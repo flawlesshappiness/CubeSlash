@@ -1,0 +1,3 @@
+[submodule "CubeSlash/Assets/UnitySubmodules"]
+	path = CubeSlash/Assets/UnitySubmodules
+	url = ../UnitySubmodules.git
