@@ -15,6 +15,8 @@ public class GameController : MonoBehaviour
         InitializeControllers();
         InitializePlayer();
         EnemyController.Instance.Spawning = true;
+
+        ViewController.Instance.ShowView<GameView>();
     }
 
     // Start is called before the first frame update

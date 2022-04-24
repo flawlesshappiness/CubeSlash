@@ -44,3 +44,9 @@ TagManager:
   - name: Background
     uniqueID: 1520506667
     locked: 0
+  - name: Trail
+    uniqueID: 827038005
+    locked: 0
+  - name: Entity
+    uniqueID: 1630863459
+    locked: 0

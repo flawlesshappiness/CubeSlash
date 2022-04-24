@@ -12,6 +12,8 @@ public class Player : MonoBehaviourExtended
     private const float SPEED_DASH = 40;
     private const float TIME_DASH = 0.2f;
 
+    public System.Action<Enemy> onEnemyKilled;
+    public System.Action<Enemy> onHurt;
     public bool Dashing { get; private set; }
 
     private Vector3 dir_move;
@@ -45,9 +47,20 @@ public class Player : MonoBehaviourExtended
         while(Time.time - time_start < TIME_DASH)
         {
             Rigidbody.velocity = dir_move * SPEED_DASH;
+            Character.SetLookDirection(dir_move);
             yield return null;
         }
         Rigidbody.velocity = dir_move * SPEED_MOVE;
+
+        // Hit everyone around
+        foreach(var hit in Physics2D.OverlapCircleAll(transform.position + dir_move * 0.5f, 1.5f))
+        {
+            var enemy = hit.GetComponentInParent<Enemy>();
+            if (enemy)
+            {
+                enemy.Kill();
+            }
+        }
 
         Dashing = false;
     }
@@ -87,10 +100,12 @@ public class Player : MonoBehaviourExtended
             if (Dashing)
             {
                 enemy.Kill();
+                onEnemyKilled?.Invoke(enemy);
             }
             else
             {
                 print("Player hit by enemy");
+                onHurt?.Invoke(enemy);
             }
         }
     }

@@ -11,9 +11,9 @@ public class EnemyController : MonoBehaviour, IInitializable
     private List<Enemy> enemies_active = new List<Enemy>();
     private List<Enemy> enemies_inactive = new List<Enemy>();
 
-    private const int COUNT_ENEMY_MAX = 1;
+    private const int COUNT_ENEMY_MAX = 15;
     private const int COUNT_ENEMY_POOL_EXTEND = 20;
-    private const float CHANCE_SPAWN_CLUSTER = 0.0f;
+    private const float CHANCE_SPAWN_CLUSTER = 0.1f;
 
     public void Initialize()
     {
@@ -57,6 +57,7 @@ public class EnemyController : MonoBehaviour, IInitializable
         enemies_active.Add(enemy);
         enemy.gameObject.SetActive(true);
         enemy.transform.position = position;
+        enemy.UpdateState();
         return enemy;
     }
 
@@ -97,7 +98,7 @@ public class EnemyController : MonoBehaviour, IInitializable
     private Vector3 GetPositionOutsideCamera()
     {
         var dir = Random.insideUnitCircle.normalized.ToVector3();
-        var dist = CameraController.Instance.Width * 0.5f * Random.Range(1.5f, 2.0f);
-        return CameraController.Instance.Camera.transform.position + dir * dist;
+        var dist = CameraController.Instance.Width * 0.5f * Random.Range(1.2f, 2.0f);
+        return CameraController.Instance.Camera.transform.position.SetZ(0) + dir * dist;
     }
 }
