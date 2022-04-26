@@ -5,7 +5,10 @@ using UnityEngine;
 public class EnemyController : MonoBehaviour, IInitializable
 {
     public static EnemyController Instance { get; private set; }
+
     public bool Spawning { get; set; }
+
+    private Dictionary<Enemy.Type, EnemySettings> settings = new Dictionary<Enemy.Type, EnemySettings>();
 
     private Enemy prefab_enemy;
     private List<Enemy> enemies_active = new List<Enemy>();
@@ -18,8 +21,20 @@ public class EnemyController : MonoBehaviour, IInitializable
     public void Initialize()
     {
         Instance = this;
+        InitializeSettings();
+        prefab_enemy = Resources.Load<Enemy>("Prefabs/Entities/Enemy");
+    }
 
-        prefab_enemy = Resources.Load<Enemy>("Prefabs/Enemy/Enemy");
+    private void InitializeSettings()
+    {
+        var assets = Resources.LoadAll<EnemySettings>("Prefabs/Enemies/Settings");
+        foreach(var asset in assets)
+        {
+            if (!settings.ContainsKey(asset.type))
+            {
+                settings.Add(asset.type, asset);
+            }
+        }
     }
 
     private void Update()
@@ -57,6 +72,8 @@ public class EnemyController : MonoBehaviour, IInitializable
         enemies_active.Add(enemy);
         enemy.gameObject.SetActive(true);
         enemy.transform.position = position;
+        var type = Random.Range(0f, 1f) < 0.05f ? Enemy.Type.CHONK : Enemy.Type.WEAK;
+        enemy.Initialize(settings[type]);
         enemy.UpdateState();
         return enemy;
     }
@@ -75,7 +92,6 @@ public class EnemyController : MonoBehaviour, IInitializable
     {
         var enemy = Instantiate(prefab_enemy.gameObject).GetComponent<Enemy>();
         enemy.transform.parent = GameController.Instance.world;
-        enemy.Initialize();
         enemy.gameObject.SetActive(false);
         enemies_inactive.Add(enemy);
         return enemy;

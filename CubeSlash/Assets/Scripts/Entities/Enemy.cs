@@ -2,10 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Enemy : MonoBehaviourExtended, IInitializable
+public class Enemy : MonoBehaviourExtended
 {
+    public enum Type { WEAK, CHONK }
+
+    [Min(1)] public int health;
+
     private Rigidbody2D Rigidbody { get { return GetComponentOnce<Rigidbody2D>(ComponentSearchType.CHILDREN); } }
-    private Character Character { get { return GetComponentOnce<Character>(ComponentSearchType.CHILDREN); } }
+    private Character Character { get; set; }
+    private EntityAI AI { get; set; }
 
     public bool Moving { get; private set; }
     private Vector3 direction_move;
@@ -18,15 +23,42 @@ public class Enemy : MonoBehaviourExtended, IInitializable
     private enum StateAI { SEARCH, HUNT }
     private StateAI state;
 
-    public void Initialize()
+    public void Initialize(EnemySettings settings)
     {
-        // Initialize enemy
+        health = settings.health;
+        SetCharacter(settings.character);
+        SetAI(settings.ai);
+        transform.localScale = settings.size;
     }
 
     private void Update()
     {
+        if (!Character) return;
+
         AIUpdate();
         MoveUpdate();
+    }
+
+    private void SetCharacter(Character prefab)
+    {
+        if (Character)
+        {
+            Destroy(Character.gameObject);
+            Character = null;
+        }
+
+        Character = Instantiate(prefab.gameObject, transform).GetComponent<Character>();
+    }
+
+    private void SetAI(EntityAI prefab)
+    {
+        if (AI)
+        {
+            Destroy(AI.gameObject);
+            AI = null;
+        }
+
+        AI = Instantiate(prefab.gameObject, transform).GetComponent<EntityAI>();
     }
 
     private void MoveUpdate()
@@ -43,6 +75,7 @@ public class Enemy : MonoBehaviourExtended, IInitializable
         }
     }
 
+    #region AI
     private void AIUpdate()
     {
         var dist_to_player = DistanceToPlayer();
@@ -123,6 +156,7 @@ public class Enemy : MonoBehaviourExtended, IInitializable
     {
         return Vector3.Distance(transform.position, Player.Instance.transform.position);
     }
+    #endregion
 
     public void Kill()
     {

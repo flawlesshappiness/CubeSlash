@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Character : MonoBehaviourExtended
 {
+    public enum Type { CIRCLE, SQUARE }
     private Collider Collider { get { return GetComponentOnce<Collider>(ComponentSearchType.CHILDREN); } }
     private Rigidbody2D Rigidbody { get { return GetComponentOnce<Rigidbody2D>(ComponentSearchType.PARENT); } }
 
