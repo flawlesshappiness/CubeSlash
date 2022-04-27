@@ -24,21 +24,32 @@ public class Player : MonoBehaviourExtended
         MoveUpdate();
     }
 
-    #region INPUT
     private void InputUpdate()
     {
         if (Input.GetButtonDown("Fire3"))
         {
-            Dash();
+            StartDashing();
         }
     }
 
-    private void Dash()
+    private void StartDashing()
     {
         if (Dashing) return;
-        StartCoroutine(DashCr());
+        _cr_dash = StartCoroutine(DashCr());
     }
 
+    private void StopDashing()
+    {
+        if(_cr_dash != null)
+        {
+            StopCoroutine(_cr_dash);
+            _cr_dash = null;
+        }
+
+        Dashing = false;
+    }
+
+    private Coroutine _cr_dash;
     private IEnumerator DashCr()
     {
         Dashing = true;
@@ -58,13 +69,13 @@ public class Player : MonoBehaviourExtended
             var enemy = hit.GetComponentInParent<Enemy>();
             if (enemy)
             {
-                enemy.Kill();
+                enemy.Damage(1); // Could be a double hit
             }
         }
 
         Dashing = false;
     }
-    #endregion
+
     #region MOVE
     private void MoveUpdate()
     {
@@ -99,8 +110,23 @@ public class Player : MonoBehaviourExtended
         {
             if (Dashing)
             {
-                enemy.Kill();
-                onEnemyKilled?.Invoke(enemy);
+                enemy.Damage(1);
+
+                if(enemy.health > 0)
+                {
+                    StopDashing();
+                    dir_move = -dir_move;
+                    StartDashing();
+
+                    InstantiateParticle("Particles/ps_impact_dash")
+                        .Position(collision.transform.position)
+                        .Destroy(1)
+                        .Play();
+                }
+                else
+                {
+                    onEnemyKilled?.Invoke(enemy);
+                }
             }
             else
             {

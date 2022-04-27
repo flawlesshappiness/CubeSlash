@@ -74,7 +74,6 @@ public class EnemyController : MonoBehaviour, IInitializable
         enemy.transform.position = position;
         var type = Random.Range(0f, 1f) < 0.05f ? Enemy.Type.CHONK : Enemy.Type.WEAK;
         enemy.Initialize(settings[type]);
-        enemy.UpdateState();
         return enemy;
     }
 

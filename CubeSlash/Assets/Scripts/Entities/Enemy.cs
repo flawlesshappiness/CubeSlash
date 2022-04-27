@@ -12,16 +12,11 @@ public class Enemy : MonoBehaviourExtended
     private Character Character { get; set; }
     private EntityAI AI { get; set; }
 
-    public bool Moving { get; private set; }
-    private Vector3 direction_move;
-    private Vector3 pos_target;
+    private bool Moving { get; set; }
 
     private const float SPEED_MOVE = 3f;
 
     private event System.Action onDeath;
-
-    private enum StateAI { SEARCH, HUNT }
-    private StateAI state;
 
     public void Initialize(EnemySettings settings)
     {
@@ -35,8 +30,7 @@ public class Enemy : MonoBehaviourExtended
     {
         if (!Character) return;
 
-        AIUpdate();
-        MoveUpdate();
+        DecelerateUpdate();
     }
 
     private void SetCharacter(Character prefab)
@@ -59,14 +53,21 @@ public class Enemy : MonoBehaviourExtended
         }
 
         AI = Instantiate(prefab.gameObject, transform).GetComponent<EntityAI>();
+        AI.Initialize(this);
     }
 
-    private void MoveUpdate()
+    public void Move(Vector3 direction)
+    {
+        Moving = true;
+        Rigidbody.velocity = direction.normalized * SPEED_MOVE;
+        Character.SetLookDirection(direction);
+    }
+
+    private void DecelerateUpdate()
     {
         if (Moving)
         {
-            Rigidbody.velocity = direction_move.normalized * SPEED_MOVE;
-            Character.SetLookDirection(direction_move);
+            Moving = false;
         }
         else
         {
@@ -75,94 +76,28 @@ public class Enemy : MonoBehaviourExtended
         }
     }
 
-    #region AI
-    private void AIUpdate()
+    public void Damage(int amount)
     {
-        var dist_to_player = DistanceToPlayer();
-        if(dist_to_player > CameraController.Instance.Width * 2f)
-        {
-            Respawn();
-            return;
-        }
+        health -= amount.Abs();
 
-        switch (state)
+        if(health <= 0)
         {
-            case StateAI.SEARCH:
-                if(dist_to_player < CameraController.Instance.Width * 0.25f)
-                {
-                    SetState(StateAI.HUNT);
-                }
-                else
-                {
-                    MoveNearPlayer();
-                }
-                break;
-            case StateAI.HUNT:
-                MoveTowardsPlayer();
-                break;
+            Kill();
         }
     }
-
-    private void SetState(StateAI state)
-    {
-        this.state = state;
-        if(state == StateAI.SEARCH)
-        {
-            pos_target = GetPositionNearPlayer();
-        }
-    }
-
-    public void UpdateState()
-    {
-        if (DistanceToPlayer() > CameraController.Instance.Width * 0.5f)
-        {
-            SetState(StateAI.SEARCH);
-        }
-        else
-        {
-            SetState(StateAI.HUNT);
-        }
-    }
-
-    private void MoveNearPlayer()
-    {
-        if (!Player.Instance) return;
-
-        if (Vector3.Distance(transform.position, pos_target) < 1f)
-        {
-            UpdateState();
-        }
-        else
-        {
-            Moving = true;
-            direction_move = transform.DirectionTo(pos_target);
-        }
-    }
-
-    private void MoveTowardsPlayer()
-    {
-        if (!Player.Instance) return;
-
-        Moving = true;
-        direction_move = transform.DirectionTo(Player.Instance.transform);
-    }
-
-    private Vector3 GetPositionNearPlayer()
-    {
-        return Player.Instance.transform.position + Random.insideUnitCircle.ToVector3() * Random.Range(2f, 5f);
-    }
-
-    private float DistanceToPlayer()
-    {
-        return Vector3.Distance(transform.position, Player.Instance.transform.position);
-    }
-    #endregion
 
     public void Kill()
     {
-        InstantiateParticle("Particles/ps_enemy_death")
+        InstantiateParticle("Particles/ps_burst")
             .Position(transform.position)
-            .Destroy(1);
+            .Destroy(1)
+            .Play();
+
+        InstantiateParticle("Particles/ps_flash")
+            .Position(transform.position)
+            .Scale(Character.transform.localScale * 5)
+            .Destroy(1)
+            .Play();
 
         // Event
         onDeath?.Invoke();
@@ -171,7 +106,7 @@ public class Enemy : MonoBehaviourExtended
         Respawn();
     }
 
-    private void Respawn()
+    public void Respawn()
     {
         gameObject.SetActive(false);
         EnemyController.Instance.OnEnemyKilled(this);
