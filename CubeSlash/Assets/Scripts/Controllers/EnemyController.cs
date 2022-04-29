@@ -72,7 +72,7 @@ public class EnemyController : MonoBehaviour, IInitializable
         enemies_active.Add(enemy);
         enemy.gameObject.SetActive(true);
         enemy.transform.position = position;
-        var type = Random.Range(0f, 1f) < 0.05f ? Enemy.Type.CHONK : Enemy.Type.WEAK;
+        var type = Random.Range(0f, 1f) < 0.15f ? Enemy.Type.CHONK : Enemy.Type.WEAK;
         enemy.Initialize(settings[type]);
         return enemy;
     }

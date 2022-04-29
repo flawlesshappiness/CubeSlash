@@ -37,6 +37,7 @@ public class GameController : MonoBehaviour
     {
         var prefab_player = Resources.Load<GameObject>("Prefabs/Entities/Player");
         Player.Instance = Instantiate(prefab_player, world).GetComponent<Player>();
+        Player.Instance.Initialize();
         CameraController.Instance.Target = Player.Instance.transform;
     }
 

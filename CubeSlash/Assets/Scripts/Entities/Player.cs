@@ -7,6 +7,7 @@ public class Player : MonoBehaviourExtended
     public static Player Instance;
     private Character Character { get { return GetComponentOnce<Character>(ComponentSearchType.CHILDREN); } }
     private Rigidbody2D Rigidbody { get { return GetComponentOnce<Rigidbody2D>(ComponentSearchType.CHILDREN); } }
+    public MinMaxInt Experience { get; private set; } = new MinMaxInt();
 
     private const float SPEED_MOVE = 5;
     private const float SPEED_DASH = 40;
@@ -18,6 +19,13 @@ public class Player : MonoBehaviourExtended
 
     private Vector3 dir_move;
 
+    public void Initialize()
+    {
+        Experience.Min = 0;
+        Experience.Max = 25;
+        Experience.Value = 0;
+    }
+
     private void Update()
     {
         InputUpdate();
@@ -28,14 +36,16 @@ public class Player : MonoBehaviourExtended
     {
         if (Input.GetButtonDown("Fire3"))
         {
-            StartDashing();
+            StartDashing(true, true, true);
         }
     }
-
-    private void StartDashing()
+    #region DASH
+    private List<Enemy> _hits_dash = new List<Enemy>();
+    private void StartDashing(bool reset_hits, bool hit_start, bool hit_end)
     {
         if (Dashing) return;
-        _cr_dash = StartCoroutine(DashCr());
+        if(reset_hits) _hits_dash.Clear();
+        _cr_dash = StartCoroutine(DashCr(hit_start, hit_end));
     }
 
     private void StopDashing()
@@ -50,10 +60,17 @@ public class Player : MonoBehaviourExtended
     }
 
     private Coroutine _cr_dash;
-    private IEnumerator DashCr()
+    private IEnumerator DashCr(bool hit_start, bool hit_end)
     {
         Dashing = true;
 
+        // Hit everyone around
+        if (hit_start)
+        {
+            DashHitEnemiesArea(transform.position, 1.5f);
+        }
+
+        // Dash
         var time_start = Time.time;
         while(Time.time - time_start < TIME_DASH)
         {
@@ -64,18 +81,32 @@ public class Player : MonoBehaviourExtended
         Rigidbody.velocity = dir_move * SPEED_MOVE;
 
         // Hit everyone around
-        foreach(var hit in Physics2D.OverlapCircleAll(transform.position + dir_move * 0.5f, 1.5f))
+        if (hit_end)
         {
-            var enemy = hit.GetComponentInParent<Enemy>();
-            if (enemy)
-            {
-                enemy.Damage(1); // Could be a double hit
-            }
+            DashHitEnemiesArea(transform.position + dir_move * 0.5f, 1.5f);
         }
 
         Dashing = false;
     }
 
+    private void DashHitEnemy(Enemy enemy)
+    {
+        if (enemy && !_hits_dash.Contains(enemy))
+        {
+            _hits_dash.Add(enemy);
+            DamageEnemy(enemy, 1);
+        }
+    }
+
+    private void DashHitEnemiesArea(Vector3 position, float radius)
+    {
+        foreach (var hit in Physics2D.OverlapCircleAll(position, radius))
+        {
+            var enemy = hit.GetComponentInParent<Enemy>();
+            DashHitEnemy(enemy);
+        }
+    }
+    #endregion
     #region MOVE
     private void MoveUpdate()
     {
@@ -102,6 +133,24 @@ public class Player : MonoBehaviourExtended
         Character.SetLookDirection(direction);
     }
     #endregion
+    #region ENEMY
+    private void DamageEnemy(Enemy enemy, int damage)
+    {
+        enemy.Damage(damage);
+
+        if(enemy.health > 0)
+        {
+            InstantiateParticle("Particles/ps_impact_dash")
+                        .Position(enemy.transform.position)
+                        .Destroy(1)
+                        .Play();
+        }
+        else
+        {
+            Experience.Value += 1;
+            onEnemyKilled?.Invoke(enemy);
+        }
+    }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -110,22 +159,13 @@ public class Player : MonoBehaviourExtended
         {
             if (Dashing)
             {
-                enemy.Damage(1);
+                DashHitEnemy(enemy);
 
-                if(enemy.health > 0)
+                if (enemy.health > 0)
                 {
                     StopDashing();
                     dir_move = -dir_move;
-                    StartDashing();
-
-                    InstantiateParticle("Particles/ps_impact_dash")
-                        .Position(collision.transform.position)
-                        .Destroy(1)
-                        .Play();
-                }
-                else
-                {
-                    onEnemyKilled?.Invoke(enemy);
+                    StartDashing(true, false, true);
                 }
             }
             else
@@ -135,4 +175,5 @@ public class Player : MonoBehaviourExtended
             }
         }
     }
+    #endregion
 }
