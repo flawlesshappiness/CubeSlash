@@ -8,6 +8,7 @@ public class Player : MonoBehaviourExtended
     private Character Character { get { return GetComponentOnce<Character>(ComponentSearchType.CHILDREN); } }
     private Rigidbody2D Rigidbody { get { return GetComponentOnce<Rigidbody2D>(ComponentSearchType.CHILDREN); } }
     public MinMaxInt Experience { get; private set; } = new MinMaxInt();
+    public int Level { get; private set; }
 
     private const float SPEED_MOVE = 5;
     private const float SPEED_DASH = 40;
@@ -41,6 +42,7 @@ public class Player : MonoBehaviourExtended
     }
     #region DASH
     private List<Enemy> _hits_dash = new List<Enemy>();
+    private bool dash_hitstop = false;
     private void StartDashing(bool reset_hits, bool hit_start, bool hit_end)
     {
         if (Dashing) return;
@@ -74,8 +76,16 @@ public class Player : MonoBehaviourExtended
         var time_start = Time.time;
         while(Time.time - time_start < TIME_DASH)
         {
-            Rigidbody.velocity = dir_move * SPEED_DASH;
-            Character.SetLookDirection(dir_move);
+            if (dash_hitstop)
+            {
+                time_start += Time.deltaTime;
+                Rigidbody.velocity = Vector3.zero;
+            }
+            else
+            {
+                Rigidbody.velocity = dir_move * SPEED_DASH;
+                Character.SetLookDirection(dir_move);
+            }
             yield return null;
         }
         Rigidbody.velocity = dir_move * SPEED_MOVE;
@@ -87,6 +97,16 @@ public class Player : MonoBehaviourExtended
         }
 
         Dashing = false;
+    }
+
+    private IEnumerator DashHitstopCr()
+    {
+        dash_hitstop = true;
+        for (int i = 0; i < 20; i++)
+        {
+            yield return null;
+        }
+        dash_hitstop = false;
     }
 
     private void DashHitEnemy(Enemy enemy)
@@ -166,6 +186,10 @@ public class Player : MonoBehaviourExtended
                     StopDashing();
                     dir_move = -dir_move;
                     StartDashing(true, false, true);
+                }
+                else
+                {
+                    StartCoroutine(DashHitstopCr());
                 }
             }
             else

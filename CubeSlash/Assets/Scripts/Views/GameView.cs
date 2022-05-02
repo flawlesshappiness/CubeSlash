@@ -20,6 +20,7 @@ public class GameView : View
         Player.Instance.Experience.onValueChanged += OnExperienceChanged;
         UpdateEnemyKillText();
         UpdatePlayerHurtText();
+        UpdateExperience(false);
     }
 
     private void OnDestroy()
@@ -52,9 +53,21 @@ public class GameView : View
 
     private void OnExperienceChanged()
     {
+        UpdateExperience(true);
+    }
+
+    private void UpdateExperience(bool animate)
+    {
         var exp = Player.Instance.Experience;
         var t = (float)exp.Value / exp.Max;
-        Lerp.Value(0.25f, img_experience.fillAmount, t, f => img_experience.fillAmount = f, img_experience.gameObject, "fill_" + img_experience.GetInstanceID())
-            .Curve(Lerp.Curve.EASE_END);
+        if (animate)
+        {
+            Lerp.Value(0.25f, img_experience.fillAmount, t, f => img_experience.fillAmount = f, img_experience.gameObject, "fill_" + img_experience.GetInstanceID())
+                .Curve(Lerp.Curve.EASE_END);
+        }
+        else
+        {
+            img_experience.fillAmount = t;
+        }
     }
 }
