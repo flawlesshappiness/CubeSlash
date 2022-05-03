@@ -1,143 +1,104 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class Player : MonoBehaviourExtended
 {
     public static Player Instance;
-    private Character Character { get { return GetComponentOnce<Character>(ComponentSearchType.CHILDREN); } }
-    private Rigidbody2D Rigidbody { get { return GetComponentOnce<Rigidbody2D>(ComponentSearchType.CHILDREN); } }
+    public Character Character { get { return GetComponentOnce<Character>(ComponentSearchType.CHILDREN); } }
+    public Rigidbody2D Rigidbody { get { return GetComponentOnce<Rigidbody2D>(ComponentSearchType.CHILDREN); } }
     public MinMaxInt Experience { get; private set; } = new MinMaxInt();
     public int Level { get; private set; }
+    public bool InputEnabled { get; set; }
+    public int InvincibilityCounter { get; set; }
+    public Vector3 MoveDirection { get; set; }
 
-    private const float SPEED_MOVE = 5;
-    private const float SPEED_DASH = 40;
-    private const float TIME_DASH = 0.2f;
+    public const float SPEED_MOVE = 5;
 
     public System.Action<Enemy> onEnemyKilled;
     public System.Action<Enemy> onHurt;
-    public bool Dashing { get; private set; }
 
-    private Vector3 dir_move;
+    public Ability[] AbilitiesEquipped { get; private set; }
+    private List<Ability> abilities_unlocked = new List<Ability>();
+    private string[] buttons_ability = new string[] { "Fire1", "Fire2", "Fire3", "Jump" };
 
     public void Initialize()
     {
         Experience.Min = 0;
         Experience.Max = 25;
         Experience.Value = 0;
+        AbilitiesEquipped = new Ability[buttons_ability.Length];
+        var dash = UnlockAbility(Ability.Type.DASH);
+        EquipAbility(dash, 2);
     }
 
     private void Update()
     {
-        InputUpdate();
+        AbilityUpdate();
         MoveUpdate();
     }
-
-    private void InputUpdate()
+    #region ABILITIES
+    public void EquipAbility(Ability ability, int idx)
     {
-        if (Input.GetButtonDown("Fire3"))
-        {
-            StartDashing(true, true, true);
-        }
-    }
-    #region DASH
-    private List<Enemy> _hits_dash = new List<Enemy>();
-    private bool dash_hitstop = false;
-    private void StartDashing(bool reset_hits, bool hit_start, bool hit_end)
-    {
-        if (Dashing) return;
-        if(reset_hits) _hits_dash.Clear();
-        _cr_dash = StartCoroutine(DashCr(hit_start, hit_end));
+        AbilitiesEquipped[idx] = ability;
+        ability.Equipped = true;
     }
 
-    private void StopDashing()
+    public Ability UnlockAbility(Ability.Type type)
     {
-        if(_cr_dash != null)
-        {
-            StopCoroutine(_cr_dash);
-            _cr_dash = null;
-        }
+        var already_unlocked = abilities_unlocked.Any(ability => ability.type == type);
+        if (already_unlocked) return null;
 
-        Dashing = false;
+        var ability = Ability.Create(type);
+        abilities_unlocked.Add(ability);
+        ability.transform.parent = transform;
+        ability.Player = this;
+        return ability;
     }
 
-    private Coroutine _cr_dash;
-    private IEnumerator DashCr(bool hit_start, bool hit_end)
+    private bool CanUseAbilities()
     {
-        Dashing = true;
+        var no_abilities = !AbilitiesEquipped.Any(ability => ability != null && ability.BlockingAbilities);
+        return no_abilities;
+    }
 
-        // Hit everyone around
-        if (hit_start)
+    private void AbilityUpdate()
+    {
+        if (!InputEnabled) return;
+        if (CanUseAbilities())
         {
-            DashHitEnemiesArea(transform.position, 1.5f);
-        }
-
-        // Dash
-        var time_start = Time.time;
-        while(Time.time - time_start < TIME_DASH)
-        {
-            if (dash_hitstop)
+            for (int i = 0; i < AbilitiesEquipped.Length; i++)
             {
-                time_start += Time.deltaTime;
-                Rigidbody.velocity = Vector3.zero;
+                var button = buttons_ability[i];
+                var ability = AbilitiesEquipped[i];
+                if (ability)
+                {
+                    if (Input.GetButtonDown(button))
+                    {
+                        ability.Pressed();
+                    }
+
+                    if (Input.GetButtonUp(button))
+                    {
+                        ability.Released();
+                    }
+                }
             }
-            else
-            {
-                Rigidbody.velocity = dir_move * SPEED_DASH;
-                Character.SetLookDirection(dir_move);
-            }
-            yield return null;
-        }
-        Rigidbody.velocity = dir_move * SPEED_MOVE;
-
-        // Hit everyone around
-        if (hit_end)
-        {
-            DashHitEnemiesArea(transform.position + dir_move * 0.5f, 1.5f);
-        }
-
-        Dashing = false;
-    }
-
-    private IEnumerator DashHitstopCr()
-    {
-        dash_hitstop = true;
-        for (int i = 0; i < 20; i++)
-        {
-            yield return null;
-        }
-        dash_hitstop = false;
-    }
-
-    private void DashHitEnemy(Enemy enemy)
-    {
-        if (enemy && !_hits_dash.Contains(enemy))
-        {
-            _hits_dash.Add(enemy);
-            DamageEnemy(enemy, 1);
-        }
-    }
-
-    private void DashHitEnemiesArea(Vector3 position, float radius)
-    {
-        foreach (var hit in Physics2D.OverlapCircleAll(position, radius))
-        {
-            var enemy = hit.GetComponentInParent<Enemy>();
-            DashHitEnemy(enemy);
         }
     }
     #endregion
     #region MOVE
     private void MoveUpdate()
     {
-        if (Dashing) return;
+        if (!CanMove()) return;
 
         var hor = Input.GetAxis("Horizontal");
         var ver = Input.GetAxis("Vertical");
         var dir = new Vector2(hor, ver);
-        if(dir.magnitude > 0.5f)
+        if(InputEnabled && dir.magnitude > 0.5f)
         {
-            dir_move = dir.normalized;
+            MoveDirection = dir.normalized;
             Move(dir.normalized);
         }
         else
@@ -152,9 +113,15 @@ public class Player : MonoBehaviourExtended
         Rigidbody.velocity = direction * SPEED_MOVE;
         Character.SetLookDirection(direction);
     }
+
+    private bool CanMove()
+    {
+        var no_abilities = !AbilitiesEquipped.Any(ability => ability != null && ability.BlockingMovement);
+        return no_abilities;
+    }
     #endregion
     #region ENEMY
-    private void DamageEnemy(Enemy enemy, int damage)
+    public void DamageEnemy(Enemy enemy, int damage)
     {
         enemy.Damage(damage);
 
@@ -177,20 +144,15 @@ public class Player : MonoBehaviourExtended
         var enemy = collision.gameObject.GetComponentInParent<Enemy>();
         if (enemy)
         {
-            if (Dashing)
+            foreach(var ability in AbilitiesEquipped)
             {
-                DashHitEnemy(enemy);
+                if (!ability) continue;
+                ability.EnemyCollision(enemy);
+            }
 
-                if (enemy.health > 0)
-                {
-                    StopDashing();
-                    dir_move = -dir_move;
-                    StartDashing(true, false, true);
-                }
-                else
-                {
-                    StartCoroutine(DashHitstopCr());
-                }
+            if (InvincibilityCounter > 0)
+            {
+                
             }
             else
             {

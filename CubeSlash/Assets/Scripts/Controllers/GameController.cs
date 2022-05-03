@@ -38,25 +38,46 @@ public class GameController : MonoBehaviour
         var prefab_player = Resources.Load<GameObject>("Prefabs/Entities/Player");
         Player.Instance = Instantiate(prefab_player, world).GetComponent<Player>();
         Player.Instance.Initialize();
+        Player.Instance.InputEnabled = true;
+        Player.Instance.Experience.onMax += CompleteLevel;
         CameraController.Instance.Target = Player.Instance.transform;
     }
 
     // Update is called once per frame
     void Update()
     {
-        InputUpdate();
+        CheatUpdate();
     }
 
-    private void InputUpdate()
+    private void CheatUpdate()
     {
         if(Input.GetKeyDown(KeyCode.R) && Input.GetKey(KeyCode.Tab))
         {
             Reload();
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha1) && Input.GetKey(KeyCode.Tab))
+        {
+            Player.Instance.Experience.Value = Player.Instance.Experience.Max;
         }
     }
 
     private void Reload()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    public void CompleteLevel()
+    {
+        StartCoroutine(CompleteLevelCr());
+    }
+
+    private IEnumerator CompleteLevelCr()
+    {
+        EnemyController.Instance.Spawning = false;
+        EnemyController.Instance.KillActiveEnemies();
+        Player.Instance.InputEnabled = false;
+        yield return new WaitForSeconds(2f);
+        Player.Instance.gameObject.SetActive(false);
+        ViewController.Instance.ShowView<AbilityView>();
     }
 }

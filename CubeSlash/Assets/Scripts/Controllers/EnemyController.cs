@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class EnemyController : MonoBehaviour, IInitializable
@@ -108,6 +109,14 @@ public class EnemyController : MonoBehaviour, IInitializable
     {
         enemies_active.Remove(enemy);
         enemies_inactive.Add(enemy);
+    }
+
+    public void KillActiveEnemies()
+    {
+        foreach(var enemy in enemies_active.ToList())
+        {
+            enemy.Kill();
+        }
     }
 
     private Vector3 GetPositionOutsideCamera()
