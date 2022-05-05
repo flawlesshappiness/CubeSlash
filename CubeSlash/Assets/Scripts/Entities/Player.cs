@@ -30,7 +30,9 @@ public class Player : MonoBehaviourExtended
         Experience.Value = 0;
         AbilitiesEquipped = new Ability[buttons_ability.Length];
         var dash = UnlockAbility(Ability.Type.DASH);
+        var split = UnlockAbility(Ability.Type.SPLIT);
         EquipAbility(dash, 2);
+        EquipAbility(split, 0);
     }
 
     private void Update()
@@ -51,10 +53,22 @@ public class Player : MonoBehaviourExtended
         if (already_unlocked) return null;
 
         var ability = Ability.Create(type);
-        abilities_unlocked.Add(ability);
-        ability.transform.parent = transform;
-        ability.Player = this;
+        if (ability)
+        {
+            abilities_unlocked.Add(ability);
+            ability.transform.parent = transform;
+            ability.Player = this;
+        }
         return ability;
+    }
+
+    public void UnlockAllAbilities()
+    {
+        var types = System.Enum.GetValues(typeof(Ability.Type)).Cast<Ability.Type>().ToArray();
+        foreach(var type in types)
+        {
+            UnlockAbility(type);
+        }
     }
 
     private bool CanUseAbilities()

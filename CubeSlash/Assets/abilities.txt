@@ -1,0 +1,22 @@
+Dash (DASH)
+- CHARGE: Charge for longer range and bigger AoE
+- SPLIT: Split into 2, covering a larger area (cool pattern)
+
+Charged beam (CHARGE)
+- DASH: Decrease charge time
+- SPLIT: Fire multiple beams, but increase charge time
+
+Split projectile (SPLIT)
+- CHARGE: Charge to create more projectiles
+- DASH: Increase projectile speed
+
+Explode (EXPLODE)
+aoe? ring of damage?
+
+Melee (MELEE)
+Close range attack?
+maybe slightly boost forward
+
+Sniper (SNIPER)
+Red dot line of sight
+bolt action - one powerful shot
