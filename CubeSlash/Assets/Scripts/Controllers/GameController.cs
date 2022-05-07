@@ -14,15 +14,7 @@ public class GameController : MonoBehaviour
         Instance = this;
         InitializeControllers();
         InitializePlayer();
-        EnemyController.Instance.Spawning = true;
-
-        ViewController.Instance.ShowView<GameView>();
-    }
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
+        StartLevel();
     }
 
     private void InitializeControllers()
@@ -64,6 +56,15 @@ public class GameController : MonoBehaviour
     private void Reload()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    public void StartLevel()
+    {
+        Player.Instance.gameObject.SetActive(true);
+        Player.Instance.InputEnabled = true;
+        Player.Instance.Experience.Value = 0;
+        EnemyController.Instance.Spawning = true;
+        ViewController.Instance.ShowView<GameView>();
     }
 
     public void CompleteLevel()

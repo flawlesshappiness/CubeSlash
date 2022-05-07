@@ -16,10 +16,20 @@ public abstract class Ability : MonoBehaviour
     public enum Type { DASH, SPLIT, CHARGE }
     public bool BlockingMovement { get; protected set; } = false;
     public bool BlockingAbilities { get; protected set; } = false;
-    public List<Ability> modifiers { get; private set; } = new List<Ability>();
+    public Ability[] Modifiers { get; protected set; } = new Ability[ConstVars.COUNT_MODIFIERS];
 
     public Player Player { get; set; }
     public bool Equipped { get; set; }
+
+    public static Ability Create(Type type)
+    {
+        return type switch
+        {
+            Type.DASH => Instantiate(Resources.Load<Ability>("Prefabs/Abilities/Dash").gameObject).GetComponent<Ability>(),
+            Type.SPLIT => Instantiate(Resources.Load<Ability>("Prefabs/Abilities/Split").gameObject).GetComponent<Ability>(),
+            _ => null,
+        };
+    }
 
     public virtual void Pressed()
     {
@@ -36,13 +46,20 @@ public abstract class Ability : MonoBehaviour
 
     }
 
-    public static Ability Create(Type type)
+    public void SetModifier(Ability ability, int idx)
     {
-        return type switch
+        // Unquip prev
+        var prev = Modifiers[idx];
+        if (prev)
         {
-            Type.DASH => Instantiate(Resources.Load<Ability>("Prefabs/Abilities/Dash").gameObject).GetComponent<Ability>(),
-            Type.SPLIT => Instantiate(Resources.Load<Ability>("Prefabs/Abilities/Split").gameObject).GetComponent<Ability>(),
-            _ => null,
-        };
+            prev.Equipped = false;
+        }
+
+        // Equip cur
+        Modifiers[idx] = ability;
+        if (ability)
+        {
+            ability.Equipped = true;
+        }
     }
 }

@@ -20,15 +20,14 @@ public class Player : MonoBehaviourExtended
     public System.Action<Enemy> onHurt;
 
     public Ability[] AbilitiesEquipped { get; private set; }
-    private List<Ability> abilities_unlocked = new List<Ability>();
-    private string[] buttons_ability = new string[] { "Fire1", "Fire2", "Fire3", "Jump" };
+    public List<Ability> AbilitiesUnlocked { get; private set; } = new List<Ability>();
 
     public void Initialize()
     {
         Experience.Min = 0;
         Experience.Max = 25;
         Experience.Value = 0;
-        AbilitiesEquipped = new Ability[buttons_ability.Length];
+        AbilitiesEquipped = new Ability[PlayerInputController.Instance.CountAbilityButtons];
         var dash = UnlockAbility(Ability.Type.DASH);
         var split = UnlockAbility(Ability.Type.SPLIT);
         EquipAbility(dash, 2);
@@ -37,25 +36,51 @@ public class Player : MonoBehaviourExtended
 
     private void Update()
     {
-        AbilityUpdate();
         MoveUpdate();
     }
     #region ABILITIES
     public void EquipAbility(Ability ability, int idx)
     {
+        // Unequip previous
+        UnequipAbility(idx);
+
+        // Equip next
         AbilitiesEquipped[idx] = ability;
-        ability.Equipped = true;
+        if(ability != null)
+        {
+            ability.Equipped = true;
+        }
+    }
+
+    public void UnequipAbility(int idx)
+    {
+        var ability = AbilitiesEquipped[idx];
+        if (ability)
+        {
+            ability.Equipped = false;
+            AbilitiesEquipped[idx] = null;
+
+            for (int i = 0; i < ability.Modifiers.Length; i++)
+            {
+                var modifier = ability.Modifiers[i];
+                if (modifier)
+                {
+                    ability.Modifiers[i] = null;
+                    modifier.Equipped = false;
+                }
+            }
+        }
     }
 
     public Ability UnlockAbility(Ability.Type type)
     {
-        var already_unlocked = abilities_unlocked.Any(ability => ability.type == type);
+        var already_unlocked = AbilitiesUnlocked.Any(ability => ability.type == type);
         if (already_unlocked) return null;
 
         var ability = Ability.Create(type);
         if (ability)
         {
-            abilities_unlocked.Add(ability);
+            AbilitiesUnlocked.Add(ability);
             ability.transform.parent = transform;
             ability.Player = this;
         }
@@ -77,28 +102,27 @@ public class Player : MonoBehaviourExtended
         return no_abilities;
     }
 
-    private void AbilityUpdate()
+    public void PressAbility(int idx)
     {
         if (!InputEnabled) return;
-        if (CanUseAbilities())
-        {
-            for (int i = 0; i < AbilitiesEquipped.Length; i++)
-            {
-                var button = buttons_ability[i];
-                var ability = AbilitiesEquipped[i];
-                if (ability)
-                {
-                    if (Input.GetButtonDown(button))
-                    {
-                        ability.Pressed();
-                    }
+        if (!CanUseAbilities()) return;
 
-                    if (Input.GetButtonUp(button))
-                    {
-                        ability.Released();
-                    }
-                }
-            }
+        var ability = AbilitiesEquipped[idx];
+        if (ability)
+        {
+            ability.Pressed();
+        }
+    }
+
+    public void ReleaseAbility(int idx)
+    {
+        if (!InputEnabled) return;
+        if (!CanUseAbilities()) return;
+
+        var ability = AbilitiesEquipped[idx];
+        if (ability)
+        {
+            ability.Released();
         }
     }
     #endregion

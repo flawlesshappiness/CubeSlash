@@ -10,9 +10,6 @@ public class UIInputButton : MonoBehaviour
     [SerializeField] private Image img_fill;
     [SerializeField] private Image img_symbol;
     [SerializeField] private TMP_Text tmp_text;
-    public enum JoystickType { XBOX, PLAYSTATION }
-    public enum JoystickButtonType { NORTH, EAST, SOUTH, WEST }
-    public enum MouseButtonType { LMB, RMB, MMB }
     
     [System.Serializable]
     public class ButtonMap
@@ -47,13 +44,13 @@ public class UIInputButton : MonoBehaviour
     public MouseMap map_mouse;
     public ButtonMap map_keyboard;
 
-    public void SetJoystickButton(JoystickType joystick, JoystickButtonType button)
+    public void SetJoystickButton(PlayerInputController.JoystickType joystick, PlayerInputController.JoystickButtonType button)
     {
-        var map_joystick = joystick == JoystickType.XBOX ? map_xbox : map_playstation;
+        var map_joystick = joystick == PlayerInputController.JoystickType.XBOX ? map_xbox : map_playstation;
         var map_button =
-            button == JoystickButtonType.NORTH ? map_joystick.north :
-            button == JoystickButtonType.EAST ? map_joystick.east :
-            button == JoystickButtonType.SOUTH ? map_joystick.south :
+            button == PlayerInputController.JoystickButtonType.NORTH ? map_joystick.north :
+            button == PlayerInputController.JoystickButtonType.EAST ? map_joystick.east :
+            button == PlayerInputController.JoystickButtonType.SOUTH ? map_joystick.south :
             map_joystick.west;
         SetButtonMap(map_button);
     }
@@ -65,12 +62,12 @@ public class UIInputButton : MonoBehaviour
         SetButtonMap(map);
     }
 
-    public void SetMouseButton(MouseButtonType type)
+    public void SetMouseButton(PlayerInputController.MouseButtonType type)
     {
         var map = map_mouse;
         var map_button =
-            type == MouseButtonType.LMB ? map.lmb :
-            type == MouseButtonType.RMB ? map.rmb :
+            type == PlayerInputController.MouseButtonType.LMB ? map.lmb :
+            type == PlayerInputController.MouseButtonType.RMB ? map.rmb :
             map.mmb;
         SetButtonMap(map_button);
 
@@ -81,6 +78,7 @@ public class UIInputButton : MonoBehaviour
         img_outline.sprite = map.sprite;
         img_fill.sprite = map.sprite;
         img_symbol.sprite = map.sprite_symbol;
+        img_symbol.gameObject.SetActive(map.sprite_symbol != null);
         img_outline.color = map.outline;
         img_symbol.color = map.symbol;
         img_fill.color = map.fill;

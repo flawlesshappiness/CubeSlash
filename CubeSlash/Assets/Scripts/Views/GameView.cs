@@ -27,6 +27,7 @@ public class GameView : View
     {
         Player.Instance.onEnemyKilled -= OnEnemyKilled;
         Player.Instance.onHurt -= OnPlayerHurt;
+        Player.Instance.Experience.onValueChanged -= OnExperienceChanged;
     }
 
     private void OnEnemyKilled(Enemy enemy)
