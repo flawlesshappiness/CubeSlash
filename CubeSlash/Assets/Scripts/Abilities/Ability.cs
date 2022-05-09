@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class Ability : MonoBehaviour
+public abstract class Ability : MonoBehaviourExtended
 {
     [Header("PROPERTIES")]
     public Type type;
@@ -27,6 +27,7 @@ public abstract class Ability : MonoBehaviour
         {
             Type.DASH => Instantiate(Resources.Load<Ability>("Prefabs/Abilities/Dash").gameObject).GetComponent<Ability>(),
             Type.SPLIT => Instantiate(Resources.Load<Ability>("Prefabs/Abilities/Split").gameObject).GetComponent<Ability>(),
+            Type.CHARGE => Instantiate(Resources.Load<Ability>("Prefabs/Abilities/Charge").gameObject).GetComponent<Ability>(),
             _ => null,
         };
     }
@@ -61,5 +62,15 @@ public abstract class Ability : MonoBehaviour
         {
             ability.Equipped = true;
         }
+    }
+
+    public bool HasModifier(Type type)
+    {
+        foreach(var modifier in Modifiers)
+        {
+            if (modifier != null && modifier.type == type)
+                return true;
+        }
+        return false;
     }
 }

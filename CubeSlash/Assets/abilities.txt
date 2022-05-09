@@ -1,22 +1,40 @@
 Dash (DASH)
-- CHARGE: Charge for longer range and bigger AoE
 - SPLIT: Split into 2, covering a larger area (cool pattern)
-
-Charged beam (CHARGE)
-- DASH: Decrease charge time
-- SPLIT: Fire multiple beams, but increase charge time
+- CHARGE: Charge for longer range and bigger AoE
+- EXPLODE: AoE explosion at start, very fast/long dash
+- CHONK: Bigger AoE
 
 Split projectile (SPLIT)
 - CHARGE: Charge to create more projectiles
-- DASH: Increase projectile speed
+- DASH: Projectiles dash towards targets
+- EXPLODE: Projectiles arc all the way around, with increased speed, like shrapnel
+- CHONK: Projectiles get smaller on hit but can do another hit
 
-Explode (EXPLODE)
-aoe? ring of damage?
+Charged beam (CHARGE) - Knocks back self? Does not penetrate?
+- DASH: Decrease charge time - teleport to hit enemy?
+- SPLIT: Fire multiple beams, but increase charge time
+- EXPLODE: Huge beam - maybe cone?
+- CHONK: Beam penetrates but becomes small
 
-Melee (MELEE)
-Close range attack?
-maybe slightly boost forward
+Explode (EXPLODE) - aoe? ring of damage?
+- DASH: Knockback?
+- SPLIT: Multiple smaller explosions around first one
+- CHARGE: Charge to increase damage/size
+- CHONK: Enemies hit explode again, but smaller
 
-Sniper (SNIPER)
-Red dot line of sight
-bolt action - one powerful shot
+Huge projectile (CHONK) - Can take multiple hits - Gets smaller after each hit
+- DASH: Accelerates
+- SPLIT: Splits into smaller projectiles on hit
+- CHARGE: Charge to increase size (technically more damage)
+- EXPLODE: Explodes upon hitting enemy
+
+Melee (MELEE) - Close range attack? maybe slightly boost forward
+
+Sniper (SNIPER) - Red dot line of sight - bolt action - one powerful shot
+
+Make enemies attack eachother
+Invisibility
+Heal - Life steal?
+Lob projectile
+Movement speed up
+Chain lightning

@@ -30,8 +30,12 @@ public class Player : MonoBehaviourExtended
         AbilitiesEquipped = new Ability[PlayerInputController.Instance.CountAbilityButtons];
         var dash = UnlockAbility(Ability.Type.DASH);
         var split = UnlockAbility(Ability.Type.SPLIT);
+        var charge = UnlockAbility(Ability.Type.CHARGE);
         EquipAbility(dash, 2);
         EquipAbility(split, 0);
+        EquipAbility(charge, 1);
+
+        MoveDirection = transform.up;
     }
 
     private void Update()
