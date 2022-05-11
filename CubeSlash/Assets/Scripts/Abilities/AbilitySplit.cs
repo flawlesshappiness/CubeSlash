@@ -7,7 +7,26 @@ public class AbilitySplit : Ability
     public override void Pressed()
     {
         base.Pressed();
-        SpawnProjectiles();
+        var charge = GetModifier<AbilityCharge>(Type.CHARGE);
+        if (charge)
+        {
+            charge.Pressed();
+        }
+        else
+        {
+            SpawnProjectiles();
+        }
+    }
+
+    public override void Released()
+    {
+        base.Released();
+        var charge = GetModifier<AbilityCharge>(Type.CHARGE);
+        if (charge)
+        {
+            charge.Released();
+            SpawnProjectiles();
+        }
     }
 
     private Projectile SpawnProjectile(Vector3 direction)
@@ -28,11 +47,18 @@ public class AbilitySplit : Ability
 
     private void SpawnProjectiles()
     {
+        var charge = GetModifier<AbilityCharge>(Type.CHARGE);
+        var t_charge = charge ? charge.GetCharge() : 0;
+
         // Spawn projectiles
         var projectiles = new List<Projectile>();
         var forward = Player.MoveDirection;
-        var angle_max = 25f;
-        var count_arc = 2;
+        var angle_max = t_charge == 1 ? 180f :
+            charge ? Mathf.Lerp(40, 20, t_charge) :
+            30f;
+        var count_arc = t_charge == 1 ? 10 :
+            charge ? (int)Mathf.Clamp(Mathf.Lerp(1, 3, t_charge), 1, 2) :
+            1;
         var angle_per = angle_max / count_arc;
         for (int i_arc = 0; i_arc < count_arc + 1; i_arc++)
         {

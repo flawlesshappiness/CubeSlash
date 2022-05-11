@@ -33,7 +33,8 @@ public class Player : MonoBehaviourExtended
         var charge = UnlockAbility(Ability.Type.CHARGE);
         EquipAbility(dash, 2);
         EquipAbility(split, 0);
-        EquipAbility(charge, 1);
+        //EquipAbility(charge, 1);
+        split.SetModifier(charge, 0);
 
         MoveDirection = transform.up;
     }
@@ -41,6 +42,7 @@ public class Player : MonoBehaviourExtended
     private void Update()
     {
         MoveUpdate();
+        QueuedAbilityUpdate();
     }
     #region ABILITIES
     public void EquipAbility(Ability ability, int idx)
@@ -109,12 +111,18 @@ public class Player : MonoBehaviourExtended
     public void PressAbility(int idx)
     {
         if (!InputEnabled) return;
-        if (!CanUseAbilities()) return;
-
         var ability = AbilitiesEquipped[idx];
+
         if (ability)
         {
-            ability.Pressed();
+            if (CanUseAbilities())
+            {
+                ability.Pressed();
+            }
+            else
+            {
+                ability.Queued = true;
+            }
         }
     }
 
@@ -127,7 +135,26 @@ public class Player : MonoBehaviourExtended
         if (ability)
         {
             ability.Released();
+            ability.Queued = false;
         }
+    }
+
+    private bool _abilities_enabled;
+    private void QueuedAbilityUpdate()
+    {
+        var can_use = CanUseAbilities();
+        if (can_use != _abilities_enabled)
+        {
+            foreach(var ability in AbilitiesEquipped)
+            {
+                if(can_use && ability != null && ability.Queued)
+                {
+                    ability.Pressed();
+                    can_use = !ability.BlockingAbilities;
+                }
+            }
+        }
+        _abilities_enabled = can_use;
     }
     #endregion
     #region MOVE

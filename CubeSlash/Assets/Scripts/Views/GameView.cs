@@ -21,6 +21,9 @@ public class GameView : View
         UpdateEnemyKillText();
         UpdatePlayerHurtText();
         UpdateExperience(false);
+
+        // Audio
+        AudioController.Instance.snapshot_main.TransitionTo(0.5f);
     }
 
     private void OnDestroy()

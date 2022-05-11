@@ -6,6 +6,10 @@ using UnityEngine;
 public class AbilityCharge : Ability
 {
     [SerializeField] private LineRenderer line;
+    [SerializeField] private ParticleSystem ps_charge;
+    [SerializeField] private ParticleSystem ps_charge_end;
+    [SerializeField] private ParticleSystem ps_charged;
+    [SerializeField] private AnimationCurve ac_charge_emission;
 
     private const float TIME_CHARGE_MAX = 1f;
     private const float DISTANCE_MAX = 20f;
@@ -13,13 +17,31 @@ public class AbilityCharge : Ability
     private const float WIDTH_MAX = 2f;
     private const int DAMAGE_MAX = 3;
 
+    private const int COUNT_EMISSION_PS_MIN = 10;
+    private const int COUNT_EMISSION_PS_MAX = 50;
+
     private float time_charge_start;
     private float time_charge_end;
-    private bool charging;
+    public bool Charging { get; private set; }
+    public bool ChargeEnded { get; private set; }
 
     private void Start()
     {
         line.gameObject.SetActive(false);
+    }
+
+    private void OnEnable()
+    {
+        ps_charge.Play();
+        ps_charge.ModifyEmission(e =>
+        {
+            e.enabled = false;
+        });
+        ps_charged.Play();
+        ps_charged.ModifyEmission(e =>
+        {
+            e.enabled = false;
+        });
     }
 
     public override void Pressed()
@@ -27,22 +49,51 @@ public class AbilityCharge : Ability
         base.Pressed();
         time_charge_start = Time.time;
         time_charge_end = time_charge_start + TIME_CHARGE_MAX;
-        charging = true;
+        Charging = true;
+        ChargeEnded = false;
     }
 
     public override void Released()
     {
         base.Released();
-        charging = false;
-        Shoot();
+        Charging = false;
+        ChargeEnded = false;
+
+        if (IsActive)
+        {
+            Shoot();
+        }
+    }
+
+    private void Update()
+    {
+        var t = GetCharge();
+        ps_charge.ModifyEmission(e =>
+        {
+            e.enabled = Charging && !ChargeEnded;
+            var t_rate = ac_charge_emission.Evaluate(t);
+            e.rateOverTime = Mathf.Lerp(COUNT_EMISSION_PS_MIN, COUNT_EMISSION_PS_MAX, t_rate);
+        });
+        ps_charged.ModifyEmission(e =>
+        {
+            e.enabled = Charging && ChargeEnded;
+        });
+
+        if (Charging && !ChargeEnded && t >= 1)
+        {
+            ChargeEnded = true;
+            ps_charge_end.Play();
+        }
     }
 
     private void Shoot()
     {
-        var t = Mathf.Clamp((Time.time - time_charge_start) / (time_charge_end - time_charge_start), 0f, 1f);
-        var damage = (int)Mathf.Clamp((DAMAGE_MAX * t) + 1, 1, TIME_CHARGE_MAX);
+        var t = GetCharge();
+        if (t < 0.25f) return;
+
+        var damage = (int)Mathf.Clamp((DAMAGE_MAX * t) + 1, 1, DAMAGE_MAX);
         var target = GetTarget(DISTANCE_MAX, ANGLE_MAX);
-        if(target != null)
+        if (target != null)
         {
             var width = WIDTH_MAX * t;
             Player.Instance.DamageEnemy(target, damage);
@@ -50,22 +101,17 @@ public class AbilityCharge : Ability
         }
     }
 
+    public float GetCharge()
+    {
+        var t = Mathf.Clamp((Time.time - time_charge_start) / (time_charge_end - time_charge_start), 0f, 1f);
+        return t;
+    }
+
     private void StartVisual(Vector3 position, float width)
     {
-        StopVisual();
-        _cr_visual = StartCoroutine(BeamVisualCr(position, width));
+        CoroutineController.Instance.Run(BeamVisualCr(position, width), "beam_visual_"+GetInstanceID());
     }
 
-    private void StopVisual()
-    {
-        if(_cr_visual != null)
-        {
-            StopCoroutine(_cr_visual);
-            _cr_visual = null;
-        }
-    }
-
-    private Coroutine _cr_visual;
     private IEnumerator BeamVisualCr(Vector3 position, float width)
     {
         line.gameObject.SetActive(true);

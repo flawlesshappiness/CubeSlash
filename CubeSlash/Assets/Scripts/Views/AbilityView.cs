@@ -18,6 +18,9 @@ public class AbilityView : View
         prefab_card_position.gameObject.SetActive(false);
 
         StartCoroutine(StartCr());
+
+        // Audio
+        AudioController.Instance.snapshot_menu.TransitionTo(0.5f);
     }
 
     private IEnumerator StartCr()

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public abstract class Ability : MonoBehaviourExtended
@@ -20,6 +21,9 @@ public abstract class Ability : MonoBehaviourExtended
 
     public Player Player { get; set; }
     public bool Equipped { get; set; }
+    public bool IsModifier { get; set; }
+    public bool IsActive { get { return Equipped && !IsModifier; } }
+    public bool Queued { get; set; }
 
     public static Ability Create(Type type)
     {
@@ -53,6 +57,7 @@ public abstract class Ability : MonoBehaviourExtended
         var prev = Modifiers[idx];
         if (prev)
         {
+            prev.IsModifier = false;
             prev.Equipped = false;
         }
 
@@ -60,6 +65,7 @@ public abstract class Ability : MonoBehaviourExtended
         Modifiers[idx] = ability;
         if (ability)
         {
+            ability.IsModifier = true;
             ability.Equipped = true;
         }
     }
@@ -72,5 +78,10 @@ public abstract class Ability : MonoBehaviourExtended
                 return true;
         }
         return false;
+    }
+
+    public T GetModifier<T>(Type type) where T : Ability
+    {
+        return (T)Modifiers.FirstOrDefault(m => m != null && m.type == type);
     }
 }
