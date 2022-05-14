@@ -14663,7 +14663,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 2
-  cooldown: 0
+  cooldown: 2
   name_ability: Charge
   desc_ability: Charge beam to increase damage
   sprite_icon: {fileID: 21300000, guid: 00cb1e475738e9c419d3e33ed7f45243, type: 3}

@@ -1,11 +1,12 @@
 TODO:
-Ability cooldown
-Ability cooldown UI
 Player body based on ability runes
-Rotate character when dash is modified by split
-Make sure projectiles only hit once
 
 WORKING ON:
 
 COMPLETED:
 Fix split projectile spread
+
+Add trigger size to dash modified by split
+Fix trail on dash modified by split
+Ability cooldown
+Ability cooldown UI

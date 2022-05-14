@@ -29,6 +29,14 @@ public class AbilitySplit : Ability
         }
     }
 
+    public override float GetCooldown()
+    {
+        return
+            (HasModifier(Type.DASH) ? 0.5f : 0) +
+            (HasModifier(Type.CHARGE) ? 1.0f : 0) +
+            0.5f;
+    }
+
     private Projectile SpawnProjectile(Vector3 direction)
     {
         var p = Instantiate(Resources.Load<Projectile>("Prefabs/Other/ProjectileSplit").gameObject).GetComponent<Projectile>();
@@ -86,13 +94,16 @@ public class AbilitySplit : Ability
                 SetupProjectileNormal(p);
             }
         }
+
+        // Cooldown
+        StartCooldown();
     }
 
     private void SetupProjectileNormal(Projectile p)
     {
         p.TurnSpeed = 1f;
         p.Homing = true;
-        p.Destroy(2);
+        p.Destroy(1);
     }
 
     private IEnumerator SetupProjectileDash(Projectile p)

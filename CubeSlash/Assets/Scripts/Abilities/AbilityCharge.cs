@@ -51,6 +51,7 @@ public class AbilityCharge : Ability
         time_charge_end = time_charge_start + TIME_CHARGE_MAX;
         Charging = true;
         ChargeEnded = false;
+        Player.Instance.AbilityBlockCounter++;
     }
 
     public override void Released()
@@ -58,11 +59,20 @@ public class AbilityCharge : Ability
         base.Released();
         Charging = false;
         ChargeEnded = false;
+        Player.Instance.AbilityBlockCounter--;
 
         if (IsActive)
         {
             Shoot();
         }
+    }
+
+    public override float GetCooldown()
+    {
+        return
+            (HasModifier(Type.DASH) ? 0.25f : 0) +
+            (HasModifier(Type.SPLIT) ? 0.5f : 0) +
+            0.1f;
     }
 
     private void Update()
@@ -98,6 +108,7 @@ public class AbilityCharge : Ability
             var width = WIDTH_MAX * t;
             Player.Instance.DamageEnemy(target, damage);
             StartVisual(target.transform.position, width);
+            StartCooldown();
         }
     }
 

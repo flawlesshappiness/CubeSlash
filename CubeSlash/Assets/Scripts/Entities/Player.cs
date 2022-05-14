@@ -12,6 +12,8 @@ public class Player : MonoBehaviourExtended
     public int Level { get; private set; }
     public bool InputEnabled { get; set; }
     public int InvincibilityCounter { get; set; }
+    public int AbilityBlockCounter { get; set; }
+    public int MovementBlockCounter { get; set; }
     public Vector3 MoveDirection { get; set; }
 
     public const float SPEED_MOVE = 5;
@@ -21,6 +23,7 @@ public class Player : MonoBehaviourExtended
 
     public Ability[] AbilitiesEquipped { get; private set; }
     public List<Ability> AbilitiesUnlocked { get; private set; } = new List<Ability>();
+    public Ability AbilityQueued { get; private set; }
 
     public void Initialize()
     {
@@ -32,9 +35,9 @@ public class Player : MonoBehaviourExtended
         var split = UnlockAbility(Ability.Type.SPLIT);
         var charge = UnlockAbility(Ability.Type.CHARGE);
         EquipAbility(dash, 2);
-        EquipAbility(split, 0);
-        //EquipAbility(charge, 1);
-        split.SetModifier(charge, 0);
+        //EquipAbility(split, 0);
+        EquipAbility(charge, 1);
+        dash.SetModifier(split, 0);
 
         MoveDirection = transform.up;
     }
@@ -102,10 +105,11 @@ public class Player : MonoBehaviourExtended
         }
     }
 
-    private bool CanUseAbilities()
+    private bool CanUseAbility(Ability ability)
     {
-        var no_abilities = !AbilitiesEquipped.Any(ability => ability != null && ability.BlockingAbilities);
-        return no_abilities;
+        var not_blocking = AbilityBlockCounter == 0;
+        var not_cooldown = !ability.OnCooldown;
+        return not_blocking && not_cooldown;
     }
 
     public void PressAbility(int idx)
@@ -115,13 +119,14 @@ public class Player : MonoBehaviourExtended
 
         if (ability)
         {
-            if (CanUseAbilities())
+            if (CanUseAbility(ability))
             {
                 ability.Pressed();
+                AbilityQueued = null;
             }
-            else
+            else if(ability.TimeCooldownLeft < 0.5f)
             {
-                ability.Queued = true;
+                AbilityQueued = ability;
             }
         }
     }
@@ -129,32 +134,32 @@ public class Player : MonoBehaviourExtended
     public void ReleaseAbility(int idx)
     {
         if (!InputEnabled) return;
-        if (!CanUseAbilities()) return;
 
         var ability = AbilitiesEquipped[idx];
         if (ability)
         {
-            ability.Released();
-            ability.Queued = false;
+            if (ability.IsPressed)
+            {
+                ability.Released();
+            }
+            
+            if(AbilityQueued == ability)
+            {
+                AbilityQueued = null;
+            }
         }
     }
 
-    private bool _abilities_enabled;
     private void QueuedAbilityUpdate()
     {
-        var can_use = CanUseAbilities();
-        if (can_use != _abilities_enabled)
+        if (AbilityQueued)
         {
-            foreach(var ability in AbilitiesEquipped)
+            if (CanUseAbility(AbilityQueued))
             {
-                if(can_use && ability != null && ability.Queued)
-                {
-                    ability.Pressed();
-                    can_use = !ability.BlockingAbilities;
-                }
+                AbilityQueued.Pressed();
+                AbilityQueued = null;
             }
         }
-        _abilities_enabled = can_use;
     }
     #endregion
     #region MOVE
@@ -185,8 +190,7 @@ public class Player : MonoBehaviourExtended
 
     private bool CanMove()
     {
-        var no_abilities = !AbilitiesEquipped.Any(ability => ability != null && ability.BlockingMovement);
-        return no_abilities;
+        return MovementBlockCounter == 0;
     }
     #endregion
     #region ENEMY

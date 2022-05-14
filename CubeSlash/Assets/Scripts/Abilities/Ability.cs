@@ -7,7 +7,6 @@ public abstract class Ability : MonoBehaviourExtended
 {
     [Header("PROPERTIES")]
     public Type type;
-    public float cooldown;
 
     [Header("UI")]
     public string name_ability;
@@ -15,15 +14,19 @@ public abstract class Ability : MonoBehaviourExtended
     public Sprite sprite_icon;
 
     public enum Type { DASH, SPLIT, CHARGE }
-    public bool BlockingMovement { get; protected set; } = false;
-    public bool BlockingAbilities { get; protected set; } = false;
     public Ability[] Modifiers { get; protected set; } = new Ability[ConstVars.COUNT_MODIFIERS];
 
     public Player Player { get; set; }
+    public bool IsPressed { get; set; }
     public bool Equipped { get; set; }
     public bool IsModifier { get; set; }
     public bool IsActive { get { return Equipped && !IsModifier; } }
-    public bool Queued { get; set; }
+
+    public float TimeCooldownStart { get; private set; }
+    public float TimeCooldownEnd { get; private set; }
+    public float TimeCooldownLeft { get { return OnCooldown ? TimeCooldownEnd - Time.time : 0f; } }
+    public bool OnCooldown { get { return Time.time < TimeCooldownEnd; } }
+    public float CooldownPercentage { get { return (Time.time - TimeCooldownStart) / (TimeCooldownEnd - TimeCooldownStart); } }
 
     public static Ability Create(Type type)
     {
@@ -38,12 +41,12 @@ public abstract class Ability : MonoBehaviourExtended
 
     public virtual void Pressed()
     {
-
+        IsPressed = true;
     }
 
     public virtual void Released()
     {
-
+        IsPressed = false;
     }
 
     public virtual void EnemyCollision(Enemy enemy)
@@ -51,6 +54,19 @@ public abstract class Ability : MonoBehaviourExtended
 
     }
 
+    #region COOLDOWN
+    public void StartCooldown()
+    {
+        TimeCooldownStart = Time.time;
+        TimeCooldownEnd = TimeCooldownStart + GetCooldown();
+    }
+
+    public virtual float GetCooldown()
+    {
+        return 0f;
+    }
+    #endregion
+    #region MODIFIER
     public void SetModifier(Ability ability, int idx)
     {
         // Unquip prev
@@ -84,4 +100,5 @@ public abstract class Ability : MonoBehaviourExtended
     {
         return (T)Modifiers.FirstOrDefault(m => m != null && m.type == type);
     }
+    #endregion
 }
