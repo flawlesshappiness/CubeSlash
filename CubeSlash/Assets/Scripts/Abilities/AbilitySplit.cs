@@ -63,23 +63,15 @@ public class AbilitySplit : Ability
         var forward = Player.MoveDirection;
         var angle_max = t_charge == 1 ? 180f :
             charge ? Mathf.Lerp(40, 20, t_charge) :
-            30f;
-        var count_arc = t_charge == 1 ? 10 :
-            charge ? (int)Mathf.Clamp(Mathf.Lerp(1, 3, t_charge), 1, 2) :
-            1;
-        var angle_per = angle_max / count_arc;
-        for (int i_arc = 0; i_arc < count_arc + 1; i_arc++)
+            15f;
+        var count_projectiles = t_charge == 1 ? 30 :
+            charge ? (int)Mathf.Clamp(Mathf.Lerp(3, 7, t_charge), 1, 8) :
+            3;
+        var directions = GetSplitDirections(count_projectiles, angle_max, forward);
+        foreach(var direction in directions)
         {
-            var angle = angle_per * i_arc;
-            var count_sides = i_arc == 0 ? 1 : 2;
-            for (int i_side = 0; i_side < count_sides; i_side++)
-            {
-                var sign = i_side == 0 ? 1 : -1;
-                var angle_signed = angle * sign;
-                var direction = Quaternion.AngleAxis(angle_signed, Vector3.back) * forward;
-                var p = SpawnProjectile(direction);
-                projectiles.Add(p);
-            }
+            var p = SpawnProjectile(direction);
+            projectiles.Add(p);
         }
 
         // Extra logic
@@ -97,6 +89,29 @@ public class AbilitySplit : Ability
 
         // Cooldown
         StartCooldown();
+    }
+
+    public List<Vector3> GetSplitDirections(int count, float angle_max, Vector3 forward)
+    {
+        var odd_count = count % 2 == 1;
+        var directions = new List<Vector3>();
+        var count_arc = ((count - 1) / 2);
+        var angle_per = angle_max / count_arc;
+        var i_start = odd_count ? 0 : 1;
+        var i_end = count_arc + (odd_count ? 1 : 2);
+        for (int i_arc = i_start; i_arc < i_end; i_arc++)
+        {
+            var angle = angle_per * i_arc;
+            var count_sides = i_arc == 0 && odd_count ? 1 : 2;
+            for (int i_side = 0; i_side < count_sides; i_side++)
+            {
+                var sign = i_side == 0 ? 1 : -1;
+                var angle_signed = angle * sign;
+                var direction = Quaternion.AngleAxis(angle_signed, Vector3.back) * forward;
+                directions.Add(direction);
+            }
+        }
+        return directions;
     }
 
     private void SetupProjectileNormal(Projectile p)

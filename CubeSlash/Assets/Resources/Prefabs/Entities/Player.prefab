@@ -30,8 +30,6 @@ Transform:
   m_Children:
   - {fileID: 5828063432436088761}
   - {fileID: 2770265765697205571}
-  - {fileID: 7566345706875452212}
-  - {fileID: 4222686253528761693}
   m_Father: {fileID: 3214702328351712212}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -77,8 +75,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 5230126094861728082}
-  m_RootOrder: 2
+  m_Father: {fileID: 3214702328351712212}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!58 &3794284237765229098
 CircleCollider2D:
@@ -207,8 +205,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 5230126094861728082}
-  m_RootOrder: 3
+  m_Father: {fileID: 3214702328351712212}
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!58 &1675149427792749659
 CircleCollider2D:
@@ -5063,6 +5061,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 5230126094861728082}
+  - {fileID: 7566345706875452212}
+  - {fileID: 4222686253528761693}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

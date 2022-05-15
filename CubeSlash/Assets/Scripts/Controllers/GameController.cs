@@ -32,6 +32,7 @@ public class GameController : MonoBehaviour
         Player.Instance.Initialize();
         Player.Instance.InputEnabled = true;
         Player.Instance.Experience.onMax += CompleteLevel;
+        Player.Instance.Health.onMin += OnPlayerDeath;
         CameraController.Instance.Target = Player.Instance.transform;
     }
 
@@ -46,6 +47,10 @@ public class GameController : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.R) && Input.GetKey(KeyCode.Tab))
         {
             Reload();
+        }
+        else if (Input.GetKeyDown(KeyCode.Q) && Input.GetKey(KeyCode.Tab))
+        {
+            Application.Quit();
         }
         else if (Input.GetKeyDown(KeyCode.Alpha1) && Input.GetKey(KeyCode.Tab))
         {
@@ -63,6 +68,7 @@ public class GameController : MonoBehaviour
         Player.Instance.gameObject.SetActive(true);
         Player.Instance.InputEnabled = true;
         Player.Instance.Experience.Value = 0;
+        Player.Instance.Health.Value = Player.Instance.Health.Max;
         EnemyController.Instance.Spawning = true;
         ViewController.Instance.ShowView<GameView>();
     }
@@ -80,5 +86,19 @@ public class GameController : MonoBehaviour
         yield return new WaitForSeconds(2f);
         Player.Instance.gameObject.SetActive(false);
         ViewController.Instance.ShowView<AbilityView>();
+    }
+
+    private void OnPlayerDeath()
+    {
+        Player.Instance.Kill();
+        StartCoroutine(RestartGameCr());
+    }
+
+    private IEnumerator RestartGameCr()
+    {
+        yield return new WaitForSeconds(1f);
+        ViewController.Instance.ShowView<DeathView>(2f);
+        yield return new WaitForSeconds(4f);
+        Reload();
     }
 }

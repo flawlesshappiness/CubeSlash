@@ -9,11 +9,13 @@ public class Player : MonoBehaviourExtended
     public Character Character { get { return GetComponentOnce<Character>(ComponentSearchType.CHILDREN); } }
     public Rigidbody2D Rigidbody { get { return GetComponentOnce<Rigidbody2D>(ComponentSearchType.CHILDREN); } }
     public MinMaxInt Experience { get; private set; } = new MinMaxInt();
+    public MinMaxInt Health { get; private set; } = new MinMaxInt();
     public int Level { get; private set; }
     public bool InputEnabled { get; set; }
-    public int InvincibilityCounter { get; set; }
-    public int AbilityBlockCounter { get; set; }
-    public int MovementBlockCounter { get; set; }
+    public MultiLock InvincibilityLock { get; set; } = new MultiLock();
+    public MultiLock AbilityLock { get; set; } = new MultiLock();
+    public MultiLock MovementLock { get; set; } = new MultiLock();
+    public MultiLock DragLock { get; set; } = new MultiLock();
     public Vector3 MoveDirection { get; set; }
 
     public const float SPEED_MOVE = 5;
@@ -27,17 +29,19 @@ public class Player : MonoBehaviourExtended
 
     public void Initialize()
     {
+        Health.Min = 0;
+        Health.Max = 3;
+        Health.Value = Health.Max;
         Experience.Min = 0;
         Experience.Max = 25;
-        Experience.Value = 0;
+        Experience.Value = Experience.Min;
         AbilitiesEquipped = new Ability[PlayerInputController.Instance.CountAbilityButtons];
         var dash = UnlockAbility(Ability.Type.DASH);
         var split = UnlockAbility(Ability.Type.SPLIT);
         var charge = UnlockAbility(Ability.Type.CHARGE);
         EquipAbility(dash, 2);
-        //EquipAbility(split, 0);
+        EquipAbility(split, 0);
         EquipAbility(charge, 1);
-        dash.SetModifier(split, 0);
 
         MoveDirection = transform.up;
     }
@@ -91,6 +95,8 @@ public class Player : MonoBehaviourExtended
         {
             AbilitiesUnlocked.Add(ability);
             ability.transform.parent = transform;
+            ability.transform.position = transform.position;
+            ability.transform.rotation = transform.rotation;
             ability.Player = this;
         }
         return ability;
@@ -107,7 +113,7 @@ public class Player : MonoBehaviourExtended
 
     private bool CanUseAbility(Ability ability)
     {
-        var not_blocking = AbilityBlockCounter == 0;
+        var not_blocking = AbilityLock.IsFree;
         var not_cooldown = !ability.OnCooldown;
         return not_blocking && not_cooldown;
     }
@@ -165,17 +171,15 @@ public class Player : MonoBehaviourExtended
     #region MOVE
     private void MoveUpdate()
     {
-        if (!CanMove()) return;
-
         var hor = Input.GetAxis("Horizontal");
         var ver = Input.GetAxis("Vertical");
         var dir = new Vector2(hor, ver);
-        if(InputEnabled && dir.magnitude > 0.5f)
+        if(MovementLock.IsFree && InputEnabled && dir.magnitude > 0.5f)
         {
             MoveDirection = dir.normalized;
             Move(dir.normalized);
         }
-        else
+        else if(DragLock.IsFree)
         {
             // Decelerate
             Rigidbody.velocity = Rigidbody.velocity * 0.7f;
@@ -186,11 +190,6 @@ public class Player : MonoBehaviourExtended
     {
         Rigidbody.velocity = direction * SPEED_MOVE;
         Character.SetLookDirection(direction);
-    }
-
-    private bool CanMove()
-    {
-        return MovementBlockCounter == 0;
     }
     #endregion
     #region ENEMY
@@ -223,16 +222,96 @@ public class Player : MonoBehaviourExtended
                 ability.EnemyCollision(enemy);
             }
 
-            if (InvincibilityCounter > 0)
+            if (InvincibilityLock.IsLocked)
             {
                 
             }
             else
             {
-                print("Player hit by enemy");
+                Damage(1, enemy.transform.position);
                 onHurt?.Invoke(enemy);
             }
         }
+    }
+    #endregion
+    #region HEALTH
+    public void Kill()
+    {
+        InstantiateParticle("Particles/ps_burst")
+            .Position(transform.position)
+            .Destroy(1)
+            .Play();
+
+        InstantiateParticle("Particles/ps_flash")
+            .Position(transform.position)
+            .Scale(Character.transform.localScale * 5)
+            .Destroy(1)
+            .Play();
+
+        gameObject.SetActive(false);
+    }
+
+    public void Damage(int amount, Vector3 damage_origin)
+    {
+        Health.Value -= amount.Abs();
+
+        if(Health.Value > 0)
+        {
+            StartCoroutine(PlayerDamageInvincibilityCr(2));
+            StartCoroutine(PlayerDamageFlashCr(2));
+
+            var dir = transform.position - damage_origin;
+            StartCoroutine(PlayerDamagePushCr(dir, 0.15f));
+        }
+    }
+
+    private IEnumerator PlayerDamageInvincibilityCr(float time)
+    {
+        InvincibilityLock.AddLock("Damage");
+        yield return new WaitForSeconds(time);
+        InvincibilityLock.RemoveLock("Damage");
+
+        // Check if still inside an enemy
+        var hits = Physics2D.OverlapCircleAll(transform.position, Character.Trigger.radius);
+        foreach(var hit in hits)
+        {
+            var e = hit.GetComponentInParent<Enemy>();
+            if (e)
+            {
+                Damage(1, e.transform.position);
+                break;
+            }
+        }
+    }
+
+    private IEnumerator PlayerDamageFlashCr(float time)
+    {
+        var time_end = Time.time + time;
+        while(Time.time < time_end)
+        {
+            Character.gameObject.SetActive(false);
+            yield return new WaitForSeconds(0.1f);
+            Character.gameObject.SetActive(true);
+            yield return new WaitForSeconds(0.1f);
+        }
+        Character.gameObject.SetActive(true);
+    }
+
+    private IEnumerator PlayerDamagePushCr(Vector3 dir, float time)
+    {
+        MovementLock.AddLock("Damage");
+        DragLock.AddLock("Damage");
+
+        Rigidbody.velocity = dir.normalized * 50f;
+        var time_end = Time.time + time;
+        while(Time.time < time_end)
+        {
+            Rigidbody.velocity = Rigidbody.velocity * 0.99f;
+            yield return null;
+        }
+
+        MovementLock.RemoveLock("Damage");
+        DragLock.RemoveLock("Damage");
     }
     #endregion
 }

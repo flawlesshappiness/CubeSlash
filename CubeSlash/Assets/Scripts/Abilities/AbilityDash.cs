@@ -14,6 +14,7 @@ public class AbilityDash : Ability
     private int DamageDash { get; set; }
 
     [Header("DASH")]
+    [SerializeField] private BoxCollider2D trigger;
     public AnimationCurve ac_path_normal;
     public AnimationCurve ac_path_split;
 
@@ -89,11 +90,10 @@ public class AbilityDash : Ability
     private IEnumerator DashPhaseCr(bool hit_start, bool hit_end)
     {
         Dashing = true;
-        Player.Instance.MovementBlockCounter++;
-        Player.Instance.AbilityBlockCounter++;
-
-        // Add invincibility
-        Player.InvincibilityCounter++;
+        Player.Instance.MovementLock.AddLock(nameof(AbilityDash));
+        Player.Instance.DragLock.AddLock(nameof(AbilityDash));
+        Player.Instance.AbilityLock.AddLock(nameof(AbilityDash));
+        Player.Instance.InvincibilityLock.AddLock(nameof(AbilityDash));
 
         // Hit everyone around
         if (hit_start)
@@ -101,20 +101,27 @@ public class AbilityDash : Ability
             DashHitEnemiesArea(Player.transform.position, 1.5f);
         }
 
+        // Target
+        var dir_dash = Player.MoveDirection;
+        var target = GetTarget(10, 25);
+        if (target)
+        {
+            dir_dash = Player.transform.DirectionTo(target.transform).normalized;
+        }
+
         // Dash
-        Player.Character.SetLookDirection(Player.MoveDirection);
-        Player.Character.SetDesiredTriggerSize("dash", RadiusDash);
+        Player.Character.SetLookDirection(dir_dash);
         TimeStart = Time.time;
         StartDashVisual(TimeDash);
 
         var charge = GetModifier<AbilityCharge>(Type.CHARGE);
         if (charge && charge.GetCharge() == 1)
         {
-            yield return DashChargedCr();
+            yield return DashChargedCr(dir_dash);
         }
         else
         {
-            yield return DashCr(TimeDash, SpeedDash);
+            yield return DashCr(dir_dash, TimeDash, SpeedDash);
         }
 
         // Hit everyone around
@@ -124,16 +131,16 @@ public class AbilityDash : Ability
         }
 
         // Remove counters
-        Player.InvincibilityCounter--;
-        Player.Instance.AbilityBlockCounter--;
-        Player.Instance.MovementBlockCounter--;
-        Player.Character.RemoveDesiredTriggerSize("dash");
+        Player.Instance.InvincibilityLock.RemoveLock(nameof(AbilityDash));
+        Player.Instance.AbilityLock.RemoveLock(nameof(AbilityDash));
+        Player.Instance.MovementLock.RemoveLock(nameof(AbilityDash));
+        Player.Instance.DragLock.RemoveLock(nameof(AbilityDash));
         Dashing = false;
 
         StartCooldown();
     }
 
-    private IEnumerator DashCr(float time, float speed)
+    private IEnumerator DashCr(Vector3 dir, float time, float speed)
     {
         while (Time.time - TimeStart < time)
         {
@@ -144,16 +151,15 @@ public class AbilityDash : Ability
             }
             else
             {
-                Player.Rigidbody.velocity = Player.MoveDirection * speed;
+                Player.Rigidbody.velocity = dir * speed;
             }
             yield return new WaitForFixedUpdate();
         }
-        Player.Rigidbody.velocity = Player.MoveDirection * Player.SPEED_MOVE;
+        Player.Rigidbody.velocity = dir * Player.SPEED_MOVE;
     }
 
-    private IEnumerator DashChargedCr()
+    private IEnumerator DashChargedCr(Vector3 dir)
     {
-        var dir = Player.MoveDirection;
         var dist = 6f;
         var speed = 100f;
         var start = Player.transform.position;
@@ -177,7 +183,7 @@ public class AbilityDash : Ability
     private IEnumerator DashHitstopCr()
     {
         dash_hitstop = true;
-        for (int i = 0; i < 10; i++)
+        for (int i = 0; i < 1; i++)
         {
             yield return null;
         }
@@ -214,10 +220,14 @@ public class AbilityDash : Ability
             var dir_delta = pos_next - pos_prev;
             Player.Character.SetLookDirection(dir + dir_delta);
 
+            var ptrigger = Player.Instance.Character.Trigger;
+            trigger.size = new Vector2(Mathf.Clamp(tval.Abs() * 2 + ptrigger.radius * 2, ptrigger.radius, float.MaxValue), ptrigger.radius * 2);
+            trigger.transform.rotation = Player.Instance.Character.transform.rotation;
+
             if (clone)
             {
                 var _pos_prev = clone.transform.localPosition;
-                var _pos_next = right * (1 - tval);
+                var _pos_next = -right * tval;
                 clone.transform.localPosition = _pos_next;
 
                 var _dir_delta = _pos_next - _pos_prev;
@@ -246,24 +256,24 @@ public class AbilityDash : Ability
     }
     #endregion
     #region ENEMY
-    public override void EnemyCollision(Enemy enemy)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        base.EnemyCollision(enemy);
-
         if (!Dashing) return;
-        var already_hit = _hits_dash.Contains(enemy);
-        DashHitEnemy(enemy);
+        var enemy = collision.GetComponentInParent<Enemy>();
+        if (enemy)
+        {
+            var already_hit = _hits_dash.Contains(enemy);
+            DashHitEnemy(enemy);
 
-        if (!already_hit && enemy.health > 0 && Reflects)
-        {
-            Player.Instance.AbilityBlockCounter--;
-            Player.Instance.MovementBlockCounter--;
-            Player.MoveDirection = -Player.MoveDirection;
-            StartDashing(true, false, true);
-        }
-        else
-        {
-            StartCoroutine(DashHitstopCr());
+            if (!already_hit && enemy.health > 0 && Reflects)
+            {
+                Player.MoveDirection = -Player.MoveDirection;
+                StartDashing(true, false, true);
+            }
+            else
+            {
+                StartCoroutine(DashHitstopCr());
+            }
         }
     }
 
@@ -286,6 +296,39 @@ public class AbilityDash : Ability
             var enemy = hit.GetComponentInParent<Enemy>();
             DashHitEnemy(enemy);
         }
+    }
+
+    private class FindTargetMap
+    {
+        public Enemy Enemy { get; set; }
+        public float Value { get; set; }
+    }
+
+    private Enemy GetTarget(float distance_max, float angle_max)
+    {
+        var targets = new List<FindTargetMap>();
+        var hits = Physics2D.OverlapCircleAll(Player.transform.position, distance_max);
+        foreach (var hit in hits)
+        {
+            var e = hit.gameObject.GetComponentInParent<Enemy>();
+            if (e == null) continue;
+
+            var dir = e.transform.position - Player.transform.position;
+            var angle = Vector3.Angle(Player.MoveDirection.normalized, dir.normalized);
+            var v_angle = 1f - (angle / 180f);
+            if (angle > angle_max) continue;
+
+            var dist = dir.magnitude;
+            var v_dist = (1f - (dist / distance_max)) * 1.5f;
+
+            var target = new FindTargetMap();
+            targets.Add(target);
+            target.Enemy = e;
+            target.Value = v_angle + v_dist;
+        }
+
+        targets = targets.OrderByDescending(target => target.Value).ToList();
+        return targets.Count == 0 ? null : targets[0].Enemy;
     }
     #endregion
     #region CLONE

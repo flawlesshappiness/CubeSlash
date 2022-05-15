@@ -25,7 +25,7 @@ public class UIAbilityCooldown : MonoBehaviour
         if (ability)
         {
             img_cooldown.fillAmount = 
-                Player.Instance.AbilityBlockCounter > 0 ? 1 :
+                Player.Instance.AbilityLock.IsLocked ? 1 :
                 ability.OnCooldown ? ability.CooldownPercentage : 0;
         }
     }
