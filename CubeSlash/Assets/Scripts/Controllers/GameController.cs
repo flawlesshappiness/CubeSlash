@@ -15,6 +15,11 @@ public class GameController : MonoBehaviour
         InitializeControllers();
         InitializePlayer();
         StartLevel();
+        ConsoleController.Instance.EnsureExistence();
+
+        print(SaveDataController.Instance.Get<GameSaveData>().value);
+        SaveDataController.Instance.Get<GameSaveData>().value++;
+        print(SaveDataController.Instance.Get<GameSaveData>().value);
     }
 
     private void InitializeControllers()
