@@ -1,3 +1,4 @@
+using Flawliz.Console;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -17,9 +18,7 @@ public class GameController : MonoBehaviour
         StartLevel();
         ConsoleController.Instance.EnsureExistence();
 
-        print(SaveDataController.Instance.Get<GameSaveData>().value);
         SaveDataController.Instance.Get<GameSaveData>().value++;
-        print(SaveDataController.Instance.Get<GameSaveData>().value);
     }
 
     private void InitializeControllers()

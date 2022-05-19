@@ -77,6 +77,10 @@ public class AbilityCharge : Ability
                 TryShoot(Player.transform.position, Player.MoveDirection, ANGLE_MAX, true);
             }
         }
+        else
+        {
+            Player.Instance.AbilityLock.RemoveLock(nameof(AbilityCharge));
+        }
     }
 
     public override float GetCooldown()
