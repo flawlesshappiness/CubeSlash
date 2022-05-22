@@ -86,6 +86,7 @@ public class UIAbilityCard : MonoBehaviour
         tmp_name.text = active ? ability.name_ability : empty_ability.name;
         tmp_desc.text = active ? ability.desc_ability : empty_ability.desc;
         img_icon.sprite = active ? ability.sprite_icon : empty_ability.sprite_icon;
+        img_icon.enabled = img_icon.sprite != null;
 
         img_bg.color = active ? active_ability.color_bg : empty_ability.color_bg;
     }

@@ -26,7 +26,7 @@ public class UIAbilityCooldown : MonoBehaviour
         {
             img_cooldown.fillAmount = 
                 Player.Instance.AbilityLock.IsLocked ? 1 :
-                ability.OnCooldown ? ability.CooldownPercentage : 0;
+                ability.OnCooldown ? 1f - ability.CooldownPercentage : 0;
         }
     }
 }

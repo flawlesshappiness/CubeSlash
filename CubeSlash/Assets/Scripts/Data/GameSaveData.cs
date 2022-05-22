@@ -5,5 +5,6 @@ using UnityEngine;
 [System.Serializable]
 public class GameSaveData : SaveDataObject
 {
-    public int value = 0;
+    public int idx_level;
+    public int count_ability_points;
 }

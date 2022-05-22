@@ -56,10 +56,26 @@ public class AbilityView : View
         cards[0].SelectAbilityButton();
     }
 
+    private IEnumerator EndCr()
+    {
+        CanvasGroup.blocksRaycasts = false;
+
+        for (int i = rt_positions.Count-1; i >= 0; i--)
+        {
+            var card = cards[i];
+            Lerp.Position(card.transform, 1f, rt_positions[i].position.AddX(Screen.width))
+                .Curve(Lerp.Curve.EASE_END);
+
+            yield return new WaitForSeconds(0.1f);
+        }
+
+        GameController.Instance.NextLevelTransition();
+    }
+
     #region BUTTONS
     private void ClickContinue()
     {
-        GameController.Instance.StartLevel();
+        StartCoroutine(EndCr());
     }
     #endregion
     #region CARDS

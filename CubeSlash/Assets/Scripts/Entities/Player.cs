@@ -11,7 +11,7 @@ public class Player : MonoBehaviourExtended
     public MinMaxInt Experience { get; private set; } = new MinMaxInt();
     public MinMaxInt Health { get; private set; } = new MinMaxInt();
     public int Level { get; private set; }
-    public bool InputEnabled { get; set; }
+    public MultiLock InputLock { get; set; } = new MultiLock();
     public MultiLock InvincibilityLock { get; set; } = new MultiLock();
     public MultiLock AbilityLock { get; set; } = new MultiLock();
     public MultiLock MovementLock { get; set; } = new MultiLock();
@@ -120,7 +120,7 @@ public class Player : MonoBehaviourExtended
 
     public void PressAbility(int idx)
     {
-        if (!InputEnabled) return;
+        if (InputLock.IsLocked) return;
         var ability = AbilitiesEquipped[idx];
 
         if (ability)
@@ -139,7 +139,7 @@ public class Player : MonoBehaviourExtended
 
     public void ReleaseAbility(int idx)
     {
-        if (!InputEnabled) return;
+        if (InputLock.IsLocked) return;
 
         var ability = AbilitiesEquipped[idx];
         if (ability)
@@ -174,7 +174,7 @@ public class Player : MonoBehaviourExtended
         var hor = Input.GetAxis("Horizontal");
         var ver = Input.GetAxis("Vertical");
         var dir = new Vector2(hor, ver);
-        if(MovementLock.IsFree && InputEnabled && dir.magnitude > 0.5f)
+        if(MovementLock.IsFree && InputLock.IsFree && dir.magnitude > 0.5f)
         {
             MoveDirection = dir.normalized;
             Move(dir.normalized);

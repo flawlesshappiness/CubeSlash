@@ -1,12 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class PlayerInputController : MonoBehaviour, IInitializable
 {
     public static PlayerInputController Instance;
     public enum JoystickType { XBOX, PLAYSTATION }
-    public enum JoystickButtonType { NORTH, EAST, SOUTH, WEST }
+    public enum JoystickButtonType { SOUTH, EAST, WEST, NORTH }
     public enum MouseButtonType { LMB, RMB, MMB }
 
     private string[] buttons_ability = new string[] { "Fire1", "Fire2", "Fire3", "Jump" };
@@ -41,13 +42,18 @@ public class PlayerInputController : MonoBehaviour, IInitializable
 
     public JoystickButtonType GetJoystickButtonType(int idx)
     {
-        return idx switch
-        {
-            0 => JoystickButtonType.SOUTH,
-            1 => JoystickButtonType.EAST,
-            2 => JoystickButtonType.WEST,
-            3 => JoystickButtonType.NORTH,
-            _ => JoystickButtonType.NORTH
-        };
+        return (JoystickButtonType)idx;
+    }
+
+    public bool GetJoystickButtonDown(JoystickButtonType type)
+    {
+        var button = buttons_ability[(int)type];
+        return Input.GetButtonDown(button);
+    }
+
+    public bool GetAnyJoystickButtonDown()
+    {
+        var types = System.Enum.GetValues(typeof(JoystickButtonType)).Cast<JoystickButtonType>().ToArray();
+        return types.Any(type => GetJoystickButtonDown(type));
     }
 }
