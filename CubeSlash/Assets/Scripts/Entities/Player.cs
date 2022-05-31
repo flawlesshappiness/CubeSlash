@@ -52,6 +52,14 @@ public class Player : MonoBehaviourExtended
         QueuedAbilityUpdate();
     }
     #region ABILITIES
+    public void InitializeAbilities()
+    {
+        foreach(var ability in AbilitiesEquipped.Where(a => a != null))
+        {
+            ability.InitializeActive();
+        }
+    }
+
     public void EquipAbility(Ability ability, int idx)
     {
         // Unequip previous
@@ -87,10 +95,11 @@ public class Player : MonoBehaviourExtended
 
     public Ability UnlockAbility(Ability.Type type)
     {
-        var already_unlocked = AbilitiesUnlocked.Any(ability => ability.type == type);
-        if (already_unlocked) return null;
+        //var already_unlocked = AbilitiesUnlocked.Any(ability => ability.type == type);
+        //if (already_unlocked) return null;
 
-        var ability = Ability.Create(type);
+        var prefab = Ability.GetPrefab(type);
+        var ability = Instantiate(prefab.gameObject).GetComponent<Ability>();
         if (ability)
         {
             AbilitiesUnlocked.Add(ability);

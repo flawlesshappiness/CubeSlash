@@ -16,6 +16,9 @@ public class LevelTransitionView : View
         // Text
         tmp_value_ap.text = Data.Game.count_ability_points.ToString();
 
+        // Wait for input
+        var cr_input = CoroutineController.Instance.Run(WaitForInputCr(), "timer_" + GetInstanceID());
+
         // Timer
         lerp_timer = Lerp.Value(2f, 1f, 0f, t =>
         {
@@ -24,16 +27,23 @@ public class LevelTransitionView : View
             .Delay(1)
             .OnEnd(() =>
             {
+                CoroutineController.Instance.Kill(cr_input);
                 GameController.Instance.NextLevelTransition();
             });
     }
 
-    private void Update()
+    private IEnumerator WaitForInputCr()
     {
-        if (PlayerInputController.Instance.GetAnyJoystickButtonDown())
+        var input_received = false;
+        while (!input_received)
         {
-            Lerp.Kill(lerp_timer);
-            GameController.Instance.AbilityMenuTransition();
+            if (PlayerInputController.Instance.GetAnyJoystickButtonDown())
+            {
+                input_received = true;
+                Lerp.Kill(lerp_timer);
+                GameController.Instance.AbilityMenuTransition();
+            }
+            yield return null;
         }
     }
 }

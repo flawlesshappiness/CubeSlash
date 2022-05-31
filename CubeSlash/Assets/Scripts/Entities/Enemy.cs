@@ -4,9 +4,8 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviourExtended
 {
-    public enum Type { WEAK, CHONK }
-
     [Min(1)] public int health;
+    public bool IsBoss { get; set; }
 
     private Rigidbody2D Rigidbody { get { return GetComponentOnce<Rigidbody2D>(ComponentSearchType.CHILDREN); } }
     private Character Character { get; set; }
@@ -21,6 +20,7 @@ public class Enemy : MonoBehaviourExtended
     public void Initialize(EnemySettings settings)
     {
         health = settings.health;
+        IsBoss = settings.boss;
         SetCharacter(settings.character);
         SetAI(settings.ai);
         transform.localScale = settings.size;
@@ -109,6 +109,6 @@ public class Enemy : MonoBehaviourExtended
     public void Respawn()
     {
         gameObject.SetActive(false);
-        EnemyController.Instance.OnEnemyKilled(this);
+        EnemyController.Instance.EnemyKilled(this);
     }
 }

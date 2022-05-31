@@ -28,16 +28,27 @@ public abstract class Ability : MonoBehaviourExtended
     public bool OnCooldown { get { return Time.time < TimeCooldownEnd; } }
     public float CooldownPercentage { get { return (Time.time - TimeCooldownStart) / (TimeCooldownEnd - TimeCooldownStart); } }
 
-    public static Ability Create(Type type)
+    public static Ability GetPrefab(Type type)
     {
-        return type switch
-        {
-            Type.DASH => Instantiate(Resources.Load<Ability>("Prefabs/Abilities/Dash").gameObject).GetComponent<Ability>(),
-            Type.SPLIT => Instantiate(Resources.Load<Ability>("Prefabs/Abilities/Split").gameObject).GetComponent<Ability>(),
-            Type.CHARGE => Instantiate(Resources.Load<Ability>("Prefabs/Abilities/Charge").gameObject).GetComponent<Ability>(),
-            _ => null,
-        };
+        return Resources.Load<Ability>(GetPrefabPath(type));
     }
+
+    private static string GetPrefabPath(Type type)
+    {
+        return "Prefabs/Abilities/" + type.ToString();
+    }
+
+    public void InitializeActive()
+    {
+        InitializeValues();
+        foreach(var modifier in Modifiers.Where(m => m != null))
+        {
+            InitializeModifier(modifier);
+        }
+    }
+
+    public virtual void InitializeValues() { }
+    public virtual void InitializeModifier(Ability modifier) { }
 
     public virtual void Pressed()
     {

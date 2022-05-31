@@ -7,6 +7,8 @@ using UnityEngine.EventSystems;
 public class UIAbilityList : MonoBehaviour
 {
     [SerializeField] private UIAbilityListElement prefab_element;
+    [SerializeField] private CanvasGroup cvg;
+    public bool Interactable { set { cvg.interactable = value; cvg.blocksRaycasts = value; } }
 
     private List<UIAbilityListElement> elements = new List<UIAbilityListElement>();
     private System.Action<Ability> onSelect;
@@ -38,7 +40,8 @@ public class UIAbilityList : MonoBehaviour
         }
 
         // Create abilities
-        var abilities = Player.Instance.AbilitiesUnlocked;
+        var abilities = Player.Instance.AbilitiesUnlocked
+            .Where(ability => !ability.Equipped).ToList();
         for (int i = 0; i < abilities.Count; i++)
         {
             var ability = abilities[i];
@@ -48,8 +51,11 @@ public class UIAbilityList : MonoBehaviour
             element.OnClicked.AddListener(() => onSelect(ability));
         }
 
-        var first_selectable = elements.FirstOrDefault(element => element.Button.interactable) ?? elements[0];
-        EventSystem.current.SetSelectedGameObject(first_selectable.Button.gameObject);
+        var first_selectable = elements.FirstOrDefault(element => element.Button.interactable) ?? null;
+        if(first_selectable != null)
+        {
+            EventSystem.current.SetSelectedGameObject(first_selectable.Button.gameObject);
+        }
     }
 
     private void ClearElements()

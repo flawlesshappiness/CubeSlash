@@ -5,47 +5,71 @@ using UnityEngine;
 
 public class Projectile : MonoBehaviourExtended
 {
+    [SerializeField] private AnimationCurve size_over_lifetime;
     public float TurnSpeed { get; set; }
     public float Drag { get; set; } = 1f;
     public float SearchRadius { get; set; } = 20f;
+    public float Lifetime { get; set; } = 1f;
     public bool Homing { get; set; }
     public bool SearchForTarget { get; set; } = true;
     public Rigidbody2D Rigidbody { get { return GetComponentOnce<Rigidbody2D>(ComponentSearchType.THIS); } }
     public System.Action<Enemy> OnHitEnemy { get; set; }
-    public System.Action<Projectile> OnHitProjectile { get; set; }
     public Enemy Target { get; set; }
 
     private const float ANGLE_MAX = 90;
 
+    private float time_birth;
+    private bool searching;
+    private bool hit;
+
     private void Start()
     {
-        StartCoroutine(FindTargetCr());
+        time_birth = Time.time;
+        StartFindTarget();
     }
 
-    private void OnDrawGizmos()
+    private void Update()
     {
-        if (!Target) return;
-        Gizmos.color = Color.red;
-        Gizmos.DrawLine(transform.position, Target.transform.position);
+        LifetimeUpdate();
     }
 
     private void FixedUpdate()
     {
+        if(Target == null)
+        {
+            StartFindTarget();
+        }
+
         TurnTowardsTarget();
         DragUpdate();
     }
 
+    private void LifetimeUpdate()
+    {
+        var t = (Time.time - time_birth) / Lifetime;
+        var tc = Mathf.Clamp(t, 0, 1);
+
+        transform.localScale = Vector3.one * size_over_lifetime.Evaluate(tc);
+
+        if(t >= 1)
+        {
+            Kill();
+        }
+    }
+
     private void TurnTowardsTarget()
     {
-        if (Target == null) return;
         if (!Homing) return;
+        if (Target == null) return;
+
         var dir = Target.transform.position - transform.position;
         var angle = Vector3.SignedAngle(transform.up, dir, Vector3.back);
         var sign = -1 * Mathf.Sign(angle);
 
         if(angle.Abs() > ANGLE_MAX)
         {
-            // Don't even try
+            // Find a new target
+            StartFindTarget();
         }
         else if(angle.Abs() < TurnSpeed)
         {
@@ -79,35 +103,20 @@ public class Projectile : MonoBehaviourExtended
         transform.rotation = q;
     }
 
-    public void Destroy(float time)
-    {
-        StartCoroutine(DestroyCr(time));
-    }
-
-    private IEnumerator DestroyCr(float time)
-    {
-        yield return new WaitForSeconds(time);
-        Destroy();
-    }
-
-    public void Destroy()
+    public void Kill()
     {
         Destroy(gameObject);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        if (hit) return;
+
         var enemy = collision.gameObject.GetComponentInParent<Enemy>();
         if (enemy)
         {
+            hit = true;
             OnHitEnemy?.Invoke(enemy);
-            return;
-        }
-
-        var projectile = collision.gameObject.GetComponentInParent<Projectile>();
-        if (projectile)
-        {
-            OnHitProjectile?.Invoke(projectile);
             return;
         }
     }
@@ -118,16 +127,22 @@ public class Projectile : MonoBehaviourExtended
         public float Value { get; set; }
     }
 
+    private void StartFindTarget()
+    {
+        if (!SearchForTarget) return;
+        if (searching) return;
+        CoroutineController.Instance.Run(FindTargetCr(), this, "find_target_" + GetInstanceID());
+    }
+
     private IEnumerator FindTargetCr()
     {
+        searching = true;
         while(Target == null)
         {
-            if (SearchForTarget)
-            {
-                FindTarget();
-            }
+            FindTarget();
             yield return new WaitForSeconds(0.1f);
         }
+        searching = false;
     }
 
     private void FindTarget()

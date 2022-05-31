@@ -21,6 +21,7 @@ public class UIAbilityCard : MonoBehaviour
 
     public int Index { get; set; }
     public bool Interactable { set { cvg.interactable = value; cvg.blocksRaycasts = value; } }
+    public bool InteractableList { set { ability_list.Interactable = value; } }
     public UIInputButton InputButton { get { return button; } }
     public List<UIAbilityModifier> Modifiers { get; private set; } = new List<UIAbilityModifier>();
     public Button.ButtonClickedEvent OnClickAbility { get { return btn_ability.onClick; } }

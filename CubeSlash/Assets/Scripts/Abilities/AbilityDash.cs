@@ -6,7 +6,6 @@ using UnityEngine;
 public class AbilityDash : Ability
 {
     private bool Dashing { get; set; }
-    private bool Reflects { get; set; }
     private float TimeStart { get; set; }
     private float TimeDash { get; set; }
     private float SpeedDash { get; set; }
@@ -17,6 +16,8 @@ public class AbilityDash : Ability
     [SerializeField] private BoxCollider2D trigger;
     public AnimationCurve ac_path_normal;
     public AnimationCurve ac_path_split;
+
+    private CustomCoroutine cr_dash;
 
     public override void Pressed()
     {
@@ -42,49 +43,41 @@ public class AbilityDash : Ability
         var charge = GetModifier<AbilityCharge>(Type.CHARGE);
         if (charge)
         {
-            var t = charge.GetCharge();
             charge.Released();
-
-            if (Dashing) return;
-            StartDashing(true, true, true);
+            if(charge.IsFullyCharged() && !Dashing)
+            {
+                StartDashing(true, true, true);
+            }
         }
     }
 
     public override float GetCooldown()
     {
-        var charge = GetModifier<AbilityCharge>(Type.CHARGE);
-        var t_charge = charge ? charge.GetCharge() : 0;
         float cd =
-            (HasModifier(Type.SPLIT) ? 0.2f : 0) +
-            (t_charge == 1 ? -0.5f : 0) +
-            1f;
+            (HasModifier(Type.SPLIT) ? 0.5f : 0) +
+            (HasModifier(Type.CHARGE) ? -0.5f : 0) +
+            0.5f;
         return Mathf.Clamp(cd, 0f, float.MaxValue);
     }
 
     private List<Enemy> _hits_dash = new List<Enemy>();
-    private bool dash_hitstop = false;
     private void StartDashing(bool reset_hits, bool hit_start, bool hit_end)
     {
         if (reset_hits) _hits_dash.Clear();
 
-        var charge = GetModifier<AbilityCharge>(Type.CHARGE);
-        var t_charge = charge ? charge.GetCharge() : 0;
         TimeDash =
-            HasModifier(Type.CHARGE) ? (t_charge == 1 ? 0.03f : Mathf.Lerp(0.05f, 0.2f, t_charge)) :
+            HasModifier(Type.CHARGE) ? 0.3f :
             HasModifier(Type.SPLIT) ? 0.4f :
-            0.2f;
+            0.25f;
         SpeedDash =
-            HasModifier(Type.CHARGE) ? (t_charge == 1 ? 240 : Mathf.Lerp(40, 50, t_charge)) :
+            HasModifier(Type.CHARGE) ? 60 :
             HasModifier(Type.SPLIT) ? 30 :
-            40;
-        DamageDash =
-            charge && t_charge == 1 ? 3 :
-            1;
+            30;
+        DamageDash = 1;
         RadiusDash =
             HasModifier(Type.SPLIT) ? 3 :
             1;
-        Reflects = !charge || t_charge < 1;
-        CoroutineController.Instance.Run(DashPhaseCr(hit_start, hit_end), "dash_"+GetInstanceID());
+        cr_dash = CoroutineController.Instance.Run(DashPhaseCr(hit_start, hit_end), "dash_" + GetInstanceID());
     }
 
     private IEnumerator DashPhaseCr(bool hit_start, bool hit_end)
@@ -92,14 +85,7 @@ public class AbilityDash : Ability
         Dashing = true;
         Player.Instance.MovementLock.AddLock(nameof(AbilityDash));
         Player.Instance.DragLock.AddLock(nameof(AbilityDash));
-        Player.Instance.AbilityLock.AddLock(nameof(AbilityDash));
         Player.Instance.InvincibilityLock.AddLock(nameof(AbilityDash));
-
-        // Hit everyone around
-        if (hit_start)
-        {
-            DashHitEnemiesArea(Player.transform.position, 1.5f);
-        }
 
         // Target
         var dir_dash = Player.MoveDirection;
@@ -113,26 +99,10 @@ public class AbilityDash : Ability
         Player.Character.SetLookDirection(dir_dash);
         TimeStart = Time.time;
         StartDashVisual(TimeDash);
-
-        var charge = GetModifier<AbilityCharge>(Type.CHARGE);
-        if (charge && charge.GetCharge() == 1)
-        {
-            yield return DashChargedCr(dir_dash);
-        }
-        else
-        {
-            yield return DashCr(dir_dash, TimeDash, SpeedDash);
-        }
-
-        // Hit everyone around
-        if (hit_end)
-        {
-            DashHitEnemiesArea(Player.transform.position + Player.MoveDirection * 0.5f, 1.5f);
-        }
+        yield return DashCr(dir_dash, TimeDash, SpeedDash);
 
         // Remove counters
         Player.Instance.InvincibilityLock.RemoveLock(nameof(AbilityDash));
-        Player.Instance.AbilityLock.RemoveLock(nameof(AbilityDash));
         Player.Instance.MovementLock.RemoveLock(nameof(AbilityDash));
         Player.Instance.DragLock.RemoveLock(nameof(AbilityDash));
         Dashing = false;
@@ -144,50 +114,10 @@ public class AbilityDash : Ability
     {
         while (Time.time - TimeStart < time)
         {
-            if (dash_hitstop)
-            {
-                TimeStart += Time.deltaTime;
-                Player.Rigidbody.velocity = Vector3.zero;
-            }
-            else
-            {
-                Player.Rigidbody.velocity = dir * speed;
-            }
+            Player.Rigidbody.velocity = dir * speed;
             yield return new WaitForFixedUpdate();
         }
         Player.Rigidbody.velocity = dir * Player.SPEED_MOVE;
-    }
-
-    private IEnumerator DashChargedCr(Vector3 dir)
-    {
-        var dist = 6f;
-        var speed = 100f;
-        var start = Player.transform.position;
-        Player.transform.position = Player.transform.position + dir.normalized * dist;
-        Player.Rigidbody.velocity = dir * speed;
-
-        var hits = Physics2D.CircleCastAll(start, 2f, dir);
-        foreach(var hit in hits)
-        {
-            var e = hit.collider.GetComponentInParent<Enemy>();
-            DashHitEnemy(e);
-        }
-
-        while(Player.Rigidbody.velocity.magnitude > Player.SPEED_MOVE)
-        {
-            Player.Rigidbody.velocity *= 0.8f;
-            yield return new WaitForFixedUpdate();
-        }
-    }
-
-    private IEnumerator DashHitstopCr()
-    {
-        dash_hitstop = true;
-        for (int i = 0; i < 1; i++)
-        {
-            yield return null;
-        }
-        dash_hitstop = false;
     }
 
     #region VISUAL
@@ -265,16 +195,28 @@ public class AbilityDash : Ability
             var already_hit = _hits_dash.Contains(enemy);
             DashHitEnemy(enemy);
 
-            if (!already_hit && enemy.health > 0 && Reflects)
+            // Stop dashing
+            if (cr_dash != null)
             {
-                Player.MoveDirection = -Player.MoveDirection;
-                StartDashing(true, false, true);
+                CoroutineController.Instance.Kill(cr_dash);
             }
-            else
-            {
-                StartCoroutine(DashHitstopCr());
-            }
+            StartCoroutine(DashHitKnockbackCr());
         }
+    }
+
+    private IEnumerator DashHitKnockbackCr()
+    {
+        var time_end = Time.time + 0.25f;
+        Player.Rigidbody.velocity = Player.MoveDirection * -15f;
+        while (Time.time < time_end)
+        {
+            Player.Rigidbody.velocity = Player.Rigidbody.velocity * 0.995f;
+            yield return null;
+        }
+        Player.Instance.InvincibilityLock.RemoveLock(nameof(AbilityDash));
+        Player.Instance.MovementLock.RemoveLock(nameof(AbilityDash));
+        Player.Instance.DragLock.RemoveLock(nameof(AbilityDash));
+        Dashing = false;
     }
 
     private void DashHitEnemy(Enemy enemy)

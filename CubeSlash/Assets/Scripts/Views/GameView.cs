@@ -7,52 +7,37 @@ using UnityEngine.UI;
 public class GameView : View
 {
     [SerializeField] private Image img_experience;
-    [SerializeField] private TMP_Text tmp_enemies_killed;
-    [SerializeField] private TMP_Text tmp_player_hurt;
+    [SerializeField] private UIOffscreenTargetSeeker prefab_target_seeker;
 
-    private int count_enemy_kill;
-    private int count_player_hurt;
+    public bool Initialized { get; private set; }
+
+    private List<UIOffscreenTargetSeeker> target_seekers;
+
+    private bool HasSpawnedSeekers { get; set; }
 
     private void Start()
     {
-        Player.Instance.onEnemyKilled += OnEnemyKilled;
-        Player.Instance.onHurt += OnPlayerHurt;
+        prefab_target_seeker.gameObject.SetActive(false);
+
         Player.Instance.Experience.onValueChanged += OnExperienceChanged;
-        UpdateEnemyKillText();
-        UpdatePlayerHurtText();
         UpdateExperience(false);
 
         // Audio
         AudioController.Instance.snapshot_main.TransitionTo(0.5f);
+
+        // Events
+        EnemyController.Instance.OnEnemyKilled += OnEnemyKilled;
+        EnemyController.Instance.OnEnemySpawned += OnEnemySpawned;
+
+        // Initialized
+        Initialized = true;
     }
 
     private void OnDestroy()
     {
-        Player.Instance.onEnemyKilled -= OnEnemyKilled;
-        Player.Instance.onHurt -= OnPlayerHurt;
         Player.Instance.Experience.onValueChanged -= OnExperienceChanged;
-    }
-
-    private void OnEnemyKilled(Enemy enemy)
-    {
-        count_enemy_kill++;
-        UpdateEnemyKillText();
-    }
-
-    private void UpdateEnemyKillText()
-    {
-        tmp_enemies_killed.text = string.Format("ENEMIES KILLED: {0}", count_enemy_kill);
-    }
-
-    private void OnPlayerHurt(Enemy enemy)
-    {
-        count_player_hurt++;
-        UpdatePlayerHurtText();
-    }
-
-    private void UpdatePlayerHurtText()
-    {
-        tmp_player_hurt.text = string.Format("PLAYER HURT: {0}", count_player_hurt);
+        EnemyController.Instance.OnEnemyKilled -= OnEnemyKilled;
+        EnemyController.Instance.OnEnemySpawned -= OnEnemySpawned;
     }
 
     private void OnExperienceChanged()
@@ -73,5 +58,33 @@ public class GameView : View
         {
             img_experience.fillAmount = t;
         }
+    }
+
+    private void OnEnemyKilled()
+    {
+        if(EnemyController.Instance.EnemiesLeft() <= 5 && !HasSpawnedSeekers)
+        {
+            HasSpawnedSeekers = true;
+            var enemies = EnemyController.Instance.ActiveEnemies;
+            foreach(var enemy in enemies)
+            {
+                CreateTargetSeeker(enemy.transform);
+            }
+        }
+    }
+
+    private void OnEnemySpawned(Enemy enemy)
+    {
+        if(EnemyController.Instance.EnemiesLeft() <= 5 && HasSpawnedSeekers)
+        {
+            CreateTargetSeeker(enemy.transform);
+        }
+    }
+
+    private void CreateTargetSeeker(Transform target)
+    {
+        var seeker = Instantiate(prefab_target_seeker.gameObject, prefab_target_seeker.transform.parent).GetComponent<UIOffscreenTargetSeeker>();
+        seeker.gameObject.SetActive(true);
+        seeker.Target = target;
     }
 }

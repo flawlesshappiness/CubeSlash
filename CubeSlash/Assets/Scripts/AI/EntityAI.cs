@@ -19,4 +19,9 @@ public abstract class EntityAI : MonoBehaviour
     {
         return Vector3.Distance(transform.position, Player.Instance.transform.position);
     }
+
+    protected bool PlayerIsAlive()
+    {
+        return Player.Instance.Health.Value > Player.Instance.Health.Min;
+    }
 }

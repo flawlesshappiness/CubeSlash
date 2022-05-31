@@ -13,10 +13,6 @@ public class AbilityView : View
     {
         btn_continue.onClick.AddListener(ClickContinue);
 
-        prefab_card.Interactable = false;
-        prefab_card.gameObject.SetActive(false);
-        prefab_card_position.gameObject.SetActive(false);
-
         StartCoroutine(StartCr());
 
         // Audio
@@ -49,10 +45,20 @@ public class AbilityView : View
             Lerp.Position(card.transform, 0.5f, rt_positions[i].position)
                 .Curve(Lerp.Curve.EASE_END);
 
+            // Disable prefabs
+            prefab_card.Interactable = false;
+            prefab_card.InteractableList = false;
+            prefab_card.gameObject.SetActive(false);
+            prefab_card_position.gameObject.SetActive(false);
+
             yield return new WaitForSeconds(0.25f);
         }
 
-        SetCardsInteractable(_ => true);
+        cards.ForEach(c =>
+        {
+            c.Interactable = true;
+            c.InteractableList = false;
+        });
         cards[0].SelectAbilityButton();
     }
 
@@ -97,14 +103,6 @@ public class AbilityView : View
         prefab_card.gameObject.SetActive(false);
         return card;
     }
-
-    private void SetCardsInteractable(System.Func<UIAbilityCard, bool> func_delegate)
-    {
-        foreach(var card in cards)
-        {
-            card.Interactable = func_delegate(card);
-        }
-    }
     #endregion
     #region POSITIONS
     private List<RectTransform> rt_positions = new List<RectTransform>();
@@ -134,7 +132,13 @@ public class AbilityView : View
         card_select_ability = card;
         var can_unequip = Player.Instance.AbilitiesEquipped[card.Index] != null;
         card.ShowSelectAbility(OnSelectAbility, HideSelectAbility, can_unequip);
-        SetCardsInteractable(c => c == card);
+
+        btn_continue.interactable = false;
+        cards.ForEach(c =>
+        {
+            c.Interactable = false;
+            c.InteractableList = c == card;
+        });
     }
 
     private void OnSelectAbility(Ability ability)
@@ -149,7 +153,13 @@ public class AbilityView : View
         card_select_ability.UpdateUI();
         card_select_ability.SelectAbilityButton();
         card_select_ability = null;
-        SetCardsInteractable(_ => true);
+
+        btn_continue.interactable = true;
+        cards.ForEach(c =>
+        {
+            c.Interactable = true;
+            c.InteractableList = false;
+        });
     }
     #endregion
     #region SELECT MODIFIER
@@ -169,7 +179,12 @@ public class AbilityView : View
         var can_unequip = ability.Modifiers[idx_modifier] != null;
         card.ShowSelectAbility(OnSelectModifier, HideSelectModifier, can_unequip);
 
-        SetCardsInteractable(c => c == card);
+        btn_continue.interactable = false;
+        cards.ForEach(c =>
+        {
+            c.Interactable = false;
+            c.InteractableList = c == card;
+        });
     }
 
     private void OnSelectModifier(Ability ability)
@@ -188,7 +203,13 @@ public class AbilityView : View
         card_select_ability.SelectModifierButton(modifier_select_ability.Index);
         card_select_ability = null;
         modifier_select_ability = null;
-        SetCardsInteractable(_ => true);
+
+        btn_continue.interactable = true;
+        cards.ForEach(c =>
+        {
+            c.Interactable = true;
+            c.InteractableList = false;
+        });
     }
     #endregion
 }

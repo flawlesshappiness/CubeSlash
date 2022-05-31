@@ -11,6 +11,8 @@ public class GameController : MonoBehaviour
 
     public static GameController Instance;
 
+    private LevelAsset level_prev;
+
     private void Awake()
     {
         Instance = this;
@@ -19,6 +21,9 @@ public class GameController : MonoBehaviour
         InitializeData();
         StartLevel();
         ConsoleController.Instance.EnsureExistence();
+
+        ConsoleController.Instance.RegisterCommand("UnlockAllAbilities", () => Player.Instance.UnlockAllAbilities());
+        ConsoleController.Instance.RegisterCommand("KillAll", () => EnemyController.Instance.KillAllEnemies());
     }
 
     private void InitializeControllers()
@@ -65,6 +70,10 @@ public class GameController : MonoBehaviour
         {
             Player.Instance.Experience.Value = Player.Instance.Experience.Max;
         }
+        else if (Input.GetKeyDown(KeyCode.Alpha2) && Input.GetKey(KeyCode.Tab))
+        {
+            EnemyController.Instance.KillAllEnemies();
+        }
     }
 
     private void Quit()
@@ -88,14 +97,21 @@ public class GameController : MonoBehaviour
         Player.Instance.InputLock.RemoveLock("NextLevel");
         Player.Instance.AbilityLock.RemoveLock("NextLevel");
         Player.Instance.Health.Value = Player.Instance.Health.Max;
-        EnemyController.Instance.StartSpawning();
-        ViewController.Instance.ShowView<GameView>();
+        Player.Instance.InitializeAbilities();
+        StartCoroutine(WaitForViewCr());
 
-        StartCoroutine(WaitForLevelCompletedCr());
+        IEnumerator WaitForViewCr()
+        {
+            var view = ViewController.Instance.ShowView<GameView>();
+            while (!view.Initialized) yield return null;
+            EnemyController.Instance.StartSpawning();
+            StartCoroutine(WaitForLevelCompletedCr());
+        }
     }
 
     private IEnumerator WaitForLevelCompletedCr()
     {
+        yield return new WaitForSeconds(1);
         while(EnemyController.Instance.EnemiesLeft() > 0)
         {
             yield return null;
@@ -122,6 +138,7 @@ public class GameController : MonoBehaviour
 
     public void CompleteLevel()
     {
+        level_prev = Level.Current;
         Level.Completed();
 
         // Stop enemies
@@ -139,7 +156,15 @@ public class GameController : MonoBehaviour
     {
         ViewController.Instance.CloseView();
         yield return new WaitForSeconds(1f);
-        ViewController.Instance.ShowView<LevelTransitionView>();
+        if(level_prev != null && level_prev.reward_ability)
+        {
+            Player.Instance.InputLock.AddLock("NextLevel");
+            ViewController.Instance.ShowView<UnlockAbilityView>();
+        }
+        else
+        {
+            ViewController.Instance.ShowView<LevelTransitionView>();
+        }
     }
 
     public void AbilityMenuTransition()
@@ -152,9 +177,7 @@ public class GameController : MonoBehaviour
         ViewController.Instance.CloseView();
         yield return new WaitForSeconds(1f);
         ViewController.Instance.ShowView<AbilityView>();
-
-        // Disable player
-        Player.Instance.InputLock.AddLock("NextLevel");
+        Player.Instance.InputLock.AddLock("NextLevel"); // Disable player
     }
 
     private void OnPlayerDeath()

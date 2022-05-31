@@ -12,12 +12,7 @@ public class AbilityCharge : Ability
     [SerializeField] private ParticleSystem ps_beam_dust;
     [SerializeField] private AnimationCurve ac_charge_emission;
 
-    private const float TIME_CHARGE_MAX = 1f;
-    private const float DISTANCE_MAX = 20f;
-    private const float ANGLE_MIN = 10;
-    private const float ANGLE_MAX = 25;
-    private const float WIDTH_MAX = 2f;
-    private const int DAMAGE_MAX = 3;
+    private const float DISTANCE_MAX = 50f;
 
     private const int COUNT_EMISSION_PS_MIN = 10;
     private const int COUNT_EMISSION_PS_MAX = 50;
@@ -26,6 +21,10 @@ public class AbilityCharge : Ability
     private float time_charge_end;
     public bool Charging { get; private set; }
     public bool ChargeEnded { get; private set; }
+
+    private float Width { get; set; }
+    private float ChargeTime { get; set; }
+    private float Knockback { get; set; }
 
     private void Start()
     {
@@ -46,11 +45,43 @@ public class AbilityCharge : Ability
         });
     }
 
+    public override void InitializeValues()
+    {
+        base.InitializeValues();
+        Width = 1;
+        ChargeTime = 0.75f;
+        Knockback = -10;
+    }
+
+    public override void InitializeModifier(Ability modifier)
+    {
+        Width = modifier.type switch
+        {
+            Type.DASH => Width + 2,
+            Type.CHARGE => Width + 5,
+            Type.SPLIT => Width * 0.5f,
+        };
+
+        ChargeTime = modifier.type switch
+        {
+            Type.DASH => ChargeTime + 0.25f,
+            Type.CHARGE => ChargeTime + 0.5f,
+            Type.SPLIT => ChargeTime + 0.5f,
+        };
+
+        Knockback = modifier.type switch
+        {
+            Type.DASH => Knockback - 75,
+            Type.CHARGE => Knockback - 25,
+            Type.SPLIT => Knockback - 10,
+        };
+    }
+
     public override void Pressed()
     {
         base.Pressed();
         time_charge_start = Time.time;
-        time_charge_end = time_charge_start + TIME_CHARGE_MAX;
+        time_charge_end = time_charge_start + ChargeTime;
         Charging = true;
         ChargeEnded = false;
         Player.Instance.AbilityLock.AddLock(nameof(AbilityCharge));
@@ -62,34 +93,21 @@ public class AbilityCharge : Ability
         Charging = false;
         ChargeEnded = false;
 
-        if (IsActive)
+        if (IsActive && IsFullyCharged())
         {
-            if (HasModifier(Type.SPLIT))
-            {
-                var t = GetCharge();
-                var count = t == 1 ? 15 : (int)Mathf.Clamp(Mathf.Lerp(3, 8, t), 3, 7);
-                var angle = t == 1 ? 170 : Mathf.Lerp(40, 30, t);
-                ShootTargets(Player.transform.position, Player.MoveDirection, count, angle, true);
-                Player.Instance.MovementLock.AddLock(nameof(AbilityCharge));
-            }
-            else
-            {
-                TryShoot(Player.transform.position, Player.MoveDirection, ANGLE_MAX, true);
-            }
+            Shoot(Player.MoveDirection, DISTANCE_MAX);
         }
-        else
-        {
-            Player.Instance.AbilityLock.RemoveLock(nameof(AbilityCharge));
-        }
+
+        Player.Instance.AbilityLock.RemoveLock(nameof(AbilityCharge));
     }
 
     public override float GetCooldown()
     {
-        var t = GetCharge();
         return
-            (HasModifier(Type.DASH) ? (t == 1 ? 5 : 2) : 0) +
-            (HasModifier(Type.SPLIT) ? (t == 1 ? 5 : 1) : 0) +
-            0;
+            (HasModifier(Type.DASH) ? 0 : 0) +
+            (HasModifier(Type.CHARGE) ? 5 : 0) +
+            (HasModifier(Type.SPLIT) ? 3 : 0) +
+            0.5f;
     }
 
     private void Update()
@@ -113,95 +131,67 @@ public class AbilityCharge : Ability
         }
     }
 
-    private void TryShoot(Vector3 start, Vector3 dir, float angle_max, bool first_beam)
+    private void Shoot(Vector3 dir, float distance)
     {
-        var target = GetTarget(start, dir.normalized, DISTANCE_MAX, angle_max);
-        if (target)
-        {
-            Shoot(start, target, first_beam);
+        var directions =
+            HasModifier(Type.SPLIT) ? GetModifier<AbilitySplit>(Type.SPLIT).GetSplitDirections(3, 15, dir) :
+            new List<Vector3> { dir };
+        StartCoroutine(ShootCr(directions));
 
-            if (HasModifier(Type.DASH)) // Penetrate
+        IEnumerator ShootCr(List<Vector3> directions)
+        {
+            foreach(var dir in directions)
             {
-                // Check if some enemies are way too close
-                var hits = Physics2D.OverlapCircleAll(target.transform.position, 1f);
-                foreach(var hit in hits)
+                var hits = Physics2D.CircleCastAll(Player.transform.position, Width * 0.5f, dir, distance);
+                foreach (var hit in hits)
                 {
-                    var e = hit.GetComponentInParent<Enemy>();
+                    var e = hit.collider.GetComponentInParent<Enemy>();
                     if (e)
                     {
-                        DamageEnemy(e);
+                        Player.Instance.DamageEnemy(e, 1);
                     }
                 }
 
-                // Penetration shot
-                TryShoot(target.transform.position, dir, ANGLE_MIN, false);
+                StartCoroutine(KnockbackCr());
+                StartVisual(Player.transform.position, Player.transform.position + dir * distance, 20);
+                yield return new WaitForSeconds(0.1f);
             }
-        }
-        else
-        {
-            Shoot(start, start + dir.normalized * DISTANCE_MAX, first_beam);
+            StartCooldown();
         }
 
-        Player.Instance.AbilityLock.RemoveLock(nameof(AbilityCharge));
-        StartCooldown();
-    }
-
-    private void Shoot(Vector3 start, Enemy target, bool first_beam)
-    {
-        DamageEnemy(target);
-        Shoot(start, target.transform.position, first_beam);
-    }
-
-    private void Shoot(Vector3 start, Vector3 end, bool first_beam)
-    {
-        var width = WIDTH_MAX * GetCharge();
-        StartVisual(start, end, first_beam ? 0.1f : width, width);
-    }
-
-    private void ShootTargets(Vector3 start, Vector3 dir, int count, float angle_max, bool first_beam)
-    {
-        var split = GetModifier<AbilitySplit>(Type.SPLIT);
-        if (split)
+        IEnumerator KnockbackCr()
         {
-            var directions = split.GetSplitDirections(count, angle_max, dir);
-            StartCoroutine(ShootTargetsCr(start, directions, first_beam));
-        }
-    }
+            Player.Rigidbody.velocity = Player.MoveDirection * Knockback;
+            Player.MovementLock.AddLock(nameof(AbilityCharge));
+            Player.DragLock.AddLock(nameof(AbilityCharge));
 
-    private void DamageEnemy(Enemy e)
-    {
-        var t = GetCharge();
-        var damage = (int)Mathf.Clamp((DAMAGE_MAX * t) + 1, 1, DAMAGE_MAX);
-        Player.Instance.DamageEnemy(e, damage);
-    }
-
-    private IEnumerator ShootTargetsCr(Vector3 start, List<Vector3> directions, bool first_beam)
-    {
-        for (int i = 0; i < directions.Count; i++)
-        {
-            var dir = directions[i];
-            TryShoot(start, dir, ANGLE_MIN, false);
-
-            for (int i_frames = 0; i_frames < 10; i_frames++)
+            // Drag
+            var time_end = Time.time + 0.2f;
+            while(Time.time < time_end)
             {
+                Player.Rigidbody.velocity *= 0.98f;
                 yield return null;
             }
-        }
 
-        Player.Instance.AbilityLock.RemoveLock(nameof(AbilityCharge));
-        Player.Instance.MovementLock.RemoveLock(nameof(AbilityCharge));
-        StartCooldown();
+            Player.MovementLock.RemoveLock(nameof(AbilityCharge));
+            Player.DragLock.RemoveLock(nameof(AbilityCharge));
+        }
     }
 
-    public float GetCharge()
+    public bool IsFullyCharged()
+    {
+        return GetCharge() == 1f;
+    }
+
+    private float GetCharge()
     {
         var t = Mathf.Clamp((Time.time - time_charge_start) / (time_charge_end - time_charge_start), 0f, 1f);
         return t;
     }
 
-    private void StartVisual(Vector3 start, Vector3 end, float w_start, float w_end)
+    private void StartVisual(Vector3 start, Vector3 end, int segments)
     {
-        CoroutineController.Instance.Run(BeamVisualCr(start, end, w_start, w_end), "beam_visual_"+GetInstanceID());
+        StartCoroutine(BeamVisualCr(start, end, segments));
 
         // Particle System
         var dir = end - start;
@@ -213,53 +203,28 @@ public class AbilityCharge : Ability
             .Destroy(5);
     }
 
-    private IEnumerator BeamVisualCr(Vector3 start, Vector3 end, float w_start, float w_end)
+    private IEnumerator BeamVisualCr(Vector3 start, Vector3 end, int segments)
     {
-        prefab_line.gameObject.SetActive(true);
         var line = Instantiate(prefab_line.gameObject, prefab_line.transform.parent).GetComponent<LineRenderer>();
-        prefab_line.gameObject.SetActive(false);
+        line.gameObject.SetActive(true);
+
+        // Segments
+        line.positionCount = segments + 1;
         line.SetPosition(0, start);
-        line.SetPosition(1, end);
+        for (int i = 0; i < segments; i++)
+        {
+            line.SetPosition(i, Vector3.Lerp(start, end, (float)i / segments));
+        }
+        line.SetPosition(segments, end);
+
+        // Width
         yield return Lerp.Value(0.25f, 0f, 1f, f =>
         {
-            line.startWidth = Mathf.Lerp(w_start, 0f, f);
-            line.endWidth = Mathf.Lerp(w_end, 0f, f);
+            line.widthMultiplier = (1f - f) * Width;
         }, line.gameObject, "width_" + line.GetInstanceID())
+            .Curve(Lerp.Curve.EASE_END)
             .GetEnumerator();
         line.gameObject.SetActive(false);
         Destroy(line.gameObject);
-    }
-
-    private class FindTargetMap
-    {
-        public Enemy Enemy { get; set; }
-        public float Value { get; set; }
-    }
-
-    private Enemy GetTarget(Vector3 start, Vector3 forward, float distance_max, float angle_max)
-    {
-        var targets = new List<FindTargetMap>();
-        var hits = Physics2D.OverlapCircleAll(start, distance_max);
-        foreach(var hit in hits)
-        {
-            var e = hit.gameObject.GetComponentInParent<Enemy>();
-            if (e == null) continue;
-
-            var dir = e.transform.position - start;
-            var angle = Vector3.Angle(forward.normalized, dir.normalized);
-            var v_angle = 1f - (angle / 180f);
-            if (angle > angle_max) continue;
-
-            var dist = dir.magnitude;
-            var v_dist = (1f - (dist / distance_max)) * 1.5f;
-
-            var target = new FindTargetMap();
-            targets.Add(target);
-            target.Enemy = e;
-            target.Value = v_angle + v_dist;
-        }
-
-        targets = targets.OrderByDescending(target => target.Value).ToList();
-        return targets.Count == 0 ? null : targets[0].Enemy;
     }
 }

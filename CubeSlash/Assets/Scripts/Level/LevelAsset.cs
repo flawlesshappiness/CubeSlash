@@ -5,8 +5,10 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Level", menuName = "Level/LevelAsset", order = 1)]
 public class LevelAsset : ScriptableObject
 {
+    public bool reward_ability;
     public int count_enemy_active;
     public List<Enemy> enemies = new List<Enemy>();
+    public List<Enemy> bosses = new List<Enemy>();
 
     private void OnValidate()
     {

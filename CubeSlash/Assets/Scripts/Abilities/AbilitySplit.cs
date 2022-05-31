@@ -34,7 +34,7 @@ public class AbilitySplit : Ability
         return
             (HasModifier(Type.DASH) ? 0.5f : 0) +
             (HasModifier(Type.CHARGE) ? 1.0f : 0) +
-            0.5f;
+            1.0f;
     }
 
     private Projectile SpawnProjectile(Vector3 direction)
@@ -47,7 +47,7 @@ public class AbilitySplit : Ability
         p.OnHitEnemy += e =>
         {
             Player.DamageEnemy(e, 1);
-            p.Destroy();
+            p.Kill();
         };
 
         return p;
@@ -55,18 +55,11 @@ public class AbilitySplit : Ability
 
     private void SpawnProjectiles()
     {
-        var charge = GetModifier<AbilityCharge>(Type.CHARGE);
-        var t_charge = charge ? charge.GetCharge() : 0;
-
         // Spawn projectiles
         var projectiles = new List<Projectile>();
         var forward = Player.MoveDirection;
-        var angle_max = t_charge == 1 ? 180f :
-            charge ? Mathf.Lerp(40, 20, t_charge) :
-            15f;
-        var count_projectiles = t_charge == 1 ? 30 :
-            charge ? (int)Mathf.Clamp(Mathf.Lerp(3, 7, t_charge), 1, 8) :
-            3;
+        var angle_max = HasModifier(Type.CHARGE) ? 180f : 35;
+        var count_projectiles = HasModifier(Type.CHARGE) ? 30 : 5;
         var directions = GetSplitDirections(count_projectiles, angle_max, forward);
         foreach(var direction in directions)
         {
@@ -118,11 +111,12 @@ public class AbilitySplit : Ability
     {
         p.TurnSpeed = 1f;
         p.Homing = true;
-        p.Destroy(1);
+        p.Lifetime = 0.75f;
     }
 
     private IEnumerator SetupProjectileDash(Projectile p)
     {
+        p.Lifetime = 0.3f + 0.5f;
         p.SearchRadius = 30f;
         p.Drag = 0.9f;
         yield return new WaitForSeconds(0.3f);

@@ -26,7 +26,7 @@ public class AI_SearchHunt : EntityAI
         switch (state)
         {
             case State.SEARCH:
-                if (dist_to_player < CameraController.Instance.Width * 0.25f)
+                if (PlayerIsAlive() && dist_to_player < CameraController.Instance.Width * 0.25f)
                 {
                     SetState(State.HUNT);
                 }
@@ -36,7 +36,14 @@ public class AI_SearchHunt : EntityAI
                 }
                 break;
             case State.HUNT:
-                MoveTowardsPlayer();
+                if(PlayerIsAlive())
+                {
+                    MoveTowardsPlayer();
+                }
+                else
+                {
+                    UpdateState();
+                }
                 break;
         }
     }
@@ -52,13 +59,13 @@ public class AI_SearchHunt : EntityAI
 
     public void UpdateState()
     {
-        if (DistanceToPlayer() > CameraController.Instance.Width * 0.5f)
+        if (PlayerIsAlive() && DistanceToPlayer() < CameraController.Instance.Width * 0.5f)
         {
-            SetState(State.SEARCH);
+            SetState(State.HUNT);
         }
         else
         {
-            SetState(State.HUNT);
+            SetState(State.SEARCH);
         }
     }
 

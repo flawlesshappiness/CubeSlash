@@ -1007,7 +1007,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Press any button to enter shop
+  m_text: Press any button to edit loadout
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 4893b383388547447a83f908b19f18bb, type: 2}
   m_sharedMaterial: {fileID: 2100000, guid: e1a7a6a8ccc534a4589c0e04d38d97bf, type: 2}

@@ -12,8 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed170f98ca580f243b98b5b4d9a80757, type: 3}
   m_Name: Level 1
   m_EditorClassIdentifier: 
+  reward_ability: 0
   count_enemy_active: 5
   enemies:
   - name: Weak
     enemy: {fileID: 11400000, guid: cfcae6b5621e50448a5872f62f68b1ba, type: 2}
-    count_total: 15
+    count_total: 10
+  bosses: []
