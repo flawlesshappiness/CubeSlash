@@ -23,7 +23,7 @@ public class GameView : View
         UpdateExperience(false);
 
         // Audio
-        AudioController.Instance.snapshot_main.TransitionTo(0.5f);
+        AudioController.Instance.TransitionTo(AudioController.Snapshot.MAIN, 0.5f);
 
         // Events
         EnemyController.Instance.OnEnemyKilled += OnEnemyKilled;

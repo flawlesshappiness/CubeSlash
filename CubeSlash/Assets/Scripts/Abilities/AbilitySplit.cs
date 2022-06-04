@@ -46,7 +46,7 @@ public class AbilitySplit : Ability
 
         p.OnHitEnemy += e =>
         {
-            Player.DamageEnemy(e, 1);
+            Player.KillEnemy(e);
             p.Kill();
         };
 

@@ -43,6 +43,8 @@ public class Player : MonoBehaviourExtended
         EquipAbility(split, 0);
         EquipAbility(charge, 1);
 
+        Character.Initialize();
+
         MoveDirection = transform.up;
     }
 
@@ -202,21 +204,17 @@ public class Player : MonoBehaviourExtended
     }
     #endregion
     #region ENEMY
-    public void DamageEnemy(Enemy enemy, int damage)
+    public void KillEnemy(Enemy enemy)
     {
-        enemy.Damage(damage);
-
-        if(enemy.health > 0)
+        if (enemy.IsKillable())
         {
-            InstantiateParticle("Particles/ps_impact_dash")
-                        .Position(enemy.transform.position)
-                        .Destroy(1)
-                        .Play();
+            enemy.Kill();
+            Experience.Value += 1;
+            onEnemyKilled?.Invoke(enemy);
         }
         else
         {
-            Experience.Value += 1;
-            onEnemyKilled?.Invoke(enemy);
+
         }
     }
 

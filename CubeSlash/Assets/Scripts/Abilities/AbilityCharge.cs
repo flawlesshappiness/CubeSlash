@@ -148,7 +148,7 @@ public class AbilityCharge : Ability
                     var e = hit.collider.GetComponentInParent<Enemy>();
                     if (e)
                     {
-                        Player.Instance.DamageEnemy(e, 1);
+                        Player.Instance.KillEnemy(e);
                     }
                 }
 

@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class EnemyController : MonoBehaviour, IInitializable
+public class EnemyController : Singleton
 {
-    public static EnemyController Instance { get; private set; }
+    public static EnemyController Instance { get { return Instance<EnemyController>(); } }
 
     private Enemy prefab_enemy;
     private List<Enemy> enemies_active = new List<Enemy>();
@@ -22,9 +22,8 @@ public class EnemyController : MonoBehaviour, IInitializable
 
     private const int COUNT_ENEMY_POOL_EXTEND = 20;
 
-    public void Initialize()
+    public override void Initialize()
     {
-        Instance = this;
         prefab_enemy = Resources.Load<Enemy>("Prefabs/Entities/Enemy");
     }
 
@@ -121,10 +120,9 @@ public class EnemyController : MonoBehaviour, IInitializable
     }
     #endregion
     #region POOL
-    private Enemy CreateEnemy()
+    private Enemy CreateEnemyForPool()
     {
-        var enemy = Instantiate(prefab_enemy.gameObject).GetComponent<Enemy>();
-        enemy.transform.parent = GameController.Instance.world;
+        var enemy = CreateEnemy();
         enemy.gameObject.SetActive(false);
         enemies_inactive.Add(enemy);
         return enemy;
@@ -134,11 +132,18 @@ public class EnemyController : MonoBehaviour, IInitializable
     {
         for (int i = 0; i < count; i++)
         {
-            CreateEnemy();
+            CreateEnemyForPool();
         }
     }
     #endregion
     #region ENEMY
+    public Enemy CreateEnemy()
+    {
+        var enemy = Instantiate(prefab_enemy.gameObject).GetComponent<Enemy>();
+        enemy.transform.parent = GameController.Instance.world;
+        return enemy;
+    }
+
     public void EnemyKilled(Enemy enemy)
     {
         enemies_active.Remove(enemy);

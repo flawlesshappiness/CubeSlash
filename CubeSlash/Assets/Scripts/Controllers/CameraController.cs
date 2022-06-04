@@ -2,17 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CameraController : MonoBehaviour, IInitializable
+public class CameraController : Singleton
 {
-    public static CameraController Instance { get; private set; }
+    public static CameraController Instance { get { return Instance<CameraController>(); } }
     public Camera Camera { get; private set; }
     public Transform Target { get; set; }
     public float Height { get { return Camera.orthographicSize * 2f; } }
     public float Width { get { return Height * Camera.aspect; } }
 
-    public void Initialize()
+    public override void Initialize()
     {
-        Instance = this;
+        base.Initialize();
         Camera = Camera.main;
     }
 

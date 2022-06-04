@@ -7,13 +7,42 @@ public class Character : MonoBehaviourExtended
     public enum Type { CIRCLE, SQUARE }
     [SerializeField] public CircleCollider2D Collider;
     [SerializeField] public CircleCollider2D Trigger;
+
+    [Header("PARASITE")]
+    [Min(0)] public int parasite_level;
+    [SerializeField] public List<ParasiteSpace> ParasiteSpaces = new List<ParasiteSpace>();
     private Rigidbody2D Rigidbody { get { return GetComponentOnce<Rigidbody2D>(ComponentSearchType.PARENT); } }
 
     private Quaternion rotation_look;
 
-    private void Start()
+    [System.Serializable]
+    public class ParasiteSpace
     {
-        SetDesiredTriggerSize("default", Trigger.radius);
+        public Transform transform;
+        [HideInInspector] public Enemy parasite;
+
+        public bool inactive_when_parent_parasite;
+
+        public Vector3 Position { get { return transform.position; } }
+        public bool Empty { get { return parasite == null; } }
+
+        public void SetParasite(Enemy e)
+        {
+            parasite = e;
+            e.transform.position = transform.position;
+            e.transform.parent = transform;
+            e.SetParasite(true);
+            e.OnDeath += () => 
+            {
+                parasite = null;
+                e.SetParasite(false);
+            };
+        }
+    }
+
+    public void Initialize()
+    {
+        
     }
 
     public void SetLookDirection(Vector3 direction)
@@ -30,45 +59,4 @@ public class Character : MonoBehaviourExtended
         float x_scale = Mathf.Lerp(1f, 0.5f, t_scale_vel);
         transform.localScale = Vector3.Slerp(transform.localScale, Vector3.one.SetX(x_scale), 10 * Time.deltaTime);
     }
-
-    #region TRIGGER
-    private Dictionary<string, float> desired_trigger_sizes = new Dictionary<string, float>();
-
-    public void SetDesiredTriggerSize(string id, float f)
-    {
-        if (desired_trigger_sizes.ContainsKey(id))
-        {
-            desired_trigger_sizes[id] = f;
-        }
-        else
-        {
-            desired_trigger_sizes.Add(id, f);
-        }
-
-        UpdateTriggerSize();
-    }
-
-    public void RemoveDesiredTriggerSize(string id)
-    {
-        if (desired_trigger_sizes.ContainsKey(id))
-        {
-            desired_trigger_sizes.Remove(id);
-            UpdateTriggerSize();
-        }
-    }
-
-    private void UpdateTriggerSize()
-    {
-        float biggest = 0f;
-        foreach(var kvp in desired_trigger_sizes)
-        {
-            if(kvp.Value > biggest)
-            {
-                biggest = kvp.Value;
-            }
-        }
-
-        Trigger.radius = biggest;
-    }
-    #endregion
 }

@@ -10,7 +10,6 @@ public class AbilityDash : Ability
     private float TimeDash { get; set; }
     private float SpeedDash { get; set; }
     private float RadiusDash { get; set; }
-    private int DamageDash { get; set; }
 
     [Header("DASH")]
     [SerializeField] private BoxCollider2D trigger;
@@ -73,7 +72,6 @@ public class AbilityDash : Ability
             HasModifier(Type.CHARGE) ? 60 :
             HasModifier(Type.SPLIT) ? 30 :
             30;
-        DamageDash = 1;
         RadiusDash =
             HasModifier(Type.SPLIT) ? 3 :
             1;
@@ -224,10 +222,7 @@ public class AbilityDash : Ability
         if (enemy && !_hits_dash.Contains(enemy))
         {
             _hits_dash.Add(enemy);
-            if(DamageDash > 0)
-            {
-                Player.DamageEnemy(enemy, DamageDash);
-            }
+            Player.KillEnemy(enemy);
         }
     }
 

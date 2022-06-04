@@ -3,15 +3,22 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
 
-public class AudioController : MonoBehaviour, IInitializable
+public class AudioController : Singleton
 {
-    public static AudioController Instance { get; private set; }
+    public static AudioController Instance { get { return Instance<AudioController>(); } }
 
-    public AudioMixerSnapshot snapshot_main;
-    public AudioMixerSnapshot snapshot_menu;
+    private AudioMixer mixer;
 
-    public void Initialize()
+    public enum Snapshot { MUTE, MAIN, MENU }
+
+    public override void Initialize()
     {
-        Instance = this;
+        mixer = Resources.Load<AudioMixer>("Audio/AudioMixer");
+    }
+
+    public void TransitionTo(Snapshot type, float time = 0)
+    {
+        var snapshot = mixer.FindSnapshot(type.ToString());
+        snapshot.TransitionTo(time);
     }
 }

@@ -1,6 +1,5 @@
 using Flawliz.Console;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -16,22 +15,12 @@ public class GameController : MonoBehaviour
     private void Awake()
     {
         Instance = this;
-        InitializeControllers();
         InitializePlayer();
         InitializeData();
         StartLevel();
-        ConsoleController.Instance.EnsureExistence();
 
         ConsoleController.Instance.RegisterCommand("UnlockAllAbilities", () => Player.Instance.UnlockAllAbilities());
         ConsoleController.Instance.RegisterCommand("KillAll", () => EnemyController.Instance.KillAllEnemies());
-    }
-
-    private void InitializeControllers()
-    {
-        foreach(var controller in GetComponentsInChildren<IInitializable>())
-        {
-            controller.Initialize();
-        }
     }
 
     private void InitializePlayer()

@@ -3,20 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class PlayerInputController : MonoBehaviour, IInitializable
+public class PlayerInputController : Singleton
 {
-    public static PlayerInputController Instance;
+    public static PlayerInputController Instance { get { return Instance<PlayerInputController>(); } }
     public enum JoystickType { XBOX, PLAYSTATION }
     public enum JoystickButtonType { SOUTH, EAST, WEST, NORTH }
     public enum MouseButtonType { LMB, RMB, MMB }
 
     private string[] buttons_ability = new string[] { "Fire1", "Fire2", "Fire3", "Jump" };
     public int CountAbilityButtons { get { return buttons_ability.Length; } }
-
-    public void Initialize()
-    {
-        Instance = this;
-    }
 
     private void Update()
     {

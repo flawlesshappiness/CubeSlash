@@ -16,7 +16,7 @@ public class AbilityView : View
         StartCoroutine(StartCr());
 
         // Audio
-        AudioController.Instance.snapshot_menu.TransitionTo(0.5f);
+        AudioController.Instance.TransitionTo(AudioController.Snapshot.MENU, 0.5f);
     }
 
     private IEnumerator StartCr()

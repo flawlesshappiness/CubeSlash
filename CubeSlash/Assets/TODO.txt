@@ -2,9 +2,7 @@ TODO:
 Player body based on ability runes
 Dash do a raycast before dashing
 escaping boss kills it
-charge + dash not working
 better graphic when hitting enemies
-charge + dash might be hitting high health enemies multiple times
 
 Phil feedback:
 bonus on multiple enemies in a row

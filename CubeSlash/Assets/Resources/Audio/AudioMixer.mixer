@@ -26,7 +26,6 @@ AudioMixerController:
   m_Snapshots:
   - {fileID: 4819825665280932327}
   - {fileID: 2818974874584983780}
-  - {fileID: 8174989061416406337}
   m_StartSnapshot: {fileID: 4819825665280932327}
   m_SuspendThreshold: -80
   m_EnableSuspend: 1
@@ -39,7 +38,7 @@ AudioMixerController:
     - ea053f372f4c64a4d96553a40c6be8a0
     name: View
   m_CurrentViewIndex: 0
-  m_TargetSnapshot: {fileID: 2818974874584983780}
+  m_TargetSnapshot: {fileID: 4819825665280932327}
 --- !u!243 &24300002
 AudioMixerGroupController:
   m_ObjectHideFlags: 0
@@ -138,7 +137,7 @@ AudioMixerSnapshotController:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Menu
+  m_Name: MENU
   m_AudioMixer: {fileID: 24100000}
   m_SnapshotID: afe96ab8bb1b4a84fbe828c12a746d54
   m_FloatValues:
@@ -168,7 +167,7 @@ AudioMixerSnapshotController:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Main
+  m_Name: MAIN
   m_AudioMixer: {fileID: 24100000}
   m_SnapshotID: 7caabb9cd757d1e45bf42ba3d8a0a222
   m_FloatValues:
@@ -206,33 +205,3 @@ AudioMixerEffectController:
   m_SendTarget: {fileID: 0}
   m_EnableWetMix: 0
   m_Bypass: 0
---- !u!245 &8174989061416406337
-AudioMixerSnapshotController:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: Mute
-  m_AudioMixer: {fileID: 24100000}
-  m_SnapshotID: 7dd220515d7d077438b697ff4327f14d
-  m_FloatValues:
-    ea04c24051f3b4941836b38fa28cc376: 0.1
-    9dcceb1106f868846904a0a8067e3589: -80
-    55871653f968312448e5ca2b84414bfd: 0
-    58e6a4f347dac7347bcf04f99465d7a9: 1
-    5958cd047f25dae4ea2da01735325c95: 39
-    63880f152b784c7428e6933d0c3eb535: -932
-    b7624e65b5d63ba4199a4a2023f0c25e: 761
-    6597cce5bbb981c4ea7720f551567230: 4
-    f0fb1f17acad8904ba0acbc176141f96: 10
-    a7eb3957a536b2e4e91c023f685f6d6f: 0.1
-    ed9ba8b7010993641a7a1a4a70d6919d: 0
-    325f1958a7db0e6469ac5c9ce375ace5: 2
-    cc41ed4ad22d8494a8c5af2fc29ebf4b: 10
-    fa7a09aadb1d52a4d86e0de719cc78b6: -0.12625667
-    55978bcafb461444e9f54818affcc885: 2
-    fcaecf0bb56478c4c885cc48c828c683: 4
-    40aff26decb979c41aa98244b02ed780: -80
-    3b16607feaa1fd947a0384e42183369a: 0
-    8c2b5cff968b728489aa08bda82aac6b: 0
-  m_TransitionOverrides: {}

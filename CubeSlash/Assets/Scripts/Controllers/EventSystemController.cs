@@ -1,18 +1,12 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class EventSystemController : MonoBehaviour, IInitializable
+public class EventSystemController : Singleton
 {
-    public static EventSystemController Instance { get; private set; }
-
+    public static EventSystemController Instance { get { return Instance<EventSystemController>(); } }
     public EventSystem EventSystem { get { return EventSystem.current; } }
 
     private GameObject prev_selected_object;
-
-    public void Initialize()
-    {
-        Instance = this;
-    }
 
     private void Update()
     {
