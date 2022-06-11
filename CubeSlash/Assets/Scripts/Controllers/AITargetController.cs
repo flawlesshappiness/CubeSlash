@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class AITargetController : Singleton
 {
+    public static AITargetController Instance { get { return Instance<AITargetController>(); } }
     private Dictionary<Transform, Artifact> artifacts = new Dictionary<Transform, Artifact>();
 
     public bool RequestArtifact(Enemy enemy, Transform target)
@@ -39,6 +40,12 @@ public class AITargetController : Singleton
     public void ClearArtifacts()
     {
         artifacts.Clear();
+    }
+
+    public void SetArtifactOwnerCount(Transform target, int count)
+    {
+        var artifact = GetOrCreateArtifact(target);
+        artifact.max = count;
     }
 
     private Artifact GetOrCreateArtifact(Transform target)

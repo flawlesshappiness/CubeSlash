@@ -83,7 +83,7 @@ public class EnemyController : Singleton
         return SpawnEnemy(settings, position);
     }
 
-    private Enemy SpawnEnemy(EnemySettings settings, Vector3 position)
+    public Enemy SpawnEnemy(EnemySettings settings, Vector3 position)
     {
         if(enemies_inactive.Count == 0)
         {
@@ -112,7 +112,7 @@ public class EnemyController : Singleton
         }
     }
 
-    private Vector3 GetPositionOutsideCamera()
+    public Vector3 GetPositionOutsideCamera()
     {
         var dir = Random.insideUnitCircle.normalized.ToVector3();
         var dist = CameraController.Instance.Width * 0.5f * Random.Range(1.2f, 2.0f);
@@ -137,7 +137,7 @@ public class EnemyController : Singleton
     }
     #endregion
     #region ENEMY
-    public Enemy CreateEnemy()
+    private Enemy CreateEnemy()
     {
         var enemy = Instantiate(prefab_enemy.gameObject).GetComponent<Enemy>();
         enemy.transform.parent = GameController.Instance.world;

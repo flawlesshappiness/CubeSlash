@@ -1,8 +1,6 @@
 TODO:
 Player body based on ability runes
 Dash do a raycast before dashing
-escaping boss kills it
-better graphic when hitting enemies
 
 Phil feedback:
 bonus on multiple enemies in a row

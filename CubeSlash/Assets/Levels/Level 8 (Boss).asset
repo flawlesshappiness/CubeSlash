@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   reward_ability: 1
   count_enemy_active: 20
+  count_enemy_target_player: 3
   enemies: []
   bosses:
   - name: 

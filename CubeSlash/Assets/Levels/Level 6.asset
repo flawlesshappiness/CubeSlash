@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   reward_ability: 0
   count_enemy_active: 25
+  count_enemy_target_player: 3
   enemies:
   - name: Weak
     enemy: {fileID: 11400000, guid: cfcae6b5621e50448a5872f62f68b1ba, type: 2}

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class Character : MonoBehaviourExtended
@@ -20,29 +21,50 @@ public class Character : MonoBehaviourExtended
     {
         public Transform transform;
         [HideInInspector] public Enemy parasite;
+        public Character Character { get; set; }
 
         public bool inactive_when_parent_parasite;
 
         public Vector3 Position { get { return transform.position; } }
-        public bool Empty { get { return parasite == null; } }
+        public bool Available { get { return IsAvailable(); } }
 
         public void SetParasite(Enemy e)
         {
+            var host = Character.GetComponentInParent<Enemy>();
             parasite = e;
             e.transform.position = transform.position;
             e.transform.parent = transform;
-            e.SetParasite(true);
+            e.SetParasiteHost(host);
             e.OnDeath += () => 
             {
                 parasite = null;
-                e.SetParasite(false);
+                e.transform.parent = GameController.Instance.world;
+                e.RemoveParasiteHost();
             };
         }
+
+        private bool IsAvailable()
+        {
+            var empty = parasite == null;
+            var active = Character.gameObject.activeInHierarchy;
+            var e = Character.GetComponentInParent<Enemy>();
+            var blocked = e != null && e.IsParasite && inactive_when_parent_parasite;
+            return empty && active && !blocked;
+        }
+    }
+
+    public ParasiteSpace GetParasiteSpace(Transform t)
+    {
+        return ParasiteSpaces.FirstOrDefault(space => space.transform == t);
     }
 
     public void Initialize()
     {
-        
+        foreach(var space in ParasiteSpaces)
+        {
+            space.Character = this;
+            AITargetController.Instance.SetArtifactOwnerCount(space.transform, 3);
+        }
     }
 
     public void SetLookDirection(Vector3 direction)

@@ -7,6 +7,7 @@ public class LevelAsset : ScriptableObject
 {
     public bool reward_ability;
     public int count_enemy_active;
+    public int count_enemy_target_player;
     public List<Enemy> enemies = new List<Enemy>();
     public List<Enemy> bosses = new List<Enemy>();
 

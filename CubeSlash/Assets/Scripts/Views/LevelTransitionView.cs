@@ -20,10 +20,11 @@ public class LevelTransitionView : View
         var cr_input = CoroutineController.Instance.Run(WaitForInputCr(), "timer_" + GetInstanceID());
 
         // Timer
-        lerp_timer = Lerp.Value(2f, 1f, 0f, t =>
+        lerp_timer = Lerp.Value(2f, 1f, 0f, "timer_" + GetInstanceID(), t =>
         {
             img_timer.fillAmount = t;
-        }, gameObject, "timer_" + GetInstanceID())
+        })
+            .Connect(gameObject)
             .Delay(1)
             .OnEnd(() =>
             {
@@ -40,7 +41,7 @@ public class LevelTransitionView : View
             if (PlayerInputController.Instance.GetAnyJoystickButtonDown())
             {
                 input_received = true;
-                Lerp.Kill(lerp_timer);
+                lerp_timer.Kill();
                 GameController.Instance.AbilityMenuTransition();
             }
             yield return null;

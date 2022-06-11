@@ -87,6 +87,10 @@ public class GameController : MonoBehaviour
         Player.Instance.AbilityLock.RemoveLock("NextLevel");
         Player.Instance.Health.Value = Player.Instance.Health.Max;
         Player.Instance.InitializeAbilities();
+
+        AITargetController.Instance.ClearArtifacts();
+        AITargetController.Instance.SetArtifactOwnerCount(Player.Instance.transform, Level.Current.count_enemy_target_player);
+
         StartCoroutine(WaitForViewCr());
 
         IEnumerator WaitForViewCr()

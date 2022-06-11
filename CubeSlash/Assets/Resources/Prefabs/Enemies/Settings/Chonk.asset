@@ -15,4 +15,4 @@ MonoBehaviour:
   character: {fileID: 6535444791780287965, guid: 4146290374a839945965b013a2647aec, type: 3}
   size: {x: 2, y: 2, z: 2}
   parasite: {fileID: 11400000, guid: cfcae6b5621e50448a5872f62f68b1ba, type: 2}
-  ai: {fileID: 529371227271487176, guid: 842ad0e37280b874383123d7d39adeeb, type: 3}
+  ai: {fileID: 529371227271487176, guid: 1238199b44c26b1418a8f4108b68ff48, type: 3}

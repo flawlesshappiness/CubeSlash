@@ -5,17 +5,17 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviourExtended
 {
-    private Rigidbody2D Rigidbody { get { return GetComponentOnce<Rigidbody2D>(ComponentSearchType.CHILDREN); } }
-    private Character Character { get; set; }
+    public Rigidbody2D Rigidbody { get { return GetComponentOnce<Rigidbody2D>(ComponentSearchType.CHILDREN); } }
+    public Character Character { get; private set; }
     private EntityAI AI { get; set; }
-    public bool IsParasite { get; private set; }
+    public bool IsParasite { get { return ParasiteHost != null; } }
+    public Enemy ParasiteHost { get; private set; }
+    public Vector3 MoveDirection { get { return Character.transform.up; } }
 
     public MultiLock MovementLock { get; private set; } = new MultiLock();
     public MultiLock DragLock { get; private set; } = new MultiLock();
 
     private bool Moving { get; set; }
-
-    private const float SPEED_MOVE = 3f;
 
     public event System.Action OnDeath;
 
@@ -28,10 +28,9 @@ public class Enemy : MonoBehaviourExtended
         // Parasites
         if(settings.parasite != null)
         {
-            foreach (var space in Character.ParasiteSpaces.Where(space => space.Empty))
+            foreach (var space in Character.ParasiteSpaces.Where(space => space.Available))
             {
-                var e = EnemyController.Instance.CreateEnemy();
-                e.Initialize(settings.parasite);
+                var e = EnemyController.Instance.SpawnEnemy(settings.parasite, space.Position);
                 space.SetParasite(e);
             }
         }
@@ -39,8 +38,6 @@ public class Enemy : MonoBehaviourExtended
 
     private void Update()
     {
-        if (!Character) return;
-
         DecelerateUpdate();
     }
 
@@ -56,11 +53,22 @@ public class Enemy : MonoBehaviourExtended
         Character.Initialize();
     }
 
-    public void SetParasite(bool isParasite)
+    public void Reposition()
     {
-        IsParasite = isParasite;
-        Rigidbody.isKinematic = isParasite;
-        Character.Collider.enabled = isParasite;
+        transform.position = EnemyController.Instance.GetPositionOutsideCamera();
+    }
+
+    public void SetParasiteHost(Enemy host)
+    {
+        ParasiteHost = host;
+        Rigidbody.isKinematic = IsParasite;
+        Character.Collider.enabled = IsParasite;
+        AI.enabled = !IsParasite;
+    }
+
+    public void RemoveParasiteHost()
+    {
+        SetParasiteHost(null);
     }
 
     private void SetAI(EntityAI prefab)
@@ -75,12 +83,21 @@ public class Enemy : MonoBehaviourExtended
         AI.Initialize(this);
     }
 
+    #region MOVEMENT
     public void Move(Vector3 direction)
     {
         if (MovementLock.IsFree)
         {
             Moving = true;
-            Rigidbody.velocity = direction.normalized * SPEED_MOVE;
+            Rigidbody.velocity = direction;
+            Character.SetLookDirection(direction);
+        }
+    }
+
+    public void TurnTowards(Vector3 direction)
+    {
+        if (MovementLock.IsFree)
+        {
             Character.SetLookDirection(direction);
         }
     }
@@ -105,9 +122,15 @@ public class Enemy : MonoBehaviourExtended
         }
     }
 
+    public void Knockback(float time, Vector3 velocity, float drag)
+    {
+        AI.Knockback(time, velocity, drag);
+    }
+    #endregion
+    #region HEALTH
     public bool IsKillable()
     {
-        return Character.ParasiteSpaces.Count == 0 || Character.ParasiteSpaces.Count(space => !space.Empty) == 0;
+        return Character.ParasiteSpaces.Count == 0 || Character.ParasiteSpaces.Count(space => !space.Available) == 0;
     }
 
     public void Kill()
@@ -126,6 +149,10 @@ public class Enemy : MonoBehaviourExtended
         // Event
         OnDeath?.Invoke();
 
+        // AI
+        AI.Kill();
+        AI = null;
+
         // Respawn
         Respawn();
     }
@@ -135,4 +162,5 @@ public class Enemy : MonoBehaviourExtended
         gameObject.SetActive(false);
         EnemyController.Instance.EnemyKilled(this);
     }
+    #endregion
 }

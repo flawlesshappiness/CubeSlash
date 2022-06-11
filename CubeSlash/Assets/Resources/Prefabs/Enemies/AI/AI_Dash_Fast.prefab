@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 529371227271487183}
   - component: {fileID: 529371227271487176}
   m_Layer: 0
-  m_Name: AI_SearchHunt
+  m_Name: AI_Dash_Fast
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -43,3 +43,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d50050222503b5246a42c1e54cf084ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  stats:
+  - name: SEARCH
+    state: 0
+    speed_move: 3
+    speed_turn: 150
+    angle_min: 45
+    angle_max: 180
+  - name: TARGET
+    state: 1
+    speed_move: 6
+    speed_turn: 15
+    angle_min: 10
+    angle_max: 30
+  - name: PARASITE
+    state: 2
+    speed_move: 4
+    speed_turn: 100
+    angle_min: 10
+    angle_max: 30

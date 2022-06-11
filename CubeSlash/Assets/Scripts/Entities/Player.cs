@@ -212,10 +212,6 @@ public class Player : MonoBehaviourExtended
             Experience.Value += 1;
             onEnemyKilled?.Invoke(enemy);
         }
-        else
-        {
-
-        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

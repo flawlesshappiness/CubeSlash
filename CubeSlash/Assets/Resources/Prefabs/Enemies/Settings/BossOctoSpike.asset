@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c301fa7d26535e4cb7056a730ebca5e, type: 3}
   m_Name: BossOctoSpike
   m_EditorClassIdentifier: 
-  health: 50
   character: {fileID: 6535444791780287965, guid: d81b8b370ecd35f47a57f343f524e45a, type: 3}
   size: {x: 8, y: 8, z: 1}
-  ai: {fileID: 529371227271487176, guid: 842ad0e37280b874383123d7d39adeeb, type: 3}
+  parasite: {fileID: 0}
+  ai: {fileID: 529371227271487176, guid: 1238199b44c26b1418a8f4108b68ff48, type: 3}

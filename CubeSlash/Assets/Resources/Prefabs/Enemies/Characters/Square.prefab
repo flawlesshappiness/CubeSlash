@@ -190,6 +190,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Collider: {fileID: 6890082898159651105}
   Trigger: {fileID: 7567302068818909714}
+  parasite_level: 1
   ParasiteSpaces:
   - transform: {fileID: 4230204030527181833}
     parasite: {fileID: 0}

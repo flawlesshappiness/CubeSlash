@@ -196,6 +196,7 @@ public class AbilityDash : Ability
             // Stop dashing
             if (cr_dash != null)
             {
+                Dashing = false;
                 CoroutineController.Instance.Kill(cr_dash);
             }
             StartCoroutine(DashHitKnockbackCr());
@@ -214,7 +215,6 @@ public class AbilityDash : Ability
         Player.Instance.InvincibilityLock.RemoveLock(nameof(AbilityDash));
         Player.Instance.MovementLock.RemoveLock(nameof(AbilityDash));
         Player.Instance.DragLock.RemoveLock(nameof(AbilityDash));
-        Dashing = false;
     }
 
     private void DashHitEnemy(Enemy enemy)
@@ -222,7 +222,24 @@ public class AbilityDash : Ability
         if (enemy && !_hits_dash.Contains(enemy))
         {
             _hits_dash.Add(enemy);
-            Player.KillEnemy(enemy);
+
+            var time = 0.25f;
+            var velocity = Player.MoveDirection * 0.25f;
+            var drag = 0.995f;
+
+            if (enemy.IsParasite)
+            {
+                enemy.ParasiteHost.Knockback(time, velocity, drag);
+            }
+
+            if (enemy.IsKillable())
+            {
+                Player.KillEnemy(enemy);
+            }
+            else
+            {
+                enemy.Knockback(time, velocity, drag);
+            }
         }
     }
 

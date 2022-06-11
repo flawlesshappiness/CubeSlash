@@ -51,7 +51,8 @@ public class GameView : View
         var t = (float)exp.Value / exp.Max;
         if (animate)
         {
-            Lerp.Value(0.25f, img_experience.fillAmount, t, f => img_experience.fillAmount = f, img_experience.gameObject, "fill_" + img_experience.GetInstanceID())
+            Lerp.Value(0.25f, img_experience.fillAmount, t, "fill_" + img_experience.GetInstanceID(), f => img_experience.fillAmount = f)
+                .Connect(img_experience.gameObject)
                 .Curve(Lerp.Curve.EASE_END);
         }
         else

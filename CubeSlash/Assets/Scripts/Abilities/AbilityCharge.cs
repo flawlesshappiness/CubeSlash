@@ -218,12 +218,10 @@ public class AbilityCharge : Ability
         line.SetPosition(segments, end);
 
         // Width
-        yield return Lerp.Value(0.25f, 0f, 1f, f =>
-        {
-            line.widthMultiplier = (1f - f) * Width;
-        }, line.gameObject, "width_" + line.GetInstanceID())
+        yield return Lerp.Value(0.25f, "width_" + line.GetInstanceID(), f => line.widthMultiplier = (1f - f) * Width)
+            .Connect(line.gameObject)
             .Curve(Lerp.Curve.EASE_END)
-            .GetEnumerator();
+            .GetCoroutine();
         line.gameObject.SetActive(false);
         Destroy(line.gameObject);
     }
