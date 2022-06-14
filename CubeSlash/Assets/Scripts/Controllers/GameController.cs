@@ -10,17 +10,21 @@ public class GameController : MonoBehaviour
 
     public static GameController Instance;
 
-    private LevelAsset level_prev;
+    public bool IsGameStarted { get; private set; }
+    public bool IsPaused { get { return PauseLock.IsLocked; } }
+    public MultiLock PauseLock { get; private set; } = new MultiLock();
 
     private void Awake()
     {
         Instance = this;
         InitializePlayer();
         InitializeData();
-        StartLevel();
+        StartGame();
+
+        PauseLock.OnLockChanged += OnPauseChanged;
 
         ConsoleController.Instance.RegisterCommand("UnlockAllAbilities", () => Player.Instance.UnlockAllAbilities());
-        ConsoleController.Instance.RegisterCommand("KillAll", () => EnemyController.Instance.KillAllEnemies());
+        ConsoleController.Instance.RegisterCommand("Kill", () => EnemyController.Instance.KillActiveEnemies());
     }
 
     private void InitializePlayer()
@@ -29,6 +33,7 @@ public class GameController : MonoBehaviour
         Player.Instance = Instantiate(prefab_player, world).GetComponent<Player>();
         Player.Instance.Initialize();
         Player.Instance.Health.onMin += OnPlayerDeath;
+        Player.Instance.Experience.onMax += OnPlayerLevelUp;
         CameraController.Instance.Target = Player.Instance.transform;
     }
 
@@ -42,6 +47,7 @@ public class GameController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        LevelUpdate();
         CheatUpdate();
     }
 
@@ -61,8 +67,18 @@ public class GameController : MonoBehaviour
         }
         else if (Input.GetKeyDown(KeyCode.Alpha2) && Input.GetKey(KeyCode.Tab))
         {
-            EnemyController.Instance.KillAllEnemies();
+            EnemyController.Instance.KillActiveEnemies();
         }
+    }
+
+    private void OnPauseChanged(bool paused)
+    {
+        SetTimeScale(paused ? 0 : 1);
+    }
+
+    private void SetTimeScale(float time)
+    {
+        Time.timeScale = PauseLock.IsLocked ? 0 : time;
     }
 
     private void Quit()
@@ -79,98 +95,55 @@ public class GameController : MonoBehaviour
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
-    public void StartLevel()
+    public void StartGame()
     {
+        IsGameStarted = true;
         Player.Instance.gameObject.SetActive(true);
         Player.Instance.Experience.Value = 0;
-        Player.Instance.InputLock.RemoveLock("NextLevel");
-        Player.Instance.AbilityLock.RemoveLock("NextLevel");
         Player.Instance.Health.Value = Player.Instance.Health.Max;
         Player.Instance.InitializeAbilities();
 
-        AITargetController.Instance.ClearArtifacts();
-        AITargetController.Instance.SetArtifactOwnerCount(Player.Instance.transform, Level.Current.count_enemy_target_player);
+        Data.Game.idx_level = 0;
+        time_level = Time.time + Level.Current.duration;
 
         StartCoroutine(WaitForViewCr());
-
         IEnumerator WaitForViewCr()
         {
             var view = ViewController.Instance.ShowView<GameView>();
             while (!view.Initialized) yield return null;
-            EnemyController.Instance.StartSpawning();
-            StartCoroutine(WaitForLevelCompletedCr());
+            EnemyController.Instance.SetSpawningEnabled(true);
         }
     }
 
-    private IEnumerator WaitForLevelCompletedCr()
+    private float time_level;
+    private void LevelUpdate()
     {
-        yield return new WaitForSeconds(1);
-        while(EnemyController.Instance.EnemiesLeft() > 0)
-        {
-            yield return null;
-        }
-
-        CompleteLevel();
-    }
-
-    public void NextLevelTransition()
-    {
-        // Enable player
-        Player.Instance.gameObject.SetActive(true);
-
-        // Transition
-        StartCoroutine(NextLevelTransitionCr());
-    }
-
-    private IEnumerator NextLevelTransitionCr()
-    {
-        ViewController.Instance.CloseView();
-        yield return new WaitForSeconds(1.0f);
-        StartLevel();
-    }
-
-    public void CompleteLevel()
-    {
-        level_prev = Level.Current;
+        if (!IsGameStarted) return;
+        if (Time.time < time_level) return;
         Level.Completed();
-
-        // Stop enemies
-        EnemyController.Instance.StopSpawning();
-        EnemyController.Instance.KillActiveEnemies();
-
-        // Stop player
-        Player.Instance.AbilityLock.AddLock("NextLevel");
-
-        // Continue
-        StartCoroutine(CompleteLevelCr());
+        time_level = Time.time + Level.Current.duration;
+        print("Next level " + Data.Game.idx_level);
     }
 
-    private IEnumerator CompleteLevelCr()
+    private void OnPlayerLevelUp()
     {
-        ViewController.Instance.CloseView();
-        yield return new WaitForSeconds(1f);
-        if(level_prev != null && level_prev.reward_ability)
+        StartCoroutine(Cr());
+        IEnumerator Cr()
         {
-            Player.Instance.InputLock.AddLock("NextLevel");
-            ViewController.Instance.ShowView<UnlockAbilityView>();
-        }
-        else
-        {
-            ViewController.Instance.ShowView<LevelTransitionView>();
+            yield return Lerp.Value(1f, 1f, 0f, "LevelUpSlowdown", f =>
+            {
+                SetTimeScale(f);
+            }).UnscaledTime().GetCoroutine();
+
+            PauseLock.AddLock(nameof(GameController));
+            Player.Instance.Experience.Value = Player.Instance.Experience.Min;
+            ViewController.Instance.ShowView<AbilityView>(0, "Ability");
         }
     }
 
-    public void AbilityMenuTransition()
+    public void ResumeLevel()
     {
-        StartCoroutine(AbilityMenuTransitionCr());
-    }
-
-    private IEnumerator AbilityMenuTransitionCr()
-    {
-        ViewController.Instance.CloseView();
-        yield return new WaitForSeconds(1f);
-        ViewController.Instance.ShowView<AbilityView>();
-        Player.Instance.InputLock.AddLock("NextLevel"); // Disable player
+        PauseLock.RemoveLock(nameof(GameController));
     }
 
     private void OnPlayerDeath()
@@ -183,7 +156,5 @@ public class GameController : MonoBehaviour
     {
         yield return new WaitForSeconds(1f);
         ViewController.Instance.ShowView<DeathView>(2f);
-        yield return new WaitForSeconds(4f);
-        Reload();
     }
 }

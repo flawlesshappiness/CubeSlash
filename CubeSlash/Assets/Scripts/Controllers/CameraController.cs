@@ -23,4 +23,11 @@ public class CameraController : Singleton
         var z = Camera.transform.position.z;
         Camera.transform.position = Vector3.Slerp(Camera.transform.position, Target.position.SetZ(z), 5 * Time.deltaTime);
     }
+
+    public Vector3 GetPositionOutsideCamera()
+    {
+        var dir = Random.insideUnitCircle.normalized.ToVector3();
+        var dist = Width * 0.5f * Random.Range(1.2f, 2.0f);
+        return Camera.transform.position.SetZ(0) + dir * dist;
+    }
 }

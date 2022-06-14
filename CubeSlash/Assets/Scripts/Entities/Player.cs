@@ -33,7 +33,7 @@ public class Player : MonoBehaviourExtended
         Health.Max = 3;
         Health.Value = Health.Max;
         Experience.Min = 0;
-        Experience.Max = 25;
+        Experience.Max = 5;
         Experience.Value = Experience.Min;
         AbilitiesEquipped = new Ability[PlayerInputController.Instance.CountAbilityButtons];
         var dash = UnlockAbility(Ability.Type.DASH);
@@ -124,9 +124,10 @@ public class Player : MonoBehaviourExtended
 
     private bool CanUseAbility(Ability ability)
     {
+        var not_paused = !GameController.Instance.IsPaused;
         var not_blocking = AbilityLock.IsFree;
         var not_cooldown = !ability.OnCooldown;
-        return not_blocking && not_cooldown;
+        return not_blocking && not_cooldown && not_paused;
     }
 
     public void PressAbility(int idx)
@@ -209,7 +210,6 @@ public class Player : MonoBehaviourExtended
         if (enemy.IsKillable())
         {
             enemy.Kill();
-            Experience.Value += 1;
             onEnemyKilled?.Invoke(enemy);
         }
     }

@@ -11,12 +11,30 @@ public class AbilityView : View
 
     private void Start()
     {
+        // Buttons
         btn_continue.onClick.AddListener(ClickContinue);
 
+        // Animate
         StartCoroutine(StartCr());
 
         // Audio
         AudioController.Instance.TransitionTo(AudioController.Snapshot.MENU, 0.5f);
+
+        // Disable prefabs
+        prefab_card.Interactable = false;
+        prefab_card.InteractableList = false;
+        prefab_card.gameObject.SetActive(false);
+        prefab_card_position.gameObject.SetActive(false);
+    }
+
+    private void OnEnable()
+    {
+        GameController.Instance.PauseLock.AddLock(nameof(AbilityView));
+    }
+
+    private void OnDisable()
+    {
+        GameController.Instance.PauseLock.RemoveLock(nameof(AbilityView));
     }
 
     private IEnumerator StartCr()
@@ -43,15 +61,10 @@ public class AbilityView : View
             card.OnClickModifier += i => ClickSelectModifier(card, i);
 
             Lerp.Position(card.transform, 0.5f, rt_positions[i].position)
+                .UnscaledTime()
                 .Curve(Lerp.Curve.EASE_END);
 
-            // Disable prefabs
-            prefab_card.Interactable = false;
-            prefab_card.InteractableList = false;
-            prefab_card.gameObject.SetActive(false);
-            prefab_card_position.gameObject.SetActive(false);
-
-            yield return new WaitForSeconds(0.25f);
+            yield return new WaitForSecondsRealtime(0.25f);
         }
 
         cards.ForEach(c =>
@@ -66,16 +79,26 @@ public class AbilityView : View
     {
         CanvasGroup.blocksRaycasts = false;
 
+        var crs = new List<Coroutine>();
         for (int i = rt_positions.Count-1; i >= 0; i--)
         {
             var card = cards[i];
-            Lerp.Position(card.transform, 1f, rt_positions[i].position.AddX(Screen.width))
+            var lerp = Lerp.Position(card.transform, 1f, rt_positions[i].position.AddX(Screen.width))
+                .UnscaledTime()
                 .Curve(Lerp.Curve.EASE_END);
 
-            yield return new WaitForSeconds(0.1f);
+            crs.Add(lerp.GetCoroutine());
+
+            yield return new WaitForSecondsRealtime(0.1f);
         }
 
-        GameController.Instance.NextLevelTransition();
+        foreach(var cr in crs)
+            yield return cr;
+
+        yield return Lerp.Alpha(CanvasGroup, 0.25f, 0f).UnscaledTime().GetCoroutine();
+
+        Close(0);
+        GameController.Instance.ResumeLevel();
     }
 
     #region BUTTONS
@@ -97,10 +120,9 @@ public class AbilityView : View
 
     private UIAbilityCard CreateCard()
     {
-        prefab_card.gameObject.SetActive(true);
         var card = Instantiate(prefab_card.gameObject, prefab_card.transform.parent).GetComponent<UIAbilityCard>();
+        card.gameObject.SetActive(true);
         cards.Add(card);
-        prefab_card.gameObject.SetActive(false);
         return card;
     }
     #endregion

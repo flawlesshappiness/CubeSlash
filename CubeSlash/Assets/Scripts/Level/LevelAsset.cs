@@ -5,9 +5,9 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Level", menuName = "Level/LevelAsset", order = 1)]
 public class LevelAsset : ScriptableObject
 {
-    public bool reward_ability;
+    public float duration;
+    public float frequency_spawn;
     public int count_enemy_active;
-    public int count_enemy_target_player;
     public List<Enemy> enemies = new List<Enemy>();
     public List<Enemy> bosses = new List<Enemy>();
 
@@ -24,6 +24,6 @@ public class LevelAsset : ScriptableObject
     {
         [HideInInspector] public string name;
         public EnemySettings enemy;
-        public int count_total = 1;
+        public float chance;
     }
 }

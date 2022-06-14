@@ -12,8 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c301fa7d26535e4cb7056a730ebca5e, type: 3}
   m_Name: Weak
   m_EditorClassIdentifier: 
-  type: 0
-  health: 1
   character: {fileID: 6535444791780287965, guid: 45499daff63c9d64b8e9f610d9bfd8a4, type: 3}
+  speed_move: 5
+  speed_turn: 150
   size: {x: 1, y: 1, z: 1}
-  ai: {fileID: 529371227271487176, guid: 842ad0e37280b874383123d7d39adeeb, type: 3}
+  parasite: {fileID: 0}
+  ai: {fileID: 8767035241809482896, guid: f11e61c706cb5664cb504211139ae209, type: 3}

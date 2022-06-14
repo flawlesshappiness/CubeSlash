@@ -8,6 +8,7 @@ public class Enemy : MonoBehaviourExtended
     public Rigidbody2D Rigidbody { get { return GetComponentOnce<Rigidbody2D>(ComponentSearchType.CHILDREN); } }
     public Character Character { get; private set; }
     private EntityAI AI { get; set; }
+    public EnemySettings Settings { get; private set; }
     public bool IsParasite { get { return ParasiteHost != null; } }
     public Enemy ParasiteHost { get; private set; }
     public Vector3 MoveDirection { get { return Character.transform.up; } }
@@ -21,6 +22,7 @@ public class Enemy : MonoBehaviourExtended
 
     public void Initialize(EnemySettings settings)
     {
+        this.Settings = settings;
         SetCharacter(settings.character);
         SetAI(settings.ai);
         transform.localScale = settings.size;
@@ -55,7 +57,7 @@ public class Enemy : MonoBehaviourExtended
 
     public void Reposition()
     {
-        transform.position = EnemyController.Instance.GetPositionOutsideCamera();
+        transform.position = CameraController.Instance.GetPositionOutsideCamera();
     }
 
     public void SetParasiteHost(Enemy host)

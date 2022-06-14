@@ -25,10 +25,6 @@ public class GameView : View
         // Audio
         AudioController.Instance.TransitionTo(AudioController.Snapshot.MAIN, 0.5f);
 
-        // Events
-        EnemyController.Instance.OnEnemyKilled += OnEnemyKilled;
-        EnemyController.Instance.OnEnemySpawned += OnEnemySpawned;
-
         // Initialized
         Initialized = true;
     }
@@ -36,8 +32,6 @@ public class GameView : View
     private void OnDestroy()
     {
         Player.Instance.Experience.onValueChanged -= OnExperienceChanged;
-        EnemyController.Instance.OnEnemyKilled -= OnEnemyKilled;
-        EnemyController.Instance.OnEnemySpawned -= OnEnemySpawned;
     }
 
     private void OnExperienceChanged()
@@ -58,27 +52,6 @@ public class GameView : View
         else
         {
             img_experience.fillAmount = t;
-        }
-    }
-
-    private void OnEnemyKilled()
-    {
-        if(EnemyController.Instance.EnemiesLeft() <= 5 && !HasSpawnedSeekers)
-        {
-            HasSpawnedSeekers = true;
-            var enemies = EnemyController.Instance.ActiveEnemies;
-            foreach(var enemy in enemies)
-            {
-                CreateTargetSeeker(enemy.transform);
-            }
-        }
-    }
-
-    private void OnEnemySpawned(Enemy enemy)
-    {
-        if(EnemyController.Instance.EnemiesLeft() <= 5 && HasSpawnedSeekers)
-        {
-            CreateTargetSeeker(enemy.transform);
         }
     }
 
