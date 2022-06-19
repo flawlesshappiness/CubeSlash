@@ -19,6 +19,7 @@ public class GameController : MonoBehaviour
         Instance = this;
         InitializePlayer();
         InitializeData();
+        InitializeController();
         StartGame();
 
         PauseLock.OnLockChanged += OnPauseChanged;
@@ -42,6 +43,12 @@ public class GameController : MonoBehaviour
         Data.Game.idx_level = 0;
         Data.Game.count_ability_points = 0;
         Data.SaveGameData();
+    }
+
+    private void InitializeController()
+    {
+        Singleton.EnsureExistence<EnemyController>();
+        Singleton.EnsureExistence<ExperienceController>();
     }
 
     // Update is called once per frame
@@ -105,14 +112,7 @@ public class GameController : MonoBehaviour
 
         Data.Game.idx_level = 0;
         time_level = Time.time + Level.Current.duration;
-
-        StartCoroutine(WaitForViewCr());
-        IEnumerator WaitForViewCr()
-        {
-            var view = ViewController.Instance.ShowView<GameView>();
-            while (!view.Initialized) yield return null;
-            EnemyController.Instance.SetSpawningEnabled(true);
-        }
+        ViewController.Instance.ShowView<GameView>();
     }
 
     private float time_level;

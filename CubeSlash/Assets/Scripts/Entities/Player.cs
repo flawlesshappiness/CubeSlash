@@ -17,6 +17,7 @@ public class Player : MonoBehaviourExtended
     public MultiLock MovementLock { get; set; } = new MultiLock();
     public MultiLock DragLock { get; set; } = new MultiLock();
     public Vector3 MoveDirection { get; set; }
+    public float DistanceCollect { get; private set; } = 3f;
 
     public const float SPEED_MOVE = 5;
 

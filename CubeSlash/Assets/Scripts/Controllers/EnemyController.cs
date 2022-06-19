@@ -14,34 +14,28 @@ public class EnemyController : Singleton
     public System.Action OnEnemyKilled { get; set; }
     public System.Action<Enemy> OnEnemySpawned { get; set; }
     public List<Enemy> ActiveEnemies { get { return enemies_active.ToList(); } }
-    private int CountActiveEnemyMax { get { return Level.Current.count_enemy_active; } }
 
     private const int COUNT_ENEMY_POOL_EXTEND = 20;
 
-    public override void Initialize()
+    protected override void Initialize()
     {
         prefab_enemy = Resources.Load<Enemy>("Prefabs/Entities/Enemy");
     }
 
     private void Update()
     {
+        if (!GameController.Instance.IsGameStarted) return;
         SpawnUpdate();
     }
 
     #region SPAWNING
-    private bool spawning;
     private float time_spawn;
     private void SpawnUpdate()
     {
-        if (!spawning) return;
         if (Time.time < time_spawn) return;
-        time_spawn = Time.time + Level.Current.frequency_spawn;
+        if (enemies_active.Count >= Level.Current.count_enemy_active) return;
+        time_spawn = Time.time + Level.Current.frequency_spawn_enemy;
         SpawnEnemy(CameraController.Instance.GetPositionOutsideCamera());
-    }
-
-    public void SetSpawningEnabled(bool enabled)
-    {
-        this.spawning = enabled;
     }
 
     private Enemy SpawnEnemy(Vector3 position)

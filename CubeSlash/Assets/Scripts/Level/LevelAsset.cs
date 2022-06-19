@@ -6,10 +6,16 @@ using UnityEngine;
 public class LevelAsset : ScriptableObject
 {
     public float duration;
-    public float frequency_spawn;
+
+    [Header("ENEMY")]
+    public float frequency_spawn_enemy;
     public int count_enemy_active;
     public List<Enemy> enemies = new List<Enemy>();
     public List<Enemy> bosses = new List<Enemy>();
+
+    [Header("EXPERIENCE")]
+    public float frequency_spawn_experience;
+    public int count_experience_active;
 
     private void OnValidate()
     {

@@ -7,26 +7,14 @@ using UnityEngine.UI;
 public class GameView : View
 {
     [SerializeField] private Image img_experience;
-    [SerializeField] private UIOffscreenTargetSeeker prefab_target_seeker;
-
-    public bool Initialized { get; private set; }
-
-    private List<UIOffscreenTargetSeeker> target_seekers;
-
-    private bool HasSpawnedSeekers { get; set; }
 
     private void Start()
     {
-        prefab_target_seeker.gameObject.SetActive(false);
-
         Player.Instance.Experience.onValueChanged += OnExperienceChanged;
         UpdateExperience(false);
 
         // Audio
         AudioController.Instance.TransitionTo(AudioController.Snapshot.MAIN, 0.5f);
-
-        // Initialized
-        Initialized = true;
     }
 
     private void OnDestroy()
@@ -53,12 +41,5 @@ public class GameView : View
         {
             img_experience.fillAmount = t;
         }
-    }
-
-    private void CreateTargetSeeker(Transform target)
-    {
-        var seeker = Instantiate(prefab_target_seeker.gameObject, prefab_target_seeker.transform.parent).GetComponent<UIOffscreenTargetSeeker>();
-        seeker.gameObject.SetActive(true);
-        seeker.Target = target;
     }
 }

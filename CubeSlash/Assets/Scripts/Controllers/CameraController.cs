@@ -10,7 +10,7 @@ public class CameraController : Singleton
     public float Height { get { return Camera.orthographicSize * 2f; } }
     public float Width { get { return Height * Camera.aspect; } }
 
-    public override void Initialize()
+    protected override void Initialize()
     {
         base.Initialize();
         Camera = Camera.main;

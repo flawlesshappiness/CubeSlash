@@ -11,7 +11,7 @@ public class AudioController : Singleton
 
     public enum Snapshot { MUTE, MAIN, MENU }
 
-    public override void Initialize()
+    protected override void Initialize()
     {
         mixer = Resources.Load<AudioMixer>("Audio/AudioMixer");
     }

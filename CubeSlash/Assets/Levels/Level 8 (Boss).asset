@@ -12,11 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed170f98ca580f243b98b5b4d9a80757, type: 3}
   m_Name: Level 8 (Boss)
   m_EditorClassIdentifier: 
-  reward_ability: 1
+  duration: 0
+  frequency_spawn_enemy: 1
   count_enemy_active: 20
-  count_enemy_target_player: 3
   enemies: []
   bosses:
   - name: 
     enemy: {fileID: 11400000, guid: 7dccd8d735ce78d4ebf0e8c1d5f92887, type: 2}
-    count_total: 3
+    chance: 1
+  frequency_spawn_experience: 1
+  count_experience_active: 25

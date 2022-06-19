@@ -151,6 +151,11 @@ public class Enemy : MonoBehaviourExtended
         // Event
         OnDeath?.Invoke();
 
+        // Experience
+        var experience = ExperienceController.Instance.SpawnExperience(transform.position);
+        experience.Initialize();
+        experience.SetMeat();
+
         // AI
         AI.Kill();
         AI = null;
