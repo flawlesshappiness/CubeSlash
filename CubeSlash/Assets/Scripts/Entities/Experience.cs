@@ -2,14 +2,15 @@ using UnityEngine;
 
 public class Experience : MonoBehaviour
 {
-    [SerializeField] private Rigidbody2D rig;
     [SerializeField] private SpriteRenderer spr;
+    [SerializeField] private TrailRenderer trail;
     [SerializeField] private Color c_plant;
     [SerializeField] private Color c_meat;
     [SerializeField] private AnimationCurve ac_collect;
 
     private bool IsCollected { get; set; }
     private float TimeCollected { get; set; }
+    private Vector3 PositionCollected { get; set; }
 
     public void Initialize()
     {
@@ -32,15 +33,8 @@ public class Experience : MonoBehaviour
 
         if (IsCollected)
         {
-            var dir = transform.DirectionTo(Player.Instance.transform.position).normalized;
             var t = (Time.time - TimeCollected) / 0.25f;
-            rig.velocity = dir * ac_collect.Evaluate(t) * 10f;
-
-            if(Vector3.Distance(transform.position, Player.Instance.transform.position) <= 0.1f)
-            {
-                Player.Instance.Experience.Value++;
-                Despawn();
-            }
+            transform.position = Vector3.LerpUnclamped(PositionCollected, Player.Instance.transform.position, ac_collect.Evaluate(t));
         }
         else
         {
@@ -48,6 +42,7 @@ public class Experience : MonoBehaviour
             {
                 IsCollected = true;
                 TimeCollected = Time.time;
+                PositionCollected = transform.position;
             }
         }
     }
@@ -55,8 +50,17 @@ public class Experience : MonoBehaviour
     private void DespawnUpdate()
     {
         if (Player.Instance == null) return;
-        if (Vector3.Distance(transform.position, Player.Instance.transform.position) > CameraController.Instance.Width * 2)
+        var too_far_away = Vector3.Distance(transform.position, Player.Instance.transform.position) > CameraController.Instance.Width * 2;
+        var in_collect_distance = Vector3.Distance(transform.position, Player.Instance.transform.position) <= 0.1f;
+
+        var should_despawn = too_far_away || in_collect_distance;
+        if (should_despawn)
         {
+            if (in_collect_distance)
+            {
+                Player.Instance.Experience.Value++;
+            }
+
             Despawn();
         }
     }
@@ -68,11 +72,17 @@ public class Experience : MonoBehaviour
 
     public void SetMeat()
     {
-        spr.color = c_meat;
+        SetColor(c_meat);
     }
     
     public void SetPlant()
     {
-        spr.color = c_plant;
+        SetColor(c_plant);
+    }
+
+    private void SetColor(Color c)
+    {
+        spr.color = c;
+        trail.material.color = c;
     }
 }
