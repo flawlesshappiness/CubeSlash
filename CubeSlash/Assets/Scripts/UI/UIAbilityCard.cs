@@ -8,107 +8,44 @@ using UnityEngine.UI;
 public class UIAbilityCard : MonoBehaviour
 {
     [SerializeField] private CanvasGroup cvg;
-    [SerializeField] private TMP_Text tmp_name;
-    [SerializeField] private TMP_Text tmp_desc;
-    [SerializeField] private Image img_icon;
-    [SerializeField] private Image img_bg;
-    [SerializeField] private Button btn_ability;
-    [SerializeField] private UIInputButton button;
-    [SerializeField] private UIAbilityList ability_list;
-    [SerializeField] private UIAbilityModifier prefab_modifier;
-    [SerializeField] private AbilityMap empty_ability;
-    [SerializeField] private AbilityMap active_ability;
+    [SerializeField] public UIAbilitySelect ability_main;
+    [SerializeField] private UIAbilitySelect prefab_modifier;
 
-    public int Index { get; set; }
+    public List<UIAbilitySelect> modifiers = new List<UIAbilitySelect>();
+
     public bool Interactable { set { cvg.interactable = value; cvg.blocksRaycasts = value; } }
-    public bool InteractableList { set { ability_list.Interactable = value; } }
-    public UIInputButton InputButton { get { return button; } }
-    public List<UIAbilityModifier> Modifiers { get; private set; } = new List<UIAbilityModifier>();
-    public Button.ButtonClickedEvent OnClickAbility { get { return btn_ability.onClick; } }
-    public System.Action<int> OnClickModifier;
 
-    [System.Serializable]
-    public class AbilityMap
+    public void Initialize(int idx_button)
     {
-        public string name;
-        public string desc;
-        public Sprite sprite_icon;
-        public Color color_bg;
-    }
+        var ability = Player.Instance.AbilitiesEquipped[idx_button];
+        ability_main.SetAbility(ability);
+        InitializeModifiers(ability);
 
-    public void Initialize()
-    {
-        ability_list.gameObject.SetActive(false);
-
-        // Modifiers
-        for (int i = 0; i < ConstVars.COUNT_MODIFIERS; i++)
+        // Events
+        ability_main.OnAbilitySelected += a => Player.Instance.EquipAbility(a, idx_button);
+        for (int i = 0; i < modifiers.Count; i++)
         {
-            var modifier = CreateModifier();
-            modifier.Index = i;
             var idx = i;
-            modifier.OnClick.AddListener(() => OnClickModifier(idx));
+            modifiers[i].OnAbilitySelected += a =>
+            {
+                if(a != null)
+                {
+                    Player.Instance.AbilitiesEquipped[idx_button].SetModifier(a, idx);
+                }
+            };
         }
     }
 
-    private UIAbilityModifier CreateModifier()
+    private void InitializeModifiers(Ability ability)
     {
-        prefab_modifier.gameObject.SetActive(true);
-        var inst = Instantiate(prefab_modifier.gameObject, prefab_modifier.transform.parent).GetComponent<UIAbilityModifier>();
-        Modifiers.Add(inst);
-        prefab_modifier.gameObject.SetActive(false);
-        return inst;
-    }
-
-    public void SelectAbilityButton()
-    {
-        EventSystem.current.SetSelectedGameObject(btn_ability.gameObject);
-    }
-
-    public void SelectModifierButton(int idx)
-    {
-        EventSystem.current.SetSelectedGameObject(Modifiers[idx].Button.gameObject);
-    }
-
-    public void UpdateUI()
-    {
-        var ability = Player.Instance.AbilitiesEquipped[Index];
-        SetAbility(ability);
-
         for (int i = 0; i < ConstVars.COUNT_MODIFIERS; i++)
         {
-            var modifier = ability ? ability.Modifiers[i] : null;
-            SetModifier(Modifiers[i], modifier);
+            var modifier = Instantiate(prefab_modifier.gameObject, prefab_modifier.transform.parent)
+                .GetComponent<UIAbilitySelect>();
+            modifiers.Add(modifier);
+            modifier.SetAbility(ability == null ? null : ability.Modifiers[i]);
         }
+        prefab_modifier.Interactable = false;
+        prefab_modifier.gameObject.SetActive(false);
     }
-
-    private void SetAbility(Ability ability)
-    {
-        var active = ability != null;
-        tmp_name.text = active ? ability.name_ability : empty_ability.name;
-        tmp_desc.text = active ? ability.desc_ability : empty_ability.desc;
-        img_icon.sprite = active ? ability.sprite_icon : empty_ability.sprite_icon;
-        img_icon.enabled = img_icon.sprite != null;
-
-        img_bg.color = active ? active_ability.color_bg : empty_ability.color_bg;
-    }
-
-    private void SetModifier(UIAbilityModifier modifier, Ability ability)
-    {
-        modifier.Name = ability ? ability.name_ability : empty_ability.name;
-        modifier.Desc = ability ? ability.desc_ability : empty_ability.desc;
-        modifier.Sprite =  ability ? ability.sprite_icon : empty_ability.sprite_icon;
-    }
-
-    #region SELECT ABILITY
-    public void ShowSelectAbility(System.Action<Ability> onSelectAbility, System.Action onCancel, bool can_unequip = false)
-    {
-        ability_list.gameObject.SetActive(true);
-        ability_list.Show(can_unequip, onSelectAbility, onCancel);
-    }
-
-    public void HideSelectAbility()
-    {
-        ability_list.gameObject.SetActive(false);
-    }
-    #endregion
 }

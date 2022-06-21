@@ -10,6 +10,7 @@ public class GameController : MonoBehaviour
 
     public static GameController Instance;
 
+    public System.Action OnResume { get; set; }
     public bool IsGameStarted { get; private set; }
     public bool IsPaused { get { return PauseLock.IsLocked; } }
     public MultiLock PauseLock { get; private set; } = new MultiLock();
@@ -144,6 +145,8 @@ public class GameController : MonoBehaviour
     public void ResumeLevel()
     {
         PauseLock.RemoveLock(nameof(GameController));
+        Player.Instance.InitializeAbilities();
+        OnResume?.Invoke();
     }
 
     private void OnPlayerDeath()

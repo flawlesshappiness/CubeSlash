@@ -34,6 +34,21 @@ public class UIAbilityCooldownLayout : MonoBehaviour
         prefab_cooldown.gameObject.SetActive(false);
 
         // Attach abilities
+        UpdateAbilities();
+    }
+
+    private void OnEnable()
+    {
+        GameController.Instance.OnResume += UpdateAbilities;
+    }
+
+    private void OnDisable()
+    {
+        GameController.Instance.OnResume -= UpdateAbilities;
+    }
+
+    private void UpdateAbilities()
+    {
         for (int i = 0; i < Player.Instance.AbilitiesEquipped.Length; i++)
         {
             var dir = PlayerInputController.Instance.GetJoystickButtonType(i);

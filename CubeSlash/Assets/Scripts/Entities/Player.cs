@@ -41,8 +41,8 @@ public class Player : MonoBehaviourExtended
         var split = UnlockAbility(Ability.Type.SPLIT);
         var charge = UnlockAbility(Ability.Type.CHARGE);
         EquipAbility(dash, 2);
-        EquipAbility(split, 0);
-        EquipAbility(charge, 1);
+        //EquipAbility(split, 0);
+        //EquipAbility(charge, 1);
 
         Character.Initialize();
 
