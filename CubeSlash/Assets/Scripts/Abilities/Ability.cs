@@ -15,6 +15,7 @@ public abstract class Ability : MonoBehaviourExtended
 
     public enum Type { DASH, SPLIT, CHARGE }
     public Ability[] Modifiers { get; protected set; } = new Ability[ConstVars.COUNT_MODIFIERS];
+    public AbilityVariable[] Variables { get; protected set; } = new AbilityVariable[ConstVars.COUNT_VARIABLES];
 
     public Player Player { get; set; }
     public bool IsPressed { get; set; }
@@ -36,6 +37,11 @@ public abstract class Ability : MonoBehaviourExtended
     private static string GetPrefabPath(Type type)
     {
         return "Prefabs/Abilities/" + type.ToString();
+    }
+
+    public virtual void InitializeFirstTime()
+    {
+
     }
 
     public void InitializeActive()

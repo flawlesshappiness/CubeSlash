@@ -14,11 +14,14 @@ public class UIAbilitySelect : MonoBehaviour
     public System.Action OnSelected { get; set; }
     public System.Action OnDeselected { get; set; }
     public System.Action<Ability> OnAbilitySelected { get; set; }
+    public System.Action<Ability> OnAbilityHighlighted { get; set; }
 
     public Ability Ability { get; private set; }
     public bool Interactable { set { cvg.interactable = value; cvg.blocksRaycasts = value; } }
     private bool Selected { get; set; }
+    private bool Highlighted { get; set; }
 
+    private bool has_scrolled;
     private float time_input;
     private int idx_ability;
     private List<Ability> abilities = new List<Ability>();
@@ -30,8 +33,22 @@ public class UIAbilitySelect : MonoBehaviour
 
     private void Update()
     {
+        HighlightUpdate();
         InputUpdate();
         ScrollUpdate();
+    }
+
+    private void HighlightUpdate()
+    {
+        var highlight = EventSystemController.Instance.EventSystem.currentSelectedGameObject == btn.gameObject;
+        if (Highlighted != highlight)
+        {
+            Highlighted = highlight;
+            if (Highlighted)
+            {
+                OnAbilityHighlighted?.Invoke(Ability);
+            }
+        }
     }
 
     private void InputUpdate()
@@ -41,11 +58,6 @@ public class UIAbilitySelect : MonoBehaviour
             if (PlayerInputController.Instance.GetJoystickButtonDown(PlayerInputController.JoystickButtonType.EAST))
             {
                 Cancel();
-            }
-
-            if (PlayerInputController.Instance.GetJoystickButtonDown(PlayerInputController.JoystickButtonType.WEST))
-            {
-                Unequip();
             }
         }
     }
@@ -87,13 +99,14 @@ public class UIAbilitySelect : MonoBehaviour
 
         if (selected)
         {
+            has_scrolled = false;
             abilities = Player.Instance.AbilitiesUnlocked.Where(a => !a.Equipped || a == Ability).ToList();
             idx_ability = Ability == null ? 0 : abilities.IndexOf(Ability);
             OnSelected?.Invoke();
         }
         else
         {
-            SetAbility(abilities[idx_ability]);
+            SubmitAbility(has_scrolled ? abilities[idx_ability] : Ability);
             Deselect();
         }
     }
@@ -102,6 +115,13 @@ public class UIAbilitySelect : MonoBehaviour
     {
         Selected = false;
         OnDeselected?.Invoke();
+    }
+
+    private void SubmitAbility(Ability ability)
+    {
+        if (ability == Ability) return;
+        SetAbility(ability);
+        OnAbilitySelected?.Invoke(ability);
     }
 
     public void SetAbility(Ability ability)
@@ -115,13 +135,13 @@ public class UIAbilitySelect : MonoBehaviour
 
         img_scroll_current.transform.localPosition = new Vector3(0, -rt_main.rect.height);
         img_scroll_next.transform.localPosition = Vector3.zero;
-
-        OnAbilitySelected?.Invoke(ability);
     }
 
     private void AdjustAbility(int adjust)
     {
         if (abilities.Count == 0) return;
+
+        has_scrolled = true;
 
         idx_ability = (idx_ability + adjust).AbsMod(abilities.Count);
         var ability_next = abilities[idx_ability];
@@ -134,6 +154,8 @@ public class UIAbilitySelect : MonoBehaviour
             .UnscaledTime();
         Lerp.Position(img_scroll_next.transform, 0.25f, new Vector3(0, rt_main.rect.height * sign * -1), Vector3.one, true)
             .UnscaledTime();
+
+        OnAbilityHighlighted?.Invoke(ability_next);
     }
 
     public void SelectEventSystem()
@@ -147,13 +169,13 @@ public class UIAbilitySelect : MonoBehaviour
         img.color = img.color.SetA(img.sprite == null ? 0 : 1);
     }
 
-    private void Unequip()
+    public void Unequip()
     {
-        SetAbility(null);
+        SubmitAbility(null);
         Deselect();
     }
 
-    private void Cancel()
+    public void Cancel()
     {
         SetAbility(Ability);
         Deselect();

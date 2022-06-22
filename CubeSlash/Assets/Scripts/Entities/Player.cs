@@ -10,7 +10,7 @@ public class Player : MonoBehaviourExtended
     public Rigidbody2D Rigidbody { get { return GetComponentOnce<Rigidbody2D>(ComponentSearchType.CHILDREN); } }
     public MinMaxInt Experience { get; private set; } = new MinMaxInt();
     public MinMaxInt Health { get; private set; } = new MinMaxInt();
-    public int Level { get; private set; }
+    public int AbilityPoints { get; set; }
     public MultiLock InputLock { get; set; } = new MultiLock();
     public MultiLock InvincibilityLock { get; set; } = new MultiLock();
     public MultiLock AbilityLock { get; set; } = new MultiLock();
@@ -33,9 +33,12 @@ public class Player : MonoBehaviourExtended
         Health.Min = 0;
         Health.Max = 3;
         Health.Value = Health.Max;
+
         Experience.Min = 0;
         Experience.Max = 5;
         Experience.Value = Experience.Min;
+        Experience.onMax += OnLevelUp;
+
         AbilitiesEquipped = new Ability[PlayerInputController.Instance.CountAbilityButtons];
         var dash = UnlockAbility(Ability.Type.DASH);
         var split = UnlockAbility(Ability.Type.SPLIT);
@@ -57,7 +60,7 @@ public class Player : MonoBehaviourExtended
     #region ABILITIES
     public void InitializeAbilities()
     {
-        foreach(var ability in AbilitiesEquipped.Where(a => a != null))
+        foreach (var ability in AbilitiesEquipped.Where(a => a != null))
         {
             ability.InitializeActive();
         }
@@ -70,7 +73,7 @@ public class Player : MonoBehaviourExtended
 
         // Equip next
         AbilitiesEquipped[idx] = ability;
-        if(ability != null)
+        if (ability != null)
         {
             ability.Equipped = true;
         }
@@ -110,6 +113,7 @@ public class Player : MonoBehaviourExtended
             ability.transform.position = transform.position;
             ability.transform.rotation = transform.rotation;
             ability.Player = this;
+            ability.InitializeFirstTime();
         }
         return ability;
     }
@@ -117,7 +121,7 @@ public class Player : MonoBehaviourExtended
     public void UnlockAllAbilities()
     {
         var types = System.Enum.GetValues(typeof(Ability.Type)).Cast<Ability.Type>().ToArray();
-        foreach(var type in types)
+        foreach (var type in types)
         {
             UnlockAbility(type);
         }
@@ -143,7 +147,7 @@ public class Player : MonoBehaviourExtended
                 ability.Pressed();
                 AbilityQueued = null;
             }
-            else if(ability.TimeCooldownLeft < 0.5f)
+            else if (ability.TimeCooldownLeft < 0.5f)
             {
                 AbilityQueued = ability;
             }
@@ -161,8 +165,8 @@ public class Player : MonoBehaviourExtended
             {
                 ability.Released();
             }
-            
-            if(AbilityQueued == ability)
+
+            if (AbilityQueued == ability)
             {
                 AbilityQueued = null;
             }
@@ -187,12 +191,12 @@ public class Player : MonoBehaviourExtended
         var hor = Input.GetAxis("Horizontal");
         var ver = Input.GetAxis("Vertical");
         var dir = new Vector2(hor, ver);
-        if(MovementLock.IsFree && InputLock.IsFree && dir.magnitude > 0.5f)
+        if (MovementLock.IsFree && InputLock.IsFree && dir.magnitude > 0.5f)
         {
             MoveDirection = dir.normalized;
             Move(dir.normalized);
         }
-        else if(DragLock.IsFree)
+        else if (DragLock.IsFree)
         {
             // Decelerate
             Rigidbody.velocity = Rigidbody.velocity * 0.7f;
@@ -220,7 +224,7 @@ public class Player : MonoBehaviourExtended
         var enemy = collision.gameObject.GetComponentInParent<Enemy>();
         if (enemy)
         {
-            foreach(var ability in AbilitiesEquipped)
+            foreach (var ability in AbilitiesEquipped)
             {
                 if (!ability) continue;
                 ability.EnemyCollision(enemy);
@@ -228,7 +232,7 @@ public class Player : MonoBehaviourExtended
 
             if (InvincibilityLock.IsLocked)
             {
-                
+
             }
             else
             {
@@ -259,7 +263,7 @@ public class Player : MonoBehaviourExtended
     {
         Health.Value -= amount.Abs();
 
-        if(Health.Value > 0)
+        if (Health.Value > 0)
         {
             StartCoroutine(PlayerDamageInvincibilityCr(2));
             StartCoroutine(PlayerDamageFlashCr(2));
@@ -277,7 +281,7 @@ public class Player : MonoBehaviourExtended
 
         // Check if still inside an enemy
         var hits = Physics2D.OverlapCircleAll(transform.position, Character.Trigger.radius);
-        foreach(var hit in hits)
+        foreach (var hit in hits)
         {
             var e = hit.GetComponentInParent<Enemy>();
             if (e)
@@ -291,7 +295,7 @@ public class Player : MonoBehaviourExtended
     private IEnumerator PlayerDamageFlashCr(float time)
     {
         var time_end = Time.time + time;
-        while(Time.time < time_end)
+        while (Time.time < time_end)
         {
             Character.gameObject.SetActive(false);
             yield return new WaitForSeconds(0.1f);
@@ -308,7 +312,7 @@ public class Player : MonoBehaviourExtended
 
         Rigidbody.velocity = dir.normalized * 50f;
         var time_end = Time.time + time;
-        while(Time.time < time_end)
+        while (Time.time < time_end)
         {
             Rigidbody.velocity = Rigidbody.velocity * 0.99f;
             yield return null;
@@ -316,6 +320,12 @@ public class Player : MonoBehaviourExtended
 
         MovementLock.RemoveLock("Damage");
         DragLock.RemoveLock("Damage");
+    }
+    #endregion
+    #region EXPERIENCE
+    private void OnLevelUp()
+    {
+        AbilityPoints++;
     }
     #endregion
 }

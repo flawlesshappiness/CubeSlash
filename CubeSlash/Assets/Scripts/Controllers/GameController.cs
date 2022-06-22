@@ -15,6 +15,8 @@ public class GameController : MonoBehaviour
     public bool IsPaused { get { return PauseLock.IsLocked; } }
     public MultiLock PauseLock { get; private set; } = new MultiLock();
 
+    public int LevelIndex { get; set; }
+
     private void Awake()
     {
         Instance = this;
@@ -41,8 +43,6 @@ public class GameController : MonoBehaviour
 
     private void InitializeData()
     {
-        Data.Game.idx_level = 0;
-        Data.Game.count_ability_points = 0;
         Data.SaveGameData();
     }
 
@@ -111,7 +111,7 @@ public class GameController : MonoBehaviour
         Player.Instance.Health.Value = Player.Instance.Health.Max;
         Player.Instance.InitializeAbilities();
 
-        Data.Game.idx_level = 0;
+        LevelIndex = 0;
         time_level = Time.time + Level.Current.duration;
         ViewController.Instance.ShowView<GameView>();
     }
@@ -123,7 +123,7 @@ public class GameController : MonoBehaviour
         if (Time.time < time_level) return;
         Level.Completed();
         time_level = Time.time + Level.Current.duration;
-        print("Next level " + Data.Game.idx_level);
+        print("Next level " + LevelIndex);
     }
 
     private void OnPlayerLevelUp()

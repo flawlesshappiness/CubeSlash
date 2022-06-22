@@ -13,10 +13,19 @@ public class AbilityDash : Ability
 
     [Header("DASH")]
     [SerializeField] private BoxCollider2D trigger;
+    public AbilityVariable VarTime { get { return Variables[0]; } }
+    public AbilityVariable VarSpeed { get { return Variables[1]; } }
     public AnimationCurve ac_path_normal;
     public AnimationCurve ac_path_split;
 
     private CustomCoroutine cr_dash;
+
+    public override void InitializeFirstTime()
+    {
+        base.InitializeFirstTime();
+        Variables[0] = new AbilityVariable(5, 10);
+        Variables[1] = new AbilityVariable(5, 10);
+    }
 
     public override void Pressed()
     {
