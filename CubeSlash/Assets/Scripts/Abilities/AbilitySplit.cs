@@ -4,6 +4,29 @@ using UnityEngine;
 
 public class AbilitySplit : Ability
 {
+    public override void InitializeFirstTime()
+    {
+        base.InitializeFirstTime();
+    }
+
+    public override void InitializeValues()
+    {
+        base.InitializeValues();
+        CooldownTime = 0.5f;
+    }
+
+    public override void InitializeModifier(Ability modifier)
+    {
+        base.InitializeModifier(modifier);
+
+        CooldownTime = modifier.type switch
+        {
+            Type.DASH => CooldownTime + 0.5f,
+            Type.CHARGE => CooldownTime + 1.0f,
+            Type.SPLIT => CooldownTime + 0.5f,
+        };
+    }
+
     public override void Pressed()
     {
         base.Pressed();
@@ -27,14 +50,6 @@ public class AbilitySplit : Ability
             charge.Released();
             SpawnProjectiles();
         }
-    }
-
-    public override float GetCooldown()
-    {
-        return
-            (HasModifier(Type.DASH) ? 0.5f : 0) +
-            (HasModifier(Type.CHARGE) ? 1.0f : 0) +
-            1.0f;
     }
 
     private Projectile SpawnProjectile(Vector3 direction)

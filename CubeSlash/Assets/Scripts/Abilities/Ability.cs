@@ -26,6 +26,7 @@ public abstract class Ability : MonoBehaviourExtended
     public float TimeCooldownStart { get; private set; }
     public float TimeCooldownEnd { get; private set; }
     public float TimeCooldownLeft { get { return OnCooldown ? TimeCooldownEnd - Time.time : 0f; } }
+    protected float CooldownTime { get; set; }
     public bool OnCooldown { get { return Time.time < TimeCooldownEnd; } }
     public float CooldownPercentage { get { return (Time.time - TimeCooldownStart) / (TimeCooldownEnd - TimeCooldownStart); } }
 
@@ -75,12 +76,7 @@ public abstract class Ability : MonoBehaviourExtended
     public void StartCooldown()
     {
         TimeCooldownStart = Time.time;
-        TimeCooldownEnd = TimeCooldownStart + GetCooldown();
-    }
-
-    public virtual float GetCooldown()
-    {
-        return 0f;
+        TimeCooldownEnd = TimeCooldownStart + CooldownTime;
     }
     #endregion
     #region MODIFIER

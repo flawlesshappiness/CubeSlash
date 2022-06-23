@@ -127,6 +127,7 @@ public class AbilityView : View
     #region BUTTONS
     private void ClickContinue()
     {
+        var p = Player.Instance;
         Close(0);
         GameController.Instance.ResumeLevel();
     }

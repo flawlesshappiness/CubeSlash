@@ -22,8 +22,8 @@ public class AbilityCharge : Ability
     public bool Charging { get; private set; }
     public bool ChargeEnded { get; private set; }
 
+    public float ChargeTime { get; set; }
     private float Width { get; set; }
-    private float ChargeTime { get; set; }
     private float Knockback { get; set; }
 
     private void Start()
@@ -48,6 +48,7 @@ public class AbilityCharge : Ability
     public override void InitializeValues()
     {
         base.InitializeValues();
+        CooldownTime = 0.5f;
         Width = 1;
         ChargeTime = 0.75f;
         Knockback = -10;
@@ -55,6 +56,13 @@ public class AbilityCharge : Ability
 
     public override void InitializeModifier(Ability modifier)
     {
+        CooldownTime = modifier.type switch
+        {
+            Type.DASH => CooldownTime + 0,
+            Type.CHARGE => CooldownTime + 5,
+            Type.SPLIT => CooldownTime * 3,
+        };
+
         Width = modifier.type switch
         {
             Type.DASH => Width + 2,
@@ -101,15 +109,6 @@ public class AbilityCharge : Ability
         Player.Instance.AbilityLock.RemoveLock(nameof(AbilityCharge));
     }
 
-    public override float GetCooldown()
-    {
-        return
-            (HasModifier(Type.DASH) ? 0 : 0) +
-            (HasModifier(Type.CHARGE) ? 5 : 0) +
-            (HasModifier(Type.SPLIT) ? 3 : 0) +
-            0.5f;
-    }
-
     private void Update()
     {
         var t = GetCharge();
@@ -137,7 +136,6 @@ public class AbilityCharge : Ability
             HasModifier(Type.SPLIT) ? GetModifier<AbilitySplit>(Type.SPLIT).GetSplitDirections(3, 15, dir) :
             new List<Vector3> { dir };
         StartCoroutine(ShootCr(directions));
-
         IEnumerator ShootCr(List<Vector3> directions)
         {
             foreach(var dir in directions)

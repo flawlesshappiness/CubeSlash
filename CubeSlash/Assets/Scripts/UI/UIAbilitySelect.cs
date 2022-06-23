@@ -9,6 +9,7 @@ public class UIAbilitySelect : MonoBehaviour
     [SerializeField] private RectTransform rt_main;
     [SerializeField] private Image img_scroll_current;
     [SerializeField] private Image img_scroll_next;
+    [SerializeField] private Image img_disabled;
     [SerializeField] private Button btn;
 
     public System.Action OnSelected { get; set; }
@@ -34,6 +35,7 @@ public class UIAbilitySelect : MonoBehaviour
     private void Update()
     {
         HighlightUpdate();
+        DisabledUpdate();
         InputUpdate();
         ScrollUpdate();
     }
@@ -49,6 +51,11 @@ public class UIAbilitySelect : MonoBehaviour
                 OnAbilityHighlighted?.Invoke(Ability);
             }
         }
+    }
+
+    private void DisabledUpdate()
+    {
+        img_disabled.enabled = !cvg.interactable;
     }
 
     private void InputUpdate()

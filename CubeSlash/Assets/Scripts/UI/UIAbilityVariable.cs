@@ -34,6 +34,7 @@ public class UIAbilityVariable : MonoBehaviour
     private void Update()
     {
         HighlightUpdate();
+        DisabledUpdate();
         InputUpdate();
         ScrollUpdate();
     }
@@ -46,6 +47,11 @@ public class UIAbilityVariable : MonoBehaviour
             Highlighted = highlight;
             SetArrowsVisible(highlight);
         }
+    }
+
+    private void DisabledUpdate()
+    {
+        points.ForEach(p => p.Disabled = !cvg.interactable);
     }
 
     private void InputUpdate()

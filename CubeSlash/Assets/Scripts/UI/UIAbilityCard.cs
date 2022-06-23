@@ -33,13 +33,12 @@ public class UIAbilityCard : MonoBehaviour
 
         for (int i = 0; i < modifiers.Count; i++)
         {
-            var idx = i;
+            var idx_modifier = i;
+            var idx_ability = idx_button;
             modifiers[i].OnAbilitySelected += m =>
             {
-                if(ability != null)
-                {
-                    ability.SetModifier(m, idx);
-                }
+                var a = Player.Instance.AbilitiesEquipped[idx_ability];
+                if(a != null) a.SetModifier(m, idx_modifier);
             };
         }
 

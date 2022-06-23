@@ -27,6 +27,54 @@ public class AbilityDash : Ability
         Variables[1] = new AbilityVariable(5, 10);
     }
 
+    public override void InitializeValues()
+    {
+        base.InitializeValues();
+        CooldownTime = 0.5f;
+        TimeDash = 0.25f;
+        SpeedDash = 30;
+        RadiusDash = 1;
+    }
+
+    public override void InitializeModifier(Ability modifier)
+    {
+        base.InitializeModifier(modifier);
+
+        CooldownTime = modifier.type switch
+        {
+            Type.DASH => CooldownTime + 0.5f,
+            Type.CHARGE => CooldownTime - 0.5f,
+            Type.SPLIT => CooldownTime + 0.5f,
+        };
+
+        TimeDash = modifier.type switch
+        {
+            Type.DASH => TimeDash + 0.05f,
+            Type.CHARGE => TimeDash - 0.15f,
+            Type.SPLIT => TimeDash + 0.05f,
+        };
+
+        SpeedDash = modifier.type switch
+        {
+            Type.DASH => SpeedDash + 10,
+            Type.CHARGE => SpeedDash + 40,
+            Type.SPLIT => SpeedDash + 0,
+        };
+
+        RadiusDash = modifier.type switch
+        {
+            Type.DASH => RadiusDash + 0.5f,
+            Type.CHARGE => RadiusDash + 0.5f,
+            Type.SPLIT => RadiusDash + 2,
+        };
+
+        if(modifier.type == Type.CHARGE)
+        {
+            var charge = (AbilityCharge)modifier;
+            charge.ChargeTime = 0.5f;
+        }
+    }
+
     public override void Pressed()
     {
         base.Pressed();
@@ -59,31 +107,10 @@ public class AbilityDash : Ability
         }
     }
 
-    public override float GetCooldown()
-    {
-        float cd =
-            (HasModifier(Type.SPLIT) ? 0.5f : 0) +
-            (HasModifier(Type.CHARGE) ? -0.5f : 0) +
-            0.5f;
-        return Mathf.Clamp(cd, 0f, float.MaxValue);
-    }
-
     private List<Enemy> _hits_dash = new List<Enemy>();
     private void StartDashing(bool reset_hits, bool hit_start, bool hit_end)
     {
         if (reset_hits) _hits_dash.Clear();
-
-        TimeDash =
-            HasModifier(Type.CHARGE) ? 0.3f :
-            HasModifier(Type.SPLIT) ? 0.4f :
-            0.25f;
-        SpeedDash =
-            HasModifier(Type.CHARGE) ? 60 :
-            HasModifier(Type.SPLIT) ? 30 :
-            30;
-        RadiusDash =
-            HasModifier(Type.SPLIT) ? 3 :
-            1;
         cr_dash = CoroutineController.Instance.Run(DashPhaseCr(hit_start, hit_end), "dash_" + GetInstanceID());
     }
 
@@ -96,11 +123,6 @@ public class AbilityDash : Ability
 
         // Target
         var dir_dash = Player.MoveDirection;
-        var target = GetTarget(10, 25);
-        if (target)
-        {
-            dir_dash = Player.transform.DirectionTo(target.transform).normalized;
-        }
 
         // Dash
         Player.Character.SetLookDirection(dir_dash);
@@ -202,13 +224,20 @@ public class AbilityDash : Ability
             var already_hit = _hits_dash.Contains(enemy);
             DashHitEnemy(enemy);
 
-            // Stop dashing
-            if (cr_dash != null)
+            if (enemy.IsKillable() && HasModifier(Type.CHARGE))
             {
-                Dashing = false;
-                CoroutineController.Instance.Kill(cr_dash);
+
             }
-            StartCoroutine(DashHitKnockbackCr());
+            else
+            {
+                // Stop dashing
+                if (cr_dash != null)
+                {
+                    Dashing = false;
+                    CoroutineController.Instance.Kill(cr_dash);
+                }
+                StartCoroutine(DashHitKnockbackCr());
+            }
         }
     }
 
