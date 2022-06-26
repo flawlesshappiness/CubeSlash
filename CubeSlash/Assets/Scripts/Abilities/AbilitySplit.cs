@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class AbilitySplit : Ability
 {
+    private int CountProjectiles { get; set; }
+    private float SpeedProjectile { get; set; }
+
     public override void InitializeFirstTime()
     {
         base.InitializeFirstTime();
@@ -13,6 +16,8 @@ public class AbilitySplit : Ability
     {
         base.InitializeValues();
         CooldownTime = 0.5f;
+        CountProjectiles = 3;
+        SpeedProjectile = 25;
     }
 
     public override void InitializeModifier(Ability modifier)
@@ -25,6 +30,26 @@ public class AbilitySplit : Ability
             Type.CHARGE => CooldownTime + 1.0f,
             Type.SPLIT => CooldownTime + 0.5f,
         };
+
+        CountProjectiles = modifier.type switch
+        {
+            Type.DASH => CountProjectiles + 0,
+            Type.CHARGE => CountProjectiles + 15,
+            Type.SPLIT => CountProjectiles + 3,
+        };
+
+        SpeedProjectile = modifier.type switch
+        {
+            Type.DASH => SpeedProjectile + 0,
+            Type.CHARGE => SpeedProjectile + 5,
+            Type.SPLIT => SpeedProjectile + 0,
+        };
+
+        if (modifier.type == Type.CHARGE)
+        {
+            var charge = (AbilityCharge)modifier;
+            charge.ChargeTime = 0.5f;
+        }
     }
 
     public override void Pressed()

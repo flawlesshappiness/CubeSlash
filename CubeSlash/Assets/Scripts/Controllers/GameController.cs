@@ -137,7 +137,7 @@ public class GameController : MonoBehaviour
             }).UnscaledTime().GetCoroutine();
 
             PauseLock.AddLock(nameof(GameController));
-            Player.Instance.Experience.Value = Player.Instance.Experience.Min;
+            Player.Instance.ResetExperience();
             ViewController.Instance.ShowView<AbilityView>(0, "Ability");
         }
     }

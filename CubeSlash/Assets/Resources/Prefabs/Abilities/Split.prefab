@@ -44,7 +44,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 1
-  cooldown: 2
   name_ability: Split
   desc_ability: Fire an arc of projectiles
   sprite_icon: {fileID: 21300000, guid: fa3a1b53a5ddc524ca4486dc707ff23f, type: 3}
+  Variables:
+  - Value: 5
+    Max: 10
+    sprite_icon: {fileID: 0}
+    Name: 
+    Description: 

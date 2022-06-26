@@ -23,8 +23,6 @@ public class AbilityDash : Ability
     public override void InitializeFirstTime()
     {
         base.InitializeFirstTime();
-        Variables[0] = new AbilityVariable(5, 10);
-        Variables[1] = new AbilityVariable(5, 10);
     }
 
     public override void InitializeValues()

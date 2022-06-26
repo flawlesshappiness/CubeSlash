@@ -1,16 +1,15 @@
 using UnityEngine;
 
+[System.Serializable]
 public class AbilityVariable
 {
-    public int Max { get; private set; }
-    public int Value { get; private set; }
+    public string Name = "Variable";
+    public int Value = 5;
+    public int Max = 10;
+    public Sprite sprite_icon;
+    [TextArea]
+    public string Description = "Description";
     public float Percentage { get { return Value / (float)Max; } }
-
-    public AbilityVariable(int value, int max)
-    {
-        Value = value;
-        Max = max;
-    }
 
     public void SetValue(int value)
     {

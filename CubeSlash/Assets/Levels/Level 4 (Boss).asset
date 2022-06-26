@@ -12,10 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed170f98ca580f243b98b5b4d9a80757, type: 3}
   m_Name: Level 4 (Boss)
   m_EditorClassIdentifier: 
-  duration: 0
-  frequency_spawn_enemy: 1
+  duration: 120
+  frequency_spawn_enemy: 0.5
   count_enemy_active: 20
-  enemies: []
+  enemies:
+  - name: Weak
+    enemy: {fileID: 11400000, guid: cfcae6b5621e50448a5872f62f68b1ba, type: 2}
+    chance: 1
   bosses:
   - name: 
     enemy: {fileID: 11400000, guid: 7dccd8d735ce78d4ebf0e8c1d5f92887, type: 2}

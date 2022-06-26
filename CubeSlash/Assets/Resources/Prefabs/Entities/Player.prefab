@@ -47,6 +47,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Collider: {fileID: 3794284237765229098}
   Trigger: {fileID: 1675149427792749659}
+  parasite_level: 0
+  ParasiteSpaces: []
 --- !u!1 &2119183727739615077
 GameObject:
   m_ObjectHideFlags: 0
@@ -57,7 +59,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7566345706875452212}
   - component: {fileID: 3794284237765229098}
-  m_Layer: 8
+  m_Layer: 10
   m_Name: Collider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5040,8 +5042,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3214702328351712212}
-  - component: {fileID: 1077616187795116517}
   - component: {fileID: 1134915344440912886}
+  - component: {fileID: 1077616187795116517}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -5066,6 +5068,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1134915344440912886
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9103637176586810545}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6529375d959be5342af6176d6d7e2b8c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  settings: {fileID: 11400000, guid: a2d8ce7788deae2489dcd078044940f2, type: 2}
 --- !u!50 &1077616187795116517
 Rigidbody2D:
   serializedVersion: 4
@@ -5087,15 +5102,3 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 4
---- !u!114 &1134915344440912886
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9103637176586810545}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6529375d959be5342af6176d6d7e2b8c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 

@@ -6,10 +6,12 @@ using UnityEngine;
 public class Player : MonoBehaviourExtended
 {
     public static Player Instance;
+    public PlayerSettings settings;
     public Character Character { get { return GetComponentOnce<Character>(ComponentSearchType.CHILDREN); } }
     public Rigidbody2D Rigidbody { get { return GetComponentOnce<Rigidbody2D>(ComponentSearchType.CHILDREN); } }
     public MinMaxInt Experience { get; private set; } = new MinMaxInt();
     public MinMaxInt Health { get; private set; } = new MinMaxInt();
+    public int Level { get; private set; }
     public int AbilityPoints { get; set; }
     public MultiLock InputLock { get; set; } = new MultiLock();
     public MultiLock InvincibilityLock { get; set; } = new MultiLock();
@@ -325,7 +327,16 @@ public class Player : MonoBehaviourExtended
     #region EXPERIENCE
     private void OnLevelUp()
     {
+        Level++;
         AbilityPoints++;
+    }
+
+    public void ResetExperience()
+    {
+        var t_level = Level / (float)settings.experience_level_max;
+        var t_exp = settings.curve_experience.Evaluate(t_level);
+        Experience.Max = (int)(Mathf.Lerp(settings.experience_min, settings.experience_max, t_exp));
+        Experience.Value = Experience.Min;
     }
     #endregion
 }

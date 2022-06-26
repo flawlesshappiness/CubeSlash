@@ -15,8 +15,8 @@ TagManager:
   - EntityTrigger
   - EntityCollider
   - Projectile
-  - 
-  - 
+  - PlayerCollider
+  - EnemyCollider
   - 
   - 
   - 

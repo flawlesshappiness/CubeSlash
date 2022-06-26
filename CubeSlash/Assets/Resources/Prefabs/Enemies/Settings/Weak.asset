@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   character: {fileID: 6535444791780287965, guid: 45499daff63c9d64b8e9f610d9bfd8a4, type: 3}
   speed_move: 5
-  speed_turn: 150
+  speed_turn: 100
   size: {x: 1, y: 1, z: 1}
   parasite: {fileID: 0}
   ai: {fileID: 8767035241809482896, guid: f11e61c706cb5664cb504211139ae209, type: 3}

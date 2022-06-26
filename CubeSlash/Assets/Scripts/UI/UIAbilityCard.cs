@@ -79,7 +79,7 @@ public class UIAbilityCard : MonoBehaviour
         }
         for (int i = 0; i < variables.Count; i++)
         {
-            variables[i].SetVariable(ability == null ? null : ability.Variables[i]);
+            variables[i].SetVariable(ability == null ? null : i < ability.Variables.Count ? ability.Variables[i] : null);
         }
     }
 }

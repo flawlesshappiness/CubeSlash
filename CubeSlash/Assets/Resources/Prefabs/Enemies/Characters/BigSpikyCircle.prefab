@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4424763086466636412}
   - component: {fileID: 1421184977900173726}
-  m_Layer: 8
+  m_Layer: 11
   m_Name: Collider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -176,6 +176,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Collider: {fileID: 1421184977900173726}
   Trigger: {fileID: 5938915428007740160}
+  parasite_level: 0
+  ParasiteSpaces: []
 --- !u!1 &6918236059815919680
 GameObject:
   m_ObjectHideFlags: 0

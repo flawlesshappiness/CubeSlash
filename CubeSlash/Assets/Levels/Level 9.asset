@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed170f98ca580f243b98b5b4d9a80757, type: 3}
   m_Name: Level 9
   m_EditorClassIdentifier: 
-  duration: 0
-  frequency_spawn_enemy: 1
-  count_enemy_active: 40
+  duration: 120
+  frequency_spawn_enemy: 0.25
+  count_enemy_active: 180
   enemies:
   - name: Weak
     enemy: {fileID: 11400000, guid: cfcae6b5621e50448a5872f62f68b1ba, type: 2}

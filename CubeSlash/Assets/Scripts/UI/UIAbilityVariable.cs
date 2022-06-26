@@ -8,8 +8,8 @@ public class UIAbilityVariable : MonoBehaviour
     [SerializeField] private Button btn;
     [SerializeField] private UIAbilityVariablePoint prefab_point;
     [SerializeField] private Image prefab_highlight;
-    [SerializeField] private Image img_arrow_left;
-    [SerializeField] private Image img_arrow_right;
+    [SerializeField] private Image img_icon;
+    [SerializeField] private Image img_icon_highlight;
 
     private List<UIAbilityVariablePoint> points = new List<UIAbilityVariablePoint>();
     private List<Image> highlights = new List<Image>();
@@ -45,7 +45,7 @@ public class UIAbilityVariable : MonoBehaviour
         if (!Selected && Highlighted != highlight)
         {
             Highlighted = highlight;
-            SetArrowsVisible(highlight);
+            SetHighlightVisible(highlight);
         }
     }
 
@@ -122,6 +122,7 @@ public class UIAbilityVariable : MonoBehaviour
         if (variable == null) return;
 
         Variable = variable;
+        img_icon.sprite = variable.sprite_icon;
 
         // Clear
         points.ForEach(p => Destroy(p.gameObject));
@@ -136,15 +137,12 @@ public class UIAbilityVariable : MonoBehaviour
             p.Filled = i < variable.Value;
         }
 
-        img_arrow_left.transform.SetAsFirstSibling();
-        img_arrow_right.transform.SetAsLastSibling();
-
         prefab_highlight.gameObject.SetActive(false);
         prefab_point.gameObject.SetActive(false);
 
         Highlighted = false;
         SetSelected(false);
-        SetArrowsVisible(false);
+        SetHighlightVisible(false);
     }
 
     private UIAbilityVariablePoint CreatePoint()
@@ -175,7 +173,7 @@ public class UIAbilityVariable : MonoBehaviour
     {
         Selected = selected;
         highlights.ForEach(h => h.gameObject.SetActive(selected));
-        SetArrowsVisible(!selected);
+        SetHighlightVisible(!selected);
 
         if (selected)
         {
@@ -189,11 +187,11 @@ public class UIAbilityVariable : MonoBehaviour
         }
     }
 
-    private void SetArrowsVisible(bool visible)
+    private void SetHighlightVisible(bool visible)
     {
-        var end = visible ? 1 : 0;
-        img_arrow_left.color = img_arrow_left.color.SetA(end);
-        img_arrow_right.color = img_arrow_right.color.SetA(end);
+        var alpha = visible ? 1 : 0;
+        img_icon_highlight.color = img_icon_highlight.color.SetA(alpha);
+        img_icon.color = visible ? ColorPalette.Main.disabled : ColorPalette.Main.selected;
     }
 
     public void Cancel()

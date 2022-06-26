@@ -15,7 +15,7 @@ public abstract class Ability : MonoBehaviourExtended
 
     public enum Type { DASH, SPLIT, CHARGE }
     public Ability[] Modifiers { get; protected set; } = new Ability[ConstVars.COUNT_MODIFIERS];
-    public AbilityVariable[] Variables { get; protected set; } = new AbilityVariable[ConstVars.COUNT_VARIABLES];
+    public List<AbilityVariable> Variables = new List<AbilityVariable>(ConstVars.COUNT_VARIABLES);
 
     public Player Player { get; set; }
     public bool IsPressed { get; set; }
@@ -29,6 +29,19 @@ public abstract class Ability : MonoBehaviourExtended
     protected float CooldownTime { get; set; }
     public bool OnCooldown { get { return Time.time < TimeCooldownEnd; } }
     public float CooldownPercentage { get { return (Time.time - TimeCooldownStart) / (TimeCooldownEnd - TimeCooldownStart); } }
+
+    private void OnValidate()
+    {
+        var variables = new List<AbilityVariable>();
+        for (int i = 0; i < ConstVars.COUNT_VARIABLES; i++)
+        {
+            if(i < Variables.Count && Variables.Count > 0)
+            {
+                variables.Add(Variables[i]);
+            }
+        }
+        Variables = variables;
+    }
 
     public static Ability GetPrefab(Type type)
     {
