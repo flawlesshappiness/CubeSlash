@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Linq;
 using TMPro;
+using UnityEngine.InputSystem;
 
 public class AbilityView : View
 {
@@ -31,39 +32,24 @@ public class AbilityView : View
     private void OnEnable()
     {
         GameController.Instance.PauseLock.AddLock(nameof(AbilityView));
+
+        var input = PlayerInput.Controls.Player;
+        input.East.performed += PressUnequip;
+        input.Menu.performed += PressStart;
     }
 
     private void OnDisable()
     {
         GameController.Instance.PauseLock.RemoveLock(nameof(AbilityView));
-    }
 
-    private void Update()
-    {
-        var selected = EventSystemController.Instance.EventSystem.currentSelectedGameObject;
-        var ability_select = selected == null ? null : selected.GetComponentInParent<UIAbilitySelect>();
-        if(ability_select != null)
-        {
-            if (PlayerInputController.Instance.GetJoystickButtonDown(PlayerInputController.JoystickButtonType.WEST))
-            {
-                ability_select.Unequip();
-            }
-        }
-
-        var ability_variable = selected == null ? null : selected.GetComponentInParent<UIAbilityVariable>();
-        if (Input.GetKeyDown(KeyCode.JoystickButton7))
-        {
-            if (ability_select != null)
-                ability_select.Cancel();
-            if (ability_variable != null)
-                ability_variable.Cancel();
-            EventSystemController.Instance.EventSystem.SetSelectedGameObject(btn_continue.gameObject);
-        }
+        var input = PlayerInput.Controls.Player;
+        input.East.performed -= PressUnequip;
+        input.Menu.performed -= PressStart;
     }
 
     private void InitializeAbilityCards()
     {
-        for (int i = 0; i < PlayerInputController.Instance.CountAbilityButtons; i++)
+        for (int i = 0; i < ConstVars.COUNT_ABILITY_BUTTONS; i++)
         {
             var card = CreateCard();
             card.Initialize(i);
@@ -166,4 +152,28 @@ public class AbilityView : View
         }
     }
     #endregion
+
+    private void PressUnequip(InputAction.CallbackContext context)
+    {
+        Unequip();
+    }
+
+    private void Unequip()
+    {
+        var selected = EventSystemController.Instance.EventSystem.currentSelectedGameObject;
+        var ability_select = selected == null ? null : selected.GetComponentInParent<UIAbilitySelect>();
+        ability_select.Unequip();
+    }
+
+    private void PressStart(InputAction.CallbackContext context)
+    {
+        var selected = EventSystemController.Instance.EventSystem.currentSelectedGameObject;
+        var ability_select = selected == null ? null : selected.GetComponentInParent<UIAbilitySelect>();
+        var ability_variable = selected == null ? null : selected.GetComponentInParent<UIAbilityVariable>();
+        if (ability_select != null)
+            ability_select.Cancel();
+        if (ability_variable != null)
+            ability_variable.Cancel();
+        EventSystemController.Instance.EventSystem.SetSelectedGameObject(btn_continue.gameObject);
+    }
 }

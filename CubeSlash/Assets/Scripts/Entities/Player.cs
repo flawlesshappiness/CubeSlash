@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class Player : MonoBehaviourExtended
 {
@@ -30,6 +31,14 @@ public class Player : MonoBehaviourExtended
     public List<Ability> AbilitiesUnlocked { get; private set; } = new List<Ability>();
     public Ability AbilityQueued { get; private set; }
 
+    private PlayerInput.ButtonType[] ability_input_map = new PlayerInput.ButtonType[]
+    {
+        PlayerInput.ButtonType.SOUTH,
+        PlayerInput.ButtonType.EAST,
+        PlayerInput.ButtonType.WEST,
+        PlayerInput.ButtonType.NORTH,
+    };
+
     public void Initialize()
     {
         Health.Min = 0;
@@ -41,7 +50,7 @@ public class Player : MonoBehaviourExtended
         Experience.Value = Experience.Min;
         Experience.onMax += OnLevelUp;
 
-        AbilitiesEquipped = new Ability[PlayerInputController.Instance.CountAbilityButtons];
+        AbilitiesEquipped = new Ability[ConstVars.COUNT_ABILITY_BUTTONS];
         var dash = UnlockAbility(Ability.Type.DASH);
         var split = UnlockAbility(Ability.Type.SPLIT);
         var charge = UnlockAbility(Ability.Type.CHARGE);
@@ -52,6 +61,18 @@ public class Player : MonoBehaviourExtended
         Character.Initialize();
 
         MoveDirection = transform.up;
+    }
+
+    private void OnEnable()
+    {
+        PlayerInput.OnAbilityButtonDown += PressAbility;
+        PlayerInput.OnAbilityButtonUp += ReleaseAbility;
+    }
+
+    private void OnDisable()
+    {
+        PlayerInput.OnAbilityButtonDown -= PressAbility;
+        PlayerInput.OnAbilityButtonUp -= ReleaseAbility;
     }
 
     private void Update()
@@ -68,6 +89,7 @@ public class Player : MonoBehaviourExtended
         }
     }
 
+    public void EquipAbility(Ability ability, PlayerInput.ButtonType type) => EquipAbility(ability, AbilityInputToIndex(type));
     public void EquipAbility(Ability ability, int idx)
     {
         // Unequip previous
@@ -81,6 +103,7 @@ public class Player : MonoBehaviourExtended
         }
     }
 
+    public void UnequipAbility(PlayerInput.ButtonType type) => UnequipAbility(AbilityInputToIndex(type));
     public void UnequipAbility(int idx)
     {
         var ability = AbilitiesEquipped[idx];
@@ -101,11 +124,10 @@ public class Player : MonoBehaviourExtended
         }
     }
 
+    public Ability GetEquippedAbility(PlayerInput.ButtonType type) => AbilitiesEquipped[AbilityInputToIndex(type)];
+    
     public Ability UnlockAbility(Ability.Type type)
     {
-        //var already_unlocked = AbilitiesUnlocked.Any(ability => ability.type == type);
-        //if (already_unlocked) return null;
-
         var prefab = Ability.GetPrefab(type);
         var ability = Instantiate(prefab.gameObject).GetComponent<Ability>();
         if (ability)
@@ -137,7 +159,8 @@ public class Player : MonoBehaviourExtended
         return not_blocking && not_cooldown && not_paused;
     }
 
-    public void PressAbility(int idx)
+    private void PressAbility(PlayerInput.ButtonType type) => PressAbility(AbilityInputToIndex(type));
+    private void PressAbility(int idx)
     {
         if (InputLock.IsLocked) return;
         var ability = AbilitiesEquipped[idx];
@@ -156,7 +179,8 @@ public class Player : MonoBehaviourExtended
         }
     }
 
-    public void ReleaseAbility(int idx)
+    private void ReleaseAbility(PlayerInput.ButtonType type) => ReleaseAbility(AbilityInputToIndex(type));
+    private void ReleaseAbility(int idx)
     {
         if (InputLock.IsLocked) return;
 
@@ -186,13 +210,16 @@ public class Player : MonoBehaviourExtended
             }
         }
     }
+
+    private int AbilityInputToIndex(PlayerInput.ButtonType type)
+    {
+        return ability_input_map.ToList().IndexOf(type);
+    }
     #endregion
     #region MOVE
     private void MoveUpdate()
     {
-        var hor = Input.GetAxis("Horizontal");
-        var ver = Input.GetAxis("Vertical");
-        var dir = new Vector2(hor, ver);
+        var dir = PlayerInput.MoveDirection;
         if (MovementLock.IsFree && InputLock.IsFree && dir.magnitude > 0.5f)
         {
             MoveDirection = dir.normalized;

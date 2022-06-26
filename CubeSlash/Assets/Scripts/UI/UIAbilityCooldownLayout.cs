@@ -6,7 +6,7 @@ public class UIAbilityCooldownLayout : MonoBehaviour
 {
     [SerializeField] private UIAbilityCooldown prefab_cooldown;
 
-    private Dictionary<PlayerInputController.JoystickButtonType, UIAbilityCooldown> cooldowns = new Dictionary<PlayerInputController.JoystickButtonType, UIAbilityCooldown>();
+    private Dictionary<PlayerInput.ButtonType, UIAbilityCooldown> cooldowns = new Dictionary<PlayerInput.ButtonType, UIAbilityCooldown>();
 
     private void Start()
     {
@@ -24,10 +24,10 @@ public class UIAbilityCooldownLayout : MonoBehaviour
             {
                 var inst = Instantiate(prefab_cooldown, prefab_cooldown.transform.parent).GetComponent<UIAbilityCooldown>();
                 var type =
-                    i == 1 ? PlayerInputController.JoystickButtonType.NORTH :
-                    i == 3 ? PlayerInputController.JoystickButtonType.WEST :
-                    i == 5 ? PlayerInputController.JoystickButtonType.EAST :
-                    PlayerInputController.JoystickButtonType.SOUTH;
+                    i == 1 ? PlayerInput.ButtonType.NORTH :
+                    i == 3 ? PlayerInput.ButtonType.WEST :
+                    i == 5 ? PlayerInput.ButtonType.EAST :
+                    PlayerInput.ButtonType.SOUTH;
                 cooldowns.Add(type, inst);
             }
         }
@@ -49,12 +49,16 @@ public class UIAbilityCooldownLayout : MonoBehaviour
 
     private void UpdateAbilities()
     {
-        for (int i = 0; i < Player.Instance.AbilitiesEquipped.Length; i++)
-        {
-            var dir = PlayerInputController.Instance.GetJoystickButtonType(i);
-            var cd = cooldowns[dir];
-            var ability = Player.Instance.AbilitiesEquipped[i];
-            cd.SetAbility(ability);
-        }
+        UpdateAbility(PlayerInput.ButtonType.NORTH);
+        UpdateAbility(PlayerInput.ButtonType.EAST);
+        UpdateAbility(PlayerInput.ButtonType.SOUTH);
+        UpdateAbility(PlayerInput.ButtonType.WEST);
+    }
+
+    private  void UpdateAbility(PlayerInput.ButtonType type)
+    {
+        var cd = cooldowns[type];
+        var a = Player.Instance.GetEquippedAbility(type);
+        cd.SetAbility(a);
     }
 }

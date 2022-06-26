@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 public class UIAbilityVariable : MonoBehaviour
@@ -31,11 +32,22 @@ public class UIAbilityVariable : MonoBehaviour
         btn.onClick.AddListener(Click);
     }
 
+    private void OnEnable()
+    {
+        var input = PlayerInput.Controls.Player;
+        input.East.performed += PressCancel;
+    }
+
+    private void OnDisable()
+    {
+        var input = PlayerInput.Controls.Player;
+        input.East.performed -= PressCancel;
+    }
+
     private void Update()
     {
         HighlightUpdate();
         DisabledUpdate();
-        InputUpdate();
         ScrollUpdate();
     }
 
@@ -54,21 +66,13 @@ public class UIAbilityVariable : MonoBehaviour
         points.ForEach(p => p.Disabled = !cvg.interactable);
     }
 
-    private void InputUpdate()
-    {
-        if (PlayerInputController.Instance.GetJoystickButtonDown(PlayerInputController.JoystickButtonType.EAST))
-        {
-            Cancel();
-        }
-    }
-
     private void ScrollUpdate()
     {
         if (Selected)
         {
             if (Time.unscaledTime < time_input) return;
 
-            var hor = Input.GetAxisRaw("Horizontal");
+            var hor = PlayerInput.MoveDirection.x;
             if (hor.Abs() > 0.25f)
             {
                 if (hor > 0)
@@ -192,6 +196,11 @@ public class UIAbilityVariable : MonoBehaviour
         var alpha = visible ? 1 : 0;
         img_icon_highlight.color = img_icon_highlight.color.SetA(alpha);
         img_icon.color = visible ? ColorPalette.Main.disabled : ColorPalette.Main.selected;
+    }
+
+    private void PressCancel(InputAction.CallbackContext context)
+    {
+        Cancel();
     }
 
     public void Cancel()

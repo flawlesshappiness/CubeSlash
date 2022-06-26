@@ -50,6 +50,7 @@ public class GameController : MonoBehaviour
     {
         Singleton.EnsureExistence<EnemyController>();
         Singleton.EnsureExistence<ExperienceController>();
+        Singleton.EnsureExistence<PlayerInputController>();
     }
 
     // Update is called once per frame
@@ -61,6 +62,7 @@ public class GameController : MonoBehaviour
 
     private void CheatUpdate()
     {
+        /*
         if(Input.GetKeyDown(KeyCode.R) && Input.GetKey(KeyCode.Tab))
         {
             Reload();
@@ -77,6 +79,7 @@ public class GameController : MonoBehaviour
         {
             EnemyController.Instance.KillActiveEnemies();
         }
+        */
     }
 
     private void OnPauseChanged(bool paused)

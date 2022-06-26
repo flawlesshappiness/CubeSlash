@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 public class UIAbilitySelect : MonoBehaviour
@@ -32,11 +33,22 @@ public class UIAbilitySelect : MonoBehaviour
         btn.onClick.AddListener(ClickButton);
     }
 
+    private void OnEnable()
+    {
+        var input = PlayerInput.Controls.Player;
+        input.West.performed += PressCancel;
+    }
+
+    private void OnDisable()
+    {
+        var input = PlayerInput.Controls.Player;
+        input.West.performed -= PressCancel;
+    }
+
     private void Update()
     {
         HighlightUpdate();
         DisabledUpdate();
-        InputUpdate();
         ScrollUpdate();
     }
 
@@ -58,24 +70,13 @@ public class UIAbilitySelect : MonoBehaviour
         img_disabled.enabled = !cvg.interactable;
     }
 
-    private void InputUpdate()
-    {
-        if (Selected)
-        {
-            if (PlayerInputController.Instance.GetJoystickButtonDown(PlayerInputController.JoystickButtonType.EAST))
-            {
-                Cancel();
-            }
-        }
-    }
-
     private void ScrollUpdate()
     {
         if (Selected)
         {
             if (Time.unscaledTime < time_input) return;
 
-            var ver = Input.GetAxisRaw("Vertical");
+            var ver = PlayerInput.MoveDirection.y;
             if (ver.Abs() > 0.5f)
             {
                 if (ver > 0)
@@ -180,6 +181,11 @@ public class UIAbilitySelect : MonoBehaviour
     {
         SubmitAbility(null);
         Deselect();
+    }
+
+    private void PressCancel(InputAction.CallbackContext context)
+    {
+        Cancel();
     }
 
     public void Cancel()

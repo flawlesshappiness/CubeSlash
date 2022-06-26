@@ -5114,16 +5114,24 @@ MonoBehaviour:
   m_GameObject: {fileID: 1567953985}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4f231c4fb786f3946a6b90b886c48677, type: 3}
+  m_Script: {fileID: 11500000, guid: 01614664b831546d2ae94a42149d80ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_HorizontalAxis: Horizontal
-  m_VerticalAxis: Vertical
-  m_SubmitButton: Submit
-  m_CancelButton: Cancel
-  m_InputActionsPerSecond: 10
-  m_RepeatDelay: 0.5
-  m_ForceModuleActive: 0
+  m_MoveRepeatDelay: 0.5
+  m_MoveRepeatRate: 0.1
+  m_ActionsAsset: {fileID: -944628639613478452, guid: c0c1a34a21c023f42827684991ffe72c, type: 3}
+  m_PointAction: {fileID: 8715192965432089704, guid: c0c1a34a21c023f42827684991ffe72c, type: 3}
+  m_MoveAction: {fileID: -5602155482806909872, guid: c0c1a34a21c023f42827684991ffe72c, type: 3}
+  m_SubmitAction: {fileID: 7319731882600933620, guid: c0c1a34a21c023f42827684991ffe72c, type: 3}
+  m_CancelAction: {fileID: -6492598738509569175, guid: c0c1a34a21c023f42827684991ffe72c, type: 3}
+  m_LeftClickAction: {fileID: -1494920560007444076, guid: c0c1a34a21c023f42827684991ffe72c, type: 3}
+  m_MiddleClickAction: {fileID: -5228466236303340673, guid: c0c1a34a21c023f42827684991ffe72c, type: 3}
+  m_RightClickAction: {fileID: 2953339191398565685, guid: c0c1a34a21c023f42827684991ffe72c, type: 3}
+  m_ScrollWheelAction: {fileID: -8343613817451202039, guid: c0c1a34a21c023f42827684991ffe72c, type: 3}
+  m_TrackedDevicePositionAction: {fileID: 2444920173625414413, guid: c0c1a34a21c023f42827684991ffe72c, type: 3}
+  m_TrackedDeviceOrientationAction: {fileID: -576926560453680241, guid: c0c1a34a21c023f42827684991ffe72c, type: 3}
+  m_DeselectOnBackgroundClick: 1
+  m_PointerBehavior: 0
 --- !u!114 &1567953987
 MonoBehaviour:
   m_ObjectHideFlags: 0
