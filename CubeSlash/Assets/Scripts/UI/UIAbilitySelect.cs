@@ -36,13 +36,13 @@ public class UIAbilitySelect : MonoBehaviour
     private void OnEnable()
     {
         var input = PlayerInput.Controls.Player;
-        input.West.performed += PressCancel;
+        input.East.performed += PressCancel;
     }
 
     private void OnDisable()
     {
         var input = PlayerInput.Controls.Player;
-        input.West.performed -= PressCancel;
+        input.East.performed -= PressCancel;
     }
 
     private void Update()
@@ -190,7 +190,10 @@ public class UIAbilitySelect : MonoBehaviour
 
     public void Cancel()
     {
-        SetAbility(Ability);
-        Deselect();
+        if (Selected)
+        {
+            SetAbility(Ability);
+            Deselect();
+        }
     }
 }

@@ -34,7 +34,7 @@ public class AbilityView : View
         GameController.Instance.PauseLock.AddLock(nameof(AbilityView));
 
         var input = PlayerInput.Controls.Player;
-        input.East.performed += PressUnequip;
+        input.West.performed += PressUnequip;
         input.Menu.performed += PressStart;
     }
 
@@ -43,7 +43,7 @@ public class AbilityView : View
         GameController.Instance.PauseLock.RemoveLock(nameof(AbilityView));
 
         var input = PlayerInput.Controls.Player;
-        input.East.performed -= PressUnequip;
+        input.West.performed -= PressUnequip;
         input.Menu.performed -= PressStart;
     }
 

@@ -29,6 +29,7 @@ public class GameController : MonoBehaviour
 
         ConsoleController.Instance.RegisterCommand("UnlockAllAbilities", () => Player.Instance.UnlockAllAbilities());
         ConsoleController.Instance.RegisterCommand("Kill", () => EnemyController.Instance.KillActiveEnemies());
+        ConsoleController.Instance.RegisterCommand("LevelUp", () => CheatLevelUp());
     }
 
     private void InitializePlayer()
@@ -162,5 +163,10 @@ public class GameController : MonoBehaviour
     {
         yield return new WaitForSeconds(1f);
         ViewController.Instance.ShowView<DeathView>(2f);
+    }
+
+    private void CheatLevelUp()
+    {
+        Player.Instance.Experience.Value = Player.Instance.Experience.Max;
     }
 }
