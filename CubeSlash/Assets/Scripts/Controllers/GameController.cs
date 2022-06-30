@@ -27,9 +27,10 @@ public class GameController : MonoBehaviour
 
         PauseLock.OnLockChanged += OnPauseChanged;
 
-        ConsoleController.Instance.RegisterCommand("UnlockAllAbilities", () => Player.Instance.UnlockAllAbilities());
-        ConsoleController.Instance.RegisterCommand("Kill", () => EnemyController.Instance.KillActiveEnemies());
-        ConsoleController.Instance.RegisterCommand("LevelUp", () => CheatLevelUp());
+        ConsoleController.Instance.RegisterCommand("UnlockAllAbilities", Player.Instance.UnlockAllAbilities);
+        ConsoleController.Instance.RegisterCommand("Kill", EnemyController.Instance.KillActiveEnemies);
+        ConsoleController.Instance.RegisterCommand("LevelUp", CheatLevelUp);
+        ConsoleController.Instance.RegisterCommand("AbilityPoints", CheatAbilityPoints);
     }
 
     private void InitializePlayer()
@@ -168,5 +169,10 @@ public class GameController : MonoBehaviour
     private void CheatLevelUp()
     {
         Player.Instance.Experience.Value = Player.Instance.Experience.Max;
+    }
+
+    private void CheatAbilityPoints()
+    {
+        Player.Instance.AbilityPoints += 999;
     }
 }

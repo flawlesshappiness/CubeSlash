@@ -19,6 +19,7 @@ public class UIAbilityVariable : MonoBehaviour
 
     public System.Action OnSelected { get; set; }
     public System.Action OnDeselected { get; set; }
+    public System.Action<AbilityVariable> OnHighlighted { get; set; }
 
     public AbilityVariable Variable { get; private set; }
     public bool Interactable { set { cvg.interactable = value; cvg.blocksRaycasts = value; } }
@@ -58,6 +59,10 @@ public class UIAbilityVariable : MonoBehaviour
         {
             Highlighted = highlight;
             SetHighlightVisible(highlight);
+            if (Highlighted)
+            {
+                OnHighlighted?.Invoke(Variable);
+            }
         }
     }
 

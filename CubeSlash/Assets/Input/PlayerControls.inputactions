@@ -652,7 +652,18 @@
                 {
                     "name": "",
                     "id": "c46702da-7513-4743-a6df-080f8ca0285f",
-                    "path": "*/{Submit}",
+                    "path": "<Gamepad>/buttonSouth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Submit",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "fa37c414-975a-4ff8-897e-e68b0cc8318f",
+                    "path": "<Keyboard>/k",
                     "interactions": "",
                     "processors": "",
                     "groups": "",

@@ -11,6 +11,7 @@ public class AbilityView : View
     [SerializeField] private UIAbilityCard prefab_card;
     [SerializeField] private Button btn_continue;
     [SerializeField] private TMP_Text tmp_desc;
+    [SerializeField] private UIInputLayout layout_input;
 
     private void Start()
     {
@@ -69,6 +70,7 @@ public class AbilityView : View
             {
                 v.OnSelected += () => OnVariableSelected(v, true);
                 v.OnDeselected += () => OnVariableSelected(v, false);
+                v.OnHighlighted += v => DisplayVariable(v);
             });
         }
 
@@ -81,6 +83,16 @@ public class AbilityView : View
         btn_continue.interactable = !selected;
         ability.Interactable = true;
         DisplayAbility(ability.Ability);
+
+        // Input
+        if (selected)
+        {
+            DisplayInputAbilitySelect();
+        }
+        else
+        {
+            DisplayInputNavigate();
+        }
     }
 
     private void OnVariableSelected(UIAbilityVariable variable, bool selected)
@@ -88,6 +100,15 @@ public class AbilityView : View
         SetAbilitiesInteractable(!selected);
         btn_continue.interactable = !selected;
         variable.Interactable = true;
+
+        if (selected)
+        {
+            DisplayInputAbilityVariable();
+        }
+        else
+        {
+            DisplayInputNavigate();
+        }
     }
 
     private void SetAbilitiesInteractable(bool interactable)
@@ -148,8 +169,48 @@ public class AbilityView : View
         }
         else
         {
-            tmp_desc.text = "Selected an ability by moving up or down";
+            tmp_desc.text = "";
         }
+    }
+
+    private void DisplayVariable(AbilityVariable v)
+    {
+        if(v != null)
+        {
+            string s = v.Name;
+            s += "\n" + v.Description;
+            tmp_desc.text = s;
+        }
+        else
+        {
+            tmp_desc.text = "";
+        }
+    }
+    #endregion
+    #region INPUT
+    private void DisplayInputAbilitySelect()
+    {
+        layout_input.Clear();
+        layout_input.AddInput(PlayerInput.UIButtonType.NAV_UP_DOWN, "Navigate");
+        layout_input.AddInput(PlayerInput.UIButtonType.SOUTH, "Select");
+        layout_input.AddInput(PlayerInput.UIButtonType.WEST, "Unequip");
+        layout_input.AddInput(PlayerInput.UIButtonType.EAST, "Cancel");
+    }
+
+    private void DisplayInputAbilityVariable()
+    {
+        layout_input.Clear();
+        layout_input.AddInput(PlayerInput.UIButtonType.NAV_LEFT_RIGHT, "Adjust");
+        layout_input.AddInput(PlayerInput.UIButtonType.SOUTH, "Confirm");
+        layout_input.AddInput(PlayerInput.UIButtonType.EAST, "Cancel");
+    }
+
+    private void DisplayInputNavigate()
+    {
+        layout_input.Clear();
+        layout_input.AddInput(PlayerInput.UIButtonType.NAV_ALL, "Navigate");
+        layout_input.AddInput(PlayerInput.UIButtonType.SOUTH, "Select");
+        layout_input.AddInput(PlayerInput.UIButtonType.WEST, "Unequip");
     }
     #endregion
 

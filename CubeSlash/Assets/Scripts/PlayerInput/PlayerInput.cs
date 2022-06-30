@@ -5,6 +5,8 @@ public static class PlayerInput
 {
     private static PlayerControls _controls;
     public static PlayerControls Controls { get { return _controls ?? CreateControls(); } }
+    public static PlayerInputDatabase _database;
+    public static PlayerInputDatabase Database { get { return _database ?? LoadDatabase(); } }
 
     public static System.Action<ButtonType> OnAbilityButtonDown { get; set; }
     public static System.Action<ButtonType> OnAbilityButtonUp { get; set; }
@@ -81,5 +83,11 @@ public static class PlayerInput
             OnDeviceChanged?.Invoke(type);
             Debug.Log($"Current device changed to {CurrentDevice}");
         }
+    }
+
+    private static PlayerInputDatabase LoadDatabase()
+    {
+        _database = Resources.Load<PlayerInputDatabase>("Databases/PlayerInputDatabase");
+        return _database;
     }
 }

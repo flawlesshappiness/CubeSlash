@@ -48,8 +48,13 @@ MonoBehaviour:
   desc_ability: Fire an arc of projectiles
   sprite_icon: {fileID: 21300000, guid: fa3a1b53a5ddc524ca4486dc707ff23f, type: 3}
   Variables:
-  - Value: 5
+  - Name: Projectiles
+    Value: 0
     Max: 10
-    sprite_icon: {fileID: 0}
-    Name: 
-    Description: 
+    sprite_icon: {fileID: 21300000, guid: 84f667a0eed51a340b7b37327afb72ea, type: 3}
+    Description: Governs amount of projectiles
+  - Name: Arc
+    Value: 0
+    Max: 10
+    sprite_icon: {fileID: 21300000, guid: df6b34c8b502f7e48a79565096a23132, type: 3}
+    Description: Governs projectile spread

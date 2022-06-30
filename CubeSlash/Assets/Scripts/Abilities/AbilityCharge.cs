@@ -19,6 +19,8 @@ public class AbilityCharge : Ability
 
     private float time_charge_start;
     private float time_charge_end;
+    public AbilityVariable VarWidth { get { return Variables[0]; } }
+    public AbilityVariable VarTime { get { return Variables[1]; } }
     public bool Charging { get; private set; }
     public bool ChargeEnded { get; private set; }
 
@@ -49,8 +51,8 @@ public class AbilityCharge : Ability
     {
         base.InitializeValues();
         CooldownTime = 0.5f;
-        Width = 1;
-        ChargeTime = 0.75f;
+        Width = 1f + (5f * VarWidth.Percentage);
+        ChargeTime = 0.75f + (-0.25f * VarTime.Percentage);
         Knockback = -10;
     }
 

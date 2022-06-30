@@ -6,15 +6,15 @@ using UnityEngine;
 public class AbilityDash : Ability
 {
     private bool Dashing { get; set; }
-    private float TimeStart { get; set; }
-    private float TimeDash { get; set; }
-    private float SpeedDash { get; set; }
-    private float RadiusDash { get; set; }
+    private Vector3 PosDashStart { get; set; }
+    private float Distance { get; set; }
+    private float Speed { get; set; }
+    private float Radius { get; set; }
 
     [Header("DASH")]
     [SerializeField] private BoxCollider2D trigger;
-    public AbilityVariable VarTime { get { return Variables[0]; } }
-    public AbilityVariable VarSpeed { get { return Variables[1]; } }
+    public AbilityVariable VarSpeed { get { return Variables[0]; } }
+    public AbilityVariable VarDistance { get { return Variables[1]; } }
     public AnimationCurve ac_path_normal;
     public AnimationCurve ac_path_split;
 
@@ -29,9 +29,11 @@ public class AbilityDash : Ability
     {
         base.InitializeValues();
         CooldownTime = 0.5f;
-        TimeDash = 0.25f;
-        SpeedDash = 30;
-        RadiusDash = 1;
+        Speed = 20f + (80f * VarSpeed.Percentage);
+        Distance = 5f + (10f * VarDistance.Percentage);
+        Radius = 1;
+
+        InitializeBody();
     }
 
     public override void InitializeModifier(Ability modifier)
@@ -45,25 +47,25 @@ public class AbilityDash : Ability
             Type.SPLIT => CooldownTime + 0.5f,
         };
 
-        TimeDash = modifier.type switch
+        Distance = modifier.type switch
         {
-            Type.DASH => TimeDash + 0.05f,
-            Type.CHARGE => TimeDash - 0.15f,
-            Type.SPLIT => TimeDash + 0.05f,
+            Type.DASH => Distance + 1.0f,
+            Type.CHARGE => Distance + 2.0f,
+            Type.SPLIT => Distance + 1.0f,
         };
 
-        SpeedDash = modifier.type switch
+        Speed = modifier.type switch
         {
-            Type.DASH => SpeedDash + 10,
-            Type.CHARGE => SpeedDash + 40,
-            Type.SPLIT => SpeedDash + 0,
+            Type.DASH => Speed + 10,
+            Type.CHARGE => Speed + 40,
+            Type.SPLIT => Speed + 0,
         };
 
-        RadiusDash = modifier.type switch
+        Radius = modifier.type switch
         {
-            Type.DASH => RadiusDash + 0.5f,
-            Type.CHARGE => RadiusDash + 0.5f,
-            Type.SPLIT => RadiusDash + 2,
+            Type.DASH => Radius + 0.5f,
+            Type.CHARGE => Radius + 0.5f,
+            Type.SPLIT => Radius + 2,
         };
 
         if(modifier.type == Type.CHARGE)
@@ -109,24 +111,32 @@ public class AbilityDash : Ability
     private void StartDashing(bool reset_hits, bool hit_start, bool hit_end)
     {
         if (reset_hits) _hits_dash.Clear();
-        cr_dash = CoroutineController.Instance.Run(DashPhaseCr(hit_start, hit_end), "dash_" + GetInstanceID());
+        cr_dash = CoroutineController.Instance.Run(SequenceCr(hit_start, hit_end), "dash_" + GetInstanceID());
     }
 
-    private IEnumerator DashPhaseCr(bool hit_start, bool hit_end)
+    private void InterruptDash()
+    {
+        if (cr_dash != null)
+        {
+            Dashing = false;
+            CoroutineController.Instance.Kill(cr_dash);
+            UpdateBody(1);
+        }
+    }
+
+    private IEnumerator SequenceCr(bool hit_start, bool hit_end)
     {
         Dashing = true;
         Player.Instance.MovementLock.AddLock(nameof(AbilityDash));
         Player.Instance.DragLock.AddLock(nameof(AbilityDash));
         Player.Instance.InvincibilityLock.AddLock(nameof(AbilityDash));
 
-        // Target
-        var dir_dash = Player.MoveDirection;
-
         // Dash
-        Player.Character.SetLookDirection(dir_dash);
-        TimeStart = Time.time;
-        StartDashVisual(TimeDash);
-        yield return DashCr(dir_dash, TimeDash, SpeedDash);
+        var direction = Player.MoveDirection;
+        var velocity = direction * Speed;
+        Player.Character.SetLookDirection(direction);
+        //StartDashVisual();
+        yield return MoveCr(velocity);
 
         // Remove counters
         Player.Instance.InvincibilityLock.RemoveLock(nameof(AbilityDash));
@@ -137,79 +147,72 @@ public class AbilityDash : Ability
         StartCooldown();
     }
 
-    private IEnumerator DashCr(Vector3 dir, float time, float speed)
+    private IEnumerator MoveCr(Vector3 velocity)
     {
-        while (Time.time - TimeStart < time)
+        PosDashStart = transform.position;
+        while (Vector3.Distance(transform.position, PosDashStart) < Distance)
         {
-            Player.Rigidbody.velocity = dir * speed;
+            Player.Rigidbody.velocity = velocity;
+            var t = Vector3.Distance(transform.position, PosDashStart) / Distance;
+            UpdateBody(t);
             yield return new WaitForFixedUpdate();
         }
-        Player.Rigidbody.velocity = dir * Player.SPEED_MOVE;
+        Player.Rigidbody.velocity = velocity.normalized * Player.SPEED_MOVE;
+        UpdateBody(1);
+
+        if (HasModifier(Type.CHARGE))
+        {
+            HitEnemiesArea(transform.position, 2f);
+        }
     }
 
     #region VISUAL
-    private IEnumerator DashVisualCr(float time)
+    private void InitializeBody()
     {
-        // Start
-        Character clone = null;
-        var curve = ac_path_normal;
-
-        if (HasModifier(Type.SPLIT))
+        if(clone == null)
         {
-            clone = GetClone();
-            clone.gameObject.SetActive(true);
-            clone.transform.localPosition = Player.Character.transform.localPosition;
-            curve = ac_path_split;
-        }
-
-        // Dash
-        while(Time.time - TimeStart < time)
-        {
-            var t = (Time.time - TimeStart) / time;
-            var tval = curve.Evaluate(t);
-            var dir = Player.MoveDirection;
-            var right = Vector3.Cross(dir, Vector3.forward).normalized;
-            var pos_prev = Player.Character.transform.localPosition;
-            var pos_next = right * tval;
-
-            Player.Character.transform.localPosition = pos_next;
-
-            var dir_delta = pos_next - pos_prev;
-            Player.Character.SetLookDirection(dir + dir_delta);
-
-            var ptrigger = Player.Instance.Character.Trigger;
-            trigger.size = new Vector2(Mathf.Clamp(tval.Abs() * 2 + ptrigger.radius * 2, ptrigger.radius, float.MaxValue), ptrigger.radius * 2);
-            trigger.transform.rotation = Player.Instance.Character.transform.rotation;
-
-            if (clone)
+            if (HasModifier(Type.SPLIT))
             {
-                var _pos_prev = clone.transform.localPosition;
-                var _pos_next = -right * tval;
-                clone.transform.localPosition = _pos_next;
-
-                var _dir_delta = _pos_next - _pos_prev;
-                clone.SetLookDirection(dir + _dir_delta);
+                CreateClone();
+                clone.gameObject.SetActive(false);
+                clone.transform.localPosition = Player.Character.transform.localPosition;
             }
-
-            yield return new WaitForEndOfFrame();
+        }
+        else
+        {
+            clone.gameObject.SetActive(false);
         }
     }
 
-    private void StartDashVisual(float time)
+    private void UpdateBody(float t)
     {
-        CoroutineController.Instance.Run(DashVisualCr(time), "dash_visual_" + GetInstanceID())
-            .OnEnd(() =>
-            {
-                // Player
-                Player.Instance.Character.transform.localPosition = Vector3.zero;
+        var curve = HasModifier(Type.SPLIT) ? ac_path_split : ac_path_normal;
+        var tval = curve.Evaluate(t);
+        var dir = Player.MoveDirection;
+        var right = Vector3.Cross(dir, Vector3.forward).normalized;
+        var pos_prev = Player.Character.transform.localPosition;
+        var pos_next = right * tval;
 
-                // Hide clone
-                var clone = GetClone();
-                if (clone)
-                {
-                    clone.gameObject.SetActive(false);
-                }
-            });
+        Player.Character.transform.localPosition = pos_next;
+
+        var dir_delta = pos_next - pos_prev;
+        Player.Character.SetLookDirection(dir + dir_delta);
+
+        var ptrigger = Player.Instance.Character.Trigger;
+        trigger.size = new Vector2(Mathf.Clamp(tval.Abs() * 2 + ptrigger.radius * 2, ptrigger.radius, float.MaxValue), ptrigger.radius * 2);
+        trigger.transform.rotation = Player.Instance.Character.transform.rotation;
+
+        if (clone)
+        {
+            var _pos_prev = clone.transform.localPosition;
+            var _pos_next = -right * tval;
+            clone.transform.localPosition = _pos_next;
+
+            var _dir_delta = _pos_next - _pos_prev;
+            clone.SetLookDirection(dir + _dir_delta);
+
+            clone.gameObject.SetActive(t < 1f);
+        }
     }
     #endregion
     #region ENEMY
@@ -220,26 +223,22 @@ public class AbilityDash : Ability
         if (enemy)
         {
             var already_hit = _hits_dash.Contains(enemy);
-            DashHitEnemy(enemy);
+            HitEnemiesArea(enemy.transform.position, 2f);
 
             if (enemy.IsKillable() && HasModifier(Type.CHARGE))
             {
-
+                // Penetrate
             }
             else
             {
                 // Stop dashing
-                if (cr_dash != null)
-                {
-                    Dashing = false;
-                    CoroutineController.Instance.Kill(cr_dash);
-                }
-                StartCoroutine(DashHitKnockbackCr());
+                InterruptDash();
+                StartCoroutine(HitKnockbackCr());
             }
         }
     }
 
-    private IEnumerator DashHitKnockbackCr()
+    private IEnumerator HitKnockbackCr()
     {
         var time_end = Time.time + 0.25f;
         Player.Rigidbody.velocity = Player.MoveDirection * -15f;
@@ -253,7 +252,7 @@ public class AbilityDash : Ability
         Player.Instance.DragLock.RemoveLock(nameof(AbilityDash));
     }
 
-    private void DashHitEnemy(Enemy enemy)
+    private void HitEnemy(Enemy enemy)
     {
         if (enemy && !_hits_dash.Contains(enemy))
         {
@@ -279,56 +278,20 @@ public class AbilityDash : Ability
         }
     }
 
-    private void DashHitEnemiesArea(Vector3 position, float radius)
+    private void HitEnemiesArea(Vector3 position, float radius)
     {
         foreach (var hit in Physics2D.OverlapCircleAll(position, radius))
         {
             var enemy = hit.GetComponentInParent<Enemy>();
-            DashHitEnemy(enemy);
+            HitEnemy(enemy);
         }
-    }
-
-    private class FindTargetMap
-    {
-        public Enemy Enemy { get; set; }
-        public float Value { get; set; }
-    }
-
-    private Enemy GetTarget(float distance_max, float angle_max)
-    {
-        var targets = new List<FindTargetMap>();
-        var hits = Physics2D.OverlapCircleAll(Player.transform.position, distance_max);
-        foreach (var hit in hits)
-        {
-            var e = hit.gameObject.GetComponentInParent<Enemy>();
-            if (e == null) continue;
-
-            var dir = e.transform.position - Player.transform.position;
-            var angle = Vector3.Angle(Player.MoveDirection.normalized, dir.normalized);
-            var v_angle = 1f - (angle / 180f);
-            if (angle > angle_max) continue;
-
-            var dist = dir.magnitude;
-            var v_dist = (1f - (dist / distance_max)) * 1.5f;
-
-            var target = new FindTargetMap();
-            targets.Add(target);
-            target.Enemy = e;
-            target.Value = v_angle + v_dist;
-        }
-
-        targets = targets.OrderByDescending(target => target.Value).ToList();
-        return targets.Count == 0 ? null : targets[0].Enemy;
     }
     #endregion
     #region CLONE
     private Character clone;
-    private Character GetClone()
+    private Character CreateClone()
     {
-        if(clone == null)
-        {
-            clone = Instantiate(Player.Character.gameObject, Player.Character.transform.parent).GetComponent<Character>();
-        }
+        clone = Instantiate(Player.Character.gameObject, Player.Character.transform.parent).GetComponent<Character>();
         return clone;
     }
     #endregion

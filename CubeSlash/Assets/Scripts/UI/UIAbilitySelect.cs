@@ -179,7 +179,7 @@ public class UIAbilitySelect : MonoBehaviour
 
     public void Unequip()
     {
-        SubmitAbility(null);
+        SetAbility(null);
         Deselect();
     }
 

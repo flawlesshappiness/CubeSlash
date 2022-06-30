@@ -19532,11 +19532,16 @@ MonoBehaviour:
   desc_ability: Charge beam to increase damage
   sprite_icon: {fileID: 21300000, guid: 00cb1e475738e9c419d3e33ed7f45243, type: 3}
   Variables:
-  - Value: 0
-    Max: 0
+  - Name: Width
+    Value: 0
+    Max: 10
     sprite_icon: {fileID: 21300000, guid: c47d07607041a9e46ac5a017fa569294, type: 3}
-    Name: Width
     Description: Governs beam width
+  - Name: Time
+    Value: 0
+    Max: 10
+    sprite_icon: {fileID: 21300000, guid: 08899c7b95056de458c07a171209ec23, type: 3}
+    Description: Governs beam charge time
   prefab_line: {fileID: 3161495528270361273}
   ps_charge: {fileID: 3355490899533344021}
   ps_charge_end: {fileID: 3894950489769590115}

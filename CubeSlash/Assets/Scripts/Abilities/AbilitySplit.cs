@@ -6,6 +6,9 @@ public class AbilitySplit : Ability
 {
     private int CountProjectiles { get; set; }
     private float SpeedProjectile { get; set; }
+    private float ArcProjectiles { get; set; }
+    public AbilityVariable VarCount { get { return Variables[0]; } }
+    public AbilityVariable VarArc { get { return Variables[1]; } }
 
     public override void InitializeFirstTime()
     {
@@ -16,8 +19,9 @@ public class AbilitySplit : Ability
     {
         base.InitializeValues();
         CooldownTime = 0.5f;
-        CountProjectiles = 3;
+        CountProjectiles = 3 + (int)(8 * VarCount.Percentage);
         SpeedProjectile = 25;
+        ArcProjectiles = 90f + (-20f * VarArc.Percentage);
     }
 
     public override void InitializeModifier(Ability modifier)
@@ -34,7 +38,7 @@ public class AbilitySplit : Ability
         CountProjectiles = modifier.type switch
         {
             Type.DASH => CountProjectiles + 0,
-            Type.CHARGE => CountProjectiles + 15,
+            Type.CHARGE => CountProjectiles + 50,
             Type.SPLIT => CountProjectiles + 3,
         };
 
@@ -43,6 +47,13 @@ public class AbilitySplit : Ability
             Type.DASH => SpeedProjectile + 0,
             Type.CHARGE => SpeedProjectile + 5,
             Type.SPLIT => SpeedProjectile + 0,
+        };
+
+        ArcProjectiles = modifier.type switch
+        {
+            Type.DASH => ArcProjectiles + 0,
+            Type.CHARGE => 180f,
+            Type.SPLIT => ArcProjectiles + 0,
         };
 
         if (modifier.type == Type.CHARGE)
@@ -81,7 +92,7 @@ public class AbilitySplit : Ability
     {
         var p = Instantiate(Resources.Load<Projectile>("Prefabs/Other/ProjectileSplit").gameObject).GetComponent<Projectile>();
         p.transform.position = Player.transform.position;
-        p.Rigidbody.velocity = direction * 25;
+        p.Rigidbody.velocity = direction * SpeedProjectile;
         p.SetDirection(direction);
 
         p.OnHitEnemy += e =>
@@ -98,9 +109,7 @@ public class AbilitySplit : Ability
         // Spawn projectiles
         var projectiles = new List<Projectile>();
         var forward = Player.MoveDirection;
-        var angle_max = HasModifier(Type.CHARGE) ? 180f : 35;
-        var count_projectiles = HasModifier(Type.CHARGE) ? 30 : 5;
-        var directions = GetSplitDirections(count_projectiles, angle_max, forward);
+        var directions = GetSplitDirections(CountProjectiles, ArcProjectiles, forward);
         foreach(var direction in directions)
         {
             var p = SpawnProjectile(direction);
