@@ -6,13 +6,18 @@ using UnityEngine;
 public class AbilityDash : Ability
 {
     private bool Dashing { get; set; }
-    private Vector3 PosDashStart { get; set; }
+    private Vector3 PositionOrigin { get; set; }
+    private Vector3 Direction { get; set; }
     private float Distance { get; set; }
     private float Speed { get; set; }
-    private float Radius { get; set; }
+    private float RadiusTrigger { get; set; }
+    private float RadiusDamage { get; set; }
+    private float RadiusPush { get; set; }
+    private float ForcePush { get; set; }
 
     [Header("DASH")]
     [SerializeField] private BoxCollider2D trigger;
+    [SerializeField] private AnimationCurve ac_push_enemies;
     public AbilityVariable VarSpeed { get { return Variables[0]; } }
     public AbilityVariable VarDistance { get { return Variables[1]; } }
     public AnimationCurve ac_path_normal;
@@ -23,6 +28,7 @@ public class AbilityDash : Ability
     public override void InitializeFirstTime()
     {
         base.InitializeFirstTime();
+        trigger.enabled = false;
     }
 
     public override void InitializeValues()
@@ -31,7 +37,10 @@ public class AbilityDash : Ability
         CooldownTime = 0.5f;
         Speed = 20f + (80f * VarSpeed.Percentage);
         Distance = 5f + (10f * VarDistance.Percentage);
-        Radius = 1;
+        RadiusTrigger = 1;
+        RadiusDamage = 1.8f;
+        RadiusPush = 8;
+        ForcePush = 80;
 
         InitializeBody();
     }
@@ -61,11 +70,11 @@ public class AbilityDash : Ability
             Type.SPLIT => Speed + 0,
         };
 
-        Radius = modifier.type switch
+        RadiusTrigger = modifier.type switch
         {
-            Type.DASH => Radius + 0.5f,
-            Type.CHARGE => Radius + 0.5f,
-            Type.SPLIT => Radius + 2,
+            Type.DASH => RadiusTrigger + 0.5f,
+            Type.CHARGE => RadiusTrigger + 0.5f,
+            Type.SPLIT => RadiusTrigger + 2,
         };
 
         if(modifier.type == Type.CHARGE)
@@ -87,7 +96,7 @@ public class AbilityDash : Ability
         else
         {
             if (Dashing) return;
-            StartDashing(true, true, true);
+            StartDashing();
         }
     }
 
@@ -102,16 +111,32 @@ public class AbilityDash : Ability
             charge.Released();
             if(charge.IsFullyCharged() && !Dashing)
             {
-                StartDashing(true, true, true);
+                StartDashing();
             }
         }
     }
 
-    private List<Enemy> _hits_dash = new List<Enemy>();
-    private void StartDashing(bool reset_hits, bool hit_start, bool hit_end)
+    private void StartDashing()
     {
-        if (reset_hits) _hits_dash.Clear();
-        cr_dash = CoroutineController.Instance.Run(SequenceCr(hit_start, hit_end), "dash_" + GetInstanceID());
+        trigger.enabled = true;
+        Direction = Player.MoveDirection;
+        cr_dash = CoroutineController.Instance.Run(SequenceCr(), "dash_" + GetInstanceID());
+    }
+
+    private IEnumerator SequenceCr()
+    {
+        Dashing = true;
+        Player.Instance.MovementLock.AddLock(nameof(AbilityDash));
+        Player.Instance.DragLock.AddLock(nameof(AbilityDash));
+        Player.Instance.InvincibilityLock.AddLock(nameof(AbilityDash));
+
+        // Dash
+        var velocity = Direction * Speed;
+        Player.Character.SetLookDirection(Direction);
+        yield return MoveCr(velocity);
+
+        // End
+        EndDash();
     }
 
     private void InterruptDash()
@@ -121,27 +146,16 @@ public class AbilityDash : Ability
             Dashing = false;
             CoroutineController.Instance.Kill(cr_dash);
             UpdateBody(1);
+            EndDash();
         }
     }
 
-    private IEnumerator SequenceCr(bool hit_start, bool hit_end)
+    private void EndDash()
     {
-        Dashing = true;
-        Player.Instance.MovementLock.AddLock(nameof(AbilityDash));
-        Player.Instance.DragLock.AddLock(nameof(AbilityDash));
-        Player.Instance.InvincibilityLock.AddLock(nameof(AbilityDash));
-
-        // Dash
-        var direction = Player.MoveDirection;
-        var velocity = direction * Speed;
-        Player.Character.SetLookDirection(direction);
-        //StartDashVisual();
-        yield return MoveCr(velocity);
-
-        // Remove counters
         Player.Instance.InvincibilityLock.RemoveLock(nameof(AbilityDash));
         Player.Instance.MovementLock.RemoveLock(nameof(AbilityDash));
         Player.Instance.DragLock.RemoveLock(nameof(AbilityDash));
+        trigger.enabled = false;
         Dashing = false;
 
         StartCooldown();
@@ -149,11 +163,11 @@ public class AbilityDash : Ability
 
     private IEnumerator MoveCr(Vector3 velocity)
     {
-        PosDashStart = transform.position;
-        while (Vector3.Distance(transform.position, PosDashStart) < Distance)
+        PositionOrigin = transform.position;
+        while (Vector3.Distance(transform.position, PositionOrigin) < Distance)
         {
             Player.Rigidbody.velocity = velocity;
-            var t = Vector3.Distance(transform.position, PosDashStart) / Distance;
+            var t = Vector3.Distance(transform.position, PositionOrigin) / Distance;
             UpdateBody(t);
             yield return new WaitForFixedUpdate();
         }
@@ -222,8 +236,8 @@ public class AbilityDash : Ability
         var enemy = collision.GetComponentInParent<Enemy>();
         if (enemy)
         {
-            var already_hit = _hits_dash.Contains(enemy);
-            HitEnemiesArea(enemy.transform.position, 2f);
+            PushEnemiesInArea(enemy.transform.position, RadiusPush);
+            HitEnemiesArea(Player.transform.position, RadiusDamage);
 
             if (enemy.IsKillable() && HasModifier(Type.CHARGE))
             {
@@ -233,13 +247,17 @@ public class AbilityDash : Ability
             {
                 // Stop dashing
                 InterruptDash();
-                StartCoroutine(HitKnockbackCr());
+                StartCoroutine(KnockbackSelfCr());
             }
         }
     }
 
-    private IEnumerator HitKnockbackCr()
+    private IEnumerator KnockbackSelfCr()
     {
+        string slock = nameof(AbilityDash) + "Knockback";
+        Player.Instance.InvincibilityLock.AddLock(slock);
+        Player.Instance.MovementLock.AddLock(slock);
+        Player.Instance.DragLock.AddLock(slock);
         var time_end = Time.time + 0.25f;
         Player.Rigidbody.velocity = Player.MoveDirection * -15f;
         while (Time.time < time_end)
@@ -247,34 +265,16 @@ public class AbilityDash : Ability
             Player.Rigidbody.velocity = Player.Rigidbody.velocity * 0.995f;
             yield return null;
         }
-        Player.Instance.InvincibilityLock.RemoveLock(nameof(AbilityDash));
-        Player.Instance.MovementLock.RemoveLock(nameof(AbilityDash));
-        Player.Instance.DragLock.RemoveLock(nameof(AbilityDash));
+        Player.Instance.InvincibilityLock.RemoveLock(slock);
+        Player.Instance.MovementLock.RemoveLock(slock);
+        Player.Instance.DragLock.RemoveLock(slock);
     }
 
     private void HitEnemy(Enemy enemy)
     {
-        if (enemy && !_hits_dash.Contains(enemy))
+        if (enemy.IsKillable())
         {
-            _hits_dash.Add(enemy);
-
-            var time = 0.25f;
-            var velocity = Player.MoveDirection * 0.25f;
-            var drag = 0.995f;
-
-            if (enemy.IsParasite)
-            {
-                enemy.ParasiteHost.Knockback(time, velocity, drag);
-            }
-
-            if (enemy.IsKillable())
-            {
-                Player.KillEnemy(enemy);
-            }
-            else
-            {
-                enemy.Knockback(time, velocity, drag);
-            }
+            Player.KillEnemy(enemy);
         }
     }
 
@@ -283,7 +283,30 @@ public class AbilityDash : Ability
         foreach (var hit in Physics2D.OverlapCircleAll(position, radius))
         {
             var enemy = hit.GetComponentInParent<Enemy>();
-            HitEnemy(enemy);
+            if(enemy != null)
+            {
+                HitEnemy(enemy);
+            }
+        }
+    }
+
+    private void PushEnemiesInArea(Vector3 position, float radius)
+    {
+        var hits = new List<Enemy>();
+        foreach (var hit in Physics2D.OverlapCircleAll(position, radius))
+        {
+            var enemy = hit.GetComponentInParent<Enemy>();
+            if(enemy != null && !hits.Contains(enemy))
+            {
+                hits.Add(enemy);
+                var dir = enemy.transform.position - position;
+                var dist = Vector3.Distance(enemy.transform.position, position);
+                var t_dist = dist / radius;
+
+                var t_force = ac_push_enemies.Evaluate(t_dist);
+                var force = ForcePush * t_force;
+                enemy.Rigidbody.AddForce(dir * force);
+            }
         }
     }
     #endregion

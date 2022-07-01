@@ -12,11 +12,11 @@ public class Enemy : MonoBehaviourExtended
     public bool IsParasite { get { return ParasiteHost != null; } }
     public Enemy ParasiteHost { get; private set; }
     public Vector3 MoveDirection { get { return Character.transform.up; } }
-
     public MultiLock MovementLock { get; private set; } = new MultiLock();
     public MultiLock DragLock { get; private set; } = new MultiLock();
 
-    private bool Moving { get; set; }
+    public float Acceleration { get; set; }
+    public float SpeedMax { get; set; }
 
     public event System.Action OnDeath;
 
@@ -40,7 +40,7 @@ public class Enemy : MonoBehaviourExtended
 
     private void Update()
     {
-        DecelerateUpdate();
+        DragUpdate();
     }
 
     private void SetCharacter(Character prefab)
@@ -86,12 +86,19 @@ public class Enemy : MonoBehaviourExtended
     }
 
     #region MOVEMENT
+    private void DragUpdate()
+    {
+        if(Rigidbody.velocity.magnitude > SpeedMax)
+        {
+            Rigidbody.velocity *= 0.9f;
+        }
+    }
+
     public void Move(Vector3 direction)
     {
         if (MovementLock.IsFree)
         {
-            Moving = true;
-            Rigidbody.velocity = direction;
+            Rigidbody.AddForce(direction.normalized * Acceleration);
             Character.SetLookDirection(direction);
         }
     }
@@ -110,23 +117,6 @@ public class Enemy : MonoBehaviourExtended
         {
             Rigidbody.velocity = Rigidbody.velocity * mul;
         }
-    }
-
-    private void DecelerateUpdate()
-    {
-        if (Moving)
-        {
-            Moving = false;
-        }
-        else
-        {
-            Decelerate(0.7f);
-        }
-    }
-
-    public void Knockback(float time, Vector3 velocity, float drag)
-    {
-        AI.Knockback(time, velocity, drag);
     }
     #endregion
     #region HEALTH

@@ -223,7 +223,10 @@ public class AbilityView : View
     {
         var selected = EventSystemController.Instance.EventSystem.currentSelectedGameObject;
         var ability_select = selected == null ? null : selected.GetComponentInParent<UIAbilitySelect>();
-        ability_select.Unequip();
+        if(ability_select != null)
+        {
+            ability_select.Unequip();
+        }
     }
 
     private void PressStart(InputAction.CallbackContext context)

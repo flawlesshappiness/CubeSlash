@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class Projectile : MonoBehaviourExtended
 {
+    [SerializeField] private bool hits_player;
+    [SerializeField] private bool hits_enemy;
     [SerializeField] private AnimationCurve size_over_lifetime;
     public float TurnSpeed { get; set; }
     public float Drag { get; set; } = 1f;
@@ -14,6 +16,7 @@ public class Projectile : MonoBehaviourExtended
     public bool SearchForTarget { get; set; } = true;
     public Rigidbody2D Rigidbody { get { return GetComponentOnce<Rigidbody2D>(ComponentSearchType.THIS); } }
     public System.Action<Enemy> OnHitEnemy { get; set; }
+    public System.Action<Player> OnHitPlayer { get; set; }
     public Enemy Target { get; set; }
 
     private const float ANGLE_MAX = 90;
@@ -22,16 +25,25 @@ public class Projectile : MonoBehaviourExtended
     private bool searching;
     private bool hit;
 
+    private Vector3 scale_start;
+
     private void Start()
     {
+        scale_start = transform.localScale;
         time_birth = Time.time;
         StartFindTarget();
+        OnStart();
     }
+
+    protected virtual void OnStart() { }
 
     private void Update()
     {
         LifetimeUpdate();
+        OnUpdate();
     }
+
+    protected virtual void OnUpdate() { }
 
     private void FixedUpdate()
     {
@@ -49,9 +61,18 @@ public class Projectile : MonoBehaviourExtended
         var t = (Time.time - time_birth) / Lifetime;
         var tc = Mathf.Clamp(t, 0, 1);
 
-        transform.localScale = Vector3.one * size_over_lifetime.Evaluate(tc);
+        transform.localScale = scale_start * size_over_lifetime.Evaluate(tc);
 
         if(t >= 1)
+        {
+            Kill();
+        }
+    }
+
+    private void DistanceUpdate()
+    {
+        var dist = CameraController.Instance.Width;
+        if(Vector3.Distance(transform.position, Player.Instance.transform.position) > dist)
         {
             Kill();
         }
@@ -113,10 +134,18 @@ public class Projectile : MonoBehaviourExtended
         if (hit) return;
 
         var enemy = collision.gameObject.GetComponentInParent<Enemy>();
-        if (enemy)
+        if (hits_enemy && enemy)
         {
             hit = true;
             OnHitEnemy?.Invoke(enemy);
+            return;
+        }
+
+        var player = collision.gameObject.GetComponentInParent<Player>();
+        if(hits_player && player)
+        {
+            hit = true;
+            OnHitPlayer?.Invoke(player);
             return;
         }
     }

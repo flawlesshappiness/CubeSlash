@@ -7,7 +7,8 @@ public class EnemySettings : ScriptableObject
 {
     [Header("CHARACTER")]
     public Character character;
-    public float speed_move;
+    public float speed_max;
+    public float speed_acceleration;
     public float speed_turn;
     public Vector3 size = Vector3.one;
     public EnemySettings parasite;

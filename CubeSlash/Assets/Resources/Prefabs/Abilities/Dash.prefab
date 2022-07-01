@@ -61,6 +61,30 @@ MonoBehaviour:
     sprite_icon: {fileID: 21300000, guid: 083237d4baf78d143b4251ca612f18dd, type: 3}
     Description: Governs the distance of the dash
   trigger: {fileID: 5274908497568605942}
+  ac_push_enemies:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: -0.38406047
+      outSlope: -0.38406047
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.067632854
+    - serializedVersion: 3
+      time: 0.9987793
+      value: 0
+      inSlope: -1.8891625
+      outSlope: -1.8891625
+      tangentMode: 0
+      weightedMode: 3
+      inWeight: 0.3574879
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
   ac_path_normal:
     serializedVersion: 2
     m_Curve:

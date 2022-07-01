@@ -16,8 +16,8 @@ MonoBehaviour:
   frequency_spawn_enemy: 1
   count_enemy_active: 3
   enemies:
-  - name: Weak
-    enemy: {fileID: 11400000, guid: cfcae6b5621e50448a5872f62f68b1ba, type: 2}
+  - name: Shooter
+    enemy: {fileID: 11400000, guid: db0782c6ad8291647b08bacf671fe0eb, type: 2}
     chance: 1
   bosses: []
   frequency_spawn_experience: 1

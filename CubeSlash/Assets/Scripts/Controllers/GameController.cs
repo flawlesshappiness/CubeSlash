@@ -31,6 +31,7 @@ public class GameController : MonoBehaviour
         ConsoleController.Instance.RegisterCommand("Kill", EnemyController.Instance.KillActiveEnemies);
         ConsoleController.Instance.RegisterCommand("LevelUp", CheatLevelUp);
         ConsoleController.Instance.RegisterCommand("AbilityPoints", CheatAbilityPoints);
+        ConsoleController.Instance.RegisterCommand("NextLevel", NextLevel);
     }
 
     private void InitializePlayer()
@@ -38,8 +39,8 @@ public class GameController : MonoBehaviour
         var prefab_player = Resources.Load<GameObject>("Prefabs/Entities/Player");
         Player.Instance = Instantiate(prefab_player, world).GetComponent<Player>();
         Player.Instance.Initialize();
-        Player.Instance.Health.onMin += OnPlayerDeath;
-        Player.Instance.Experience.onMax += OnPlayerLevelUp;
+        Player.Instance.onDeath += OnPlayerDeath;
+        Player.Instance.onLevelUp += OnPlayerLevelUp;
         CameraController.Instance.Target = Player.Instance.transform;
     }
 
@@ -59,29 +60,6 @@ public class GameController : MonoBehaviour
     void Update()
     {
         LevelUpdate();
-        CheatUpdate();
-    }
-
-    private void CheatUpdate()
-    {
-        /*
-        if(Input.GetKeyDown(KeyCode.R) && Input.GetKey(KeyCode.Tab))
-        {
-            Reload();
-        }
-        else if (Input.GetKeyDown(KeyCode.Q) && Input.GetKey(KeyCode.Tab))
-        {
-            Quit();
-        }
-        else if (Input.GetKeyDown(KeyCode.Alpha1) && Input.GetKey(KeyCode.Tab))
-        {
-            Player.Instance.Experience.Value = Player.Instance.Experience.Max;
-        }
-        else if (Input.GetKeyDown(KeyCode.Alpha2) && Input.GetKey(KeyCode.Tab))
-        {
-            EnemyController.Instance.KillActiveEnemies();
-        }
-        */
     }
 
     private void OnPauseChanged(bool paused)
@@ -126,6 +104,11 @@ public class GameController : MonoBehaviour
     {
         if (!IsGameStarted) return;
         if (Time.time < time_level) return;
+        NextLevel();
+    }
+
+    private void NextLevel()
+    {
         Level.Completed();
         time_level = Time.time + Level.Current.duration;
         print("Next level " + LevelIndex);
@@ -156,7 +139,6 @@ public class GameController : MonoBehaviour
 
     private void OnPlayerDeath()
     {
-        Player.Instance.Kill();
         StartCoroutine(RestartGameCr());
     }
 

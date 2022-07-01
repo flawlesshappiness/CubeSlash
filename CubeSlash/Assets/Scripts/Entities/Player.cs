@@ -14,6 +14,8 @@ public class Player : MonoBehaviourExtended
     public MinMaxInt Experience { get; private set; } = new MinMaxInt();
     public MinMaxInt Health { get; private set; } = new MinMaxInt();
     public int Level { get; private set; }
+    public bool HasLevelledUp { get; private set; }
+    public bool IsDead { get; private set; }
     public int AbilityPoints { get; set; }
     public MultiLock InputLock { get; set; } = new MultiLock();
     public MultiLock InvincibilityLock { get; set; } = new MultiLock();
@@ -27,6 +29,8 @@ public class Player : MonoBehaviourExtended
 
     public System.Action<Enemy> onEnemyKilled;
     public System.Action<Enemy> onHurt;
+    public System.Action onLevelUp;
+    public System.Action onDeath;
 
     public Ability[] AbilitiesEquipped { get; private set; }
     public List<Ability> AbilitiesUnlocked { get; private set; } = new List<Ability>();
@@ -45,6 +49,7 @@ public class Player : MonoBehaviourExtended
         Health.Min = 0;
         Health.Max = 3;
         Health.Value = Health.Max;
+        Health.onMin += OnDeath;
 
         Experience.Min = 0;
         Experience.Max = 5;
@@ -273,8 +278,18 @@ public class Player : MonoBehaviourExtended
     }
     #endregion
     #region HEALTH
+    private void OnDeath()
+    {
+        if (!IsDead)
+        {
+            Kill();
+        }
+    }
+
     public void Kill()
     {
+        IsDead = true;
+
         InstantiateParticle("Particles/ps_burst")
             .Position(transform.position)
             .Destroy(1)
@@ -287,6 +302,7 @@ public class Player : MonoBehaviourExtended
             .Play();
 
         gameObject.SetActive(false);
+        onDeath?.Invoke();
     }
 
     public void Damage(int amount, Vector3 damage_origin)
@@ -355,8 +371,13 @@ public class Player : MonoBehaviourExtended
     #region EXPERIENCE
     private void OnLevelUp()
     {
-        Level++;
-        AbilityPoints++;
+        if (!HasLevelledUp)
+        {
+            HasLevelledUp = true;
+            Level++;
+            AbilityPoints++;
+            onLevelUp?.Invoke();
+        }
     }
 
     public void ResetExperience()
@@ -365,6 +386,7 @@ public class Player : MonoBehaviourExtended
         var t_exp = settings.curve_experience.Evaluate(t_level);
         Experience.Max = (int)(Mathf.Lerp(settings.experience_min, settings.experience_max, t_exp));
         Experience.Value = Experience.Min;
+        HasLevelledUp = false;
     }
     #endregion
 }

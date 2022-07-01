@@ -46,6 +46,11 @@ public abstract class EntityAI : MonoBehaviour
         return Vector3.Distance(transform.position, Player.Instance.transform.position);
     }
 
+    protected Vector3 DirectionToPlayer()
+    {
+        return Player.Instance.transform.position - Position;
+    }
+
     protected bool PlayerIsAlive()
     {
         return Player.Instance.Health.Value > Player.Instance.Health.Min;
@@ -57,13 +62,13 @@ public abstract class EntityAI : MonoBehaviour
         return Vector3.SignedAngle(Self.MoveDirection, dir, Vector3.forward);
     }
 
-    protected void MoveTowards(Vector3 position, float speed_move, float speed_turn, bool turn = true)
+    protected void MoveTowards(Vector3 position, float speed_turn, bool turn = true)
     {
         if (turn)
         {
             TurnTowards(position, speed_turn);
         }
-        Self.Move(Self.MoveDirection.normalized * speed_move);
+        Self.Move(Self.MoveDirection);
     }
 
     protected void TurnTowards(Vector3 position, float turn)
