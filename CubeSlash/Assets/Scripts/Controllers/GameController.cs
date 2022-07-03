@@ -14,8 +14,9 @@ public class GameController : MonoBehaviour
     public bool IsGameStarted { get; private set; }
     public bool IsPaused { get { return PauseLock.IsLocked; } }
     public MultiLock PauseLock { get; private set; } = new MultiLock();
-
     public int LevelIndex { get; set; }
+
+    public System.Action OnNextLevel { get; set; }
 
     private void Awake()
     {
@@ -112,6 +113,7 @@ public class GameController : MonoBehaviour
         Level.Completed();
         time_level = Time.time + Level.Current.duration;
         print("Next level " + LevelIndex);
+        OnNextLevel?.Invoke();
     }
 
     private void OnPlayerLevelUp()

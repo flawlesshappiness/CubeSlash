@@ -38,9 +38,9 @@ public class AbilityDash : Ability
         Speed = 20f + (80f * VarSpeed.Percentage);
         Distance = 5f + (10f * VarDistance.Percentage);
         RadiusTrigger = 1;
-        RadiusDamage = 1.8f;
-        RadiusPush = 8;
-        ForcePush = 80;
+        RadiusDamage = 1.0f;
+        RadiusPush = 10;
+        ForcePush = 400;
 
         InitializeBody();
     }
@@ -299,13 +299,13 @@ public class AbilityDash : Ability
             if(enemy != null && !hits.Contains(enemy))
             {
                 hits.Add(enemy);
-                var dir = enemy.transform.position - position;
+                var dir = enemy.transform.position - Player.transform.position;
                 var dist = Vector3.Distance(enemy.transform.position, position);
                 var t_dist = dist / radius;
 
                 var t_force = ac_push_enemies.Evaluate(t_dist);
                 var force = ForcePush * t_force;
-                enemy.Rigidbody.AddForce(dir * force);
+                enemy.Rigidbody.AddForce(dir.normalized * force);
             }
         }
     }

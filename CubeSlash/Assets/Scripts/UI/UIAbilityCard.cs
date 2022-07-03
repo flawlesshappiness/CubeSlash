@@ -42,6 +42,12 @@ public class UIAbilityCard : MonoBehaviour
             };
         }
 
+        ability_main.OnAbilityUnequipped += a =>
+        {
+            Player.Instance.UnequipAbility(idx_button);
+            UpdateAbility(null);
+        };
+
         // Ability
         ability_main.SetAbility(ability);
         UpdateAbility(ability);

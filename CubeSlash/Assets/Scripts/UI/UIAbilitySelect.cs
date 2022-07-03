@@ -17,6 +17,7 @@ public class UIAbilitySelect : MonoBehaviour
     public System.Action OnDeselected { get; set; }
     public System.Action<Ability> OnAbilitySelected { get; set; }
     public System.Action<Ability> OnAbilityHighlighted { get; set; }
+    public System.Action<Ability> OnAbilityUnequipped { get; set; }
 
     public Ability Ability { get; private set; }
     public bool Interactable { set { cvg.interactable = value; cvg.blocksRaycasts = value; } }
@@ -179,6 +180,7 @@ public class UIAbilitySelect : MonoBehaviour
 
     public void Unequip()
     {
+        OnAbilityUnequipped?.Invoke(Ability);
         SetAbility(null);
         Deselect();
     }

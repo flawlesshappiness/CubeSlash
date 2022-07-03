@@ -64,8 +64,10 @@ public class Enemy : MonoBehaviourExtended
     {
         ParasiteHost = host;
         Rigidbody.isKinematic = IsParasite;
-        Character.Collider.enabled = IsParasite;
+        Character.Collider.enabled = !IsParasite;
         AI.enabled = !IsParasite;
+
+        Character.SetLookDirection(host.transform.position - transform.position);
     }
 
     public void RemoveParasiteHost()
@@ -99,15 +101,6 @@ public class Enemy : MonoBehaviourExtended
         if (MovementLock.IsFree)
         {
             Rigidbody.AddForce(direction.normalized * Acceleration);
-            Character.SetLookDirection(direction);
-        }
-    }
-
-    public void TurnTowards(Vector3 direction)
-    {
-        if (MovementLock.IsFree)
-        {
-            Character.SetLookDirection(direction);
         }
     }
 

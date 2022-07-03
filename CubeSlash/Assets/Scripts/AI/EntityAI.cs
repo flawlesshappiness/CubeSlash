@@ -78,6 +78,7 @@ public abstract class EntityAI : MonoBehaviour
             var angle = AngleTowards(position);
             var z = Mathf.Clamp(turn * Time.deltaTime, 0, angle.Abs()) * Mathf.Sign(angle);
             Self.Character.transform.rotation *= Quaternion.Euler(0, 0, z);
+            Self.Character.SetLookDirection(Self.MoveDirection);
         }
     }
 

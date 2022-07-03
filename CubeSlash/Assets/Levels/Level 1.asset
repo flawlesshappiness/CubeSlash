@@ -15,10 +15,10 @@ MonoBehaviour:
   duration: 20
   frequency_spawn_enemy: 1
   count_enemy_active: 3
-  enemies:
-  - name: Shooter
-    enemy: {fileID: 11400000, guid: db0782c6ad8291647b08bacf671fe0eb, type: 2}
+  enemies: []
+  bosses:
+  - name: 
+    enemy: {fileID: 11400000, guid: 4fe64771ce63226478a6456e661756ff, type: 2}
     chance: 1
-  bosses: []
   frequency_spawn_experience: 1
   count_experience_active: 25

@@ -17,9 +17,12 @@ public class EnemyController : Singleton
 
     private const int COUNT_ENEMY_POOL_EXTEND = 20;
 
+    private bool has_spawned_boss = false;
+
     protected override void Initialize()
     {
         prefab_enemy = Resources.Load<Enemy>("Prefabs/Entities/Enemy");
+        GameController.Instance.OnNextLevel += OnNextLevel;
     }
 
     private void Update()
@@ -28,14 +31,38 @@ public class EnemyController : Singleton
         SpawnUpdate();
     }
 
+    private void OnNextLevel()
+    {
+        has_spawned_boss = false;
+    }
+
     #region SPAWNING
     private float time_spawn;
     private void SpawnUpdate()
     {
+        if (!has_spawned_boss)
+        {
+            has_spawned_boss = true;
+            SpawnBosses();
+        }
+
         if (Time.time < time_spawn) return;
+        if (Level.Current.enemies.Count == 0) return;
         if (enemies_active.Count >= Level.Current.count_enemy_active) return;
         time_spawn = Time.time + Level.Current.frequency_spawn_enemy;
         SpawnEnemy(CameraController.Instance.GetPositionOutsideCamera());
+    }
+
+    private List<Enemy> SpawnBosses()
+    {
+        var enemies = new List<Enemy>();
+
+        foreach(var boss in Level.Current.bosses)
+        {
+            var e = SpawnEnemy(boss.enemy, CameraController.Instance.GetPositionOutsideCamera());
+        }
+
+        return enemies;
     }
 
     private Enemy SpawnEnemy(Vector3 position)
@@ -67,16 +94,6 @@ public class EnemyController : Singleton
         OnEnemySpawned?.Invoke(enemy);
         
         return enemy;
-    }
-
-    private void SpawnCluster()
-    {
-        var center = CameraController.Instance.GetPositionOutsideCamera();
-        for (int i = 0; i < 3; i++)
-        {
-            var pos = center + Random.insideUnitCircle.normalized.ToVector3() * Random.Range(0.5f, 2f);
-            var enemy = SpawnEnemy(pos);
-        }
     }
     #endregion
     #region POOL

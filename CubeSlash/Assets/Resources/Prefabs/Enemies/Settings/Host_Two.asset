@@ -10,11 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9c301fa7d26535e4cb7056a730ebca5e, type: 3}
-  m_Name: BossOctoSpike
+  m_Name: Host_Two
   m_EditorClassIdentifier: 
-  character: {fileID: 6535444791780287965, guid: d81b8b370ecd35f47a57f343f524e45a, type: 3}
-  speed_move: 2
-  speed_turn: 75
-  size: {x: 8, y: 8, z: 1}
+  character: {fileID: 6535444791780287965, guid: 01f1f563247dab344b19b6b9a0e7db67, type: 3}
+  speed_max: 3
+  speed_acceleration: 0.75
+  speed_turn: 100
+  size: {x: 1, y: 1, z: 1}
   parasite: {fileID: 11400000, guid: cfcae6b5621e50448a5872f62f68b1ba, type: 2}
   ai: {fileID: 8767035241809482896, guid: f11e61c706cb5664cb504211139ae209, type: 3}

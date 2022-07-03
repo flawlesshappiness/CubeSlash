@@ -10,7 +10,6 @@ public class Character : MonoBehaviourExtended
     [SerializeField] public CircleCollider2D Trigger;
 
     [Header("PARASITE")]
-    [Min(0)] public int parasite_level;
     [SerializeField] public List<ParasiteSpace> ParasiteSpaces = new List<ParasiteSpace>();
     private Rigidbody2D Rigidbody { get { return GetComponentOnce<Rigidbody2D>(ComponentSearchType.PARENT); } }
 
@@ -22,8 +21,6 @@ public class Character : MonoBehaviourExtended
         public Transform transform;
         [HideInInspector] public Enemy parasite;
         public Character Character { get; set; }
-
-        public bool inactive_when_parent_parasite;
 
         public Vector3 Position { get { return transform.position; } }
         public bool Available { get { return IsAvailable(); } }
@@ -48,8 +45,7 @@ public class Character : MonoBehaviourExtended
             var empty = parasite == null;
             var active = Character.gameObject.activeInHierarchy;
             var e = Character.GetComponentInParent<Enemy>();
-            var blocked = e != null && e.IsParasite && inactive_when_parent_parasite;
-            return empty && active && !blocked;
+            return empty && active;
         }
     }
 

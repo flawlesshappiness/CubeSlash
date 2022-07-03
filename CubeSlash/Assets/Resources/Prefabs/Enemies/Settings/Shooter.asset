@@ -15,7 +15,7 @@ MonoBehaviour:
   character: {fileID: 6535444791780287965, guid: c3089b761f1048242b2fcb74c354cc49, type: 3}
   speed_max: 4
   speed_acceleration: 0.6
-  speed_turn: 100
+  speed_turn: 150
   size: {x: 1.1, y: 1.1, z: 1.1}
   parasite: {fileID: 0}
   ai: {fileID: 3873106988618322131, guid: e8b3dcbf445451b44b56254a18515441, type: 3}
