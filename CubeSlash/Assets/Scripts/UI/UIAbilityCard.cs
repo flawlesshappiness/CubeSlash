@@ -67,14 +67,17 @@ public class UIAbilityCard : MonoBehaviour
 
     private void InitializeVariables()
     {
+        prefab_variable.Interactable = false;
+        prefab_variable.gameObject.SetActive(false);
+        return;
+
         for (int i = 0; i < ConstVars.COUNT_VARIABLES; i++)
         {
             var ui = Instantiate(prefab_variable.gameObject, prefab_variable.transform.parent)
                 .GetComponent<UIAbilityVariable>();
+            ui.gameObject.SetActive(true);
             variables.Add(ui);
         }
-        prefab_variable.Interactable = false;
-        prefab_variable.gameObject.SetActive(false);
     }
 
     private void UpdateAbility(Ability ability)

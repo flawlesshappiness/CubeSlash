@@ -33,6 +33,7 @@ public class GameController : MonoBehaviour
         ConsoleController.Instance.RegisterCommand("LevelUp", CheatLevelUp);
         ConsoleController.Instance.RegisterCommand("AbilityPoints", CheatAbilityPoints);
         ConsoleController.Instance.RegisterCommand("NextLevel", NextLevel);
+        ConsoleController.Instance.RegisterCommand("GainAbility", OnPlayerGainAbility);
     }
 
     private void InitializePlayer()
@@ -71,6 +72,14 @@ public class GameController : MonoBehaviour
     private void SetTimeScale(float time)
     {
         Time.timeScale = PauseLock.IsLocked ? 0 : time;
+    }
+
+    private Coroutine LerpTimeScale(float duration, float end)
+    {
+        return Lerp.Value(duration, Time.timeScale, end, "TimeScale", f =>
+        {
+            SetTimeScale(f);
+        }).UnscaledTime().GetCoroutine();
     }
 
     private void Quit()
@@ -121,14 +130,21 @@ public class GameController : MonoBehaviour
         StartCoroutine(Cr());
         IEnumerator Cr()
         {
-            yield return Lerp.Value(1f, 1f, 0f, "LevelUpSlowdown", f =>
-            {
-                SetTimeScale(f);
-            }).UnscaledTime().GetCoroutine();
-
+            yield return LerpTimeScale(1f, 0f);
             PauseLock.AddLock(nameof(GameController));
             Player.Instance.ResetExperience();
             ViewController.Instance.ShowView<AbilityView>(0, "Ability");
+        }
+    }
+
+    public void OnPlayerGainAbility()
+    {
+        StartCoroutine(Cr());
+        IEnumerator Cr()
+        {
+            yield return LerpTimeScale(1f, 0f);
+            PauseLock.AddLock(nameof(GameController));
+            ViewController.Instance.ShowView<UnlockAbilityView>(0, "Ability");
         }
     }
 

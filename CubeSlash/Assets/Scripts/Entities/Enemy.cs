@@ -67,7 +67,10 @@ public class Enemy : MonoBehaviourExtended
         Character.Collider.enabled = !IsParasite;
         AI.enabled = !IsParasite;
 
-        Character.SetLookDirection(host.transform.position - transform.position);
+        if (host)
+        {
+            Character.SetLookDirection(host.transform.position - transform.position);
+        }
     }
 
     public void RemoveParasiteHost()
@@ -133,11 +136,6 @@ public class Enemy : MonoBehaviourExtended
 
         // Event
         OnDeath?.Invoke();
-
-        // Experience
-        var experience = ExperienceController.Instance.SpawnExperience(transform.position);
-        experience.Initialize();
-        experience.SetMeat();
 
         // AI
         AI.Kill();

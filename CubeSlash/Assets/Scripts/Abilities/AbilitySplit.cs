@@ -21,7 +21,7 @@ public class AbilitySplit : Ability
         CooldownTime = 0.5f;
         CountProjectiles = 3 + (int)(8 * VarCount.Percentage);
         SpeedProjectile = 25;
-        ArcProjectiles = 90f + (-20f * VarArc.Percentage);
+        ArcProjectiles = 75f + (-20f * VarArc.Percentage);
     }
 
     public override void InitializeModifier(Ability modifier)

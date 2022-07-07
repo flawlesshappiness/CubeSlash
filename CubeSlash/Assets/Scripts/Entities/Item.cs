@@ -1,18 +1,14 @@
 using UnityEngine;
 
-public class Experience : MonoBehaviour
+public class Item : MonoBehaviour
 {
-    [SerializeField] private SpriteRenderer spr;
-    [SerializeField] private TrailRenderer trail;
-    [SerializeField] private Color c_plant;
-    [SerializeField] private Color c_meat;
+    [Header("ITEM")]
     [SerializeField] private AnimationCurve ac_collect;
-
     private bool IsCollected { get; set; }
     private float TimeCollected { get; set; }
     private Vector3 PositionCollected { get; set; }
 
-    public void Initialize()
+    public virtual void Initialize()
     {
         IsCollected = false;
     }
@@ -25,6 +21,11 @@ public class Experience : MonoBehaviour
     private void FixedUpdate()
     {
         CollectUpdate();
+    }
+
+    protected virtual void Collect()
+    {
+
     }
 
     private void CollectUpdate()
@@ -58,31 +59,15 @@ public class Experience : MonoBehaviour
         {
             if (in_collect_distance)
             {
-                Player.Instance.Experience.Value++;
+                Collect();
             }
 
             Despawn();
         }
     }
 
-    public void Despawn()
+    public virtual void Despawn()
     {
-        ExperienceController.Instance.OnExperienceDespawned(this);
-    }
-
-    public void SetMeat()
-    {
-        SetColor(c_meat);
-    }
-    
-    public void SetPlant()
-    {
-        SetColor(c_plant);
-    }
-
-    private void SetColor(Color c)
-    {
-        spr.color = c;
-        trail.material.color = c;
+        
     }
 }

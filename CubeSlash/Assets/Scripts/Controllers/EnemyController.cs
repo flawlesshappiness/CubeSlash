@@ -59,7 +59,14 @@ public class EnemyController : Singleton
 
         foreach(var boss in Level.Current.bosses)
         {
-            var e = SpawnEnemy(boss.enemy, CameraController.Instance.GetPositionOutsideCamera());
+            var enemy = SpawnEnemy(boss.enemy, CameraController.Instance.GetPositionOutsideCamera());
+            enemies.Add(enemy);
+
+            enemy.OnDeath += () =>
+            {
+                var item = ExperienceController.Instance.SpawnAbilityItem(enemy.transform.position);
+                item.Initialize();
+            };
         }
 
         return enemies;
@@ -68,13 +75,22 @@ public class EnemyController : Singleton
     private Enemy SpawnEnemy(Vector3 position)
     {
         var random = new WeightedRandom<EnemySettings>();
-        foreach(var enemy in Level.Current.enemies)
+        foreach(var e in Level.Current.enemies)
         {
-            random.AddElement(enemy.enemy, enemy.chance);
+            random.AddElement(e.enemy, e.chance);
         }
 
         var settings = random.Random();
-        return SpawnEnemy(settings, position);
+        var enemy = SpawnEnemy(settings, position);
+
+        enemy.OnDeath += () =>
+        {
+            var experience = ExperienceController.Instance.SpawnExperience(enemy.transform.position);
+            experience.Initialize();
+            experience.SetMeat();
+        };
+
+        return enemy;
     }
 
     public Enemy SpawnEnemy(EnemySettings settings, Vector3 position)

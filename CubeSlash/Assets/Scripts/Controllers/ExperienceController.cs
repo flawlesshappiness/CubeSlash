@@ -5,18 +5,20 @@ public class ExperienceController : Singleton
 {
     public static ExperienceController Instance { get { return Singleton.Instance<ExperienceController>(); } }
 
-    public System.Action<Experience> OnExperienceSpawned { get; set; }
+    public System.Action<ExperienceItem> OnExperienceSpawned { get; set; }
 
-    private List<Experience> experience_active = new List<Experience>();
-    private List<Experience> experience_inactive = new List<Experience>();
+    private List<ExperienceItem> experience_active = new List<ExperienceItem>();
+    private List<ExperienceItem> experience_inactive = new List<ExperienceItem>();
 
-    private Experience prefab_experience;
+    private ExperienceItem prefab_experience;
+    private AbilityItem prefab_ability;
 
     private const int COUNT_POOL_EXTEND = 20;
 
     private void Start()
     {
-        prefab_experience = Resources.Load<Experience>("Prefabs/Entities/Experience");
+        prefab_experience = Resources.Load<ExperienceItem>("Prefabs/Entities/Experience");
+        prefab_ability = Resources.Load<AbilityItem>("Prefabs/Entities/AbilityItem");
     }
 
     private void Update()
@@ -37,7 +39,7 @@ public class ExperienceController : Singleton
         e.SetPlant();
     }
 
-    public Experience SpawnExperience(Vector3 position)
+    public ExperienceItem SpawnExperience(Vector3 position)
     {
         if(experience_inactive.Count == 0)
         {
@@ -54,6 +56,14 @@ public class ExperienceController : Singleton
         return e;
     }
 
+    public AbilityItem SpawnAbilityItem(Vector3 position)
+    {
+        var item = Instantiate(prefab_ability, GameController.Instance.world);
+        item.gameObject.SetActive(true);
+        item.transform.position = position;
+        return item;
+    }
+
     private void ExtendPool(int count)
     {
         for (int i = 0; i < count; i++)
@@ -62,9 +72,9 @@ public class ExperienceController : Singleton
         }
     }
 
-    private Experience CreateExperienceForPool()
+    private ExperienceItem CreateExperienceForPool()
     {
-        var e = Instantiate(prefab_experience.gameObject, GameController.Instance.world).GetComponent<Experience>();
+        var e = Instantiate(prefab_experience.gameObject, GameController.Instance.world).GetComponent<ExperienceItem>();
         experience_inactive.Add(e);
         e.gameObject.SetActive(false);
         return e;
@@ -78,7 +88,7 @@ public class ExperienceController : Singleton
         }
     }
 
-    public void OnExperienceDespawned(Experience e)
+    public void OnExperienceDespawned(ExperienceItem e)
     {
         e.gameObject.SetActive(false);
         experience_active.Remove(e);
