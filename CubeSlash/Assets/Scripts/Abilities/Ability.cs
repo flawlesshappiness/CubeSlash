@@ -16,6 +16,7 @@ public abstract class Ability : MonoBehaviourExtended
     public enum Type { DASH, SPLIT, CHARGE }
     public Ability[] Modifiers { get; protected set; } = new Ability[ConstVars.COUNT_MODIFIERS];
     public List<AbilityVariable> Variables = new List<AbilityVariable>(ConstVars.COUNT_VARIABLES);
+    public List<UpgradeData> Upgrades = new List<UpgradeData>();
 
     public Player Player { get; set; }
     public bool IsPressed { get; set; }

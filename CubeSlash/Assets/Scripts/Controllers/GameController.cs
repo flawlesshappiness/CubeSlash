@@ -127,24 +127,46 @@ public class GameController : MonoBehaviour
 
     private void OnPlayerLevelUp()
     {
-        StartCoroutine(Cr());
-        IEnumerator Cr()
+        Player.Instance.ResetExperience();
+        if (UnlockView.CanUnlockUpgrade())
         {
-            yield return LerpTimeScale(1f, 0f);
-            PauseLock.AddLock(nameof(GameController));
-            Player.Instance.ResetExperience();
-            ViewController.Instance.ShowView<AbilityView>(0, "Ability");
+            UnlockUpgrade();
         }
     }
 
     public void OnPlayerGainAbility()
+    {
+        if (UnlockView.CanUnlockAbility())
+        {
+            UnlockAbility();
+        }
+        else if (UnlockView.CanUnlockUpgrade())
+        {
+            UnlockUpgrade();
+        }
+    }
+
+    private void UnlockUpgrade()
     {
         StartCoroutine(Cr());
         IEnumerator Cr()
         {
             yield return LerpTimeScale(1f, 0f);
             PauseLock.AddLock(nameof(GameController));
-            ViewController.Instance.ShowView<UnlockAbilityView>(0, "Ability");
+            var view = ViewController.Instance.ShowView<UnlockView>(0, "Ability");
+            view.UnlockUpgrade();
+        }
+    }
+
+    private void UnlockAbility()
+    {
+        StartCoroutine(Cr());
+        IEnumerator Cr()
+        {
+            yield return LerpTimeScale(1f, 0f);
+            PauseLock.AddLock(nameof(GameController));
+            var view = ViewController.Instance.ShowView<UnlockView>(0, "Ability");
+            view.UnlockAbility();
         }
     }
 

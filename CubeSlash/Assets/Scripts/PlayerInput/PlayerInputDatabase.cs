@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "PlayerInputDatabase", menuName = "PlayerInputDatabase", order = 1)]
+[CreateAssetMenu(fileName = "PlayerInputDatabase", menuName = "Game/PlayerInputDatabase", order = 1)]
 public class PlayerInputDatabase : ScriptableObject
 {
     [SerializeField] private List<UIInputMapCollection> input_collections = new List<UIInputMapCollection>();

@@ -490,6 +490,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  mul_dist_collect: 0.5
   t_spr_upper: {fileID: 7733597543797453127}
   t_spr_lower: {fileID: 5162339068952680356}
 --- !u!1 &8404474339872458181

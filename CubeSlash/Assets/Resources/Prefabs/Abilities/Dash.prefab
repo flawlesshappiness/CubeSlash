@@ -60,6 +60,9 @@ MonoBehaviour:
     Max: 10
     sprite_icon: {fileID: 21300000, guid: 083237d4baf78d143b4251ca612f18dd, type: 3}
     Description: Governs the distance of the dash
+  Upgrades:
+  - {fileID: 11400000, guid: dae6fe909ddb7b048b6e5c89f3fff7c1, type: 2}
+  - {fileID: 11400000, guid: dad4f38ebdabc2d42a94591f8383ec74, type: 2}
   trigger: {fileID: 5274908497568605942}
   ac_push_enemies:
     serializedVersion: 2

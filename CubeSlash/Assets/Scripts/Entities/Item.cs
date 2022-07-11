@@ -4,6 +4,7 @@ public class Item : MonoBehaviour
 {
     [Header("ITEM")]
     [SerializeField] private AnimationCurve ac_collect;
+    public float mul_dist_collect = 1f;
     private bool IsCollected { get; set; }
     private float TimeCollected { get; set; }
     private Vector3 PositionCollected { get; set; }
@@ -39,7 +40,7 @@ public class Item : MonoBehaviour
         }
         else
         {
-            if (Vector3.Distance(transform.position, Player.Instance.transform.position) <= Player.Instance.DistanceCollect)
+            if (Vector3.Distance(transform.position, Player.Instance.transform.position) <= Player.Instance.DistanceCollect * mul_dist_collect)
             {
                 IsCollected = true;
                 TimeCollected = Time.time;

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "ColorPalette", menuName = "ColorPalette", order = 1)]
+[CreateAssetMenu(fileName = "ColorPalette", menuName = "Game/ColorPalette", order = 1)]
 public class ColorPalette : ScriptableObject
 {
     private static ColorPalette _main;

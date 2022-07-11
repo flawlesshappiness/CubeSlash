@@ -267,10 +267,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03088e9a713cb0e48ac5ef544a28b548, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spr: {fileID: 8182434315060225569}
-  trail: {fileID: 5892555046342164689}
-  c_plant: {r: 0.2901961, g: 0.7372549, b: 0.28235295, a: 1}
-  c_meat: {r: 0.7372549, g: 0.28235295, b: 0.28235295, a: 1}
   ac_collect:
     serializedVersion: 2
     m_Curve:
@@ -295,3 +291,8 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  mul_dist_collect: 1
+  spr: {fileID: 8182434315060225569}
+  trail: {fileID: 5892555046342164689}
+  c_plant: {r: 0.2901961, g: 0.7372549, b: 0.28235295, a: 1}
+  c_meat: {r: 0.7372549, g: 0.28235295, b: 0.28235295, a: 1}

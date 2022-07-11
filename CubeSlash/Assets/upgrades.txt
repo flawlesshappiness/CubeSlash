@@ -1,0 +1,36 @@
+DASH
+Cooldown
+Distance
+Speed
+Size collision
+Size impact
+Size knockback
+Force knockback
+Penetration
+Bounce
+
+(+CD +DST) > (+CD +SPD) > Kills extend distance
+(+SPD) > (+SPD) > Dash leaves a trail of damage
+
+
+SPLIT
+Cooldown
+Count projectiles
+Speed projectiles
+Arc projectiles
+Size projectiles
+Penetration
+Bounce
+
+(+SPD -ARC) > (+SPD -ARC) > Continuously shoot projectiles (build up cooldown)
+(+CNT +ARC) > (+CNT +ARC) > Fire projectiles in a 360 arc
+
+
+CHARGE
+Cooldown
+Charge time
+Width
+Self Knockback
+
+(-CRG) > (-CRG) > Auto-aiming beam
+(+WDH) > (+WDH) > Kills reduce cooldown

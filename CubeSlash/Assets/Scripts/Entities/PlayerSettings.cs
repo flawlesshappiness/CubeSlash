@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "PlayerSettings", menuName = "Player/Settings", order = 1)]
+[CreateAssetMenu(fileName = "PlayerSettings", menuName = "Game/Player/Settings", order = 1)]
 public class PlayerSettings : ScriptableObject
 {
     [Header("EXPERIENCE")]

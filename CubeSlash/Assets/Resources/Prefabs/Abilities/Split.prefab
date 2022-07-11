@@ -58,3 +58,6 @@ MonoBehaviour:
     Max: 10
     sprite_icon: {fileID: 21300000, guid: df6b34c8b502f7e48a79565096a23132, type: 3}
     Description: Governs projectile spread
+  Upgrades:
+  - {fileID: 11400000, guid: 232a8c03f851423478deef39cd5fcf82, type: 2}
+  - {fileID: 11400000, guid: d81917483578e5e43b5cda1b7d45bc76, type: 2}
