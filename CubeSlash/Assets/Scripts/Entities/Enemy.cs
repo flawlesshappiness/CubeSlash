@@ -93,7 +93,8 @@ public class Enemy : MonoBehaviourExtended
     #region MOVEMENT
     private void DragUpdate()
     {
-        if(Rigidbody.velocity.magnitude > SpeedMax)
+        var dot = Vector3.Dot(MoveDirection, Rigidbody.velocity);
+        if(dot > 0 && Rigidbody.velocity.magnitude > SpeedMax)
         {
             Rigidbody.velocity *= 0.9f;
         }
@@ -104,14 +105,6 @@ public class Enemy : MonoBehaviourExtended
         if (MovementLock.IsFree)
         {
             Rigidbody.AddForce(direction.normalized * Acceleration);
-        }
-    }
-
-    public void Decelerate(float mul)
-    {
-        if (DragLock.IsFree)
-        {
-            Rigidbody.velocity = Rigidbody.velocity * mul;
         }
     }
     #endregion

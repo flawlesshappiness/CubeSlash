@@ -9,11 +9,16 @@ public class AbilityDash : Ability
     private Vector3 PositionOrigin { get; set; }
     private Vector3 Direction { get; set; }
     private float Distance { get; set; }
+    private float DistanceExtendPerKill { get; set; }
     private float Speed { get; set; }
     private float RadiusTrigger { get; set; }
     private float RadiusDamage { get; set; }
     private float RadiusPush { get; set; }
     private float ForcePush { get; set; }
+    private int Piercing { get; set; }
+
+    // Upgrades
+    private bool HasTrail { get; set; }
 
     [Header("DASH")]
     [SerializeField] private BoxCollider2D trigger;
@@ -25,6 +30,9 @@ public class AbilityDash : Ability
 
     private CustomCoroutine cr_dash;
 
+    private int pierces_left;
+    private float distance_temp;
+
     public override void InitializeFirstTime()
     {
         base.InitializeFirstTime();
@@ -35,14 +43,58 @@ public class AbilityDash : Ability
     {
         base.InitializeValues();
         CooldownTime = 0.5f;
-        Speed = 20f + (80f * VarSpeed.Percentage);
-        Distance = 5f + (10f * VarDistance.Percentage);
+        Speed = 30f;
+        Distance = 5f;
+        DistanceExtendPerKill = 0;
         RadiusTrigger = 1;
         RadiusDamage = 1.0f;
         RadiusPush = 10;
         ForcePush = 400;
+        Piercing = 0;
 
         InitializeBody();
+    }
+
+    public override void InitializeUpgrade(Upgrade upgrade)
+    {
+        base.InitializeUpgrade(upgrade);
+
+        if(upgrade.data.type == UpgradeData.Type.DASH_DISTANCE)
+        {
+            if(upgrade.level >= 1)
+            {
+                CooldownTime += 0.1f;
+                Distance += 1f;
+                Piercing += 2;
+            }
+
+            if(upgrade.level >= 2)
+            {
+                CooldownTime += 0.1f;
+                Distance += 1f;
+                Piercing += 4;
+            }
+
+            if (upgrade.level >= 3)
+            {
+                DistanceExtendPerKill += 3f;
+            }
+        }
+
+        if (upgrade.data.type == UpgradeData.Type.DASH_TRAIL)
+        {
+            if (upgrade.level >= 1)
+            {
+                Speed += 2.0f;
+            }
+
+            if (upgrade.level >= 2)
+            {
+                Speed += 2.0f;
+            }
+
+            HasTrail = upgrade.level == 3;
+        }
     }
 
     public override void InitializeModifier(Ability modifier)
@@ -119,6 +171,8 @@ public class AbilityDash : Ability
     private void StartDashing()
     {
         trigger.enabled = true;
+        pierces_left = Piercing;
+        distance_temp = Distance;
         Direction = Player.MoveDirection;
         cr_dash = CoroutineController.Instance.Run(SequenceCr(), "dash_" + GetInstanceID());
     }
@@ -164,10 +218,10 @@ public class AbilityDash : Ability
     private IEnumerator MoveCr(Vector3 velocity)
     {
         PositionOrigin = transform.position;
-        while (Vector3.Distance(transform.position, PositionOrigin) < Distance)
+        while (Vector3.Distance(transform.position, PositionOrigin) < distance_temp)
         {
             Player.Rigidbody.velocity = velocity;
-            var t = Vector3.Distance(transform.position, PositionOrigin) / Distance;
+            var t = Vector3.Distance(transform.position, PositionOrigin) / distance_temp;
             UpdateBody(t);
             yield return new WaitForFixedUpdate();
         }
@@ -237,18 +291,25 @@ public class AbilityDash : Ability
         if (enemy)
         {
             PushEnemiesInArea(enemy.transform.position, RadiusPush);
-            HitEnemiesArea(Player.transform.position, RadiusDamage);
+            var count_hits = HitEnemiesArea(Player.transform.position, RadiusDamage);
 
-            if (enemy.IsKillable() && HasModifier(Type.CHARGE))
+            pierces_left -= count_hits;
+            bool can_pierce = HasModifier(Type.CHARGE) || pierces_left > 0;
+
+            if (enemy.IsKillable() && can_pierce)
             {
-                // Penetrate
+                distance_temp += DistanceExtendPerKill;
             }
             else
             {
-                // Stop dashing
-                InterruptDash();
-                StartCoroutine(KnockbackSelfCr());
+                StopDashing();
             }
+        }
+
+        void StopDashing()
+        {
+            InterruptDash();
+            StartCoroutine(KnockbackSelfCr());
         }
     }
 
@@ -278,16 +339,19 @@ public class AbilityDash : Ability
         }
     }
 
-    private void HitEnemiesArea(Vector3 position, float radius)
+    private int HitEnemiesArea(Vector3 position, float radius)
     {
+        var count = 0;
         foreach (var hit in Physics2D.OverlapCircleAll(position, radius))
         {
             var enemy = hit.GetComponentInParent<Enemy>();
             if(enemy != null)
             {
                 HitEnemy(enemy);
+                count++;
             }
         }
+        return count;
     }
 
     private void PushEnemiesInArea(Vector3 position, float radius)

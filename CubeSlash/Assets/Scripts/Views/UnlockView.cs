@@ -73,13 +73,11 @@ public class UnlockView : View
 
     private IEnumerator HighlightButtonCr(UIUnlockButton button)
     {
-        yield return Lerp.Scale(button.transform, 0.25f, button.transform.localScale * 1.25f)
-            .UnscaledTime()
-            .GetCoroutine();
+        Lerp.Scale(button.transform, 0.25f, button.transform.localScale * 1.25f).UnscaledTime();
+        yield return new WaitForSecondsRealtime(0.25f);
 
-        yield return Lerp.Scale(button.transform, 0.15f, Vector3.zero)
-            .UnscaledTime()
-            .GetCoroutine();
+        Lerp.Scale(button.transform, 0.15f, Vector3.zero).UnscaledTime();
+        yield return new WaitForSecondsRealtime(0.15f);
     }
     #endregion
     #region UPGRADES

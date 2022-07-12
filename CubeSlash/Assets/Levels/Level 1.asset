@@ -15,10 +15,10 @@ MonoBehaviour:
   duration: 20
   frequency_spawn_enemy: 1
   count_enemy_active: 3
-  enemies: []
-  bosses:
-  - name: 
-    enemy: {fileID: 11400000, guid: 4fe64771ce63226478a6456e661756ff, type: 2}
+  enemies:
+  - name: Weak
+    enemy: {fileID: 11400000, guid: cfcae6b5621e50448a5872f62f68b1ba, type: 2}
     chance: 1
+  bosses: []
   frequency_spawn_experience: 1
   count_experience_active: 25

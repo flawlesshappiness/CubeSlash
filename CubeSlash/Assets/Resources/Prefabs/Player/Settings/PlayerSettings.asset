@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0ac907e883f37b4984c284f642d7aea, type: 3}
   m_Name: PlayerSettings
   m_EditorClassIdentifier: 
-  experience_level_max: 40
+  experience_level_max: 20
   experience_min: 5
-  experience_max: 500
+  experience_max: 750
   curve_experience:
     serializedVersion: 2
     m_Curve:

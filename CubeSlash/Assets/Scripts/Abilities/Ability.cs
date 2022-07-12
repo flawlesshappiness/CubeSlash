@@ -54,21 +54,20 @@ public abstract class Ability : MonoBehaviourExtended
         return "Prefabs/Abilities/" + type.ToString();
     }
 
-    public virtual void InitializeFirstTime()
-    {
-
-    }
-
     public void InitializeActive()
     {
         InitializeValues();
-        foreach(var modifier in Modifiers.Where(m => m != null))
-        {
-            InitializeModifier(modifier);
-        }
+        
+        Upgrades.Select(data => UpgradeController.Instance.GetUpgrade(data.type))
+            .ToList().ForEach(upgrade => InitializeUpgrade(upgrade));
+
+        Modifiers.Where(m => m != null)
+            .ToList().ForEach(m => InitializeModifier(m));
     }
 
+    public virtual void InitializeFirstTime() { }
     public virtual void InitializeValues() { }
+    public virtual void InitializeUpgrade(Upgrade upgrade) { }
     public virtual void InitializeModifier(Ability modifier) { }
 
     public virtual void Pressed()
