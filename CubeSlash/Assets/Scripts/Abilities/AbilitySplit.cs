@@ -4,11 +4,17 @@ using UnityEngine;
 
 public class AbilitySplit : Ability
 {
+    private int Bursts { get; set; }
     private int CountProjectiles { get; set; }
     private float SpeedProjectile { get; set; }
     private float ArcProjectiles { get; set; }
+    private bool Firing { get; set; }
     public AbilityVariable VarCount { get { return Variables[0]; } }
     public AbilityVariable VarArc { get { return Variables[1]; } }
+
+    private bool Arc360;
+
+    private float time_fire;
 
     public override void InitializeFirstTime()
     {
@@ -19,9 +25,58 @@ public class AbilitySplit : Ability
     {
         base.InitializeValues();
         CooldownTime = 0.5f;
-        CountProjectiles = 3 + (int)(8 * VarCount.Percentage);
+        CountProjectiles = 3;
         SpeedProjectile = 25;
-        ArcProjectiles = 75f + (-20f * VarArc.Percentage);
+        ArcProjectiles = 45f;
+        Bursts = 1;
+    }
+
+    public override void InitializeUpgrade(Upgrade upgrade)
+    {
+        base.InitializeUpgrade(upgrade);
+
+        if (upgrade.data.type == UpgradeData.Type.SPLIT_RATE)
+        {
+            if (upgrade.level >= 1)
+            {
+                SpeedProjectile += 5f;
+                ArcProjectiles -= 5;
+            }
+
+            if (upgrade.level >= 2)
+            {
+                SpeedProjectile += 5f;
+                ArcProjectiles -= 5;
+            }
+
+            if (upgrade.level >= 2)
+            {
+                Bursts += 2;
+            }
+        }
+
+        if (upgrade.data.type == UpgradeData.Type.SPLIT_ARC)
+        {
+            if (upgrade.level >= 1)
+            {
+                CooldownTime += 0.2f;
+                CountProjectiles += 1;
+            }
+
+            if (upgrade.level >= 2)
+            {
+                CooldownTime += 0.2f;
+                CountProjectiles += 1;
+            }
+
+            Arc360 = upgrade.level >= 3;
+
+            if(upgrade.level >= 3)
+            {
+                CooldownTime += 0.2f;
+                CountProjectiles += 10;
+            }
+        }
     }
 
     public override void InitializeModifier(Ability modifier)
@@ -73,7 +128,16 @@ public class AbilitySplit : Ability
         }
         else
         {
-            SpawnProjectiles();
+            StartCoroutine(BurstFireCr(Bursts));
+        }
+
+        IEnumerator BurstFireCr(int count)
+        {
+            for (int i = 0; i < count; i++)
+            {
+                SpawnProjectiles();
+                yield return new WaitForSeconds(0.1f);
+            }
         }
     }
 
@@ -85,6 +149,20 @@ public class AbilitySplit : Ability
         {
             charge.Released();
             SpawnProjectiles();
+        }
+
+        Firing = false;
+    }
+
+    private void Update()
+    {
+        if (Firing)
+        {
+            if(Time.time > time_fire)
+            {
+                time_fire = Time.time + 0.1f;
+                SpawnProjectiles();
+            }
         }
     }
 
@@ -109,7 +187,8 @@ public class AbilitySplit : Ability
         // Spawn projectiles
         var projectiles = new List<Projectile>();
         var forward = Player.MoveDirection;
-        var directions = GetSplitDirections(CountProjectiles, ArcProjectiles, forward);
+        var arc = Arc360 ? 175 : ArcProjectiles;
+        var directions = GetSplitDirections(CountProjectiles, arc, forward);
         foreach(var direction in directions)
         {
             var p = SpawnProjectile(direction);

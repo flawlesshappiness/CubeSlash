@@ -21,7 +21,7 @@ MonoBehaviour:
     chance: 1
   bosses:
   - name: 
-    enemy: {fileID: 11400000, guid: 7dccd8d735ce78d4ebf0e8c1d5f92887, type: 2}
+    enemy: {fileID: 11400000, guid: f41298fdccde658438bc50f38c6c1f2d, type: 2}
     chance: 1
   frequency_spawn_experience: 1
   count_experience_active: 25

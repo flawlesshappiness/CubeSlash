@@ -58,11 +58,13 @@ public class Player : MonoBehaviourExtended
 
         AbilitiesEquipped = new Ability[ConstVars.COUNT_ABILITY_BUTTONS];
         var dash = UnlockAbility(Ability.Type.DASH);
-        //var split = UnlockAbility(Ability.Type.SPLIT);
+        var split = UnlockAbility(Ability.Type.SPLIT);
         //var charge = UnlockAbility(Ability.Type.CHARGE);
         EquipAbility(dash, 2);
-        //EquipAbility(split, 0);
+        EquipAbility(split, 0);
         //EquipAbility(charge, 1);
+
+        UpgradeController.Instance.SetUpgradeLevel(UpgradeData.Type.SPLIT_RATE, 3);
 
         Character.Initialize();
 
@@ -386,6 +388,7 @@ public class Player : MonoBehaviourExtended
         var t_exp = settings.curve_experience.Evaluate(t_level);
         Experience.Max = (int)(Mathf.Lerp(settings.experience_min, settings.experience_max, t_exp));
         Experience.Value = Experience.Min;
+        print(Experience.Max);
         HasLevelledUp = false;
     }
     #endregion

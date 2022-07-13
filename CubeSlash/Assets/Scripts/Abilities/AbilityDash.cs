@@ -22,6 +22,7 @@ public class AbilityDash : Ability
 
     [Header("DASH")]
     [SerializeField] private BoxCollider2D trigger;
+    [SerializeField] private TrailDash trail;
     [SerializeField] private AnimationCurve ac_push_enemies;
     public AbilityVariable VarSpeed { get { return Variables[0]; } }
     public AbilityVariable VarDistance { get { return Variables[1]; } }
@@ -37,6 +38,7 @@ public class AbilityDash : Ability
     {
         base.InitializeFirstTime();
         trigger.enabled = false;
+        trail.gameObject.SetActive(false);
     }
 
     public override void InitializeValues()
@@ -93,7 +95,7 @@ public class AbilityDash : Ability
                 Speed += 2.0f;
             }
 
-            HasTrail = upgrade.level == 3;
+            HasTrail = upgrade.level >= 3;
         }
     }
 
@@ -174,6 +176,7 @@ public class AbilityDash : Ability
         pierces_left = Piercing;
         distance_temp = Distance;
         Direction = Player.MoveDirection;
+        trail.ResetTrail();
         cr_dash = CoroutineController.Instance.Run(SequenceCr(), "dash_" + GetInstanceID());
     }
 
@@ -223,10 +226,12 @@ public class AbilityDash : Ability
             Player.Rigidbody.velocity = velocity;
             var t = Vector3.Distance(transform.position, PositionOrigin) / distance_temp;
             UpdateBody(t);
+            UpdateTrail();
             yield return new WaitForFixedUpdate();
         }
         Player.Rigidbody.velocity = velocity.normalized * Player.SPEED_MOVE;
         UpdateBody(1);
+        UpdateTrail();
 
         if (HasModifier(Type.CHARGE))
         {
@@ -280,6 +285,15 @@ public class AbilityDash : Ability
             clone.SetLookDirection(dir + _dir_delta);
 
             clone.gameObject.SetActive(t < 1f);
+        }
+    }
+    #endregion
+    #region TRAIL
+    private void UpdateTrail()
+    {
+        if (HasTrail)
+        {
+            trail.UpdateTrail();
         }
     }
     #endregion

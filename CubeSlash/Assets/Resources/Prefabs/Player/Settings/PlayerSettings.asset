@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: PlayerSettings
   m_EditorClassIdentifier: 
   experience_level_max: 20
-  experience_min: 5
-  experience_max: 750
+  experience_min: 15
+  experience_max: 1200
   curve_experience:
     serializedVersion: 2
     m_Curve:

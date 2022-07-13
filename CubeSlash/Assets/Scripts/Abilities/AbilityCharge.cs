@@ -51,8 +51,8 @@ public class AbilityCharge : Ability
     {
         base.InitializeValues();
         CooldownTime = 0.5f;
-        Width = 1f + (5f * VarWidth.Percentage);
-        ChargeTime = 0.75f + (-0.25f * VarTime.Percentage);
+        Width = 1f;
+        ChargeTime = 1.25f;
         Knockback = -10;
     }
 

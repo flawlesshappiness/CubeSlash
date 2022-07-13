@@ -14,12 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   duration: 120
   frequency_spawn_enemy: 0.25
-  count_enemy_active: 180
+  count_enemy_active: 50
   enemies:
   - name: Weak
     enemy: {fileID: 11400000, guid: cfcae6b5621e50448a5872f62f68b1ba, type: 2}
     chance: 1
-  - name: Chonk
+  - name: Host_Two
     enemy: {fileID: 11400000, guid: f41298fdccde658438bc50f38c6c1f2d, type: 2}
     chance: 0.25
   bosses: []
