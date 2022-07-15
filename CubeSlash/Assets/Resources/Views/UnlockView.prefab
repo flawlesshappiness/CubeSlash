@@ -1162,6 +1162,7 @@ MonoBehaviour:
   panel_upgrades: {fileID: 2963654731878489845}
   prefab_ability: {fileID: 8436468010388266523}
   prefab_upgrade: {fileID: 3844613635250054330}
+  tmp_title: {fileID: 5670104601830256273}
   tmp_desc: {fileID: 7059210874212936385}
 --- !u!1 &4766514939152007958
 GameObject:

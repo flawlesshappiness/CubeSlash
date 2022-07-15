@@ -9,6 +9,7 @@ public class GameController : MonoBehaviour
     [SerializeField] public Transform world;
 
     public static GameController Instance;
+    public static bool DAMAGE_DISABLED = false;
 
     public System.Action OnResume { get; set; }
     public bool IsGameStarted { get; private set; }
@@ -34,6 +35,18 @@ public class GameController : MonoBehaviour
         ConsoleController.Instance.RegisterCommand("AbilityPoints", CheatAbilityPoints);
         ConsoleController.Instance.RegisterCommand("NextLevel", NextLevel);
         ConsoleController.Instance.RegisterCommand("GainAbility", OnPlayerGainAbility);
+        ConsoleController.Instance.RegisterCommand("ToggleDamage", () => DAMAGE_DISABLED = !DAMAGE_DISABLED);
+        ConsoleController.Instance.onToggle += toggle =>
+        {
+            if (toggle)
+            {
+                PauseLock.AddLock("Console");
+            }
+            else
+            {
+                PauseLock.RemoveLock("Console");
+            }
+        };
     }
 
     private void InitializePlayer()

@@ -47,7 +47,31 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Collider: {fileID: 3794284237765229098}
   Trigger: {fileID: 1675149427792749659}
-  parasite_level: 0
+  ps_trail: {fileID: 4814302361354603248}
+  ac_trail_ratio:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 2
+      outSlope: 2
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
   ParasiteSpaces: []
 --- !u!1 &2119183727739615077
 GameObject:

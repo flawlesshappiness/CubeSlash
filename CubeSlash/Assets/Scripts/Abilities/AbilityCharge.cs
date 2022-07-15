@@ -28,6 +28,8 @@ public class AbilityCharge : Ability
     private float Width { get; set; }
     private float Knockback { get; set; }
 
+    private bool KillsReduceCooldown;
+
     private void Start()
     {
         prefab_line.gameObject.SetActive(false);
@@ -54,6 +56,44 @@ public class AbilityCharge : Ability
         Width = 1f;
         ChargeTime = 1.25f;
         Knockback = -10;
+    }
+
+    public override void InitializeUpgrade(Upgrade upgrade)
+    {
+        base.InitializeUpgrade(upgrade);
+
+        if (upgrade.data.type == UpgradeData.Type.CHARGE_AIM)
+        {
+            if (upgrade.level >= 1)
+            {
+                ChargeTime -= 0.2f;
+            }
+
+            if (upgrade.level >= 2)
+            {
+                ChargeTime -= 0.2f;
+            }
+
+            if (upgrade.level >= 3)
+            {
+                ChargeTime -= 0.2f;
+            }
+        }
+
+        if (upgrade.data.type == UpgradeData.Type.CHARGE_WIDTH)
+        {
+            if (upgrade.level >= 1)
+            {
+                Width += 1.0f;
+            }
+
+            if (upgrade.level >= 2)
+            {
+                Width += 1.0f;
+            }
+
+            KillsReduceCooldown = upgrade.level >= 3;
+        }
     }
 
     public override void InitializeModifier(Ability modifier)
@@ -134,6 +174,8 @@ public class AbilityCharge : Ability
 
     private void Shoot(Vector3 dir, float distance)
     {
+        var count_hits = 0;
+
         var directions =
             HasModifier(Type.SPLIT) ? GetModifier<AbilitySplit>(Type.SPLIT).GetSplitDirections(3, 15, dir) :
             new List<Vector3> { dir };
@@ -148,6 +190,7 @@ public class AbilityCharge : Ability
                     var e = hit.collider.GetComponentInParent<Enemy>();
                     if (e)
                     {
+                        count_hits += e.IsKillable() ? 1 : 0;
                         Player.Instance.KillEnemy(e);
                     }
                 }
@@ -156,7 +199,16 @@ public class AbilityCharge : Ability
                 StartVisual(Player.transform.position, Player.transform.position + dir * distance, 20);
                 yield return new WaitForSeconds(0.1f);
             }
-            StartCooldown();
+
+            if (KillsReduceCooldown)
+            {
+                var time = Mathf.Clamp(CooldownTime - 0.1f * count_hits, 0, float.MaxValue);
+                StartCooldown(time);
+            }
+            else
+            {
+                StartCooldown();
+            }
         }
 
         IEnumerator KnockbackCr()

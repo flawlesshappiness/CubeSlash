@@ -8,6 +8,8 @@ public class Character : MonoBehaviourExtended
     public enum Type { CIRCLE, SQUARE }
     [SerializeField] public CircleCollider2D Collider;
     [SerializeField] public CircleCollider2D Trigger;
+    [SerializeField] private ParticleSystem ps_trail;
+    [SerializeField] private AnimationCurve ac_trail_ratio;
 
     [Header("PARASITE")]
     [SerializeField] public List<ParasiteSpace> ParasiteSpaces = new List<ParasiteSpace>();
@@ -73,8 +75,26 @@ public class Character : MonoBehaviourExtended
     {
         transform.rotation = Quaternion.Slerp(transform.rotation, rotation_look, 10 * Time.deltaTime);
 
-        float t_scale_vel = Mathf.Clamp(Rigidbody.velocity.magnitude / 40, 0, 1);
-        float x_scale = Mathf.Lerp(1f, 0.5f, t_scale_vel);
+        var t_velocity = Mathf.Clamp(Rigidbody.velocity.magnitude / 40, 0, 1);
+        float x_scale = Mathf.Lerp(1f, 0.5f, t_velocity);
         transform.localScale = Vector3.Slerp(transform.localScale, Vector3.one.SetX(x_scale), 10 * Time.deltaTime);
+
+        if(ps_trail != null)
+        {
+            var trails = ps_trail.trails;
+            trails.ratio = ac_trail_ratio.Evaluate(t_velocity);
+        }
+    }
+
+    private void OnDrawGizmos()
+    {
+        foreach(var space in ParasiteSpaces)
+        {
+            if(space.transform != null)
+            {
+                Gizmos.color = Color.yellow;
+                Gizmos.DrawSphere(space.transform.position, 0.05f);
+            }
+        }
     }
 }

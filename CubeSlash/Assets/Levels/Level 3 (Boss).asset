@@ -10,18 +10,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ed170f98ca580f243b98b5b4d9a80757, type: 3}
-  m_Name: Level 4 (Boss)
+  m_Name: Level 3 (Boss)
   m_EditorClassIdentifier: 
-  duration: 120
-  frequency_spawn_enemy: 0.5
-  count_enemy_active: 20
+  duration: 30
+  frequency_spawn_enemy: 2
+  count_enemy_active: 150
   enemies:
   - name: Weak
     enemy: {fileID: 11400000, guid: cfcae6b5621e50448a5872f62f68b1ba, type: 2}
     chance: 1
   bosses:
   - name: 
-    enemy: {fileID: 11400000, guid: f41298fdccde658438bc50f38c6c1f2d, type: 2}
+    enemy: {fileID: 11400000, guid: 4fe64771ce63226478a6456e661756ff, type: 2}
     chance: 1
   frequency_spawn_experience: 1
   count_experience_active: 25

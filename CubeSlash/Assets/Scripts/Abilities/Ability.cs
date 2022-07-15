@@ -86,10 +86,12 @@ public abstract class Ability : MonoBehaviourExtended
     }
 
     #region COOLDOWN
-    public void StartCooldown()
+    public void StartCooldown() => StartCooldown(CooldownTime);
+
+    public void StartCooldown(float time)
     {
         TimeCooldownStart = Time.time;
-        TimeCooldownEnd = TimeCooldownStart + CooldownTime;
+        TimeCooldownEnd = TimeCooldownStart + time;
     }
     #endregion
     #region MODIFIER

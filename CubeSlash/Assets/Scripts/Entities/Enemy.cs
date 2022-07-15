@@ -27,6 +27,8 @@ public class Enemy : MonoBehaviourExtended
         SetAI(settings.ai);
         transform.localScale = settings.size;
 
+        OnDeath = null;
+
         // Parasites
         if(settings.parasite != null)
         {
@@ -41,6 +43,11 @@ public class Enemy : MonoBehaviourExtended
     private void Update()
     {
         DragUpdate();
+
+        if (IsParasite)
+        {
+            Character.SetLookDirection(ParasiteHost.transform.position - transform.position);
+        }
     }
 
     private void SetCharacter(Character prefab)
@@ -66,11 +73,6 @@ public class Enemy : MonoBehaviourExtended
         Rigidbody.isKinematic = IsParasite;
         Character.Collider.enabled = !IsParasite;
         AI.enabled = !IsParasite;
-
-        if (host)
-        {
-            Character.SetLookDirection(host.transform.position - transform.position);
-        }
     }
 
     public void RemoveParasiteHost()
@@ -93,11 +95,7 @@ public class Enemy : MonoBehaviourExtended
     #region MOVEMENT
     private void DragUpdate()
     {
-        var dot = Vector3.Dot(MoveDirection, Rigidbody.velocity);
-        if(dot > 0 && Rigidbody.velocity.magnitude > SpeedMax)
-        {
-            Rigidbody.velocity *= 0.9f;
-        }
+        Rigidbody.velocity = Vector3.ClampMagnitude(Rigidbody.velocity, SpeedMax);
     }
 
     public void Move(Vector3 direction)

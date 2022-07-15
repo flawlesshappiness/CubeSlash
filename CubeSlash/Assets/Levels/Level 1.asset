@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Level 1
   m_EditorClassIdentifier: 
   duration: 20
-  frequency_spawn_enemy: 1
-  count_enemy_active: 3
+  frequency_spawn_enemy: 1.5
+  count_enemy_active: 15
   enemies:
   - name: Weak
     enemy: {fileID: 11400000, guid: cfcae6b5621e50448a5872f62f68b1ba, type: 2}

@@ -11,6 +11,7 @@ public class UnlockView : View
     [SerializeField] private GameObject panel_upgrades;
     [SerializeField] private UIUnlockButton prefab_ability;
     [SerializeField] private UIUnlockButton prefab_upgrade;
+    [SerializeField] private TMP_Text tmp_title;
     [SerializeField] private TMP_Text tmp_desc;
 
     private List<UIUnlockButton> btns = new List<UIUnlockButton>();
@@ -100,6 +101,8 @@ public class UnlockView : View
     {
         Initialize();
 
+        tmp_title.text = "UNLOCK UPGRADE";
+
         var upgrades = GetUnlockableUpgrades();
         upgrades.Shuffle();
         upgrades = upgrades.Take(4).ToList();
@@ -175,6 +178,8 @@ public class UnlockView : View
     public void UnlockAbility()
     {
         Initialize();
+
+        tmp_title.text = "UNLOCK ABILITY";
 
         var abilities = GetUnlockableAbilities().Take(2).ToList();
         abilities.Shuffle();

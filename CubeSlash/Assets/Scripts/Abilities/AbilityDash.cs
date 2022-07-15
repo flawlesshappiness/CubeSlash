@@ -193,6 +193,11 @@ public class AbilityDash : Ability
         yield return MoveCr(velocity);
 
         // End
+        if(HitEnemiesArea(Player.transform.position, RadiusDamage) > 0)
+        {
+            PushEnemiesInArea(Player.transform.position, RadiusPush);
+        }
+
         EndDash();
     }
 
@@ -310,7 +315,7 @@ public class AbilityDash : Ability
             pierces_left -= count_hits;
             bool can_pierce = HasModifier(Type.CHARGE) || pierces_left > 0;
 
-            if (enemy.IsKillable() && can_pierce)
+            if (enemy.IsKillable() && can_pierce && !enemy.IsParasite)
             {
                 distance_temp += DistanceExtendPerKill;
             }
@@ -347,10 +352,7 @@ public class AbilityDash : Ability
 
     private void HitEnemy(Enemy enemy)
     {
-        if (enemy.IsKillable())
-        {
-            Player.KillEnemy(enemy);
-        }
+        Player.KillEnemy(enemy);
     }
 
     private int HitEnemiesArea(Vector3 position, float radius)

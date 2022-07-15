@@ -16,11 +16,6 @@ public class CurvedLayoutGroup : LayoutGroup
 
     private int ChildCount { get { return rectChildren.Count; } }
 
-    private void OnValidate()
-    {
-        base.OnValidate();
-    }
-
     public override void SetLayoutVertical()
     {
         var angle_delta = use_spacing ? spacing : ChildCount < 2 ? 0 : arc / (ChildCount - 1);

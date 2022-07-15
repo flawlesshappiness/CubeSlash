@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ed170f98ca580f243b98b5b4d9a80757, type: 3}
-  m_Name: Level 5
+  m_Name: Level 4
   m_EditorClassIdentifier: 
   duration: 120
   frequency_spawn_enemy: 1
@@ -18,10 +18,10 @@ MonoBehaviour:
   enemies:
   - name: Weak
     enemy: {fileID: 11400000, guid: cfcae6b5621e50448a5872f62f68b1ba, type: 2}
-    chance: 1
+    chance: 10
   - name: Host_Two
     enemy: {fileID: 11400000, guid: f41298fdccde658438bc50f38c6c1f2d, type: 2}
-    chance: 0.25
+    chance: 1
   bosses: []
   frequency_spawn_experience: 1
   count_experience_active: 25

@@ -9,39 +9,34 @@ public class AI_Shooter : EntityAI
     [SerializeField] private Projectile prefab_projectile;
     [SerializeField] private float velocity_projectile;
 
-    [Header("CURVES")]
-    [SerializeField] private AnimationCurve ac_move_mul;
-    [SerializeField] private AnimationCurve ac_turn_mul;
-
+    private Vector3 pos_player_prev;
     private float cd_shoot;
     private bool can_shoot;
 
 
-    private void Update()
+    private void FixedUpdate()
     {
-        if (!PlayerIsAlive()) return;
+        pos_player_prev = PlayerIsAlive() ? Player.Instance.transform.position : pos_player_prev;
         MoveUpdate();
         ShootUpdate();
     }
 
     private void MoveUpdate()
     {
-        var dist = DistanceToPlayer();
-        var dist_max_move = CameraController.Instance.Width * 0.5f;
-        var dist_max_shoot = CameraController.Instance.Width * dist_max_mul_shoot;
-        var t_dist = dist / dist_max_move;
-        Self.SpeedMax = Self.Settings.speed_max * ac_move_mul.Evaluate(t_dist);
-        Self.Acceleration = Self.Settings.speed_acceleration * ac_move_mul.Evaluate(t_dist);
-        var turn = Self.Settings.speed_turn * ac_turn_mul.Evaluate(t_dist);
+        Self.SpeedMax = Self.Settings.speed_max;
+        Self.Acceleration = Self.Settings.speed_acceleration;
+        var turn = Self.Settings.speed_turn;
 
+        var dist = DistanceToPlayer();
+        var dist_max_shoot = CameraController.Instance.Width * dist_max_mul_shoot;
         if(dist < dist_max_shoot)
         {
             Self.Rigidbody.velocity *= 0.999f;
-            TurnTowards(Player.Instance.transform.position, turn);
+            TurnTowards(pos_player_prev, turn);
         }
         else
         {
-            MoveTowards(Player.Instance.transform.position, turn);
+            MoveTowards(pos_player_prev, turn);
         }
     }
 

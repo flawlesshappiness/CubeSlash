@@ -40,6 +40,12 @@ public class UIAbilityCard : MonoBehaviour
                 var a = Player.Instance.AbilitiesEquipped[idx_ability];
                 if(a != null) a.SetModifier(m, idx_modifier);
             };
+
+            modifiers[i].OnAbilityUnequipped += m =>
+            {
+                var a = Player.Instance.AbilitiesEquipped[idx_ability];
+                if (a != null) a.SetModifier(null, idx_modifier);
+            };
         }
 
         ability_main.OnAbilityUnequipped += a =>

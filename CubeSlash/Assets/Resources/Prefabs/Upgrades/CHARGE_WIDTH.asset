@@ -14,12 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: 5
   levels:
-  - name: 
-    description: 
+  - name: CHARGE_WIDTH_0
+    description: + Width
     icon: {fileID: 21300000, guid: 588ac5b533407b74ab8b59d1f45e90db, type: 3}
-  - name: 
-    description: 
+  - name: CHARGE_WIDTH_1
+    description: + Width
     icon: {fileID: 21300000, guid: 7b7de2430deee964da27ba2590989b37, type: 3}
-  - name: 
-    description: 
+  - name: CHARGE_WIDTH_2
+    description: Kills decrease cooldown
     icon: {fileID: 21300000, guid: 41c6f94d80f9e034a9c63dcf97d30f5c, type: 3}

@@ -2,20 +2,13 @@ using UnityEngine;
 
 public class AI_SlowMove : EntityAI
 {
-    [SerializeField] private AnimationCurve ac_move_mul;
-    [SerializeField] private AnimationCurve ac_turn_mul;
+    private Vector3 pos_player_prev;
 
-
-    private void Update()
+    private void FixedUpdate()
     {
-        if (!PlayerIsAlive()) return;
-
-        var dist = DistanceToPlayer();
-        var dist_max = CameraController.Instance.Width * 0.5f;
-        var t_dist = dist / dist_max;
-        Self.SpeedMax = Self.Settings.speed_max * ac_move_mul.Evaluate(t_dist);
-        Self.Acceleration = Self.Settings.speed_acceleration * ac_move_mul.Evaluate(t_dist);
-        var turn = Self.Settings.speed_turn * ac_turn_mul.Evaluate(t_dist);
-        MoveTowards(Player.Instance.transform.position, turn);
+        pos_player_prev = PlayerIsAlive() ? Player.Instance.transform.position : pos_player_prev;
+        Self.SpeedMax = Self.Settings.speed_max;
+        Self.Acceleration = Self.Settings.speed_acceleration;
+        MoveTowards(pos_player_prev, Self.Settings.speed_turn);
     }
 }
