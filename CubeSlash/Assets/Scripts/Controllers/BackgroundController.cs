@@ -59,7 +59,7 @@ public class BackgroundController : Singleton
 
                 bg.transform.parent = GameController.Instance.world;
                 var r = Random.insideUnitCircle;
-                bg.transform.localPosition = new Vector3(r.x, r.y) * CameraController.Instance.Width + Vector3.forward * (11 + 10 * i_layer);
+                bg.transform.localPosition = new Vector3(r.x, r.y) * CameraController.Instance.Width + Vector3.forward * (2 + 10 + 10 * i_layer);
                 bg.StartPosition = bg.transform.localPosition;
                 bg.Layer = i_layer;
                 bg.transform.localScale = Vector3.one * Random.Range(layer.size_sprite_min, layer.size_sprite_min);
@@ -106,12 +106,9 @@ public class BackgroundController : Singleton
             var layer = layers[i];
             foreach (var ps_prefab in layer.particles)
             {
-                var ps = Instantiate(ps_prefab);
+                var ps = Instantiate(ps_prefab, cam.transform);
                 particles.Add(ps);
-                ps.transform.position = cam.transform.position;
-
-                var psr = ps.GetComponent<ParticleSystemRenderer>();
-                psr.sortingOrder = (layers.Count - i) * 10;
+                ps.transform.position = cam.transform.position + Vector3.forward * (1 + 20 + 10 * i);
             }
         }
 
@@ -150,7 +147,7 @@ public class BackgroundController : Singleton
             }
             else // Fade fog
             {
-                Lerp.Color(fogs[i].spr, time, level.color_fog);
+                Lerp.Color(fogs[i].spr, time, level.color_fog.SetA(alpha));
             }
         }
     }

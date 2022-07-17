@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed170f98ca580f243b98b5b4d9a80757, type: 3}
   m_Name: Level 3 (Boss)
   m_EditorClassIdentifier: 
-  duration: 30
+  duration: 60
   frequency_spawn_enemy: 2
   count_enemy_active: 150
   enemies:
@@ -25,9 +25,50 @@ MonoBehaviour:
     chance: 1
   frequency_spawn_experience: 1
   count_experience_active: 25
+  color_fog: {r: 0.08235294, g: 0.27450982, b: 0.54901963, a: 1}
+  color_bg: {r: 0, g: 0, b: 0, a: 1}
+  ac_alpha_fog:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0.7
+      inSlope: -0.0041285106
+      outSlope: -0.0041285106
+      tangentMode: 0
+      weightedMode: 3
+      inWeight: 0
+      outWeight: 0.57125604
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: -0.7
+      outSlope: -0.7
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  parallax_min: 0.5
+  parallax_max: 0.8
   background_layers:
   - name: 0
-    color_fog: {r: 0.0625, g: 0.14062501, b: 0.25, a: 1}
+    size_sprite_min: 0
+    size_sprite_max: 0
+    count_sprite: 0
+    sprites: []
     particles:
+    - {fileID: 7935337046598179359, guid: 4b69278ff55303c4a83b81a88ad7e1a1, type: 3}
+    - {fileID: 6471937910845384915, guid: 4227469584206424696bac83a7f5da41, type: 3}
+    objects: []
+  - name: 1
+    size_sprite_min: 0
+    size_sprite_max: 0
+    count_sprite: 0
+    sprites: []
+    particles:
+    - {fileID: 7935337046598179359, guid: 4b69278ff55303c4a83b81a88ad7e1a1, type: 3}
     - {fileID: 6471937910845384915, guid: 4227469584206424696bac83a7f5da41, type: 3}
     objects: []

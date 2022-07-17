@@ -12,6 +12,7 @@ public class BackgroundSprite : MonoBehaviour
     public void Destroy(float time)
     {
         Lerp.Color(spr, time, spr.color.SetA(0))
+            .Delay(Random.Range(0, time * 0.5f))
             .OnEnd(() =>
             {
                 Destroy(gameObject);

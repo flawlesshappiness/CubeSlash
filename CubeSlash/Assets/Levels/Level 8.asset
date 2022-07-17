@@ -10,19 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ed170f98ca580f243b98b5b4d9a80757, type: 3}
-  m_Name: Level 7
+  m_Name: Level 8
   m_EditorClassIdentifier: 
   duration: 120
   frequency_spawn_enemy: 1
-  count_enemy_active: 150
-  enemies:
-  - name: Weak
-    enemy: {fileID: 11400000, guid: cfcae6b5621e50448a5872f62f68b1ba, type: 2}
+  count_enemy_active: 20
+  enemies: []
+  bosses:
+  - name: 
+    enemy: {fileID: 11400000, guid: 4fe64771ce63226478a6456e661756ff, type: 2}
     chance: 1
-  - name: Host_Two
-    enemy: {fileID: 11400000, guid: f41298fdccde658438bc50f38c6c1f2d, type: 2}
-    chance: 0.25
-  bosses: []
   frequency_spawn_experience: 1
   count_experience_active: 25
   color_fog: {r: 0.13333334, g: 0.32941177, b: 0.19215687, a: 1}
