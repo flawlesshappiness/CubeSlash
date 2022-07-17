@@ -20,7 +20,7 @@ public class CameraController : Singleton
     {
         if (Target == null) return;
 
-        var z = Camera.transform.position.z;
+        var z = -10;
         Camera.transform.position = Vector3.Slerp(Camera.transform.position, Target.position.SetZ(z), 5 * Time.deltaTime);
     }
 

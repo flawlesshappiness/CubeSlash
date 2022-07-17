@@ -22,3 +22,10 @@ MonoBehaviour:
   bosses: []
   frequency_spawn_experience: 1
   count_experience_active: 25
+  background_layers:
+  - name: 0
+    color_fog: {r: 0.125, g: 0.28125003, b: 0.5, a: 1}
+    particles:
+    - {fileID: 7935337046598179359, guid: 4b69278ff55303c4a83b81a88ad7e1a1, type: 3}
+    sprites: []
+    objects: []

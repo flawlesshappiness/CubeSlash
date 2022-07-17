@@ -26,7 +26,7 @@ public class Item : MonoBehaviour
 
     protected virtual void Collect()
     {
-
+        IsCollected = false;
     }
 
     private void CollectUpdate()

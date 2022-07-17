@@ -52,7 +52,7 @@ public class Player : MonoBehaviourExtended
         Health.onMin += OnDeath;
 
         Experience.Min = 0;
-        Experience.Max = 5;
+        Experience.Max = settings.experience_min;
         Experience.Value = Experience.Min;
         Experience.onMax += OnLevelUp;
 

@@ -25,3 +25,9 @@ MonoBehaviour:
     chance: 1
   frequency_spawn_experience: 1
   count_experience_active: 25
+  background_layers:
+  - name: 0
+    color_fog: {r: 0.0625, g: 0.14062501, b: 0.25, a: 1}
+    particles:
+    - {fileID: 6471937910845384915, guid: 4227469584206424696bac83a7f5da41, type: 3}
+    objects: []

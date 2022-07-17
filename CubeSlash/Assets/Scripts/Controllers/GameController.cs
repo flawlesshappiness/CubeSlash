@@ -69,6 +69,7 @@ public class GameController : MonoBehaviour
         Singleton.EnsureExistence<EnemyController>();
         Singleton.EnsureExistence<ExperienceController>();
         Singleton.EnsureExistence<PlayerInputController>();
+        Singleton.EnsureExistence<BackgroundController>();
     }
 
     // Update is called once per frame
