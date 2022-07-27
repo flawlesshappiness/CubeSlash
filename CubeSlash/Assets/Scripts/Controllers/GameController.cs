@@ -25,7 +25,7 @@ public class GameController : MonoBehaviour
         InitializePlayer();
         InitializeData();
         InitializeController();
-        StartGame();
+        ViewController.Instance.ShowView<StartView>();
 
         PauseLock.OnLockChanged += OnPauseChanged;
 
@@ -35,7 +35,9 @@ public class GameController : MonoBehaviour
         ConsoleController.Instance.RegisterCommand("AbilityPoints", CheatAbilityPoints);
         ConsoleController.Instance.RegisterCommand("NextLevel", NextLevel);
         ConsoleController.Instance.RegisterCommand("GainAbility", OnPlayerGainAbility);
+        ConsoleController.Instance.RegisterCommand("Equipment", CheatOpenEquipment);
         ConsoleController.Instance.RegisterCommand("ToggleDamage", () => DAMAGE_DISABLED = !DAMAGE_DISABLED);
+        ConsoleController.Instance.RegisterCommand("Suicide", () => Player.Instance.Kill());
         ConsoleController.Instance.onToggle += toggle =>
         {
             if (toggle)
@@ -57,6 +59,7 @@ public class GameController : MonoBehaviour
         Player.Instance.onDeath += OnPlayerDeath;
         Player.Instance.onLevelUp += OnPlayerLevelUp;
         CameraController.Instance.Target = Player.Instance.transform;
+        Player.Instance.gameObject.SetActive(false);
     }
 
     private void InitializeData()
@@ -67,7 +70,7 @@ public class GameController : MonoBehaviour
     private void InitializeController()
     {
         Singleton.EnsureExistence<EnemyController>();
-        Singleton.EnsureExistence<ExperienceController>();
+        Singleton.EnsureExistence<ItemController>();
         Singleton.EnsureExistence<PlayerInputController>();
         Singleton.EnsureExistence<BackgroundController>();
     }
@@ -198,8 +201,16 @@ public class GameController : MonoBehaviour
 
     private IEnumerator RestartGameCr()
     {
-        yield return new WaitForSeconds(1f);
+        IsGameStarted = false;
+        yield return new WaitForSeconds(0.5f);
         ViewController.Instance.ShowView<DeathView>(2f);
+        yield return new WaitForSeconds(2.5f);
+        ViewController.Instance.CloseView(0.5f);
+        yield return new WaitForSeconds(0.5f);
+        EnemyController.Instance.KillActiveEnemies();
+        ItemController.Instance.DespawnAllActiveItems();
+        Player.Instance.gameObject.SetActive(false);
+        ViewController.Instance.ShowView<StartView>(0.25f);
     }
 
     private void CheatLevelUp()
@@ -210,5 +221,11 @@ public class GameController : MonoBehaviour
     private void CheatAbilityPoints()
     {
         Player.Instance.AbilityPoints += 999;
+    }
+
+    private void CheatOpenEquipment()
+    {
+        SetTimeScale(0);
+        ViewController.Instance.ShowView<AbilityView>(tag: "Ability");
     }
 }

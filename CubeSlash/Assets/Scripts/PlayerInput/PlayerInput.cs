@@ -90,4 +90,16 @@ public static class PlayerInput
         _database = Resources.Load<PlayerInputDatabase>("Databases/PlayerInputDatabase");
         return _database;
     }
+
+    public static UIButtonType ButtonToUI(ButtonType type)
+    {
+        return type switch
+        {
+            ButtonType.NORTH => UIButtonType.NORTH,
+            ButtonType.SOUTH => UIButtonType.SOUTH,
+            ButtonType.EAST => UIButtonType.EAST,
+            ButtonType.WEST => UIButtonType.WEST,
+            _ => UIButtonType.NORTH
+        };
+    }
 }

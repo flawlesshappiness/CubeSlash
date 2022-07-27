@@ -8,10 +8,15 @@ using UnityEngine.InputSystem;
 
 public class AbilityView : View
 {
-    [SerializeField] private UIAbilityCard prefab_card;
     [SerializeField] private Button btn_continue;
     [SerializeField] private TMP_Text tmp_desc;
     [SerializeField] private UIInputLayout layout_input;
+    [SerializeField] private UIAbilitySlot template_slot_unlocked;
+    [SerializeField] private UIAbilitySlotMove slot_move;
+
+    private List<UIAbilitySlot> slots_unlocked = new List<UIAbilitySlot>();
+    private List<UIAbilitySlot> slots = new List<UIAbilitySlot>();
+    public List<UIAbilityEquipment> equipments = new List<UIAbilityEquipment>();
 
     private void Start()
     {
@@ -19,15 +24,10 @@ public class AbilityView : View
         btn_continue.onClick.AddListener(ClickContinue);
 
         // Cards
-        InitializeAbilityCards();
-        SetAbilitiesInteractable(true);
+        InitializeAbilitySlots();
 
         // Audio
         AudioController.Instance.TransitionTo(AudioController.Snapshot.MENU, 0.5f);
-
-        // Disable prefabs
-        prefab_card.Interactable = false;
-        prefab_card.gameObject.SetActive(false);
     }
 
     private void OnEnable()
@@ -48,114 +48,138 @@ public class AbilityView : View
         input.Menu.performed -= PressStart;
     }
 
-    private void InitializeAbilityCards()
+    #region SLOTS
+    private void InitializeAbilitySlots()
     {
+        // Move
+        slot_move.SetAbility(null);
+
+        // Unlocked slots
+        template_slot_unlocked.gameObject.SetActive(false);
+        foreach(var ability in Player.Instance.AbilitiesUnlocked)
+        {
+            var slot = Instantiate(template_slot_unlocked, template_slot_unlocked.transform.parent);
+            slot.gameObject.SetActive(true);
+            slot.SetAbility(ability.Equipped ? null : ability);
+            slot.SetWrong(false);
+
+            slots.Add(slot);
+            slots_unlocked.Add(slot);
+
+            slot.Button.onClick.AddListener(() => ClickSlot(slot));
+            slot.Button.OnSelectedChanged += selected => SelectSlot(slot, selected);
+        }
+
+        // Equipment slots
+        foreach(var equipment in equipments)
+        {
+            InitializeEquipmentSlot(equipment);
+        }
+        UpdateEquipment();
+
+        EventSystemController.Instance.EventSystem.SetSelectedGameObject(slots_unlocked[0].Button.gameObject);
+    }
+
+    private void InitializeEquipmentSlot(UIAbilityEquipment equipment)
+    {
+        var ability = Player.Instance.AbilitiesEquipped[Player.Instance.AbilityInputToIndex(equipment.type_button)];
+        equipment.gameObject.SetActive(true);
+        equipment.Initialize(ability);
+
+        slots.Add(equipment.Slot);
+
+        equipment.Slot.Button.onClick.AddListener(() => ClickSlot(equipment.Slot));
+        equipment.Slot.Button.OnSelectedChanged += selected => SelectSlot(equipment.Slot, selected);
+
+        foreach (var slot in equipment.ModifierSlots)
+        {
+            slots.Add(slot);
+            slot.Button.onClick.AddListener(() => ClickSlot(slot));
+            slot.Button.OnSelectedChanged += selected => SelectSlot(slot, selected);
+        }
+    }
+
+    private void UpdateEquipment()
+    {
+        foreach (var equipment in equipments)
+        {
+            var main_filled = equipment.Slot.Ability != null;
+            var other_filled = equipment.ModifierSlots.Any(m => m.Ability != null);
+            foreach (var modifier in equipment.ModifierSlots)
+            {
+                var filled = modifier.Ability != null;
+                modifier.gameObject.SetActive(filled || (main_filled && IsMovingAbility()));
+                modifier.SetWrong(filled && !main_filled);
+            }
+
+            equipment.Slot.SetWrong(!main_filled && other_filled);
+        }
+
+        var any_wrong = slots.Any(slot => slot.IsWrong);
+        btn_continue.interactable = !any_wrong && !IsMovingAbility();
+    }
+
+    private void ClickSlot(UIAbilitySlot slot)
+    {
+        var temp = slot.Ability;
+        slot.SetAbility(slot_move.Ability);
+        slot_move.SetAbility(temp);
+
+        UpdateEquipment();
+    }
+
+    private void SelectSlot(UIAbilitySlot slot, bool selected)
+    {
+        if (!selected) return;
+        slot_move.MoveToSlot(slot);
+
+        if(slot.Ability != null)
+        {
+            DisplayAbility(slot.Ability);
+        }
+        else if(IsMovingAbility())
+        {
+            DisplayAbility(slot_move.Ability);
+        }
+        else
+        {
+            DisplayAbility(null);
+        }
+    }
+
+    private bool IsMovingAbility() => slot_move.Ability != null;
+
+    private void UpdatePlayer()
+    {
+        // Unequip abilities
         for (int i = 0; i < ConstVars.COUNT_ABILITY_BUTTONS; i++)
         {
-            var card = CreateCard();
-            card.Initialize(i);
+            Player.Instance.UnequipAbility(i);
+        }
 
-            card.ability_main.OnSelected += () => OnAbilitySelected(card.ability_main, true);
-            card.ability_main.OnDeselected += () => OnAbilitySelected(card.ability_main, false);
-            card.ability_main.OnAbilityHighlighted += a => DisplayAbility(a);
+        // Equip abilities
+        foreach(var equipment in equipments)
+        {
+            if (equipment.Slot.Ability == null) continue;
 
-            card.modifiers.ForEach(m =>
+            var idx = Player.Instance.AbilityInputToIndex(equipment.type_button);
+            Player.Instance.EquipAbility(equipment.Slot.Ability, idx);
+
+            for (int i = 0; i < equipment.ModifierSlots.Count; i++)
             {
-                m.OnSelected += () => OnAbilitySelected(m, true);
-                m.OnDeselected += () => OnAbilitySelected(m, false);
-                m.OnAbilityHighlighted += a => DisplayAbility(a);
-            });
-
-            card.variables.ForEach(v =>
-            {
-                v.OnSelected += () => OnVariableSelected(v, true);
-                v.OnDeselected += () => OnVariableSelected(v, false);
-                v.OnHighlighted += v => DisplayVariable(v);
-            });
-        }
-
-        cards[0].ability_main.SelectEventSystem();
-    }
-
-    private void OnAbilitySelected(UIAbilitySelect ability, bool selected)
-    {
-        SetAbilitiesInteractable(!selected);
-        btn_continue.interactable = !selected;
-        ability.Interactable = true;
-        DisplayAbility(ability.Ability);
-
-        // Input
-        if (selected)
-        {
-            DisplayInputAbilitySelect();
-        }
-        else
-        {
-            DisplayInputNavigate();
+                var slot = equipment.ModifierSlots[i];
+                if (slot.Ability == null) continue;
+                equipment.Slot.Ability.SetModifier(slot.Ability, i);
+            }
         }
     }
-
-    private void OnVariableSelected(UIAbilityVariable variable, bool selected)
-    {
-        SetAbilitiesInteractable(!selected);
-        btn_continue.interactable = !selected;
-        variable.Interactable = true;
-
-        if (selected)
-        {
-            DisplayInputAbilityVariable();
-        }
-        else
-        {
-            DisplayInputNavigate();
-        }
-    }
-
-    private void SetAbilitiesInteractable(bool interactable)
-    {
-        foreach(var card in cards)
-        {
-            card.ability_main.Interactable = interactable;
-
-            var has_ability = card.ability_main.Ability != null;
-            card.modifiers.Select((m, i) => (m, i))
-                .ToList().ForEach(x =>
-                {
-                    x.m.Interactable = interactable && has_ability;
-                });
-            card.variables.Select((v, i) => (v, i))
-                .ToList().ForEach(x =>
-                {
-                    x.v.Interactable = interactable && has_ability;
-                });
-        }
-    }
-
+    #endregion
     #region BUTTONS
     private void ClickContinue()
     {
-        var p = Player.Instance;
+        UpdatePlayer();
         Close(0);
         GameController.Instance.ResumeLevel();
-    }
-    #endregion
-    #region CARDS
-    private List<UIAbilityCard> cards = new List<UIAbilityCard>();
-    private void ClearCards()
-    {
-        foreach(var card in cards)
-        {
-            Destroy(card.gameObject);
-        }
-        cards.Clear();
-    }
-
-    private UIAbilityCard CreateCard()
-    {
-        var card = Instantiate(prefab_card.gameObject, prefab_card.transform.parent).GetComponent<UIAbilityCard>();
-        card.gameObject.SetActive(true);
-        cards.Add(card);
-        return card;
     }
     #endregion
     #region DISPLAY
@@ -212,7 +236,6 @@ public class AbilityView : View
         layout_input.AddInput(PlayerInput.UIButtonType.SOUTH, "Select");
         layout_input.AddInput(PlayerInput.UIButtonType.WEST, "Unequip");
     }
-    #endregion
 
     private void PressUnequip(InputAction.CallbackContext context)
     {
@@ -240,4 +263,5 @@ public class AbilityView : View
             ability_variable.Cancel();
         EventSystemController.Instance.EventSystem.SetSelectedGameObject(btn_continue.gameObject);
     }
+    #endregion
 }

@@ -24,6 +24,6 @@ public class AbilityItem : Item
     public override void Despawn()
     {
         base.Despawn();
-        Destroy(gameObject);
+        ItemController.Instance.OnAbilityItemDespawn(this);
     }
 }

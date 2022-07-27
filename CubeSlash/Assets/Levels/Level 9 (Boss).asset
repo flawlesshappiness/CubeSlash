@@ -53,4 +53,22 @@ MonoBehaviour:
     m_RotationOrder: 4
   parallax_min: 0.5
   parallax_max: 0.8
-  background_layers: []
+  background_layers:
+  - name: 0
+    size_sprite_min: 5
+    size_sprite_max: 10
+    count_sprite: 25
+    sprites:
+    - {fileID: 21300000, guid: 863d64dc0199c8948a6b8dc5ad8f34e7, type: 3}
+    - {fileID: 21300000, guid: 301a40a7e6f53cf45b59669c1344dfda, type: 3}
+    particles: []
+    objects: []
+  - name: 1
+    size_sprite_min: 10
+    size_sprite_max: 20
+    count_sprite: 50
+    sprites:
+    - {fileID: 21300000, guid: 863d64dc0199c8948a6b8dc5ad8f34e7, type: 3}
+    - {fileID: 21300000, guid: 301a40a7e6f53cf45b59669c1344dfda, type: 3}
+    particles: []
+    objects: []

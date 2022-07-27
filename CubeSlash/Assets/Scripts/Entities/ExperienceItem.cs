@@ -11,7 +11,7 @@ public class ExperienceItem : Item
     public override void Despawn()
     {
         base.Despawn();
-        ExperienceController.Instance.OnExperienceDespawned(this);
+        ItemController.Instance.OnExperienceDespawned(this);
     }
 
     protected override void Collect()

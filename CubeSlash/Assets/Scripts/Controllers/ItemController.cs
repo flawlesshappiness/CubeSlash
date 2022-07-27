@@ -1,14 +1,16 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
-public class ExperienceController : Singleton
+public class ItemController : Singleton
 {
-    public static ExperienceController Instance { get { return Singleton.Instance<ExperienceController>(); } }
+    public static ItemController Instance { get { return Singleton.Instance<ItemController>(); } }
 
     public System.Action<ExperienceItem> OnExperienceSpawned { get; set; }
 
     private List<ExperienceItem> experience_active = new List<ExperienceItem>();
     private List<ExperienceItem> experience_inactive = new List<ExperienceItem>();
+    private List<AbilityItem> ability_items_active = new List<AbilityItem>();
 
     private ExperienceItem prefab_experience;
     private AbilityItem prefab_ability;
@@ -25,11 +27,11 @@ public class ExperienceController : Singleton
     {
         if (!GameController.Instance.IsGameStarted) return;
 
-        SpawnUpdate();
+        SpawnExperienceUpdate();
     }
 
     private float time_spawn;
-    private void SpawnUpdate()
+    private void SpawnExperienceUpdate()
     {
         if (Time.time < time_spawn) return;
         if (experience_active.Count >= Level.Current.count_experience_active) return;
@@ -61,7 +63,14 @@ public class ExperienceController : Singleton
         var item = Instantiate(prefab_ability, GameController.Instance.world);
         item.gameObject.SetActive(true);
         item.transform.position = position;
+        ability_items_active.Add(item);
         return item;
+    }
+
+    public void OnAbilityItemDespawn(AbilityItem item)
+    {
+        ability_items_active.Remove(item);
+        Destroy(item.gameObject);
     }
 
     private void ExtendPool(int count)
@@ -93,5 +102,18 @@ public class ExperienceController : Singleton
         e.gameObject.SetActive(false);
         experience_active.Remove(e);
         experience_inactive.Add(e);
+    }
+
+    public void DespawnAllActiveItems()
+    {
+        foreach(var item in experience_active.ToList())
+        {
+            item.Despawn();
+        }
+
+        foreach(var item in ability_items_active.ToList())
+        {
+            item.Despawn();
+        }
     }
 }

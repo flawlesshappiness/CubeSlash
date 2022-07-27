@@ -64,7 +64,7 @@ public class EnemyController : Singleton
 
             enemy.OnDeath += () =>
             {
-                var item = ExperienceController.Instance.SpawnAbilityItem(enemy.transform.position);
+                var item = ItemController.Instance.SpawnAbilityItem(enemy.transform.position);
                 item.Initialize();
             };
         }
@@ -85,7 +85,7 @@ public class EnemyController : Singleton
 
         enemy.OnDeath += () =>
         {
-            var experience = ExperienceController.Instance.SpawnExperience(enemy.transform.position);
+            var experience = ItemController.Instance.SpawnExperience(enemy.transform.position);
             experience.Initialize();
             experience.SetMeat();
         };

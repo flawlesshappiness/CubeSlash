@@ -200,7 +200,7 @@ public class UIAbilityVariable : MonoBehaviour
     {
         var alpha = visible ? 1 : 0;
         img_icon_highlight.color = img_icon_highlight.color.SetA(alpha);
-        img_icon.color = visible ? ColorPalette.Main.disabled : ColorPalette.Main.selected;
+        img_icon.color = visible ? ColorPalette.Main.Get(ColorPalette.Type.BACKGROUND) : ColorPalette.Main.Get(ColorPalette.Type.HIGHLIGHT);
     }
 
     private void PressCancel(InputAction.CallbackContext context)
