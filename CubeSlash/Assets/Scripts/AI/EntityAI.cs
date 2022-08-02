@@ -6,6 +6,7 @@ public abstract class EntityAI : MonoBehaviour
 {
     protected Enemy Self { get; private set; }
     protected Vector3 Position { get { return Self.transform.position; } }
+    protected Vector3 PlayerPosition { get { return Player.Instance.transform.position; } }
     public void Initialize(Enemy enemy)
     {
         Self = enemy;

@@ -385,7 +385,7 @@ public class AbilityDash : Ability
 
                 var t_force = ac_push_enemies.Evaluate(t_dist);
                 var force = ForcePush * t_force;
-                enemy.Rigidbody.AddForce(dir.normalized * force);
+                enemy.Rigidbody.velocity += dir.normalized.ToVector2() * force;
             }
         }
     }

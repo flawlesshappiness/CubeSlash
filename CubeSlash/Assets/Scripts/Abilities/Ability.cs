@@ -23,7 +23,6 @@ public abstract class Ability : MonoBehaviourExtended
     public bool Equipped { get; set; }
     public bool IsModifier { get; set; }
     public bool IsActive { get { return Equipped && !IsModifier; } }
-
     public float TimeCooldownStart { get; private set; }
     public float TimeCooldownEnd { get; private set; }
     public float TimeCooldownLeft { get { return OnCooldown ? TimeCooldownEnd - Time.time : 0f; } }

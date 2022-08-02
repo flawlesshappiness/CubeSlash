@@ -29,6 +29,11 @@ public class LevelAsset : ScriptableObject
     {
         foreach(var enemy in enemies)
         {
+            enemy.name = enemy.enemy == null ? "NONE" : enemy.enemy.name + $" ({(enemy.max <= 0 ? "Infinite" : enemy.max.ToString())})";
+        }
+
+        foreach (var enemy in bosses)
+        {
             enemy.name = enemy.enemy == null ? "NONE" : enemy.enemy.name;
         }
 
@@ -53,6 +58,7 @@ public class LevelAsset : ScriptableObject
         [HideInInspector] public string name;
         public EnemySettings enemy;
         public float chance;
+        public int max;
     }
 
     [System.Serializable]

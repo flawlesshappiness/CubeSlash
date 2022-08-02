@@ -56,6 +56,8 @@ public class AbilityCharge : Ability
         Width = 1f;
         ChargeTime = 1.25f;
         Knockback = -10;
+        Charging = false;
+        ChargeEnded = false;
     }
 
     public override void InitializeUpgrade(Upgrade upgrade)

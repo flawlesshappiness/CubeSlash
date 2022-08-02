@@ -50,7 +50,7 @@ public class EnemyController : Singleton
         if (Level.Current.enemies.Count == 0) return;
         if (enemies_active.Count >= Level.Current.count_enemy_active) return;
         time_spawn = Time.time + Level.Current.frequency_spawn_enemy;
-        SpawnEnemy(CameraController.Instance.GetPositionOutsideCamera());
+        SpawnRandomEnemy(CameraController.Instance.GetPositionOutsideCamera());
     }
 
     private List<Enemy> SpawnBosses()
@@ -72,12 +72,21 @@ public class EnemyController : Singleton
         return enemies;
     }
 
-    private Enemy SpawnEnemy(Vector3 position)
+    private Enemy SpawnRandomEnemy(Vector3 position)
     {
         var random = new WeightedRandom<EnemySettings>();
         foreach(var e in Level.Current.enemies)
         {
-            random.AddElement(e.enemy, e.chance);
+            var count = enemies_active.Count(x => x.Settings == e.enemy);
+            if(count < e.max || e.max <= 0)
+            {
+                random.AddElement(e.enemy, e.chance);
+            }
+        }
+
+        if(random.Count == 0)
+        {
+            return null;
         }
 
         var settings = random.Random();

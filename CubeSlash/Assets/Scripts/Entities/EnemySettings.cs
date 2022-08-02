@@ -11,6 +11,7 @@ public class EnemySettings : ScriptableObject
     public float speed_acceleration;
     public float speed_turn;
     public Vector3 size = Vector3.one;
+    public float mass = 1;
     public EnemySettings parasite;
 
     [Header("AI")]

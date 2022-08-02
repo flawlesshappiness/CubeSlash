@@ -16,12 +16,14 @@ MonoBehaviour:
   frequency_spawn_enemy: 1
   count_enemy_active: 150
   enemies:
-  - name: Weak
+  - name: Weak (Infinite)
     enemy: {fileID: 11400000, guid: cfcae6b5621e50448a5872f62f68b1ba, type: 2}
     chance: 1
-  - name: Host_Two
+    max: 0
+  - name: Host_Two (2)
     enemy: {fileID: 11400000, guid: f41298fdccde658438bc50f38c6c1f2d, type: 2}
     chance: 0.05
+    max: 2
   bosses: []
   frequency_spawn_experience: 1
   count_experience_active: 25

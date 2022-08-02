@@ -25,6 +25,7 @@ public class Enemy : MonoBehaviourExtended
         this.Settings = settings;
         SetCharacter(settings.character);
         SetAI(settings.ai);
+        Rigidbody.mass = settings.mass;
         transform.localScale = settings.size;
 
         OnDeath = null;
@@ -84,12 +85,16 @@ public class Enemy : MonoBehaviourExtended
     {
         if (AI)
         {
+            AI.Kill();
             Destroy(AI.gameObject);
             AI = null;
         }
 
-        AI = Instantiate(prefab.gameObject, transform).GetComponent<EntityAI>();
-        AI.Initialize(this);
+        if (prefab)
+        {
+            AI = Instantiate(prefab.gameObject, transform).GetComponent<EntityAI>();
+            AI.Initialize(this);
+        }
     }
 
     #region MOVEMENT
@@ -102,7 +107,7 @@ public class Enemy : MonoBehaviourExtended
     {
         if (MovementLock.IsFree)
         {
-            Rigidbody.AddForce(direction.normalized * Acceleration);
+            Rigidbody.AddForce(direction.normalized * Acceleration * Rigidbody.mass);
         }
     }
     #endregion
@@ -129,8 +134,7 @@ public class Enemy : MonoBehaviourExtended
         OnDeath?.Invoke();
 
         // AI
-        AI.Kill();
-        AI = null;
+        SetAI(null);
 
         // Respawn
         Respawn();

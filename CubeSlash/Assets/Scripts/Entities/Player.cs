@@ -128,6 +128,7 @@ public class Player : MonoBehaviourExtended
                 {
                     ability.Modifiers[i] = null;
                     modifier.Equipped = false;
+                    modifier.IsModifier = false;
                 }
             }
         }
