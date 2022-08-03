@@ -20,7 +20,7 @@ public class AI_BossHost : EntityAI
             Self.Acceleration = Self.Settings.speed_acceleration;
             MoveTowards(destination, Self.Settings.speed_turn);
         }
-        else if(PlayerIsAlive())
+        else if(IsPlayerAlive())
         {
             var r = Random.insideUnitCircle;
             destination = PlayerPosition + new Vector3(r.x, r.y) * 3f;

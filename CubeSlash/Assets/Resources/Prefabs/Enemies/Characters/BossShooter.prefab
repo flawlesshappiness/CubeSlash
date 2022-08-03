@@ -195,8 +195,6 @@ MonoBehaviour:
     parasite: {fileID: 0}
   - transform: {fileID: 8013712051060977519}
     parasite: {fileID: 0}
-  - transform: {fileID: 0}
-    parasite: {fileID: 0}
   - transform: {fileID: 9027192402083819212}
     parasite: {fileID: 0}
   - transform: {fileID: 3092082747316351761}

@@ -4,29 +4,40 @@ public class AI_BossShooter : EntityAI
 {
     [SerializeField] private Projectile prefab_projectile;
 
+    private enum State { WATCH, MOVE_TO_PLAYER }
+    private State state = State.WATCH;
+
     private Vector3 destination;
-    private float time_wait;
 
     private void FixedUpdate()
     {
-        if (Time.time < time_wait) return;
-
-        if (Vector3.Distance(Position, PlayerPosition) > Screen.width)
+        if(state == State.WATCH)
         {
-            destination = PlayerPosition;
+            if(Vector3.Distance(Position, PlayerPosition) > CameraController.Instance.Width * 0.4f)
+            {
+                state = State.MOVE_TO_PLAYER;
+            }
+            else
+            {
+                destination = IsPlayerAlive() ? PlayerPosition : Position;
+                Self.SpeedMax = 0;
+                Self.Acceleration = 0;
+                MoveTowards(destination, 10);
+            }
         }
-
-        if (Vector3.Distance(Position, destination) > 0.5f)
+        else if(state == State.MOVE_TO_PLAYER)
         {
-            Self.SpeedMax = Self.Settings.speed_max;
-            Self.Acceleration = Self.Settings.speed_acceleration;
-            MoveTowards(destination, Self.Settings.speed_turn);
-        }
-        else if (PlayerIsAlive())
-        {
-            var r = Random.insideUnitCircle;
-            destination = PlayerPosition + new Vector3(r.x, r.y) * 3f;
-            time_wait = Time.time + Random.Range(0.5f, 2f);
+            if (Vector3.Distance(Position, PlayerPosition) > CameraController.Instance.Width * 0.25f)
+            {
+                destination = IsPlayerAlive() ? PlayerPosition : Position;
+                Self.SpeedMax = Self.Settings.speed_max;
+                Self.Acceleration = Self.Settings.speed_acceleration;
+                MoveTowards(destination, 25);
+            }
+            else
+            {
+                state = State.WATCH;
+            }
         }
     }
 

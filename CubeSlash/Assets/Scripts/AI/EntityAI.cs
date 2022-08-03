@@ -52,7 +52,7 @@ public abstract class EntityAI : MonoBehaviour
         return Player.Instance.transform.position - Position;
     }
 
-    protected bool PlayerIsAlive()
+    protected bool IsPlayerAlive()
     {
         return Player.Instance.Health.Value > Player.Instance.Health.Min;
     }

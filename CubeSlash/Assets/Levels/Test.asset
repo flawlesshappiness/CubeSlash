@@ -15,11 +15,12 @@ MonoBehaviour:
   duration: 99999
   frequency_spawn_enemy: 1.2
   count_enemy_active: 0
-  enemies:
-  - name: Test
-    enemy: {fileID: 11400000, guid: 95173a26f3b79b54ab0569109f30b6e8, type: 2}
+  enemies: []
+  bosses:
+  - name: Boss_Shooter
+    enemy: {fileID: 11400000, guid: f1d890245d5d5544c964565e2efdfaca, type: 2}
     chance: 1
-  bosses: []
+    max: 1
   frequency_spawn_experience: 1
   count_experience_active: 25
   color_fog: {r: 0.13333334, g: 0.32941177, b: 0.19215687, a: 1}
