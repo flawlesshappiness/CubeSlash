@@ -7,12 +7,12 @@ public class EnemySettings : ScriptableObject
 {
     [Header("CHARACTER")]
     public Character character;
-    public float speed_max;
-    public float speed_acceleration;
-    public float speed_turn;
-    public Vector3 size = Vector3.one;
+    public float linear_acceleration;
+    public float linear_velocity;
+    public float angular_acceleration;
+    public float angular_velocity;
+    public float size = 1;
     public float mass = 1;
-    public EnemySettings parasite;
 
     [Header("AI")]
     public EntityAI ai;

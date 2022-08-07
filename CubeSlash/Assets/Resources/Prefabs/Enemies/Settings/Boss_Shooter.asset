@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: Boss_Shooter
   m_EditorClassIdentifier: 
   character: {fileID: 6535444791780287965, guid: 85e579033e61c1b46a34e2dccd45913a, type: 3}
-  speed_max: 3
-  speed_acceleration: 5
-  speed_turn: 50
-  size: {x: 10, y: 10, z: 10}
+  linear_acceleration: 5
+  linear_velocity: 3
+  angular_acceleration: 5
+  angular_velocity: 50
+  size: 10
   mass: 100
-  parasite: {fileID: 11400000, guid: cfcae6b5621e50448a5872f62f68b1ba, type: 2}
   ai: {fileID: -4310067352924480310, guid: 58b68234838ebb3488f554bf0e889c71, type: 3}

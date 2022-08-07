@@ -3,7 +3,7 @@ using UnityEngine.UI;
 
 public class ButtonCustom : ButtonExtended
 {
-    protected override void OnValidate()
+    protected void OnValidate()
     {
         base.Start();
         var palette = ColorPalette.Main;

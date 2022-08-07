@@ -7,7 +7,7 @@ public abstract class EntityAI : MonoBehaviour
     protected Enemy Self { get; private set; }
     protected Vector3 Position { get { return Self.transform.position; } }
     protected Vector3 PlayerPosition { get { return Player.Instance.transform.position; } }
-    public void Initialize(Enemy enemy)
+    public virtual void Initialize(Enemy enemy)
     {
         Self = enemy;
     }
@@ -63,23 +63,29 @@ public abstract class EntityAI : MonoBehaviour
         return Vector3.SignedAngle(Self.MoveDirection, dir, Vector3.forward);
     }
 
-    protected void MoveTowards(Vector3 position, float speed_turn, bool turn = true)
+    protected void MoveTowards(Vector3 position)
     {
-        if (turn)
-        {
-            TurnTowards(position, speed_turn);
-        }
         Self.Move(Self.MoveDirection);
     }
 
-    protected void TurnTowards(Vector3 position, float turn)
+    protected void MoveToStop(float mul = 1f)
+    {
+        var v = Self.Rigidbody.velocity;
+        if(v.magnitude > 0)
+        {
+            Self.Rigidbody.AddForce(-v * mul * Self.Rigidbody.mass);
+        }
+    }
+
+    protected void TurnTowards(Vector3 position)
     {
         if (Self.MovementLock.IsFree)
         {
             var angle = AngleTowards(position);
-            var z = Mathf.Clamp(turn * Time.deltaTime, 0, angle.Abs()) * Mathf.Sign(angle);
-            Self.Character.transform.rotation *= Quaternion.Euler(0, 0, z);
-            Self.Character.SetLookDirection(Self.MoveDirection);
+            var t = Mathf.Clamp(angle.Abs() / 25, 0, 1);
+            var vel_max = Self.Settings.angular_velocity * t;
+            Self.AngularVelocity = vel_max;
+            Self.Turn(angle < 0);
         }
     }
 

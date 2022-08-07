@@ -47,7 +47,7 @@ public class Player : MonoBehaviourExtended
     public void Initialize()
     {
         Health.Min = 0;
-        Health.Max = 3;
+        Health.Max = 6;
         Health.Value = Health.Max;
         Health.onMin += OnDeath;
 
@@ -249,16 +249,6 @@ public class Player : MonoBehaviourExtended
     }
     #endregion
     #region ENEMY
-    public void KillEnemy(Enemy enemy)
-    {
-        if (GameController.DAMAGE_DISABLED) return;
-        if (enemy.IsKillable())
-        {
-            enemy.Kill();
-            onEnemyKilled?.Invoke(enemy);
-        }
-    }
-
     private void OnTriggerEnter2D(Collider2D collision)
     {
         var enemy = collision.gameObject.GetComponentInParent<Enemy>();

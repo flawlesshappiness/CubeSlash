@@ -305,17 +305,20 @@ public class AbilityDash : Ability
     #region ENEMY
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        if (collision.GetComponentInParent<Player>()) return;
         if (!Dashing) return;
-        var enemy = collision.GetComponentInParent<Enemy>();
-        if (enemy)
+        
+        var killable = collision.GetComponentInParent<IKillable>();
+
+        PushEnemiesInArea(Player.transform.position, RadiusPush);
+        var count_hits = HitEnemiesArea(Player.transform.position, RadiusDamage);
+
+        pierces_left -= count_hits;
+        bool can_pierce = HasModifier(Type.CHARGE) || pierces_left > 0;
+
+        if(killable != null)
         {
-            PushEnemiesInArea(enemy.transform.position, RadiusPush);
-            var count_hits = HitEnemiesArea(Player.transform.position, RadiusDamage);
-
-            pierces_left -= count_hits;
-            bool can_pierce = HasModifier(Type.CHARGE) || pierces_left > 0;
-
-            if (enemy.IsKillable() && can_pierce && !enemy.IsParasite)
+            if(killable.CanKill() && can_pierce)
             {
                 distance_temp += DistanceExtendPerKill;
             }
@@ -350,20 +353,15 @@ public class AbilityDash : Ability
         Player.Instance.DragLock.RemoveLock(slock);
     }
 
-    private void HitEnemy(Enemy enemy)
-    {
-        Player.KillEnemy(enemy);
-    }
-
     private int HitEnemiesArea(Vector3 position, float radius)
     {
         var count = 0;
         foreach (var hit in Physics2D.OverlapCircleAll(position, radius))
         {
-            var enemy = hit.GetComponentInParent<Enemy>();
-            if(enemy != null)
+            var killable = hit.GetComponentInParent<IKillable>();
+            if(killable != null && killable.CanKill())
             {
-                HitEnemy(enemy);
+                killable.Kill();
                 count++;
             }
         }

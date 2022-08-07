@@ -10,6 +10,13 @@ public class EnemyProjectile : Projectile
         Lerp.Scale(spr.transform, 0.25f, Vector3.one, Vector3.one * 1.5f)
             .Loop().Oscillate();
 
-        OnHitPlayer += player => player.Damage(1, transform.position);
+        OnHit += c =>
+        {
+            var player = c.GetComponentInParent<Player>();
+            if(player != null)
+            {
+                player.Damage(1, transform.position);
+            }
+        };
     }
 }

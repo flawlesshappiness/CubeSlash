@@ -3,52 +3,37 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class Enemy : MonoBehaviourExtended
+public class Enemy : MonoBehaviourExtended, IKillable
 {
     public Rigidbody2D Rigidbody { get { return GetComponentOnce<Rigidbody2D>(ComponentSearchType.CHILDREN); } }
     public Character Character { get; private set; }
     private EntityAI AI { get; set; }
     public EnemySettings Settings { get; private set; }
-    public bool IsParasite { get { return ParasiteHost != null; } }
-    public Enemy ParasiteHost { get; private set; }
     public Vector3 MoveDirection { get { return Character.transform.up; } }
     public MultiLock MovementLock { get; private set; } = new MultiLock();
     public MultiLock DragLock { get; private set; } = new MultiLock();
 
-    public float Acceleration { get; set; }
-    public float SpeedMax { get; set; }
+    public float LinearAcceleration { get; set; }
+    public float LinearVelocity { get; set; }
+    public float AngularAcceleration { get; set; }
+    public float AngularVelocity { get; set; }
 
     public event System.Action OnDeath;
 
     public void Initialize(EnemySettings settings)
     {
         this.Settings = settings;
+        transform.localScale = Vector3.one * settings.size;
+        Rigidbody.mass = settings.mass;
         SetCharacter(settings.character);
         SetAI(settings.ai);
-        Rigidbody.mass = settings.mass;
-        transform.localScale = settings.size;
 
         OnDeath = null;
-
-        // Parasites
-        if(settings.parasite != null)
-        {
-            foreach (var space in Character.ParasiteSpaces.Where(space => space.Available))
-            {
-                var e = EnemyController.Instance.SpawnEnemy(settings.parasite, space.Position);
-                space.SetParasite(e);
-            }
-        }
     }
 
     private void Update()
     {
         DragUpdate();
-
-        if (IsParasite)
-        {
-            Character.SetLookDirection(ParasiteHost.transform.position - transform.position);
-        }
     }
 
     private void SetCharacter(Character prefab)
@@ -66,19 +51,6 @@ public class Enemy : MonoBehaviourExtended
     public void Reposition()
     {
         transform.position = CameraController.Instance.GetPositionOutsideCamera();
-    }
-
-    public void SetParasiteHost(Enemy host)
-    {
-        ParasiteHost = host;
-        Rigidbody.isKinematic = IsParasite;
-        Character.Collider.enabled = !IsParasite;
-        AI.enabled = !IsParasite;
-    }
-
-    public void RemoveParasiteHost()
-    {
-        SetParasiteHost(null);
     }
 
     private void SetAI(EntityAI prefab)
@@ -100,22 +72,26 @@ public class Enemy : MonoBehaviourExtended
     #region MOVEMENT
     private void DragUpdate()
     {
-        Rigidbody.velocity = Vector3.ClampMagnitude(Rigidbody.velocity, SpeedMax);
+        Rigidbody.velocity = Vector3.ClampMagnitude(Rigidbody.velocity, LinearVelocity);
+        Rigidbody.angularVelocity = Mathf.Clamp(Rigidbody.angularVelocity, -AngularVelocity, AngularVelocity);
     }
 
     public void Move(Vector3 direction)
     {
         if (MovementLock.IsFree)
         {
-            Rigidbody.AddForce(direction.normalized * Acceleration * Rigidbody.mass);
+            Rigidbody.AddForce(direction.normalized * LinearAcceleration * Rigidbody.mass);
         }
+    }
+
+    public void Turn(bool right)
+    {
+        var angle = right ? -1 : 1;
+        Rigidbody.AddTorque(angle * AngularAcceleration * Rigidbody.mass);
     }
     #endregion
     #region HEALTH
-    public bool IsKillable()
-    {
-        return Character.ParasiteSpaces.Count == 0 || Character.ParasiteSpaces.Count(space => !space.Available) == 0;
-    }
+    public bool CanKill() => !Character.HasActiveHealthDuds();
 
     public void Kill()
     {

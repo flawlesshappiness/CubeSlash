@@ -10,60 +10,32 @@ public class Character : MonoBehaviourExtended
     [SerializeField] public CircleCollider2D Trigger;
     [SerializeField] private ParticleSystem ps_trail;
     [SerializeField] private AnimationCurve ac_trail_ratio;
-
-    [Header("PARASITE")]
-    [SerializeField] public List<ParasiteSpace> ParasiteSpaces = new List<ParasiteSpace>();
+    [SerializeField] public Transform parent_health_duds;
     private Rigidbody2D Rigidbody { get { return GetComponentOnce<Rigidbody2D>(ComponentSearchType.PARENT); } }
-
     private Quaternion rotation_look;
+    private List<HealthDud> health_duds = new List<HealthDud>();
 
-    [System.Serializable]
-    public class ParasiteSpace
-    {
-        public Transform transform;
-        [HideInInspector] public Enemy parasite;
-        public Character Character { get; set; }
-
-        public Vector3 Position { get { return transform.position; } }
-        public bool Available { get { return IsAvailable(); } }
-
-        public void SetParasite(Enemy e)
-        {
-            var host = Character.GetComponentInParent<Enemy>();
-            parasite = e;
-            e.transform.position = transform.position;
-            e.transform.parent = transform;
-            e.SetParasiteHost(host);
-            e.OnDeath += () => 
-            {
-                parasite = null;
-                e.transform.parent = GameController.Instance.world;
-                e.RemoveParasiteHost();
-            };
-        }
-
-        private bool IsAvailable()
-        {
-            var empty = parasite == null;
-            var active = Character.gameObject.activeInHierarchy;
-            var e = Character.GetComponentInParent<Enemy>();
-            return empty && active;
-        }
-    }
-
-    public ParasiteSpace GetParasiteSpace(Transform t)
-    {
-        return ParasiteSpaces.FirstOrDefault(space => space.transform == t);
-    }
+    public List<HealthDud> Duds { get { return health_duds.ToList(); } }
 
     public void Initialize()
     {
-        foreach(var space in ParasiteSpaces)
+        if(parent_health_duds != null)
         {
-            space.Character = this;
-            AITargetController.Instance.SetArtifactOwnerCount(space.transform, 3);
+            foreach(var t in parent_health_duds.GetComponentsInChildren<Transform>())
+            {
+                if(t != parent_health_duds)
+                {
+                    var dud = Instantiate(Resources.Load<HealthDud>("Prefabs/Entities/HealthDud"), t);
+                    dud.transform.SetGlobalScale(t.localScale);
+                    dud.transform.localPosition = Vector3.zero;
+                    dud.Initialize();
+                    health_duds.Add(dud);
+                }
+            }
         }
     }
+
+    public bool HasActiveHealthDuds() => parent_health_duds != null && health_duds.Any(dud => dud.IsActive());
 
     public void SetLookDirection(Vector3 direction)
     {
@@ -88,12 +60,15 @@ public class Character : MonoBehaviourExtended
 
     private void OnDrawGizmos()
     {
-        foreach(var space in ParasiteSpaces)
+        if(parent_health_duds != null)
         {
-            if(space.transform != null)
+            foreach (var t in parent_health_duds.GetComponentsInChildren<Transform>())
             {
-                Gizmos.color = Color.yellow;
-                Gizmos.DrawSphere(space.transform.position, 0.05f);
+                if (t != parent_health_duds)
+                {
+                    Gizmos.color = Color.yellow;
+                    Gizmos.DrawSphere(t.position, 0.05f);
+                }
             }
         }
     }

@@ -189,11 +189,11 @@ public class AbilityCharge : Ability
                 var hits = Physics2D.CircleCastAll(Player.transform.position, Width * 0.5f, dir, distance);
                 foreach (var hit in hits)
                 {
-                    var e = hit.collider.GetComponentInParent<Enemy>();
-                    if (e)
+                    var killable = hit.collider.GetComponentInParent<IKillable>();
+                    if (killable != null)
                     {
-                        count_hits += e.IsKillable() ? 1 : 0;
-                        Player.Instance.KillEnemy(e);
+                        count_hits += killable.CanKill() ? 1 : 0;
+                        killable.Kill();
                     }
                 }
 

@@ -13,6 +13,14 @@ public class AI_Shooter : EntityAI
     private float cd_shoot;
     private bool can_shoot;
 
+    public override void Initialize(Enemy enemy)
+    {
+        base.Initialize(enemy);
+        Self.LinearVelocity = Self.Settings.linear_velocity;
+        Self.LinearAcceleration = Self.Settings.linear_acceleration;
+        Self.AngularVelocity = Self.Settings.angular_velocity;
+        Self.AngularAcceleration = Self.Settings.angular_acceleration;
+    }
 
     private void FixedUpdate()
     {
@@ -23,20 +31,17 @@ public class AI_Shooter : EntityAI
 
     private void MoveUpdate()
     {
-        Self.SpeedMax = Self.Settings.speed_max;
-        Self.Acceleration = Self.Settings.speed_acceleration;
-        var turn = Self.Settings.speed_turn;
-
         var dist = DistanceToPlayer();
         var dist_max_shoot = CameraController.Instance.Width * dist_max_mul_shoot;
         if(dist < dist_max_shoot)
         {
             Self.Rigidbody.velocity *= 0.999f;
-            TurnTowards(pos_player_prev, turn);
+            TurnTowards(pos_player_prev);
         }
         else
         {
-            MoveTowards(pos_player_prev, turn);
+            MoveTowards(pos_player_prev);
+            TurnTowards(pos_player_prev);
         }
     }
 

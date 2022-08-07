@@ -13,9 +13,10 @@ MonoBehaviour:
   m_Name: Test
   m_EditorClassIdentifier: 
   character: {fileID: 6535444791780287965, guid: 45499daff63c9d64b8e9f610d9bfd8a4, type: 3}
-  speed_max: 3
-  speed_acceleration: 9
-  speed_turn: 200
-  size: {x: 1, y: 1, z: 1}
-  parasite: {fileID: 0}
+  linear_acceleration: 9
+  linear_velocity: 3
+  angular_acceleration: 5
+  angular_velocity: 200
+  size: 1
+  mass: 1
   ai: {fileID: 8767035241809482896, guid: f11e61c706cb5664cb504211139ae209, type: 3}

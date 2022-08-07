@@ -5,6 +5,15 @@ public class AI_BossHost : EntityAI
     private Vector3 destination;
     private float time_wait;
 
+    public override void Initialize(Enemy enemy)
+    {
+        base.Initialize(enemy);
+        Self.LinearVelocity = Self.Settings.linear_velocity;
+        Self.LinearAcceleration = Self.Settings.linear_acceleration;
+        Self.AngularVelocity = Self.Settings.angular_velocity;
+        Self.AngularAcceleration = Self.Settings.angular_acceleration;
+    }
+
     private void FixedUpdate()
     {
         if (Time.time < time_wait) return;
@@ -16,9 +25,8 @@ public class AI_BossHost : EntityAI
 
         if(Vector3.Distance(Position, destination) > 0.5f)
         {
-            Self.SpeedMax = Self.Settings.speed_max;
-            Self.Acceleration = Self.Settings.speed_acceleration;
-            MoveTowards(destination, Self.Settings.speed_turn);
+            MoveTowards(destination);
+            TurnTowards(destination);
         }
         else if(IsPlayerAlive())
         {

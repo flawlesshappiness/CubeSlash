@@ -44,10 +44,10 @@ public class TrailDash : MonoBehaviour
         var hits = Physics2D.OverlapCircleAll(transform.position, radius);
         foreach(var hit in hits)
         {
-            var e = hit.GetComponentInParent<Enemy>();
-            if(e != null && e.IsKillable())
+            var k = hit.GetComponentInParent<IKillable>();
+            if(k != null && k.CanKill())
             {
-                e.Kill();
+                k.Kill();
             }
         }
     }

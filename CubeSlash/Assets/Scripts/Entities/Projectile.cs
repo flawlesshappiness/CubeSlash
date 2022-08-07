@@ -15,15 +15,13 @@ public class Projectile : MonoBehaviourExtended
     public bool Homing { get; set; }
     public bool SearchForTarget { get; set; } = true;
     public Rigidbody2D Rigidbody { get { return GetComponentOnce<Rigidbody2D>(ComponentSearchType.THIS); } }
-    public System.Action<Enemy> OnHitEnemy { get; set; }
-    public System.Action<Player> OnHitPlayer { get; set; }
+    public System.Action<Collider2D> OnHit { get; set; }
     public Enemy Target { get; set; }
 
     private const float ANGLE_MAX = 90;
 
     private float time_birth;
     private bool searching;
-    private bool hit;
 
     private Vector3 scale_start;
 
@@ -40,6 +38,7 @@ public class Projectile : MonoBehaviourExtended
     private void Update()
     {
         LifetimeUpdate();
+        DistanceUpdate();
         OnUpdate();
     }
 
@@ -126,28 +125,13 @@ public class Projectile : MonoBehaviourExtended
 
     public void Kill()
     {
+        gameObject.SetActive(false);
         Destroy(gameObject);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (hit) return;
-
-        var enemy = collision.gameObject.GetComponentInParent<Enemy>();
-        if (hits_enemy && enemy)
-        {
-            hit = true;
-            OnHitEnemy?.Invoke(enemy);
-            return;
-        }
-
-        var player = collision.gameObject.GetComponentInParent<Player>();
-        if(hits_player && player)
-        {
-            hit = true;
-            OnHitPlayer?.Invoke(player);
-            return;
-        }
+        OnHit?.Invoke(collision);
     }
 
     private class FindTargetMap
@@ -183,6 +167,7 @@ public class Projectile : MonoBehaviourExtended
         {
             var e = hit.gameObject.GetComponentInParent<Enemy>();
             if (e == null) continue;
+            if (!e.CanKill()) continue;
 
             var dir = e.transform.position - transform.position;
             var angle = Vector3.Angle(transform.up, dir.normalized);

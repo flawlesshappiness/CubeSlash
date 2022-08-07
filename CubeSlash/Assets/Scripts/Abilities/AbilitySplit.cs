@@ -8,6 +8,7 @@ public class AbilitySplit : Ability
     private int CountProjectiles { get; set; }
     private float SpeedProjectile { get; set; }
     private float ArcProjectiles { get; set; }
+    private float SizeProjectiles { get; set; }
     private bool Firing { get; set; }
     public AbilityVariable VarCount { get { return Variables[0]; } }
     public AbilityVariable VarArc { get { return Variables[1]; } }
@@ -27,7 +28,8 @@ public class AbilitySplit : Ability
         CooldownTime = 0.5f;
         CountProjectiles = 3;
         SpeedProjectile = 25;
-        ArcProjectiles = 45f;
+        ArcProjectiles = 15f;
+        SizeProjectiles = 2f;
         Bursts = 1;
     }
 
@@ -170,13 +172,21 @@ public class AbilitySplit : Ability
     {
         var p = Instantiate(Resources.Load<Projectile>("Prefabs/Other/ProjectileSplit").gameObject).GetComponent<Projectile>();
         p.transform.position = Player.transform.position;
+        p.transform.localScale = Vector3.one * SizeProjectiles;
         p.Rigidbody.velocity = direction * SpeedProjectile;
         p.SetDirection(direction);
 
-        p.OnHitEnemy += e =>
+        p.OnHit += c =>
         {
-            Player.KillEnemy(e);
-            p.Kill();
+            var k = c.GetComponentInParent<IKillable>();
+            if(k != null)
+            {
+                if (k.CanKill())
+                {
+                    k.Kill();
+                }
+                p.Kill();
+            }
         };
 
         return p;
@@ -238,7 +248,7 @@ public class AbilitySplit : Ability
     private void SetupProjectileNormal(Projectile p)
     {
         p.TurnSpeed = 1f;
-        p.Homing = true;
+        p.Homing = false;
         p.Lifetime = 0.75f;
     }
 
