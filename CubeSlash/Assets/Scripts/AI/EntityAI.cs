@@ -14,7 +14,7 @@ public abstract class EntityAI : MonoBehaviour
 
     public void Kill()
     {
-        AITargetController.Instance.ClearArtifacts(Self);
+        Destroy(gameObject);
     }
 
     public virtual void Knockback(float time, Vector3 velocity, float drag)
@@ -77,28 +77,20 @@ public abstract class EntityAI : MonoBehaviour
         }
     }
 
-    protected void TurnTowards(Vector3 position)
+    protected void TurnTowards(Vector3 position, float angle_min = 25)
     {
         if (Self.MovementLock.IsFree)
         {
             var angle = AngleTowards(position);
-            var t = Mathf.Clamp(angle.Abs() / 25, 0, 1);
+            var t = angle_min == 0 ? 1 : Mathf.Clamp(angle.Abs() / angle_min, 0, 1);
             var vel_max = Self.Settings.angular_velocity * t;
             Self.AngularVelocity = vel_max;
             Self.Turn(angle < 0);
         }
     }
 
-    protected bool HasPlayerArtifact { get; private set; }
-    protected bool RequestPlayerArtifact()
-    {
-        HasPlayerArtifact = AITargetController.Instance.RequestArtifact(Self, Player.Instance.transform);
-        return HasPlayerArtifact;
-    }
-
-    protected void RemovePlayerArtifact()
-    {
-        AITargetController.Instance.RemoveArtifact(Self, Player.Instance.transform);
-        HasPlayerArtifact = false;
-    }
+    protected void LerpAngularVelocity(float time, float end) => Lerp.Value(time, Self.AngularVelocity, end, "angular_velocity_" + Self.GetInstanceID(), f => Self.AngularVelocity = f);
+    protected void LerpAngularAcceleration(float time, float end) => Lerp.Value(time, Self.AngularAcceleration, end, "angular_acceleration_" + Self.GetInstanceID(), f => Self.AngularAcceleration = f);
+    protected void LerpLinearVelocity(float time, float end) => Lerp.Value(time, Self.LinearVelocity, end, "linear_velocity_" + Self.GetInstanceID(), f => Self.LinearVelocity = f);
+    protected void LerpLinearAcceleration(float time, float end) => Lerp.Value(time, Self.LinearAcceleration, end, "linear_acceleration_" + Self.GetInstanceID(), f => Self.LinearAcceleration = f);
 }

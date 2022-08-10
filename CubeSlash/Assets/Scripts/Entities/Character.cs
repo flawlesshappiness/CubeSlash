@@ -8,12 +8,12 @@ public class Character : MonoBehaviourExtended
     public enum Type { CIRCLE, SQUARE }
     [SerializeField] public CircleCollider2D Collider;
     [SerializeField] public CircleCollider2D Trigger;
-    [SerializeField] private ParticleSystem ps_trail;
-    [SerializeField] private AnimationCurve ac_trail_ratio;
     [SerializeField] public Transform parent_health_duds;
     private Rigidbody2D Rigidbody { get { return GetComponentOnce<Rigidbody2D>(ComponentSearchType.PARENT); } }
     private Quaternion rotation_look;
     private List<HealthDud> health_duds = new List<HealthDud>();
+
+    public System.Action<HealthDud> OnDudKilled;
 
     public List<HealthDud> Duds { get { return health_duds.ToList(); } }
 
@@ -29,6 +29,7 @@ public class Character : MonoBehaviourExtended
                     dud.transform.SetGlobalScale(t.localScale);
                     dud.transform.localPosition = Vector3.zero;
                     dud.Initialize();
+                    dud.OnKilled += () => OnDudKilled(dud);
                     health_duds.Add(dud);
                 }
             }
@@ -51,11 +52,13 @@ public class Character : MonoBehaviourExtended
         float x_scale = Mathf.Lerp(1f, 0.5f, t_velocity);
         transform.localScale = Vector3.Slerp(transform.localScale, Vector3.one.SetX(x_scale), 10 * Time.deltaTime);
 
+        /*
         if(ps_trail != null)
         {
             var trails = ps_trail.trails;
             trails.ratio = ac_trail_ratio.Evaluate(t_velocity);
         }
+        */
     }
 
     private void OnDrawGizmos()
@@ -71,5 +74,11 @@ public class Character : MonoBehaviourExtended
                 }
             }
         }
+    }
+
+    public Transform GetTransform(string name)
+    {
+        return GetComponentsInChildren<Transform>()
+            .FirstOrDefault(t => t.name == name);
     }
 }

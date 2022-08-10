@@ -6,6 +6,7 @@ public class HealthDud : MonoBehaviour, IKillable
     [SerializeField] private AnimationCurve ac_armor_active;
     [SerializeField] private AnimationCurve ac_armor_inactive;
     public bool ArmorActive { get; private set; }
+    public System.Action OnKilled;
 
     public void Initialize()
     {
@@ -35,6 +36,7 @@ public class HealthDud : MonoBehaviour, IKillable
     public void Kill()
     {
         gameObject.SetActive(false);
+        OnKilled?.Invoke();
     }
 
     public bool CanKill() => !ArmorActive;

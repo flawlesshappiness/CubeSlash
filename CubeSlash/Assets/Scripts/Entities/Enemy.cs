@@ -58,7 +58,6 @@ public class Enemy : MonoBehaviourExtended, IKillable
         if (AI)
         {
             AI.Kill();
-            Destroy(AI.gameObject);
             AI = null;
         }
 

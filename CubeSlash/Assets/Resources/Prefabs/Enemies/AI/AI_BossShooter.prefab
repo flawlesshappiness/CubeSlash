@@ -44,3 +44,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   prefab_projectile: {fileID: 7462172402094969671, guid: 6538c54ea107f1b42afc16e280524ec3, type: 3}
+  template_telegraph_dir: {fileID: 0}
+  template_telegraph_glow: {fileID: 0}

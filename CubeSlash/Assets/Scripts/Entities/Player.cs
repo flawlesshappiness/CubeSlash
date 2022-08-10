@@ -27,8 +27,6 @@ public class Player : MonoBehaviourExtended
 
     public const float SPEED_MOVE = 5;
 
-    public System.Action<Enemy> onEnemyKilled;
-    public System.Action<Enemy> onHurt;
     public System.Action onLevelUp;
     public System.Action onDeath;
 
@@ -260,15 +258,7 @@ public class Player : MonoBehaviourExtended
                 ability.EnemyCollision(enemy);
             }
 
-            if (InvincibilityLock.IsLocked)
-            {
-
-            }
-            else
-            {
-                Damage(1, enemy.transform.position);
-                onHurt?.Invoke(enemy);
-            }
+            Damage(1, enemy.transform.position);
         }
     }
     #endregion
@@ -302,18 +292,21 @@ public class Player : MonoBehaviourExtended
 
     public void Damage(int amount, Vector3 damage_origin)
     {
-        if (!GameController.DAMAGE_DISABLED)
+        if (InvincibilityLock.IsFree)
         {
-            Health.Value -= amount.Abs();
-        }
+            if (!GameController.DAMAGE_DISABLED)
+            {
+                Health.Value -= amount.Abs();
+            }
 
-        if (Health.Value > 0)
-        {
-            StartCoroutine(PlayerDamageInvincibilityCr(2));
-            StartCoroutine(PlayerDamageFlashCr(2));
+            if (Health.Value > 0)
+            {
+                StartCoroutine(PlayerDamageInvincibilityCr(2));
+                StartCoroutine(PlayerDamageFlashCr(2));
 
-            var dir = transform.position - damage_origin;
-            StartCoroutine(PlayerDamagePushCr(dir, 0.15f));
+                var dir = transform.position - damage_origin;
+                StartCoroutine(PlayerDamagePushCr(dir, 0.15f));
+            }
         }
     }
 
