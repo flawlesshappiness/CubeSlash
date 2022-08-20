@@ -6,20 +6,21 @@ public class EventSystemController : Singleton
     public static EventSystemController Instance { get { return Instance<EventSystemController>(); } }
     public EventSystem EventSystem { get { return EventSystem.current; } }
 
-    private GameObject prev_selected_object;
+    private GameObject default_selected_object;
 
     private void Update()
     {
-        if(EventSystem.currentSelectedGameObject == null)
+        if(EventSystem.currentSelectedGameObject == null || !EventSystem.currentSelectedGameObject.activeInHierarchy)
         {
-            if (prev_selected_object != null)
+            if (default_selected_object != null)
             {
-                EventSystem.SetSelectedGameObject(prev_selected_object);
+                EventSystem.SetSelectedGameObject(default_selected_object);
             }
         }
-        else
-        {
-            prev_selected_object = EventSystem.currentSelectedGameObject;
-        }
+    }
+
+    public void SetDefaultSelection(GameObject g)
+    {
+        default_selected_object = g;
     }
 }

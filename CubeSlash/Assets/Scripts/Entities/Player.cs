@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class Player : MonoBehaviourExtended
 {
@@ -56,14 +55,7 @@ public class Player : MonoBehaviourExtended
 
         AbilitiesEquipped = new Ability[ConstVars.COUNT_ABILITY_BUTTONS];
         var dash = UnlockAbility(Ability.Type.DASH);
-        var split = UnlockAbility(Ability.Type.SPLIT);
-        var charge = UnlockAbility(Ability.Type.CHARGE);
         EquipAbility(dash, 2);
-        //EquipAbility(split, 0);
-        //EquipAbility(charge, 1);
-
-        //UpgradeController.Instance.SetUpgradeLevel(UpgradeData.Type.CHARGE_WIDTH, 3);
-        //UpgradeController.Instance.SetUpgradeLevel(UpgradeData.Type.CHARGE_AIM, 3);
 
         Character.Initialize();
 

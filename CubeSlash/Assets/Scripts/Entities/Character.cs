@@ -28,6 +28,7 @@ public class Character : MonoBehaviourExtended
                     var dud = Instantiate(Resources.Load<HealthDud>("Prefabs/Entities/HealthDud"), t);
                     dud.transform.SetGlobalScale(t.localScale);
                     dud.transform.localPosition = Vector3.zero;
+                    dud.transform.localRotation = Quaternion.identity;
                     dud.Initialize();
                     dud.OnKilled += () => OnDudKilled(dud);
                     health_duds.Add(dud);
@@ -51,14 +52,6 @@ public class Character : MonoBehaviourExtended
         var t_velocity = Mathf.Clamp(Rigidbody.velocity.magnitude / 40, 0, 1);
         float x_scale = Mathf.Lerp(1f, 0.5f, t_velocity);
         transform.localScale = Vector3.Slerp(transform.localScale, Vector3.one.SetX(x_scale), 10 * Time.deltaTime);
-
-        /*
-        if(ps_trail != null)
-        {
-            var trails = ps_trail.trails;
-            trails.ratio = ac_trail_ratio.Evaluate(t_velocity);
-        }
-        */
     }
 
     private void OnDrawGizmos()
@@ -71,6 +64,7 @@ public class Character : MonoBehaviourExtended
                 {
                     Gizmos.color = Color.yellow;
                     Gizmos.DrawSphere(t.position, 0.05f);
+                    Gizmos.DrawLine(t.position, t.position + t.up * 0.1f);
                 }
             }
         }

@@ -13,13 +13,21 @@ MonoBehaviour:
   m_Name: DASH_TRAIL
   m_EditorClassIdentifier: 
   type: 1
+  require_ability: 1
+  type_ability_required: 0
   levels:
   - name: DASH_TRAIL_0
-    description: + Speed
+    desc_positive:
+    - + Speed
+    desc_negative: []
     icon: {fileID: 21300000, guid: 588ac5b533407b74ab8b59d1f45e90db, type: 3}
   - name: DASH_TRAIL_1
-    description: + Speed
+    desc_positive:
+    - + Speed
+    desc_negative: []
     icon: {fileID: 21300000, guid: 7b7de2430deee964da27ba2590989b37, type: 3}
   - name: DASH_TRAIL_2
-    description: Leave a trail behind when dashing
+    desc_positive:
+    - Leave behind a trail when dashing
+    desc_negative: []
     icon: {fileID: 21300000, guid: 41c6f94d80f9e034a9c63dcf97d30f5c, type: 3}

@@ -145,7 +145,7 @@ public class GameController : MonoBehaviour
     private void OnPlayerLevelUp()
     {
         Player.Instance.ResetExperience();
-        if (UnlockView.CanUnlockUpgrade())
+        if (UpgradeController.Instance.CanUnlockUpgrade())
         {
             UnlockUpgrade();
         }
@@ -153,11 +153,11 @@ public class GameController : MonoBehaviour
 
     public void OnPlayerGainAbility()
     {
-        if (UnlockView.CanUnlockAbility())
+        if (AbilityController.Instance.CanUnlockAbility())
         {
             UnlockAbility();
         }
-        else if (UnlockView.CanUnlockUpgrade())
+        else if (UpgradeController.Instance.CanUnlockUpgrade())
         {
             UnlockUpgrade();
         }
@@ -170,8 +170,11 @@ public class GameController : MonoBehaviour
         {
             yield return LerpTimeScale(1f, 0f);
             PauseLock.AddLock(nameof(GameController));
-            var view = ViewController.Instance.ShowView<UnlockView>(0, "Ability");
-            view.UnlockUpgrade();
+            var view = ViewController.Instance.ShowView<UnlockUpgradeView>(0, "Unlock");
+            view.OnUpgradeSelected += () =>
+            {
+                ResumeLevel();
+            };
         }
     }
 
@@ -182,8 +185,7 @@ public class GameController : MonoBehaviour
         {
             yield return LerpTimeScale(1f, 0f);
             PauseLock.AddLock(nameof(GameController));
-            var view = ViewController.Instance.ShowView<UnlockView>(0, "Ability");
-            view.UnlockAbility();
+            var view = ViewController.Instance.ShowView<UnlockAbilityView>(0, "Unlock");
         }
     }
 
@@ -226,6 +228,6 @@ public class GameController : MonoBehaviour
     private void CheatOpenEquipment()
     {
         SetTimeScale(0);
-        ViewController.Instance.ShowView<AbilityView>(tag: "Ability");
+        ViewController.Instance.ShowView<AbilityView>(tag: "Unlock");
     }
 }

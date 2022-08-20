@@ -10,8 +10,6 @@ public class AbilitySplit : Ability
     private float ArcProjectiles { get; set; }
     private float SizeProjectiles { get; set; }
     private bool Firing { get; set; }
-    public AbilityVariable VarCount { get { return Variables[0]; } }
-    public AbilityVariable VarArc { get { return Variables[1]; } }
 
     private bool Arc360;
 

@@ -24,8 +24,6 @@ public class AbilityDash : Ability
     [SerializeField] private BoxCollider2D trigger;
     [SerializeField] private TrailDash trail;
     [SerializeField] private AnimationCurve ac_push_enemies;
-    public AbilityVariable VarSpeed { get { return Variables[0]; } }
-    public AbilityVariable VarDistance { get { return Variables[1]; } }
     public AnimationCurve ac_path_normal;
     public AnimationCurve ac_path_split;
 

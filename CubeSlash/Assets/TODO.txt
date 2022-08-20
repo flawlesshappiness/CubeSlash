@@ -1,13 +1,6 @@
 TODO:
-Dash do a raycast before dashing
-
-Phil feedback:
-bonus on multiple enemies in a row
-maybe adjust auto targetting charge
-maybe give charge aoe
-need a big enemy variation
-split feels underpowered (add more bullets / lifetime)
-charge multiple buttons at the same time
+Add roar direction when spawning boss
+Trail only on dash
 
 WORKING ON:
 

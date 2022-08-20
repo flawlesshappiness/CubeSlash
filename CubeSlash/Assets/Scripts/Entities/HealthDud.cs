@@ -2,9 +2,13 @@ using UnityEngine;
 
 public class HealthDud : MonoBehaviour, IKillable
 {
+    [SerializeField] private GameObject pivot;
     [SerializeField] private GameObject g_armor;
+    [SerializeField] private ParticleSystem ps_kill;
+    [SerializeField] private ParticleSystem ps_ooze;
     [SerializeField] private AnimationCurve ac_armor_active;
     [SerializeField] private AnimationCurve ac_armor_inactive;
+    public bool Dead { get; private set; }
     public bool ArmorActive { get; private set; }
     public System.Action OnKilled;
 
@@ -12,6 +16,7 @@ public class HealthDud : MonoBehaviour, IKillable
     {
         g_armor.transform.localScale = Vector3.zero;
         ArmorActive = false;
+        Dead = false;
     }
 
     public void SetArmorActive(bool active, bool animate = true)
@@ -31,13 +36,16 @@ public class HealthDud : MonoBehaviour, IKillable
         }
     }
 
-    public bool IsActive() => gameObject.activeInHierarchy;
+    public bool IsActive() => !Dead;
 
     public void Kill()
     {
-        gameObject.SetActive(false);
+        pivot.SetActive(false);
+        ps_kill.Play();
+        ps_ooze.Play();
         OnKilled?.Invoke();
+        Dead = true;
     }
 
-    public bool CanKill() => !ArmorActive;
+    public bool CanKill() => IsActive() && !ArmorActive;
 }

@@ -19,8 +19,6 @@ public class AbilityCharge : Ability
 
     private float time_charge_start;
     private float time_charge_end;
-    public AbilityVariable VarWidth { get { return Variables[0]; } }
-    public AbilityVariable VarTime { get { return Variables[1]; } }
     public bool Charging { get; private set; }
     public bool ChargeEnded { get; private set; }
 

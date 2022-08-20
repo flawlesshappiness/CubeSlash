@@ -1,5 +1,5 @@
 Dash (DASH) - Dash short distance (Knocks back enemy and stops dash)
-x SPLIT: Split into 2, covering a larger area (cool pattern)
+- SPLIT: Send out copies of yourself that target other enemies
 x CHARGE: Penetrate enemies + longer range
 - EXPLODE: AoE explosion at start, very fast/long dash
 - CHONK: Bigger AoE

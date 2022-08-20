@@ -1,3 +1,5 @@
+using System.Collections;
+using Unity.VisualScripting.Antlr3.Runtime.Tree;
 using UnityEngine;
 
 public class AI_Shooter : EntityAI
@@ -9,9 +11,10 @@ public class AI_Shooter : EntityAI
     [SerializeField] private Projectile prefab_projectile;
     [SerializeField] private float velocity_projectile;
 
+    private Transform t_eye;
+
     private Vector3 pos_player_prev;
     private float cd_shoot;
-    private bool can_shoot;
 
     public override void Initialize(Enemy enemy)
     {
@@ -20,6 +23,8 @@ public class AI_Shooter : EntityAI
         Self.LinearAcceleration = Self.Settings.linear_acceleration;
         Self.AngularVelocity = Self.Settings.angular_velocity;
         Self.AngularAcceleration = Self.Settings.angular_acceleration;
+
+        t_eye = Self.Character.GetTransform("eye");
     }
 
     private void FixedUpdate()
@@ -35,7 +40,7 @@ public class AI_Shooter : EntityAI
         var dist_max_shoot = CameraController.Instance.Width * dist_max_mul_shoot;
         if(dist < dist_max_shoot)
         {
-            Self.Rigidbody.velocity *= 0.999f;
+            MoveToStop(0.5f);
             TurnTowards(pos_player_prev);
         }
         else
@@ -49,22 +54,19 @@ public class AI_Shooter : EntityAI
     {
         var dist = DistanceToPlayer();
         var dist_max = CameraController.Instance.Width * dist_max_mul_shoot;
-        if (dist > dist_max)
-        {
-            can_shoot = false;
-            return;
-        }
-
         if (Time.time < cd_shoot) return;
-        cd_shoot = Time.time + cooldown_shoot;
-
-        if (!can_shoot)
+        if (dist < dist_max)
         {
-            can_shoot = true;
+            StartCoroutine(Cr());
         }
-        else
+
+        IEnumerator Cr()
         {
+            cd_shoot = Time.time + 999;
+            TelegraphShootShort(0);
+            yield return new WaitForSeconds(0.5f);
             Shoot();
+            cd_shoot = Time.time + cooldown_shoot;
         }
     }
 
@@ -76,6 +78,18 @@ public class AI_Shooter : EntityAI
         p.Rigidbody.velocity = dir.normalized * velocity_projectile;
         p.SetDirection(dir);
         p.Lifetime = 999f;
-        Self.Rigidbody.AddForce(-dir * 150);
+
+        Self.Rigidbody.AddForce(-dir * 50 * Self.Rigidbody.mass);
+    }
+
+    private void TelegraphShootShort(float angle)
+    {
+        Resources.Load<ParticleSystem>("particles/ps_telegraph_shoot_small")
+            .Duplicate()
+            .Parent(transform)
+            .Scale(Vector3.one)
+            .Position(t_eye.position)
+            .Rotation(transform.rotation * Quaternion.AngleAxis(angle, Vector3.forward))
+            .Destroy(3f);
     }
 }

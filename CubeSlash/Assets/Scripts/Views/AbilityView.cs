@@ -28,6 +28,10 @@ public class AbilityView : View
 
         // Audio
         AudioController.Instance.TransitionTo(AudioController.Snapshot.MENU, 0.5f);
+
+        // UI
+        EventSystemController.Instance.SetDefaultSelection(slots[0].Button.gameObject);
+        EventSystemController.Instance.EventSystem.SetSelectedGameObject(slots[0].Button.gameObject);
     }
 
     private void OnEnable()
@@ -196,20 +200,6 @@ public class AbilityView : View
             tmp_desc.text = "";
         }
     }
-
-    private void DisplayVariable(AbilityVariable v)
-    {
-        if(v != null)
-        {
-            string s = v.Name;
-            s += "\n" + v.Description;
-            tmp_desc.text = s;
-        }
-        else
-        {
-            tmp_desc.text = "";
-        }
-    }
     #endregion
     #region INPUT
     private void DisplayInputAbilitySelect()
@@ -256,11 +246,8 @@ public class AbilityView : View
     {
         var selected = EventSystemController.Instance.EventSystem.currentSelectedGameObject;
         var ability_select = selected == null ? null : selected.GetComponentInParent<UIAbilitySelect>();
-        var ability_variable = selected == null ? null : selected.GetComponentInParent<UIAbilityVariable>();
         if (ability_select != null)
             ability_select.Cancel();
-        if (ability_variable != null)
-            ability_variable.Cancel();
         EventSystemController.Instance.EventSystem.SetSelectedGameObject(btn_continue.gameObject);
     }
     #endregion

@@ -1,23 +1,22 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-[RequireComponent(typeof(Image))]
-public class ImagePalette : MonoBehaviour
+public class GraphicPalette : MonoBehaviour
 {
     public ColorPalette.Type type;
-    public Image image;
+    public Graphic graphic;
 
     private void OnValidate()
     {
-        if(image == null)
+        if(graphic == null)
         {
-            image = GetComponent<Image>();
+            graphic = GetComponent<Graphic>();
         }
 
         var palette = ColorPalette.Main;
         if(palette != null)
         {
-            image.color = ColorPalette.Main.Get(type);
+            graphic.color = ColorPalette.Main.Get(type);
         }
     }
 }

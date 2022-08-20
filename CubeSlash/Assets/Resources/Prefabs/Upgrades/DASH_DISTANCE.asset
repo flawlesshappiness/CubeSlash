@@ -15,6 +15,11 @@ MonoBehaviour:
   type: 0
   levels:
   - name: DASH_DISTANCE_0
+    desc_positive:
+    - + Piercing
+    - + Distance
+    desc_negative:
+    - + Cooldown
     description: '+ Cooldown
 
       + Distance
@@ -22,6 +27,11 @@ MonoBehaviour:
       + Piercing'
     icon: {fileID: 21300000, guid: 588ac5b533407b74ab8b59d1f45e90db, type: 3}
   - name: DASH_DISTANCE_1
+    desc_positive:
+    - ++ Piercing
+    - + Distance
+    desc_negative:
+    - + Cooldown
     description: '+ Cooldown
 
       + Distance
@@ -29,5 +39,10 @@ MonoBehaviour:
       ++ Piercing'
     icon: {fileID: 21300000, guid: 7b7de2430deee964da27ba2590989b37, type: 3}
   - name: DASH_DISTANCE_2
+    desc_positive:
+    - Killing enemies extend distance
+    desc_negative: []
     description: Killing enemies extend distance
     icon: {fileID: 21300000, guid: 41c6f94d80f9e034a9c63dcf97d30f5c, type: 3}
+  require_ability: 1
+  type_ability_required: 0

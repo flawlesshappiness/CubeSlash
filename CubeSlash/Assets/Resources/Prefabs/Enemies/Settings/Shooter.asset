@@ -14,9 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   character: {fileID: 6535444791780287965, guid: c3089b761f1048242b2fcb74c354cc49, type: 3}
   linear_acceleration: 9
-  linear_velocity: 2
+  linear_velocity: 3
   angular_acceleration: 5
   angular_velocity: 200
-  size: 1
-  mass: 1
+  size: 1.5
+  mass: 2
   ai: {fileID: 3873106988618322131, guid: e8b3dcbf445451b44b56254a18515441, type: 3}

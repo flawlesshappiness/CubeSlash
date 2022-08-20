@@ -12,16 +12,23 @@ public class UpgradeData : ScriptableObject
         SPLIT_ARC,
         CHARGE_AIM,
         CHARGE_WIDTH,
+
+        PLAYER_EXP,
+        PLAYER_HEALTH,
+        PLAYER_SPEED,
     }
 
     public Type type;
+    public bool require_ability;
+    public Ability.Type type_ability_required;
     public List<Level> levels = new List<Level>();
 
     [System.Serializable]
     public class Level
     {
         public string name;
-        [TextArea] public string description;
+        public List<string> desc_positive;
+        public List<string> desc_negative;
         public Sprite icon;
     }
 
