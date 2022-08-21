@@ -3,7 +3,6 @@ using UnityEngine;
 public class AI_BossHost : EntityAI
 {
     private Vector3 destination;
-    private float time_wait;
 
     public override void Initialize(Enemy enemy)
     {
@@ -16,23 +15,17 @@ public class AI_BossHost : EntityAI
 
     private void FixedUpdate()
     {
-        if (Time.time < time_wait) return;
-
-        if(Vector3.Distance(Position, PlayerPosition) > Screen.width)
+        if(IsPlayerAlive())
         {
             destination = PlayerPosition;
         }
 
-        if(Vector3.Distance(Position, destination) > 0.5f)
-        {
-            MoveTowards(destination);
-            TurnTowards(destination);
-        }
-        else if(IsPlayerAlive())
-        {
-            var r = Random.insideUnitCircle;
-            destination = PlayerPosition + new Vector3(r.x, r.y) * 3f;
-            time_wait = Time.time + Random.Range(0.5f, 2f);
-        }
+        var dir = (destination - Position).normalized;
+        var offset = dir * Self.Settings.size * 0.7f;
+        var t = (Vector3.Distance(Position + offset, destination)) / (CameraController.Instance.Width * 0.5f);
+        Self.AngularAcceleration = Mathf.Lerp(Self.Settings.angular_acceleration * 0.25f, Self.Settings.angular_acceleration, t);
+        Self.AngularVelocity = Mathf.Lerp(Self.Settings.angular_velocity * 0.25f, Self.Settings.angular_velocity, t);
+        MoveTowards(destination);
+        TurnTowards(destination);
     }
 }

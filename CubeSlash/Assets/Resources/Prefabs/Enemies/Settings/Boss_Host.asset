@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: Boss_Host
   m_EditorClassIdentifier: 
   character: {fileID: 6535444791780287965, guid: d81b8b370ecd35f47a57f343f524e45a, type: 3}
-  linear_acceleration: 2
-  linear_velocity: 2
+  linear_acceleration: 1
+  linear_velocity: 3
   angular_acceleration: 5
-  angular_velocity: 25
-  size: 10
+  angular_velocity: 50
+  size: 8
   mass: 100
   ai: {fileID: 8224403435722928764, guid: d67f2202b22b9404f9fb5df7901db12c, type: 3}

@@ -4,4 +4,6 @@ Preview when holding ability button
 Ability upgrade trees should not do the same thing twice
 knockback enemies on level up
 cooldown layout show when ability is in use
-dash fucks up if dashing right as invincibility ends
+Animate move ability in AbilityView
+Make small enemy collision with eachother bigger, but keep trigger the same
+Spawn more enemies

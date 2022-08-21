@@ -49,7 +49,7 @@ public class AbilitySplit : Ability
                 ArcProjectiles -= 5;
             }
 
-            if (upgrade.level >= 2)
+            if (upgrade.level >= 3)
             {
                 Bursts += 2;
             }
