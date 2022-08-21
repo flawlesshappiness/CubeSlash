@@ -250,6 +250,7 @@ public class AbilityDash : Ability
 
     private void SetEffectEnabled(bool enabled)
     {
+        ps_dash.transform.rotation = Player.Character.transform.rotation;
         foreach (var ps in ps_dash.GetComponentsInChildren<ParticleSystem>())
         {
             ps.ModifyEmission(e => e.enabled = enabled);
