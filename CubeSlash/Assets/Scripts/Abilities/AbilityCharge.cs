@@ -47,9 +47,9 @@ public class AbilityCharge : Ability
         });
     }
 
-    public override void InitializeValues()
+    public override void ResetValues()
     {
-        base.InitializeValues();
+        base.ResetValues();
         CooldownTime = 0.5f;
         Width = 1f;
         ChargeTime = 1.25f;
@@ -58,9 +58,9 @@ public class AbilityCharge : Ability
         ChargeEnded = false;
     }
 
-    public override void InitializeUpgrade(Upgrade upgrade)
+    public override void ApplyUpgrade(Upgrade upgrade)
     {
-        base.InitializeUpgrade(upgrade);
+        base.ApplyUpgrade(upgrade);
 
         if (upgrade.data.type == UpgradeData.Type.CHARGE_AIM)
         {
@@ -96,7 +96,7 @@ public class AbilityCharge : Ability
         }
     }
 
-    public override void InitializeModifier(Ability modifier)
+    public override void ApplyModifier(Ability modifier)
     {
         CooldownTime = modifier.type switch
         {

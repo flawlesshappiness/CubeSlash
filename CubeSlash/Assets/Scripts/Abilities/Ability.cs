@@ -38,21 +38,29 @@ public abstract class Ability : MonoBehaviourExtended
         return "Prefabs/Abilities/" + type.ToString();
     }
 
-    public void InitializeActive()
+    public void ApplyActive()
     {
-        InitializeValues();
-        
-        UpgradeController.Instance.Database.upgrades.Select(data => UpgradeController.Instance.GetUpgrade(data.type))
-            .ToList().ForEach(upgrade => InitializeUpgrade(upgrade));
+        ResetValues();
+        ApplyUpgrades();
+        ApplyModifiers();
+    }
 
+    private void ApplyUpgrades()
+    {
+        UpgradeController.Instance.Database.upgrades.Select(data => UpgradeController.Instance.GetUpgrade(data.type))
+            .ToList().ForEach(upgrade => ApplyUpgrade(upgrade));
+    }
+
+    private void ApplyModifiers()
+    {
         Modifiers.Where(m => m != null)
-            .ToList().ForEach(m => InitializeModifier(m));
+            .ToList().ForEach(m => ApplyModifier(m));
     }
 
     public virtual void InitializeFirstTime() { }
-    public virtual void InitializeValues() { }
-    public virtual void InitializeUpgrade(Upgrade upgrade) { }
-    public virtual void InitializeModifier(Ability modifier) { }
+    public virtual void ResetValues() { }
+    public virtual void ApplyUpgrade(Upgrade upgrade) { }
+    public virtual void ApplyModifier(Ability modifier) { }
 
     public virtual void Pressed()
     {
@@ -64,9 +72,23 @@ public abstract class Ability : MonoBehaviourExtended
         IsPressed = false;
     }
 
-    public virtual void EnemyCollision(Enemy enemy)
+    public void Equip()
     {
+        Equipped = true;
+    }
 
+    public void Unequip()
+    {
+        Equipped = false;
+        IsModifier = false;
+
+        for (int i = 0; i < Modifiers.Length; i++)
+        {
+            var modifier = Modifiers[i];
+            if (modifier == null) continue;
+            modifier.Unequip();
+            Modifiers[i] = null;
+        }
     }
 
     #region COOLDOWN

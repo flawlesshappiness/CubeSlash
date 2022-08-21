@@ -19,36 +19,40 @@ public class GameController : MonoBehaviour
 
     public System.Action OnNextLevel { get; set; }
 
+    public const string TAG_ABILITY_VIEW = "Ability";
+
     private void Awake()
     {
         Instance = this;
         InitializePlayer();
         InitializeData();
         InitializeController();
-        ViewController.Instance.ShowView<StartView>();
+        ViewController.Instance.ShowView<StartView>(0);
 
         PauseLock.OnLockChanged += OnPauseChanged;
 
-        ConsoleController.Instance.RegisterCommand("UnlockAllAbilities", Player.Instance.UnlockAllAbilities);
+        ConsoleController.Instance.RegisterCommand("UnlockAllAbilities", AbilityController.Instance.UnlockAllAbilities);
         ConsoleController.Instance.RegisterCommand("Kill", EnemyController.Instance.KillActiveEnemies);
         ConsoleController.Instance.RegisterCommand("LevelUp", CheatLevelUp);
         ConsoleController.Instance.RegisterCommand("AbilityPoints", CheatAbilityPoints);
-        ConsoleController.Instance.RegisterCommand("NextLevel", NextLevel);
+        ConsoleController.Instance.RegisterCommand("NextLevel", () => SetLevel(LevelIndex + 1));
         ConsoleController.Instance.RegisterCommand("GainAbility", OnPlayerGainAbility);
         ConsoleController.Instance.RegisterCommand("Equipment", CheatOpenEquipment);
         ConsoleController.Instance.RegisterCommand("ToggleDamage", () => DAMAGE_DISABLED = !DAMAGE_DISABLED);
         ConsoleController.Instance.RegisterCommand("Suicide", () => Player.Instance.Kill());
-        ConsoleController.Instance.onToggle += toggle =>
+        ConsoleController.Instance.onToggle += OnToggleConsole;
+    }
+
+    private void OnToggleConsole(bool toggle)
+    {
+        if (toggle)
         {
-            if (toggle)
-            {
-                PauseLock.AddLock("Console");
-            }
-            else
-            {
-                PauseLock.RemoveLock("Console");
-            }
-        };
+            PauseLock.AddLock("Console");
+        }
+        else
+        {
+            PauseLock.RemoveLock("Console");
+        }
     }
 
     private void InitializePlayer()
@@ -73,12 +77,6 @@ public class GameController : MonoBehaviour
         Singleton.EnsureExistence<ItemController>();
         Singleton.EnsureExistence<PlayerInputController>();
         Singleton.EnsureExistence<BackgroundController>();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        LevelUpdate();
     }
 
     private void OnPauseChanged(bool paused)
@@ -116,30 +114,57 @@ public class GameController : MonoBehaviour
     public void StartGame()
     {
         IsGameStarted = true;
-        Player.Instance.gameObject.SetActive(true);
         Player.Instance.Experience.Value = 0;
         Player.Instance.Health.Value = Player.Instance.Health.Max;
-        Player.Instance.InitializeAbilities();
+        Player.Instance.ReapplyAbilities();
 
-        LevelIndex = 0;
-        time_level = Time.time + Level.Current.duration;
-        ViewController.Instance.ShowView<GameView>();
+        PauseLevel();
+        var view_unlock = ViewController.Instance.ShowView<UnlockAbilityView>(0);
+        view_unlock.OnAbilitySelected += () =>
+        {
+            var view_ability = ViewController.Instance.ShowView<AbilityView>(0);
+            view_ability.OnContinue += () =>
+            {
+                ViewController.Instance.ShowView<GameView>(1);
+                Player.Instance.gameObject.SetActive(true);
+                SetLevel(0);
+                ResumeLevel();
+            };
+        };
     }
 
-    private float time_level;
-    private void LevelUpdate()
+    private void PauseLevel()
     {
-        if (!IsGameStarted) return;
-        if (Time.time < time_level) return;
-        NextLevel();
+        PauseLock.AddLock(nameof(GameController));
     }
 
-    private void NextLevel()
+    private void ResumeLevel()
     {
-        Level.Completed();
-        time_level = Time.time + Level.Current.duration;
-        print("Next level " + LevelIndex);
-        OnNextLevel?.Invoke();
+        PauseLock.RemoveLock(nameof(GameController));
+        Player.Instance.ReapplyAbilities();
+        OnResume?.Invoke();
+    }
+
+    private Coroutine _cr_next_level;
+    private IEnumerator NextLevelCr()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(Level.Current.duration);
+            Level.Completed();
+            OnNextLevel?.Invoke();
+        }
+    }
+
+    private void SetLevel(int idx)
+    {
+        if(_cr_next_level != null)
+        {
+            StopCoroutine(_cr_next_level);
+        }
+
+        LevelIndex = idx;
+        _cr_next_level = StartCoroutine(NextLevelCr());
     }
 
     private void OnPlayerLevelUp()
@@ -169,8 +194,8 @@ public class GameController : MonoBehaviour
         IEnumerator Cr()
         {
             yield return LerpTimeScale(1f, 0f);
-            PauseLock.AddLock(nameof(GameController));
-            var view = ViewController.Instance.ShowView<UnlockUpgradeView>(0, "Unlock");
+            PauseLevel();
+            var view = ViewController.Instance.ShowView<UnlockUpgradeView>(0, TAG_ABILITY_VIEW);
             view.OnUpgradeSelected += () =>
             {
                 ResumeLevel();
@@ -184,16 +209,17 @@ public class GameController : MonoBehaviour
         IEnumerator Cr()
         {
             yield return LerpTimeScale(1f, 0f);
-            PauseLock.AddLock(nameof(GameController));
-            var view = ViewController.Instance.ShowView<UnlockAbilityView>(0, "Unlock");
+            PauseLevel();
+            var view_unlock = ViewController.Instance.ShowView<UnlockAbilityView>(0, TAG_ABILITY_VIEW);
+            view_unlock.OnAbilitySelected += () =>
+            {
+                var view_ability = ViewController.Instance.ShowView<AbilityView>(0, TAG_ABILITY_VIEW);
+                view_ability.OnContinue += () =>
+                {
+                    ResumeLevel();
+                };
+            };
         }
-    }
-
-    public void ResumeLevel()
-    {
-        PauseLock.RemoveLock(nameof(GameController));
-        Player.Instance.InitializeAbilities();
-        OnResume?.Invoke();
     }
 
     private void OnPlayerDeath()
@@ -228,6 +254,6 @@ public class GameController : MonoBehaviour
     private void CheatOpenEquipment()
     {
         SetTimeScale(0);
-        ViewController.Instance.ShowView<AbilityView>(tag: "Unlock");
+        ViewController.Instance.ShowView<AbilityView>(0, TAG_ABILITY_VIEW);
     }
 }

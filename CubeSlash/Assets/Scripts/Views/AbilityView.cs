@@ -18,6 +18,8 @@ public class AbilityView : View
     private List<UIAbilitySlot> slots = new List<UIAbilitySlot>();
     public List<UIAbilityEquipment> equipments = new List<UIAbilityEquipment>();
 
+    public event System.Action OnContinue;
+
     private void Start()
     {
         // Buttons
@@ -39,7 +41,6 @@ public class AbilityView : View
         GameController.Instance.PauseLock.AddLock(nameof(AbilityView));
 
         var input = PlayerInput.Controls.Player;
-        input.West.performed += PressUnequip;
         input.Menu.performed += PressStart;
     }
 
@@ -48,7 +49,6 @@ public class AbilityView : View
         GameController.Instance.PauseLock.RemoveLock(nameof(AbilityView));
 
         var input = PlayerInput.Controls.Player;
-        input.West.performed -= PressUnequip;
         input.Menu.performed -= PressStart;
     }
 
@@ -60,7 +60,7 @@ public class AbilityView : View
 
         // Unlocked slots
         template_slot_unlocked.gameObject.SetActive(false);
-        foreach(var ability in Player.Instance.AbilitiesUnlocked)
+        foreach(var ability in AbilityController.Instance.GetUnlockedAbilities())
         {
             var slot = Instantiate(template_slot_unlocked, template_slot_unlocked.transform.parent);
             slot.gameObject.SetActive(true);
@@ -81,12 +81,12 @@ public class AbilityView : View
         }
         UpdateEquipment();
 
-        EventSystemController.Instance.EventSystem.SetSelectedGameObject(slots_unlocked[0].Button.gameObject);
+        EventSystemController.Instance.EventSystem.SetSelectedGameObject(equipments[0].Slot.Button.gameObject);
     }
 
     private void InitializeEquipmentSlot(UIAbilityEquipment equipment)
     {
-        var ability = Player.Instance.AbilitiesEquipped[Player.Instance.AbilityInputToIndex(equipment.type_button)];
+        var ability = AbilityController.Instance.GetEquippedAbility(equipment.type_button);
         equipment.gameObject.SetActive(true);
         equipment.Initialize(ability);
 
@@ -120,7 +120,8 @@ public class AbilityView : View
         }
 
         var any_wrong = slots.Any(slot => slot.IsWrong);
-        btn_continue.interactable = !any_wrong && !IsMovingAbility();
+        var any_filled = equipments.Any(e => e.Slot.Ability != null);
+        btn_continue.interactable = !any_wrong && any_filled && !IsMovingAbility();
     }
 
     private void ClickSlot(UIAbilitySlot slot)
@@ -156,18 +157,14 @@ public class AbilityView : View
     private void UpdatePlayer()
     {
         // Unequip abilities
-        for (int i = 0; i < ConstVars.COUNT_ABILITY_BUTTONS; i++)
-        {
-            Player.Instance.UnequipAbility(i);
-        }
+        AbilityController.Instance.UnequipAllAbilities();
 
         // Equip abilities
         foreach(var equipment in equipments)
         {
             if (equipment.Slot.Ability == null) continue;
 
-            var idx = Player.Instance.AbilityInputToIndex(equipment.type_button);
-            Player.Instance.EquipAbility(equipment.Slot.Ability, idx);
+            AbilityController.Instance.EquipAbility(equipment.Slot.Ability, equipment.type_button);
 
             for (int i = 0; i < equipment.ModifierSlots.Count; i++)
             {
@@ -183,7 +180,7 @@ public class AbilityView : View
     {
         UpdatePlayer();
         Close(0);
-        GameController.Instance.ResumeLevel();
+        OnContinue?.Invoke();
     }
     #endregion
     #region DISPLAY
@@ -227,28 +224,12 @@ public class AbilityView : View
         layout_input.AddInput(PlayerInput.UIButtonType.WEST, "Unequip");
     }
 
-    private void PressUnequip(InputAction.CallbackContext context)
-    {
-        Unequip();
-    }
-
-    private void Unequip()
-    {
-        var selected = EventSystemController.Instance.EventSystem.currentSelectedGameObject;
-        var ability_select = selected == null ? null : selected.GetComponentInParent<UIAbilitySelect>();
-        if(ability_select != null)
-        {
-            ability_select.Unequip();
-        }
-    }
-
     private void PressStart(InputAction.CallbackContext context)
     {
-        var selected = EventSystemController.Instance.EventSystem.currentSelectedGameObject;
-        var ability_select = selected == null ? null : selected.GetComponentInParent<UIAbilitySelect>();
-        if (ability_select != null)
-            ability_select.Cancel();
-        EventSystemController.Instance.EventSystem.SetSelectedGameObject(btn_continue.gameObject);
+        if (btn_continue.interactable)
+        {
+            EventSystemController.Instance.EventSystem.SetSelectedGameObject(btn_continue.gameObject);
+        }
     }
     #endregion
 }

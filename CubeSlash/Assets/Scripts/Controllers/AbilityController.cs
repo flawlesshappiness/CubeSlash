@@ -6,14 +6,90 @@ public class AbilityController : Singleton
 {
     public static AbilityController Instance { get { return Instance<AbilityController>(); } }
 
+    private AbilityDatabase Database { get; set; }
+    private List<Ability> abilities = new List<Ability>();
+    private Dictionary<PlayerInput.ButtonType, Ability> equipment = new Dictionary<PlayerInput.ButtonType, Ability>();
+
+    protected override void Initialize()
+    {
+        base.Initialize();
+        Database = Resources.Load<AbilityDatabase>("Databases/" + nameof(AbilityDatabase));
+        Clear();
+    }
+
+    private void InitializeEquipment()
+    {
+        equipment.Clear();
+        equipment.Add(PlayerInput.ButtonType.NORTH, null);
+        equipment.Add(PlayerInput.ButtonType.EAST, null);
+        equipment.Add(PlayerInput.ButtonType.SOUTH, null);
+        equipment.Add(PlayerInput.ButtonType.WEST, null);
+    }
+
+    public void Clear()
+    {
+        abilities.Clear();
+        InitializeEquipment();
+    }
+
+    #region UNLOCK
     public bool CanUnlockAbility() => GetUnlockableAbilities().Count > 0;
     public List<Ability> GetUnlockableAbilities()
     {
-        var unlocked_types = Player.Instance.AbilitiesUnlocked.Select(ability => ability.type).ToList();
-        var abilities =
-            System.Enum.GetValues(typeof(Ability.Type)).Cast<Ability.Type>()
+        var unlocked_types = abilities.Select(ability => ability.type).ToList();
+        return System.Enum.GetValues(typeof(Ability.Type)).Cast<Ability.Type>()
             .Where(type => !unlocked_types.Contains(type))
             .Select(type => Ability.GetPrefab(type)).ToList();
-        return abilities;
     }
+
+    public List<Ability> GetUnlockedAbilities() => abilities.ToList();
+    public bool IsAbilityUnlocked(Ability.Type type) => abilities.Any(a => a.type == type);
+    public Ability UnlockAbility(Ability.Type type)
+    {
+        var prefab = Ability.GetPrefab(type);
+        var ability = Instantiate(prefab.gameObject).GetComponent<Ability>();
+        if (ability)
+        {
+            abilities.Add(ability);
+            Player.Instance.AttachAbility(ability);
+            ability.InitializeFirstTime();
+        }
+        return ability;
+    }
+
+    public void UnlockAllAbilities()
+    {
+        System.Enum.GetValues(typeof(Ability.Type)).Cast<Ability.Type>().ToArray()
+            .Where(type => !IsAbilityUnlocked(type))
+            .ToList().ForEach(type => UnlockAbility(type));
+    }
+    #endregion
+    #region EQUIP
+    public void EquipAbility(Ability ability, PlayerInput.ButtonType button)
+    {
+        UnequipAbility(button);
+        equipment[button] = ability;
+        ability.Equip();
+    }
+
+    public Ability GetEquippedAbility(PlayerInput.ButtonType type) => equipment[type];
+    public List<Ability> GetEquippedAbilities() => equipment.Values.Where(a => a != null).ToList();
+    #endregion
+    #region UNEQUIP
+    public void UnequipAbility(PlayerInput.ButtonType button)
+    {
+        var ability = equipment[button];
+        if (ability == null) return;
+        ability.Unequip();
+        equipment[button] = null;
+    }
+
+    public void UnequipAllAbilities()
+    {
+        equipment.Keys.ToList().ForEach(button =>
+        {
+            UnequipAbility(button);
+        });
+    }
+    #endregion
 }

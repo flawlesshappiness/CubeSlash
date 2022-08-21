@@ -8,8 +8,21 @@ public class UIAbilityCooldownLayout : MonoBehaviour
 
     private Dictionary<PlayerInput.ButtonType, UIAbilityCooldown> cooldowns = new Dictionary<PlayerInput.ButtonType, UIAbilityCooldown>();
 
+    private bool initialized;
+
     private void Start()
     {
+        if (!initialized)
+        {
+            UpdateAbilities();
+        }
+    }
+
+    private void Initialize()
+    {
+        if (initialized) return;
+        initialized = true;
+
         // Create ui elements
         for (int i = 0; i < 9; i++)
         {
@@ -32,9 +45,6 @@ public class UIAbilityCooldownLayout : MonoBehaviour
             }
         }
         prefab_cooldown.gameObject.SetActive(false);
-
-        // Attach abilities
-        UpdateAbilities();
     }
 
     private void OnEnable()
@@ -49,6 +59,7 @@ public class UIAbilityCooldownLayout : MonoBehaviour
 
     private void UpdateAbilities()
     {
+        Initialize();
         UpdateAbility(PlayerInput.ButtonType.NORTH);
         UpdateAbility(PlayerInput.ButtonType.EAST);
         UpdateAbility(PlayerInput.ButtonType.SOUTH);
@@ -58,7 +69,7 @@ public class UIAbilityCooldownLayout : MonoBehaviour
     private  void UpdateAbility(PlayerInput.ButtonType type)
     {
         var cd = cooldowns[type];
-        var a = Player.Instance.GetEquippedAbility(type);
+        var a = AbilityController.Instance.GetEquippedAbility(type);
         cd.SetAbility(a);
     }
 }

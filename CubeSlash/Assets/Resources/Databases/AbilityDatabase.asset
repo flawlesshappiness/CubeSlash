@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 789436ae5ee4df140a06ac3beea4e6c4, type: 3}
+  m_Name: AbilityDatabase
+  m_EditorClassIdentifier: 
+  abilities:
+  - {fileID: -6285604109607061310, guid: 429b866104c523145aac2bb04c9b3b25, type: 3}
+  - {fileID: 2597603420062549882, guid: 4c7feeaa5614f444ab4b36be5a97af2c, type: 3}
+  - {fileID: 3496842684735880008, guid: 59ec788fb56ca6d41853f8279a9e0521, type: 3}

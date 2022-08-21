@@ -30,7 +30,7 @@ public class Character : MonoBehaviourExtended
                     dud.transform.localPosition = Vector3.zero;
                     dud.transform.localRotation = Quaternion.identity;
                     dud.Initialize();
-                    dud.OnKilled += () => OnDudKilled(dud);
+                    dud.OnKilled += () => OnDudKilled?.Invoke(dud);
                     health_duds.Add(dud);
                 }
             }

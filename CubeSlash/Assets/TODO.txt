@@ -1,6 +1,9 @@
 TODO:
 Add roar direction when spawning boss
 Trail only on dash
+Preview when holding ability button
+Ability upgrade trees should not do the same thing twice
+knockback enemies on level up
 
 WORKING ON:
 

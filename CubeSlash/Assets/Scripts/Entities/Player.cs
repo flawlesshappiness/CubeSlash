@@ -23,42 +23,29 @@ public class Player : MonoBehaviourExtended
     public MultiLock DragLock { get; set; } = new MultiLock();
     public Vector3 MoveDirection { get; set; }
     public float DistanceCollect { get; private set; } = 3f;
-
-    public const float SPEED_MOVE = 5;
+    public float SpeedMove { get; private set; } = 5;
 
     public System.Action onLevelUp;
     public System.Action onDeath;
 
-    public Ability[] AbilitiesEquipped { get; private set; }
-    public List<Ability> AbilitiesUnlocked { get; private set; } = new List<Ability>();
     public Ability AbilityQueued { get; private set; }
-
-    private PlayerInput.ButtonType[] ability_input_map = new PlayerInput.ButtonType[]
-    {
-        PlayerInput.ButtonType.SOUTH,
-        PlayerInput.ButtonType.EAST,
-        PlayerInput.ButtonType.WEST,
-        PlayerInput.ButtonType.NORTH,
-    };
 
     public void Initialize()
     {
+        // Health
         Health.Min = 0;
         Health.Max = 6;
         Health.Value = Health.Max;
         Health.onMin += OnDeath;
 
+        // Experience
         Experience.Min = 0;
         Experience.Max = settings.experience_min;
         Experience.Value = Experience.Min;
         Experience.onMax += OnLevelUp;
 
-        AbilitiesEquipped = new Ability[ConstVars.COUNT_ABILITY_BUTTONS];
-        var dash = UnlockAbility(Ability.Type.DASH);
-        EquipAbility(dash, 2);
-
+        // Character
         Character.Initialize();
-
         MoveDirection = transform.up;
     }
 
@@ -80,74 +67,19 @@ public class Player : MonoBehaviourExtended
         QueuedAbilityUpdate();
     }
     #region ABILITIES
-    public void InitializeAbilities()
+    public void AttachAbility(Ability ability)
     {
-        foreach (var ability in AbilitiesEquipped.Where(a => a != null))
-        {
-            ability.InitializeActive();
-        }
+        ability.transform.parent = transform;
+        ability.transform.position = transform.position;
+        ability.transform.rotation = transform.rotation;
+        ability.Player = this;
     }
 
-    public void EquipAbility(Ability ability, PlayerInput.ButtonType type) => EquipAbility(ability, AbilityInputToIndex(type));
-    public void EquipAbility(Ability ability, int idx)
+    public void ReapplyAbilities()
     {
-        // Unequip previous
-        UnequipAbility(idx);
-
-        // Equip next
-        AbilitiesEquipped[idx] = ability;
-        if (ability != null)
+        foreach (var ability in AbilityController.Instance.GetEquippedAbilities())
         {
-            ability.Equipped = true;
-        }
-    }
-
-    public void UnequipAbility(PlayerInput.ButtonType type) => UnequipAbility(AbilityInputToIndex(type));
-    public void UnequipAbility(int idx)
-    {
-        var ability = AbilitiesEquipped[idx];
-        if (ability)
-        {
-            ability.Equipped = false;
-            AbilitiesEquipped[idx] = null;
-
-            for (int i = 0; i < ability.Modifiers.Length; i++)
-            {
-                var modifier = ability.Modifiers[i];
-                if (modifier)
-                {
-                    ability.Modifiers[i] = null;
-                    modifier.Equipped = false;
-                    modifier.IsModifier = false;
-                }
-            }
-        }
-    }
-
-    public Ability GetEquippedAbility(PlayerInput.ButtonType type) => AbilitiesEquipped[AbilityInputToIndex(type)];
-    
-    public Ability UnlockAbility(Ability.Type type)
-    {
-        var prefab = Ability.GetPrefab(type);
-        var ability = Instantiate(prefab.gameObject).GetComponent<Ability>();
-        if (ability)
-        {
-            AbilitiesUnlocked.Add(ability);
-            ability.transform.parent = transform;
-            ability.transform.position = transform.position;
-            ability.transform.rotation = transform.rotation;
-            ability.Player = this;
-            ability.InitializeFirstTime();
-        }
-        return ability;
-    }
-
-    public void UnlockAllAbilities()
-    {
-        var types = System.Enum.GetValues(typeof(Ability.Type)).Cast<Ability.Type>().ToArray();
-        foreach (var type in types)
-        {
-            UnlockAbility(type);
+            ability.ApplyActive();
         }
     }
 
@@ -159,43 +91,37 @@ public class Player : MonoBehaviourExtended
         return not_blocking && not_cooldown && not_paused;
     }
 
-    private void PressAbility(PlayerInput.ButtonType type) => PressAbility(AbilityInputToIndex(type));
-    private void PressAbility(int idx)
+    private void PressAbility(PlayerInput.ButtonType button)
     {
         if (InputLock.IsLocked) return;
-        var ability = AbilitiesEquipped[idx];
+        var ability = AbilityController.Instance.GetEquippedAbility(button);
+        if (ability == null) return;
 
-        if (ability)
+        if (CanUseAbility(ability))
         {
-            if (CanUseAbility(ability))
-            {
-                ability.Pressed();
-                AbilityQueued = null;
-            }
-            else if (ability.TimeCooldownLeft < 0.5f)
-            {
-                AbilityQueued = ability;
-            }
+            ability.Pressed();
+            AbilityQueued = null;
+        }
+        else if (ability.TimeCooldownLeft < 0.5f)
+        {
+            AbilityQueued = ability;
         }
     }
 
-    private void ReleaseAbility(PlayerInput.ButtonType type) => ReleaseAbility(AbilityInputToIndex(type));
-    private void ReleaseAbility(int idx)
+    private void ReleaseAbility(PlayerInput.ButtonType button)
     {
         if (InputLock.IsLocked) return;
+        var ability = AbilityController.Instance.GetEquippedAbility(button);
+        if (ability == null) return;
 
-        var ability = AbilitiesEquipped[idx];
-        if (ability)
+        if (ability.IsPressed)
         {
-            if (ability.IsPressed)
-            {
-                ability.Released();
-            }
+            ability.Released();
+        }
 
-            if (AbilityQueued == ability)
-            {
-                AbilityQueued = null;
-            }
+        if (AbilityQueued == ability)
+        {
+            AbilityQueued = null;
         }
     }
 
@@ -209,11 +135,6 @@ public class Player : MonoBehaviourExtended
                 AbilityQueued = null;
             }
         }
-    }
-
-    public int AbilityInputToIndex(PlayerInput.ButtonType type)
-    {
-        return ability_input_map.ToList().IndexOf(type);
     }
     #endregion
     #region MOVE
@@ -234,7 +155,7 @@ public class Player : MonoBehaviourExtended
 
     private void Move(Vector3 direction)
     {
-        Rigidbody.velocity = direction * SPEED_MOVE;
+        Rigidbody.velocity = direction * SpeedMove;
         Character.SetLookDirection(direction);
     }
     #endregion
@@ -242,16 +163,8 @@ public class Player : MonoBehaviourExtended
     private void OnTriggerEnter2D(Collider2D collision)
     {
         var enemy = collision.gameObject.GetComponentInParent<Enemy>();
-        if (enemy)
-        {
-            foreach (var ability in AbilitiesEquipped)
-            {
-                if (!ability) continue;
-                ability.EnemyCollision(enemy);
-            }
-
-            Damage(1, enemy.transform.position);
-        }
+        if (enemy == null) return;
+        Damage(1, enemy.transform.position);
     }
     #endregion
     #region HEALTH

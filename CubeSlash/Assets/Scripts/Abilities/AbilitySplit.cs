@@ -20,9 +20,9 @@ public class AbilitySplit : Ability
         base.InitializeFirstTime();
     }
 
-    public override void InitializeValues()
+    public override void ResetValues()
     {
-        base.InitializeValues();
+        base.ResetValues();
         CooldownTime = 0.5f;
         CountProjectiles = 3;
         SpeedProjectile = 25;
@@ -31,9 +31,9 @@ public class AbilitySplit : Ability
         Bursts = 1;
     }
 
-    public override void InitializeUpgrade(Upgrade upgrade)
+    public override void ApplyUpgrade(Upgrade upgrade)
     {
-        base.InitializeUpgrade(upgrade);
+        base.ApplyUpgrade(upgrade);
 
         if (upgrade.data.type == UpgradeData.Type.SPLIT_RATE)
         {
@@ -79,9 +79,9 @@ public class AbilitySplit : Ability
         }
     }
 
-    public override void InitializeModifier(Ability modifier)
+    public override void ApplyModifier(Ability modifier)
     {
-        base.InitializeModifier(modifier);
+        base.ApplyModifier(modifier);
 
         CooldownTime = modifier.type switch
         {

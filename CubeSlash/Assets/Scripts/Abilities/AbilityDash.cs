@@ -39,9 +39,9 @@ public class AbilityDash : Ability
         trail.gameObject.SetActive(false);
     }
 
-    public override void InitializeValues()
+    public override void ResetValues()
     {
-        base.InitializeValues();
+        base.ResetValues();
         CooldownTime = 0.5f;
         Speed = 30f;
         Distance = 5f;
@@ -55,23 +55,22 @@ public class AbilityDash : Ability
         InitializeBody();
     }
 
-    public override void InitializeUpgrade(Upgrade upgrade)
+    public override void ApplyUpgrade(Upgrade upgrade)
     {
-        base.InitializeUpgrade(upgrade);
+        base.ApplyUpgrade(upgrade);
 
         if(upgrade.data.type == UpgradeData.Type.DASH_DISTANCE)
         {
             if(upgrade.level >= 1)
             {
-                CooldownTime += 0.1f;
-                Distance += 1f;
+                CooldownTime += 0.3f;
                 Piercing += 2;
             }
 
             if(upgrade.level >= 2)
             {
-                CooldownTime += 0.1f;
-                Distance += 1f;
+                CooldownTime += 0.3f;
+                Distance += 2f;
                 Piercing += 4;
             }
 
@@ -85,21 +84,22 @@ public class AbilityDash : Ability
         {
             if (upgrade.level >= 1)
             {
-                Speed += 2.0f;
+                Speed += 3.0f;
             }
 
             if (upgrade.level >= 2)
             {
-                Speed += 2.0f;
+                Speed += 3.0f;
+                Distance += 2f;
             }
 
             HasTrail = upgrade.level >= 3;
         }
     }
 
-    public override void InitializeModifier(Ability modifier)
+    public override void ApplyModifier(Ability modifier)
     {
-        base.InitializeModifier(modifier);
+        base.ApplyModifier(modifier);
 
         CooldownTime = modifier.type switch
         {
@@ -232,7 +232,7 @@ public class AbilityDash : Ability
             UpdateTrail();
             yield return new WaitForFixedUpdate();
         }
-        Player.Rigidbody.velocity = velocity.normalized * Player.SPEED_MOVE;
+        Player.Rigidbody.velocity = velocity.normalized * Player.SpeedMove;
         UpdateBody(1);
         UpdateTrail();
 

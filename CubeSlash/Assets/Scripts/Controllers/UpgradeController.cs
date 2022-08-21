@@ -42,9 +42,7 @@ public class UpgradeController : Singleton
     public List<Upgrade> GetUnlockableUpgrades()
     {
         return Database.upgrades
-            .Where(u => !u.require_ability || Player.Instance.AbilitiesEquipped
-                .Where(a => a != null)
-                .Any(a => u.type_ability_required == a.type))
+            .Where(u => !u.require_ability || AbilityController.Instance.GetEquippedAbilities().Any(a => u.type_ability_required == a.type))
             .Select(u => GetUpgrade(u.type))
             .Where(u => !u.IsMaxLevel)
             .ToList();

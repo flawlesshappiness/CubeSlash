@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed170f98ca580f243b98b5b4d9a80757, type: 3}
   m_Name: Level 1 (Ocean)
   m_EditorClassIdentifier: 
-  duration: 20
+  duration: 30
   frequency_spawn_enemy: 1.5
   count_enemy_active: 15
   enemies:

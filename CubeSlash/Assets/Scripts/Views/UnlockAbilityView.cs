@@ -30,6 +30,8 @@ public class UnlockAbilityView : View
             btn.Button.onClick.AddListener(() => Click(btn, ability));
         }
 
+        EventSystemController.Instance.SetDefaultSelection(btns_ability[0].Button.gameObject);
+
         void OnSelected(bool selected, Ability ability)
         {
             if (selected)
@@ -40,6 +42,7 @@ public class UnlockAbilityView : View
 
         void Click(UIIconButton btn, Ability ability)
         {
+            AbilityController.Instance.UnlockAbility(ability.type);
             OnAbilitySelected?.Invoke();
             Close(0);
         }
