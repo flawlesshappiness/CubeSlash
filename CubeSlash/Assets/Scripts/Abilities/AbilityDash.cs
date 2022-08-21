@@ -18,7 +18,7 @@ public class AbilityDash : Ability
     private int Piercing { get; set; }
 
     // Upgrades
-    private bool HasTrail { get; set; }
+    private bool HasTrailUpgrade { get; set; }
 
     [Header("DASH")]
     [SerializeField] private BoxCollider2D trigger;
@@ -93,7 +93,7 @@ public class AbilityDash : Ability
                 Distance += 2f;
             }
 
-            HasTrail = upgrade.level >= 3;
+            HasTrailUpgrade = upgrade.level >= 3;
         }
     }
 
@@ -184,6 +184,9 @@ public class AbilityDash : Ability
         Player.Instance.MovementLock.AddLock(nameof(AbilityDash));
         Player.Instance.DragLock.AddLock(nameof(AbilityDash));
         Player.Instance.InvincibilityLock.AddLock(nameof(AbilityDash));
+
+        var ps_trail = Instantiate(Resources.Load<ParticleSystem>("Particles/ps_trail_dash"), Player.Instance.transform);
+        ps_trail.transform.localPosition = Vector3.zero;
 
         // Dash
         var velocity = Direction * Speed;
@@ -294,7 +297,7 @@ public class AbilityDash : Ability
     #region TRAIL
     private void UpdateTrail()
     {
-        if (HasTrail)
+        if (HasTrailUpgrade)
         {
             trail.UpdateTrail();
         }

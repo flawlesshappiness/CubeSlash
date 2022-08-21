@@ -39,14 +39,15 @@ public class AbilityController : Singleton
         var unlocked_types = abilities.Select(ability => ability.type).ToList();
         return System.Enum.GetValues(typeof(Ability.Type)).Cast<Ability.Type>()
             .Where(type => !unlocked_types.Contains(type))
-            .Select(type => Ability.GetPrefab(type)).ToList();
+            .Select(type => Database.GetAbility(type)).ToList();
     }
 
+    public Ability GetAbility(Ability.Type type) => Database.GetAbility(type);
     public List<Ability> GetUnlockedAbilities() => abilities.ToList();
     public bool IsAbilityUnlocked(Ability.Type type) => abilities.Any(a => a.type == type);
     public Ability UnlockAbility(Ability.Type type)
     {
-        var prefab = Ability.GetPrefab(type);
+        var prefab = Database.GetAbility(type);
         var ability = Instantiate(prefab.gameObject).GetComponent<Ability>();
         if (ability)
         {

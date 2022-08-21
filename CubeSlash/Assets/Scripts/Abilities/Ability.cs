@@ -28,16 +28,6 @@ public abstract class Ability : MonoBehaviourExtended
     public bool OnCooldown { get { return Time.time < TimeCooldownEnd; } }
     public float CooldownPercentage { get { return (Time.time - TimeCooldownStart) / (TimeCooldownEnd - TimeCooldownStart); } }
 
-    public static Ability GetPrefab(Type type)
-    {
-        return Resources.Load<Ability>(GetPrefabPath(type));
-    }
-
-    private static string GetPrefabPath(Type type)
-    {
-        return "Prefabs/Abilities/" + type.ToString();
-    }
-
     public void ApplyActive()
     {
         ResetValues();
