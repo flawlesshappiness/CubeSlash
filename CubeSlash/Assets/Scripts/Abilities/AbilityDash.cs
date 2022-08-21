@@ -23,6 +23,7 @@ public class AbilityDash : Ability
     [Header("DASH")]
     [SerializeField] private BoxCollider2D trigger;
     [SerializeField] private TrailDash trail;
+    [SerializeField] private ParticleSystem ps_dash;
     [SerializeField] private AnimationCurve ac_push_enemies;
     public AnimationCurve ac_path_normal;
     public AnimationCurve ac_path_split;
@@ -37,6 +38,7 @@ public class AbilityDash : Ability
         base.InitializeFirstTime();
         trigger.enabled = false;
         trail.gameObject.SetActive(false);
+        SetEffectEnabled(false);
     }
 
     public override void ResetValues()
@@ -185,8 +187,7 @@ public class AbilityDash : Ability
         Player.Instance.DragLock.AddLock(nameof(AbilityDash));
         Player.Instance.InvincibilityLock.AddLock(nameof(AbilityDash));
 
-        var ps_trail = Instantiate(Resources.Load<ParticleSystem>("Particles/ps_trail_dash"), Player.Instance.transform);
-        ps_trail.transform.localPosition = Vector3.zero;
+        SetEffectEnabled(true);
 
         // Dash
         var velocity = Direction * Speed;
@@ -221,6 +222,8 @@ public class AbilityDash : Ability
         trigger.enabled = false;
         Dashing = false;
 
+        SetEffectEnabled(false);
+
         StartCooldown();
     }
 
@@ -242,6 +245,14 @@ public class AbilityDash : Ability
         if (HasModifier(Type.CHARGE))
         {
             HitEnemiesArea(transform.position, 2f);
+        }
+    }
+
+    private void SetEffectEnabled(bool enabled)
+    {
+        foreach (var ps in ps_dash.GetComponentsInChildren<ParticleSystem>())
+        {
+            ps.ModifyEmission(e => e.enabled = enabled);
         }
     }
 

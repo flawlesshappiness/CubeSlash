@@ -69,7 +69,7 @@ public class Player : MonoBehaviourExtended
     #region ABILITIES
     public void AttachAbility(Ability ability)
     {
-        ability.transform.parent = transform;
+        ability.transform.parent = Character.transform;
         ability.transform.position = transform.position;
         ability.transform.rotation = transform.rotation;
         ability.Player = this;

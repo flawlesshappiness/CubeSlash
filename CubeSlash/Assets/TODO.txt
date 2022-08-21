@@ -4,17 +4,4 @@ Preview when holding ability button
 Ability upgrade trees should not do the same thing twice
 knockback enemies on level up
 cooldown layout show when ability is in use
-
-WORKING ON:
-
-COMPLETED:
-Fix split projectile spread
-
-Add trigger size to dash modified by split
-Fix trail on dash modified by split
-Ability cooldown
-Ability cooldown UI
-
-Fixed event system allowing null selected object
-Fixed can start a new level while also entering loadout
-Fixed unlock ability view interactable too early
+dash fucks up if dashing right as invincibility ends
