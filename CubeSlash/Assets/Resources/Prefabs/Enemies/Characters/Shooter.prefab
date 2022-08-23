@@ -128,6 +128,7 @@ MonoBehaviour:
   Collider: {fileID: 1421184977900173726}
   Trigger: {fileID: 5938915428007740160}
   parent_health_duds: {fileID: 0}
+  ps_death: {fileID: 1272193720796475515, guid: 56a4aa63eefd7704981ffb7c14788af0, type: 3}
 --- !u!1 &4750801090880873126
 GameObject:
   m_ObjectHideFlags: 0

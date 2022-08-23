@@ -1,10 +1,9 @@
 TODO:
-Add roar direction when spawning boss
+Ability to refund level if you dont want an upgrade (unlock in meta layer)
+pause menu
+dash piercing isn't working all the time
 Preview when holding ability button
 Ability upgrade trees should not do the same thing twice
-knockback enemies on level up
-cooldown layout show when ability is in use
-Animate move ability in AbilityView
-Make small enemy collision with eachother bigger, but keep trigger the same
-Spawn more enemies
-Ability to refund level if you dont want an upgrade (unlock in meta layer)
+add player upgrades
+Add roar direction when spawning boss
+enemies can't be knocked back due to velocity limit

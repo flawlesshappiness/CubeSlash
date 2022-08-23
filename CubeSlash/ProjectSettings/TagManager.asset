@@ -41,12 +41,18 @@ TagManager:
   - name: Background
     uniqueID: 1520506667
     locked: 0
-  - name: Default
-    uniqueID: 0
+  - name: Particles_Back
+    uniqueID: 346044895
     locked: 0
   - name: Trail
     uniqueID: 827038005
     locked: 0
+  - name: Default
+    uniqueID: 0
+    locked: 0
   - name: Entity
     uniqueID: 1630863459
+    locked: 0
+  - name: Particles_Front
+    uniqueID: 1797311287
     locked: 0

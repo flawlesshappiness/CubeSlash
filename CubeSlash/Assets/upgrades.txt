@@ -1,5 +1,6 @@
 PLAYER
-Movement speed
+Velocity
+Acceleration
 Health
 Health regen
 Spirit health
@@ -13,7 +14,7 @@ Every 100 kill, regain health
 Healing is doubled
 Chance to avoid taking damage
 
-(+SPD) > (+SPD) > Global cooldown reduction
+(+ACC) > (+SPD) > Global cooldown reduction
 (+SHP) > (+HP) > Chance to avoid damage
 (+RANGE) > (+EXP) > Collecting exp gives a speed boost
 

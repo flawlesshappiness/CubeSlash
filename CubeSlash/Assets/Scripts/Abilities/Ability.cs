@@ -26,8 +26,10 @@ public abstract class Ability : MonoBehaviourExtended
     public float TimeCooldownLeft { get { return OnCooldown ? TimeCooldownEnd - Time.time : 0f; } }
     protected float CooldownTime { get; set; }
     public bool OnCooldown { get { return Time.time < TimeCooldownEnd; } }
+    public bool InUse { get; protected set; }
     public float CooldownPercentage { get { return (Time.time - TimeCooldownStart) / (TimeCooldownEnd - TimeCooldownStart); } }
 
+    #region APPLY
     public void ApplyActive()
     {
         ResetValues();
@@ -51,7 +53,8 @@ public abstract class Ability : MonoBehaviourExtended
     public virtual void ResetValues() { }
     public virtual void ApplyUpgrade(Upgrade upgrade) { }
     public virtual void ApplyModifier(Ability modifier) { }
-
+    #endregion
+    #region INPUT
     public virtual void Pressed()
     {
         IsPressed = true;
@@ -61,7 +64,8 @@ public abstract class Ability : MonoBehaviourExtended
     {
         IsPressed = false;
     }
-
+    #endregion
+    #region EQUIP
     public void Equip()
     {
         Equipped = true;
@@ -80,12 +84,13 @@ public abstract class Ability : MonoBehaviourExtended
             Modifiers[i] = null;
         }
     }
-
+    #endregion
     #region COOLDOWN
     public void StartCooldown() => StartCooldown(CooldownTime);
 
     public void StartCooldown(float time)
     {
+        InUse = false;
         TimeCooldownStart = Time.time;
         TimeCooldownEnd = TimeCooldownStart + time;
     }

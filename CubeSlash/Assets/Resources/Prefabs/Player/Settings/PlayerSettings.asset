@@ -12,35 +12,51 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0ac907e883f37b4984c284f642d7aea, type: 3}
   m_Name: PlayerSettings
   m_EditorClassIdentifier: 
+  character: {fileID: 2759864362140732729, guid: f5fbfb80795043b4ca6e62aab876e931, type: 3}
+  linear_acceleration: 20
+  linear_velocity: 5
+  angular_acceleration: 0
+  angular_velocity: 0
+  size: 1
+  mass: 1
   experience_level_max: 20
   experience_min: 15
-  experience_max: 1200
+  experience_max: 1000
   curve_experience:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
       time: 0
       value: 0
-      inSlope: 0.7692308
-      outSlope: 0.7692308
+      inSlope: 0.4
+      outSlope: 0.4
       tangentMode: 34
       weightedMode: 0
       inWeight: 0
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 0.65
-      value: 0.5
-      inSlope: 1.098901
-      outSlope: 1.098901
-      tangentMode: 34
+      time: 0.25
+      value: 0.1
+      inSlope: 0.4295645
+      outSlope: 0.4295645
+      tangentMode: 0
       weightedMode: 0
       inWeight: 0.33333334
-      outWeight: 0.33333334
+      outWeight: 0.12089775
+    - serializedVersion: 3
+      time: 0.8
+      value: 0.5
+      inSlope: 0.97941285
+      outSlope: 0.97941285
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.34550253
     - serializedVersion: 3
       time: 1
       value: 1
-      inSlope: 1.4285713
-      outSlope: 1.4285713
+      inSlope: 2.5000002
+      outSlope: 2.5000002
       tangentMode: 34
       weightedMode: 0
       inWeight: 0.33333334

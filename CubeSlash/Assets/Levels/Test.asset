@@ -14,15 +14,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   duration: 99999
   frequency_spawn_enemy: 0.3
-  count_enemy_active: 500
+  count_enemy_active: 999
   enemies:
-  - name: Weak (500)
+  - name: Weak (50)
     enemy: {fileID: 11400000, guid: cfcae6b5621e50448a5872f62f68b1ba, type: 2}
     chance: 1
-    max: 500
+    max: 50
   bosses:
-  - name: Boss_Host
-    enemy: {fileID: 11400000, guid: 4fe64771ce63226478a6456e661756ff, type: 2}
+  - name: Boss_Shooter
+    enemy: {fileID: 11400000, guid: f1d890245d5d5544c964565e2efdfaca, type: 2}
     chance: 1
     max: 1
   frequency_spawn_experience: 1

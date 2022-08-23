@@ -94,15 +94,10 @@ public class Enemy : MonoBehaviourExtended, IKillable
 
     public void Kill()
     {
-        InstantiateParticle("Particles/ps_burst")
+        Character.ps_death.Duplicate()
             .Position(transform.position)
-            .Destroy(1)
-            .Play();
-
-        InstantiateParticle("Particles/ps_flash")
-            .Position(transform.position)
-            .Scale(Character.transform.localScale * 5)
-            .Destroy(1)
+            .Scale(Vector3.one * Settings.size)
+            .Destroy(10)
             .Play();
 
         // Event

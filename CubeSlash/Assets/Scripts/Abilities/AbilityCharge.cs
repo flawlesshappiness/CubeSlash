@@ -132,6 +132,7 @@ public class AbilityCharge : Ability
         base.Pressed();
         time_charge_start = Time.time;
         time_charge_end = time_charge_start + ChargeTime;
+        InUse = true;
         Charging = true;
         ChargeEnded = false;
         Player.Instance.AbilityLock.AddLock(nameof(AbilityCharge));
@@ -146,6 +147,10 @@ public class AbilityCharge : Ability
         if (IsActive && IsFullyCharged())
         {
             Shoot(Player.MoveDirection, DISTANCE_MAX);
+        }
+        else
+        {
+            InUse = false;
         }
 
         Player.Instance.AbilityLock.RemoveLock(nameof(AbilityCharge));
@@ -184,16 +189,14 @@ public class AbilityCharge : Ability
         {
             foreach(var dir in directions)
             {
-                var hits = Physics2D.CircleCastAll(Player.transform.position, Width * 0.5f, dir, distance);
-                foreach (var hit in hits)
-                {
-                    var killable = hit.collider.GetComponentInParent<IKillable>();
-                    if (killable != null)
+                Physics2D.CircleCastAll(Player.transform.position, Width * 0.5f, dir, distance)
+                    .Select(hit => hit.collider.GetComponentInParent<IKillable>())
+                    .Where(k => k != null && k.CanKill())
+                    .ToList().ForEach(k =>
                     {
-                        count_hits += killable.CanKill() ? 1 : 0;
-                        killable.Kill();
-                    }
-                }
+                        k.Kill();
+                        count_hits++;
+                    });
 
                 StartCoroutine(KnockbackCr());
                 StartVisual(Player.transform.position, Player.transform.position + dir * distance, 20);

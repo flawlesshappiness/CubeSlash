@@ -152,6 +152,8 @@ public class AbilityDash : Ability
             if (Dashing) return;
             StartDashing();
         }
+
+        InUse = true;
     }
 
     
@@ -166,6 +168,10 @@ public class AbilityDash : Ability
             if(charge.IsFullyCharged() && !Dashing)
             {
                 StartDashing();
+            }
+            else
+            {
+                InUse = false;
             }
         }
     }
@@ -197,10 +203,14 @@ public class AbilityDash : Ability
         // End
         if(HitEnemiesArea(Player.transform.position, RadiusDamage) > 0)
         {
-            PushEnemiesInArea(Player.transform.position, RadiusPush);
+            Player.PushEnemiesInArea(Player.transform.position, RadiusPush, ForcePush, ac_push_enemies);
+            InterruptDash();
+            StartCoroutine(KnockbackSelfCr());
         }
-
-        EndDash();
+        else
+        {
+            EndDash();
+        }
     }
 
     private void InterruptDash()
@@ -323,7 +333,7 @@ public class AbilityDash : Ability
         
         var killable = collision.GetComponentInParent<IKillable>();
 
-        PushEnemiesInArea(Player.transform.position, RadiusPush);
+        Player.PushEnemiesInArea(Player.transform.position, RadiusPush, ForcePush, ac_push_enemies);
         var count_hits = HitEnemiesArea(Player.transform.position, RadiusDamage);
 
         pierces_left -= count_hits;
@@ -354,13 +364,8 @@ public class AbilityDash : Ability
         Player.Instance.InvincibilityLock.AddLock(slock);
         Player.Instance.MovementLock.AddLock(slock);
         Player.Instance.DragLock.AddLock(slock);
-        var time_end = Time.time + 0.25f;
         Player.Rigidbody.velocity = Player.MoveDirection * -15f;
-        while (Time.time < time_end)
-        {
-            Player.Rigidbody.velocity = Player.Rigidbody.velocity * 0.995f;
-            yield return null;
-        }
+        yield return new WaitForSeconds(0.25f);
         Player.Instance.InvincibilityLock.RemoveLock(slock);
         Player.Instance.MovementLock.RemoveLock(slock);
         Player.Instance.DragLock.RemoveLock(slock);
@@ -369,36 +374,16 @@ public class AbilityDash : Ability
     private int HitEnemiesArea(Vector3 position, float radius)
     {
         var count = 0;
-        foreach (var hit in Physics2D.OverlapCircleAll(position, radius))
-        {
-            var killable = hit.GetComponentInParent<IKillable>();
-            if(killable != null && killable.CanKill())
+        Physics2D.OverlapCircleAll(position, radius)
+            .Select(hit => hit.GetComponentInParent<IKillable>())
+            .Where(k => k != null && k.CanKill())
+            .ToList().ForEach(k =>
             {
-                killable.Kill();
+                k.Kill();
                 count++;
-            }
-        }
+            });
+
         return count;
-    }
-
-    private void PushEnemiesInArea(Vector3 position, float radius)
-    {
-        var hits = new List<Enemy>();
-        foreach (var hit in Physics2D.OverlapCircleAll(position, radius))
-        {
-            var enemy = hit.GetComponentInParent<Enemy>();
-            if(enemy != null && !hits.Contains(enemy))
-            {
-                hits.Add(enemy);
-                var dir = enemy.transform.position - Player.transform.position;
-                var dist = Vector3.Distance(enemy.transform.position, position);
-                var t_dist = dist / radius;
-
-                var t_force = ac_push_enemies.Evaluate(t_dist);
-                var force = ForcePush * t_force;
-                enemy.Rigidbody.velocity += dir.normalized.ToVector2() * force;
-            }
-        }
     }
     #endregion
     #region CLONE

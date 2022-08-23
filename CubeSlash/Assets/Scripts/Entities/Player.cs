@@ -7,8 +7,8 @@ using UnityEngine;
 public class Player : MonoBehaviourExtended
 {
     public static Player Instance;
-    public PlayerSettings settings;
-    public Character Character { get { return GetComponentOnce<Character>(ComponentSearchType.CHILDREN); } }
+    [SerializeField] private PlayerSettings settings;
+    public Character Character { get; private set; }
     public Rigidbody2D Rigidbody { get { return GetComponentOnce<Rigidbody2D>(ComponentSearchType.CHILDREN); } }
     public MinMaxInt Experience { get; private set; } = new MinMaxInt();
     public MinMaxInt Health { get; private set; } = new MinMaxInt();
@@ -22,13 +22,16 @@ public class Player : MonoBehaviourExtended
     public MultiLock MovementLock { get; set; } = new MultiLock();
     public MultiLock DragLock { get; set; } = new MultiLock();
     public Vector3 MoveDirection { get; set; }
+    public float LinearAcceleration { get; private set; }
+    public float LinearVelocity { get; private set; }
     public float DistanceCollect { get; private set; } = 3f;
     public float SpeedMove { get; private set; } = 5;
+    public Ability AbilityQueued { get; private set; }
 
     public System.Action onLevelUp;
     public System.Action onDeath;
 
-    public Ability AbilityQueued { get; private set; }
+    private ParticleSystem ps_move;
 
     public void Initialize()
     {
@@ -44,9 +47,21 @@ public class Player : MonoBehaviourExtended
         Experience.Value = Experience.Min;
         Experience.onMax += OnLevelUp;
 
+        // Speed
+        LinearAcceleration = settings.linear_acceleration;
+        LinearVelocity = settings.linear_velocity;
+        Rigidbody.mass = settings.mass;
+
         // Character
-        Character.Initialize();
+        SetCharacter(settings.character);
+        Character.transform.localEulerAngles = Vector3.one * settings.size;
         MoveDirection = transform.up;
+
+        // Particles
+        ps_move = Instantiate(Resources.Load<ParticleSystem>("Particles/ps_player_move"));
+        ps_move.transform.parent = Character.transform;
+        ps_move.transform.position = Character.transform.position;
+        ps_move.ModifyEmission(e => e.enabled = false);
     }
 
     private void OnEnable()
@@ -63,9 +78,27 @@ public class Player : MonoBehaviourExtended
 
     private void Update()
     {
-        MoveUpdate();
         QueuedAbilityUpdate();
     }
+
+    private void FixedUpdate()
+    {
+        MoveUpdate();
+        DragUpdate();
+    }
+
+    private void SetCharacter(Character prefab)
+    {
+        if (Character)
+        {
+            Destroy(Character.gameObject);
+            Character = null;
+        }
+
+        Character = Instantiate(prefab.gameObject, transform).GetComponent<Character>();
+        Character.Initialize();
+    }
+
     #region ABILITIES
     public void AttachAbility(Ability ability)
     {
@@ -141,22 +174,30 @@ public class Player : MonoBehaviourExtended
     private void MoveUpdate()
     {
         var dir = PlayerInput.MoveDirection;
-        if (MovementLock.IsFree && InputLock.IsFree && dir.magnitude > 0.5f)
+        if (MovementLock.IsFree && InputLock.IsFree)
         {
-            MoveDirection = dir.normalized;
-            Move(dir.normalized);
-        }
-        else if (DragLock.IsFree)
-        {
-            // Decelerate
-            Rigidbody.velocity = Rigidbody.velocity * 0.7f;
+            if(dir.magnitude > 0.5f)
+            {
+                MoveDirection = dir.normalized;
+                Rigidbody.AddForce(MoveDirection.normalized * LinearAcceleration * Rigidbody.mass);
+                Character.SetLookDirection(MoveDirection);
+                ps_move.ModifyEmission(e => e.enabled = true);
+            }
+            else
+            {
+                float mul_decel = 1f;
+                Rigidbody.AddForce(-Rigidbody.velocity * mul_decel * Rigidbody.mass);
+                ps_move.ModifyEmission(e => e.enabled = false);
+            }
         }
     }
 
-    private void Move(Vector3 direction)
+    private void DragUpdate()
     {
-        Rigidbody.velocity = direction * SpeedMove;
-        Character.SetLookDirection(direction);
+        if (DragLock.IsFree)
+        {
+            Rigidbody.velocity = Vector3.ClampMagnitude(Rigidbody.velocity, LinearVelocity);
+        }
     }
     #endregion
     #region ENEMY
@@ -165,6 +206,26 @@ public class Player : MonoBehaviourExtended
         var enemy = collision.gameObject.GetComponentInParent<Enemy>();
         if (enemy == null) return;
         Damage(1, enemy.transform.position);
+    }
+
+    public void PushEnemiesInArea(Vector3 position, float radius, float force, AnimationCurve curve_force = null)
+    {
+        var hits = new List<Enemy>();
+        foreach (var hit in Physics2D.OverlapCircleAll(position, radius))
+        {
+            var enemy = hit.GetComponentInParent<Enemy>();
+            if (enemy != null && !hits.Contains(enemy))
+            {
+                hits.Add(enemy);
+                var dir = enemy.transform.position - position;
+                var dist = Vector3.Distance(enemy.transform.position, position);
+                var t_dist = dist / radius;
+
+                var t_force = curve_force == null ? 1 : curve_force.Evaluate(t_dist);
+                var calc_force = force * t_force;
+                enemy.Rigidbody.velocity += dir.normalized.ToVector2() * calc_force;
+            }
+        }
     }
     #endregion
     #region HEALTH
@@ -269,10 +330,24 @@ public class Player : MonoBehaviourExtended
     {
         if (!HasLevelledUp)
         {
+            var ps = InstantiateParticle("Particles/ps_level_up")
+                .Parent(transform)
+                .Position(transform.position)
+                .Play()
+                .Destroy(5);
+
+            StartCoroutine(PushCr(0.3f));
+
             HasLevelledUp = true;
             Level++;
             AbilityPoints++;
             onLevelUp?.Invoke();
+        }
+
+        IEnumerator PushCr(float delay)
+        {
+            yield return new WaitForSeconds(delay);
+            PushEnemiesInArea(transform.position, 8, 600);
         }
     }
 

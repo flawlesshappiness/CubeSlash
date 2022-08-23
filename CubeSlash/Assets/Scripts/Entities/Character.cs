@@ -9,6 +9,7 @@ public class Character : MonoBehaviourExtended
     [SerializeField] public CircleCollider2D Collider;
     [SerializeField] public CircleCollider2D Trigger;
     [SerializeField] public Transform parent_health_duds;
+    [SerializeField] public ParticleSystem ps_death;
     private Rigidbody2D Rigidbody { get { return GetComponentOnce<Rigidbody2D>(ComponentSearchType.PARENT); } }
     private Quaternion rotation_look;
     private List<HealthDud> health_duds = new List<HealthDud>();

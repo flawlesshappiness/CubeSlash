@@ -16,12 +16,12 @@ public class CameraController : Singleton
         base.Initialize();
     }
 
-    private void Update()
+    private void LateUpdate()
     {
         if (Target == null) return;
 
         var z = -10;
-        Camera.transform.position = Vector3.Slerp(Camera.transform.position, Target.position.SetZ(z), 5 * Time.deltaTime);
+        Camera.transform.position = Vector3.Lerp(Camera.transform.position, Target.position.SetZ(z), 5 * Time.deltaTime);
     }
 
     public Vector3 GetPositionOutsideCamera()
