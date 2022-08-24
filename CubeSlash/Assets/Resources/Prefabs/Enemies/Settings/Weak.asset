@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c301fa7d26535e4cb7056a730ebca5e, type: 3}
   m_Name: Weak
   m_EditorClassIdentifier: 
-  character: {fileID: 6535444791780287965, guid: 45499daff63c9d64b8e9f610d9bfd8a4, type: 3}
+  body: {fileID: 6535444791780287965, guid: 45499daff63c9d64b8e9f610d9bfd8a4, type: 3}
   linear_acceleration: 9
   linear_velocity: 3
   angular_acceleration: 5

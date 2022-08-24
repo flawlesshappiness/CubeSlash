@@ -4,7 +4,7 @@ using UnityEngine;
 public class CharacterSettings : ScriptableObject
 {
     [Header("CHARACTER")]
-    public Character character;
+    public Body body;
     public float linear_acceleration;
     public float linear_velocity;
     public float angular_acceleration;

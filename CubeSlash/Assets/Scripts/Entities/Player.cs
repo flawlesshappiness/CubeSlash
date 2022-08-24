@@ -1,15 +1,11 @@
-using Flawliz.Console;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
-public class Player : MonoBehaviourExtended
+public class Player : Character
 {
     public static Player Instance;
     [SerializeField] private PlayerSettings settings;
-    public Character Character { get; private set; }
-    public Rigidbody2D Rigidbody { get { return GetComponentOnce<Rigidbody2D>(ComponentSearchType.CHILDREN); } }
     public MinMaxInt Experience { get; private set; } = new MinMaxInt();
     public MinMaxInt Health { get; private set; } = new MinMaxInt();
     public int Level { get; private set; }
@@ -19,11 +15,7 @@ public class Player : MonoBehaviourExtended
     public MultiLock InputLock { get; set; } = new MultiLock();
     public MultiLock InvincibilityLock { get; set; } = new MultiLock();
     public MultiLock AbilityLock { get; set; } = new MultiLock();
-    public MultiLock MovementLock { get; set; } = new MultiLock();
-    public MultiLock DragLock { get; set; } = new MultiLock();
     public Vector3 MoveDirection { get; set; }
-    public float LinearAcceleration { get; private set; }
-    public float LinearVelocity { get; private set; }
     public float DistanceCollect { get; private set; } = 3f;
     public float SpeedMove { get; private set; } = 5;
     public Ability AbilityQueued { get; private set; }
@@ -53,14 +45,14 @@ public class Player : MonoBehaviourExtended
         Rigidbody.mass = settings.mass;
 
         // Character
-        SetCharacter(settings.character);
-        Character.transform.localEulerAngles = Vector3.one * settings.size;
+        SetBody(settings.body);
+        Body.transform.localEulerAngles = Vector3.one * settings.size;
         MoveDirection = transform.up;
 
         // Particles
         ps_move = Instantiate(Resources.Load<ParticleSystem>("Particles/ps_player_move"));
-        ps_move.transform.parent = Character.transform;
-        ps_move.transform.position = Character.transform.position;
+        ps_move.transform.parent = Body.transform;
+        ps_move.transform.position = Body.transform.position;
         ps_move.ModifyEmission(e => e.enabled = false);
     }
 
@@ -76,27 +68,36 @@ public class Player : MonoBehaviourExtended
         PlayerInput.OnAbilityButtonUp -= ReleaseAbility;
     }
 
-    private void Update()
+    protected override void OnUpdate()
     {
+        base.OnUpdate();
         QueuedAbilityUpdate();
     }
 
-    private void FixedUpdate()
+    protected override void OnFixedUpdate()
     {
+        base.OnFixedUpdate();
         MoveUpdate();
-        DragUpdate();
     }
 
-    private void SetCharacter(Character prefab)
+    private void MoveUpdate()
     {
-        if (Character)
+        var dir = PlayerInput.MoveDirection;
+        if (InputLock.IsFree)
         {
-            Destroy(Character.gameObject);
-            Character = null;
+            if (dir.magnitude > 0.5f)
+            {
+                MoveDirection = dir.normalized;
+                Move(MoveDirection);
+                Body.SetLookDirection(MoveDirection);
+                ps_move.ModifyEmission(e => e.enabled = true);
+            }
+            else
+            {
+                MoveToStop();
+                ps_move.ModifyEmission(e => e.enabled = false);
+            }
         }
-
-        Character = Instantiate(prefab.gameObject, transform).GetComponent<Character>();
-        Character.Initialize();
     }
 
     #region ABILITIES
@@ -170,36 +171,6 @@ public class Player : MonoBehaviourExtended
         }
     }
     #endregion
-    #region MOVE
-    private void MoveUpdate()
-    {
-        var dir = PlayerInput.MoveDirection;
-        if (MovementLock.IsFree && InputLock.IsFree)
-        {
-            if(dir.magnitude > 0.5f)
-            {
-                MoveDirection = dir.normalized;
-                Rigidbody.AddForce(MoveDirection.normalized * LinearAcceleration * Rigidbody.mass);
-                Character.SetLookDirection(MoveDirection);
-                ps_move.ModifyEmission(e => e.enabled = true);
-            }
-            else
-            {
-                float mul_decel = 1f;
-                Rigidbody.AddForce(-Rigidbody.velocity * mul_decel * Rigidbody.mass);
-                ps_move.ModifyEmission(e => e.enabled = false);
-            }
-        }
-    }
-
-    private void DragUpdate()
-    {
-        if (DragLock.IsFree)
-        {
-            Rigidbody.velocity = Vector3.ClampMagnitude(Rigidbody.velocity, LinearVelocity);
-        }
-    }
-    #endregion
     #region ENEMY
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -223,7 +194,8 @@ public class Player : MonoBehaviourExtended
 
                 var t_force = curve_force == null ? 1 : curve_force.Evaluate(t_dist);
                 var calc_force = force * t_force;
-                enemy.Rigidbody.velocity += dir.normalized.ToVector2() * calc_force;
+                var dir_knock = dir.normalized.ToVector2() * calc_force;
+                enemy.Knockback(dir_knock, false, true);
             }
         }
     }
@@ -248,7 +220,7 @@ public class Player : MonoBehaviourExtended
 
         InstantiateParticle("Particles/ps_flash")
             .Position(transform.position)
-            .Scale(Character.transform.localScale * 5)
+            .Scale(Body.transform.localScale * 5)
             .Destroy(1)
             .Play();
 
@@ -283,7 +255,7 @@ public class Player : MonoBehaviourExtended
         InvincibilityLock.RemoveLock("Damage");
 
         // Check if still inside an enemy
-        var hits = Physics2D.OverlapCircleAll(transform.position, Character.Trigger.radius);
+        var hits = Physics2D.OverlapCircleAll(transform.position, Body.Trigger.radius);
         foreach (var hit in hits)
         {
             var e = hit.GetComponentInParent<Enemy>();
@@ -300,12 +272,12 @@ public class Player : MonoBehaviourExtended
         var time_end = Time.time + time;
         while (Time.time < time_end)
         {
-            Character.gameObject.SetActive(false);
+            Body.gameObject.SetActive(false);
             yield return new WaitForSeconds(0.1f);
-            Character.gameObject.SetActive(true);
+            Body.gameObject.SetActive(true);
             yield return new WaitForSeconds(0.1f);
         }
-        Character.gameObject.SetActive(true);
+        Body.gameObject.SetActive(true);
     }
 
     private IEnumerator PlayerDamagePushCr(Vector3 dir, float time)
@@ -336,7 +308,7 @@ public class Player : MonoBehaviourExtended
                 .Play()
                 .Destroy(5);
 
-            StartCoroutine(PushCr(0.3f));
+            StartCoroutine(PushCr(0.4f));
 
             HasLevelledUp = true;
             Level++;
@@ -347,7 +319,7 @@ public class Player : MonoBehaviourExtended
         IEnumerator PushCr(float delay)
         {
             yield return new WaitForSeconds(delay);
-            PushEnemiesInArea(transform.position, 8, 600);
+            PushEnemiesInArea(transform.position, 12, 500);
         }
     }
 

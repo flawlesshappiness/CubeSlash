@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0ac907e883f37b4984c284f642d7aea, type: 3}
   m_Name: PlayerSettings
   m_EditorClassIdentifier: 
-  character: {fileID: 2759864362140732729, guid: f5fbfb80795043b4ca6e62aab876e931, type: 3}
+  body: {fileID: 2759864362140732729, guid: f5fbfb80795043b4ca6e62aab876e931, type: 3}
   linear_acceleration: 20
   linear_velocity: 5
   angular_acceleration: 0

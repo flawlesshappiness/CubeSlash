@@ -22,9 +22,9 @@ public class AI_BossShooter : EntityAI
         base.Initialize(enemy);
         ResetSpeed();
 
-        t_eye = Self.Character.GetTransform("eye");
+        t_eye = Self.Body.GetTransform("eye");
 
-        Self.Character.OnDudKilled += dud => ShieldDuds();
+        Self.Body.OnDudKilled += dud => ShieldDuds();
     }
 
     private void ResetSpeed()
@@ -179,9 +179,9 @@ public class AI_BossShooter : EntityAI
         StartCoroutine(Cr());
         IEnumerator Cr()
         {
-            Self.Character.Duds.Where(d => d.IsActive()).ToList().ForEach(d => d.SetArmorActive(true));
+            Self.Body.Duds.Where(d => d.IsActive()).ToList().ForEach(d => d.SetArmorActive(true));
             yield return new WaitForSeconds(5f);
-            Self.Character.Duds.Where(d => d.IsActive()).ToList().ForEach(d => d.SetArmorActive(false));
+            Self.Body.Duds.Where(d => d.IsActive()).ToList().ForEach(d => d.SetArmorActive(false));
         }
     }
 

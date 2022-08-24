@@ -1,9 +1,9 @@
 TODO:
 Ability to refund level if you dont want an upgrade (unlock in meta layer)
 pause menu
-dash piercing isn't working all the time
 Preview when holding ability button
 Ability upgrade trees should not do the same thing twice
 add player upgrades
+rework dash. Kill piercing. Add AOE instead.
 Add roar direction when spawning boss
-enemies can't be knocked back due to velocity limit
+set area size

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c301fa7d26535e4cb7056a730ebca5e, type: 3}
   m_Name: Boss_Shooter
   m_EditorClassIdentifier: 
-  character: {fileID: 6535444791780287965, guid: 85e579033e61c1b46a34e2dccd45913a, type: 3}
+  body: {fileID: 6535444791780287965, guid: 85e579033e61c1b46a34e2dccd45913a, type: 3}
   linear_acceleration: 5
   linear_velocity: 3
   angular_acceleration: 5

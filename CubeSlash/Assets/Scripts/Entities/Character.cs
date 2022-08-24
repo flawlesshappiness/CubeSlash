@@ -1,79 +1,93 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
+using Unity.IO.LowLevel.Unsafe;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
-public class Character : MonoBehaviourExtended
+public abstract class Character : MonoBehaviourExtended
 {
-    public enum Type { CIRCLE, SQUARE }
-    [SerializeField] public CircleCollider2D Collider;
-    [SerializeField] public CircleCollider2D Trigger;
-    [SerializeField] public Transform parent_health_duds;
-    [SerializeField] public ParticleSystem ps_death;
-    private Rigidbody2D Rigidbody { get { return GetComponentOnce<Rigidbody2D>(ComponentSearchType.PARENT); } }
-    private Quaternion rotation_look;
-    private List<HealthDud> health_duds = new List<HealthDud>();
+    public Body Body { get; private set; }
+    public Rigidbody2D Rigidbody { get { return GetComponentOnce<Rigidbody2D>(ComponentSearchType.THIS); } }
+    public MultiLock MovementLock { get; set; } = new MultiLock();
+    public MultiLock DragLock { get; set; } = new MultiLock();
+    public MultiLock StunLock { get; set; } = new MultiLock();
+    public float LinearAcceleration { get; set; }
+    public float LinearVelocity { get; set; }
+    public float AngularAcceleration { get; set; }
+    public float AngularVelocity { get; set; }
 
-    public System.Action<HealthDud> OnDudKilled;
+    private float time_stun;
 
-    public List<HealthDud> Duds { get { return health_duds.ToList(); } }
-
-    public void Initialize()
-    {
-        if(parent_health_duds != null)
-        {
-            foreach(var t in parent_health_duds.GetComponentsInChildren<Transform>())
-            {
-                if(t != parent_health_duds)
-                {
-                    var dud = Instantiate(Resources.Load<HealthDud>("Prefabs/Entities/HealthDud"), t);
-                    dud.transform.SetGlobalScale(t.localScale);
-                    dud.transform.localPosition = Vector3.zero;
-                    dud.transform.localRotation = Quaternion.identity;
-                    dud.Initialize();
-                    dud.OnKilled += () => OnDudKilled?.Invoke(dud);
-                    health_duds.Add(dud);
-                }
-            }
-        }
-    }
-
-    public bool HasActiveHealthDuds() => parent_health_duds != null && health_duds.Any(dud => dud.IsActive());
-
-    public void SetLookDirection(Vector3 direction)
-    {
-        var q = Quaternion.LookRotation(Vector3.forward, direction);
-        rotation_look = q;
-    }
-
+    protected virtual void OnUpdate() { }
     private void Update()
     {
-        transform.rotation = Quaternion.Slerp(transform.rotation, rotation_look, 10 * Time.deltaTime);
-
-        var t_velocity = Mathf.Clamp(Rigidbody.velocity.magnitude / 40, 0, 1);
-        float x_scale = Mathf.Lerp(1f, 0.5f, t_velocity);
-        transform.localScale = Vector3.Slerp(transform.localScale, Vector3.one.SetX(x_scale), 10 * Time.deltaTime);
+        OnUpdate();
     }
 
-    private void OnDrawGizmos()
+    protected virtual void OnFixedUpdate() { }
+    private void FixedUpdate()
     {
-        if(parent_health_duds != null)
+        DragUpdate();
+        OnFixedUpdate();
+    }
+
+    protected void SetBody(Body prefab)
+    {
+        if (Body)
         {
-            foreach (var t in parent_health_duds.GetComponentsInChildren<Transform>())
-            {
-                if (t != parent_health_duds)
-                {
-                    Gizmos.color = Color.yellow;
-                    Gizmos.DrawSphere(t.position, 0.05f);
-                    Gizmos.DrawLine(t.position, t.position + t.up * 0.1f);
-                }
-            }
+            Destroy(Body.gameObject);
+            Body = null;
+        }
+
+        Body = Instantiate(prefab.gameObject, transform).GetComponent<Body>();
+        Body.Initialize();
+    }
+
+    public void Move(Vector3 direction)
+    {
+        if (MovementLock.IsFree && StunLock.IsFree)
+        {
+            Rigidbody.AddForce(direction.normalized * LinearAcceleration * Rigidbody.mass);
         }
     }
 
-    public Transform GetTransform(string name)
+    public void MoveToStop(float mul = 1f)
     {
-        return GetComponentsInChildren<Transform>()
-            .FirstOrDefault(t => t.name == name);
+        if (StunLock.IsFree)
+        {
+            Rigidbody.AddForce(-Rigidbody.velocity * mul * Rigidbody.mass);
+        }
+    }
+
+    private void DragUpdate()
+    {
+        if (StunLock.IsLocked || Time.time < time_stun)
+        {
+            if (Rigidbody.velocity.magnitude > LinearVelocity)
+            {
+                Rigidbody.AddForce(-Rigidbody.velocity.normalized * LinearAcceleration * Rigidbody.mass);
+            }
+            else if(Time.time > time_stun)
+            {
+                StunLock.RemoveLock(nameof(Character));
+            }
+        }
+        else if (DragLock.IsFree)
+        {
+            Rigidbody.velocity = Vector3.ClampMagnitude(Rigidbody.velocity, LinearVelocity);
+            Rigidbody.angularVelocity = Mathf.Clamp(Rigidbody.angularVelocity, -AngularVelocity, AngularVelocity);
+        }
+    }
+
+    public void Knockback(Vector3 direction, bool use_mass = false, bool reset_velocity = false)
+    {
+        Stun();
+        direction *= use_mass ? Rigidbody.mass : 1;
+        if (reset_velocity) Rigidbody.velocity = Vector3.zero;
+        Rigidbody.AddForce(direction);
+    }
+
+    public void Stun(float time = 0.2f)
+    {
+        StunLock.AddLock(nameof(Character));
+        time_stun = Time.time + time;
     }
 }

@@ -3,20 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class Enemy : MonoBehaviourExtended, IKillable
+public class Enemy : Character, IKillable
 {
-    public Rigidbody2D Rigidbody { get { return GetComponentOnce<Rigidbody2D>(ComponentSearchType.CHILDREN); } }
-    public Character Character { get; private set; }
     private EntityAI AI { get; set; }
     public EnemySettings Settings { get; private set; }
-    public Vector3 MoveDirection { get { return Character.transform.up; } }
-    public MultiLock MovementLock { get; private set; } = new MultiLock();
-    public MultiLock DragLock { get; private set; } = new MultiLock();
-
-    public float LinearAcceleration { get; set; }
-    public float LinearVelocity { get; set; }
-    public float AngularAcceleration { get; set; }
-    public float AngularVelocity { get; set; }
+    public Vector3 MoveDirection { get { return Body.transform.up; } }
 
     public event System.Action OnDeath;
 
@@ -25,27 +16,10 @@ public class Enemy : MonoBehaviourExtended, IKillable
         this.Settings = settings;
         transform.localScale = Vector3.one * settings.size;
         Rigidbody.mass = settings.mass;
-        SetCharacter(settings.character);
+        SetBody(settings.body);
         SetAI(settings.ai);
 
         OnDeath = null;
-    }
-
-    private void Update()
-    {
-        DragUpdate();
-    }
-
-    private void SetCharacter(Character prefab)
-    {
-        if (Character)
-        {
-            Destroy(Character.gameObject);
-            Character = null;
-        }
-
-        Character = Instantiate(prefab.gameObject, transform).GetComponent<Character>();
-        Character.Initialize();
     }
 
     public void Reposition()
@@ -68,33 +42,17 @@ public class Enemy : MonoBehaviourExtended, IKillable
         }
     }
 
-    #region MOVEMENT
-    private void DragUpdate()
-    {
-        Rigidbody.velocity = Vector3.ClampMagnitude(Rigidbody.velocity, LinearVelocity);
-        Rigidbody.angularVelocity = Mathf.Clamp(Rigidbody.angularVelocity, -AngularVelocity, AngularVelocity);
-    }
-
-    public void Move(Vector3 direction)
-    {
-        if (MovementLock.IsFree)
-        {
-            Rigidbody.AddForce(direction.normalized * LinearAcceleration * Rigidbody.mass);
-        }
-    }
-
     public void Turn(bool right)
     {
         var angle = right ? -1 : 1;
         Rigidbody.AddTorque(angle * AngularAcceleration * Rigidbody.mass);
     }
-    #endregion
     #region HEALTH
-    public bool CanKill() => !Character.HasActiveHealthDuds();
+    public bool CanKill() => !Body.HasActiveHealthDuds();
 
     public void Kill()
     {
-        Character.ps_death.Duplicate()
+        Body.ps_death.Duplicate()
             .Position(transform.position)
             .Scale(Vector3.one * Settings.size)
             .Destroy(10)

@@ -50,8 +50,8 @@ public class AbilityDash : Ability
         DistanceExtendPerKill = 0;
         RadiusTrigger = 1;
         RadiusDamage = 1.0f;
-        RadiusPush = 10;
-        ForcePush = 400;
+        RadiusPush = 12;
+        ForcePush = 300;
         Piercing = 0;
 
         InitializeBody();
@@ -197,7 +197,7 @@ public class AbilityDash : Ability
 
         // Dash
         var velocity = Direction * Speed;
-        Player.Character.SetLookDirection(Direction);
+        Player.Body.SetLookDirection(Direction);
         yield return MoveCr(velocity);
 
         // End
@@ -260,7 +260,7 @@ public class AbilityDash : Ability
 
     private void SetEffectEnabled(bool enabled)
     {
-        ps_dash.transform.rotation = Player.Character.transform.rotation;
+        ps_dash.transform.rotation = Player.Body.transform.rotation;
         foreach (var ps in ps_dash.GetComponentsInChildren<ParticleSystem>())
         {
             ps.ModifyEmission(e => e.enabled = enabled);
@@ -276,7 +276,7 @@ public class AbilityDash : Ability
             {
                 CreateClone();
                 clone.gameObject.SetActive(false);
-                clone.transform.localPosition = Player.Character.transform.localPosition;
+                clone.transform.localPosition = Player.Body.transform.localPosition;
             }
         }
         else
@@ -291,17 +291,17 @@ public class AbilityDash : Ability
         var tval = curve.Evaluate(t);
         var dir = Player.MoveDirection;
         var right = Vector3.Cross(dir, Vector3.forward).normalized;
-        var pos_prev = Player.Character.transform.localPosition;
+        var pos_prev = Player.Body.transform.localPosition;
         var pos_next = right * tval;
 
-        Player.Character.transform.localPosition = pos_next;
+        Player.Body.transform.localPosition = pos_next;
 
         var dir_delta = pos_next - pos_prev;
-        Player.Character.SetLookDirection(dir + dir_delta);
+        Player.Body.SetLookDirection(dir + dir_delta);
 
-        var ptrigger = Player.Instance.Character.Trigger;
+        var ptrigger = Player.Instance.Body.Trigger;
         trigger.size = new Vector2(Mathf.Clamp(tval.Abs() * 2 + ptrigger.radius * 2, ptrigger.radius, float.MaxValue), ptrigger.radius * 2);
-        trigger.transform.rotation = Player.Instance.Character.transform.rotation;
+        trigger.transform.rotation = Player.Instance.Body.transform.rotation;
 
         if (clone)
         {
@@ -387,10 +387,10 @@ public class AbilityDash : Ability
     }
     #endregion
     #region CLONE
-    private Character clone;
-    private Character CreateClone()
+    private Body clone;
+    private Body CreateClone()
     {
-        clone = Instantiate(Player.Character.gameObject, Player.Character.transform.parent).GetComponent<Character>();
+        clone = Instantiate(Player.Body.gameObject, Player.Body.transform.parent).GetComponent<Body>();
         return clone;
     }
     #endregion

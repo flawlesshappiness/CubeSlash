@@ -24,7 +24,7 @@ public class AI_Shooter : EntityAI
         Self.AngularVelocity = Self.Settings.angular_velocity;
         Self.AngularAcceleration = Self.Settings.angular_acceleration;
 
-        t_eye = Self.Character.GetTransform("eye");
+        t_eye = Self.Body.GetTransform("eye");
     }
 
     private void FixedUpdate()

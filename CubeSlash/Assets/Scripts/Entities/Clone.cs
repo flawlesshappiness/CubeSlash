@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Clone : MonoBehaviourExtended
 {
-    public Character Character { get; set; }
+    public Body Character { get; set; }
     public Rigidbody2D Rigidbody { get { return GetComponentOnce<Rigidbody2D>(ComponentSearchType.CHILDREN); } }
     public System.Action<Enemy> OnEnemyCollision { get; set; }
 
