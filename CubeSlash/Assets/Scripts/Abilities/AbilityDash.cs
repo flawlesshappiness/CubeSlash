@@ -110,7 +110,7 @@ public class AbilityDash : Ability
         Speed = modifier.type switch
         {
             Type.DASH => Speed + 10,
-            Type.CHARGE => Speed + 40,
+            Type.CHARGE => Speed + 30,
             Type.SPLIT => Speed + 0,
         };
 
@@ -146,7 +146,6 @@ public class AbilityDash : Ability
         InUse = true;
     }
 
-    
     public override void Released()
     {
         base.Released();
@@ -191,7 +190,16 @@ public class AbilityDash : Ability
             clone.transform.rotation = Quaternion.LookRotation(Vector3.forward, direction);
             clone.Initialize(this, has_player);
             clone.gameObject.SetActive(true);
-            clone.onHitKillable += k => victim = k;
+            clone.onHitKillable += k => {
+                if (HasModifier(Type.CHARGE))
+                {
+                    HitEnemiesArea(clone.transform.position, RadiusDamage);
+                }
+                else
+                {
+                    victim = k;
+                }
+            };
 
             yield return MoveCloneCr();
             EndDash(clone, victim, has_player);
@@ -234,7 +242,7 @@ public class AbilityDash : Ability
                 Player.Rigidbody.velocity = Player.MoveDirection * Speed * (hit_anything ? -1 : 1);
             }
 
-            if (hit_anything)
+            if (hit_anything || HasModifier(Type.CHARGE))
             {
                 HitEnemiesArea(Player.transform.position, RadiusDamage);
                 Player.PushEnemiesInArea(Player.transform.position, RadiusPush, ForcePush, ac_push_enemies);
