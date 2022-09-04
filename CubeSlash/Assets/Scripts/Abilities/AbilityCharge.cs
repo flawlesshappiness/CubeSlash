@@ -182,7 +182,7 @@ public class AbilityCharge : Ability
         var count_hits = 0;
 
         var directions =
-            HasModifier(Type.SPLIT) ? GetModifier<AbilitySplit>(Type.SPLIT).GetSplitDirections(3, 15, dir) :
+            HasModifier(Type.SPLIT) ? AbilitySplit.GetSplitDirections(3, 15, dir) :
             new List<Vector3> { dir };
         StartCoroutine(ShootCr(directions));
         IEnumerator ShootCr(List<Vector3> directions)

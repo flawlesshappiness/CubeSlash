@@ -220,7 +220,7 @@ public class AbilitySplit : Ability
         StartCooldown();
     }
 
-    public List<Vector3> GetSplitDirections(int count, float angle_max, Vector3 forward)
+    public static List<Vector3> GetSplitDirections(int count, float angle_max, Vector3 forward)
     {
         var odd_count = count % 2 == 1;
         var directions = new List<Vector3>();
