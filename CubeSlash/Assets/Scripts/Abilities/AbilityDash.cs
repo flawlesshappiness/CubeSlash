@@ -15,7 +15,6 @@ public class AbilityDash : Ability
     private float RadiusDamage { get; set; }
     private float RadiusPush { get; set; }
     private float ForcePush { get; set; }
-    private int Piercing { get; set; }
 
     // Upgrades
     private bool HasTrailUpgrade { get; set; }
@@ -30,8 +29,8 @@ public class AbilityDash : Ability
 
     private CustomCoroutine cr_dash;
 
-    private int pierces_left;
-    private float distance_temp;
+    private float distance_target;
+    private float distance_extend;
 
     public override void InitializeFirstTime()
     {
@@ -44,7 +43,7 @@ public class AbilityDash : Ability
     public override void ResetValues()
     {
         base.ResetValues();
-        CooldownTime = 0.5f;
+        CooldownTime = 0.75f;
         Speed = 30f;
         Distance = 5f;
         DistanceExtendPerKill = 0;
@@ -52,7 +51,6 @@ public class AbilityDash : Ability
         RadiusDamage = 1.0f;
         RadiusPush = 12;
         ForcePush = 300;
-        Piercing = 0;
 
         InitializeBody();
     }
@@ -65,20 +63,19 @@ public class AbilityDash : Ability
         {
             if(upgrade.level >= 1)
             {
-                CooldownTime += 0.3f;
-                Piercing += 2;
+                RadiusDamage += 1.0f;
             }
 
             if(upgrade.level >= 2)
             {
-                CooldownTime += 0.3f;
+                RadiusDamage += 1.0f;
                 Distance += 2f;
-                Piercing += 4;
             }
 
             if (upgrade.level >= 3)
             {
-                DistanceExtendPerKill += 3f;
+                RadiusDamage += 1.0f;
+                DistanceExtendPerKill += 1f;
             }
         }
 
@@ -93,6 +90,11 @@ public class AbilityDash : Ability
             {
                 Speed += 3.0f;
                 Distance += 2f;
+            }
+
+            if(upgrade.level >= 3)
+            {
+                Speed += 3.0f;
             }
 
             HasTrailUpgrade = upgrade.level >= 3;
@@ -179,8 +181,8 @@ public class AbilityDash : Ability
     private void StartDashing()
     {
         trigger.enabled = true;
-        pierces_left = Piercing;
-        distance_temp = Distance;
+        distance_target = Distance + distance_extend;
+        distance_extend = 0;
         Direction = Player.MoveDirection;
         trail.ResetTrail();
         cr_dash = CoroutineController.Instance.Run(SequenceCr(), "dash_" + GetInstanceID());
@@ -201,7 +203,7 @@ public class AbilityDash : Ability
         yield return MoveCr(velocity);
 
         // End
-        if(HitEnemiesArea(Player.transform.position, RadiusDamage) > 0)
+        if(HitEnemiesArea(Player.transform.position, 1.0f) > 0) // Default radius value
         {
             Player.PushEnemiesInArea(Player.transform.position, RadiusPush, ForcePush, ac_push_enemies);
             InterruptDash();
@@ -240,15 +242,15 @@ public class AbilityDash : Ability
     private IEnumerator MoveCr(Vector3 velocity)
     {
         PositionOrigin = transform.position;
-        while (Vector3.Distance(transform.position, PositionOrigin) < distance_temp)
+        while (Vector3.Distance(transform.position, PositionOrigin) < distance_target)
         {
             Player.Rigidbody.velocity = velocity;
-            var t = Vector3.Distance(transform.position, PositionOrigin) / distance_temp;
+            var t = Vector3.Distance(transform.position, PositionOrigin) / distance_target;
             UpdateBody(t);
             UpdateTrail();
             yield return new WaitForFixedUpdate();
         }
-        Player.Rigidbody.velocity = velocity.normalized * Player.SpeedMove;
+        Player.Rigidbody.velocity = velocity.normalized * Player.LinearVelocity;
         UpdateBody(1);
         UpdateTrail();
 
@@ -336,19 +338,9 @@ public class AbilityDash : Ability
         Player.PushEnemiesInArea(Player.transform.position, RadiusPush, ForcePush, ac_push_enemies);
         var count_hits = HitEnemiesArea(Player.transform.position, RadiusDamage);
 
-        pierces_left -= count_hits;
-        bool can_pierce = HasModifier(Type.CHARGE) || pierces_left > 0;
-
         if(killable != null)
         {
-            if(killable.CanKill() && can_pierce)
-            {
-                distance_temp += DistanceExtendPerKill;
-            }
-            else
-            {
-                StopDashing();
-            }
+            StopDashing();
         }
 
         void StopDashing()
@@ -380,6 +372,7 @@ public class AbilityDash : Ability
             .ToList().ForEach(k =>
             {
                 k.Kill();
+                distance_extend += DistanceExtendPerKill;
                 count++;
             });
 

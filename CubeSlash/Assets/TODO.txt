@@ -1,9 +1,6 @@
 TODO:
 Ability to refund level if you dont want an upgrade (unlock in meta layer)
+fix SPLIT arc when projectile count is even
 pause menu
 Preview when holding ability button
-Ability upgrade trees should not do the same thing twice
 add player upgrades
-rework dash. Kill piercing. Add AOE instead.
-Add roar direction when spawning boss
-set area size

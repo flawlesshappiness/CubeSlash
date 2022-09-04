@@ -15,7 +15,7 @@ public class EnemyProjectile : Projectile
             var player = c.GetComponentInParent<Player>();
             if(player != null)
             {
-                player.Damage(1, transform.position);
+                player.Damage(transform.position);
             }
         };
     }

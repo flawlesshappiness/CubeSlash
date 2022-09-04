@@ -57,7 +57,7 @@ public class EnemyController : Singleton
     {
         var enemies = new List<Enemy>();
 
-        foreach(var boss in Level.Current.bosses)
+        foreach (var boss in Level.Current.bosses)
         {
             var enemy = SpawnEnemy(boss.enemy, CameraController.Instance.GetPositionOutsideCamera());
             enemies.Add(enemy);
@@ -67,6 +67,19 @@ public class EnemyController : Singleton
                 var item = ItemController.Instance.SpawnAbilityItem(enemy.transform.position);
                 item.Initialize();
             };
+
+            // Particles
+            var ps = Instantiate(Resources.Load<ParticleSystem>("Particles/ps_boss_yell"));
+            var player_pos = Player.Instance.transform.position;
+            var w_cam_h = CameraController.Instance.Width * 0.5f;
+            var h_cam_h = CameraController.Instance.Height * 0.5f;
+            var dir = enemy.transform.position - player_pos;
+            var x = Mathf.Clamp(dir.x, player_pos.x - w_cam_h, player_pos.x + w_cam_h);
+            var y = Mathf.Clamp(dir.y, player_pos.y - h_cam_h, player_pos.y + h_cam_h);
+            ps.transform.position = new Vector3(x, y) * 0.9f;
+
+            var angle = Vector3.SignedAngle(Vector3.up, dir, Vector3.forward);
+            ps.transform.rotation = ps.transform.rotation * Quaternion.AngleAxis(angle, Vector3.up);
         }
 
         return enemies;

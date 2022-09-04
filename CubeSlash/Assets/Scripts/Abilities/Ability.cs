@@ -92,7 +92,7 @@ public abstract class Ability : MonoBehaviourExtended
     {
         InUse = false;
         TimeCooldownStart = Time.time;
-        TimeCooldownEnd = TimeCooldownStart + time;
+        TimeCooldownEnd = TimeCooldownStart + time * Player.Instance.GlobalCooldownMultiplier;
     }
     #endregion
     #region MODIFIER

@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Level 4
   m_EditorClassIdentifier: 
   duration: 30
+  size: 100
   frequency_spawn_enemy: 1
   count_enemy_active: 2
   enemies:

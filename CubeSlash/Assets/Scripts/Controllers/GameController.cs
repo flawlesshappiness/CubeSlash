@@ -114,9 +114,10 @@ public class GameController : MonoBehaviour
     public void StartGame()
     {
         IsGameStarted = true;
-        Player.Instance.Experience.Value = 0;
-        Player.Instance.Health.Value = Player.Instance.Health.Max;
-        Player.Instance.ReapplyAbilities();
+        LevelIndex = 0;
+        Player.Instance.ResetValues();
+        AbilityController.Instance.Clear();
+        UpgradeController.Instance.ClearUpgrades();
 
         PauseLevel();
         var view_unlock = ViewController.Instance.ShowView<UnlockAbilityView>(0);
@@ -141,6 +142,7 @@ public class GameController : MonoBehaviour
     private void ResumeLevel()
     {
         PauseLock.RemoveLock(nameof(GameController));
+        Player.Instance.ReapplyUpgrades();
         Player.Instance.ReapplyAbilities();
         OnResume?.Invoke();
     }
@@ -196,7 +198,8 @@ public class GameController : MonoBehaviour
             yield return LerpTimeScale(2f, 0f);
             PauseLevel();
             var view = ViewController.Instance.ShowView<UnlockUpgradeView>(0, TAG_ABILITY_VIEW);
-            view.OnUpgradeSelected += () =>
+            view.OnUpgradeSelected += Player.Instance.OnUpgradeSelected;
+            view.OnUpgradeSelected += u =>
             {
                 ResumeLevel();
             };

@@ -28,7 +28,6 @@ Size collision
 Size impact
 Size knockback
 Force knockback
-Penetration
 Bounce
 
 (+CD +DST) > (+CD +SPD) > Kills extend distance

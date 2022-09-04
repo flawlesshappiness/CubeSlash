@@ -6,6 +6,7 @@ using UnityEngine;
 public class LevelAsset : ScriptableObject
 {
     public float duration;
+    public float size;
 
     [Header("ENEMY")]
     public float frequency_spawn_enemy;

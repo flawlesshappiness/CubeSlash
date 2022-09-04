@@ -27,7 +27,7 @@ public class CameraController : Singleton
     public Vector3 GetPositionOutsideCamera()
     {
         var dir = Random.insideUnitCircle.normalized.ToVector3();
-        var dist = Width * 0.5f * Random.Range(1.2f, 2.0f);
+        var dist = Width * 0.5f * Random.Range(1.3f, 2.0f);
         return Camera.transform.position.SetZ(0) + dir * dist;
     }
 

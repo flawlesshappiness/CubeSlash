@@ -15,7 +15,7 @@ public class UnlockUpgradeView : View
     private List<UIIconButton> btns_tree = new List<UIIconButton>();
     private List<TMP_Text> tmps_upgrade = new List<TMP_Text>();
 
-    public event System.Action OnUpgradeSelected;
+    public event System.Action<Upgrade> OnUpgradeSelected;
 
     private void Start()
     {
@@ -58,7 +58,7 @@ public class UnlockUpgradeView : View
             CanvasGroup.interactable = false;
             CanvasGroup.blocksRaycasts = false;
             UpgradeController.Instance.IncrementUpgradeLevel(upgrade.data.type);
-            OnUpgradeSelected?.Invoke();
+            OnUpgradeSelected?.Invoke(upgrade);
             Close(0);
         }
     }

@@ -1,13 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class Player : Character
 {
     public static Player Instance;
     [SerializeField] private PlayerSettings settings;
-    public MinMaxInt Experience { get; private set; } = new MinMaxInt();
-    public MinMaxInt Health { get; private set; } = new MinMaxInt();
+    public MinMaxFloat Experience { get; private set; } = new MinMaxFloat();
+    public Health Health { get; private set; } = new Health();
     public int Level { get; private set; }
     public bool HasLevelledUp { get; private set; }
     public bool IsDead { get; private set; }
@@ -16,32 +17,26 @@ public class Player : Character
     public MultiLock InvincibilityLock { get; set; } = new MultiLock();
     public MultiLock AbilityLock { get; set; } = new MultiLock();
     public Vector3 MoveDirection { get; set; }
-    public float DistanceCollect { get; private set; } = 3f;
-    public float SpeedMove { get; private set; } = 5;
     public Ability AbilityQueued { get; private set; }
 
-    public System.Action onLevelUp;
-    public System.Action onDeath;
+    // UPGRADE VALUES
+    public float ChanceToAvoidDamage { get; private set; }
+    public float GlobalCooldownMultiplier { get; private set; }
+    public float ExperienceMultiplier { get; private set; }
+    public float DistanceCollect { get; private set; }
+    public float SpeedBoostPerExp { get; private set; }
+
+    public event System.Action onLevelUp;
+    public event System.Action onDeath;
 
     private ParticleSystem ps_move;
 
     public void Initialize()
     {
-        // Health
-        Health.Min = 0;
-        Health.Max = 6;
-        Health.Value = Health.Max;
-        Health.onMin += OnDeath;
-
         // Experience
-        Experience.Min = 0;
-        Experience.Max = settings.experience_min;
-        Experience.Value = Experience.Min;
         Experience.onMax += OnLevelUp;
 
         // Speed
-        LinearAcceleration = settings.linear_acceleration;
-        LinearVelocity = settings.linear_velocity;
         Rigidbody.mass = settings.mass;
 
         // Character
@@ -54,6 +49,14 @@ public class Player : Character
         ps_move.transform.parent = Body.transform;
         ps_move.transform.position = Body.transform.position;
         ps_move.ModifyEmission(e => e.enabled = false);
+    }
+
+    public void ResetValues()
+    {
+        Level = 0;
+        ResetExperience();
+        ResetHealth();
+        ResetUpgradeValues();
     }
 
     private void OnEnable()
@@ -171,12 +174,94 @@ public class Player : Character
         }
     }
     #endregion
+    #region UPGRADES
+    public void OnUpgradeSelected(Upgrade upgrade)
+    {
+        if(upgrade.data.type == UpgradeData.Type.PLAYER_HEALTH)
+        {
+            if(upgrade.level == 1)
+            {
+                Health.AddHealth(HealthPoint.Type.TEMPORARY);
+            }
+            else if(upgrade.level == 2)
+            {
+                Health.AddHealth(HealthPoint.Type.FULL);
+            }
+        }
+    }
+
+    public void ReapplyUpgrades()
+    {
+        ResetUpgradeValues();
+
+        UpgradeController.Instance.Database.upgrades.Select(data => UpgradeController.Instance.GetUpgrade(data.type))
+            .ToList().ForEach(upgrade => ApplyUpgrade(upgrade));
+    }
+
+    private void ResetUpgradeValues()
+    {
+        LinearAcceleration = settings.linear_acceleration;
+        LinearVelocity = settings.linear_velocity;
+        ChanceToAvoidDamage = 0;
+        GlobalCooldownMultiplier = 1f;
+        DistanceCollect = 3f;
+        ExperienceMultiplier = 1f;
+    }
+
+    private void ApplyUpgrade(Upgrade upgrade)
+    {
+        if(upgrade.data.type == UpgradeData.Type.PLAYER_HEALTH)
+        {
+            if(upgrade.level >= 3)
+            {
+                ChanceToAvoidDamage += 0.2f;
+            }
+        }
+        else if(upgrade.data.type == UpgradeData.Type.PLAYER_EXP)
+        {
+            if(upgrade.level >= 1)
+            {
+                DistanceCollect += 2f;
+            }
+
+            if (upgrade.level >= 2)
+            {
+                DistanceCollect += 2f;
+                ExperienceMultiplier += 0.2f;
+            }
+
+            if (upgrade.level >= 3)
+            {
+                // Speed on exp
+            }
+        }
+        else if(upgrade.data.type == UpgradeData.Type.PLAYER_SPEED)
+        {
+            if(upgrade.level >= 1)
+            {
+                LinearVelocity += 2f;
+            }
+
+            if(upgrade.level >= 2)
+            {
+                LinearVelocity += 2f;
+                LinearAcceleration += 7f;
+            }
+
+            if(upgrade.level >= 3)
+            {
+                LinearAcceleration += 5f;
+                GlobalCooldownMultiplier -= 0.2f;
+            }
+        }
+    }
+    #endregion
     #region ENEMY
     private void OnTriggerEnter2D(Collider2D collision)
     {
         var enemy = collision.gameObject.GetComponentInParent<Enemy>();
         if (enemy == null) return;
-        Damage(1, enemy.transform.position);
+        Damage(enemy.transform.position);
     }
 
     public void PushEnemiesInArea(Vector3 position, float radius, float force, AnimationCurve curve_force = null)
@@ -201,12 +286,11 @@ public class Player : Character
     }
     #endregion
     #region HEALTH
-    private void OnDeath()
+    private void ResetHealth()
     {
-        if (!IsDead)
-        {
-            Kill();
-        }
+        if (Health == null) Health = new Health();
+        Health.Clear();
+        for (int i = 0; i < 5; i++) Health.AddHealth(HealthPoint.Type.FULL);
     }
 
     public void Kill()
@@ -228,23 +312,34 @@ public class Player : Character
         onDeath?.Invoke();
     }
 
-    public void Damage(int amount, Vector3 damage_origin)
+    public void Damage(Vector3 damage_origin)
     {
-        if (InvincibilityLock.IsFree)
+        if (IsDead) return;
+        if (InvincibilityLock.IsLocked) return;
+
+        if (!GameController.DAMAGE_DISABLED)
         {
-            if (!GameController.DAMAGE_DISABLED)
+            if(ChanceToAvoidDamage == 0 || Random.Range(0f, 1f) < ChanceToAvoidDamage)
             {
-                Health.Value -= amount.Abs();
+                Health.Damage();
             }
-
-            if (Health.Value > 0)
+            else
             {
-                StartCoroutine(PlayerDamageInvincibilityCr(2));
-                StartCoroutine(PlayerDamageFlashCr(2));
-
-                var dir = transform.position - damage_origin;
-                StartCoroutine(PlayerDamagePushCr(dir, 0.15f));
+                // Avoided damage
             }
+        }
+
+        if (Health.IsDead())
+        {
+            Kill();
+        }
+        else
+        {
+            StartCoroutine(PlayerDamageInvincibilityCr(2));
+            StartCoroutine(PlayerDamageFlashCr(2));
+
+            var dir = transform.position - damage_origin;
+            StartCoroutine(PlayerDamagePushCr(dir, 0.15f));
         }
     }
 
@@ -261,7 +356,7 @@ public class Player : Character
             var e = hit.GetComponentInParent<Enemy>();
             if (e)
             {
-                Damage(1, e.transform.position);
+                Damage(e.transform.position);
                 break;
             }
         }
@@ -321,6 +416,11 @@ public class Player : Character
             yield return new WaitForSeconds(delay);
             PushEnemiesInArea(transform.position, 12, 500);
         }
+    }
+
+    public void AddExperience()
+    {
+        Experience.Value += 1f * ExperienceMultiplier;
     }
 
     public void ResetExperience()

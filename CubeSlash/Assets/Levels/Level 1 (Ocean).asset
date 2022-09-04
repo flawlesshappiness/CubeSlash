@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Level 1 (Ocean)
   m_EditorClassIdentifier: 
   duration: 30
+  size: 100
   frequency_spawn_enemy: 1.5
   count_enemy_active: 15
   enemies:

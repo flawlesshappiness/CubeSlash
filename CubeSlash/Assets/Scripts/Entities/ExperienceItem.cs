@@ -17,7 +17,7 @@ public class ExperienceItem : Item
     protected override void Collect()
     {
         base.Collect();
-        Player.Instance.Experience.Value++;
+        Player.Instance.AddExperience();
     }
 
     public void SetMeat()

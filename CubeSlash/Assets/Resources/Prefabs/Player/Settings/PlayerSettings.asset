@@ -19,9 +19,9 @@ MonoBehaviour:
   angular_velocity: 0
   size: 1
   mass: 1
-  experience_level_max: 20
+  experience_level_max: 25
   experience_min: 15
-  experience_max: 1000
+  experience_max: 500
   curve_experience:
     serializedVersion: 2
     m_Curve:

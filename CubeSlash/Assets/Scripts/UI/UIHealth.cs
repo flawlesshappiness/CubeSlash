@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using System.Net.NetworkInformation;
 using UnityEngine;
 
 public class UIHealth : MonoBehaviour
@@ -10,38 +12,57 @@ public class UIHealth : MonoBehaviour
 
     private void Start()
     {
-        // Initialize points
-        prefab_hp.gameObject.SetActive(true);
-        for (int i = 0; i < Player.Instance.Health.Max; i++)
-        {
-            var inst = Instantiate(prefab_hp.gameObject, prefab_hp.transform.parent).GetComponentInParent<UIHealthPoint>();
-            points.Add(inst);
-        }
         prefab_hp.gameObject.SetActive(false);
 
-        // Set events
-        Player.Instance.Health.onValueChanged += OnHealthChanged;
-
-        // Finalize
-        UpdateHealth();
+        Player.Instance.Health.GetHealthList(HealthPoint.Type.FULL).ForEach(hp => OnAddHealthPoint(hp));
+        Player.Instance.Health.GetHealthList(HealthPoint.Type.EMPTY).ForEach(hp => OnAddHealthPoint(hp));
+        Player.Instance.Health.GetHealthList(HealthPoint.Type.TEMPORARY).ForEach(hp => OnAddHealthPoint(hp));
     }
 
-    private void OnDestroy()
+    private void OnEnable()
     {
-        Player.Instance.Health.onValueChanged -= OnHealthChanged;
+        Player.Instance.Health.onAddHealthPoint += OnAddHealthPoint;
     }
 
-    private void OnHealthChanged()
+    private void OnDisable()
     {
-        UpdateHealth();
+        Player.Instance.Health.onAddHealthPoint -= OnAddHealthPoint;
     }
 
-    private void UpdateHealth()
+    private UIHealthPoint CreateHealthPoint(HealthPoint hp)
     {
-        for (int i = 0; i < points.Count; i++)
+        var ui = Instantiate(prefab_hp, prefab_hp.transform.parent);
+        ui.gameObject.SetActive(true);
+        ui.Initialize(this, hp);
+        return ui;
+    }
+
+    public void RemoveHealthPoint(UIHealthPoint ui)
+    {
+        points.Remove(ui);
+    }
+
+    private void OnAddHealthPoint(HealthPoint hp)
+    {
+        var ui = CreateHealthPoint(hp);
+        var idx = 0;
+
+        if(hp.HealthType == HealthPoint.Type.FULL)
         {
-            var hp = points[i];
-            hp.Full = i <= Player.Instance.Health.Value - 1;
+            var target = points.LastOrDefault(p => p.Type == HealthPoint.Type.FULL);
+            idx = target == null ? 0 : points.IndexOf(target) + 1;
         }
+        else if(hp.HealthType == HealthPoint.Type.EMPTY)
+        {
+            var target = points.LastOrDefault(p => p.Type == HealthPoint.Type.EMPTY) ?? points.LastOrDefault(p => p.Type == HealthPoint.Type.FULL);
+            idx = target == null ? 0 : points.IndexOf(target) + 1;
+        }
+        else if(hp.HealthType == HealthPoint.Type.TEMPORARY)
+        {
+            idx = points.Count;
+        }
+
+        ui.transform.SetSiblingIndex(idx);
+        points.Insert(idx, ui);
     }
 }

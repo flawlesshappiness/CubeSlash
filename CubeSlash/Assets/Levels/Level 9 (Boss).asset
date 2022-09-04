@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Level 9 (Boss)
   m_EditorClassIdentifier: 
   duration: 60
+  size: 100
   frequency_spawn_enemy: 1
   count_enemy_active: 150
   enemies:

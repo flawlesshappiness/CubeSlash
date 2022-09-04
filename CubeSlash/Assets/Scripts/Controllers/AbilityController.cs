@@ -28,6 +28,7 @@ public class AbilityController : Singleton
 
     public void Clear()
     {
+        abilities.ForEach(a => Destroy(a.gameObject));
         abilities.Clear();
         InitializeEquipment();
     }

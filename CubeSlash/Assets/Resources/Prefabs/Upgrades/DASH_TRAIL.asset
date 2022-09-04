@@ -29,6 +29,7 @@ MonoBehaviour:
     icon: {fileID: 21300000, guid: 7b7de2430deee964da27ba2590989b37, type: 3}
   - name: DASH_TRAIL_2
     desc_positive:
+    - + Speed
     - Leave behind a trail when dashing
     desc_negative: []
     icon: {fileID: 21300000, guid: 41c6f94d80f9e034a9c63dcf97d30f5c, type: 3}

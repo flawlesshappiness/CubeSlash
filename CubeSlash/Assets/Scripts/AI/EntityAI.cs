@@ -54,7 +54,7 @@ public abstract class EntityAI : MonoBehaviour
 
     protected bool IsPlayerAlive()
     {
-        return Player.Instance.Health.Value > Player.Instance.Health.Min;
+        return !Player.Instance.IsDead;
     }
 
     protected float AngleTowards(Vector3 position)
