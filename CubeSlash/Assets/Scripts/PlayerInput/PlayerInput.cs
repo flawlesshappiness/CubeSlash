@@ -46,6 +46,8 @@ public static class PlayerInput
         _controls.Player.West.started += context => OnAbilityButton(context, ButtonType.WEST);
         _controls.Player.West.canceled += context => OnAbilityButton(context, ButtonType.WEST);
 
+        _controls.Player.Menu.started += context => GameController.Instance.OpenPauseView();
+
         _controls.Player.Enable();
         _controls.UI.Enable();
         return _controls;

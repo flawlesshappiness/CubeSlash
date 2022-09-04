@@ -17,7 +17,7 @@ public class EnemyController : Singleton
 
     private const int COUNT_ENEMY_POOL_EXTEND = 20;
 
-    private bool has_spawned_boss = false;
+    private bool has_spawned_boss = true;
 
     protected override void Initialize()
     {
@@ -166,11 +166,12 @@ public class EnemyController : Singleton
         OnEnemyKilled?.Invoke();
     }
 
-    public void KillActiveEnemies()
+    public void RemoveActiveEnemies()
     {
         foreach(var enemy in enemies_active.ToList())
         {
-            enemy.Kill();
+            enemy.gameObject.SetActive(false);
+            EnemyKilled(enemy);
         }
     }
     #endregion

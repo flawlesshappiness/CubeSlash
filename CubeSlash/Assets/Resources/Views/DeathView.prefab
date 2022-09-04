@@ -65,7 +65,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: YOU DIED
+  m_text: Extinct
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 4893b383388547447a83f908b19f18bb, type: 2}
   m_sharedMaterial: {fileID: 2100000, guid: e1a7a6a8ccc534a4589c0e04d38d97bf, type: 2}
@@ -335,6 +335,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2348da7818b5fe247b049400d4650fa6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rt_title: {fileID: 6353704306148447321}
 --- !u!1 &6452885596978572278
 GameObject:
   m_ObjectHideFlags: 0

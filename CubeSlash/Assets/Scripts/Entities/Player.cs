@@ -12,7 +12,6 @@ public class Player : Character
     public int Level { get; private set; }
     public bool HasLevelledUp { get; private set; }
     public bool IsDead { get; private set; }
-    public int AbilityPoints { get; set; }
     public MultiLock InputLock { get; set; } = new MultiLock();
     public MultiLock InvincibilityLock { get; set; } = new MultiLock();
     public MultiLock AbilityLock { get; set; } = new MultiLock();
@@ -54,6 +53,7 @@ public class Player : Character
     public void ResetValues()
     {
         Level = 0;
+        IsDead = false;
         ResetExperience();
         ResetHealth();
         ResetUpgradeValues();
@@ -232,7 +232,7 @@ public class Player : Character
 
             if (upgrade.level >= 3)
             {
-                // Speed on exp
+                // Undecided
             }
         }
         else if(upgrade.data.type == UpgradeData.Type.PLAYER_SPEED)
@@ -407,7 +407,6 @@ public class Player : Character
 
             HasLevelledUp = true;
             Level++;
-            AbilityPoints++;
             onLevelUp?.Invoke();
         }
 

@@ -21,7 +21,7 @@ MonoBehaviour:
   mass: 1
   experience_level_max: 25
   experience_min: 15
-  experience_max: 500
+  experience_max: 750
   curve_experience:
     serializedVersion: 2
     m_Curve:

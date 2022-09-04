@@ -24,7 +24,7 @@ public class AbilitySplit : Ability
     {
         base.ResetValues();
         CooldownTime = 0.5f;
-        CountProjectiles = 3;
+        CountProjectiles = 5;
         SpeedProjectile = 25;
         ArcProjectiles = 15f;
         SizeProjectiles = 2f;
@@ -230,7 +230,7 @@ public class AbilitySplit : Ability
         var i_end = count_arc + (odd_count ? 1 : 2);
         for (int i_arc = i_start; i_arc < i_end; i_arc++)
         {
-            var angle = angle_per * i_arc;
+            var angle = (angle_per * i_arc) - (odd_count ? 0 : angle_per * 0.5f);
             var count_sides = i_arc == 0 && odd_count ? 1 : 2;
             for (int i_side = 0; i_side < count_sides; i_side++)
             {

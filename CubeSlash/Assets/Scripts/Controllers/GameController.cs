@@ -1,5 +1,6 @@
 using Flawliz.Console;
 using System.Collections;
+using System.Reflection;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -10,6 +11,9 @@ public class GameController : MonoBehaviour
 
     public static GameController Instance;
     public static bool DAMAGE_DISABLED = false;
+
+    public enum GameState { PLAYING, MENU }
+    public GameState gameState = GameState.PLAYING;
 
     public System.Action OnResume { get; set; }
     public bool IsGameStarted { get; private set; }
@@ -32,9 +36,8 @@ public class GameController : MonoBehaviour
         PauseLock.OnLockChanged += OnPauseChanged;
 
         ConsoleController.Instance.RegisterCommand("UnlockAllAbilities", AbilityController.Instance.UnlockAllAbilities);
-        ConsoleController.Instance.RegisterCommand("Kill", EnemyController.Instance.KillActiveEnemies);
+        ConsoleController.Instance.RegisterCommand("Kill", EnemyController.Instance.RemoveActiveEnemies);
         ConsoleController.Instance.RegisterCommand("LevelUp", CheatLevelUp);
-        ConsoleController.Instance.RegisterCommand("AbilityPoints", CheatAbilityPoints);
         ConsoleController.Instance.RegisterCommand("NextLevel", () => SetLevel(LevelIndex + 1));
         ConsoleController.Instance.RegisterCommand("GainAbility", OnPlayerGainAbility);
         ConsoleController.Instance.RegisterCommand("Equipment", CheatOpenEquipment);
@@ -79,6 +82,15 @@ public class GameController : MonoBehaviour
         Singleton.EnsureExistence<BackgroundController>();
     }
 
+    public void OpenPauseView()
+    {
+        if (!IsGameStarted) return;
+        if (PauseView.Exists) return;
+        if (gameState != GameState.PLAYING) return;
+        if (PauseLock.IsLocked) return;
+        ViewController.Instance.ShowView<PauseView>(0, nameof(PauseView));
+    }
+
     private void OnPauseChanged(bool paused)
     {
         SetTimeScale(paused ? 0 : 1);
@@ -113,8 +125,8 @@ public class GameController : MonoBehaviour
 
     public void StartGame()
     {
+        gameState = GameState.MENU;
         IsGameStarted = true;
-        LevelIndex = 0;
         Player.Instance.ResetValues();
         AbilityController.Instance.Clear();
         UpgradeController.Instance.ClearUpgrades();
@@ -141,6 +153,7 @@ public class GameController : MonoBehaviour
 
     private void ResumeLevel()
     {
+        gameState = GameState.PLAYING;
         PauseLock.RemoveLock(nameof(GameController));
         Player.Instance.ReapplyUpgrades();
         Player.Instance.ReapplyAbilities();
@@ -166,6 +179,7 @@ public class GameController : MonoBehaviour
         }
 
         LevelIndex = idx;
+        OnNextLevel?.Invoke();
         _cr_next_level = StartCoroutine(NextLevelCr());
     }
 
@@ -195,6 +209,7 @@ public class GameController : MonoBehaviour
         StartCoroutine(Cr());
         IEnumerator Cr()
         {
+            gameState = GameState.MENU;
             yield return LerpTimeScale(2f, 0f);
             PauseLevel();
             var view = ViewController.Instance.ShowView<UnlockUpgradeView>(0, TAG_ABILITY_VIEW);
@@ -211,6 +226,7 @@ public class GameController : MonoBehaviour
         StartCoroutine(Cr());
         IEnumerator Cr()
         {
+            gameState = GameState.MENU;
             yield return LerpTimeScale(2f, 0f);
             PauseLevel();
             var view_unlock = ViewController.Instance.ShowView<UnlockAbilityView>(0, TAG_ABILITY_VIEW);
@@ -227,18 +243,42 @@ public class GameController : MonoBehaviour
 
     private void OnPlayerDeath()
     {
-        StartCoroutine(RestartGameCr());
+        StartCoroutine(Cr());
+
+        IEnumerator Cr()
+        {
+            gameState = GameState.MENU;
+            yield return new WaitForSeconds(0.5f);
+            var death_view = ViewController.Instance.ShowView<DeathView>(2f, "Death");
+            death_view.AnimateScaleTitle(6);
+            yield return new WaitForSeconds(2.0f);
+            var bg_view = ViewController.Instance.ShowView<BackgroundView>(2.0f, "Background");
+            yield return new WaitForSeconds(3.0f);
+            death_view.Close(1.0f);
+            yield return new WaitForSeconds(1.0f);
+            bg_view.Close(0.5f);
+            MainMenu();
+        }
     }
 
-    private IEnumerator RestartGameCr()
+    public void ReturnToMainMenu()
+    {
+        StartCoroutine(Cr());
+        IEnumerator Cr()
+        {
+            gameState = GameState.MENU;
+            var bg_view = ViewController.Instance.ShowView<BackgroundView>(0.5f, "Background");
+            yield return new WaitForSeconds(0.5f);
+            bg_view.Close(0.5f);
+            MainMenu();
+        }
+    }
+
+    private void MainMenu()
     {
         IsGameStarted = false;
-        yield return new WaitForSeconds(0.5f);
-        ViewController.Instance.ShowView<DeathView>(2f);
-        yield return new WaitForSeconds(2.5f);
-        ViewController.Instance.CloseView(0.5f);
-        yield return new WaitForSeconds(0.5f);
-        EnemyController.Instance.KillActiveEnemies();
+        gameState = GameState.MENU;
+        EnemyController.Instance.RemoveActiveEnemies();
         ItemController.Instance.DespawnAllActiveItems();
         Player.Instance.gameObject.SetActive(false);
         ViewController.Instance.ShowView<StartView>(0.25f);
@@ -247,11 +287,6 @@ public class GameController : MonoBehaviour
     private void CheatLevelUp()
     {
         Player.Instance.Experience.Value = Player.Instance.Experience.Max;
-    }
-
-    private void CheatAbilityPoints()
-    {
-        Player.Instance.AbilityPoints += 999;
     }
 
     private void CheatOpenEquipment()

@@ -27,9 +27,9 @@ public class UpgradeData : ScriptableObject
     public class Level
     {
         public string name;
+        public Sprite icon;
         public List<string> desc_positive;
         public List<string> desc_negative;
-        public Sprite icon;
     }
 
     private void OnValidate()

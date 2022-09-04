@@ -10,11 +10,12 @@ public class BackgroundController : Singleton
     private List<ParticleSystem> particles = new List<ParticleSystem>();
     private List<BackgroundSprite> sprites = new List<BackgroundSprite>();
 
+    private LevelAsset currentLevel;
+
     protected override void Initialize()
     {
         base.Initialize();
         GameController.Instance.OnNextLevel += OnNextLevel;
-        FadeToLevel(Level.Current, 5f);
     }
 
     private void Update()
@@ -27,8 +28,11 @@ public class BackgroundController : Singleton
         FadeToLevel(Level.Current, 5f);
     }
 
-    private void FadeToLevel(LevelAsset level, float time)
+    public void FadeToLevel(LevelAsset level, float time)
     {
+        if (currentLevel == level) return;
+        currentLevel = level;
+
         FadeBackground(level, time);
         FadeFog(level, time);
         CreateSprites(level.background_layers, time);

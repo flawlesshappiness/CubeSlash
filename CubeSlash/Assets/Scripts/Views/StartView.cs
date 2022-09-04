@@ -11,9 +11,9 @@ public class StartView : View
 
     private void Start()
     {
-        EventSystemController.Instance.SetDefaultSelection(btn_play.gameObject);
-
         btn_play.onClick.AddListener(ClickPlay);
+        EventSystemController.Instance.SetDefaultSelection(btn_play.gameObject);
+        BackgroundController.Instance.FadeToLevel(LevelDatabase.Instance.levels[0], 5);
     }
 
     private void ClickPlay()

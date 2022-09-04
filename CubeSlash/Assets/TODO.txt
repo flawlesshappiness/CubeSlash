@@ -1,6 +1,4 @@
 TODO:
 Ability to refund level if you dont want an upgrade (unlock in meta layer)
-fix SPLIT arc when projectile count is even
-pause menu
 Preview when holding ability button
 add player upgrades
