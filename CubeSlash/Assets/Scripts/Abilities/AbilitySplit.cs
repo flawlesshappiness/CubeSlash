@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class AbilitySplit : Ability
 {
+    [SerializeField] private Projectile prefab_projectile;
     private int Bursts { get; set; }
     private int CountProjectiles { get; set; }
     private float SpeedProjectile { get; set; }
@@ -24,10 +25,10 @@ public class AbilitySplit : Ability
     {
         base.ResetValues();
         CooldownTime = 0.5f;
-        CountProjectiles = 5;
+        CountProjectiles = 3;
         SpeedProjectile = 25;
         ArcProjectiles = 15f;
-        SizeProjectiles = 2f;
+        SizeProjectiles = 1.0f;
         Bursts = 1;
     }
 
@@ -85,7 +86,7 @@ public class AbilitySplit : Ability
 
         CooldownTime = modifier.type switch
         {
-            Type.DASH => CooldownTime + 0.5f,
+            Type.DASH => CooldownTime - 0.2f,
             Type.CHARGE => CooldownTime + 1.0f,
             Type.SPLIT => CooldownTime + 0.5f,
         };
@@ -93,21 +94,21 @@ public class AbilitySplit : Ability
         CountProjectiles = modifier.type switch
         {
             Type.DASH => CountProjectiles + 0,
-            Type.CHARGE => CountProjectiles + 50,
+            Type.CHARGE => CountProjectiles + 0,
             Type.SPLIT => CountProjectiles + 3,
         };
 
         SpeedProjectile = modifier.type switch
         {
-            Type.DASH => SpeedProjectile + 0,
-            Type.CHARGE => SpeedProjectile + 5,
+            Type.DASH => SpeedProjectile + 10,
+            Type.CHARGE => SpeedProjectile + 0,
             Type.SPLIT => SpeedProjectile + 0,
         };
 
         ArcProjectiles = modifier.type switch
         {
             Type.DASH => ArcProjectiles + 0,
-            Type.CHARGE => 180f,
+            Type.CHARGE => ArcProjectiles + 0,
             Type.SPLIT => ArcProjectiles + 0,
         };
 
@@ -168,7 +169,7 @@ public class AbilitySplit : Ability
 
     private Projectile SpawnProjectile(Vector3 direction)
     {
-        var p = Instantiate(Resources.Load<Projectile>("Prefabs/Other/ProjectileSplit").gameObject).GetComponent<Projectile>();
+        var p = Instantiate(prefab_projectile);
         p.transform.position = Player.transform.position;
         p.transform.localScale = Vector3.one * SizeProjectiles;
         p.Rigidbody.velocity = direction * SpeedProjectile;
@@ -183,7 +184,11 @@ public class AbilitySplit : Ability
                 {
                     k.Kill();
                 }
-                p.Kill();
+
+                if (!p.Piercing)
+                {
+                    p.Kill();
+                }
             }
         };
 
@@ -206,14 +211,7 @@ public class AbilitySplit : Ability
         // Extra logic
         foreach(var p in projectiles)
         {
-            if (HasModifier(Type.DASH))
-            {
-                p.StartCoroutine(SetupProjectileDash(p));
-            }
-            else
-            {
-                SetupProjectileNormal(p);
-            }
+            SetupProjectileNormal(p);
         }
 
         // Cooldown
@@ -245,23 +243,8 @@ public class AbilitySplit : Ability
 
     private void SetupProjectileNormal(Projectile p)
     {
-        p.TurnSpeed = 1f;
         p.Homing = false;
         p.Lifetime = 0.75f;
-    }
-
-    private IEnumerator SetupProjectileDash(Projectile p)
-    {
-        p.Lifetime = 0.3f + 0.5f;
-        p.SearchRadius = 30f;
-        p.Drag = 0.9f;
-        yield return new WaitForSeconds(0.3f);
-        p.SearchForTarget = false;
-        p.Homing = true;
-        p.Drag = 1f;
-        p.TurnSpeed = 10f;
-
-        var dir = p.Target != null ? p.Target.transform.position - p.transform.position : p.transform.up;
-        p.Rigidbody.velocity = dir.normalized * 50f;
+        p.Piercing = HasModifier(Type.CHARGE);
     }
 }

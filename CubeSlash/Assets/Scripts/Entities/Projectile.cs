@@ -5,13 +5,13 @@ using UnityEngine;
 
 public class Projectile : MonoBehaviourExtended
 {
-    [SerializeField] private bool hits_player;
-    [SerializeField] private bool hits_enemy;
-    [SerializeField] private AnimationCurve size_over_lifetime;
+    [SerializeField] private bool hits_player, hits_enemy;
+    [SerializeField] private ParticleSystem ps_death, ps_trail;
     public float TurnSpeed { get; set; }
     public float Drag { get; set; } = 1f;
     public float SearchRadius { get; set; } = 20f;
     public float Lifetime { get; set; } = 1f;
+    public bool Piercing { get; set; }
     public bool Homing { get; set; }
     public bool SearchForTarget { get; set; } = true;
     public Rigidbody2D Rigidbody { get { return GetComponentOnce<Rigidbody2D>(ComponentSearchType.THIS); } }
@@ -23,11 +23,8 @@ public class Projectile : MonoBehaviourExtended
     private float time_birth;
     private bool searching;
 
-    private Vector3 scale_start;
-
     private void Start()
     {
-        scale_start = transform.localScale;
         time_birth = Time.time;
         StartFindTarget();
         OnStart();
@@ -58,10 +55,6 @@ public class Projectile : MonoBehaviourExtended
     private void LifetimeUpdate()
     {
         var t = (Time.time - time_birth) / Lifetime;
-        var tc = Mathf.Clamp(t, 0, 1);
-
-        transform.localScale = scale_start * size_over_lifetime.Evaluate(tc);
-
         if(t >= 1)
         {
             Kill();
@@ -125,6 +118,20 @@ public class Projectile : MonoBehaviourExtended
 
     public void Kill()
     {
+        if(ps_death != null)
+        {
+            ps_death.Duplicate()
+                .Position(transform.position)
+                .Play()
+                .Destroy(1);
+        }
+
+        if(ps_trail != null)
+        {
+            ps_trail.transform.parent = null;
+            Destroy(ps_trail.gameObject, 2);
+        }
+
         gameObject.SetActive(false);
         Destroy(gameObject);
     }

@@ -5,13 +5,13 @@ x CHARGE: Penetrate enemies + longer range
 - CHONK: Bigger AoE
 
 Split projectile (SPLIT)
-x CHARGE: Charge to create more projectiles
-x DASH: Projectiles dash towards targets
+x CHARGE: Projectiles pierce enemies
+x DASH: Increased projectile speed, and decreased cooldown
 - EXPLODE: Projectiles arc all the way around, with increased speed, like shrapnel
 - CHONK: Projectiles get smaller on hit but can do another hit
 
 Charged beam (CHARGE) - Straight penetrating beam
-x DASH: Decrease charge time - teleport to hit enemy? - Penetrate
+x DASH: Forwards knockback
 x SPLIT: Fire multiple beams, but increase charge time
 - EXPLODE: Huge beam - maybe cone?
 - CHONK: Beam penetrates but becomes small

@@ -52,7 +52,7 @@ public class AbilityCharge : Ability
         base.ResetValues();
         CooldownTime = 0.5f;
         Width = 1f;
-        ChargeTime = 1.25f;
+        ChargeTime = 1.0f;
         Knockback = -10;
         Charging = false;
         ChargeEnded = false;
@@ -109,19 +109,19 @@ public class AbilityCharge : Ability
         {
             Type.DASH => Width + 2,
             Type.CHARGE => Width + 5,
-            Type.SPLIT => Width * 0.5f,
+            Type.SPLIT => Width + 0f,
         };
 
         ChargeTime = modifier.type switch
         {
-            Type.DASH => ChargeTime + 0.25f,
+            Type.DASH => ChargeTime + 0f,
             Type.CHARGE => ChargeTime + 0.5f,
             Type.SPLIT => ChargeTime + 0.5f,
         };
 
         Knockback = modifier.type switch
         {
-            Type.DASH => Knockback - 75,
+            Type.DASH => Knockback + 75,
             Type.CHARGE => Knockback - 25,
             Type.SPLIT => Knockback - 10,
         };
