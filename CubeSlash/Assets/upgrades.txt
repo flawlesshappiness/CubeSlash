@@ -55,3 +55,11 @@ Self Knockback
 
 (-CRG) > (-CRG) > Auto-aiming beam
 (+WDH) > (+WDH) > Kills reduce cooldown
+
+
+EXPLODE
+Ring count
+Delay time
+Radius
+Width
+Knockbacks

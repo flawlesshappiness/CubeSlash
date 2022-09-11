@@ -99,7 +99,7 @@ public class AI_BossShooter : EntityAI
         }
 
         var time_start = Time.time;
-        var time_end = Time.time + 5f;
+        var time_end = Time.time + 2f;
 
         // Shoot
         while(Time.time < time_end)

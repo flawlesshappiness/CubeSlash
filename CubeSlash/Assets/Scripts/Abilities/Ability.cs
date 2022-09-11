@@ -13,7 +13,7 @@ public abstract class Ability : MonoBehaviourExtended
     [TextArea] public string desc_ability;
     public Sprite sprite_icon;
 
-    public enum Type { DASH, SPLIT, CHARGE }
+    public enum Type { DASH, SPLIT, CHARGE, EXPLODE }
     public Ability[] Modifiers { get; protected set; } = new Ability[ConstVars.COUNT_MODIFIERS];
 
     public Player Player { get; set; }

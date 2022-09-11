@@ -21,6 +21,7 @@ public class UpgradeData : ScriptableObject
     public Type type;
     public bool require_ability;
     public Ability.Type type_ability_required;
+    public UpgradeNodeTree tree;
     public List<Level> levels = new List<Level>();
 
     [System.Serializable]

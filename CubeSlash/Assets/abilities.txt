@@ -1,7 +1,7 @@
 Dash (DASH) - Dash short distance (Knocks back enemy and stops dash)
-- SPLIT: Send out copies of yourself that target other enemies
+x SPLIT: Send out copies of yourself that target other enemies
 x CHARGE: Penetrate enemies + longer range
-- EXPLODE: AoE explosion at start, very fast/long dash
+- EXPLODE: AoE explosion at start
 - CHONK: Bigger AoE
 
 Split projectile (SPLIT)
@@ -14,9 +14,9 @@ Charged beam (CHARGE) - Straight penetrating beam
 x DASH: Forwards knockback
 x SPLIT: Fire multiple beams, but increase charge time
 - EXPLODE: Huge beam - maybe cone?
-- CHONK: Beam penetrates but becomes small
 
 Explode (EXPLODE) - aoe? ring of damage?
+- CHONK: Beam penetrates but becomes small
 - DASH: Knockback?
 - SPLIT: Multiple smaller explosions around first one
 - CHARGE: Charge to increase damage/size
