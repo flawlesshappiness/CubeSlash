@@ -19531,6 +19531,7 @@ MonoBehaviour:
   name_ability: Charge
   desc_ability: Charge, then release a beam penetrating all enemies
   sprite_icon: {fileID: 21300000, guid: 00cb1e475738e9c419d3e33ed7f45243, type: 3}
+  variables: []
   prefab_line: {fileID: 3161495528270361273}
   ps_charge: {fileID: 3355490899533344021}
   ps_charge_end: {fileID: 3894950489769590115}

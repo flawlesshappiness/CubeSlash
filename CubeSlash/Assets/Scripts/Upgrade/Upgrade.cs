@@ -1,12 +1,20 @@
+using System.Collections.Generic;
 using UnityEngine;
 
-public class Upgrade
+[CreateAssetMenu(fileName = "Upgrade", menuName = "Game/Upgrade", order = 1)]
+public class Upgrade : ScriptableObject
 {
-    public UpgradeData data;
-    public int level;
-
-    public int LevelsRemain { get { return (data.levels.Count + 1) - level; } }
-    public bool IsMaxLevel { get { return LevelsRemain <= 1; } }
-
-    public UpgradeData.Level GetCurrentLevel() => data.levels[level];
+    public string id;
+    public string name;
+    public Sprite icon;
+    public Ability.Type ability;
+    public List<Effect> effects = new List<Effect>();
+    
+    [System.Serializable]
+    public class Effect
+    {
+        public enum TypeEffect { POSITIVE, NEGATIVE }
+        public TypeEffect type_effect;
+        public AbilityVariable variable = new AbilityVariable(); // This should probably mimic AbilityVariable, but load id from ability instead of writing it yourself
+    }
 }

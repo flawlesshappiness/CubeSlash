@@ -35,7 +35,7 @@ public class AbilitySplit : Ability
     public override void ApplyUpgrade(Upgrade upgrade)
     {
         base.ApplyUpgrade(upgrade);
-
+        /*
         if (upgrade.data.type == UpgradeData.Type.SPLIT_RATE)
         {
             if (upgrade.level >= 1)
@@ -78,6 +78,7 @@ public class AbilitySplit : Ability
                 CountProjectiles += 10;
             }
         }
+        */
     }
 
     public override void ApplyModifier(Ability modifier)

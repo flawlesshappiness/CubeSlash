@@ -46,7 +46,7 @@ public class AbilityDash : Ability
     public override void ApplyUpgrade(Upgrade upgrade)
     {
         base.ApplyUpgrade(upgrade);
-
+        /*
         if(upgrade.data.type == UpgradeData.Type.DASH_DISTANCE)
         {
             if(upgrade.level >= 1)
@@ -87,6 +87,7 @@ public class AbilityDash : Ability
 
             HasTrailUpgrade = upgrade.level >= 3;
         }
+        */
     }
 
     public override void ApplyModifier(Ability modifier)

@@ -34,11 +34,13 @@ public class UnlockUpgradeView : View
         ClearUpgradeButtons();
         foreach (var upgrade in upgrades)
         {
+            /*
             var level = upgrade.GetCurrentLevel();
             var btn = CreateUpgradeButton();
             btn.Icon = level.icon;
             btn.Button.OnSelectedChanged += s => OnSelected(s, upgrade);
             btn.Button.onClick.AddListener(() => OnClick(btn, upgrade));
+            */
         }
 
         // Set default ui
@@ -48,7 +50,7 @@ public class UnlockUpgradeView : View
         {
             if (selected)
             {
-                DisplayUpgradeText(upgrade.GetCurrentLevel());
+                DisplayUpgradeText(upgrade);
                 DisplayUpgradeTree(upgrade);
             }
         }
@@ -57,7 +59,7 @@ public class UnlockUpgradeView : View
         {
             CanvasGroup.interactable = false;
             CanvasGroup.blocksRaycasts = false;
-            UpgradeController.Instance.IncrementUpgradeLevel(upgrade.data.type);
+            //UpgradeController.Instance.IncrementUpgradeLevel(upgrade.data.type);
             OnUpgradeSelected?.Invoke(upgrade);
             Close(0);
         }
@@ -107,25 +109,23 @@ public class UnlockUpgradeView : View
         tmps_upgrade.Clear();
     }
 
-    private void DisplayUpgradeText(UpgradeData.Level level)
+    private void DisplayUpgradeText(Upgrade upgrade)
     {
         ClearUpgradeTexts();
-        CreateUpgradeText(level.name, ColorPalette.Main.Get(ColorPalette.Type.HIGHLIGHT));
+        CreateUpgradeText(upgrade.name, ColorPalette.Main.Get(ColorPalette.Type.HIGHLIGHT));
         CreateUpgradeText("", ColorPalette.Main.Get(ColorPalette.Type.HIGHLIGHT));
-        foreach(var desc in level.desc_positive)
+        foreach(var effect in upgrade.effects)
         {
-            var tmp = CreateUpgradeText(desc, ColorPalette.Main.Get(ColorPalette.Type.HIGHLIGHT));
-        }
-        foreach (var desc in level.desc_negative)
-        {
-            var tmp = CreateUpgradeText(desc, ColorPalette.Main.Get(ColorPalette.Type.WRONG));
+            var color = effect.type_effect == Upgrade.Effect.TypeEffect.POSITIVE ? ColorPalette.Main.Get(ColorPalette.Type.HIGHLIGHT) : ColorPalette.Main.Get(ColorPalette.Type.WRONG);
+            var tmp = CreateUpgradeText(effect.variable.GetDisplayString(), color);
         }
     }
 
     private void DisplayUpgradeTree(Upgrade upgrade)
     {
         ClearTreeButtons();
-        foreach(var level in upgrade.data.levels)
+        /*
+        foreach(var level in upgrade.levels)
         {
             var btn = CreateTreeButton();
             btn.Icon = level.icon;
@@ -139,5 +139,6 @@ public class UnlockUpgradeView : View
                 DisplayUpgradeText(level);
             }
         }
+        */
     }
 }

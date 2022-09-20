@@ -12,6 +12,7 @@ public abstract class Ability : MonoBehaviourExtended
     public string name_ability;
     [TextArea] public string desc_ability;
     public Sprite sprite_icon;
+    public List<AbilityVariable> variables = new List<AbilityVariable>();
 
     public enum Type { DASH, SPLIT, CHARGE, EXPLODE }
     public Ability[] Modifiers { get; protected set; } = new Ability[ConstVars.COUNT_MODIFIERS];
@@ -39,8 +40,10 @@ public abstract class Ability : MonoBehaviourExtended
 
     private void ApplyUpgrades()
     {
+        /*
         UpgradeController.Instance.Database.upgrades.Select(data => UpgradeController.Instance.GetUpgrade(data.type))
             .ToList().ForEach(upgrade => ApplyUpgrade(upgrade));
+        */
     }
 
     private void ApplyModifiers()

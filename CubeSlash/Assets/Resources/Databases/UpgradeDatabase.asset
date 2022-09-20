@@ -13,12 +13,8 @@ MonoBehaviour:
   m_Name: UpgradeDatabase
   m_EditorClassIdentifier: 
   upgrades:
-  - {fileID: 11400000, guid: 1c1611e658df6df45af8d182fb7f47a9, type: 2}
-  - {fileID: 11400000, guid: 1568008d1e3be3745ad45ea19adbc0fd, type: 2}
-  - {fileID: 11400000, guid: dae6fe909ddb7b048b6e5c89f3fff7c1, type: 2}
-  - {fileID: 11400000, guid: dad4f38ebdabc2d42a94591f8383ec74, type: 2}
-  - {fileID: 11400000, guid: 232a8c03f851423478deef39cd5fcf82, type: 2}
-  - {fileID: 11400000, guid: d81917483578e5e43b5cda1b7d45bc76, type: 2}
-  - {fileID: 11400000, guid: a71fa5fd9a51dee40b143ed189f3cdc1, type: 2}
-  - {fileID: 11400000, guid: 01f1bb4212265594bb19e7af533100be, type: 2}
-  - {fileID: 11400000, guid: fa950c1836d4fdb46929241d3e60d5cf, type: 2}
+  - {fileID: 11400000, guid: f13bb97eff1ad4c429f00007c58e44ff, type: 2}
+  - {fileID: 11400000, guid: 2355c913f676f5e4587a84f47259cd47, type: 2}
+  - {fileID: 11400000, guid: 2913fb3a9eb9ac748b36b1ccc2e54278, type: 2}
+  trees:
+  - {fileID: 11400000, guid: 1d0b7df5b10ca924e91f9b88885a39f2, type: 2}

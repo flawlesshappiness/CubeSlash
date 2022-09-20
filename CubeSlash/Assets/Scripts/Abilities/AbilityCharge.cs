@@ -61,7 +61,7 @@ public class AbilityCharge : Ability
     public override void ApplyUpgrade(Upgrade upgrade)
     {
         base.ApplyUpgrade(upgrade);
-
+        /*
         if (upgrade.data.type == UpgradeData.Type.CHARGE_AIM)
         {
             if (upgrade.level >= 1)
@@ -94,6 +94,7 @@ public class AbilityCharge : Ability
 
             KillsReduceCooldown = upgrade.level >= 3;
         }
+        */
     }
 
     public override void ApplyModifier(Ability modifier)

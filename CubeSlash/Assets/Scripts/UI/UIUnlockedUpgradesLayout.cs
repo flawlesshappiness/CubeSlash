@@ -6,7 +6,7 @@ public class UIUnlockedUpgradesLayout : MonoBehaviour
 {
     [SerializeField] private UIIconButton temp_btn;
 
-    public System.Action<UpgradeData.Level> OnUpgradeLevelSelected;
+    public System.Action<Upgrade> OnUpgradeLevelSelected;
 
     private List<UIIconButton> btns = new List<UIIconButton>();
 
@@ -19,6 +19,7 @@ public class UIUnlockedUpgradesLayout : MonoBehaviour
 
         UpgradeController.Instance.GetUnlockedUpgrades().ForEach(u =>
         {
+            /*
             for (int i = 0; i < u.level; i++)
             {
                 var level = u.data.levels[i];
@@ -27,13 +28,14 @@ public class UIUnlockedUpgradesLayout : MonoBehaviour
                 btn.Icon = level.icon;
                 btn.Button.OnSelectedChanged += s => OnSelected(s, level);
             }
+            */
         });
 
-        void OnSelected(bool selected, UpgradeData.Level level)
+        void OnSelected(bool selected, Upgrade upgrade)
         {
             if (selected)
             {
-                OnUpgradeLevelSelected?.Invoke(level);
+                OnUpgradeLevelSelected?.Invoke(upgrade);
             }
         }
     }

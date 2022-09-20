@@ -177,6 +177,7 @@ public class Player : Character
     #region UPGRADES
     public void OnUpgradeSelected(Upgrade upgrade)
     {
+        /*
         if(upgrade.data.type == UpgradeData.Type.PLAYER_HEALTH)
         {
             if(upgrade.level == 1)
@@ -188,14 +189,17 @@ public class Player : Character
                 Health.AddHealth(HealthPoint.Type.FULL);
             }
         }
+        */
     }
 
     public void ReapplyUpgrades()
     {
         ResetUpgradeValues();
 
+        /*
         UpgradeController.Instance.Database.upgrades.Select(data => UpgradeController.Instance.GetUpgrade(data.type))
             .ToList().ForEach(upgrade => ApplyUpgrade(upgrade));
+        */
     }
 
     private void ResetUpgradeValues()
@@ -210,6 +214,7 @@ public class Player : Character
 
     private void ApplyUpgrade(Upgrade upgrade)
     {
+        /*
         if(upgrade.data.type == UpgradeData.Type.PLAYER_HEALTH)
         {
             if(upgrade.level >= 3)
@@ -254,6 +259,7 @@ public class Player : Character
                 GlobalCooldownMultiplier -= 0.2f;
             }
         }
+        */
     }
     #endregion
     #region ENEMY
