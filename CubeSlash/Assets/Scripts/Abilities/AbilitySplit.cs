@@ -21,6 +21,7 @@ public class AbilitySplit : Ability
         base.InitializeFirstTime();
     }
 
+    /*
     public override void ResetValues()
     {
         base.ResetValues();
@@ -31,11 +32,13 @@ public class AbilitySplit : Ability
         SizeProjectiles = 1.0f;
         Bursts = 1;
     }
+    */
 
+    /*
     public override void ApplyUpgrade(Upgrade upgrade)
     {
         base.ApplyUpgrade(upgrade);
-        /*
+
         if (upgrade.data.type == UpgradeData.Type.SPLIT_RATE)
         {
             if (upgrade.level >= 1)
@@ -78,7 +81,6 @@ public class AbilitySplit : Ability
                 CountProjectiles += 10;
             }
         }
-        */
     }
 
     public override void ApplyModifier(Ability modifier)
@@ -119,6 +121,7 @@ public class AbilitySplit : Ability
             charge.ChargeTime = 0.5f;
         }
     }
+    */
 
     public override void Pressed()
     {

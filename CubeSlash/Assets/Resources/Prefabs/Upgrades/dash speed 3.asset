@@ -10,26 +10,20 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 616189df85cb92d40806459b9c9111b7, type: 3}
-  m_Name: dash speed 1
+  m_Name: dash speed 3
   m_EditorClassIdentifier: 
-  id: dash_speed_001
-  name: Speed 2
-  icon: {fileID: 21300000, guid: 083237d4baf78d143b4251ca612f18dd, type: 3}
+  id: dash_speed_003
+  name: Speed 4
+  icon: {fileID: 21300000, guid: 588ac5b533407b74ab8b59d1f45e90db, type: 3}
   ability: 0
   effects:
   - type_effect: 0
     variable:
-      name: Speed
-      text_display: $ speed
-      type_value: 1
-      type_display: 1
+      name: TrailEnabled
+      text_display: Trail
+      type_value: 2
+      type_display: 3
       value_int: 0
       value_float: 5
-  - type_effect: 0
-    variable:
-      name: Distance
-      text_display: $ distance
-      type_value: 1
-      type_display: 1
-      value_int: 0
-      value_float: 1
+      value_bool: 1
+      can_edit_name: 1

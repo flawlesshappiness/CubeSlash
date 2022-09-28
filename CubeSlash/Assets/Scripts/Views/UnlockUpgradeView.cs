@@ -117,7 +117,7 @@ public class UnlockUpgradeView : View
         foreach(var effect in upgrade.effects)
         {
             var color = effect.type_effect == Upgrade.Effect.TypeEffect.POSITIVE ? ColorPalette.Main.Get(ColorPalette.Type.HIGHLIGHT) : ColorPalette.Main.Get(ColorPalette.Type.WRONG);
-            var tmp = CreateUpgradeText(effect.variable.GetDisplayString(), color);
+            var tmp = CreateUpgradeText(effect.variable.GetDisplayString(false), color);
         }
     }
 

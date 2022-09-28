@@ -47,6 +47,7 @@ public class AbilityCharge : Ability
         });
     }
 
+    /*
     public override void ResetValues()
     {
         base.ResetValues();
@@ -61,7 +62,7 @@ public class AbilityCharge : Ability
     public override void ApplyUpgrade(Upgrade upgrade)
     {
         base.ApplyUpgrade(upgrade);
-        /*
+
         if (upgrade.data.type == UpgradeData.Type.CHARGE_AIM)
         {
             if (upgrade.level >= 1)
@@ -94,7 +95,6 @@ public class AbilityCharge : Ability
 
             KillsReduceCooldown = upgrade.level >= 3;
         }
-        */
     }
 
     public override void ApplyModifier(Ability modifier)
@@ -127,6 +127,7 @@ public class AbilityCharge : Ability
             Type.SPLIT => Knockback - 10,
         };
     }
+    */
 
     public override void Pressed()
     {
@@ -206,7 +207,7 @@ public class AbilityCharge : Ability
 
             if (KillsReduceCooldown)
             {
-                var time = Mathf.Clamp(CooldownTime - 0.1f * count_hits, 0, float.MaxValue);
+                var time = Mathf.Clamp(Cooldown - 0.1f * count_hits, 0, float.MaxValue);
                 StartCooldown(time);
             }
             else

@@ -220,7 +220,7 @@ public class UpgradeNodeTreeWindow : NodeEditorWindow
             node.AddProperty("Name", upgrade.name, false);
             foreach(var effect in upgrade.effects)
             {
-                node.AddProperty("Effect: ", effect.variable.GetDisplayString(), false);
+                node.AddProperty("Effect: ", effect.variable.GetDisplayString(true), false);
             }
             Save();
         }

@@ -15,5 +15,21 @@ MonoBehaviour:
   id: dash_speed_002
   name: Speed 3
   icon: {fileID: 21300000, guid: 588ac5b533407b74ab8b59d1f45e90db, type: 3}
-  desc_positive: []
-  desc_negative: []
+  ability: 0
+  effects:
+  - type_effect: 0
+    variable:
+      name: Speed
+      text_display: $ speed
+      type_value: 1
+      type_display: 1
+      value_int: 0
+      value_float: 5
+  - type_effect: 0
+    variable:
+      name: Charges
+      text_display: $ dash charges
+      type_value: 0
+      type_display: 0
+      value_int: 1
+      value_float: 0

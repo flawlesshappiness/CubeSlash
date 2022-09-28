@@ -13,10 +13,10 @@ public abstract class Ability : MonoBehaviourExtended
     [TextArea] public string desc_ability;
     public Sprite sprite_icon;
     public List<AbilityVariable> variables = new List<AbilityVariable>();
+    public List<AbilityModifierEffects> modifier_effects = new List<AbilityModifierEffects>();
 
     public enum Type { DASH, SPLIT, CHARGE, EXPLODE }
     public Ability[] Modifiers { get; protected set; } = new Ability[ConstVars.COUNT_MODIFIERS];
-
     public Player Player { get; set; }
     public bool IsPressed { get; set; }
     public bool Equipped { get; set; }
@@ -25,10 +25,46 @@ public abstract class Ability : MonoBehaviourExtended
     public float TimeCooldownStart { get; private set; }
     public float TimeCooldownEnd { get; private set; }
     public float TimeCooldownLeft { get { return OnCooldown ? TimeCooldownEnd - Time.time : 0f; } }
-    protected float CooldownTime { get; set; }
     public bool OnCooldown { get { return Time.time < TimeCooldownEnd; } }
     public bool InUse { get; protected set; }
     public float CooldownPercentage { get { return (Time.time - TimeCooldownStart) / (TimeCooldownEnd - TimeCooldownStart); } }
+
+    private Dictionary<string, AbilityValue> values = new Dictionary<string, AbilityValue>();
+
+    // Values
+    public float Cooldown { get; private set; }
+
+    private void OnValidate()
+    {
+        // Add modifier effects
+        var types = System.Enum.GetValues(typeof(Type)).Cast<Type>().ToList();
+        foreach(var type in types)
+        {
+            if(!modifier_effects.Any(e => e.type == type))
+            {
+                modifier_effects.Add(new AbilityModifierEffects { type = type });
+            }
+        }
+
+        // Add variables
+        if(!variables.Any(v => v.name == "Cooldown"))
+        {
+            variables.Add(new AbilityVariable
+            {
+                name = "Cooldown",
+                text_display = "$s cooldown",
+                type_display = AbilityVariable.DisplayType.FLOAT,
+                type_value = AbilityVariable.ValueType.FLOAT,
+                can_edit_name = false,
+            });
+        }
+    }
+
+    public virtual void InitializeFirstTime() { }
+    public virtual void OnValuesApplied() 
+    {
+        Cooldown = GetFloatValue("Cooldown");
+    }
 
     #region APPLY
     public void ApplyActive()
@@ -36,26 +72,39 @@ public abstract class Ability : MonoBehaviourExtended
         ResetValues();
         ApplyUpgrades();
         ApplyModifiers();
+        //
+        OnValuesApplied();
+    }
+
+    public void ResetValues()
+    {
+        values.Clear();
+        foreach (var v in variables)
+        {
+            var value = new AbilityValue(v);
+            values.Add(v.name, value);
+        }
     }
 
     private void ApplyUpgrades()
     {
-        /*
-        UpgradeController.Instance.Database.upgrades.Select(data => UpgradeController.Instance.GetUpgrade(data.type))
-            .ToList().ForEach(upgrade => ApplyUpgrade(upgrade));
-        */
+        UpgradeController.Instance.GetUnlockedUpgrades().ForEach(info => 
+        {
+            foreach(var effect in info.upgrade.effects)
+            {
+                var value = values[effect.variable.name];
+                value.AddValue(effect.variable);
+            }
+        });
     }
 
     private void ApplyModifiers()
     {
-        Modifiers.Where(m => m != null)
-            .ToList().ForEach(m => ApplyModifier(m));
+        Modifiers.Where(m => m != null).ToList().ForEach(m => 
+        { 
+            // Apply modifier variables
+        });
     }
-
-    public virtual void InitializeFirstTime() { }
-    public virtual void ResetValues() { }
-    public virtual void ApplyUpgrade(Upgrade upgrade) { }
-    public virtual void ApplyModifier(Ability modifier) { }
     #endregion
     #region INPUT
     public virtual void Pressed()
@@ -89,7 +138,7 @@ public abstract class Ability : MonoBehaviourExtended
     }
     #endregion
     #region COOLDOWN
-    public void StartCooldown() => StartCooldown(CooldownTime);
+    public void StartCooldown() => StartCooldown(GetFloatValue("Cooldown"));
 
     public void StartCooldown(float time)
     {
@@ -132,5 +181,13 @@ public abstract class Ability : MonoBehaviourExtended
     {
         return (T)Modifiers.FirstOrDefault(m => m != null && m.type == type);
     }
+    #endregion
+    #region VALUES
+    public int GetIntValue(string name) => values[name].GetIntValue();
+    public float GetFloatValue(string name) => values[name].GetFloatValue();
+    public bool GetBoolValue(string name) => values[name].GetBoolValue();
+    public void AddValue(string name, int value) => values[name].AddValue(value);
+    public void AddValue(string name, float value) => values[name].AddValue(value);
+    public void AddValue(string name, bool value) => values[name].AddValue(value);
     #endregion
 }

@@ -2,23 +2,23 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class AbilityDash : Ability
 {
     private bool Dashing { get; set; }
     private Vector3 PositionOrigin { get; set; }
     private Vector3 Direction { get; set; }
-    private float Distance { get; set; }
-    private float DistanceExtendPerKill { get; set; }
-    private float Speed { get; set; }
-    private float RadiusTrigger { get; set; }
-    private float RadiusDamage { get; set; }
-    private float RadiusPush { get; set; }
-    private float ForcePush { get; set; }
-    private float DistanceExtend { get; set; }
 
-    // Upgrades
-    public bool HasTrailUpgrade { get; set; }
+    // Values
+    public float Distance { get; private set; }
+    public float Speed { get; private set; }
+    public float RadiusDamage { get; private set; }
+    public float RadiusKnockback { get; private set; }
+    public float ForceKnockback { get; private set; }
+    public float CooldownOnHit { get; private set; }
+    public int Charges { get; private set; }
+    public bool TrailEnabled { get; private set; }
 
     [Header("DASH")]
     [SerializeField] private AbilityDashClone template_clone;
@@ -30,103 +30,18 @@ public class AbilityDash : Ability
         template_clone.gameObject.SetActive(false);
     }
 
-    public override void ResetValues()
+    public override void OnValuesApplied()
     {
-        base.ResetValues();
-        CooldownTime = 0.75f;
-        Speed = 30f;
-        Distance = 5f;
-        DistanceExtendPerKill = 0;
-        RadiusTrigger = 1;
-        RadiusDamage = 1.0f;
-        RadiusPush = 12;
-        ForcePush = 300;
-    }
+        base.OnValuesApplied();
 
-    public override void ApplyUpgrade(Upgrade upgrade)
-    {
-        base.ApplyUpgrade(upgrade);
-        /*
-        if(upgrade.data.type == UpgradeData.Type.DASH_DISTANCE)
-        {
-            if(upgrade.level >= 1)
-            {
-                RadiusDamage += 1.0f;
-            }
-
-            if(upgrade.level >= 2)
-            {
-                RadiusDamage += 1.0f;
-                Distance += 2f;
-            }
-
-            if (upgrade.level >= 3)
-            {
-                RadiusDamage += 1.0f;
-                DistanceExtendPerKill += 1f;
-            }
-        }
-
-        if (upgrade.data.type == UpgradeData.Type.DASH_TRAIL)
-        {
-            if (upgrade.level >= 1)
-            {
-                Speed += 3.0f;
-            }
-
-            if (upgrade.level >= 2)
-            {
-                Speed += 3.0f;
-                Distance += 2f;
-            }
-
-            if(upgrade.level >= 3)
-            {
-                Speed += 3.0f;
-            }
-
-            HasTrailUpgrade = upgrade.level >= 3;
-        }
-        */
-    }
-
-    public override void ApplyModifier(Ability modifier)
-    {
-        base.ApplyModifier(modifier);
-
-        CooldownTime = modifier.type switch
-        {
-            Type.DASH => CooldownTime + 0.5f,
-            Type.CHARGE => CooldownTime - 0.5f,
-            Type.SPLIT => CooldownTime + 2.0f,
-        };
-
-        Distance = modifier.type switch
-        {
-            Type.DASH => Distance + 1.0f,
-            Type.CHARGE => Distance + 2.0f,
-            Type.SPLIT => Distance + 1.0f,
-        };
-
-        Speed = modifier.type switch
-        {
-            Type.DASH => Speed + 10,
-            Type.CHARGE => Speed + 30,
-            Type.SPLIT => Speed + 0,
-        };
-
-        RadiusTrigger = modifier.type switch
-        {
-            Type.DASH => RadiusTrigger + 0.5f,
-            Type.CHARGE => RadiusTrigger + 0.5f,
-            Type.SPLIT => RadiusTrigger + 2,
-        };
-
-        if(modifier.type == Type.CHARGE)
-        {
-            var charge = (AbilityCharge)modifier;
-            charge.ChargeTime = 0.5f;
-        }
+        Distance = GetFloatValue("Distance");
+        Speed = GetFloatValue("Speed");
+        RadiusDamage = GetFloatValue("RadiusDamage");
+        RadiusKnockback = GetFloatValue("RadiusKnockback");
+        ForceKnockback = GetFloatValue("ForceKnockback");
+        CooldownOnHit = GetFloatValue("CooldownOnHit");
+        Charges = GetIntValue("Charges");
+        TrailEnabled = GetBoolValue("TrailEnabled");
     }
 
     public override void Pressed()
@@ -174,9 +89,6 @@ public class AbilityDash : Ability
         Player.InvincibilityLock.AddLock(nameof(AbilityDash));
         Player.Body.gameObject.SetActive(false);
 
-        var extend = DistanceExtend;
-        DistanceExtend = 0;
-
         var directions = HasModifier(Type.SPLIT) ? AbilitySplit.GetSplitDirections(3, 25, Player.MoveDirection) : new List<Vector3> { Player.MoveDirection };
         for (int i = 0; i < directions.Count; i++)
         {
@@ -209,9 +121,8 @@ public class AbilityDash : Ability
             {
                 var velocity = direction * Speed;
                 var pos_origin = transform.position;
-                var dist_target = Distance + extend;
 
-                while (victim == null && Vector3.Distance(clone.transform.position, pos_origin) < dist_target)
+                while (victim == null && Vector3.Distance(clone.transform.position, pos_origin) < Distance)
                 {
                     clone.Rigidbody.velocity = velocity;
                     clone.DashUpdate();
@@ -232,7 +143,6 @@ public class AbilityDash : Ability
             if (has_player)
             {
                 Dashing = false;
-                Player.InvincibilityLock.RemoveLock(nameof(AbilityDash));
                 Player.MovementLock.RemoveLock(nameof(AbilityDash));
                 Player.DragLock.RemoveLock(nameof(AbilityDash));
                 StartCooldown();
@@ -246,10 +156,18 @@ public class AbilityDash : Ability
             if (hit_anything || HasModifier(Type.CHARGE))
             {
                 HitEnemiesArea(Player.transform.position, RadiusDamage);
-                Player.PushEnemiesInArea(Player.transform.position, RadiusPush, ForcePush, ac_push_enemies);
+                Player.PushEnemiesInArea(Player.transform.position, RadiusKnockback, ForceKnockback, ac_push_enemies);
+                Player.Knockback(-Player.MoveDirection.normalized * 500, true, true);
             }
 
             clone.Destroy();
+
+            StartCoroutine(EndInvincibilityCr());
+            IEnumerator EndInvincibilityCr()
+            {
+                yield return new WaitForSeconds(0.2f);
+                Player.InvincibilityLock.RemoveLock(nameof(AbilityDash));
+            }
         }
     }
 
@@ -262,7 +180,6 @@ public class AbilityDash : Ability
             .ToList().ForEach(k =>
             {
                 k.Kill();
-                DistanceExtend += DistanceExtendPerKill;
                 count++;
             });
 

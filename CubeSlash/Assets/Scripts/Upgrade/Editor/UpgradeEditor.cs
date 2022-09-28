@@ -96,13 +96,15 @@ public class UpgradeEditor : Editor
         if (GUILayout.Button(GUIHelper.GetTexture(GUIHelper.GUITexture.PLUS), GUILayout.Width(30), GUILayout.Height(30)))
         {
             upgrade.effects.Add(new Upgrade.Effect());
+            EditorUtility.SetDirty(upgrade);
         }
         GUILayout.EndHorizontal();
 
-        foreach(var effect in upgrade.effects.ToList())
+        var ability = db_ability.GetAbility(upgrade.ability);
+        foreach (var effect in upgrade.effects.ToList())
         {
             EditorGUI.BeginChangeCheck();
-            DrawEffect(effect);
+            DrawEffect(ability, effect, () => upgrade.effects.Remove(effect));
             if (EditorGUI.EndChangeCheck())
             {
                 EditorUtility.SetDirty(upgrade);
@@ -110,11 +112,10 @@ public class UpgradeEditor : Editor
         }
     }
 
-    private void DrawEffect(Upgrade.Effect effect)
+    public static void DrawEffect(Ability ability, Upgrade.Effect effect, System.Action onDelete)
     {
         GUILayout.BeginHorizontal();
 
-        var ability = db_ability.GetAbility(upgrade.ability);
         var variable = ability.variables.FirstOrDefault(v => v.name == effect.variable.name) ??
             (ability.variables.Count > 0 ? ability.variables[0] : null);
 
@@ -124,7 +125,7 @@ public class UpgradeEditor : Editor
         GUIHelper.PushColor(ColorPalette.Main.Get(type_color));
         var ali_prev = GUI.skin.box.alignment;
         GUI.skin.box.alignment = TextAnchor.MiddleCenter;
-        var text = variable != null ? effect.variable.GetDisplayString() : "No variable";
+        var text = variable != null ? effect.variable.GetDisplayString(true) : "No variable";
         GUILayout.Box(text, GUILayout.Height(30));
         GUI.skin.box.alignment = ali_prev;
         GUIHelper.PopColor();
@@ -132,26 +133,24 @@ public class UpgradeEditor : Editor
         GUILayout.FlexibleSpace();
         if (GUILayout.Button(GUIHelper.GetTexture(GUIHelper.GUITexture.MINUS), GUILayout.Width(30), GUILayout.Height(30)))
         {
-            upgrade.effects.Remove(effect);
+            //upgrade.effects.Remove(effect);
+            onDelete?.Invoke();
         }
         GUILayout.EndHorizontal();
 
-        // Text
-        /*
-        GUILayout.BeginHorizontal();
-        GUILayout.Label("Text", GUILayout.Width(100));
-        effect.variable.text_display = GUILayout.TextField(effect.variable.text_display);   
-        GUILayout.EndHorizontal();
-        */
-
+        // Variable
         if(variable != null)
         {
             var variables = ability.variables.Select(v => v.name.ToString()).ToArray();
             var idx_variable = ability.variables.IndexOf(variable);
 
             GUILayout.BeginHorizontal();
-            EditorGUILayout.Popup(idx_variable, variables);
-            GUILayout.EndHorizontal();
+            EditorGUI.BeginChangeCheck();
+            idx_variable = EditorGUILayout.Popup(idx_variable, variables);
+            if (EditorGUI.EndChangeCheck())
+            {
+                variable = ability.variables[idx_variable];
+            }
 
             effect.variable.name = variable.name;
             effect.variable.text_display = variable.text_display;
@@ -159,8 +158,6 @@ public class UpgradeEditor : Editor
             effect.variable.type_value = variable.type_value;
 
             // Value
-            GUILayout.BeginHorizontal();
-
             if (effect.variable.type_value == AbilityVariable.ValueType.INT)
             {
                 effect.variable.value_int = EditorGUILayout.IntField(effect.variable.value_int);
@@ -168,6 +165,10 @@ public class UpgradeEditor : Editor
             else if (effect.variable.type_value == AbilityVariable.ValueType.FLOAT)
             {
                 effect.variable.value_float = EditorGUILayout.FloatField(effect.variable.value_float);
+            }
+            else if(effect.variable.type_value == AbilityVariable.ValueType.BOOL)
+            {
+                effect.variable.value_bool = EditorGUILayout.Toggle(effect.variable.value_bool);
             }
             else
             {

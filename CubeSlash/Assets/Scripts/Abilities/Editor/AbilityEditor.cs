@@ -1,5 +1,7 @@
+using System.Linq;
 using UnityEditor;
 using UnityEngine;
+using static Upgrade;
 
 [CustomEditor(typeof(Ability), true)]
 public class AbilityEditor : Editor
@@ -33,6 +35,18 @@ public class AbilityEditor : Editor
         GUILayout.Label("Description", GUILayout.Width(100));
         ability.desc_ability = GUILayout.TextField(ability.desc_ability);
         GUILayout.EndHorizontal();
+
+        // Variables
+        if(GUILayout.Button($"Variables ({ability.variables.Count})", GUILayout.Height(30)))
+        {
+            AbilityVariableWindow.Show(ability);
+        }
+
+        // Modifiers
+        if (GUILayout.Button($"Modifiers ({ability.modifier_effects.Count})", GUILayout.Height(30)))
+        {
+            AbilityModifierEffectsWindow.Show(ability);
+        }
 
         // Base
         foldBase = EditorGUILayout.Foldout(foldBase, "Base");

@@ -19,9 +19,9 @@ MonoBehaviour:
   effects:
   - type_effect: 0
     variable:
-      name: Distance
-      text_display: $ distance
+      name: Speed
+      text_display: $ speed
       type_value: 1
       type_display: 1
       value_int: 0
-      value_float: 1
+      value_float: 5

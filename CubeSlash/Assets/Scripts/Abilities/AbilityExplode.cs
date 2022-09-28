@@ -20,6 +20,7 @@ public class AbilityExplode : Ability
         base.InitializeFirstTime();
     }
 
+    /*
     public override void ResetValues()
     {
         base.ResetValues();
@@ -29,16 +30,7 @@ public class AbilityExplode : Ability
         Knockback = 200;
         CountRings = 1;
     }
-
-    public override void ApplyModifier(Ability modifier)
-    {
-        base.ApplyModifier(modifier);
-    }
-
-    public override void ApplyUpgrade(Upgrade upgrade)
-    {
-        base.ApplyUpgrade(upgrade);
-    }
+    */
 
     public override void Pressed()
     {

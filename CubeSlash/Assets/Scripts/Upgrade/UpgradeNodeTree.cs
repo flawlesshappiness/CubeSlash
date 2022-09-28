@@ -9,7 +9,7 @@ public class UpgradeNodeTree : ScriptableObject
     public bool require_ability;
     public Ability.Type ability_type_required;
     public List<UpgradeNodeData> nodes = new List<UpgradeNodeData>();
-    private int id_node = 0;
+    public int id_node = 0;
 
     public UpgradeNodeData GetNode(int id) => nodes.FirstOrDefault(node => node.id == id);
     public UpgradeNodeData CreateNodeData()

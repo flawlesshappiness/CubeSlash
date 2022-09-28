@@ -15,6 +15,6 @@ public class Upgrade : ScriptableObject
     {
         public enum TypeEffect { POSITIVE, NEGATIVE }
         public TypeEffect type_effect;
-        public AbilityVariable variable = new AbilityVariable(); // This should probably mimic AbilityVariable, but load id from ability instead of writing it yourself
+        public AbilityVariable variable = new AbilityVariable();
     }
 }

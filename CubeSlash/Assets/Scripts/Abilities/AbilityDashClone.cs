@@ -19,7 +19,7 @@ public class AbilityDashClone : MonoBehaviourExtended
         HasPlayer = has_player;
 
         // Trail
-        Trail.gameObject.SetActive(Dash.HasTrailUpgrade);
+        Trail.gameObject.SetActive(Dash.TrailEnabled);
         Trail.ResetTrail();
 
         // Camera
@@ -59,7 +59,7 @@ public class AbilityDashClone : MonoBehaviourExtended
 
     private void UpdateTrail()
     {
-        if (Dash.HasTrailUpgrade)
+        if (Dash.TrailEnabled)
         {
             Trail.UpdateTrail();
         }

@@ -9779,6 +9779,23 @@ MonoBehaviour:
   desc_ability: After a brief delay, damage enemies at the edge of a ring around
     you
   sprite_icon: {fileID: 21300000, guid: a3388fc2c05b33f48b3888711bd48aad, type: 3}
+  variables:
+  - name: Cooldown
+    text_display: $s cooldown
+    type_value: 1
+    type_display: 1
+    value_int: 0
+    value_float: 0
+    can_edit_name: 0
+  modifier_effects:
+  - type: 0
+    effects: []
+  - type: 1
+    effects: []
+  - type: 2
+    effects: []
+  - type: 3
+    effects: []
   ps_charge: {fileID: 4787254983571835076}
   ps_explode: {fileID: 8603852486622223825}
   ps_explode_point: {fileID: 8969493615852723287}
