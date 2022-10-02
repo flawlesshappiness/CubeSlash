@@ -18,6 +18,7 @@ public class UpgradeEditor : Editor
 
     public override void OnInspectorGUI()
     {
+        EditorGUI.BeginChangeCheck();
         // Icon
         GUILayout.BeginHorizontal();
         GUILayout.FlexibleSpace();
@@ -42,6 +43,11 @@ public class UpgradeEditor : Editor
         GUILayout.Label("Ability", GUILayout.Width(100));
         upgrade.ability = (Ability.Type)EditorGUILayout.EnumPopup(upgrade.ability);
         GUILayout.EndHorizontal();
+
+        if (EditorGUI.EndChangeCheck())
+        {
+            EditorUtility.SetDirty(upgrade);
+        }
 
         // Effects
         GUILayout.Space(20);

@@ -9,28 +9,28 @@ public class AbilityExplode : Ability
     [SerializeField] private ParticleSystem ps_charge;
     [SerializeField] private ParticleSystem ps_explode;
     [SerializeField] private ParticleSystem ps_explode_point;
+
+    // Values
     public float Delay { get; private set; }
     public float Radius { get; private set; }
     public float Width { get; private set; }
     public float Knockback { get; private set; }
-    public float CountRings { get; private set; }
+    public float Rings { get; private set; }
 
     public override void InitializeFirstTime()
     {
         base.InitializeFirstTime();
     }
 
-    /*
-    public override void ResetValues()
+    public override void OnValuesApplied()
     {
-        base.ResetValues();
-        Delay = 0.5f;
-        Radius = 4f;
-        Width = 1.5f;
-        Knockback = 200;
-        CountRings = 1;
+        base.OnValuesApplied();
+        Delay = GetFloatValue("Delay");
+        Radius = GetFloatValue("Radius");
+        Width = GetFloatValue("Width");
+        Knockback = GetFloatValue("Knockback");
+        Rings = GetFloatValue("Rings");
     }
-    */
 
     public override void Pressed()
     {
@@ -40,7 +40,7 @@ public class AbilityExplode : Ability
     public override void Released()
     {
         base.Released();
-        for (int i = 0; i < CountRings; i++)
+        for (int i = 0; i < Rings; i++)
         {
             StartCoroutine(ExplodeCr(Radius + Width * i, Width, 0.2f * i));
         }

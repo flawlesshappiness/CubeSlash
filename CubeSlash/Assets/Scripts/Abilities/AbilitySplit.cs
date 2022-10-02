@@ -1,127 +1,45 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class AbilitySplit : Ability
 {
     [SerializeField] private Projectile prefab_projectile;
+    private bool Firing { get; set; }
+    private float time_fire;
+
+    // Values
     private int Bursts { get; set; }
     private int CountProjectiles { get; set; }
-    private float SpeedProjectile { get; set; }
+    private float SpeedProjectiles { get; set; }
     private float ArcProjectiles { get; set; }
     private float SizeProjectiles { get; set; }
-    private bool Firing { get; set; }
-
-    private bool Arc360;
-
-    private float time_fire;
+    private float RadiusKnockback { get; set; }
+    private float ForceKnockback { get; set; }
+    private bool SplitProjectiles { get; set; }
+    private bool ExplodeProjectiles { get; set; }
 
     public override void InitializeFirstTime()
     {
         base.InitializeFirstTime();
     }
 
-    /*
-    public override void ResetValues()
+    public override void OnValuesApplied()
     {
-        base.ResetValues();
-        CooldownTime = 0.5f;
-        CountProjectiles = 3;
-        SpeedProjectile = 25;
-        ArcProjectiles = 15f;
-        SizeProjectiles = 1.0f;
-        Bursts = 1;
+        base.OnValuesApplied();
+
+        CountProjectiles = GetIntValue("CountProjectiles");
+        SpeedProjectiles = GetFloatValue("SpeedProjectiles");
+        ArcProjectiles = GetFloatValue("ArcProjectiles");
+        SizeProjectiles = GetFloatValue("SizeProjectiles");
+        RadiusKnockback = GetFloatValue("RadiusKnockback");
+        ForceKnockback = GetFloatValue("ForceKnockback");
+        SizeProjectiles = GetFloatValue("SizeProjectiles");
+        Bursts = GetIntValue("Bursts");
+        ExplodeProjectiles = GetBoolValue("ExplodeProjectiles");
+        SplitProjectiles = GetBoolValue("SplitProjectiles");
     }
-    */
-
-    /*
-    public override void ApplyUpgrade(Upgrade upgrade)
-    {
-        base.ApplyUpgrade(upgrade);
-
-        if (upgrade.data.type == UpgradeData.Type.SPLIT_RATE)
-        {
-            if (upgrade.level >= 1)
-            {
-                SpeedProjectile += 5f;
-                ArcProjectiles -= 5;
-            }
-
-            if (upgrade.level >= 2)
-            {
-                SpeedProjectile += 5f;
-                ArcProjectiles -= 5;
-            }
-
-            if (upgrade.level >= 3)
-            {
-                Bursts += 2;
-            }
-        }
-
-        if (upgrade.data.type == UpgradeData.Type.SPLIT_ARC)
-        {
-            if (upgrade.level >= 1)
-            {
-                CooldownTime += 0.2f;
-                CountProjectiles += 1;
-            }
-
-            if (upgrade.level >= 2)
-            {
-                CooldownTime += 0.2f;
-                CountProjectiles += 1;
-            }
-
-            Arc360 = upgrade.level >= 3;
-
-            if(upgrade.level >= 3)
-            {
-                CooldownTime += 0.2f;
-                CountProjectiles += 10;
-            }
-        }
-    }
-
-    public override void ApplyModifier(Ability modifier)
-    {
-        base.ApplyModifier(modifier);
-
-        CooldownTime = modifier.type switch
-        {
-            Type.DASH => CooldownTime - 0.2f,
-            Type.CHARGE => CooldownTime + 1.0f,
-            Type.SPLIT => CooldownTime + 0.5f,
-        };
-
-        CountProjectiles = modifier.type switch
-        {
-            Type.DASH => CountProjectiles + 0,
-            Type.CHARGE => CountProjectiles + 0,
-            Type.SPLIT => CountProjectiles + 3,
-        };
-
-        SpeedProjectile = modifier.type switch
-        {
-            Type.DASH => SpeedProjectile + 10,
-            Type.CHARGE => SpeedProjectile + 0,
-            Type.SPLIT => SpeedProjectile + 0,
-        };
-
-        ArcProjectiles = modifier.type switch
-        {
-            Type.DASH => ArcProjectiles + 0,
-            Type.CHARGE => ArcProjectiles + 0,
-            Type.SPLIT => ArcProjectiles + 0,
-        };
-
-        if (modifier.type == Type.CHARGE)
-        {
-            var charge = (AbilityCharge)modifier;
-            charge.ChargeTime = 0.5f;
-        }
-    }
-    */
 
     public override void Pressed()
     {
@@ -140,7 +58,7 @@ public class AbilitySplit : Ability
         {
             for (int i = 0; i < count; i++)
             {
-                SpawnProjectiles();
+                ShootProjectiles();
                 yield return new WaitForSeconds(0.1f);
             }
         }
@@ -153,7 +71,7 @@ public class AbilitySplit : Ability
         if (charge)
         {
             charge.Released();
-            SpawnProjectiles();
+            ShootProjectiles();
         }
 
         Firing = false;
@@ -166,56 +84,66 @@ public class AbilitySplit : Ability
             if(Time.time > time_fire)
             {
                 time_fire = Time.time + 0.1f;
-                SpawnProjectiles();
+                ShootProjectiles();
             }
         }
     }
 
-    private Projectile SpawnProjectile(Vector3 direction)
+    public static Projectile ShootProjectile(Projectile prefab, Vector3 start_position, Vector3 direction, float size, float speed, System.Action<Projectile, IKillable> onHit = null)
     {
-        var p = Instantiate(prefab_projectile);
-        p.transform.position = Player.transform.position;
-        p.transform.localScale = Vector3.one * SizeProjectiles;
-        p.Rigidbody.velocity = direction * SpeedProjectile;
+        var p = Instantiate(prefab);
+        p.transform.position = start_position;
+        p.transform.localScale = Vector3.one * size;
+        p.Rigidbody.velocity = direction * speed;
         p.SetDirection(direction);
 
         p.OnHit += c =>
         {
             var k = c.GetComponentInParent<IKillable>();
-            if(k != null)
+            if (k != null)
             {
-                if (k.CanKill())
-                {
-                    k.Kill();
-                }
-
-                if (!p.Piercing)
-                {
-                    p.Kill();
-                }
+                onHit?.Invoke(p, k);
+                if (k.CanKill()) k.Kill();
+                if (!p.Piercing) p.Kill();
             }
         };
 
         return p;
     }
 
-    private void SpawnProjectiles()
+    private void ShootProjectiles()
     {
         // Spawn projectiles
         var projectiles = new List<Projectile>();
         var forward = Player.MoveDirection;
-        var arc = Arc360 ? 175 : ArcProjectiles;
+        var arc = ArcProjectiles;
         var directions = GetSplitDirections(CountProjectiles, arc, forward);
         foreach(var direction in directions)
         {
-            var p = SpawnProjectile(direction);
+            var p = ShootProjectile(prefab_projectile, Player.transform.position, direction, SizeProjectiles, SpeedProjectiles, (p, k) =>
+            {
+                Player.PushEnemiesInArea(p.transform.position, RadiusKnockback, ForceKnockback);
+
+                if (SplitProjectiles)
+                {
+                    var count = 3;
+                    var angle_delta = 360f / count;
+                    for (int i = 0; i < count; i++)
+                    {
+                        var d = Quaternion.AngleAxis(angle_delta * i, Vector3.forward) * direction;
+                        ShootProjectile(prefab_projectile, p.transform.position, d, SizeProjectiles * 0.5f, SpeedProjectiles);
+                    }
+                }
+            });
             projectiles.Add(p);
         }
 
-        // Extra logic
+        // Setup projectiles
         foreach(var p in projectiles)
         {
-            SetupProjectileNormal(p);
+            p.Homing = false;
+            p.Lifetime = 0.75f;
+            p.Piercing = HasModifier(Type.CHARGE);
         }
 
         // Cooldown
@@ -243,12 +171,5 @@ public class AbilitySplit : Ability
             }
         }
         return directions;
-    }
-
-    private void SetupProjectileNormal(Projectile p)
-    {
-        p.Homing = false;
-        p.Lifetime = 0.75f;
-        p.Piercing = HasModifier(Type.CHARGE);
     }
 }

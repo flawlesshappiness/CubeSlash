@@ -37,6 +37,23 @@ public class UpgradeNodeTree : ScriptableObject
         return node.children.Select(id => GetNode(id)).ToList();
     }
 
+    public int GetNodeDepth(UpgradeNodeData node)
+    {
+        return RecSearch(GetRootNode(), 0);
+        int RecSearch(UpgradeNodeData current, int depth)
+        {
+            if (node == current) return depth;
+            var result = depth;
+            foreach (var child in GetNodeChildren(current))
+            {
+                var d = RecSearch(child, depth + 1);
+                if (d > result) result = d;
+            }
+            if (result > depth) return result;
+            return -1;
+        }
+    }
+
     public bool Contains(Upgrade upgrade) => Contains(upgrade.id);
     public bool Contains(string id) => nodes.Any(node => node.id_name == id);
 }

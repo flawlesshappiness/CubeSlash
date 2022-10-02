@@ -28,11 +28,13 @@ public abstract class Ability : MonoBehaviourExtended
     public bool OnCooldown { get { return Time.time < TimeCooldownEnd; } }
     public bool InUse { get; protected set; }
     public float CooldownPercentage { get { return (Time.time - TimeCooldownStart) / (TimeCooldownEnd - TimeCooldownStart); } }
+    public int CurrentCharges { get; set; }
 
     private Dictionary<string, AbilityValue> values = new Dictionary<string, AbilityValue>();
 
     // Values
     public float Cooldown { get; private set; }
+    public int Charges { get; private set; }
 
     private void OnValidate()
     {
@@ -58,12 +60,25 @@ public abstract class Ability : MonoBehaviourExtended
                 can_edit_name = false,
             });
         }
+
+        if(!variables.Any(v => v.name == "Charges"))
+        {
+            variables.Add(new AbilityVariable
+            {
+                name = "Charges",
+                text_display = "$ charges",
+                type_display = AbilityVariable.DisplayType.INT,
+                type_value = AbilityVariable.ValueType.INT,
+                can_edit_name = false,
+            });
+        }
     }
 
     public virtual void InitializeFirstTime() { }
     public virtual void OnValuesApplied() 
     {
         Cooldown = GetFloatValue("Cooldown");
+        Charges = GetIntValue("Charges");
     }
 
     #region APPLY
@@ -143,8 +158,23 @@ public abstract class Ability : MonoBehaviourExtended
     public void StartCooldown(float time)
     {
         InUse = false;
-        TimeCooldownStart = Time.time;
-        TimeCooldownEnd = TimeCooldownStart + time * Player.Instance.GlobalCooldownMultiplier;
+        CurrentCharges--;
+        if (CurrentCharges <= 0)
+        {
+            TimeCooldownStart = Time.time;
+            TimeCooldownEnd = TimeCooldownStart + time * Player.Instance.GlobalCooldownMultiplier;
+            StartCoroutine(WaitForCooldownCr());
+        }
+
+        IEnumerator WaitForCooldownCr()
+        {
+            while(Time.time < TimeCooldownEnd)
+            {
+                yield return null;
+            }
+
+            CurrentCharges = Charges;
+        }
     }
     #endregion
     #region MODIFIER

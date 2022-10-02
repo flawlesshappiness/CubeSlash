@@ -71,6 +71,7 @@ public class AbilityView : View
             slots_unlocked.Add(slot);
 
             slot.Button.onClick.AddListener(() => ClickSlot(slot));
+            slot.Button.OnHoverChanged += hovered => HoverSlot(slot, hovered);
             slot.Button.OnSelectedChanged += selected => SelectSlot(slot, selected);
         }
 
@@ -93,6 +94,7 @@ public class AbilityView : View
         slots.Add(equipment.Slot);
 
         equipment.Slot.Button.onClick.AddListener(() => ClickSlot(equipment.Slot));
+        equipment.Slot.Button.OnHoverChanged += hovered => HoverSlot(equipment.Slot, hovered);
         equipment.Slot.Button.OnSelectedChanged += selected => SelectSlot(equipment.Slot, selected);
 
         foreach (var slot in equipment.ModifierSlots)
@@ -131,6 +133,12 @@ public class AbilityView : View
         slot_move.SetAbility(temp);
 
         UpdateEquipment();
+    }
+
+    private void HoverSlot(UIAbilitySlot slot, bool hovered)
+    {
+        if (!hovered) return;
+        slot.Button.Select();
     }
 
     private void SelectSlot(UIAbilitySlot slot, bool selected)
@@ -191,37 +199,45 @@ public class AbilityView : View
             string s = a.name_ability;
             s += "\n" + a.desc_ability;
             tmp_desc.text = s;
+            DisplayInputAbility();
         }
         else
         {
-            tmp_desc.text = "";
+            var any_wrong = slots.Any(slot => slot.IsWrong);
+            var any_filled = equipments.Any(e => e.Slot.Ability != null);
+
+            if (any_wrong)
+            {
+                tmp_desc.text = "Some slots are " + "invalid".Color(ColorPalette.Main.Get(ColorPalette.Type.WRONG)) + ".";
+            }
+            else if (!any_filled)
+            {
+                tmp_desc.text = "Equip at least 1 ability to continue.";
+            }
+            else
+            {
+                tmp_desc.text = "";
+            }
+            DisplayInputNoAbility();
         }
     }
     #endregion
     #region INPUT
-    private void DisplayInputAbilitySelect()
+    private void DisplayInputAbility()
     {
-        layout_input.Clear();
-        layout_input.AddInput(PlayerInput.UIButtonType.NAV_UP_DOWN, "Navigate");
-        layout_input.AddInput(PlayerInput.UIButtonType.SOUTH, "Select");
-        layout_input.AddInput(PlayerInput.UIButtonType.WEST, "Unequip");
-        layout_input.AddInput(PlayerInput.UIButtonType.EAST, "Cancel");
+        ClearInputDisplay();
+        layout_input.AddInput(PlayerInput.UIButtonType.SOUTH, "Grab/Place");
+        layout_input.AddInput(PlayerInput.UIButtonType.NORTH, "Move");
     }
 
-    private void DisplayInputAbilityVariable()
+    private void DisplayInputNoAbility()
     {
-        layout_input.Clear();
-        layout_input.AddInput(PlayerInput.UIButtonType.NAV_LEFT_RIGHT, "Adjust");
-        layout_input.AddInput(PlayerInput.UIButtonType.SOUTH, "Confirm");
-        layout_input.AddInput(PlayerInput.UIButtonType.EAST, "Cancel");
+        ClearInputDisplay();
     }
 
-    private void DisplayInputNavigate()
+    private void ClearInputDisplay()
     {
         layout_input.Clear();
-        layout_input.AddInput(PlayerInput.UIButtonType.NAV_ALL, "Navigate");
-        layout_input.AddInput(PlayerInput.UIButtonType.SOUTH, "Select");
-        layout_input.AddInput(PlayerInput.UIButtonType.WEST, "Unequip");
     }
 
     private void PressStart(InputAction.CallbackContext context)

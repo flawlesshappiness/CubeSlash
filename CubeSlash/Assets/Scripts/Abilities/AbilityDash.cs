@@ -17,7 +17,6 @@ public class AbilityDash : Ability
     public float RadiusKnockback { get; private set; }
     public float ForceKnockback { get; private set; }
     public float CooldownOnHit { get; private set; }
-    public int Charges { get; private set; }
     public bool TrailEnabled { get; private set; }
 
     [Header("DASH")]
@@ -40,7 +39,6 @@ public class AbilityDash : Ability
         RadiusKnockback = GetFloatValue("RadiusKnockback");
         ForceKnockback = GetFloatValue("ForceKnockback");
         CooldownOnHit = GetFloatValue("CooldownOnHit");
-        Charges = GetIntValue("Charges");
         TrailEnabled = GetBoolValue("TrailEnabled");
     }
 
@@ -145,7 +143,9 @@ public class AbilityDash : Ability
                 Dashing = false;
                 Player.MovementLock.RemoveLock(nameof(AbilityDash));
                 Player.DragLock.RemoveLock(nameof(AbilityDash));
-                StartCooldown();
+
+                var cd = hit_anything ? Cooldown * CooldownOnHit : Cooldown;
+                StartCooldown(cd);
 
                 CameraController.Instance.Target = Player.transform;
                 Player.transform.position = clone.transform.position;

@@ -270,7 +270,7 @@ public class Player : Character
         Damage(enemy.transform.position);
     }
 
-    public void PushEnemiesInArea(Vector3 position, float radius, float force, AnimationCurve curve_force = null)
+    public static void PushEnemiesInArea(Vector3 position, float radius, float force, AnimationCurve curve_force = null)
     {
         var hits = new List<Enemy>();
         foreach (var hit in Physics2D.OverlapCircleAll(position, radius))

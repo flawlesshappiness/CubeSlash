@@ -66,9 +66,11 @@ public class UpgradeController : Singleton
     public List<UpgradeInfo> GetUnlockableUpgrades()
     {
         return upgrades.Values
-            .Where(info => info.isUnlocked)
-            .SelectMany(info => info.children)
-            .Where(info => !IsUpgradeUnlocked(info.upgrade.id))
+            .Where(info => 
+                AbilityController.Instance.GetEquippedAbilities().Any(a => a.type == info.upgrade.ability) &&
+                !info.isUnlocked && 
+                (info.parents.Count == 0 || info.parents.Any(p => p.isUnlocked))
+            )
             .ToList();
     }
 

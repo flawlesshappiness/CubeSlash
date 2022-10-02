@@ -65,10 +65,12 @@ public class AbilityVariableWindow : EditorWindow
         GUIHelper.PopColor();
 
         GUILayout.FlexibleSpace();
+        GUI.enabled = variable.can_edit_name;
         if (GUILayout.Button(GUIHelper.GetTexture(GUIHelper.GUITexture.MINUS), GUILayout.Width(30), GUILayout.Height(30)))
         {
             ability.variables.Remove(variable);
         }
+        GUI.enabled = true;
         GUILayout.EndHorizontal();
 
         //  Name

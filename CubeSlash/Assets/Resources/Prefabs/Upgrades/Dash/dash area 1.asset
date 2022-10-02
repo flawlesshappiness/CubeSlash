@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 616189df85cb92d40806459b9c9111b7, type: 3}
-  m_Name: dash area 0
+  m_Name: dash area 1
   m_EditorClassIdentifier: 
-  id: dash_area_000
+  id: dash_area_001
   name: Area 1
   icon: {fileID: 21300000, guid: c47d07607041a9e46ac5a017fa569294, type: 3}
   ability: 0
@@ -25,3 +25,5 @@ MonoBehaviour:
       type_display: 1
       value_int: 0
       value_float: 0.5
+      value_bool: 0
+      can_edit_name: 1

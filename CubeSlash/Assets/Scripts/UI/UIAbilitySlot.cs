@@ -5,12 +5,12 @@ public class UIAbilitySlot : MonoBehaviour
 {
     [SerializeField] private Image img_icon;
     [SerializeField] private Image img_wrong;
-    [SerializeField] private ButtonCustom button;
+    [SerializeField] private ButtonExtended button;
 
     public bool IsWrong { get; private set; }
 
     public Ability Ability { get; private set; }
-    public ButtonCustom Button { get { return button; } }
+    public ButtonExtended Button { get { return button; } }
 
     public void SetAbility(Ability ability)
     {

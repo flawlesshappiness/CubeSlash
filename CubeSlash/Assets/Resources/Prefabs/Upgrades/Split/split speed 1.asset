@@ -10,20 +10,20 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 616189df85cb92d40806459b9c9111b7, type: 3}
-  m_Name: dash speed 3
+  m_Name: split speed 1
   m_EditorClassIdentifier: 
-  id: dash_speed_003
-  name: Speed 4
-  icon: {fileID: 21300000, guid: 588ac5b533407b74ab8b59d1f45e90db, type: 3}
-  ability: 0
+  id: projectile_speed_001
+  name: Projectile speed 1
+  icon: {fileID: 21300000, guid: 84f667a0eed51a340b7b37327afb72ea, type: 3}
+  ability: 1
   effects:
   - type_effect: 0
     variable:
-      name: TrailEnabled
-      text_display: Trail
-      type_value: 2
-      type_display: 3
-      value_int: 0
+      name: SpeedProjectiles
+      text_display: $ projectile speed
+      type_value: 1
+      type_display: 1
+      value_int: 1
       value_float: 5
-      value_bool: 1
+      value_bool: 0
       can_edit_name: 1

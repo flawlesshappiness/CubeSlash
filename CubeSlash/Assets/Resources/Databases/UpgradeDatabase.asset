@@ -13,13 +13,27 @@ MonoBehaviour:
   m_Name: UpgradeDatabase
   m_EditorClassIdentifier: 
   upgrades:
+  - {fileID: 11400000, guid: 58c0460e11a52964e8c7621dbcf45682, type: 2}
+  - {fileID: 11400000, guid: 02d0943ec16a8d742b6e19a4886494d9, type: 2}
+  - {fileID: 11400000, guid: af56d3526ae03494fbfa2ce25c78c915, type: 2}
+  - {fileID: 11400000, guid: c002abc81936838488846a907004a4d6, type: 2}
   - {fileID: 11400000, guid: f13bb97eff1ad4c429f00007c58e44ff, type: 2}
   - {fileID: 11400000, guid: 2355c913f676f5e4587a84f47259cd47, type: 2}
-  - {fileID: 11400000, guid: 2913fb3a9eb9ac748b36b1ccc2e54278, type: 2}
-  - {fileID: 11400000, guid: cd8f7225b29416f45bd78aa82c9892fc, type: 2}
-  - {fileID: 11400000, guid: 7e89786f7621ee04f88e8dc1d38b5f01, type: 2}
+  - {fileID: 11400000, guid: ac5a8080e5f11cb43b47c24279893510, type: 2}
+  - {fileID: 11400000, guid: e330db526ab48204693dd5d308a2c19a, type: 2}
   - {fileID: 11400000, guid: 83b60e0b536b3404788cb8d0abc3caf2, type: 2}
   - {fileID: 11400000, guid: 06c8828c8f803034bae2bbada016052f, type: 2}
   - {fileID: 11400000, guid: 4f88d15c63758744f9f737faf7d2d6bd, type: 2}
+  - {fileID: 11400000, guid: 1097210ae7fdf6747b2400ddc6d99cf8, type: 2}
+  - {fileID: 11400000, guid: d366cccf59afd9b43a88daedeca09600, type: 2}
+  - {fileID: 11400000, guid: b51a23b020a16ae408d948ae35cbee53, type: 2}
+  - {fileID: 11400000, guid: dc7fbd7c4d7b49d42a01b38d3971bb4e, type: 2}
+  - {fileID: 11400000, guid: b087bf8f26354534ab0163edb7ac4095, type: 2}
+  - {fileID: 11400000, guid: 1aa25848c5027f6479e1d5bada8d6c3e, type: 2}
+  - {fileID: 11400000, guid: 9537140311d25ea468052643222c3995, type: 2}
+  - {fileID: 11400000, guid: 2c74cdfc6d3b6334baed7a3c6ab7e9dc, type: 2}
+  - {fileID: 11400000, guid: 2fd2f20b3e71aea4f875ba07a05a9818, type: 2}
+  - {fileID: 11400000, guid: db632df6de35f6c429d4adf40abe7322, type: 2}
   trees:
-  - {fileID: 11400000, guid: 1d0b7df5b10ca924e91f9b88885a39f2, type: 2}
+  - {fileID: 11400000, guid: 2a82bf42028a437489c49ccd5160f05a, type: 2}
+  - {fileID: 11400000, guid: 7d32df11b2c2f9649ba76c13aab93a98, type: 2}

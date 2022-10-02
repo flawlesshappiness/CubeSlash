@@ -10,18 +10,30 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 616189df85cb92d40806459b9c9111b7, type: 3}
-  m_Name: dash speed 0
+  m_Name: dash area 2
   m_EditorClassIdentifier: 
-  id: dash_speed_000
-  name: Speed 1
-  icon: {fileID: 21300000, guid: 588ac5b533407b74ab8b59d1f45e90db, type: 3}
+  id: dash_area_002
+  name: Area 2
+  icon: {fileID: 21300000, guid: c47d07607041a9e46ac5a017fa569294, type: 3}
   ability: 0
   effects:
   - type_effect: 0
     variable:
-      name: Speed
-      text_display: $ speed
+      name: RadiusDamage
+      text_display: $ damage radius
       type_value: 1
       type_display: 1
       value_int: 0
-      value_float: 5
+      value_float: 1
+      value_bool: 0
+      can_edit_name: 1
+  - type_effect: 1
+    variable:
+      name: Cooldown
+      text_display: $s cooldown
+      type_value: 1
+      type_display: 1
+      value_int: 0
+      value_float: 0.5
+      value_bool: 0
+      can_edit_name: 1

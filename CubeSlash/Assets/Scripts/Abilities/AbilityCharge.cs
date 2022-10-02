@@ -22,11 +22,13 @@ public class AbilityCharge : Ability
     public bool Charging { get; private set; }
     public bool ChargeEnded { get; private set; }
 
-    public float ChargeTime { get; set; }
+    // Values
+    private int BeamCount { get; set; }
+    private float BeamArc { get; set; }
     private float Width { get; set; }
-    private float Knockback { get; set; }
-
-    private bool KillsReduceCooldown;
+    public float ChargeTime { get; set; }
+    private float KnockbackSelf { get; set; }
+    private bool KillsReduceCooldown { get; set; }
 
     private void Start()
     {
@@ -47,18 +49,20 @@ public class AbilityCharge : Ability
         });
     }
 
-    /*
-    public override void ResetValues()
+    public override void OnValuesApplied()
     {
-        base.ResetValues();
-        CooldownTime = 0.5f;
-        Width = 1f;
-        ChargeTime = 1.0f;
-        Knockback = -10;
+        base.OnValuesApplied();
+        Width = GetFloatValue("Width");
+        ChargeTime = GetFloatValue("ChargeTime");
+        KnockbackSelf = GetFloatValue("KnockbackSelf");
+        KnockbackSelf = GetFloatValue("KnockbackSelf");
+        BeamCount = GetIntValue("BeamCount");
+        BeamArc = GetFloatValue("BeamArc");
         Charging = false;
         ChargeEnded = false;
     }
 
+    /*
     public override void ApplyUpgrade(Upgrade upgrade)
     {
         base.ApplyUpgrade(upgrade);
@@ -218,7 +222,7 @@ public class AbilityCharge : Ability
 
         IEnumerator KnockbackCr()
         {
-            Player.Rigidbody.velocity = Player.MoveDirection * Knockback;
+            Player.Rigidbody.velocity = Player.MoveDirection * KnockbackSelf;
             Player.MovementLock.AddLock(nameof(AbilityCharge));
             Player.DragLock.AddLock(nameof(AbilityCharge));
 

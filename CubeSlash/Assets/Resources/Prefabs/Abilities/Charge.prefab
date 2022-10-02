@@ -14501,13 +14501,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6023090740020385455}
-  m_LocalRotation: {x: -0.5055391, y: -0.4943988, z: 0.4943988, w: 0.5055391}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 7826104057191268102}
   m_RootOrder: 4
-  m_LocalEulerAnglesHint: {x: -178.723, y: 90, z: -90}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!198 &7152537896896159995
 ParticleSystem:
   m_ObjectHideFlags: 0
@@ -14591,7 +14591,7 @@ ParticleSystem:
     startLifetime:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 2
+      scalar: 4
       minScalar: 1
       maxCurve:
         serializedVersion: 2
@@ -14644,8 +14644,8 @@ ParticleSystem:
     startSpeed:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 60
-      minScalar: 10
+      scalar: 2
+      minScalar: 1
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -14760,7 +14760,7 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0.1
+      scalar: 0.25
       minScalar: 0.05
       maxCurve:
         serializedVersion: 2
@@ -14813,7 +14813,7 @@ ParticleSystem:
     startSizeY:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0.25
+      scalar: 0.1
       minScalar: 1
       maxCurve:
         serializedVersion: 2
@@ -15136,15 +15136,15 @@ ParticleSystem:
   ShapeModule:
     serializedVersion: 6
     enabled: 1
-    type: 4
+    type: 5
     angle: 3
     length: 5
     boxThickness: {x: 0, y: 0, z: 0}
     radiusThickness: 0.6
     donutRadius: 0.2
     m_Position: {x: 0, y: 0, z: 0}
-    m_Rotation: {x: 0, y: 0, z: 0}
-    m_Scale: {x: 1, y: 1, z: 1}
+    m_Rotation: {x: 0, y: -90, z: 0}
+    m_Scale: {x: 1, y: 1, z: 7.19}
     placementMode: 0
     m_MeshMaterialIndex: 0
     m_MeshNormalOffset: 0
@@ -15211,7 +15211,7 @@ ParticleSystem:
     m_SpriteRenderer: {fileID: 0}
     m_UseMeshMaterialIndex: 0
     m_UseMeshColors: 1
-    alignToDirection: 1
+    alignToDirection: 0
     m_Texture: {fileID: 0}
     m_TextureClipChannel: 3
     m_TextureClipThreshold: 0
@@ -15506,7 +15506,7 @@ ParticleSystem:
       repeatInterval: 0.01
       probability: 1
   SizeModule:
-    enabled: 0
+    enabled: 1
     curve:
       serializedVersion: 2
       minMaxState: 1
@@ -15517,22 +15517,22 @@ ParticleSystem:
         m_Curve:
         - serializedVersion: 3
           time: 0
-          value: 0
-          inSlope: 0
-          outSlope: 1
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 0.33333334
-          outWeight: 0.33333334
-        - serializedVersion: 3
-          time: 1
           value: 1
-          inSlope: 1
+          inSlope: 0
           outSlope: 0
           tangentMode: 0
           weightedMode: 0
-          inWeight: 0.33333334
-          outWeight: 0.33333334
+          inWeight: 0
+          outWeight: 0
+        - serializedVersion: 3
+          time: 1
+          value: 0
+          inSlope: -2
+          outSlope: -2
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
         m_PreInfinity: 2
         m_PostInfinity: 2
         m_RotationOrder: 4
@@ -15855,7 +15855,7 @@ ParticleSystem:
         ctime6: 0
         ctime7: 0
         atime0: 0
-        atime1: 1311
+        atime1: 3277
         atime2: 65535
         atime3: 65535
         atime4: 65535
@@ -16019,7 +16019,7 @@ ParticleSystem:
     flipU: 0
     flipV: 0
   VelocityModule:
-    enabled: 0
+    enabled: 1
     x:
       serializedVersion: 2
       minMaxState: 0
@@ -16560,18 +16560,18 @@ ParticleSystem:
         m_Curve:
         - serializedVersion: 3
           time: 0
-          value: 0.1
-          inSlope: 0
-          outSlope: 0
+          value: 1
+          inSlope: -5.75106
+          outSlope: -5.75106
           tangentMode: 0
           weightedMode: 0
           inWeight: 0
-          outWeight: 0
+          outWeight: 0.17563738
         - serializedVersion: 3
-          time: 1
-          value: 1
-          inSlope: 2
-          outSlope: 2
+          time: 0.5
+          value: 0
+          inSlope: 0
+          outSlope: 0
           tangentMode: 0
           weightedMode: 0
           inWeight: 0
@@ -16941,7 +16941,7 @@ ParticleSystem:
       m_Bits: 4294967295
     influenceList: []
   ClampVelocityModule:
-    enabled: 1
+    enabled: 0
     x:
       serializedVersion: 2
       minMaxState: 0
@@ -17158,7 +17158,7 @@ ParticleSystem:
     inWorldSpace: 0
     multiplyDragByParticleSize: 1
     multiplyDragByParticleVelocity: 1
-    dampen: 0.15
+    dampen: 0
     drag:
       serializedVersion: 2
       minMaxState: 0
@@ -19315,7 +19315,7 @@ ParticleSystemRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_RenderMode: 1
+  m_RenderMode: 0
   m_SortMode: 0
   m_MinParticleSize: 0
   m_MaxParticleSize: 0.5
@@ -19538,7 +19538,64 @@ MonoBehaviour:
     type_display: 1
     value_int: 0
     value_float: 0
+    value_bool: 0
     can_edit_name: 0
+  - name: Charges
+    text_display: $ charges
+    type_value: 0
+    type_display: 0
+    value_int: 1
+    value_float: 0
+    value_bool: 0
+    can_edit_name: 0
+  - name: Width
+    text_display: $ beam width
+    type_value: 1
+    type_display: 1
+    value_int: 0
+    value_float: 1
+    value_bool: 0
+    can_edit_name: 1
+  - name: ChargeTime
+    text_display: $s charge time
+    type_value: 1
+    type_display: 1
+    value_int: 1
+    value_float: 1
+    value_bool: 0
+    can_edit_name: 1
+  - name: KnockbackSelf
+    text_display: $ self knockback
+    type_value: 1
+    type_display: 1
+    value_int: 0
+    value_float: 10
+    value_bool: 0
+    can_edit_name: 1
+  - name: ChargeTimeOnKill
+    text_display: $ charge time on kill
+    type_value: 1
+    type_display: 2
+    value_int: 0
+    value_float: 1
+    value_bool: 0
+    can_edit_name: 1
+  - name: BeamCount
+    text_display: $ beams
+    type_value: 0
+    type_display: 0
+    value_int: 1
+    value_float: 0
+    value_bool: 0
+    can_edit_name: 1
+  - name: BeamArc
+    text_display: $ degree arc per beam
+    type_value: 1
+    type_display: 1
+    value_int: 0
+    value_float: 0
+    value_bool: 0
+    can_edit_name: 1
   modifier_effects:
   - type: 0
     effects: []
