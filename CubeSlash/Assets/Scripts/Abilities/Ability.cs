@@ -91,7 +91,9 @@ public abstract class Ability : MonoBehaviourExtended
 
     private void ApplyUpgrades()
     {
-        UpgradeController.Instance.GetUnlockedUpgrades().ForEach(info => ApplyEffects(info.upgrade.effects));
+        UpgradeController.Instance.GetUnlockedUpgrades()
+            .Where(info => info.require_ability && info.type_ability_required == Info.type)
+            .ToList().ForEach(info => ApplyEffects(info.upgrade.effects));
     }
 
     private void ApplyModifiers()
@@ -99,7 +101,7 @@ public abstract class Ability : MonoBehaviourExtended
         Modifiers
             .Where(m => m != null)
             .Select(m => ModifierUpgrades.GetModifier(m.Info.type))
-            .Where(am => am != null)
+            .Where(am => am.upgrade != null)
             .ToList().ForEach(am => ApplyEffects(am.upgrade.effects));
     }
 

@@ -14,10 +14,13 @@ public class StatCollectionEditor : Editor
 
     public override void OnInspectorGUI()
     {
+        GUIHelper.DrawAssetSaveButton(collection);
+
         collection.id = EditorGUILayout.TextField("ID: ", collection.id);
 
         DrawDivider();
 
+        EditorGUI.BeginChangeCheck();
         foreach(var stat in collection.stats.ToList())
         {
             DrawVariable(stat, out var clicked_remove);
@@ -27,12 +30,17 @@ public class StatCollectionEditor : Editor
                 collection.stats.Remove(stat);
             }
         }
+        if (EditorGUI.EndChangeCheck())
+        {
+            EditorUtility.SetDirty(collection);
+        }
 
         GUILayout.BeginHorizontal();
         GUILayout.FlexibleSpace();
         if(GUILayout.Button(GUIHelper.GetTexture(GUIHelper.GUITexture.PLUS), GUILayout.Width(30), GUILayout.Height(30)))
         {
             collection.stats.Add(new StatParameter());
+            EditorUtility.SetDirty(collection);
         }
         GUILayout.FlexibleSpace();
         GUILayout.EndHorizontal();
