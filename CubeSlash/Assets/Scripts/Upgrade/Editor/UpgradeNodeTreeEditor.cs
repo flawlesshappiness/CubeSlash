@@ -15,7 +15,10 @@ public class UpgradeNodeTreeEditor : Editor
 
     public override void OnInspectorGUI()
     {
+        GUIHelper.DrawAssetSaveButton(tree);
+
         // Required ability
+        EditorGUI.BeginChangeCheck();
         GUILayout.BeginHorizontal();
         GUIHelper.FittedLabel("Require ability");
         tree.require_ability = GUILayout.Toggle(tree.require_ability, "", GUILayout.Width(20));
@@ -29,6 +32,8 @@ public class UpgradeNodeTreeEditor : Editor
             GUILayout.FlexibleSpace();
         }
         GUILayout.EndHorizontal();
+
+        if (EditorGUI.EndChangeCheck()) { EditorUtility.SetDirty(tree); }
 
         GUILayout.Space(20);
 

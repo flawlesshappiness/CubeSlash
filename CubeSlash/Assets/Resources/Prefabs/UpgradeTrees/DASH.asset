@@ -17,46 +17,46 @@ MonoBehaviour:
   nodes:
   - id: 0
     id_name: dash_distance_001
-    _editorPosition: {x: 859, y: 131}
+    _editorPosition: {x: 796, y: 163}
     children: 010000000400000005000000
   - id: 1
     id_name: dash_speed_001
-    _editorPosition: {x: 609, y: 327}
+    _editorPosition: {x: 235, y: 341}
     children: 0a0000000c000000
   - id: 4
     id_name: dash_area_001
-    _editorPosition: {x: 1079, y: 323}
+    _editorPosition: {x: 1340, y: 356}
     children: 0800000009000000
   - id: 5
     id_name: dash_distance_002
-    _editorPosition: {x: 857, y: 326}
+    _editorPosition: {x: 794, y: 358}
     children: 06000000
   - id: 6
     id_name: dash_distance_003
-    _editorPosition: {x: 862, y: 522}
+    _editorPosition: {x: 779, y: 554}
     children: 07000000
   - id: 7
     id_name: dash_cooldown_on_hit
-    _editorPosition: {x: 860, y: 752}
+    _editorPosition: {x: 789, y: 812}
     children: 
   - id: 8
     id_name: dash_area_002
-    _editorPosition: {x: 1087, y: 529}
+    _editorPosition: {x: 1185, y: 551}
     children: 
   - id: 9
     id_name: dash_knockback_001
-    _editorPosition: {x: 1334, y: 530}
+    _editorPosition: {x: 1518, y: 562}
     children: 
   - id: 10
     id_name: dash_speed_001
-    _editorPosition: {x: 592, y: 548}
+    _editorPosition: {x: 424, y: 562}
     children: 0b000000
   - id: 11
     id_name: dash_trail
-    _editorPosition: {x: 586, y: 757}
+    _editorPosition: {x: 417, y: 804}
     children: 
   - id: 12
     id_name: dash_charge_001
-    _editorPosition: {x: 338, y: 556}
+    _editorPosition: {x: 47, y: 577}
     children: 
   id_node: 13

@@ -29,7 +29,8 @@ public class AbilityCharge : Ability
     private float Width { get; set; }
     public float ChargeTime { get; set; }
     private float KnockbackSelf { get; set; }
-    private bool KillsReduceCooldown { get; set; }
+    private bool ChargeTimeOnKill { get; set; }
+    private bool ChargeSucksExp { get; set; }
 
     private void Start()
     {
@@ -59,6 +60,8 @@ public class AbilityCharge : Ability
         KnockbackSelf = GetFloatValue("KnockbackSelf");
         BeamCount = GetIntValue("BeamCount");
         BeamArc = GetFloatValue("BeamArc");
+        ChargeSucksExp = GetBoolValue("ChargeSucksExp");
+        ChargeTimeOnKill = GetBoolValue("ChargeTimeOnKill");
         Charging = false;
         ChargeEnded = false;
     }
@@ -205,38 +208,12 @@ public class AbilityCharge : Ability
                         count_hits++;
                     });
 
-                StartCoroutine(KnockbackCr());
+                Player.Knockback(-Player.MoveDirection.normalized * KnockbackSelf, true, true);
                 StartVisual(Player.transform.position, Player.transform.position + dir * distance, 20);
                 yield return new WaitForSeconds(0.1f);
             }
 
-            if (KillsReduceCooldown)
-            {
-                var time = Mathf.Clamp(Cooldown - 0.1f * count_hits, 0, float.MaxValue);
-                StartCooldown(time);
-            }
-            else
-            {
-                StartCooldown();
-            }
-        }
-
-        IEnumerator KnockbackCr()
-        {
-            Player.Rigidbody.velocity = Player.MoveDirection * KnockbackSelf;
-            Player.MovementLock.AddLock(nameof(AbilityCharge));
-            Player.DragLock.AddLock(nameof(AbilityCharge));
-
-            // Drag
-            var time_end = Time.time + 0.2f;
-            while(Time.time < time_end)
-            {
-                Player.Rigidbody.velocity *= 0.98f;
-                yield return null;
-            }
-
-            Player.MovementLock.RemoveLock(nameof(AbilityCharge));
-            Player.DragLock.RemoveLock(nameof(AbilityCharge));
+            StartCooldown();
         }
     }
 

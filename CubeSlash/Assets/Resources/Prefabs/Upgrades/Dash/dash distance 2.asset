@@ -15,7 +15,7 @@ MonoBehaviour:
   id: dash_distance_002
   name: Distance 2
   icon: {fileID: 21300000, guid: 083237d4baf78d143b4251ca612f18dd, type: 3}
-  ability: 0
+  id_stats: dash
   effects:
   - type_effect: 0
     variable:
@@ -27,6 +27,7 @@ MonoBehaviour:
       value_float: 1.5
       value_bool: 1
       can_edit_name: 1
+      _editor_toggle_preview: 0
   - type_effect: 1
     variable:
       name: Cooldown
@@ -37,3 +38,4 @@ MonoBehaviour:
       value_float: 0.25
       value_bool: 0
       can_edit_name: 1
+      _editor_toggle_preview: 0

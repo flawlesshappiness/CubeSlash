@@ -8,7 +8,7 @@ public class UpgradeNodeTreeWindow : NodeEditorWindow
 {
     private static UpgradeNodeTreeWindow window;
     private UpgradeNodeTree Tree { get; set; }
-    private UpgradeDatabase Database { get; set; }
+    private UpgradeDatabase UpgradeDatabase { get; set; }
 
     private enum State { NONE, CONNECT_CHILD }
     private State state = State.NONE;
@@ -25,7 +25,7 @@ public class UpgradeNodeTreeWindow : NodeEditorWindow
     {
         ClearGUI();
         Tree = tree;
-        Database = UpgradeDatabase.LoadAsset();
+        UpgradeDatabase = UpgradeDatabase.LoadAsset();
 
         // Create root node
         if (Tree.nodes.Count == 0)
@@ -207,14 +207,16 @@ public class UpgradeNodeTreeWindow : NodeEditorWindow
 
     private void UpdateNodeProperties(UpgradeNode node)
     {
+        var ids = UpgradeDatabase.upgrades.Select(u => u.id).ToArray();
+
         node.ClearProperties();
-        node.AddProperty("ID", node.data.id_name, true, v => 
+        node.AddProperty("ID", node.data.id_name, ids, true, v => 
         {
             node.data.id_name = v;
             UpdateNodeProperties(node);
         });
 
-        var upgrade = Database.upgrades.FirstOrDefault(upgrade => upgrade.id == node.data.id_name);
+        var upgrade = UpgradeDatabase.upgrades.FirstOrDefault(upgrade => upgrade.id == node.data.id_name);
         if(upgrade != null)
         {
             node.AddProperty("Name", upgrade.name, false);

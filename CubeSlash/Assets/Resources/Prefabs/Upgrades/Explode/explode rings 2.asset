@@ -10,21 +10,32 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 616189df85cb92d40806459b9c9111b7, type: 3}
-  m_Name: dash distance 1
+  m_Name: explode rings 2
   m_EditorClassIdentifier: 
-  id: dash_distance_001
-  name: Distance 1
-  icon: {fileID: 21300000, guid: 083237d4baf78d143b4251ca612f18dd, type: 3}
-  id_stats: dash
+  id: explode_rings_002
+  name: Explode rings 2
+  icon: {fileID: 21300000, guid: 4ce0634a6bcefab4c8b2dd9468b7a46a, type: 3}
+  id_stats: explode
   effects:
   - type_effect: 0
     variable:
-      name: Distance
-      text_display: $ distance
+      name: Rings
+      text_display: $ rings
+      type_value: 0
+      type_display: 0
+      value_int: 1
+      value_float: -1
+      value_bool: 1
+      can_edit_name: 1
+      _editor_toggle_preview: 0
+  - type_effect: 1
+    variable:
+      name: Width
+      text_display: $ ring width
       type_value: 1
       type_display: 1
       value_int: 0
-      value_float: 1
-      value_bool: 1
+      value_float: -0.25
+      value_bool: 0
       can_edit_name: 1
       _editor_toggle_preview: 0

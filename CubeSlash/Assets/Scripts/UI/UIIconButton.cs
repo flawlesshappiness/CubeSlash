@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class UIIconButton : MonoBehaviour
 {
+    public bool scale_on_selected;
     [SerializeField] private Image img_icon;
     [SerializeField] private ButtonExtended btn;
 
@@ -15,6 +16,7 @@ public class UIIconButton : MonoBehaviour
     private void Start()
     {
         btn.OnSelectedChanged += OnSelectedChanged;
+        btn.SetSelectOnHover(true);
     }
 
     public void Select()
@@ -24,8 +26,11 @@ public class UIIconButton : MonoBehaviour
     
     private void OnSelectedChanged(bool selected)
     {
-        var end = selected ? Vector3.one * 1.25f : Vector3.one;
-        Lerp.Scale(transform, 0.15f, end)
-            .UnscaledTime();
+        if (scale_on_selected)
+        {
+            var end = selected ? Vector3.one * 1.25f : Vector3.one;
+            Lerp.Scale(transform, 0.15f, end)
+                .UnscaledTime();
+        }
     }
 }

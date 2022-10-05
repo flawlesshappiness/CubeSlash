@@ -15,7 +15,7 @@ MonoBehaviour:
   id: dash_charge_001
   name: Charge 1
   icon: {fileID: 21300000, guid: 083237d4baf78d143b4251ca612f18dd, type: 3}
-  ability: 0
+  id_stats: dash
   effects:
   - type_effect: 0
     variable:
@@ -27,3 +27,4 @@ MonoBehaviour:
       value_float: 5
       value_bool: 0
       can_edit_name: 1
+      _editor_toggle_preview: 0

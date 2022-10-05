@@ -20,38 +20,53 @@ public class UpgradeEditor : Editor
 
     public override void OnInspectorGUI()
     {
-        EditorGUI.BeginChangeCheck();
+        GUIHelper.DrawAssetSaveButton(upgrade);
+
         // Icon
         GUILayout.BeginHorizontal();
         GUILayout.FlexibleSpace();
+
+        EditorGUI.BeginChangeCheck();
         upgrade.icon = (Sprite)EditorGUILayout.ObjectField(upgrade.icon, typeof(Sprite), false, GUILayout.Height(60), GUILayout.Width(60));
+        if (EditorGUI.EndChangeCheck()) { EditorUtility.SetDirty(upgrade); }
+
         GUILayout.FlexibleSpace();
         GUILayout.EndHorizontal();
 
         // ID
         GUILayout.BeginHorizontal();
+
+        EditorGUI.BeginChangeCheck();
         GUILayout.Label("ID", GUILayout.Width(100));
         upgrade.id = GUILayout.TextField(upgrade.id);
+        if (EditorGUI.EndChangeCheck()) { EditorUtility.SetDirty(upgrade); }
+
         GUILayout.EndHorizontal();
 
         // Name
         GUILayout.BeginHorizontal();
+
+        EditorGUI.BeginChangeCheck();
         GUILayout.Label("Name", GUILayout.Width(100));
         upgrade.name = GUILayout.TextField(upgrade.name);
+        if (EditorGUI.EndChangeCheck()) { EditorUtility.SetDirty(upgrade); }
+
         GUILayout.EndHorizontal();
 
         // Stat ID
         GUILayout.BeginHorizontal();
+
+        EditorGUI.BeginChangeCheck();
         GUILayout.Label("Stat ID:", GUILayout.Width(100));
         var stat_ids = db_stat.collections.Select(c => c.id).ToArray();
         var idx_stat_ids = stat_ids.ToList().IndexOf(upgrade.id_stats);
-        EditorGUI.BeginChangeCheck();
         idx_stat_ids = EditorGUILayout.Popup(idx_stat_ids, stat_ids);
         if (EditorGUI.EndChangeCheck())
         {
             upgrade.id_stats = stat_ids[idx_stat_ids];
             EditorUtility.SetDirty(upgrade);
         }
+
         GUILayout.EndHorizontal();
 
         // Effects
