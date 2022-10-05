@@ -28,8 +28,8 @@ public abstract class Ability : MonoBehaviourExtended
     private Dictionary<string, StatValue> values = new Dictionary<string, StatValue>();
 
     // Values
-    public float Cooldown { get; private set; }
-    public int Charges { get; private set; }
+    public float Cooldown { get; protected set; }
+    public int Charges { get; protected set; }
 
     private void OnValidate()
     {

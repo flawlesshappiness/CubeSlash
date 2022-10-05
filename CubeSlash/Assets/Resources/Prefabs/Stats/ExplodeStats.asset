@@ -22,7 +22,7 @@ MonoBehaviour:
     value_float: 2
     value_bool: 0
     can_edit_name: 0
-    _editor_toggle_preview: 0
+    _editor_toggle_preview: 1
   - name: Charges
     text_display: $ charges
     type_value: 0
@@ -31,7 +31,7 @@ MonoBehaviour:
     value_float: 0
     value_bool: 0
     can_edit_name: 0
-    _editor_toggle_preview: 0
+    _editor_toggle_preview: 1
   - name: Delay
     text_display: $s explosion delay
     type_value: 1
@@ -40,7 +40,7 @@ MonoBehaviour:
     value_float: 0.5
     value_bool: 0
     can_edit_name: 1
-    _editor_toggle_preview: 0
+    _editor_toggle_preview: 1
   - name: Radius
     text_display: $ ring radius
     type_value: 1
@@ -49,7 +49,7 @@ MonoBehaviour:
     value_float: 4
     value_bool: 0
     can_edit_name: 1
-    _editor_toggle_preview: 0
+    _editor_toggle_preview: 1
   - name: Width
     text_display: $ ring width
     type_value: 1
@@ -58,7 +58,7 @@ MonoBehaviour:
     value_float: 1.5
     value_bool: 0
     can_edit_name: 1
-    _editor_toggle_preview: 0
+    _editor_toggle_preview: 1
   - name: Knockback
     text_display: $ knockback force
     type_value: 1
@@ -67,7 +67,7 @@ MonoBehaviour:
     value_float: 200
     value_bool: 0
     can_edit_name: 1
-    _editor_toggle_preview: 0
+    _editor_toggle_preview: 1
   - name: Rings
     text_display: $ rings
     type_value: 0
@@ -76,4 +76,13 @@ MonoBehaviour:
     value_float: 0
     value_bool: 0
     can_edit_name: 1
-    _editor_toggle_preview: 0
+    _editor_toggle_preview: 1
+  - name: DelayPull
+    text_display: Pull enemies in before exploding
+    type_value: 2
+    type_display: 3
+    value_int: 0
+    value_float: 0
+    value_bool: 0
+    can_edit_name: 1
+    _editor_toggle_preview: 1

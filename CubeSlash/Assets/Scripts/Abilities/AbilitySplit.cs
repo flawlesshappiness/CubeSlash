@@ -19,7 +19,6 @@ public class AbilitySplit : Ability
     private float RadiusKnockback { get; set; }
     private float ForceKnockback { get; set; }
     private bool SplitProjectiles { get; set; }
-    private bool ExplodeProjectiles { get; set; }
 
     public override void InitializeFirstTime()
     {
@@ -38,8 +37,12 @@ public class AbilitySplit : Ability
         ForceKnockback = GetFloatValue("ForceKnockback");
         SizeProjectiles = GetFloatValue("SizeProjectiles");
         Bursts = GetIntValue("Bursts");
-        ExplodeProjectiles = GetBoolValue("ExplodeProjectiles");
         SplitProjectiles = GetBoolValue("SplitProjectiles");
+
+        if (HasModifier(Type.DASH))
+        {
+            Charges++;
+        }
     }
 
     public override void Pressed()
@@ -134,6 +137,11 @@ public class AbilitySplit : Ability
                         var d = Quaternion.AngleAxis(angle_delta * i, Vector3.forward) * direction;
                         ShootProjectile(prefab_projectile, p.transform.position, d, SizeProjectiles * 0.5f, SpeedProjectiles);
                     }
+                }
+
+                if (HasModifier(Type.EXPLODE))
+                {
+                    AbilityExplode.Explode(p.transform.position, 2f, 1.5f, 50);
                 }
             });
             projectiles.Add(p);

@@ -93,6 +93,11 @@ public class AbilityDash : Ability
             StartCoroutine(DashCr(directions[i], i == 0));
         }
 
+        if (HasModifier(Type.EXPLODE))
+        {
+            AbilityExplode.Explode(Player.transform.position, 3f, 2f, 200);
+        }
+
         IEnumerator DashCr(Vector3 direction, bool has_player)
         {
             IKillable victim = null;
@@ -102,7 +107,7 @@ public class AbilityDash : Ability
             clone.Initialize(this, has_player);
             clone.gameObject.SetActive(true);
             clone.onHitKillable += k => {
-                if (HasModifier(Type.CHARGE))
+                if (HasModifier(Type.CHARGE) && k.CanKill())
                 {
                     HitEnemiesArea(clone.transform.position, RadiusDamage);
                 }
@@ -135,7 +140,7 @@ public class AbilityDash : Ability
             var hit_anything = victim != null;
             if (!hit_anything)
             {
-                hit_anything = HitEnemiesArea(Player.transform.position, 1.0f) > 0; // Try to hit something
+                hit_anything = HitEnemiesArea(clone.transform.position, 1.0f) > 0; // Try to hit something
             }
 
             if (has_player)
@@ -151,13 +156,17 @@ public class AbilityDash : Ability
                 Player.transform.position = clone.transform.position;
                 Player.Body.gameObject.SetActive(true);
                 Player.Rigidbody.velocity = Player.MoveDirection * Speed * (hit_anything ? -1 : 1);
+
+                if (hit_anything)
+                {
+                    Player.Knockback(-Player.MoveDirection.normalized * 500, true, true);
+                }
             }
 
             if (hit_anything || HasModifier(Type.CHARGE))
             {
-                HitEnemiesArea(Player.transform.position, RadiusDamage);
-                Player.PushEnemiesInArea(Player.transform.position, RadiusKnockback, ForceKnockback, ac_push_enemies);
-                Player.Knockback(-Player.MoveDirection.normalized * 500, true, true);
+                HitEnemiesArea(clone.transform.position, RadiusDamage);
+                Player.PushEnemiesInArea(clone.transform.position, RadiusKnockback, ForceKnockback, ac_push_enemies);
             }
 
             clone.Destroy();
