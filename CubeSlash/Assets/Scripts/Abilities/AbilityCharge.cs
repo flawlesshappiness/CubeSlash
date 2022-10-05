@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class AbilityCharge : Ability
 {
+    [Header("CHARGE")]
     [SerializeField] private LineRenderer prefab_line;
     [SerializeField] private ParticleSystem ps_charge;
     [SerializeField] private ParticleSystem ps_charge_end;

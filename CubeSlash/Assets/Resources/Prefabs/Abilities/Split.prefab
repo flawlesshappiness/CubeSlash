@@ -43,186 +43,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce47be9d3eb8f5a439468a92cb4bfa54, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  type: 1
-  name_ability: Split
-  desc_ability: Fire an arc of projectiles
-  sprite_icon: {fileID: 21300000, guid: fa3a1b53a5ddc524ca4486dc707ff23f, type: 3}
-  variables:
-  - name: Cooldown
-    text_display: $s cooldown
-    type_value: 1
-    type_display: 1
-    value_int: 0
-    value_float: 0.75
-    value_bool: 0
-    can_edit_name: 0
-  - name: Charges
-    text_display: $ charges
-    type_value: 0
-    type_display: 0
-    value_int: 1
-    value_float: 0
-    value_bool: 0
-    can_edit_name: 0
-  - name: CountProjectiles
-    text_display: $ projectiles
-    type_value: 0
-    type_display: 0
-    value_int: 3
-    value_float: 0
-    value_bool: 0
-    can_edit_name: 1
-  - name: SpeedProjectiles
-    text_display: $ projectile speed
-    type_value: 1
-    type_display: 1
-    value_int: 0
-    value_float: 25
-    value_bool: 0
-    can_edit_name: 1
-  - name: ArcProjectiles
-    text_display: $ degree arc
-    type_value: 1
-    type_display: 1
-    value_int: 0
-    value_float: 15
-    value_bool: 0
-    can_edit_name: 1
-  - name: SizeProjectiles
-    text_display: $ projectile size
-    type_value: 1
-    type_display: 1
-    value_int: 0
-    value_float: 1
-    value_bool: 0
-    can_edit_name: 1
-  - name: Bursts
-    text_display: $ bursts
-    type_value: 0
-    type_display: 0
-    value_int: 1
-    value_float: 0
-    value_bool: 0
-    can_edit_name: 1
-  - name: ExplodeProjectiles
-    text_display: Projectiles explode
-    type_value: 2
-    type_display: 3
-    value_int: 0
-    value_float: 0
-    value_bool: 0
-    can_edit_name: 1
-  - name: SplitProjectiles
-    text_display: Projectiles split into smaller projectiles on impact
-    type_value: 2
-    type_display: 3
-    value_int: 0
-    value_float: 0
-    value_bool: 0
-    can_edit_name: 1
-  - name: RadiusKnockback
-    text_display: $ knockback area
-    type_value: 1
-    type_display: 1
-    value_int: 0
-    value_float: 0
-    value_bool: 0
-    can_edit_name: 1
-  - name: ForceKnockback
-    text_display: $ knockback force
-    type_value: 1
-    type_display: 1
-    value_int: 0
-    value_float: 0
-    value_bool: 0
-    can_edit_name: 1
+  Info: {fileID: 11400000, guid: 28808eab66fcede409e2647c406f8bab, type: 2}
+  Stats: {fileID: 11400000, guid: 0755b411f2c9abc43898ccef029bc0a1, type: 2}
+  ModifierUpgrades: {fileID: 11400000, guid: 057deef5701e54e4fa96b588847eeb3f, type: 2}
   modifier_effects:
-  - type: 0
-    effects:
-    - type_effect: 0
-      variable:
-        name: Cooldown
-        text_display: $s cooldown
-        type_value: 1
-        type_display: 1
-        value_int: 0
-        value_float: -0.2
-        value_bool: 0
-        can_edit_name: 1
-    - type_effect: 0
-      variable:
-        name: SpeedProjectiles
-        text_display: $ projectile speed
-        type_value: 1
-        type_display: 1
-        value_int: 0
-        value_float: 10
-        value_bool: 0
-        can_edit_name: 1
-  - type: 1
-    effects:
-    - type_effect: 1
-      variable:
-        name: Cooldown
-        text_display: $s cooldown
-        type_value: 1
-        type_display: 1
-        value_int: 0
-        value_float: 0.5
-        value_bool: 0
-        can_edit_name: 1
-    - type_effect: 0
-      variable:
-        name: CountProjectiles
-        text_display: $ projectiles
-        type_value: 0
-        type_display: 0
-        value_int: 3
-        value_float: 0
-        value_bool: 0
-        can_edit_name: 1
-  - type: 2
-    effects:
-    - type_effect: 1
-      variable:
-        name: Cooldown
-        text_display: $s cooldown
-        type_value: 1
-        type_display: 1
-        value_int: 0
-        value_float: 1
-        value_bool: 0
-        can_edit_name: 1
-  - type: 3
-    effects:
-    - type_effect: 1
-      variable:
-        name: Cooldown
-        text_display: $s cooldown
-        type_value: 1
-        type_display: 1
-        value_int: 0
-        value_float: 0.5
-        value_bool: 0
-        can_edit_name: 1
-    - type_effect: 1
-      variable:
-        name: SpeedProjectiles
-        text_display: $ projectile speed
-        type_value: 1
-        type_display: 1
-        value_int: 0
-        value_float: -3
-        value_bool: 0
-        can_edit_name: 1
-    - type_effect: 0
-      variable:
-        name: ExplodeProjectiles
-        text_display: Projectiles explode
-        type_value: 2
-        type_display: 3
-        value_int: 0
-        value_float: 0
-        value_bool: 1
-        can_edit_name: 1
+  - name: 
+    type: 0
+    upgrade: {fileID: 0}
+  - name: 
+    type: 1
+    upgrade: {fileID: 0}
+  - name: 
+    type: 2
+    upgrade: {fileID: 0}
+  - name: 
+    type: 3
+    upgrade: {fileID: 0}
   prefab_projectile: {fileID: 2903384162585443173, guid: 078517c61f1a4504e9d7107a57670364, type: 3}

@@ -15,7 +15,7 @@ MonoBehaviour:
   id: projectile_count_002
   name: Projectile count 2
   icon: {fileID: 21300000, guid: 84f667a0eed51a340b7b37327afb72ea, type: 3}
-  ability: 1
+  id_stats: split
   effects:
   - type_effect: 0
     variable:
@@ -27,6 +27,7 @@ MonoBehaviour:
       value_float: 0
       value_bool: 0
       can_edit_name: 1
+      _editor_toggle_preview: 0
   - type_effect: 0
     variable:
       name: ArcProjectiles
@@ -37,3 +38,4 @@ MonoBehaviour:
       value_float: 15
       value_bool: 0
       can_edit_name: 1
+      _editor_toggle_preview: 0

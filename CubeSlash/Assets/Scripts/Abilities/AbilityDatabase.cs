@@ -6,6 +6,5 @@ using UnityEngine;
 public class AbilityDatabase : ScriptableObject
 {
     public List<Ability> abilities = new List<Ability>();
-
-    public Ability GetAbility(Ability.Type type) => abilities.FirstOrDefault(a => a.type == type);
+    public Ability GetAbility(Ability.Type type) => abilities.FirstOrDefault(a => a.Info.type == type);
 }

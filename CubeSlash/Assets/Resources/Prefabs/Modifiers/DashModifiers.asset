@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e72ec920637b88348b294d24f48bf858, type: 3}
+  m_Name: DashModifiers
+  m_EditorClassIdentifier: 
+  modifiers:
+  - name: EXPLODE
+    type: 3
+    upgrade: {fileID: 11400000, guid: 6d0d79814e662ef43a5256c5a1892171, type: 2}
+    effects: []
+  - name: CHARGE
+    type: 2
+    upgrade: {fileID: 11400000, guid: c5c74eae81dd7b04d9a3fc5d7834b241, type: 2}
+    effects: []
+  - name: SPLIT
+    type: 1
+    upgrade: {fileID: 11400000, guid: 5faa26d5a265ada4a96a4db53c48bfb9, type: 2}
+    effects: []
+  - name: DASH
+    type: 0
+    upgrade: {fileID: 11400000, guid: 5cae6b8c952536f449d46d1d5365f67b, type: 2}
+    effects: []

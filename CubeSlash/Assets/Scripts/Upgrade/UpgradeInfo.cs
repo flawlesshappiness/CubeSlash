@@ -7,6 +7,8 @@ public class UpgradeInfo
     public List<UpgradeInfo> parents = new List<UpgradeInfo>();
     public List<UpgradeInfo> children = new List<UpgradeInfo>();
     public bool isUnlocked;
+    public bool require_ability;
+    public Ability.Type type_ability_required;
 
     public UpgradeInfo(Upgrade upgrade)
     {

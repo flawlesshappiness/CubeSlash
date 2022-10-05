@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class AbilityExplode : Ability
 {
-    [Header("EXTRA")]
+    [Header("EXPLODE")]
     [SerializeField] private ParticleSystem ps_charge;
     [SerializeField] private ParticleSystem ps_explode;
     [SerializeField] private ParticleSystem ps_explode_point;

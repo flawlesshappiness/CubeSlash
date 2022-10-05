@@ -9774,77 +9774,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d9ff3ead511de7b4cbacc83d074ab95b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  type: 3
-  name_ability: Explode
-  desc_ability: After a brief delay, damage enemies at the edge of a ring around
-    you
-  sprite_icon: {fileID: 21300000, guid: a3388fc2c05b33f48b3888711bd48aad, type: 3}
-  variables:
-  - name: Cooldown
-    text_display: $s cooldown
-    type_value: 1
-    type_display: 1
-    value_int: 0
-    value_float: 2
-    value_bool: 0
-    can_edit_name: 0
-  - name: Charges
-    text_display: $ charges
-    type_value: 0
-    type_display: 0
-    value_int: 1
-    value_float: 0
-    value_bool: 0
-    can_edit_name: 0
-  - name: Delay
-    text_display: $s explosion delay
-    type_value: 1
-    type_display: 1
-    value_int: 0
-    value_float: 0.5
-    value_bool: 0
-    can_edit_name: 1
-  - name: Radius
-    text_display: $ ring radius
-    type_value: 1
-    type_display: 1
-    value_int: 0
-    value_float: 4
-    value_bool: 0
-    can_edit_name: 1
-  - name: Width
-    text_display: $ ring width
-    type_value: 1
-    type_display: 1
-    value_int: 0
-    value_float: 1.5
-    value_bool: 0
-    can_edit_name: 1
-  - name: Knockback
-    text_display: $ knockback force
-    type_value: 1
-    type_display: 1
-    value_int: 0
-    value_float: 200
-    value_bool: 0
-    can_edit_name: 1
-  - name: Rings
-    text_display: $ rings
-    type_value: 0
-    type_display: 0
-    value_int: 1
-    value_float: 0
-    value_bool: 0
-    can_edit_name: 1
+  Info: {fileID: 11400000, guid: 788725a427918d94783101729c0276dc, type: 2}
+  Stats: {fileID: 11400000, guid: b1472cec798a0414c92ae1a95abab146, type: 2}
+  ModifierUpgrades: {fileID: 11400000, guid: 161417befd49f914f8a016a009f566af, type: 2}
   modifier_effects:
-  - type: 0
-    effects: []
-  - type: 1
-    effects: []
-  - type: 2
-    effects: []
-  - type: 3
-    effects: []
+  - name: 
+    type: 0
+    upgrade: {fileID: 0}
+  - name: 
+    type: 1
+    upgrade: {fileID: 0}
+  - name: 
+    type: 2
+    upgrade: {fileID: 0}
+  - name: 
+    type: 3
+    upgrade: {fileID: 0}
   ps_charge: {fileID: 4787254983571835076}
   ps_explode: {fileID: 8603852486622223825}
   ps_explode_point: {fileID: 8969493615852723287}

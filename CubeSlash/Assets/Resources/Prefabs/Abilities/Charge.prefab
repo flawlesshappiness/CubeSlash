@@ -19527,84 +19527,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4bbbe16d954462a419a0c7b803b9b1a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  type: 2
-  name_ability: Charge
-  desc_ability: Charge, then release a beam penetrating all enemies
-  sprite_icon: {fileID: 21300000, guid: 00cb1e475738e9c419d3e33ed7f45243, type: 3}
-  variables:
-  - name: Cooldown
-    text_display: $s cooldown
-    type_value: 1
-    type_display: 1
-    value_int: 0
-    value_float: 0
-    value_bool: 0
-    can_edit_name: 0
-  - name: Charges
-    text_display: $ charges
-    type_value: 0
-    type_display: 0
-    value_int: 1
-    value_float: 0
-    value_bool: 0
-    can_edit_name: 0
-  - name: Width
-    text_display: $ beam width
-    type_value: 1
-    type_display: 1
-    value_int: 0
-    value_float: 1
-    value_bool: 0
-    can_edit_name: 1
-  - name: ChargeTime
-    text_display: $s charge time
-    type_value: 1
-    type_display: 1
-    value_int: 1
-    value_float: 1
-    value_bool: 0
-    can_edit_name: 1
-  - name: KnockbackSelf
-    text_display: $ self knockback
-    type_value: 1
-    type_display: 1
-    value_int: 0
-    value_float: 10
-    value_bool: 0
-    can_edit_name: 1
-  - name: ChargeTimeOnKill
-    text_display: $ charge time on kill
-    type_value: 1
-    type_display: 2
-    value_int: 0
-    value_float: 1
-    value_bool: 0
-    can_edit_name: 1
-  - name: BeamCount
-    text_display: $ beams
-    type_value: 0
-    type_display: 0
-    value_int: 1
-    value_float: 0
-    value_bool: 0
-    can_edit_name: 1
-  - name: BeamArc
-    text_display: $ degree arc per beam
-    type_value: 1
-    type_display: 1
-    value_int: 0
-    value_float: 0
-    value_bool: 0
-    can_edit_name: 1
+  Info: {fileID: 11400000, guid: a77c9a9f9d872354fbd91946993903d8, type: 2}
+  Stats: {fileID: 11400000, guid: dea22f17ad735a5429748d23a588c898, type: 2}
+  ModifierUpgrades: {fileID: 11400000, guid: e5813a8d4b232a04ebec93b0b67e7015, type: 2}
   modifier_effects:
-  - type: 0
-    effects: []
-  - type: 1
-    effects: []
-  - type: 2
-    effects: []
-  - type: 3
-    effects: []
+  - name: 
+    type: 0
+    upgrade: {fileID: 0}
+  - name: 
+    type: 1
+    upgrade: {fileID: 0}
+  - name: 
+    type: 2
+    upgrade: {fileID: 0}
+  - name: 
+    type: 3
+    upgrade: {fileID: 0}
   prefab_line: {fileID: 3161495528270361273}
   ps_charge: {fileID: 3355490899533344021}
   ps_charge_end: {fileID: 3894950489769590115}

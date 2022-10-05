@@ -5,15 +5,10 @@ using UnityEngine;
 
 public abstract class Ability : MonoBehaviourExtended
 {
-    [Header("PROPERTIES")]
-    public Type type;
-
-    [Header("UI")]
-    public string name_ability;
-    [TextArea] public string desc_ability;
-    public Sprite sprite_icon;
-    public List<AbilityVariable> variables = new List<AbilityVariable>();
-    public List<AbilityModifierEffects> modifier_effects = new List<AbilityModifierEffects>();
+    [Header("ABILITY")]
+    public AbilityInfo Info;
+    public StatCollection Stats;
+    public AbilityModifierCollection ModifierUpgrades;
 
     public enum Type { DASH, SPLIT, CHARGE, EXPLODE }
     public Ability[] Modifiers { get; protected set; } = new Ability[ConstVars.COUNT_MODIFIERS];
@@ -30,7 +25,7 @@ public abstract class Ability : MonoBehaviourExtended
     public float CooldownPercentage { get { return (Time.time - TimeCooldownStart) / (TimeCooldownEnd - TimeCooldownStart); } }
     public int CurrentCharges { get; set; }
 
-    private Dictionary<string, AbilityValue> values = new Dictionary<string, AbilityValue>();
+    private Dictionary<string, StatValue> values = new Dictionary<string, StatValue>();
 
     // Values
     public float Cooldown { get; private set; }
@@ -38,39 +33,32 @@ public abstract class Ability : MonoBehaviourExtended
 
     private void OnValidate()
     {
-        // Add modifier effects
-        var types = System.Enum.GetValues(typeof(Type)).Cast<Type>().ToList();
-        foreach(var type in types)
-        {
-            if(!modifier_effects.Any(e => e.type == type))
-            {
-                modifier_effects.Add(new AbilityModifierEffects { type = type });
-            }
-        }
-
         // Add variables
-        if(!variables.Any(v => v.name == "Cooldown"))
+        if(Stats != null)
         {
-            variables.Add(new AbilityVariable
+            if (!Stats.stats.Any(v => v.name == "Cooldown"))
             {
-                name = "Cooldown",
-                text_display = "$s cooldown",
-                type_display = AbilityVariable.DisplayType.FLOAT,
-                type_value = AbilityVariable.ValueType.FLOAT,
-                can_edit_name = false,
-            });
-        }
+                Stats.stats.Add(new StatParameter
+                {
+                    name = "Cooldown",
+                    text_display = "$s cooldown",
+                    type_display = StatParameter.DisplayType.FLOAT,
+                    type_value = StatParameter.ValueType.FLOAT,
+                    can_edit_name = false,
+                });
+            }
 
-        if(!variables.Any(v => v.name == "Charges"))
-        {
-            variables.Add(new AbilityVariable
+            if (!Stats.stats.Any(v => v.name == "Charges"))
             {
-                name = "Charges",
-                text_display = "$ charges",
-                type_display = AbilityVariable.DisplayType.INT,
-                type_value = AbilityVariable.ValueType.INT,
-                can_edit_name = false,
-            });
+                Stats.stats.Add(new StatParameter
+                {
+                    name = "Charges",
+                    text_display = "$ charges",
+                    type_display = StatParameter.DisplayType.INT,
+                    type_value = StatParameter.ValueType.INT,
+                    can_edit_name = false,
+                });
+            }
         }
     }
 
@@ -94,31 +82,34 @@ public abstract class Ability : MonoBehaviourExtended
     public void ResetValues()
     {
         values.Clear();
-        foreach (var v in variables)
+        foreach (var v in Stats.stats)
         {
-            var value = new AbilityValue(v);
+            var value = new StatValue(v);
             values.Add(v.name, value);
         }
     }
 
     private void ApplyUpgrades()
     {
-        UpgradeController.Instance.GetUnlockedUpgrades().ForEach(info => 
-        {
-            foreach(var effect in info.upgrade.effects)
-            {
-                var value = values[effect.variable.name];
-                value.AddValue(effect.variable);
-            }
-        });
+        UpgradeController.Instance.GetUnlockedUpgrades().ForEach(info => ApplyEffects(info.upgrade.effects));
     }
 
     private void ApplyModifiers()
     {
-        Modifiers.Where(m => m != null).ToList().ForEach(m => 
-        { 
-            // Apply modifier variables
-        });
+        Modifiers
+            .Where(m => m != null)
+            .Select(m => ModifierUpgrades.GetModifier(m.Info.type))
+            .Where(am => am != null)
+            .ToList().ForEach(am => ApplyEffects(am.upgrade.effects));
+    }
+
+    private void ApplyEffects(List<Upgrade.Effect> effects)
+    {
+        foreach (var effect in effects)
+        {
+            var value = values[effect.variable.name];
+            value.AddValue(effect.variable);
+        }
     }
     #endregion
     #region INPUT
@@ -201,7 +192,7 @@ public abstract class Ability : MonoBehaviourExtended
     {
         foreach(var modifier in Modifiers)
         {
-            if (modifier != null && modifier.type == type)
+            if (modifier != null && modifier.Info.type == type)
                 return true;
         }
         return false;
@@ -209,7 +200,7 @@ public abstract class Ability : MonoBehaviourExtended
 
     public T GetModifier<T>(Type type) where T : Ability
     {
-        return (T)Modifiers.FirstOrDefault(m => m != null && m.type == type);
+        return (T)Modifiers.FirstOrDefault(m => m != null && m.Info.type == type);
     }
     #endregion
     #region VALUES

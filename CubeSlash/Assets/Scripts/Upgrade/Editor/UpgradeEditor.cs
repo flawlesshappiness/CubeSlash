@@ -8,12 +8,14 @@ public class UpgradeEditor : Editor
     private Upgrade upgrade;
     private UpgradeDatabase db_upgrade;
     private AbilityDatabase db_ability;
+    private StatDatabase db_stat;
 
     private void OnEnable()
     {
         upgrade = target as Upgrade;
         db_upgrade = AssetDatabase.LoadAssetAtPath<UpgradeDatabase>($"Assets/Resources/Databases/{nameof(UpgradeDatabase)}.asset");
         db_ability = AssetDatabase.LoadAssetAtPath<AbilityDatabase>($"Assets/Resources/Databases/{nameof(AbilityDatabase)}.asset");
+        db_stat = StatDatabase.Load();
     }
 
     public override void OnInspectorGUI()
@@ -38,16 +40,19 @@ public class UpgradeEditor : Editor
         upgrade.name = GUILayout.TextField(upgrade.name);
         GUILayout.EndHorizontal();
 
-        // Ability
+        // Stat ID
         GUILayout.BeginHorizontal();
-        GUILayout.Label("Ability", GUILayout.Width(100));
-        upgrade.ability = (Ability.Type)EditorGUILayout.EnumPopup(upgrade.ability);
-        GUILayout.EndHorizontal();
-
+        GUILayout.Label("Stat ID:", GUILayout.Width(100));
+        var stat_ids = db_stat.collections.Select(c => c.id).ToArray();
+        var idx_stat_ids = stat_ids.ToList().IndexOf(upgrade.id_stats);
+        EditorGUI.BeginChangeCheck();
+        idx_stat_ids = EditorGUILayout.Popup(idx_stat_ids, stat_ids);
         if (EditorGUI.EndChangeCheck())
         {
+            upgrade.id_stats = stat_ids[idx_stat_ids];
             EditorUtility.SetDirty(upgrade);
         }
+        GUILayout.EndHorizontal();
 
         // Effects
         GUILayout.Space(20);
@@ -106,11 +111,12 @@ public class UpgradeEditor : Editor
         }
         GUILayout.EndHorizontal();
 
-        var ability = db_ability.GetAbility(upgrade.ability);
+        var stats = StatCollection.Load(upgrade.id_stats);
+
         foreach (var effect in upgrade.effects.ToList())
         {
             EditorGUI.BeginChangeCheck();
-            DrawEffect(ability, effect, () => upgrade.effects.Remove(effect));
+            DrawEffect(stats, effect, () => upgrade.effects.Remove(effect));
             if (EditorGUI.EndChangeCheck())
             {
                 EditorUtility.SetDirty(upgrade);
@@ -118,12 +124,14 @@ public class UpgradeEditor : Editor
         }
     }
 
-    public static void DrawEffect(Ability ability, Upgrade.Effect effect, System.Action onDelete)
+    public static void DrawEffect(StatCollection stat_collection, Upgrade.Effect effect, System.Action onDelete)
     {
         GUILayout.BeginHorizontal();
 
-        var variable = ability.variables.FirstOrDefault(v => v.name == effect.variable.name) ??
-            (ability.variables.Count > 0 ? ability.variables[0] : null);
+        var variable = 
+            stat_collection == null ? null :
+            stat_collection.stats.FirstOrDefault(v => v.name == effect.variable.name) ??
+            (stat_collection.stats.Count > 0 ? stat_collection.stats[0] : null);
 
         // Preview
         GUILayout.FlexibleSpace();
@@ -147,15 +155,15 @@ public class UpgradeEditor : Editor
         // Variable
         if(variable != null)
         {
-            var variables = ability.variables.Select(v => v.name.ToString()).ToArray();
-            var idx_variable = ability.variables.IndexOf(variable);
+            var variables = stat_collection.stats.Select(v => v.name.ToString()).ToArray();
+            var idx_variable = stat_collection.stats.IndexOf(variable);
 
             GUILayout.BeginHorizontal();
             EditorGUI.BeginChangeCheck();
             idx_variable = EditorGUILayout.Popup(idx_variable, variables);
             if (EditorGUI.EndChangeCheck())
             {
-                variable = ability.variables[idx_variable];
+                variable = stat_collection.stats[idx_variable];
             }
 
             effect.variable.name = variable.name;
@@ -164,15 +172,15 @@ public class UpgradeEditor : Editor
             effect.variable.type_value = variable.type_value;
 
             // Value
-            if (effect.variable.type_value == AbilityVariable.ValueType.INT)
+            if (effect.variable.type_value == StatParameter.ValueType.INT)
             {
                 effect.variable.value_int = EditorGUILayout.IntField(effect.variable.value_int);
             }
-            else if (effect.variable.type_value == AbilityVariable.ValueType.FLOAT)
+            else if (effect.variable.type_value == StatParameter.ValueType.FLOAT)
             {
                 effect.variable.value_float = EditorGUILayout.FloatField(effect.variable.value_float);
             }
-            else if(effect.variable.type_value == AbilityVariable.ValueType.BOOL)
+            else if(effect.variable.type_value == StatParameter.ValueType.BOOL)
             {
                 effect.variable.value_bool = EditorGUILayout.Toggle(effect.variable.value_bool);
             }

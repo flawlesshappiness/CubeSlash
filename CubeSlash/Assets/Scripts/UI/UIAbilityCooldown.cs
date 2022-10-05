@@ -14,7 +14,7 @@ public class UIAbilityCooldown : MonoBehaviour
     public void SetAbility(Ability ability)
     {
         this.ability = ability;
-        img_icon.sprite = ability ? ability.sprite_icon : null;
+        img_icon.sprite = ability ? ability.Info.sprite_icon : null;
         img_icon.enabled = img_icon.sprite != null;
         img_cooldown.fillAmount = 0;
         cvg.alpha = ability ? 1 : 0.1f;

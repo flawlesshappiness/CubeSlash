@@ -45,85 +45,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e75a4da76b4d75c448357f153da5e6b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  type: 0
-  name_ability: Dash
-  desc_ability: Dash forwards, damaging enemies on impact
-  sprite_icon: {fileID: 21300000, guid: fd6e8c77e0376ca47876b6db0994e1d4, type: 3}
-  variables:
-  - name: Distance
-    text_display: $ distance
-    type_value: 1
-    type_display: 1
-    value_int: 0
-    value_float: 5
-    value_bool: 0
-    can_edit_name: 1
-  - name: Speed
-    text_display: $ speed
-    type_value: 1
-    type_display: 1
-    value_int: 0
-    value_float: 30
-    value_bool: 0
-    can_edit_name: 1
-  - name: RadiusDamage
-    text_display: $ damage radius
-    type_value: 1
-    type_display: 1
-    value_int: 0
-    value_float: 1
-    value_bool: 0
-    can_edit_name: 1
-  - name: RadiusKnockback
-    text_display: $ knockback radius
-    type_value: 1
-    type_display: 1
-    value_int: 0
-    value_float: 12
-    value_bool: 0
-    can_edit_name: 1
-  - name: ForceKnockback
-    text_display: $ knockback force
-    type_value: 1
-    type_display: 1
-    value_int: 0
-    value_float: 300
-    value_bool: 0
-    can_edit_name: 1
-  - name: TrailEnabled
-    text_display: Trail
-    type_value: 2
-    type_display: 3
-    value_int: 0
-    value_float: 0
-    value_bool: 0
-    can_edit_name: 1
-  - name: CooldownOnHit
-    text_display: $ cooldown on hit
-    type_value: 1
-    type_display: 2
-    value_int: 0
-    value_float: 1
-    value_bool: 0
-    can_edit_name: 1
-  - name: Charges
-    text_display: $ charges
-    type_value: 0
-    type_display: 0
-    value_int: 1
-    value_float: 0
-    value_bool: 0
-    can_edit_name: 1
-  - name: Cooldown
-    text_display: $s cooldown
-    type_value: 1
-    type_display: 1
-    value_int: 0
-    value_float: 0.75
-    value_bool: 0
-    can_edit_name: 0
+  Info: {fileID: 11400000, guid: 94bf2c62d7d24574882c13e46e18a041, type: 2}
+  Stats: {fileID: 11400000, guid: 734a4049d8fce3b48a8e34c0596e5989, type: 2}
+  ModifierUpgrades: {fileID: 11400000, guid: 1c73c92639b2fad469983727b62a8d8a, type: 2}
   modifier_effects:
-  - type: 0
+  - name: 
+    type: 0
+    upgrade: []
     effects:
     - type_effect: 0
       variable:
@@ -155,7 +83,9 @@ MonoBehaviour:
         value_float: 10
         value_bool: 0
         can_edit_name: 1
-  - type: 1
+  - name: 
+    type: 1
+    upgrade: []
     effects:
     - type_effect: 0
       variable:
@@ -177,7 +107,9 @@ MonoBehaviour:
         value_float: 2
         value_bool: 0
         can_edit_name: 1
-  - type: 2
+  - name: 
+    type: 2
+    upgrade: []
     effects:
     - type_effect: 0
       variable:
@@ -209,7 +141,9 @@ MonoBehaviour:
         value_float: 30
         value_bool: 0
         can_edit_name: 1
-  - type: 3
+  - name: 
+    type: 3
+    upgrade: []
     effects:
     - type_effect: 1
       variable:

@@ -196,8 +196,8 @@ public class AbilityView : View
     {
         if(a != null)
         {
-            string s = a.name_ability;
-            s += "\n" + a.desc_ability;
+            string s = a.Info.name_ability;
+            s += "\n" + a.Info.desc_ability;
             tmp_desc.text = s;
             DisplayInputAbility();
         }

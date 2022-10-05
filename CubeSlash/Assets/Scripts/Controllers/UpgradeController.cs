@@ -42,6 +42,8 @@ public class UpgradeController : Singleton
             {
                 var upgrade = Database.upgrades.FirstOrDefault(u => u.id == node.id_name);
                 info = new UpgradeInfo(upgrade);
+                info.require_ability = tree.require_ability;
+                info.type_ability_required = tree.ability_type_required;
                 upgrades.Add(node.id_name, info);
             }
 
@@ -67,7 +69,7 @@ public class UpgradeController : Singleton
     {
         return upgrades.Values
             .Where(info => 
-                AbilityController.Instance.GetEquippedAbilities().Any(a => a.type == info.upgrade.ability) &&
+                (!info.require_ability || AbilityController.Instance.GetEquippedAbilities().Any(a => a.Info.type == info.type_ability_required)) &&
                 !info.isUnlocked && 
                 (info.parents.Count == 0 || info.parents.Any(p => p.isUnlocked))
             )

@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class AbilitySplit : Ability
 {
+    [Header("SPLIT")]
     [SerializeField] private Projectile prefab_projectile;
     private bool Firing { get; set; }
     private float time_fire;

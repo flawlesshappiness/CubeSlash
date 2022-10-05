@@ -15,7 +15,7 @@ public class UIAbilitySlot : MonoBehaviour
     public void SetAbility(Ability ability)
     {
         this.Ability = ability;
-        img_icon.sprite = ability == null ? null : ability.sprite_icon;
+        img_icon.sprite = ability == null ? null : ability.Info.sprite_icon;
         img_icon.enabled = ability != null;
     }
 

@@ -26,7 +26,7 @@ public class UnlockAbilityView : View
         foreach(var ability in abilities)
         {
             var btn = CreateButton();
-            btn.Icon = ability.sprite_icon;
+            btn.Icon = ability.Info.sprite_icon;
             btn.Button.OnSelectedChanged += s => OnSelected(s, ability);
             btn.Button.onClick.AddListener(() => Click(btn, ability));
         }
@@ -43,7 +43,7 @@ public class UnlockAbilityView : View
 
         void Click(UIIconButton btn, Ability ability)
         {
-            AbilityController.Instance.UnlockAbility(ability.type);
+            AbilityController.Instance.UnlockAbility(ability.Info.type);
             OnAbilitySelected?.Invoke();
             Close(0);
         }
@@ -69,9 +69,9 @@ public class UnlockAbilityView : View
 
         if(ability != null)
         {
-            text += ability.name_ability;
+            text += ability.Info.name_ability;
             text += "\n";
-            text += ability.desc_ability;
+            text += ability.Info.desc_ability;
         }
 
         tmp_desc.text = text;

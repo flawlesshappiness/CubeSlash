@@ -11,7 +11,7 @@ public class UIAbilitySlotMove : MonoBehaviour
     public void SetAbility(Ability ability)
     {
         Ability = ability;
-        img_icon.sprite = ability == null ? null : ability.sprite_icon;
+        img_icon.sprite = ability == null ? null : ability.Info.sprite_icon;
         img_icon.enabled = ability != null;
         cvg.alpha = ability == null ? 0 : 1;
     }

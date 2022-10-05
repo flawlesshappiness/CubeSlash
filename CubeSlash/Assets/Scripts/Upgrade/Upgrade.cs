@@ -7,7 +7,7 @@ public class Upgrade : ScriptableObject
     public string id;
     public string name;
     public Sprite icon;
-    public Ability.Type ability;
+    public string id_stats = "";
     public List<Effect> effects = new List<Effect>();
     
     [System.Serializable]
@@ -15,6 +15,6 @@ public class Upgrade : ScriptableObject
     {
         public enum TypeEffect { POSITIVE, NEGATIVE }
         public TypeEffect type_effect;
-        public AbilityVariable variable = new AbilityVariable();
+        public StatParameter variable = new StatParameter();
     }
 }
