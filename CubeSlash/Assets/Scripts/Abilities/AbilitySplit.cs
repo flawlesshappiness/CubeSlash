@@ -45,18 +45,10 @@ public class AbilitySplit : Ability
         }
     }
 
-    public override void Pressed()
+    public override void Trigger()
     {
-        base.Pressed();
-        var charge = GetModifier<AbilityCharge>(Type.CHARGE);
-        if (charge)
-        {
-            charge.Pressed();
-        }
-        else
-        {
-            StartCoroutine(BurstFireCr(Bursts));
-        }
+        base.Trigger();
+        StartCoroutine(BurstFireCr(Bursts));
 
         IEnumerator BurstFireCr(int count)
         {
@@ -64,31 +56,6 @@ public class AbilitySplit : Ability
             {
                 ShootProjectiles();
                 yield return new WaitForSeconds(0.1f);
-            }
-        }
-    }
-
-    public override void Released()
-    {
-        base.Released();
-        var charge = GetModifier<AbilityCharge>(Type.CHARGE);
-        if (charge)
-        {
-            charge.Released();
-            ShootProjectiles();
-        }
-
-        Firing = false;
-    }
-
-    private void Update()
-    {
-        if (Firing)
-        {
-            if(Time.time > time_fire)
-            {
-                time_fire = Time.time + 0.1f;
-                ShootProjectiles();
             }
         }
     }

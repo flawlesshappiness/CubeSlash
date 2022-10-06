@@ -5,7 +5,7 @@ public class Item : MonoBehaviour
     [Header("ITEM")]
     [SerializeField] private AnimationCurve ac_collect;
     public float mul_dist_collect = 1f;
-    private bool IsCollected { get; set; }
+    public bool IsCollected { get; set; }
     private float TimeCollected { get; set; }
     private Vector3 PositionCollected { get; set; }
 

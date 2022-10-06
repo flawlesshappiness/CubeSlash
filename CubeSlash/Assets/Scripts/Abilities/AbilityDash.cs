@@ -42,41 +42,11 @@ public class AbilityDash : Ability
         TrailEnabled = GetBoolValue("TrailEnabled");
     }
 
-    public override void Pressed()
+    public override void Trigger()
     {
-        base.Pressed();
-
-        var charge = GetModifier<AbilityCharge>(Type.CHARGE);
-        if (charge)
-        {
-            charge.Pressed();
-        }
-        else
-        {
-            if (Dashing) return;
-            StartDashing();
-        }
-
-        InUse = true;
-    }
-
-    public override void Released()
-    {
-        base.Released();
-
-        var charge = GetModifier<AbilityCharge>(Type.CHARGE);
-        if (charge)
-        {
-            charge.Released();
-            if(charge.IsFullyCharged() && !Dashing)
-            {
-                StartDashing();
-            }
-            else
-            {
-                InUse = false;
-            }
-        }
+        base.Trigger();
+        if (Dashing) return;
+        StartDashing();
     }
 
     private void StartDashing()

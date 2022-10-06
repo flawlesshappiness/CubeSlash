@@ -55,16 +55,16 @@ MonoBehaviour:
     type_value: 1
     type_display: 1
     value_int: 0
-    value_float: 10
+    value_float: 500
     value_bool: 0
     can_edit_name: 1
     _editor_toggle_preview: 1
   - name: ChargeTimeOnKill
-    text_display: $ charge time on kill
+    text_display: $ charge time per kill
     type_value: 1
     type_display: 2
     value_int: 0
-    value_float: 1
+    value_float: 0
     value_bool: 0
     can_edit_name: 1
     _editor_toggle_preview: 1
@@ -88,6 +88,15 @@ MonoBehaviour:
     _editor_toggle_preview: 1
   - name: ChargeSucksExp
     text_display: Pull exp closer while charging
+    type_value: 2
+    type_display: 3
+    value_int: 0
+    value_float: 0
+    value_bool: 0
+    can_edit_name: 1
+    _editor_toggle_preview: 1
+  - name: BeamBack
+    text_display: Shoot another beam backwards
     type_value: 2
     type_display: 3
     value_int: 0

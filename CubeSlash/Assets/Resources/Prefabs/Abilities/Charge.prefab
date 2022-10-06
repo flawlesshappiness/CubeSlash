@@ -19530,19 +19530,6 @@ MonoBehaviour:
   Info: {fileID: 11400000, guid: a77c9a9f9d872354fbd91946993903d8, type: 2}
   Stats: {fileID: 11400000, guid: dea22f17ad735a5429748d23a588c898, type: 2}
   ModifierUpgrades: {fileID: 11400000, guid: e5813a8d4b232a04ebec93b0b67e7015, type: 2}
-  modifier_effects:
-  - name: 
-    type: 0
-    upgrade: {fileID: 0}
-  - name: 
-    type: 1
-    upgrade: {fileID: 0}
-  - name: 
-    type: 2
-    upgrade: {fileID: 0}
-  - name: 
-    type: 3
-    upgrade: {fileID: 0}
   prefab_line: {fileID: 3161495528270361273}
   ps_charge: {fileID: 3355490899533344021}
   ps_charge_end: {fileID: 3894950489769590115}
@@ -19568,6 +19555,30 @@ MonoBehaviour:
       tangentMode: 0
       weightedMode: 0
       inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  ac_charge_suck_falloff:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 2.000003
+      tangentMode: 0
+      weightedMode: 3
+      inWeight: 0
+      outWeight: 0.333333
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 3
+      inWeight: 0.33333302
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2

@@ -19,12 +19,23 @@ MonoBehaviour:
   effects:
   - type_effect: 0
     variable:
-      name: KnockbackEnemies
-      text_display: $ enemy knockback
+      name: Cooldown
+      text_display: $s cooldown
       type_value: 1
       type_display: 1
       value_int: 0
       value_float: 400
+      value_bool: 0
+      can_edit_name: 1
+      _editor_toggle_preview: 0
+  - type_effect: 1
+    variable:
+      name: ChargeTime
+      text_display: $s charge time
+      type_value: 1
+      type_display: 1
+      value_int: 0
+      value_float: 0.25
       value_bool: 0
       can_edit_name: 1
       _editor_toggle_preview: 0

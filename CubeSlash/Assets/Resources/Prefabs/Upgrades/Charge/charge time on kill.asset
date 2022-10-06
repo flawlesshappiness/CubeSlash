@@ -20,11 +20,11 @@ MonoBehaviour:
   - type_effect: 0
     variable:
       name: ChargeTimeOnKill
-      text_display: $ charge time on kill
+      text_display: $ charge time per kill
       type_value: 1
       type_display: 2
       value_int: 0
-      value_float: -0.01
+      value_float: -0.02
       value_bool: 1
       can_edit_name: 1
       _editor_toggle_preview: 0

@@ -24,7 +24,18 @@ MonoBehaviour:
       type_value: 1
       type_display: 1
       value_int: 0
-      value_float: -150
+      value_float: -200
+      value_bool: 0
+      can_edit_name: 1
+      _editor_toggle_preview: 0
+  - type_effect: 1
+    variable:
+      name: ChargeTime
+      text_display: $s charge time
+      type_value: 1
+      type_display: 1
+      value_int: 0
+      value_float: 0.25
       value_bool: 0
       can_edit_name: 1
       _editor_toggle_preview: 0

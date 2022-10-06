@@ -19,10 +19,10 @@ MonoBehaviour:
   effects:
   - type_effect: 0
     variable:
-      name: Cooldown
-      text_display: $s cooldown
-      type_value: 1
-      type_display: 1
+      name: BeamBack
+      text_display: Shoot another beam backwards
+      type_value: 2
+      type_display: 3
       value_int: 0
       value_float: 400
       value_bool: 1

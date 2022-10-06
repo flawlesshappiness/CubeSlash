@@ -15,7 +15,8 @@ public abstract class Ability : MonoBehaviourExtended
     public Player Player { get; set; }
     public bool IsPressed { get; set; }
     public bool Equipped { get; set; }
-    public bool IsModifier { get; set; }
+    public Ability ModifierParent { get; set; }
+    public bool IsModifier { get { return ModifierParent != null; } }
     public bool IsActive { get { return Equipped && !IsModifier; } }
     public float TimeCooldownStart { get; private set; }
     public float TimeCooldownEnd { get; private set; }
@@ -118,11 +119,47 @@ public abstract class Ability : MonoBehaviourExtended
     public virtual void Pressed()
     {
         IsPressed = true;
+
+        var charge = GetModifier<AbilityCharge>(Type.CHARGE);
+        if(Info.type == Type.CHARGE)
+        {
+            // Do nothing
+        }
+        else if(charge != null)
+        {
+            charge.BeginCharge();
+        }
+        else
+        {
+            Trigger();
+        }
     }
 
     public virtual void Released()
     {
         IsPressed = false;
+
+        var charge = GetModifier<AbilityCharge>(Type.CHARGE);
+        if (Info.type == Type.CHARGE)
+        {
+            // Do nothing
+        }
+        else if (charge != null)
+        {
+            if (charge.EndCharge())
+            {
+                Trigger();
+            }
+            else
+            {
+                // Do nothing
+            }
+        }
+    }
+
+    public virtual void Trigger()
+    {
+        // Trigger ability
     }
     #endregion
     #region EQUIP
@@ -134,7 +171,7 @@ public abstract class Ability : MonoBehaviourExtended
     public void Unequip()
     {
         Equipped = false;
-        IsModifier = false;
+        ModifierParent = null;
 
         for (int i = 0; i < Modifiers.Length; i++)
         {
@@ -177,7 +214,7 @@ public abstract class Ability : MonoBehaviourExtended
         var prev = Modifiers[idx];
         if (prev)
         {
-            prev.IsModifier = false;
+            prev.ModifierParent = null;
             prev.Equipped = false;
         }
 
@@ -185,7 +222,7 @@ public abstract class Ability : MonoBehaviourExtended
         Modifiers[idx] = ability;
         if (ability)
         {
-            ability.IsModifier = true;
+            ability.ModifierParent = this;
             ability.Equipped = true;
         }
     }

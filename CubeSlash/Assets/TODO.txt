@@ -1,4 +1,6 @@
 TODO:
 Ability to refund level if you dont want an upgrade (unlock in meta layer)
 Preview when holding ability button
-add player upgrades
+Hold Y to view ability stats
+Gain ability on some level ups
+Charge time based on modified ability

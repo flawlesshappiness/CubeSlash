@@ -116,4 +116,6 @@ public class ItemController : Singleton
             item.Despawn();
         }
     }
+
+    public List<ExperienceItem> GetActiveExperiences() => experience_active.ToList();
 }

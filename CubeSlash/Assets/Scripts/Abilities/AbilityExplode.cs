@@ -29,18 +29,13 @@ public class AbilityExplode : Ability
         Rings = GetIntValue("Rings");
     }
 
-    public override void Pressed()
+    public override void Trigger()
     {
-        base.Pressed();
+        base.Trigger();
         for (int i = 0; i < Rings; i++)
         {
             StartCoroutine(ExplodeCr(Radius + Width * i, Width, 0.2f * i));
         }
-    }
-
-    public override void Released()
-    {
-        base.Released();
     }
 
     private IEnumerator ExplodeCr(float radius, float width, float delay = 0)

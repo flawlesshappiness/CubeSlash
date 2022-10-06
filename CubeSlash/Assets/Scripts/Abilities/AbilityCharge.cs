@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class AbilityCharge : Ability
@@ -12,6 +14,7 @@ public class AbilityCharge : Ability
     [SerializeField] private ParticleSystem ps_charged;
     [SerializeField] private ParticleSystem ps_beam_dust;
     [SerializeField] private AnimationCurve ac_charge_emission;
+    [SerializeField] private AnimationCurve ac_charge_suck_falloff;
 
     private const float DISTANCE_MAX = 50f;
 
@@ -22,6 +25,7 @@ public class AbilityCharge : Ability
     private float time_charge_end;
     public bool Charging { get; private set; }
     public bool ChargeEnded { get; private set; }
+    public int Kills { get; private set; }
 
     // Values
     private int BeamCount { get; set; }
@@ -29,8 +33,9 @@ public class AbilityCharge : Ability
     private float Width { get; set; }
     public float ChargeTime { get; set; }
     private float KnockbackSelf { get; set; }
-    private bool ChargeTimeOnKill { get; set; }
+    private float ChargeTimeOnKill { get; set; }
     private bool ChargeSucksExp { get; set; }
+    private bool BeamBack { get; set; }
 
     private void Start()
     {
@@ -61,50 +66,14 @@ public class AbilityCharge : Ability
         BeamCount = GetIntValue("BeamCount");
         BeamArc = GetFloatValue("BeamArc");
         ChargeSucksExp = GetBoolValue("ChargeSucksExp");
-        ChargeTimeOnKill = GetBoolValue("ChargeTimeOnKill");
+        BeamBack = GetBoolValue("BeamBack");
+        ChargeTimeOnKill = GetFloatValue("ChargeTimeOnKill");
         Charging = false;
         ChargeEnded = false;
+        Kills = 0;
     }
 
     /*
-    public override void ApplyUpgrade(Upgrade upgrade)
-    {
-        base.ApplyUpgrade(upgrade);
-
-        if (upgrade.data.type == UpgradeData.Type.CHARGE_AIM)
-        {
-            if (upgrade.level >= 1)
-            {
-                ChargeTime -= 0.2f;
-            }
-
-            if (upgrade.level >= 2)
-            {
-                ChargeTime -= 0.2f;
-            }
-
-            if (upgrade.level >= 3)
-            {
-                ChargeTime -= 0.2f;
-            }
-        }
-
-        if (upgrade.data.type == UpgradeData.Type.CHARGE_WIDTH)
-        {
-            if (upgrade.level >= 1)
-            {
-                Width += 1.0f;
-            }
-
-            if (upgrade.level >= 2)
-            {
-                Width += 1.0f;
-            }
-
-            KillsReduceCooldown = upgrade.level >= 3;
-        }
-    }
-
     public override void ApplyModifier(Ability modifier)
     {
         CooldownTime = modifier.type switch
@@ -140,33 +109,61 @@ public class AbilityCharge : Ability
     public override void Pressed()
     {
         base.Pressed();
-        time_charge_start = Time.time;
-        time_charge_end = time_charge_start + ChargeTime;
-        InUse = true;
-        Charging = true;
-        ChargeEnded = false;
-        Player.Instance.AbilityLock.AddLock(nameof(AbilityCharge));
+        BeginCharge();
     }
 
     public override void Released()
     {
         base.Released();
+        if (EndCharge() && IsActive)
+        {
+            Trigger();
+        }
+    }
+
+    public override void Trigger()
+    {
+        base.Trigger();
+        Shoot(Player.MoveDirection, DISTANCE_MAX);
+    }
+
+    private Coroutine _cr_charge;
+    public void BeginCharge()
+    {
+        Player.Instance.AbilityLock.AddLock(nameof(AbilityCharge));
+
+        InUse = true;
+        Charging = true;
+        ChargeEnded = false;
+
+        if (_cr_charge != null) StopCoroutine(_cr_charge);
+        _cr_charge = StartCoroutine(ChargeCr());
+        IEnumerator ChargeCr()
+        {
+            var time = GetChargeTime();
+            time_charge_start = Time.time;
+            time_charge_end = time_charge_start + time;
+            yield return new WaitForSeconds(time);
+        }
+    }
+
+    public bool EndCharge()
+    {
+        InUse = false;
         Charging = false;
         ChargeEnded = false;
 
-        if (IsActive && IsFullyCharged())
-        {
-            Shoot(Player.MoveDirection, DISTANCE_MAX);
-        }
-        else
-        {
-            InUse = false;
-        }
-
         Player.Instance.AbilityLock.RemoveLock(nameof(AbilityCharge));
+        return IsFullyCharged();
     }
 
     private void Update()
+    {
+        ChargeUpdate();
+        SuckUpdate();
+    }
+
+    private void ChargeUpdate()
     {
         var t = GetCharge();
         ps_charge.ModifyEmission(e =>
@@ -187,14 +184,39 @@ public class AbilityCharge : Ability
         }
     }
 
+    private void SuckUpdate()
+    {
+        if(Charging && !ChargeEnded && ChargeSucksExp)
+        {
+            var speed_max = 8f;
+            var dist_max = CameraController.Instance.Width;
+            var items = ItemController.Instance.GetActiveExperiences();
+            foreach(var item in items)
+            {
+                if (item.IsCollected) continue;
+                var dir = Player.transform.position - item.transform.position;
+                if (dir.magnitude > dist_max) continue;
+                var t = dir.magnitude / dist_max;
+                var t_speed = ac_charge_suck_falloff.Evaluate(1f - t);
+                item.transform.position += dir.normalized * (speed_max * Time.deltaTime * t_speed);
+            }
+        }
+    }
+
     private void Shoot(Vector3 dir, float distance)
     {
-        var count_hits = 0;
+        Kills = 0;
 
         var directions =
             HasModifier(Type.SPLIT) ? AbilitySplit.GetSplitDirections(3, 15, dir) :
             new List<Vector3> { dir };
         StartCoroutine(ShootCr(directions));
+
+        if (BeamBack)
+        {
+            StartCoroutine(ShootCr(new List<Vector3> { -Player.MoveDirection }));
+        }
+
         IEnumerator ShootCr(List<Vector3> directions)
         {
             foreach(var dir in directions)
@@ -205,7 +227,7 @@ public class AbilityCharge : Ability
                     .ToList().ForEach(k =>
                     {
                         k.Kill();
-                        count_hits++;
+                        Kills++;
                     });
 
                 Player.Knockback(-Player.MoveDirection.normalized * KnockbackSelf, true, true);
@@ -219,13 +241,35 @@ public class AbilityCharge : Ability
 
     public bool IsFullyCharged()
     {
-        return GetCharge() == 1f;
+        return GetCharge() >= 1f;
     }
 
     private float GetCharge()
     {
         var t = Mathf.Clamp((Time.time - time_charge_start) / (time_charge_end - time_charge_start), 0f, 1f);
         return t;
+    }
+
+    private float GetChargeTime()
+    {
+        if (IsActive)
+        {
+            var time_per_kill = Mathf.Clamp(ChargeTime * Kills * ChargeTimeOnKill, -ChargeTime, 0);
+            return ChargeTime + time_per_kill;
+        }
+        else if(ModifierParent != null)
+        {
+            return ModifierParent.Info.type switch
+            {
+                Type.DASH => 1f,
+                Type.SPLIT => 1f,
+                Type.CHARGE => ((AbilityCharge)ModifierParent).GetChargeTime(),
+                Type.EXPLODE => 1f,
+                _ => 0,
+            };
+        }
+
+        return 0;
     }
 
     private void StartVisual(Vector3 start, Vector3 end, int segments)
