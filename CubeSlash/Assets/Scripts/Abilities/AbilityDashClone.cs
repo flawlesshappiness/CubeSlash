@@ -6,7 +6,7 @@ public class AbilityDashClone : MonoBehaviourExtended
     [SerializeField] private List<ParticleSystem> particles = new List<ParticleSystem>();
 
     public Rigidbody2D Rigidbody { get { return GetComponentOnce<Rigidbody2D>(); } }
-    public TrailDash Trail { get { return GetComponentOnce<TrailDash>(ComponentSearchType.CHILDREN); } }
+    public DamageTrail Trail { get { return GetComponentOnce<DamageTrail>(ComponentSearchType.CHILDREN); } }
 
     public System.Action<IKillable> onHitKillable;
 
@@ -31,6 +31,8 @@ public class AbilityDashClone : MonoBehaviourExtended
 
     public void Destroy()
     {
+        UpdateTrail();
+
         foreach(var ps in particles)
         {
             ps.transform.parent = GameController.Instance.world;

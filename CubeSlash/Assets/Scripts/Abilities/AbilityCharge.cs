@@ -1,14 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.InteropServices;
-using Unity.VisualScripting;
+using UnityEditor.Callbacks;
 using UnityEngine;
 
 public class AbilityCharge : Ability
 {
     [Header("CHARGE")]
     [SerializeField] private LineRenderer prefab_line;
+    [SerializeField] private DamageTrail template_trail;
     [SerializeField] private ParticleSystem ps_charge;
     [SerializeField] private ParticleSystem ps_charge_end;
     [SerializeField] private ParticleSystem ps_charged;
@@ -32,17 +32,13 @@ public class AbilityCharge : Ability
     private float BeamArc { get; set; }
     private float Width { get; set; }
     public float ChargeTime { get; set; }
+    private float Knockback { get; set; }
     private float KnockbackSelf { get; set; }
     private float ChargeTimeOnKill { get; set; }
     private bool ChargeSucksExp { get; set; }
     private bool BeamBack { get; set; }
 
     private void Start()
-    {
-        prefab_line.gameObject.SetActive(false);
-    }
-
-    private void OnEnable()
     {
         ps_charge.Play();
         ps_charge.ModifyEmission(e =>
@@ -56,55 +52,30 @@ public class AbilityCharge : Ability
         });
     }
 
+    public override void InitializeFirstTime()
+    {
+        base.InitializeFirstTime();
+
+        prefab_line.gameObject.SetActive(false);
+        template_trail.gameObject.SetActive(false);
+    }
+
     public override void OnValuesApplied()
     {
         base.OnValuesApplied();
         Width = GetFloatValue("Width");
         ChargeTime = GetFloatValue("ChargeTime");
         KnockbackSelf = GetFloatValue("KnockbackSelf");
-        KnockbackSelf = GetFloatValue("KnockbackSelf");
+        Knockback = GetFloatValue("Knockback");
         BeamCount = GetIntValue("BeamCount");
         BeamArc = GetFloatValue("BeamArc");
-        ChargeSucksExp = GetBoolValue("ChargeSucksExp");
         BeamBack = GetBoolValue("BeamBack");
+        ChargeSucksExp = GetBoolValue("ChargeSucksExp");
         ChargeTimeOnKill = GetFloatValue("ChargeTimeOnKill");
         Charging = false;
         ChargeEnded = false;
         Kills = 0;
     }
-
-    /*
-    public override void ApplyModifier(Ability modifier)
-    {
-        CooldownTime = modifier.type switch
-        {
-            Type.DASH => CooldownTime + 0,
-            Type.CHARGE => CooldownTime + 5,
-            Type.SPLIT => CooldownTime * 3,
-        };
-
-        Width = modifier.type switch
-        {
-            Type.DASH => Width + 2,
-            Type.CHARGE => Width + 5,
-            Type.SPLIT => Width + 0f,
-        };
-
-        ChargeTime = modifier.type switch
-        {
-            Type.DASH => ChargeTime + 0f,
-            Type.CHARGE => ChargeTime + 0.5f,
-            Type.SPLIT => ChargeTime + 0.5f,
-        };
-
-        Knockback = modifier.type switch
-        {
-            Type.DASH => Knockback + 75,
-            Type.CHARGE => Knockback - 25,
-            Type.SPLIT => Knockback - 10,
-        };
-    }
-    */
 
     public override void Pressed()
     {
@@ -221,17 +192,51 @@ public class AbilityCharge : Ability
         {
             foreach(var dir in directions)
             {
+                // Damage
                 Physics2D.CircleCastAll(Player.transform.position, Width * 0.5f, dir, distance)
                     .Select(hit => hit.collider.GetComponentInParent<IKillable>())
                     .Where(k => k != null && k.CanKill())
                     .ToList().ForEach(k =>
                     {
-                        k.Kill();
-                        Kills++;
+                        if (k.CanKill())
+                        {
+                            k.Kill();
+                            Kills++;
+
+                            if (HasModifier(Type.EXPLODE))
+                            {
+                                AbilityExplode.Explode(k.GetPosition(), 2f, 1.5f, 50);
+                            }
+                        }
                     });
 
-                Player.Knockback(-Player.MoveDirection.normalized * KnockbackSelf, true, true);
+                // Enemy knockback
+                var radius_knockback = Width * 3f;
+                Physics2D.CircleCastAll(Player.transform.position + dir.normalized * radius_knockback, radius_knockback, dir, distance)
+                    .Select(hit => hit.collider.GetComponentInParent<Enemy>())
+                    .Where(e => e != null)
+                    .ToList().ForEach(e =>
+                    {
+                        e.Knockback(Player.MoveDirection * Knockback, true, false);
+                    });
+
+                // Self knockback
+                Player.Knockback(-dir.normalized * KnockbackSelf, true, true);
+
+                // Visual
                 StartVisual(Player.transform.position, Player.transform.position + dir * distance, 20);
+
+                // Trail
+                if (HasModifier(Type.DASH))
+                {
+                    var trail = Instantiate(template_trail, template_trail.transform.parent);
+                    trail.gameObject.SetActive(true);
+                    trail.transform.localPosition = Vector3.zero;
+                    trail.ResetTrail();
+                    trail.transform.position = Player.transform.position + dir * distance;
+                    trail.UpdateTrail();
+                }
+
                 yield return new WaitForSeconds(0.1f);
             }
 
@@ -276,14 +281,20 @@ public class AbilityCharge : Ability
     {
         StartCoroutine(BeamVisualCr(start, end, segments));
 
+        var distance = Vector3.Distance(start, end);
+
         // Particle System
         var dir = end - start;
-        var angle = Vector3.SignedAngle(Vector3.up, dir, Vector3.back);
-        ps_beam_dust.Duplicate()
-            .Position(start)
-            .Euler(angle-90, 90, -90)
-            .Play()
-            .Destroy(5);
+        var angle = Vector3.SignedAngle(Vector3.up, dir, Vector3.forward);
+        var ps = ps_beam_dust.Duplicate().ps;
+
+        ps.transform.position = Vector3.Lerp(start, end, 0.5f);
+        ps.transform.eulerAngles = new Vector3(0, 0, angle);
+        ps.ModifyShape(shape => shape.scale = new Vector3(1, 1, distance));
+        ps.ModifyEmission(e => e.SetBurst(0, new ParticleSystem.Burst(0, distance * 5)));
+
+        ps.Play();
+        Destroy(ps.gameObject, 5f);
     }
 
     private IEnumerator BeamVisualCr(Vector3 start, Vector3 end, int segments)

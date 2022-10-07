@@ -89,5 +89,7 @@ public class Enemy : Character, IKillable
         gameObject.SetActive(false);
         EnemyController.Instance.EnemyKilled(this);
     }
+
+    public Vector3 GetPosition() => transform.position;
     #endregion
 }

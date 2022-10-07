@@ -42,16 +42,16 @@ public class AbilityExplode : Ability
     {
         yield return new WaitForSeconds(delay);
 
-        var ps = ps_charge.Duplicate()
+        var psd = ps_charge.Duplicate()
             .Parent(transform)
             .Position(transform.position)
             .Scale(Vector3.one * radius * 2);
 
-        ps.ModifyMain(m =>
+        psd.ps.ModifyMain(m =>
         {
             m.startLifetime = new ParticleSystem.MinMaxCurve { constant = Delay };
         });
-        ps.Play();
+        psd.Play();
         yield return new WaitForSeconds(Delay);
         Explode(Player.transform.position, radius, width, Knockback);
     }
@@ -81,7 +81,7 @@ public class AbilityExplode : Ability
 
         // Fx
         var ps_explode_point = Resources.Load<ParticleSystem>("Particles/ps_explode_point");
-        var count_points = (int)(radius * 10);
+        var count_points = (int)(radius * 5);
         var points = CircleHelper.Points(radius, count_points);
         foreach(var point in points)
         {

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class TrailDash : MonoBehaviour
+public class DamageTrail : MonoBehaviour
 {
     public float radius;
     public float lifetime;
@@ -59,19 +59,27 @@ public class TrailDash : MonoBehaviour
 
     public void UpdateTrail()
     {
-        var pos_next = transform.position;
-        var dir = pos_next - pos_prev;
-        dir = Vector3.ClampMagnitude(dir, dir.magnitude - radius);
-        if(dir.magnitude >= radius * 2)
+        var dir = (transform.position - pos_prev).normalized * radius;
+        var create_more = true;
+        while (create_more)
         {
-            pos_prev = pos_prev + dir.normalized * radius * 2;
-            CreateTrail(pos_prev);
+            var pos_next = pos_prev + dir;
+            if(Vector3.Distance(pos_next, transform.position) > radius)
+            {
+                create_more = true;
+                CreateTrail(pos_next);
+                pos_prev = pos_next;
+            }
+            else
+            {
+                create_more = false;
+            }
         }
     }
 
     private void CreateTrail(Vector3 position)
     {
-        var trail = Instantiate(gameObject, GameController.Instance.world).GetComponent<TrailDash>();
+        var trail = Instantiate(gameObject, GameController.Instance.world).GetComponent<DamageTrail>();
         trail.gameObject.SetActive(true);
         trail.transform.position = position;
     }

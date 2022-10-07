@@ -104,3 +104,12 @@ MonoBehaviour:
     value_bool: 0
     can_edit_name: 1
     _editor_toggle_preview: 1
+  - name: Knockback
+    text_display: $ enemy knockback
+    type_value: 1
+    type_display: 1
+    value_int: 0
+    value_float: 0
+    value_bool: 0
+    can_edit_name: 1
+    _editor_toggle_preview: 1

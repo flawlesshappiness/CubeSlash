@@ -48,4 +48,5 @@ public class HealthDud : MonoBehaviour, IKillable
     }
 
     public bool CanKill() => IsActive() && !ArmorActive;
+    public Vector3 GetPosition() => transform.position;
 }
