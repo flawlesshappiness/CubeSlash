@@ -46,3 +46,4 @@ MonoBehaviour:
   Info: {fileID: 11400000, guid: 788725a427918d94783101729c0276dc, type: 2}
   Stats: {fileID: 11400000, guid: b1472cec798a0414c92ae1a95abab146, type: 2}
   ModifierUpgrades: {fileID: 11400000, guid: 161417befd49f914f8a016a009f566af, type: 2}
+  projectile_split_modifier: {fileID: 2903384162585443173, guid: c2e3bb02feeb6014fbc7fef251de104d, type: 3}

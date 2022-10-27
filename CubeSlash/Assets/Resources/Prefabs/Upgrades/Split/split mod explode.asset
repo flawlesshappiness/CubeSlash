@@ -23,6 +23,7 @@ MonoBehaviour:
       text_display: $s cooldown
       type_value: 1
       type_display: 1
+      higher_is_positive: 0
       value_int: 0
       value_float: 0.5
       value_bool: 0
@@ -34,8 +35,21 @@ MonoBehaviour:
       text_display: $ projectile speed
       type_value: 1
       type_display: 1
+      higher_is_positive: 0
       value_int: 0
       value_float: -3
       value_bool: 0
+      can_edit_name: 1
+      _editor_toggle_preview: 0
+  - type_effect: 0
+    variable:
+      name: ExplodeModifier
+      text_display: Explode on hit
+      type_value: 2
+      type_display: 3
+      higher_is_positive: 0
+      value_int: 0
+      value_float: 0
+      value_bool: 1
       can_edit_name: 1
       _editor_toggle_preview: 0

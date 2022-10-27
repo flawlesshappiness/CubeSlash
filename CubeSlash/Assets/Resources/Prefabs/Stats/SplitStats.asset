@@ -18,69 +18,77 @@ MonoBehaviour:
     text_display: $s cooldown
     type_value: 1
     type_display: 1
+    higher_is_positive: 0
     value_int: 0
     value_float: 0.75
     value_bool: 0
     can_edit_name: 0
-    _editor_toggle_preview: 0
+    _editor_toggle_preview: 1
   - name: Charges
     text_display: $ charges
     type_value: 0
     type_display: 0
+    higher_is_positive: 1
     value_int: 1
     value_float: 0
     value_bool: 0
     can_edit_name: 0
-    _editor_toggle_preview: 0
+    _editor_toggle_preview: 1
   - name: CountProjectiles
     text_display: $ projectiles
     type_value: 0
     type_display: 0
+    higher_is_positive: 1
     value_int: 3
     value_float: 0
     value_bool: 0
     can_edit_name: 1
-    _editor_toggle_preview: 0
+    _editor_toggle_preview: 1
   - name: SpeedProjectiles
     text_display: $ projectile speed
     type_value: 1
     type_display: 1
+    higher_is_positive: 1
     value_int: 0
     value_float: 25
     value_bool: 0
     can_edit_name: 1
-    _editor_toggle_preview: 0
+    _editor_toggle_preview: 1
   - name: ArcProjectiles
     text_display: $ degree arc
     type_value: 1
     type_display: 1
+    higher_is_positive: 0
     value_int: 0
     value_float: 15
     value_bool: 0
     can_edit_name: 1
-    _editor_toggle_preview: 0
+    _editor_toggle_preview: 1
   - name: SizeProjectiles
     text_display: $ projectile size
     type_value: 1
     type_display: 1
+    higher_is_positive: 1
     value_int: 0
     value_float: 1
     value_bool: 0
     can_edit_name: 1
-    _editor_toggle_preview: 0
+    _editor_toggle_preview: 1
   - name: Bursts
     text_display: $ bursts
     type_value: 0
     type_display: 0
+    higher_is_positive: 1
     value_int: 1
     value_float: 0
     value_bool: 0
     can_edit_name: 1
-    _editor_toggle_preview: 0
+    _editor_toggle_preview: 1
   - name: SplitProjectiles
     text_display: Projectiles split into smaller projectiles on impact
     type_value: 2
     type_display: 3
+    higher_is_positive: 1
     value_int: 0
     value_float: 0
     value_bool: 0
@@ -90,15 +98,37 @@ MonoBehaviour:
     text_display: $ knockback area
     type_value: 1
     type_display: 1
+    higher_is_positive: 1
     value_int: 0
     value_float: 0
     value_bool: 0
     can_edit_name: 1
-    _editor_toggle_preview: 0
+    _editor_toggle_preview: 1
   - name: ForceKnockback
     text_display: $ knockback force
     type_value: 1
     type_display: 1
+    higher_is_positive: 1
+    value_int: 0
+    value_float: 0
+    value_bool: 0
+    can_edit_name: 1
+    _editor_toggle_preview: 1
+  - name: ChargeModifier
+    text_display: Projectiles penetrate
+    type_value: 2
+    type_display: 3
+    higher_is_positive: 1
+    value_int: 0
+    value_float: 0
+    value_bool: 0
+    can_edit_name: 1
+    _editor_toggle_preview: 1
+  - name: ExplodeModifier
+    text_display: Explode on hit
+    type_value: 2
+    type_display: 3
+    higher_is_positive: 1
     value_int: 0
     value_float: 0
     value_bool: 0

@@ -5,10 +5,11 @@ using UnityEngine.UI;
 using System.Linq;
 using TMPro;
 using UnityEngine.InputSystem;
+using UnityEditor.Experimental.GraphView;
 
 public class AbilityView : View
 {
-    [SerializeField] private Button btn_continue;
+    [SerializeField] private ButtonExtended btn_continue;
     [SerializeField] private TMP_Text tmp_desc;
     [SerializeField] private UIInputLayout layout_input;
     [SerializeField] private UIAbilitySlot template_slot_unlocked;
@@ -18,12 +19,16 @@ public class AbilityView : View
     private List<UIAbilitySlot> slots = new List<UIAbilitySlot>();
     public List<UIAbilityEquipment> equipments = new List<UIAbilityEquipment>();
 
+    private AbilityStatView view_stats;
+    private UIAbilitySlot selected_slot;
+
     public event System.Action OnContinue;
 
     private void Start()
     {
         // Buttons
         btn_continue.onClick.AddListener(ClickContinue);
+        btn_continue.OnSelectedChanged += OnSelectContinue;
 
         // Cards
         InitializeAbilitySlots();
@@ -42,6 +47,8 @@ public class AbilityView : View
 
         var input = PlayerInput.Controls.Player;
         input.Menu.performed += PressStart;
+        input.North.started += OnNorthPressed;
+        input.North.canceled += OnNorthReleased;
     }
 
     private void OnDisable()
@@ -50,6 +57,8 @@ public class AbilityView : View
 
         var input = PlayerInput.Controls.Player;
         input.Menu.performed -= PressStart;
+        input.North.started -= OnNorthPressed;
+        input.North.canceled -= OnNorthReleased;
     }
 
     #region SLOTS
@@ -73,6 +82,7 @@ public class AbilityView : View
             slot.Button.onClick.AddListener(() => ClickSlot(slot));
             slot.Button.OnHoverChanged += hovered => HoverSlot(slot, hovered);
             slot.Button.OnSelectedChanged += selected => SelectSlot(slot, selected);
+            slot.Button.OnSelectedChanged += selected => SelectInventorySlot(slot, selected);
         }
 
         // Equipment slots
@@ -96,6 +106,7 @@ public class AbilityView : View
         equipment.Slot.Button.onClick.AddListener(() => ClickSlot(equipment.Slot));
         equipment.Slot.Button.OnHoverChanged += hovered => HoverSlot(equipment.Slot, hovered);
         equipment.Slot.Button.OnSelectedChanged += selected => SelectSlot(equipment.Slot, selected);
+        equipment.Slot.Button.OnSelectedChanged += selected => SelectEquipmentSlot(equipment.Slot, selected);
 
         foreach (var slot in equipment.ModifierSlots)
         {
@@ -160,6 +171,22 @@ public class AbilityView : View
         }
     }
 
+    private void SelectEquipmentSlot(UIAbilitySlot slot, bool selected)
+    {
+        if (selected)
+        {
+            selected_slot = slot;
+        }
+    }
+
+    private void SelectInventorySlot(UIAbilitySlot slot, bool selected)
+    {
+        if (selected)
+        {
+            selected_slot = null;
+        }
+    }
+
     private bool IsMovingAbility() => slot_move.Ability != null;
 
     private void UpdatePlayer()
@@ -189,6 +216,14 @@ public class AbilityView : View
         UpdatePlayer();
         Close(0);
         OnContinue?.Invoke();
+    }
+
+    private void OnSelectContinue(bool selected)
+    {
+        if (selected)
+        {
+            selected_slot = null;
+        }
     }
     #endregion
     #region DISPLAY
@@ -245,6 +280,28 @@ public class AbilityView : View
         if (btn_continue.interactable)
         {
             EventSystemController.Instance.EventSystem.SetSelectedGameObject(btn_continue.gameObject);
+        }
+    }
+
+    private void OnNorthPressed(InputAction.CallbackContext context)
+    {
+        if(selected_slot != null && selected_slot.Ability != null)
+        {
+            UpdatePlayer();
+            Player.Instance.ReapplyUpgrades();
+            Player.Instance.ReapplyAbilities();
+
+            view_stats = ViewController.Instance.ShowView<AbilityStatView>(0, "AbilityStatView");
+            view_stats.SetAbility(selected_slot.Ability);
+        }
+    }
+
+    private void OnNorthReleased(InputAction.CallbackContext context)
+    {
+        if(view_stats != null)
+        {
+            view_stats.Close(0);
+            view_stats = null;
         }
     }
     #endregion

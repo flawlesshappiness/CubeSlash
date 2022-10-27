@@ -9,6 +9,7 @@ public class StatParameter
     public ValueType type_value;
     public enum DisplayType { INT, FLOAT, PERCENT, TEXT }
     public DisplayType type_display;
+    public bool higher_is_positive;
     public int value_int;
     public float value_float;
     public bool value_bool;
@@ -16,24 +17,49 @@ public class StatParameter
     public bool can_edit_name = true;
     public bool _editor_toggle_preview;
 
-    public string GetValueString(bool isEffect)
+    public static string GetValueString(int i, float f, bool b, ValueType value, DisplayType type, bool isEffect)
     {
-        var isPositiveInt = type_display == DisplayType.INT && value_int > 0;
-        var isPositiveFloat = (type_display == DisplayType.FLOAT || type_display == DisplayType.PERCENT) && value_float > 0;
+        var isPositiveInt = type == DisplayType.INT && i > 0;
+        var isPositiveFloat = (type == DisplayType.FLOAT || type == DisplayType.PERCENT) && f > 0;
         var isPositive = isPositiveInt || isPositiveFloat;
         var sign = isPositive && isEffect ? "+" : "";
 
-        return type_display switch
+        return type switch
         {
-            DisplayType.INT => $"{sign}{value_int}",
-            DisplayType.PERCENT => $"{sign}{Mathf.RoundToInt(value_float * 100f)}%",
-            DisplayType.FLOAT => $"{sign}{value_float.ToString("0.##")}",
-            _ => ""
+            DisplayType.INT => $"{sign}{i}",
+            DisplayType.PERCENT => $"{sign}{Mathf.RoundToInt(f * 100f)}%",
+            DisplayType.FLOAT => $"{sign}{f.ToString("0.##")}",
+            _ => value switch
+            {
+                ValueType.INT => i.ToString(),
+                ValueType.FLOAT => f.ToString("0.##"),
+                ValueType.BOOL => b.ToString(),
+                _ => ""
+            }
         };
     }
+
+    public string GetValueString(bool isEffect) => GetValueString(value_int, value_float, value_bool, type_value, type_display, isEffect);
 
     public string GetDisplayString(bool isEffect)
     {
         return text_display.Replace("$", GetValueString(isEffect));
+    }
+
+    public bool ComparePositiveTo(StatParameter parameter)
+    {
+        switch (parameter.type_value)
+        {
+            case ValueType.INT:
+                return parameter.higher_is_positive ? value_int >= parameter.value_int : value_int < parameter.value_int;
+
+            case ValueType.FLOAT:
+                return parameter.higher_is_positive ? value_float >= parameter.value_float : value_float < parameter.value_float;
+
+            case ValueType.BOOL:
+                return parameter.higher_is_positive == parameter.value_bool;
+
+            default: return false;
+        }
     }
 }

@@ -64,6 +64,10 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 4b19ac5a079d3e24d968f0882dabcda2, type: 2}
   - {fileID: 11400000, guid: 9bf292bad1f07e5458af6d95f883281b, type: 2}
   - {fileID: 11400000, guid: a9fca8aab8c45df4bb5d3adbc3a3f01e, type: 2}
+  - {fileID: 11400000, guid: ac3a84d7a5eb61444bde33b5c631ab7c, type: 2}
+  - {fileID: 11400000, guid: 35b077ac2e674a046a0132ced97cff53, type: 2}
+  - {fileID: 11400000, guid: 689573ccc4ee79b419e9c2a902dad8ca, type: 2}
+  - {fileID: 11400000, guid: dc646571c05a87847a71675243fd7e45, type: 2}
   trees:
   - {fileID: 11400000, guid: 2a82bf42028a437489c49ccd5160f05a, type: 2}
   - {fileID: 11400000, guid: 7d32df11b2c2f9649ba76c13aab93a98, type: 2}

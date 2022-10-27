@@ -23,6 +23,7 @@ MonoBehaviour:
       text_display: $s charge time
       type_value: 1
       type_display: 1
+      higher_is_positive: 0
       value_int: 0
       value_float: 1
       value_bool: 0
@@ -34,6 +35,7 @@ MonoBehaviour:
       text_display: $ beam width
       type_value: 1
       type_display: 1
+      higher_is_positive: 0
       value_int: 0
       value_float: -0.5
       value_bool: 0
@@ -45,6 +47,7 @@ MonoBehaviour:
       text_display: $ self knockback
       type_value: 1
       type_display: 1
+      higher_is_positive: 0
       value_int: 0
       value_float: -50
       value_bool: 0

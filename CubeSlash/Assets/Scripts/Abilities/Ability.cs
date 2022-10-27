@@ -46,6 +46,7 @@ public abstract class Ability : MonoBehaviourExtended
                     type_display = StatParameter.DisplayType.FLOAT,
                     type_value = StatParameter.ValueType.FLOAT,
                     can_edit_name = false,
+                    higher_is_positive = false,
                 });
             }
 
@@ -58,6 +59,7 @@ public abstract class Ability : MonoBehaviourExtended
                     type_display = StatParameter.DisplayType.INT,
                     type_value = StatParameter.ValueType.INT,
                     can_edit_name = false,
+                    higher_is_positive = true,
                 });
             }
         }
@@ -249,5 +251,6 @@ public abstract class Ability : MonoBehaviourExtended
     public void AddValue(string name, int value) => values[name].AddValue(value);
     public void AddValue(string name, float value) => values[name].AddValue(value);
     public void AddValue(string name, bool value) => values[name].AddValue(value);
+    public StatValue GetStat(string name) => values[name];
     #endregion
 }

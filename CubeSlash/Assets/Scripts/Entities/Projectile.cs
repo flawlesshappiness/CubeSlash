@@ -16,6 +16,7 @@ public class Projectile : MonoBehaviourExtended
     public bool SearchForTarget { get; set; } = true;
     public Rigidbody2D Rigidbody { get { return GetComponentOnce<Rigidbody2D>(ComponentSearchType.THIS); } }
     public System.Action<Collider2D> OnHit { get; set; }
+    public System.Action OnDeath { get; set; }
     public Enemy Target { get; set; }
 
     private const float ANGLE_MAX = 90;
@@ -57,6 +58,7 @@ public class Projectile : MonoBehaviourExtended
         var t = (Time.time - time_birth) / Lifetime;
         if(t >= 1)
         {
+            OnDeath?.Invoke();
             Kill();
         }
     }

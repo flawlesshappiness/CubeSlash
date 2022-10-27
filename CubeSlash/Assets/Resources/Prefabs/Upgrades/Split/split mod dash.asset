@@ -23,6 +23,7 @@ MonoBehaviour:
       text_display: $s cooldown
       type_value: 1
       type_display: 1
+      higher_is_positive: 0
       value_int: 0
       value_float: -0.2
       value_bool: 0
@@ -34,8 +35,21 @@ MonoBehaviour:
       text_display: $ projectile speed
       type_value: 1
       type_display: 1
+      higher_is_positive: 0
       value_int: 0
       value_float: 10
+      value_bool: 0
+      can_edit_name: 1
+      _editor_toggle_preview: 0
+  - type_effect: 0
+    variable:
+      name: Charges
+      text_display: $ charges
+      type_value: 0
+      type_display: 0
+      higher_is_positive: 0
+      value_int: 1
+      value_float: 0
       value_bool: 0
       can_edit_name: 1
       _editor_toggle_preview: 0

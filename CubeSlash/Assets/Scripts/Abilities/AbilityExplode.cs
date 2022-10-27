@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class AbilityExplode : Ability
 {
+    [Header("EXPLODE")]
+    [SerializeField] private Projectile projectile_split_modifier;
     private ParticleSystem ps_charge;
 
     // Values
@@ -12,6 +14,7 @@ public class AbilityExplode : Ability
     public float Width { get; private set; }
     public float Knockback { get; private set; }
     public int Rings { get; private set; }
+    public bool DelayPull { get; private set; }
 
     public override void InitializeFirstTime()
     {
@@ -27,24 +30,71 @@ public class AbilityExplode : Ability
         Width = GetFloatValue("Width");
         Knockback = GetFloatValue("Knockback");
         Rings = GetIntValue("Rings");
+        DelayPull = GetBoolValue("DelayPull");
+
+        if (HasModifier(Type.DASH))
+        {
+            Delay = 0;
+        }
     }
 
     public override void Trigger()
     {
         base.Trigger();
-        for (int i = 0; i < Rings; i++)
+        InUse = true;
+
+        if (HasModifier(Type.SPLIT))
         {
-            StartCoroutine(ExplodeCr(Radius + Width * i, Width, 0.2f * i));
+            // Shoot bullet that explodes
+            var p = projectile_split_modifier;
+            var start = Player.transform.position;
+            var dir = Player.MoveDirection;
+            var p_instance = AbilitySplit.ShootProjectile(p, start, dir, 1f, 15, (p, k) =>
+            {
+                TriggerExplode(p.transform.parent, p.transform.position, dir);
+            });
+            p_instance.OnDeath += () =>
+            {
+                TriggerExplode(p_instance.transform.parent, p_instance.transform.position, dir);
+            };
+        }
+        else
+        {
+            TriggerExplode(Player.transform, Player.transform.position, Player.Instance.MoveDirection);
         }
     }
 
-    private IEnumerator ExplodeCr(float radius, float width, float delay = 0)
+    private void TriggerExplode(Transform parent, Vector3 position, Vector3 direction)
     {
-        yield return new WaitForSeconds(delay);
+        if (HasModifier(Type.CHARGE))
+        {
+            Vector3 pos = position;
+            for (int i = 0; i < Rings; i++)
+            {
+                var radius = Radius + Width * i;
+                pos = pos + direction.normalized * radius;
+                Explode(pos, radius, Width, Knockback);
+            }
+
+            InUse = false;
+            StartCooldown();
+        }
+        else
+        {
+            for (int i = 0; i < Rings; i++)
+            {
+                StartCoroutine(ExplodeCr(parent, position, Radius + Width * i, Width, 0.2f * i));
+            }
+        }
+    }
+
+    private IEnumerator ExplodeCr(Transform parent, Vector3 position, float radius, float width, float ring_delay = 0)
+    {
+        yield return new WaitForSeconds(ring_delay);
 
         var psd = ps_charge.Duplicate()
-            .Parent(transform)
-            .Position(transform.position)
+            .Parent(parent)
+            .Position(position)
             .Scale(Vector3.one * radius * 2);
 
         psd.ps.ModifyMain(m =>
@@ -53,7 +103,10 @@ public class AbilityExplode : Ability
         });
         psd.Play();
         yield return new WaitForSeconds(Delay);
-        Explode(Player.transform.position, radius, width, Knockback);
+        Explode(position, radius, width, Knockback);
+
+        InUse = false;
+        StartCooldown();
     }
 
     public static void Explode(Vector3 position, float radius, float width, float force)

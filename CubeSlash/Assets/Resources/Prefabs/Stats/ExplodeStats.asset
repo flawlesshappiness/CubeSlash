@@ -18,6 +18,7 @@ MonoBehaviour:
     text_display: $s cooldown
     type_value: 1
     type_display: 1
+    higher_is_positive: 0
     value_int: 0
     value_float: 2
     value_bool: 0
@@ -27,6 +28,7 @@ MonoBehaviour:
     text_display: $ charges
     type_value: 0
     type_display: 0
+    higher_is_positive: 1
     value_int: 1
     value_float: 0
     value_bool: 0
@@ -36,6 +38,7 @@ MonoBehaviour:
     text_display: $s explosion delay
     type_value: 1
     type_display: 1
+    higher_is_positive: 0
     value_int: 0
     value_float: 0.5
     value_bool: 0
@@ -45,6 +48,7 @@ MonoBehaviour:
     text_display: $ ring radius
     type_value: 1
     type_display: 1
+    higher_is_positive: 1
     value_int: 0
     value_float: 4
     value_bool: 0
@@ -54,6 +58,7 @@ MonoBehaviour:
     text_display: $ ring width
     type_value: 1
     type_display: 1
+    higher_is_positive: 1
     value_int: 0
     value_float: 1.5
     value_bool: 0
@@ -63,6 +68,7 @@ MonoBehaviour:
     text_display: $ knockback force
     type_value: 1
     type_display: 1
+    higher_is_positive: 1
     value_int: 0
     value_float: 200
     value_bool: 0
@@ -72,6 +78,7 @@ MonoBehaviour:
     text_display: $ rings
     type_value: 0
     type_display: 0
+    higher_is_positive: 1
     value_int: 1
     value_float: 0
     value_bool: 0
@@ -81,8 +88,39 @@ MonoBehaviour:
     text_display: Pull enemies in before exploding
     type_value: 2
     type_display: 3
+    higher_is_positive: 1
     value_int: 0
     value_float: 0
     value_bool: 0
     can_edit_name: 1
     _editor_toggle_preview: 1
+  - name: DashModifier
+    text_display: No explode delay
+    type_value: 2
+    type_display: 3
+    higher_is_positive: 1
+    value_int: 0
+    value_float: 0
+    value_bool: 0
+    can_edit_name: 1
+    _editor_toggle_preview: 0
+  - name: SplitModifier
+    text_display: Shoot exploding projectile
+    type_value: 2
+    type_display: 3
+    higher_is_positive: 1
+    value_int: 0
+    value_float: 0
+    value_bool: 0
+    can_edit_name: 1
+    _editor_toggle_preview: 0
+  - name: ChargeModifier
+    text_display: Forward explode direction
+    type_value: 2
+    type_display: 3
+    higher_is_positive: 1
+    value_int: 0
+    value_float: 0
+    value_bool: 0
+    can_edit_name: 1
+    _editor_toggle_preview: 0

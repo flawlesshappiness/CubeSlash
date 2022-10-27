@@ -3,6 +3,9 @@ using UnityEngine;
 [System.Serializable]
 public class StatValue
 {
+    private StatParameter.ValueType type_value;
+    private StatParameter.DisplayType type_display;
+
     private int value_int;
     private float value_float;
     private bool value_bool;
@@ -12,13 +15,13 @@ public class StatValue
         AddValue(variable);
     }
 
-    public StatValue(int i, float f, bool b)
-    {
-
-    }
+    public string GetValueString() => StatParameter.GetValueString(value_int, value_float, value_bool, type_value, type_display, false);
 
     public void AddValue(StatParameter variable)
     {
+        type_value = variable.type_value;
+        type_display = variable.type_display;
+
         switch (variable.type_value)
         {
             case StatParameter.ValueType.INT:
@@ -42,4 +45,21 @@ public class StatValue
     public int GetIntValue() => value_int;
     public float GetFloatValue() => value_float;
     public bool GetBoolValue() => value_bool;
+
+    public bool ComparePositiveTo(StatParameter parameter)
+    {
+        switch (parameter.type_value)
+        {
+            case StatParameter.ValueType.INT:
+                return parameter.higher_is_positive ? value_int >= parameter.value_int : value_int < parameter.value_int;
+
+            case StatParameter.ValueType.FLOAT:
+                return parameter.higher_is_positive ? value_float >= parameter.value_float : value_float < parameter.value_float;
+
+            case StatParameter.ValueType.BOOL:
+                return parameter.higher_is_positive == parameter.value_bool;
+
+            default: return false;
+        }
+    }
 }

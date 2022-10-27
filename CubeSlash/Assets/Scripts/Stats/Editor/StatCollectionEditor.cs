@@ -23,7 +23,7 @@ public class StatCollectionEditor : Editor
         EditorGUI.BeginChangeCheck();
         foreach(var stat in collection.stats.ToList())
         {
-            DrawVariable(stat, out var clicked_remove);
+            DrawStat(stat, out var clicked_remove);
 
             if (clicked_remove)
             {
@@ -46,7 +46,7 @@ public class StatCollectionEditor : Editor
         GUILayout.EndHorizontal();
     }
 
-    private void DrawVariable(StatParameter stat, out bool clicked_remove)
+    private void DrawStat(StatParameter stat, out bool clicked_remove)
     {
         clicked_remove = false;
 
@@ -105,6 +105,15 @@ public class StatCollectionEditor : Editor
         }
 
         stat.type_display = (StatParameter.DisplayType)EditorGUILayout.EnumPopup(stat.type_display, GUILayout.Width(100));
+
+        GUILayout.EndHorizontal();
+
+        //  Name
+        GUILayout.BeginHorizontal();
+        GUILayout.Label("High is good:", GUILayout.Width(100));
+        GUI.enabled = stat.can_edit_name;
+        stat.higher_is_positive = GUILayout.Toggle(stat.higher_is_positive, "", GUILayout.Width(20));
+        GUI.enabled = true;
 
         GUILayout.EndHorizontal();
 

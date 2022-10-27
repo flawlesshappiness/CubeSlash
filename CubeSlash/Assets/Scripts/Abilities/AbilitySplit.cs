@@ -38,11 +38,6 @@ public class AbilitySplit : Ability
         SizeProjectiles = GetFloatValue("SizeProjectiles");
         Bursts = GetIntValue("Bursts");
         SplitProjectiles = GetBoolValue("SplitProjectiles");
-
-        if (HasModifier(Type.DASH))
-        {
-            Charges++;
-        }
     }
 
     public override void Trigger()

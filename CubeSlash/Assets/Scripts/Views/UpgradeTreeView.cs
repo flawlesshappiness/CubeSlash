@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 public class UpgradeTreeView : View
 {
-    [SerializeField] private UIIconButton template_btn_upgrade;
+    [SerializeField] private UIUpgradeTreeButton template_btn_upgrade;
     [SerializeField] private Image template_line;
     [SerializeField] private RectTransform rt_panel;
     [SerializeField] private TMP_Text tmp_desc;
@@ -17,7 +17,7 @@ public class UpgradeTreeView : View
 
     private class ButtonMap
     {
-        public UIIconButton button;
+        public UIUpgradeTreeButton button;
         public UpgradeNodeData node;
         public Upgrade upgrade;
     }
@@ -100,7 +100,7 @@ public class UpgradeTreeView : View
         }
     }
 
-    private void Connect(UIIconButton btnA, UIIconButton btnB)
+    private void Connect(UIUpgradeTreeButton btnA, UIUpgradeTreeButton btnB)
     {
         var line = Instantiate(template_line, template_line.transform.parent);
         line.gameObject.SetActive(true);
@@ -123,7 +123,7 @@ public class UpgradeTreeView : View
 
         var btn = Instantiate(template_btn_upgrade, template_btn_upgrade.transform.parent);
         btn.gameObject.SetActive(true);
-        btn.Icon = upgrade.icon;
+        btn.SetUpgrade(info);
 
         var map = new ButtonMap
         {

@@ -12,9 +12,16 @@ public class AbilityModifierCollectionEditor : Editor
 
     public override void OnInspectorGUI()
     {
+        EditorGUI.BeginChangeCheck();
         foreach(var modifier in collection.modifiers)
         {
             DrawModifier(modifier);
+        }
+
+        if (EditorGUI.EndChangeCheck())
+        {
+            EditorUtility.SetDirty(collection);
+            AssetDatabase.SaveAssets();
         }
     }
 

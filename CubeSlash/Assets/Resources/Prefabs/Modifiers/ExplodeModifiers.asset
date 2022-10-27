@@ -15,17 +15,13 @@ MonoBehaviour:
   modifiers:
   - name: EXPLODE
     type: 3
-    upgrade: []
-    effects: []
+    upgrade: {fileID: 11400000, guid: dc646571c05a87847a71675243fd7e45, type: 2}
   - name: CHARGE
     type: 2
-    upgrade: []
-    effects: []
+    upgrade: {fileID: 11400000, guid: 689573ccc4ee79b419e9c2a902dad8ca, type: 2}
   - name: SPLIT
     type: 1
-    upgrade: []
-    effects: []
+    upgrade: {fileID: 11400000, guid: 35b077ac2e674a046a0132ced97cff53, type: 2}
   - name: DASH
     type: 0
-    upgrade: []
-    effects: []
+    upgrade: {fileID: 11400000, guid: ac3a84d7a5eb61444bde33b5c631ab7c, type: 2}
