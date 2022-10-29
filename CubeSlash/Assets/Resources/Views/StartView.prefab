@@ -211,6 +211,7 @@ GameObject:
   - component: {fileID: 2883161917552200309}
   - component: {fileID: 3433326641445374743}
   - component: {fileID: 9037622921476463187}
+  - component: {fileID: 5859103038987642137}
   m_Layer: 5
   m_Name: ButtonOptions
   m_TagString: Untagged
@@ -336,6 +337,34 @@ MonoBehaviour:
   Normal: 0
   Hovered: 2
   Selected: 2
+--- !u!114 &5859103038987642137
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 555102647909191770}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f957b57a2edc0164e81f51ab02b7722d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  eventOnClick:
+    reference:
+      Guid:
+        Data1: 392378103
+        Data2: 1205344972
+        Data3: -945780290
+        Data4: 1559893948
+      Path: event:/UI/ui_button_select_001
+  eventOnSelect:
+    reference:
+      Guid:
+        Data1: 392378103
+        Data2: 1205344972
+        Data3: -945780290
+        Data4: 1559893948
+      Path: event:/UI/ui_button_select_001
 --- !u!1 &1616378205350852466
 GameObject:
   m_ObjectHideFlags: 0
@@ -349,6 +378,7 @@ GameObject:
   - component: {fileID: 6233068147934555238}
   - component: {fileID: 592649157407208456}
   - component: {fileID: 1411862421191081132}
+  - component: {fileID: 2906886459042247123}
   m_Layer: 5
   m_Name: ButtonQuit
   m_TagString: Untagged
@@ -474,6 +504,34 @@ MonoBehaviour:
   Normal: 0
   Hovered: 2
   Selected: 2
+--- !u!114 &2906886459042247123
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1616378205350852466}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f957b57a2edc0164e81f51ab02b7722d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  eventOnClick:
+    reference:
+      Guid:
+        Data1: 392378103
+        Data2: 1205344972
+        Data3: -945780290
+        Data4: 1559893948
+      Path: event:/UI/ui_button_select_001
+  eventOnSelect:
+    reference:
+      Guid:
+        Data1: 392378103
+        Data2: 1205344972
+        Data3: -945780290
+        Data4: 1559893948
+      Path: event:/UI/ui_button_select_001
 --- !u!1 &1626851326277921182
 GameObject:
   m_ObjectHideFlags: 0
@@ -624,6 +682,7 @@ GameObject:
   - component: {fileID: 8418839012086327976}
   - component: {fileID: 4900002644772853595}
   - component: {fileID: 5214558978118969948}
+  - component: {fileID: 7458047819644652736}
   m_Layer: 5
   m_Name: ButtonPlay
   m_TagString: Untagged
@@ -749,6 +808,34 @@ MonoBehaviour:
   Normal: 0
   Hovered: 2
   Selected: 2
+--- !u!114 &7458047819644652736
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3076699203149696880}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f957b57a2edc0164e81f51ab02b7722d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  eventOnClick:
+    reference:
+      Guid:
+        Data1: 392378103
+        Data2: 1205344972
+        Data3: -945780290
+        Data4: 1559893948
+      Path: event:/UI/ui_button_select_001
+  eventOnSelect:
+    reference:
+      Guid:
+        Data1: 392378103
+        Data2: 1205344972
+        Data3: -945780290
+        Data4: 1559893948
+      Path: event:/UI/ui_button_select_001
 --- !u!1 &3526924459688362600
 GameObject:
   m_ObjectHideFlags: 0
