@@ -164,7 +164,7 @@ public class AbilityCharge : Ability
             var items = ItemController.Instance.GetActiveExperiences();
             foreach(var item in items)
             {
-                if (item.IsCollected) continue;
+                if (item.IsBeingCollected) continue;
                 var dir = Player.transform.position - item.transform.position;
                 if (dir.magnitude > dist_max) continue;
                 var t = dir.magnitude / dist_max;

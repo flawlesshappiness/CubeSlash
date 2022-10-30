@@ -15,10 +15,10 @@ MonoBehaviour:
   Path: Assets/FMOD/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 638026891554538814
+  lastModified: 638027564175962078
   FileSizes: []
   Exists: 1
---- !u!114 &-6936816069414901682
+--- !u!114 &-6648804991705279764
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -28,14 +28,41 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
-  m_Name: event:/Game/impact_001
+  m_Name: event:/UI/ui_insert_001
   m_EditorClassIdentifier: 
-  Path: event:/Game/impact_001
+  Path: event:/UI/ui_insert_001
   Guid:
-    Data1: 708260271
-    Data2: 1194525231
-    Data3: -179385464
-    Data4: -951029568
+    Data1: 1813566338
+    Data2: 1276579812
+    Data3: 1129842584
+    Data4: 940544334
+  Banks:
+  - {fileID: -8060980804293988741}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
+--- !u!114 &-6579456980698998601
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Game/Impact/impact_002
+  m_EditorClassIdentifier: 
+  Path: event:/Game/Impact/impact_002
+  Guid:
+    Data1: 2035608470
+    Data2: 1123394001
+    Data3: 505414545
+    Data4: 750684327
   Banks:
   - {fileID: -8060980804293988741}
   IsStream: 0
@@ -67,12 +94,12 @@ MonoBehaviour:
   - {fileID: -8060980804293988741}
   IsStream: 1
   Is3D: 0
-  IsOneShot: 1
+  IsOneShot: 0
   Parameters: []
   MinDistance: 1
   MaxDistance: 20
   Length: 245869
---- !u!114 &-3344271978048811491
+--- !u!114 &-4141026294078847062
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -82,14 +109,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
-  m_Name: event:/Game/impact_004
+  m_Name: event:/Game/Impact/impact_003
   m_EditorClassIdentifier: 
-  Path: event:/Game/impact_004
+  Path: event:/Game/Impact/impact_003
   Guid:
-    Data1: 109420663
-    Data2: 1208691892
-    Data3: -514296155
-    Data4: -275320002
+    Data1: 2122546176
+    Data2: 1222344975
+    Data3: 1022156475
+    Data4: -48099975
   Banks:
   - {fileID: -8060980804293988741}
   IsStream: 0
@@ -99,7 +126,7 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 0
---- !u!114 &-2430680715346146621
+--- !u!114 &-1490901177813782816
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -109,14 +136,41 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
-  m_Name: event:/Game/impact_003
+  m_Name: event:/Game/Abilities/dash_start_001
   m_EditorClassIdentifier: 
-  Path: event:/Game/impact_003
+  Path: event:/Game/Abilities/dash_start_001
   Guid:
-    Data1: 2122546176
-    Data2: 1222344975
-    Data3: 1022156475
-    Data4: -48099975
+    Data1: -753614769
+    Data2: 1335369779
+    Data3: -930628976
+    Data4: -1141744966
+  Banks:
+  - {fileID: -8060980804293988741}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
+--- !u!114 &-1172066447781288604
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Game/Impact/impact_001
+  m_EditorClassIdentifier: 
+  Path: event:/Game/Impact/impact_001
+  Guid:
+    Data1: 708260271
+    Data2: 1194525231
+    Data3: -179385464
+    Data4: -951029568
   Banks:
   - {fileID: -8060980804293988741}
   IsStream: 0
@@ -171,17 +225,48 @@ MonoBehaviour:
   EditorEvents:
   - {fileID: -6410181819053263911}
   - {fileID: -845457164245201846}
-  - {fileID: -2430680715346146621}
-  - {fileID: -3344271978048811491}
-  - {fileID: 6296187168488835591}
-  - {fileID: -6936816069414901682}
+  - {fileID: -4141026294078847062}
+  - {fileID: 8573418566942188164}
+  - {fileID: -1490901177813782816}
+  - {fileID: -6648804991705279764}
+  - {fileID: -6579456980698998601}
+  - {fileID: -1172066447781288604}
+  - {fileID: 8653740270979045993}
+  - {fileID: 5194722749936854408}
   EditorParameters: []
   MasterBanks:
   - {fileID: -8060980804293988741}
   StringsBanks:
   - {fileID: 5917708036578608240}
-  cacheTime: 638026891554558822
+  cacheTime: 638027564175982083
   cacheVersion: 131593
+--- !u!114 &5194722749936854408
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Game/Beeps/experience_collect_001
+  m_EditorClassIdentifier: 
+  Path: event:/Game/Beeps/experience_collect_001
+  Guid:
+    Data1: 1991122487
+    Data2: 1171221821
+    Data3: -1686703210
+    Data4: -185806061
+  Banks:
+  - {fileID: -8060980804293988741}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
 --- !u!114 &5917708036578608240
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -197,12 +282,12 @@ MonoBehaviour:
   Path: Assets/FMOD/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 638026891554558822
+  lastModified: 638027564175982083
   FileSizes:
   - Name: 
-    Value: 996
+    Value: 1242
   Exists: 1
---- !u!114 &6296187168488835591
+--- !u!114 &8573418566942188164
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -212,14 +297,41 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
-  m_Name: event:/Game/impact_002
+  m_Name: event:/UI/ui_move_ability_001
   m_EditorClassIdentifier: 
-  Path: event:/Game/impact_002
+  Path: event:/UI/ui_move_ability_001
   Guid:
-    Data1: 2035608470
-    Data2: 1123394001
-    Data3: 505414545
-    Data4: 750684327
+    Data1: -488556006
+    Data2: 1262379110
+    Data3: -1992291445
+    Data4: -574275927
+  Banks:
+  - {fileID: -8060980804293988741}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
+--- !u!114 &8653740270979045993
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Game/Abilities/dash_start_002
+  m_EditorClassIdentifier: 
+  Path: event:/Game/Abilities/dash_start_002
+  Guid:
+    Data1: 880579045
+    Data2: 1244781696
+    Data3: 1956077727
+    Data4: 1565322739
   Banks:
   - {fileID: -8060980804293988741}
   IsStream: 0

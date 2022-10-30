@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -16,6 +17,9 @@ public class ItemController : Singleton
     private AbilityItem prefab_ability;
 
     private const int COUNT_POOL_EXTEND = 20;
+
+    private int collected_experience;
+    private Coroutine cr_experience_collect;
 
     private void Start()
     {
@@ -118,4 +122,28 @@ public class ItemController : Singleton
     }
 
     public List<ExperienceItem> GetActiveExperiences() => experience_active.ToList();
+
+    public void CollectExperience()
+    {
+        collected_experience++;
+        if(cr_experience_collect == null)
+        {
+            cr_experience_collect = StartCoroutine(Cr());
+        }
+
+        IEnumerator Cr()
+        {
+            var plays = 0;
+            while(collected_experience > 0 && plays < 3)
+            {
+                collected_experience--;
+                plays++;
+                FMODEventReferenceDatabase.Load().collect_experience.Play();
+                yield return new WaitForSeconds(0.05f);
+            }
+
+            collected_experience = 0;
+            cr_experience_collect = null;
+        }
+    }
 }

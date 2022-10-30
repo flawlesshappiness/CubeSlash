@@ -22,6 +22,8 @@ public class AbilityDash : Ability
     [Header("DASH")]
     [SerializeField] private AbilityDashClone template_clone;
     [SerializeField] private AnimationCurve ac_push_enemies;
+    [SerializeField] private FMODEventReference event_dash_start;
+    [SerializeField] private FMODEventReference event_dash_impact;
 
     public override void InitializeFirstTime()
     {
@@ -56,6 +58,8 @@ public class AbilityDash : Ability
         Player.DragLock.AddLock(nameof(AbilityDash));
         Player.InvincibilityLock.AddLock(nameof(AbilityDash));
         Player.Body.gameObject.SetActive(false);
+
+        event_dash_start.Play();
 
         var directions = HasModifier(Type.SPLIT) ? AbilitySplit.GetSplitDirections(3, 25, Player.MoveDirection) : new List<Vector3> { Player.MoveDirection };
         for (int i = 0; i < directions.Count; i++)
@@ -161,6 +165,11 @@ public class AbilityDash : Ability
                 k.Kill();
                 count++;
             });
+
+        if(count > 0)
+        {
+            event_dash_impact.PlayWithTimeLimit(0.1f);
+        }
 
         return count;
     }

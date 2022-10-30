@@ -1,0 +1,20 @@
+Ability equip
+Ability unequip
+Continue from ability menu
+Enemy death
+Experience collect
+Level up
+Use ability that is on cooldown
+
+ABILITIES:
+Dash trail idle
+
+Charge charge
+Charge shoot
+
+Split shoot
+Split projectile death
+
+Explode charge
+Explode explode
+

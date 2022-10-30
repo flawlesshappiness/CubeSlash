@@ -18,6 +18,7 @@ public class ExperienceItem : Item
     {
         base.Collect();
         Player.Instance.AddExperience();
+        ItemController.Instance.CollectExperience();
     }
 
     public void SetMeat()

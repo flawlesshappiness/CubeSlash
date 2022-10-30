@@ -488,6 +488,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a4aa938057b06848a5ac9703d351323, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  scale_on_selected: 0
   img_icon: {fileID: 4850732185314114786}
   btn: {fileID: 4769267168335194321}
 --- !u!1 &7522985025533662588
@@ -502,6 +503,7 @@ GameObject:
   - component: {fileID: 2095547731176614116}
   - component: {fileID: 7513855472433973551}
   - component: {fileID: 4769267168335194321}
+  - component: {fileID: 386149511777212340}
   m_Layer: 5
   m_Name: Button
   m_TagString: Untagged
@@ -610,6 +612,34 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &386149511777212340
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7522985025533662588}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f957b57a2edc0164e81f51ab02b7722d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  eventOnClick:
+    reference:
+      Guid:
+        Data1: 392378103
+        Data2: 1205344972
+        Data3: -945780290
+        Data4: 1559893948
+      Path: event:/UI/ui_button_select_001
+  eventOnSelect:
+    reference:
+      Guid:
+        Data1: 392378103
+        Data2: 1205344972
+        Data3: -945780290
+        Data4: 1559893948
+      Path: event:/UI/ui_button_select_001
 --- !u!1 &7761457546952664073
 GameObject:
   m_ObjectHideFlags: 0

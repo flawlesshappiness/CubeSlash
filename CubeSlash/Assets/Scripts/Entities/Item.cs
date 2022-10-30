@@ -5,13 +5,15 @@ public class Item : MonoBehaviour
     [Header("ITEM")]
     [SerializeField] private AnimationCurve ac_collect;
     public float mul_dist_collect = 1f;
-    public bool IsCollected { get; set; }
+    public bool IsBeingCollected { get; set; }
+    public bool IsDespawning { get; set; }
     private float TimeCollected { get; set; }
     private Vector3 PositionCollected { get; set; }
 
     public virtual void Initialize()
     {
-        IsCollected = false;
+        IsBeingCollected = false;
+        IsDespawning = false;
     }
 
     private void Update()
@@ -26,14 +28,14 @@ public class Item : MonoBehaviour
 
     protected virtual void Collect()
     {
-        IsCollected = false;
+        IsBeingCollected = false;
     }
 
     private void CollectUpdate()
     {
         if (Player.Instance == null) return;
 
-        if (IsCollected)
+        if (IsBeingCollected)
         {
             var t = (Time.time - TimeCollected) / 0.25f;
             transform.position = Vector3.LerpUnclamped(PositionCollected, Player.Instance.transform.position, ac_collect.Evaluate(t));
@@ -42,7 +44,7 @@ public class Item : MonoBehaviour
         {
             if (Vector3.Distance(transform.position, Player.Instance.transform.position) <= Player.Instance.DistanceCollect * mul_dist_collect)
             {
-                IsCollected = true;
+                IsBeingCollected = true;
                 TimeCollected = Time.time;
                 PositionCollected = transform.position;
             }
@@ -58,7 +60,7 @@ public class Item : MonoBehaviour
         var should_despawn = too_far_away || in_collect_distance;
         if (should_despawn)
         {
-            if (in_collect_distance)
+            if (in_collect_distance && !IsDespawning)
             {
                 Collect();
             }
@@ -69,6 +71,6 @@ public class Item : MonoBehaviour
 
     public virtual void Despawn()
     {
-        
+        IsDespawning = true;
     }
 }

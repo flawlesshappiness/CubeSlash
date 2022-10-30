@@ -2460,6 +2460,24 @@ MonoBehaviour:
   layout_input: {fileID: 8918290295275058458}
   template_slot_unlocked: {fileID: 318491759084984260}
   slot_move: {fileID: 6870788441091377530}
+  event_move_slot:
+    reference:
+      Guid:
+        Data1: -488556006
+        Data2: 1262379110
+        Data3: -1992291445
+        Data4: -574275927
+      Path: event:/UI/ui_move_ability_001
+    timestamp_next: 0
+  event_insert_slot:
+    reference:
+      Guid:
+        Data1: 1813566338
+        Data2: 1276579812
+        Data3: 1129842584
+        Data4: 940544334
+      Path: event:/UI/ui_insert_001
+    timestamp_next: 0
   equipments:
   - {fileID: 4618427874495703458}
   - {fileID: 7519893642565021047}
@@ -3086,6 +3104,7 @@ GameObject:
   - component: {fileID: 6614814898189759043}
   - component: {fileID: 1341824693394008969}
   - component: {fileID: 7682811680490708558}
+  - component: {fileID: 7401399334079134944}
   m_Layer: 5
   m_Name: Button
   m_TagString: Untagged
@@ -3194,6 +3213,36 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &7401399334079134944
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8804105634774542271}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f957b57a2edc0164e81f51ab02b7722d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  eventOnClick:
+    reference:
+      Guid:
+        Data1: 392378103
+        Data2: 1205344972
+        Data3: -945780290
+        Data4: 1559893948
+      Path: event:/UI/ui_button_select_001
+    timestamp_next: 0
+  eventOnSelect:
+    reference:
+      Guid:
+        Data1: 392378103
+        Data2: 1205344972
+        Data3: -945780290
+        Data4: 1559893948
+      Path: event:/UI/ui_button_select_001
+    timestamp_next: 0
 --- !u!1 &8978444117727387081
 GameObject:
   m_ObjectHideFlags: 0

@@ -5,7 +5,6 @@ using UnityEngine.UI;
 using System.Linq;
 using TMPro;
 using UnityEngine.InputSystem;
-using UnityEditor.Experimental.GraphView;
 
 public class AbilityView : View
 {
@@ -14,6 +13,10 @@ public class AbilityView : View
     [SerializeField] private UIInputLayout layout_input;
     [SerializeField] private UIAbilitySlot template_slot_unlocked;
     [SerializeField] private UIAbilitySlotMove slot_move;
+
+    [Header("AUDIO")]
+    [SerializeField] private FMODEventReference event_move_slot;
+    [SerializeField] private FMODEventReference event_insert_slot;
 
     private List<UIAbilitySlot> slots_unlocked = new List<UIAbilitySlot>();
     private List<UIAbilitySlot> slots = new List<UIAbilitySlot>();
@@ -144,6 +147,8 @@ public class AbilityView : View
         slot_move.SetAbility(temp);
 
         UpdateEquipment();
+
+        event_insert_slot.Play();
     }
 
     private void HoverSlot(UIAbilitySlot slot, bool hovered)
@@ -163,6 +168,7 @@ public class AbilityView : View
         }
         else if(IsMovingAbility())
         {
+            event_move_slot.Play();
             DisplayAbility(slot_move.Ability);
         }
         else

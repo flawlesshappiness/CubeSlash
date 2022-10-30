@@ -73,6 +73,22 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  event_dash_start:
+    reference:
+      Guid:
+        Data1: 880579045
+        Data2: 1244781696
+        Data3: 1956077727
+        Data4: 1565322739
+      Path: event:/Game/Abilities/dash_start_002
+  event_dash_impact:
+    reference:
+      Guid:
+        Data1: 2122546176
+        Data2: 1222344975
+        Data3: 1022156475
+        Data4: -48099975
+      Path: event:/Game/Impact/impact_003
 --- !u!50 &5857255952472684800
 Rigidbody2D:
   serializedVersion: 4
@@ -14850,7 +14866,7 @@ ParticleSystem:
     startLifetime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 1
+      scalar: 0.25
       minScalar: 0.5
       maxCurve:
         serializedVersion: 2
@@ -15019,7 +15035,7 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 4
+      scalar: 3
       minScalar: 1
       maxCurve:
         serializedVersion: 2
@@ -15718,18 +15734,18 @@ ParticleSystem:
         m_Curve:
         - serializedVersion: 3
           time: 0
-          value: 0.515152
-          inSlope: 0.48484802
-          outSlope: 0.48484802
+          value: 1
+          inSlope: -0.4141407
+          outSlope: -0.4141407
           tangentMode: 34
           weightedMode: 0
           inWeight: 0
           outWeight: 0.33333334
         - serializedVersion: 3
           time: 1
-          value: 1
-          inSlope: 0.48484802
-          outSlope: 0.48484802
+          value: 0.5858593
+          inSlope: -0.4141407
+          outSlope: -0.4141407
           tangentMode: 34
           weightedMode: 0
           inWeight: 0.33333334

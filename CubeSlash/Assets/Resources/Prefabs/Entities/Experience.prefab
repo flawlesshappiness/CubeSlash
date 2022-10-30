@@ -71,7 +71,7 @@ TrailRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 827038005
-  m_SortingLayer: 1
+  m_SortingLayer: -1
   m_SortingOrder: 0
   m_Time: 0.1
   m_Parameters:
@@ -296,3 +296,11 @@ MonoBehaviour:
   trail: {fileID: 5892555046342164689}
   c_plant: {r: 0.2901961, g: 0.7372549, b: 0.28235295, a: 1}
   c_meat: {r: 0.7372549, g: 0.28235295, b: 0.28235295, a: 1}
+  event_collect:
+    reference:
+      Guid:
+        Data1: 1991122487
+        Data2: 1171221821
+        Data3: -1686703210
+        Data4: -185806061
+      Path: event:/Game/Beeps/experience_collect_001

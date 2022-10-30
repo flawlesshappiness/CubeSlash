@@ -9,6 +9,8 @@ public class Enemy : Character, IKillable
     public EnemySettings Settings { get; private set; }
     public Vector3 MoveDirection { get { return Body.transform.up; } }
 
+    public bool IsDead { get; private set; }
+
     public event System.Action OnDeath;
 
     public void Initialize(EnemySettings settings)
@@ -19,6 +21,7 @@ public class Enemy : Character, IKillable
         SetBody(settings.body);
         SetAI(settings.ai);
 
+        IsDead = false;
         OnDeath = null;
     }
 
@@ -68,20 +71,24 @@ public class Enemy : Character, IKillable
 
     public void Kill()
     {
-        Body.ps_death.Duplicate()
+        if (!IsDead)
+        {
+            IsDead = true;
+            Body.ps_death.Duplicate()
             .Position(transform.position)
             .Scale(Vector3.one * Settings.size)
             .Destroy(10)
             .Play();
 
-        // Event
-        OnDeath?.Invoke();
+            // Event
+            OnDeath?.Invoke();
 
-        // AI
-        SetAI(null);
+            // AI
+            SetAI(null);
 
-        // Respawn
-        Respawn();
+            // Respawn
+            Respawn();
+        }
     }
 
     public void Respawn()
