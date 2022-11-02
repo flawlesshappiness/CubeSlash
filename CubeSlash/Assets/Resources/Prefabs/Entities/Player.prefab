@@ -45,7 +45,30 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   settings: {fileID: 11400000, guid: a2d8ce7788deae2489dcd078044940f2, type: 2}
-  ps_move: {fileID: 0}
+  event_ability_on_cooldown:
+    reference:
+      Guid:
+        Data1: -474823519
+        Data2: 1232703166
+        Data3: 1700276925
+        Data4: 450463273
+      Path: event:/Game/Abilities/on_cooldown_001
+  event_levelup_slide:
+    reference:
+      Guid:
+        Data1: 697741965
+        Data2: 1216149096
+        Data3: -642046800
+        Data4: -679409612
+      Path: event:/Game/Experience/levelup_slide_001
+  event_levelup:
+    reference:
+      Guid:
+        Data1: -1640532706
+        Data2: 1100626776
+        Data3: 188179076
+        Data4: 1738341589
+      Path: event:/Game/Experience/levelup_001
 --- !u!50 &1077616187795116517
 Rigidbody2D:
   serializedVersion: 4

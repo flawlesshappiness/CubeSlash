@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 [RequireComponent(typeof(ButtonExtended))]
 public class FMODButtonEvent : MonoBehaviour
@@ -6,7 +7,7 @@ public class FMODButtonEvent : MonoBehaviour
     [SerializeField] private FMODEventReference eventOnClick;
     [SerializeField] private FMODEventReference eventOnSelect;
 
-    private float timestamp_next;
+    public static Button PreviousSelected { get; set; }
 
     private ButtonExtended btn;
 
@@ -18,7 +19,12 @@ public class FMODButtonEvent : MonoBehaviour
         {
             if (s)
             {
-                Play(eventOnSelect);
+                if(PreviousSelected != null)
+                {
+                    Play(eventOnSelect);
+                }
+
+                PreviousSelected = btn;
             }
         };
     }

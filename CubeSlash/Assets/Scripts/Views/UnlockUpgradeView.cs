@@ -56,6 +56,7 @@ public class UnlockUpgradeView : View
 
         void OnClick(UIIconButton btn, Upgrade upgrade)
         {
+            FMODButtonEvent.PreviousSelected = null;
             CanvasGroup.interactable = false;
             CanvasGroup.blocksRaycasts = false;
             UpgradeController.Instance.UnlockUpgrade(upgrade.id);

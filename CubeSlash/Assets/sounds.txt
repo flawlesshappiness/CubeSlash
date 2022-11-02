@@ -1,10 +1,5 @@
-Ability equip
-Ability unequip
-Continue from ability menu
-Enemy death
-Experience collect
-Level up
-Use ability that is on cooldown
+PLAYER:
+Player hit
 
 ABILITIES:
 Dash trail idle

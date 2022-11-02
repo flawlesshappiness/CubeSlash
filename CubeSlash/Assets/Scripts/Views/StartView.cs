@@ -22,6 +22,7 @@ public class StartView : View
 
     private void ClickPlay()
     {
+        FMODButtonEvent.PreviousSelected = null;
         GameController.Instance.StartGame();
     }
 }

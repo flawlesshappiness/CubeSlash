@@ -9,11 +9,18 @@ public class FMODEventReference
     public EventReference reference;
     private float timestamp_next;
 
+    private EventInstance current_instance;
+
+    public void Stop(FMOD.Studio.STOP_MODE mode = FMOD.Studio.STOP_MODE.IMMEDIATE)
+    {
+        current_instance.stop(mode);
+    }
+
     public void Play(System.Action<EventInstance> modifyInstance = null)
     {
-        var instance = RuntimeManager.CreateInstance(reference);
-        modifyInstance?.Invoke(instance);
-        instance.start();
+        current_instance = RuntimeManager.CreateInstance(reference);
+        modifyInstance?.Invoke(current_instance);
+        current_instance.start();
     }
 
     public void PlayWithTimeLimit(float time_limit, System.Action<EventInstance> modify_instance = null)

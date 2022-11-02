@@ -1075,6 +1075,46 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5964927460234344277}
     m_Modifications:
+    - target: {fileID: 1924338080218962910, guid: 10a7ef8d1fd0e1846bcb118e37b2f092, type: 3}
+      propertyPath: eventOnClick.reference.Path
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 1924338080218962910, guid: 10a7ef8d1fd0e1846bcb118e37b2f092, type: 3}
+      propertyPath: eventOnSelect.reference.Path
+      value: event:/UI/ui_button_select_001
+      objectReference: {fileID: 0}
+    - target: {fileID: 1924338080218962910, guid: 10a7ef8d1fd0e1846bcb118e37b2f092, type: 3}
+      propertyPath: eventOnClick.reference.Guid.Data1
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1924338080218962910, guid: 10a7ef8d1fd0e1846bcb118e37b2f092, type: 3}
+      propertyPath: eventOnClick.reference.Guid.Data2
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1924338080218962910, guid: 10a7ef8d1fd0e1846bcb118e37b2f092, type: 3}
+      propertyPath: eventOnClick.reference.Guid.Data3
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1924338080218962910, guid: 10a7ef8d1fd0e1846bcb118e37b2f092, type: 3}
+      propertyPath: eventOnClick.reference.Guid.Data4
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1924338080218962910, guid: 10a7ef8d1fd0e1846bcb118e37b2f092, type: 3}
+      propertyPath: eventOnSelect.reference.Guid.Data1
+      value: 392378103
+      objectReference: {fileID: 0}
+    - target: {fileID: 1924338080218962910, guid: 10a7ef8d1fd0e1846bcb118e37b2f092, type: 3}
+      propertyPath: eventOnSelect.reference.Guid.Data2
+      value: 1205344972
+      objectReference: {fileID: 0}
+    - target: {fileID: 1924338080218962910, guid: 10a7ef8d1fd0e1846bcb118e37b2f092, type: 3}
+      propertyPath: eventOnSelect.reference.Guid.Data3
+      value: -945780290
+      objectReference: {fileID: 0}
+    - target: {fileID: 1924338080218962910, guid: 10a7ef8d1fd0e1846bcb118e37b2f092, type: 3}
+      propertyPath: eventOnSelect.reference.Guid.Data4
+      value: 1559893948
+      objectReference: {fileID: 0}
     - target: {fileID: 4199395762272161313, guid: 10a7ef8d1fd0e1846bcb118e37b2f092, type: 3}
       propertyPath: m_Name
       value: IconButton

@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class Enemy : Character, IKillable
 {
+    [SerializeField] private FMODEventReference event_death;
     private EntityAI AI { get; set; }
     public EnemySettings Settings { get; private set; }
     public Vector3 MoveDirection { get { return Body.transform.up; } }
@@ -79,6 +80,8 @@ public class Enemy : Character, IKillable
             .Scale(Vector3.one * Settings.size)
             .Destroy(10)
             .Play();
+
+            event_death.Play();
 
             // Event
             OnDeath?.Invoke();

@@ -15,8 +15,8 @@ MonoBehaviour:
   collect_experience:
     reference:
       Guid:
-        Data1: 1991122487
-        Data2: 1171221821
-        Data3: -1686703210
-        Data4: -185806061
-      Path: event:/Game/Beeps/experience_collect_001
+        Data1: -176759565
+        Data2: 1273025704
+        Data3: -854633795
+        Data4: -1846097945
+      Path: event:/Game/Experience/experience_collect_002

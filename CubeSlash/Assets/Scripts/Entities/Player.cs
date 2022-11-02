@@ -7,6 +7,9 @@ public class Player : Character
 {
     public static Player Instance;
     [SerializeField] private PlayerSettings settings;
+    [SerializeField] private FMODEventReference event_ability_on_cooldown;
+    [SerializeField] private FMODEventReference event_levelup_slide;
+    [SerializeField] private FMODEventReference event_levelup;
     public MinMaxFloat Experience { get; private set; } = new MinMaxFloat();
     public Health Health { get; private set; } = new Health();
     public int Level { get; private set; }
@@ -139,9 +142,14 @@ public class Player : Character
             ability.Pressed();
             AbilityQueued = null;
         }
-        else if (ability.TimeCooldownLeft < 0.5f)
+        else
         {
-            AbilityQueued = ability;
+            event_ability_on_cooldown.Play();
+
+            if (ability.TimeCooldownLeft < 0.5f)
+            {
+                AbilityQueued = ability;
+            }
         }
     }
 
@@ -418,7 +426,10 @@ public class Player : Character
 
         IEnumerator PushCr(float delay)
         {
+            event_levelup_slide.Play();
             yield return new WaitForSeconds(delay);
+            event_levelup_slide.Stop();
+            event_levelup.Play();
             PushEnemiesInArea(transform.position, 12, 500);
         }
     }

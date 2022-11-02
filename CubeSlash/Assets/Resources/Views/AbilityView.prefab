@@ -2468,7 +2468,6 @@ MonoBehaviour:
         Data3: -1992291445
         Data4: -574275927
       Path: event:/UI/ui_move_ability_001
-    timestamp_next: 0
   event_insert_slot:
     reference:
       Guid:
@@ -2477,7 +2476,6 @@ MonoBehaviour:
         Data3: 1129842584
         Data4: 940544334
       Path: event:/UI/ui_insert_001
-    timestamp_next: 0
   equipments:
   - {fileID: 4618427874495703458}
   - {fileID: 7519893642565021047}
@@ -3228,12 +3226,11 @@ MonoBehaviour:
   eventOnClick:
     reference:
       Guid:
-        Data1: 392378103
-        Data2: 1205344972
-        Data3: -945780290
-        Data4: 1559893948
-      Path: event:/UI/ui_button_select_001
-    timestamp_next: 0
+        Data1: 2035608470
+        Data2: 1123394001
+        Data3: 505414545
+        Data4: 750684327
+      Path: event:/Game/Impact/impact_002
   eventOnSelect:
     reference:
       Guid:
@@ -3242,7 +3239,6 @@ MonoBehaviour:
         Data3: -945780290
         Data4: 1559893948
       Path: event:/UI/ui_button_select_001
-    timestamp_next: 0
 --- !u!1 &8978444117727387081
 GameObject:
   m_ObjectHideFlags: 0
