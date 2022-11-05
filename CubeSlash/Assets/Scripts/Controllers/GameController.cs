@@ -12,7 +12,7 @@ public class GameController : MonoBehaviour
     public static bool DAMAGE_DISABLED = false;
 
     public enum GameState { PLAYING, MENU }
-    public GameState gameState = GameState.PLAYING;
+    private GameState gameState = GameState.PLAYING;
 
     public System.Action OnResume { get; set; }
     public bool IsGameStarted { get; private set; }
@@ -247,6 +247,7 @@ public class GameController : MonoBehaviour
         IEnumerator Cr()
         {
             gameState = GameState.MENU;
+            FMODEventReferenceDatabase.Load().lose_game.Play();
             yield return new WaitForSeconds(0.5f);
             var death_view = ViewController.Instance.ShowView<DeathView>(2f, "Death");
             death_view.AnimateScaleTitle(6);

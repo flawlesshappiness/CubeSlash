@@ -10,6 +10,7 @@ public class Player : Character
     [SerializeField] private FMODEventReference event_ability_on_cooldown;
     [SerializeField] private FMODEventReference event_levelup_slide;
     [SerializeField] private FMODEventReference event_levelup;
+    [SerializeField] private FMODEventReference event_damage;
     public MinMaxFloat Experience { get; private set; } = new MinMaxFloat();
     public Health Health { get; private set; } = new Health();
     public int Level { get; private set; }
@@ -336,6 +337,7 @@ public class Player : Character
             if(ChanceToAvoidDamage == 0 || Random.Range(0f, 1f) < ChanceToAvoidDamage)
             {
                 Health.Damage();
+                event_damage.Play();
             }
             else
             {

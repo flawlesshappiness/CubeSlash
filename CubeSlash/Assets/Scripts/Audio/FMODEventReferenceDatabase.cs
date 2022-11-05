@@ -4,6 +4,7 @@ using UnityEngine;
 public class FMODEventReferenceDatabase : ScriptableObject
 {
     public FMODEventReference collect_experience;
+    public FMODEventReference lose_game;
 
     private static FMODEventReferenceDatabase instance;
 

@@ -20,3 +20,11 @@ MonoBehaviour:
         Data3: -854633795
         Data4: -1846097945
       Path: event:/Game/Experience/experience_collect_002
+  lose_game:
+    reference:
+      Guid:
+        Data1: -771218821
+        Data2: 1128927549
+        Data3: 189750964
+        Data4: -1995803853
+      Path: event:/Game/Events/lose_game

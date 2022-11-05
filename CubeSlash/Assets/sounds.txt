@@ -1,5 +1,6 @@
 PLAYER:
-Player hit
+select new upgrade
+select new ability
 
 ABILITIES:
 Dash trail idle

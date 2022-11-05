@@ -69,6 +69,14 @@ MonoBehaviour:
         Data3: 188179076
         Data4: 1738341589
       Path: event:/Game/Experience/levelup_001
+  event_damage:
+    reference:
+      Guid:
+        Data1: -812085309
+        Data2: 1251255407
+        Data3: -1776841837
+        Data4: 1130830504
+      Path: event:/Game/Player/player_hit_001
 --- !u!50 &1077616187795116517
 Rigidbody2D:
   serializedVersion: 4
