@@ -10,6 +10,7 @@ public class UnlockUpgradeView : View
     [SerializeField] private UIIconButton temp_btn_upgrade;
     [SerializeField] private TMP_Text tmp_upgrade;
     [SerializeField] private RectTransform rt_upgrades, rt_desc;
+    [SerializeField] private FMODEventReference sfx_unlock_upgrade;
 
     public event System.Action<Upgrade> OnUpgradeSelected;
 
@@ -60,6 +61,7 @@ public class UnlockUpgradeView : View
             CanvasGroup.interactable = false;
             CanvasGroup.blocksRaycasts = false;
             UpgradeController.Instance.UnlockUpgrade(upgrade.id);
+            sfx_unlock_upgrade.Play();
             OnUpgradeSelected?.Invoke(upgrade);
             Close(0);
         }

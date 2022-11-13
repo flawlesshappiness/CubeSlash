@@ -15,6 +15,10 @@ public class AbilityCharge : Ability
     [SerializeField] private ParticleSystem ps_beam_dust;
     [SerializeField] private AnimationCurve ac_charge_emission;
     [SerializeField] private AnimationCurve ac_charge_suck_falloff;
+    [SerializeField] private FMODEventReference sfx_charge;
+    [SerializeField] private FMODEventReference sfx_charge_idle;
+    [SerializeField] private FMODEventReference sfx_shoot;
+    [SerializeField] private FMODEventReference sfx_shoot_premature;
 
     private const float DISTANCE_MAX = 50f;
 
@@ -90,6 +94,10 @@ public class AbilityCharge : Ability
         {
             Trigger();
         }
+        else
+        {
+            sfx_shoot_premature.Play();
+        }
     }
 
     public override void Trigger()
@@ -107,6 +115,8 @@ public class AbilityCharge : Ability
         Charging = true;
         ChargeEnded = false;
 
+        sfx_charge.Play();
+
         if (_cr_charge != null) StopCoroutine(_cr_charge);
         _cr_charge = StartCoroutine(ChargeCr());
         IEnumerator ChargeCr()
@@ -123,6 +133,9 @@ public class AbilityCharge : Ability
         InUse = false;
         Charging = false;
         ChargeEnded = false;
+
+        sfx_charge.Stop();
+        sfx_charge_idle.Stop();
 
         Player.Instance.AbilityLock.RemoveLock(nameof(AbilityCharge));
         return IsFullyCharged();
@@ -152,6 +165,8 @@ public class AbilityCharge : Ability
         {
             ChargeEnded = true;
             ps_charge_end.Play();
+            sfx_charge.Stop();
+            sfx_charge_idle.Play();
         }
     }
 
@@ -236,6 +251,9 @@ public class AbilityCharge : Ability
                     trail.transform.position = Player.transform.position + dir * distance;
                     trail.UpdateTrail();
                 }
+
+                // Sound
+                sfx_shoot.Play();
 
                 yield return new WaitForSeconds(0.1f);
             }

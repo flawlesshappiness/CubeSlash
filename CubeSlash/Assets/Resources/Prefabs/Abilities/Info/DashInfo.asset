@@ -15,4 +15,4 @@ MonoBehaviour:
   type: 0
   name_ability: Dash
   desc_ability: Dash forwards, damaging enemies on impact
-  sprite_icon: {fileID: 21300000, guid: fd6e8c77e0376ca47876b6db0994e1d4, type: 3}
+  sprite_icon: {fileID: 21300000, guid: dab5a681fd7e4e342bf04e5a239fbdb2, type: 3}

@@ -12,9 +12,6 @@ public class GameView : View
     {
         Player.Instance.Experience.onValueChanged += OnExperienceChanged;
         UpdateExperience(false);
-
-        // Audio
-        AudioController.Instance.TransitionTo(AudioController.Snapshot.MAIN, 0.5f);
     }
 
     private void OnDestroy()

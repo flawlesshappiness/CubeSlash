@@ -829,6 +829,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   temp_btn_ability: {fileID: 7474798089283018882}
   tmp_desc: {fileID: 2583120460113071657}
+  sfx_unlock_ability:
+    reference:
+      Guid:
+        Data1: 175011373
+        Data2: 1097586406
+        Data3: 343695514
+        Data4: 1588041429
+      Path: event:/UI/ui_unlock_ability_001
 --- !u!1 &7347007160510169531
 GameObject:
   m_ObjectHideFlags: 0

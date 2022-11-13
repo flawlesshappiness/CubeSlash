@@ -24383,3 +24383,35 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  sfx_charge:
+    reference:
+      Guid:
+        Data1: 264187058
+        Data2: 1206686304
+        Data3: 1389975950
+        Data4: 999229046
+      Path: event:/Game/Abilities/charge_start_001
+  sfx_charge_idle:
+    reference:
+      Guid:
+        Data1: 1183244009
+        Data2: 1291060210
+        Data3: -1672864599
+        Data4: 1720805592
+      Path: event:/Game/Abilities/charge_idle_001
+  sfx_shoot:
+    reference:
+      Guid:
+        Data1: 927798703
+        Data2: 1119834803
+        Data3: 447513531
+        Data4: 1199017499
+      Path: event:/Game/Abilities/charge_end_001
+  sfx_shoot_premature:
+    reference:
+      Guid:
+        Data1: -474823519
+        Data2: 1232703166
+        Data3: 1700276925
+        Data4: 450463273
+      Path: event:/Game/Abilities/on_cooldown_001

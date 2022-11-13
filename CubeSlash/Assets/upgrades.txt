@@ -8,6 +8,8 @@ Exp bonus
 Exp pickup range
 Global cooldown reduction
 
+When eating plant gain health?
+when eating meat ...?
 Picking up EXP increases movement speed shortly
 Every 2 minutes, gain a spirit heart
 Every 100 kill, regain health

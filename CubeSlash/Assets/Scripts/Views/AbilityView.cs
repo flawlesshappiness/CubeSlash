@@ -36,9 +36,6 @@ public class AbilityView : View
         // Cards
         InitializeAbilitySlots();
 
-        // Audio
-        AudioController.Instance.TransitionTo(AudioController.Snapshot.MENU, 0.5f);
-
         // UI
         EventSystemController.Instance.SetDefaultSelection(slots[0].Button.gameObject);
         EventSystemController.Instance.EventSystem.SetSelectedGameObject(slots[0].Button.gameObject);

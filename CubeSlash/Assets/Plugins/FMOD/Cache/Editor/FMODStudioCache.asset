@@ -42,7 +42,7 @@ MonoBehaviour:
   Path: Assets/FMOD/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 638032072555040070
+  lastModified: 638039033907028006
   FileSizes: []
   Exists: 1
 --- !u!114 &-6648804991705279764
@@ -207,6 +207,33 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 0
+--- !u!114 &-4356645826321953852
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/UI/ui_unlock_upgrade_001
+  m_EditorClassIdentifier: 
+  Path: event:/UI/ui_unlock_upgrade_001
+  Guid:
+    Data1: 295234077
+    Data2: 1232971657
+    Data3: -157440861
+    Data4: -1506351820
+  Banks:
+  - {fileID: -8060980804293988741}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
 --- !u!114 &-4141026294078847062
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -234,6 +261,33 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 0
+--- !u!114 &-2045402373136644028
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Game/Abilities/charge_idle_001
+  m_EditorClassIdentifier: 
+  Path: event:/Game/Abilities/charge_idle_001
+  Guid:
+    Data1: 1183244009
+    Data2: 1291060210
+    Data3: -1672864599
+    Data4: 1720805592
+  Banks:
+  - {fileID: -8060980804293988741}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 0
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 8000
 --- !u!114 &-1490901177813782816
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -315,6 +369,60 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 0
+--- !u!114 &-534392046617968838
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/UI/ui_unlock_ability_001
+  m_EditorClassIdentifier: 
+  Path: event:/UI/ui_unlock_ability_001
+  Guid:
+    Data1: 175011373
+    Data2: 1097586406
+    Data3: 343695514
+    Data4: 1588041429
+  Banks:
+  - {fileID: -8060980804293988741}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
+--- !u!114 &-243892825821260796
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Game/Abilities/charge_end_001
+  m_EditorClassIdentifier: 
+  Path: event:/Game/Abilities/charge_end_001
+  Guid:
+    Data1: 927798703
+    Data2: 1119834803
+    Data3: 447513531
+    Data4: 1199017499
+  Banks:
+  - {fileID: -8060980804293988741}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
 --- !u!114 &-189976109974734642
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -375,13 +483,48 @@ MonoBehaviour:
   - {fileID: 2606001295264177313}
   - {fileID: -6362446530669809572}
   - {fileID: -189976109974734642}
+  - {fileID: -243892825821260796}
+  - {fileID: 2267956152613183766}
+  - {fileID: -2045402373136644028}
+  - {fileID: 4030382554514392126}
+  - {fileID: 3677917369912790837}
+  - {fileID: -4356645826321953852}
+  - {fileID: -534392046617968838}
+  - {fileID: 6642678424488806187}
   EditorParameters: []
   MasterBanks:
   - {fileID: -8060980804293988741}
   StringsBanks:
   - {fileID: 5917708036578608240}
-  cacheTime: 638032072555060072
+  cacheTime: 638039033907048012
   cacheVersion: 131593
+--- !u!114 &2267956152613183766
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Game/Abilities/charge_start_001
+  m_EditorClassIdentifier: 
+  Path: event:/Game/Abilities/charge_start_001
+  Guid:
+    Data1: 264187058
+    Data2: 1206686304
+    Data3: 1389975950
+    Data4: 999229046
+  Banks:
+  - {fileID: -8060980804293988741}
+  IsStream: 1
+  Is3D: 0
+  IsOneShot: 0
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 16000
 --- !u!114 &2606001295264177313
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -463,6 +606,60 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 0
+--- !u!114 &3677917369912790837
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Music/game_001
+  m_EditorClassIdentifier: 
+  Path: event:/Music/game_001
+  Guid:
+    Data1: -1820905848
+    Data2: 1333989044
+    Data3: -787764304
+    Data4: 642457650
+  Banks:
+  - {fileID: -8060980804293988741}
+  IsStream: 1
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 122181
+--- !u!114 &4030382554514392126
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Ambience/amb_underwater_002
+  m_EditorClassIdentifier: 
+  Path: event:/Ambience/amb_underwater_002
+  Guid:
+    Data1: 505008823
+    Data2: 1299767671
+    Data3: 559173303
+    Data4: 520860045
+  Banks:
+  - {fileID: -8060980804293988741}
+  IsStream: 1
+  Is3D: 0
+  IsOneShot: 0
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 249907
 --- !u!114 &5917708036578608240
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -478,11 +675,38 @@ MonoBehaviour:
   Path: Assets/FMOD/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 638032072555060072
+  lastModified: 638039033907048012
   FileSizes:
   - Name: 
-    Value: 1616
+    Value: 2006
   Exists: 1
+--- !u!114 &6642678424488806187
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Game/Enemy/healthdud_death_001
+  m_EditorClassIdentifier: 
+  Path: event:/Game/Enemy/healthdud_death_001
+  Guid:
+    Data1: 1670559046
+    Data2: 1203043853
+    Data3: -1995059786
+    Data4: -2040260450
+  Banks:
+  - {fileID: -8060980804293988741}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
 --- !u!114 &8573418566942188164
 MonoBehaviour:
   m_ObjectHideFlags: 0

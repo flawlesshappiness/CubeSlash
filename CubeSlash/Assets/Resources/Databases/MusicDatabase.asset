@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 936a834acbcdd9146be0bb7cac7caa04, type: 3}
+  m_Name: MusicDatabase
+  m_EditorClassIdentifier: 
+  bgms_progress:
+  - reference:
+      Guid:
+        Data1: -1820905848
+        Data2: 1333989044
+        Data3: -787764304
+        Data4: 642457650
+      Path: event:/Music/game_001

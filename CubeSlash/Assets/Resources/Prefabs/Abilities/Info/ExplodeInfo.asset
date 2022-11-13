@@ -16,4 +16,4 @@ MonoBehaviour:
   name_ability: Explode
   desc_ability: After a brief delay, damage enemies at the edge of a ring around
     you
-  sprite_icon: {fileID: 21300000, guid: a3388fc2c05b33f48b3888711bd48aad, type: 3}
+  sprite_icon: {fileID: 21300000, guid: 8e0f21bc236fc5345b67a7cd8f82c0d2, type: 3}

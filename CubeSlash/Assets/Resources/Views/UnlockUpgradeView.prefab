@@ -1133,6 +1133,14 @@ MonoBehaviour:
   tmp_upgrade: {fileID: 7869773761348997573}
   rt_upgrades: {fileID: 322741293686769352}
   rt_desc: {fileID: 3336253849913015402}
+  sfx_unlock_upgrade:
+    reference:
+      Guid:
+        Data1: 295234077
+        Data2: 1232971657
+        Data3: -157440861
+        Data4: -1506351820
+      Path: event:/UI/ui_unlock_upgrade_001
 --- !u!1001 &862280928907509775
 PrefabInstance:
   m_ObjectHideFlags: 0

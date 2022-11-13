@@ -1,6 +1,7 @@
 using UnityEngine;
 using FMODUnity;
 using FMOD.Studio;
+using System.Collections.Generic;
 
 [System.Serializable]
 public class FMODEventReference
@@ -10,6 +11,10 @@ public class FMODEventReference
     private float timestamp_next;
 
     private EventInstance current_instance;
+
+    private static Dictionary<string, int> dicPlayCount = new Dictionary<string, int>();
+
+    public int PlayCount { get { return dicPlayCount.ContainsKey(reference.Path) ? dicPlayCount[reference.Path] : 0; } }
 
     public void Stop(FMOD.Studio.STOP_MODE mode = FMOD.Studio.STOP_MODE.IMMEDIATE)
     {
@@ -21,6 +26,7 @@ public class FMODEventReference
         current_instance = RuntimeManager.CreateInstance(reference);
         modifyInstance?.Invoke(current_instance);
         current_instance.start();
+        IncrementPlayCount();
     }
 
     public void PlayWithTimeLimit(float time_limit, System.Action<EventInstance> modify_instance = null)
@@ -38,5 +44,15 @@ public class FMODEventReference
         {
             e.setPitch(delta_pitch);
         });
+    }
+
+    private void IncrementPlayCount()
+    {
+        if (!dicPlayCount.ContainsKey(reference.Path))
+        {
+            dicPlayCount.Add(reference.Path, 0);
+        }
+
+        dicPlayCount[reference.Path]++;
     }
 }

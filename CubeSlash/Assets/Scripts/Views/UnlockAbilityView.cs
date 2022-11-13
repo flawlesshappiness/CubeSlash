@@ -8,6 +8,7 @@ public class UnlockAbilityView : View
 {
     [SerializeField] private UIIconButton temp_btn_ability;
     [SerializeField] private TMP_Text tmp_desc;
+    [SerializeField] private FMODEventReference sfx_unlock_ability;
 
     public event System.Action OnAbilitySelected;
 
@@ -45,6 +46,7 @@ public class UnlockAbilityView : View
         {
             FMODButtonEvent.PreviousSelected = null;
             AbilityController.Instance.UnlockAbility(ability.Info.type);
+            sfx_unlock_ability.Play();
             OnAbilitySelected?.Invoke();
             Close(0);
         }

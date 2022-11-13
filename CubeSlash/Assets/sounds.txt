@@ -1,12 +1,7 @@
 PLAYER:
-select new upgrade
-select new ability
 
 ABILITIES:
 Dash trail idle
-
-Charge charge
-Charge shoot
 
 Split shoot
 Split projectile death
