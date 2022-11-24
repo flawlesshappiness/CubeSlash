@@ -118,7 +118,7 @@ public class UpgradeTreeView : View
 
     private ButtonMap CreateButton(UpgradeNodeData node)
     {
-        var info = UpgradeController.Instance.GetUpgrade(node.id_name);
+        var info = UpgradeController.Instance.GetUpgradeInfo(node.id_name);
         var upgrade = info.upgrade;
 
         var btn = Instantiate(template_btn_upgrade, template_btn_upgrade.transform.parent);

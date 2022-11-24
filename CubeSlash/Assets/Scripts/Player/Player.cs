@@ -30,12 +30,16 @@ public class Player : Character
     // UPGRADE VALUES
     public float ChanceToAvoidDamage { get; private set; }
     public float GlobalCooldownMultiplier { get; private set; }
+    public float CollectCooldownReduction { get; private set; }
     public float ExperienceMultiplier { get; private set; }
-    public float DistanceCollect { get; private set; }
-    public float SpeedBoostPerExp { get; private set; }
+    public float CollectRadius { get; private set; }
+    public bool CollectSpeedBoost { get; private set; }
+    public bool ConvertHealthToArmor { get; private set; }
 
     public event System.Action onLevelUp;
     public event System.Action onDeath;
+
+    private float timestamp_collect_last;
 
     public void Initialize()
     {
@@ -89,6 +93,18 @@ public class Player : Character
 
     private void MoveUpdate()
     {
+        // Update move values
+        var flat_acceleration = Values.GetFloatValue("FlatAcceleration");
+        var flat_velocity = Values.GetFloatValue("FlatVelocity");
+
+        var t_collect_boost = (Time.time - timestamp_collect_last) / 0.5f;
+        var collect_boost_acceleration = CollectSpeedBoost ? Mathf.Lerp(10, 0, t_collect_boost) : 0;
+        var collect_boost_velocity = CollectSpeedBoost ? Mathf.Lerp(8, 0, t_collect_boost) : 0;
+
+        LinearAcceleration = settings.linear_acceleration + flat_acceleration + collect_boost_acceleration;
+        LinearVelocity = settings.linear_velocity + flat_velocity + collect_boost_velocity;
+
+        // Move
         var dir = PlayerInput.MoveDirection;
         if (InputLock.IsFree)
         {
@@ -198,12 +214,14 @@ public class Player : Character
 
     private void ApplyUpgradeValues()
     {
-        LinearAcceleration = settings.linear_acceleration + Values.GetFloatValue("FlatAcceleration");
-        LinearVelocity = settings.linear_velocity + Values.GetFloatValue("FlatVelocity");
         ChanceToAvoidDamage = Values.GetFloatValue("AvoidDamage");
         GlobalCooldownMultiplier = 1f - Values.GetFloatValue("CooldownReduc");
-        DistanceCollect = Values.GetFloatValue("CollectRadius");
+        CollectRadius = Values.GetFloatValue("CollectRadius");
         ExperienceMultiplier = 1f + Values.GetFloatValue("ExpBonus");
+        CollectCooldownReduction = Values.GetFloatValue("CollectCooldownReduc");
+        CollectSpeedBoost = Values.GetBoolValue("CollectSpeedBoost");
+        ConvertHealthToArmor = Values.GetBoolValue("ConvertHealthToArmor");
+        Body.Size = settings.size + Values.GetFloatValue("BodySize");
     }
 
     public void OnUpgradeSelected(Upgrade upgrade)
@@ -223,6 +241,10 @@ public class Player : Character
                 {
                     Health.AddHealth(HealthPoint.Type.TEMPORARY);
                 }
+            }
+            else if(e.variable.name == "ConvertHealthToArmor")
+            {
+                Health.SetConvertHealthToArmorEnabled(true);
             }
         }
     }
@@ -403,9 +425,15 @@ public class Player : Character
         }
     }
 
-    public void AddExperience()
+    public void CollectExperience()
     {
+        timestamp_collect_last = Time.time;
+        
         Experience.Value += 1f * ExperienceMultiplier;
+
+        // Adjust ability cooldown
+        AbilityController.Instance.GetEquippedAbilities()
+            .ForEach(a => a.AdjustCooldownFlat(CollectCooldownReduction));
     }
 
     public void ResetExperience()

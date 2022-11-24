@@ -13,10 +13,7 @@ public class UIHealth : MonoBehaviour
     private void Start()
     {
         prefab_hp.gameObject.SetActive(false);
-
-        Player.Instance.Health.GetHealthList(HealthPoint.Type.FULL).ForEach(hp => OnAddHealthPoint(hp));
-        Player.Instance.Health.GetHealthList(HealthPoint.Type.EMPTY).ForEach(hp => OnAddHealthPoint(hp));
-        Player.Instance.Health.GetHealthList(HealthPoint.Type.TEMPORARY).ForEach(hp => OnAddHealthPoint(hp));
+        ResetHealthPoints();
     }
 
     private void OnEnable()
@@ -27,6 +24,32 @@ public class UIHealth : MonoBehaviour
     private void OnDisable()
     {
         Player.Instance.Health.onAddHealthPoint -= OnAddHealthPoint;
+    }
+
+    private void Update()
+    {
+        if (Player.Instance.Health.ResetUI)
+        {
+            ResetHealthPoints();
+        }
+    }
+
+    private void ResetHealthPoints()
+    {
+        // Clear
+        foreach(var p in points)
+        {
+            Destroy(p.gameObject);
+        }
+        points.Clear();
+
+        // Create
+        Player.Instance.Health.GetHealthList(HealthPoint.Type.FULL).ForEach(hp => OnAddHealthPoint(hp));
+        Player.Instance.Health.GetHealthList(HealthPoint.Type.EMPTY).ForEach(hp => OnAddHealthPoint(hp));
+        Player.Instance.Health.GetHealthList(HealthPoint.Type.TEMPORARY).ForEach(hp => OnAddHealthPoint(hp));
+
+        // Reset
+        Player.Instance.Health.OnUIReset();
     }
 
     private UIHealthPoint CreateHealthPoint(HealthPoint hp)

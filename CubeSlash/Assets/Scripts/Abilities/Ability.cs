@@ -192,6 +192,11 @@ public abstract class Ability : MonoBehaviourExtended
             CurrentCharges = Charges;
         }
     }
+
+    public void AdjustCooldownFlat(float seconds)
+    {
+        TimeCooldownEnd += seconds;
+    }
     #endregion
     #region MODIFIER
     public void SetModifier(Ability ability, int idx)

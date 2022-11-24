@@ -10,6 +10,9 @@ public class Body : MonoBehaviourExtended
     [SerializeField] public CircleCollider2D Trigger;
     [SerializeField] public Transform parent_health_duds;
     [SerializeField] public ParticleSystem ps_death;
+
+    public float Size { get; set; } = 1f;
+
     private Rigidbody2D Rigidbody { get { return GetComponentOnce<Rigidbody2D>(ComponentSearchType.PARENT); } }
     private Quaternion rotation_look;
     private List<HealthDud> health_duds = new List<HealthDud>();
@@ -52,7 +55,7 @@ public class Body : MonoBehaviourExtended
 
         var t_velocity = Mathf.Clamp(Rigidbody.velocity.magnitude / 40, 0, 1);
         float x_scale = Mathf.Lerp(1f, 0.5f, t_velocity);
-        transform.localScale = Vector3.Slerp(transform.localScale, Vector3.one.SetX(x_scale), 10 * Time.deltaTime);
+        transform.localScale = Vector3.Slerp(transform.localScale, Size * new Vector3(x_scale, 1), 10 * Time.deltaTime);
     }
 
     private void OnDrawGizmos()

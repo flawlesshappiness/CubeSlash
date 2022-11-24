@@ -60,9 +60,9 @@ public class UpgradeController : Singleton
         }
     }
 
-    public void UnlockUpgrade(string id) => GetUpgrade(id).isUnlocked = true;
-    public bool IsUpgradeUnlocked(string id) => GetUpgrade(id).isUnlocked;
-    public UpgradeInfo GetUpgrade(string id) => upgrades[id];
+    public void UnlockUpgrade(string id) => GetUpgradeInfo(id).isUnlocked = true;
+    public bool IsUpgradeUnlocked(string id) => GetUpgradeInfo(id).isUnlocked;
+    public UpgradeInfo GetUpgradeInfo(string id) => upgrades[id];
     public UpgradeNodeTree GetUpgradeTree(string id) => Database.trees.FirstOrDefault(tree => tree.Contains(id));
 
     public List<UpgradeInfo> GetUnlockableUpgrades()
@@ -124,6 +124,9 @@ public class UpgradeController : Singleton
                 else
                 {
                     UnlockUpgrade(id);
+                    Player.Instance.OnUpgradeSelected(info.upgrade);
+                    Player.Instance.ReapplyUpgrades();
+                    Player.Instance.ReapplyAbilities();
                     ConsoleController.Instance.LogOutput("Success!");
                 }
             }

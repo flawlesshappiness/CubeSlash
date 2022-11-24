@@ -42,7 +42,7 @@ public class Item : MonoBehaviour
         }
         else
         {
-            if (Vector3.Distance(transform.position, Player.Instance.transform.position) <= Player.Instance.DistanceCollect * mul_dist_collect)
+            if (Vector3.Distance(transform.position, Player.Instance.transform.position) <= Player.Instance.CollectRadius * mul_dist_collect)
             {
                 IsBeingCollected = true;
                 TimeCollected = Time.time;
