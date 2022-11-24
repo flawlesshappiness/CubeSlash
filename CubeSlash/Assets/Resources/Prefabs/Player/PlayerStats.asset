@@ -10,62 +10,42 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 20d804d53a9e8a142a2077ae6c2d0b28, type: 3}
-  m_Name: ChargeStats
+  m_Name: PlayerStats
   m_EditorClassIdentifier: 
-  id: charge
+  id: player
   stats:
-  - name: Cooldown
-    text_display: $s cooldown
-    type_value: 1
-    type_display: 1
-    higher_is_positive: 0
-    value_int: 0
-    value_float: 0
-    value_bool: 0
-    can_edit_name: 0
-    _editor_toggle_preview: 1
-  - name: Charges
-    text_display: $ charges
+  - name: Health
+    text_display: When you health reaches 0, you die
     type_value: 0
     type_display: 0
     higher_is_positive: 1
-    value_int: 1
+    value_int: 5
     value_float: 0
     value_bool: 0
-    can_edit_name: 0
-    _editor_toggle_preview: 1
-  - name: Width
-    text_display: $ beam width
-    type_value: 1
-    type_display: 1
-    higher_is_positive: 0
-    value_int: 0
-    value_float: 1
-    value_bool: 0
     can_edit_name: 1
     _editor_toggle_preview: 1
-  - name: ChargeTime
-    text_display: $s charge time
-    type_value: 1
-    type_display: 1
+  - name: Armor
+    text_display: Like health, but cannot be regenerated
+    type_value: 0
+    type_display: 0
     higher_is_positive: 1
-    value_int: 1
+    value_int: 0
+    value_float: 0
+    value_bool: 0
+    can_edit_name: 1
+    _editor_toggle_preview: 1
+  - name: Body size
+    text_display: $ body size
+    type_value: 1
+    type_display: 2
+    higher_is_positive: 0
+    value_int: 0
     value_float: 1
     value_bool: 0
     can_edit_name: 1
     _editor_toggle_preview: 1
-  - name: KnockbackSelf
-    text_display: $ self knockback
-    type_value: 1
-    type_display: 1
-    higher_is_positive: 0
-    value_int: 0
-    value_float: 500
-    value_bool: 0
-    can_edit_name: 1
-    _editor_toggle_preview: 1
-  - name: ChargeTimeOnKill
-    text_display: $ charge time per kill
+  - name: AvoidDamage
+    text_display: $ chance to avoid damage
     type_value: 1
     type_display: 2
     higher_is_positive: 1
@@ -74,18 +54,38 @@ MonoBehaviour:
     value_bool: 0
     can_edit_name: 1
     _editor_toggle_preview: 1
-  - name: BeamCount
-    text_display: $ beams
-    type_value: 0
-    type_display: 0
+  - name: PlantExpHealthRegen
+    text_display: Eat plant exp to regenerate health
+    type_value: 2
+    type_display: 3
     higher_is_positive: 1
-    value_int: 1
+    value_int: 0
     value_float: 0
     value_bool: 0
     can_edit_name: 1
     _editor_toggle_preview: 1
-  - name: BeamArc
-    text_display: $ degree arc per beam
+  - name: KillEnemyShieldRegen
+    text_display: Kill enemies to gain armor
+    type_value: 2
+    type_display: 3
+    higher_is_positive: 1
+    value_int: 0
+    value_float: 0
+    value_bool: 0
+    can_edit_name: 1
+    _editor_toggle_preview: 1
+  - name: ConvertHealthToArmor
+    text_display: Health is doubled, and converted to armor
+    type_value: 2
+    type_display: 3
+    higher_is_positive: 1
+    value_int: 0
+    value_float: 0
+    value_bool: 0
+    can_edit_name: 1
+    _editor_toggle_preview: 1
+  - name: FlatVelocity
+    text_display: $ max speed
     type_value: 1
     type_display: 1
     higher_is_positive: 1
@@ -94,28 +94,8 @@ MonoBehaviour:
     value_bool: 0
     can_edit_name: 1
     _editor_toggle_preview: 1
-  - name: ChargeSucksExp
-    text_display: Pull exp closer while charging
-    type_value: 2
-    type_display: 3
-    higher_is_positive: 1
-    value_int: 0
-    value_float: 0
-    value_bool: 0
-    can_edit_name: 1
-    _editor_toggle_preview: 1
-  - name: BeamBack
-    text_display: Shoot another beam backwards
-    type_value: 2
-    type_display: 3
-    higher_is_positive: 1
-    value_int: 0
-    value_float: 0
-    value_bool: 0
-    can_edit_name: 1
-    _editor_toggle_preview: 1
-  - name: Knockback
-    text_display: $ enemy knockback
+  - name: FlatAcceleration
+    text_display: $ acceleration
     type_value: 1
     type_display: 1
     higher_is_positive: 1
@@ -124,8 +104,18 @@ MonoBehaviour:
     value_bool: 0
     can_edit_name: 1
     _editor_toggle_preview: 1
-  - name: DashModifier
-    text_display: Trail
+  - name: CooldownReduc
+    text_display: $ global cooldown reduction
+    type_value: 1
+    type_display: 2
+    higher_is_positive: 1
+    value_int: 0
+    value_float: 0
+    value_bool: 0
+    can_edit_name: 1
+    _editor_toggle_preview: 1
+  - name: InfiniteDrag
+    text_display: Stop instantly when not moving
     type_value: 2
     type_display: 3
     higher_is_positive: 1
@@ -134,10 +124,40 @@ MonoBehaviour:
     value_bool: 0
     can_edit_name: 1
     _editor_toggle_preview: 1
-  - name: ExplodeModifier
-    text_display: Enemies explode
+  - name: CollectRadius
+    text_display: $ item collect radius
+    type_value: 1
+    type_display: 1
+    higher_is_positive: 1
+    value_int: 3
+    value_float: 3
+    value_bool: 0
+    can_edit_name: 1
+    _editor_toggle_preview: 1
+  - name: CollectSpeedBoost
+    text_display: Gain temporary speed when collecting exp
     type_value: 2
     type_display: 3
+    higher_is_positive: 1
+    value_int: 0
+    value_float: 0
+    value_bool: 0
+    can_edit_name: 1
+    _editor_toggle_preview: 1
+  - name: CollectCooldownReduc
+    text_display: $s cooldown reduction when collecting exp
+    type_value: 1
+    type_display: 1
+    higher_is_positive: 1
+    value_int: 0
+    value_float: 0
+    value_bool: 0
+    can_edit_name: 1
+    _editor_toggle_preview: 1
+  - name: ExpBonus
+    text_display: $ exp bonus
+    type_value: 1
+    type_display: 2
     higher_is_positive: 1
     value_int: 0
     value_float: 0

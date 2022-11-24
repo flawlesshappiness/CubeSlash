@@ -38,7 +38,6 @@ public class GameController : MonoBehaviour
         ConsoleController.Instance.RegisterCommand("Kill", EnemyController.Instance.RemoveActiveEnemies);
         ConsoleController.Instance.RegisterCommand("LevelUp", CheatLevelUp);
         ConsoleController.Instance.RegisterCommand("NextLevel", () => SetLevel(LevelIndex + 1));
-        ConsoleController.Instance.RegisterCommand("GainAbility", OnPlayerGainAbility);
         ConsoleController.Instance.RegisterCommand("Equipment", CheatOpenEquipment);
         ConsoleController.Instance.RegisterCommand("ToggleDamage", () => DAMAGE_DISABLED = !DAMAGE_DISABLED);
         ConsoleController.Instance.RegisterCommand("Suicide", () => Player.Instance.Kill());
@@ -143,6 +142,7 @@ public class GameController : MonoBehaviour
                 Player.Instance.gameObject.SetActive(true);
                 SetLevel(0);
                 ResumeLevel();
+                MusicController.Instance.PlayStartMusic();
             };
         };
     }
@@ -187,16 +187,11 @@ public class GameController : MonoBehaviour
     private void OnPlayerLevelUp()
     {
         Player.Instance.ResetExperience();
-        if (UpgradeController.Instance.CanUnlockUpgrade())
-        {
-            UnlockUpgrade();
-        }
-    }
 
-    public void OnPlayerGainAbility()
-    {
-        if (AbilityController.Instance.CanUnlockAbility())
+        //Debug.Log($"{Player.Instance.LevelsUntilAbility} {Player.Instance.CanGainAbility()} {AbilityController.Instance.CanUnlockAbility()}");
+        if (Player.Instance.CanGainAbility() && AbilityController.Instance.CanUnlockAbility())
         {
+            Player.Instance.ResetLevelsUntilAbility();
             UnlockAbility();
         }
         else if (UpgradeController.Instance.CanUnlockUpgrade())
@@ -214,10 +209,10 @@ public class GameController : MonoBehaviour
             yield return LerpTimeScale(2f, 0f);
             PauseLevel();
             var view = ViewController.Instance.ShowView<UnlockUpgradeView>(0, TAG_ABILITY_VIEW);
-            view.OnUpgradeSelected += Player.Instance.OnUpgradeSelected;
             view.OnUpgradeSelected += u =>
             {
                 ResumeLevel();
+                Player.Instance.OnUpgradeSelected(u);
             };
         }
     }

@@ -17,42 +17,42 @@ MonoBehaviour:
   nodes:
   - id: 0
     id_name: projectile_count_001
-    _editorPosition: {x: 957, y: 87}
+    _editorPosition: {x: 863, y: 135}
     children: 010000000400000008000000
   - id: 1
     id_name: projectile_count_002
-    _editorPosition: {x: 951, y: 275}
+    _editorPosition: {x: 962, y: 348}
     children: 02000000
   - id: 2
     id_name: projectile_count_003
-    _editorPosition: {x: 938, y: 520}
+    _editorPosition: {x: 844, y: 568}
     children: 03000000
   - id: 3
     id_name: burst
-    _editorPosition: {x: 938, y: 744}
+    _editorPosition: {x: 844, y: 792}
     children: 
   - id: 4
     id_name: projectile_size_001
-    _editorPosition: {x: 370, y: 284}
+    _editorPosition: {x: 276, y: 332}
     children: 0500000006000000
   - id: 5
     id_name: projectile_size_002
-    _editorPosition: {x: 517, y: 540}
+    _editorPosition: {x: 423, y: 588}
     children: 07000000
   - id: 6
     id_name: projectile_knockback_001
-    _editorPosition: {x: 125, y: 526}
+    _editorPosition: {x: 31, y: 574}
     children: 
   - id: 7
     id_name: projectile_hit_split
-    _editorPosition: {x: 505, y: 730}
+    _editorPosition: {x: 411, y: 778}
     children: 
   - id: 8
     id_name: projectile_speed_001
-    _editorPosition: {x: 1457, y: 273}
+    _editorPosition: {x: 1363, y: 321}
     children: 09000000
   - id: 9
     id_name: projectile_speed_002
-    _editorPosition: {x: 1462, y: 546}
+    _editorPosition: {x: 1368, y: 594}
     children: 
   id_node: 10

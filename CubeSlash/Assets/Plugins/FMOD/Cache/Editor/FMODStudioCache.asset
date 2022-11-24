@@ -42,7 +42,7 @@ MonoBehaviour:
   Path: Assets/FMOD/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 638039033907028006
+  lastModified: 638045606725051462
   FileSizes: []
   Exists: 1
 --- !u!114 &-6648804991705279764
@@ -171,6 +171,33 @@ MonoBehaviour:
     Data2: 1336558619
     Data3: 975733157
     Data4: -2109526787
+  Banks:
+  - {fileID: -8060980804293988741}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
+--- !u!114 &-5770864616696661268
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Game/Abilities/split_projectile_death_001
+  m_EditorClassIdentifier: 
+  Path: event:/Game/Abilities/split_projectile_death_001
+  Guid:
+    Data1: 771590777
+    Data2: 1117013070
+    Data3: 729043125
+    Data4: 1166786284
   Banks:
   - {fileID: -8060980804293988741}
   IsStream: 0
@@ -491,12 +518,15 @@ MonoBehaviour:
   - {fileID: -4356645826321953852}
   - {fileID: -534392046617968838}
   - {fileID: 6642678424488806187}
+  - {fileID: 3533031449618742868}
+  - {fileID: 7863103116885566477}
+  - {fileID: -5770864616696661268}
   EditorParameters: []
   MasterBanks:
   - {fileID: -8060980804293988741}
   StringsBanks:
   - {fileID: 5917708036578608240}
-  cacheTime: 638039033907048012
+  cacheTime: 638045606725071472
   cacheVersion: 131593
 --- !u!114 &2267956152613183766
 MonoBehaviour:
@@ -579,6 +609,33 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 0
+--- !u!114 &3533031449618742868
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Music/start_001
+  m_EditorClassIdentifier: 
+  Path: event:/Music/start_001
+  Guid:
+    Data1: 399466152
+    Data2: 1224058666
+    Data3: 1777809578
+    Data4: -281874303
+  Banks:
+  - {fileID: -8060980804293988741}
+  IsStream: 1
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 26727
 --- !u!114 &3583782921577775159
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -675,10 +732,10 @@ MonoBehaviour:
   Path: Assets/FMOD/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 638039033907048012
+  lastModified: 638045606725071472
   FileSizes:
   - Name: 
-    Value: 2006
+    Value: 2166
   Exists: 1
 --- !u!114 &6642678424488806187
 MonoBehaviour:
@@ -698,6 +755,33 @@ MonoBehaviour:
     Data2: 1203043853
     Data3: -1995059786
     Data4: -2040260450
+  Banks:
+  - {fileID: -8060980804293988741}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
+--- !u!114 &7863103116885566477
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Game/Abilities/split_shoot_001
+  m_EditorClassIdentifier: 
+  Path: event:/Game/Abilities/split_shoot_001
+  Guid:
+    Data1: 1458345307
+    Data2: 1074797131
+    Data3: -1075839820
+    Data4: -1202161205
   Banks:
   - {fileID: -8060980804293988741}
   IsStream: 0

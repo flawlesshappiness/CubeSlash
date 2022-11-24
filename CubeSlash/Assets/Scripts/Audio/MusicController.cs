@@ -33,19 +33,29 @@ public class MusicController : Singleton
             PlayBGM(bgm);
 
             progress_next = progress_counter + 5;
-            time_progress_next = Time.time + 6 * 60;
         }
+    }
+
+    public void PlayStartMusic()
+    {
+        PlayBGM(Database.bgm_start_game);
     }
 
     private void PlayBGM(FMODEventReference bgm)
     {
+        StopBGM();
         current_bgm = bgm;
         bgm.Play();
+
+        time_progress_next = Time.time + 6 * 60;
     }
 
     public void StopBGM(FMOD.Studio.STOP_MODE stop_mode = FMOD.Studio.STOP_MODE.IMMEDIATE)
     {
-        current_bgm.Stop(stop_mode);
+        if(current_bgm != null)
+        {
+            current_bgm.Stop(stop_mode);
+        }
     }
 
     private FMODEventReference GetProgressBGM()

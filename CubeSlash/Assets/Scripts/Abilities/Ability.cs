@@ -25,8 +25,7 @@ public abstract class Ability : MonoBehaviourExtended
     public bool InUse { get; protected set; }
     public float CooldownPercentage { get { return (Time.time - TimeCooldownStart) / (TimeCooldownEnd - TimeCooldownStart); } }
     public int CurrentCharges { get; set; }
-
-    private Dictionary<string, StatValue> values = new Dictionary<string, StatValue>();
+    public StatValueCollection Values { get; private set; }
 
     // Values
     public float Cooldown { get; protected set; }
@@ -65,38 +64,32 @@ public abstract class Ability : MonoBehaviourExtended
         }
     }
 
-    public virtual void InitializeFirstTime() { }
+    public virtual void InitializeFirstTime() 
+    {
+        Values = new StatValueCollection(Stats);
+    }
+
     public virtual void OnValuesApplied() 
     {
-        Cooldown = GetFloatValue("Cooldown");
-        Charges = GetIntValue("Charges");
+        Cooldown = Values.GetFloatValue("Cooldown");
+        Charges = Values.GetIntValue("Charges");
     }
 
     #region APPLY
     public void ApplyActive()
     {
-        ResetValues();
+        Values.ResetValues();
         ApplyUpgrades();
         ApplyModifiers();
         //
         OnValuesApplied();
     }
 
-    public void ResetValues()
-    {
-        values.Clear();
-        foreach (var v in Stats.stats)
-        {
-            var value = new StatValue(v);
-            values.Add(v.name, value);
-        }
-    }
-
     private void ApplyUpgrades()
     {
         UpgradeController.Instance.GetUnlockedUpgrades()
             .Where(info => info.require_ability && info.type_ability_required == Info.type)
-            .ToList().ForEach(info => ApplyEffects(info.upgrade.effects));
+            .ToList().ForEach(info => Values.ApplyEffects(info.upgrade.effects));
     }
 
     private void ApplyModifiers()
@@ -105,16 +98,7 @@ public abstract class Ability : MonoBehaviourExtended
             .Where(m => m != null)
             .Select(m => ModifierUpgrades.GetModifier(m.Info.type))
             .Where(am => am.upgrade != null)
-            .ToList().ForEach(am => ApplyEffects(am.upgrade.effects));
-    }
-
-    private void ApplyEffects(List<Upgrade.Effect> effects)
-    {
-        foreach (var effect in effects)
-        {
-            var value = values[effect.variable.name];
-            value.AddValue(effect.variable);
-        }
+            .ToList().ForEach(am => Values.ApplyEffects(am.upgrade.effects));
     }
     #endregion
     #region INPUT
@@ -245,12 +229,9 @@ public abstract class Ability : MonoBehaviourExtended
     }
     #endregion
     #region VALUES
-    public int GetIntValue(string name) => values[name].GetIntValue();
-    public float GetFloatValue(string name) => values[name].GetFloatValue();
-    public bool GetBoolValue(string name) => values[name].GetBoolValue();
-    public void AddValue(string name, int value) => values[name].AddValue(value);
-    public void AddValue(string name, float value) => values[name].AddValue(value);
-    public void AddValue(string name, bool value) => values[name].AddValue(value);
-    public StatValue GetStat(string name) => values[name];
+    public int GetIntValue(string name) => Values.GetIntValue(name);
+    public float GetFloatValue(string name) => Values.GetFloatValue(name);
+    public bool GetBoolValue(string name) => Values.GetBoolValue(name);
+    public StatValue GetValue(string name) => Values.GetValue(name);
     #endregion
 }

@@ -45,6 +45,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   settings: {fileID: 11400000, guid: a2d8ce7788deae2489dcd078044940f2, type: 2}
+  stats: {fileID: 11400000, guid: 29f0fba11b5e8354bba485134153f9b7, type: 2}
   event_ability_on_cooldown:
     reference:
       Guid:

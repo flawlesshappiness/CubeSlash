@@ -8,11 +8,11 @@ public class FMODEventReference
 {
     [SerializeField]
     public EventReference reference;
-    private float timestamp_next;
 
     private EventInstance current_instance;
 
     private static Dictionary<string, int> dicPlayCount = new Dictionary<string, int>();
+    private static Dictionary<string, float> dicPlayTimestamp = new Dictionary<string, float>();
 
     public int PlayCount { get { return dicPlayCount.ContainsKey(reference.Path) ? dicPlayCount[reference.Path] : 0; } }
 
@@ -27,13 +27,16 @@ public class FMODEventReference
         modifyInstance?.Invoke(current_instance);
         current_instance.start();
         IncrementPlayCount();
+        SetPlayTimestamp();
     }
 
     public void PlayWithTimeLimit(float time_limit, System.Action<EventInstance> modify_instance = null)
     {
-        if (Time.time < timestamp_next) return;
-        timestamp_next = Time.time + time_limit;
-        Play(modify_instance);
+        var has_timestamp = GetPlayTimestamp(out var timestamp);
+        if(!has_timestamp || Time.time >= timestamp + time_limit)
+        {
+            Play(modify_instance);
+        }
     }
 
     public void PlayWithPitch(int pitch)
@@ -54,5 +57,36 @@ public class FMODEventReference
         }
 
         dicPlayCount[reference.Path]++;
+    }
+
+    private void SetPlayTimestamp()
+    {
+        if (!dicPlayTimestamp.ContainsKey(reference.Path))
+        {
+            dicPlayTimestamp.Add(reference.Path, Time.time);
+        }
+        else
+        {
+            dicPlayTimestamp[reference.Path] = Time.time;
+        }
+    }
+
+    private bool GetPlayTimestamp(out float timestamp)
+    {
+        var key = reference.Path;
+        var contains = dicPlayTimestamp.ContainsKey(key);
+        timestamp = contains ? dicPlayTimestamp[key] : 0;
+        return contains;
+    }
+
+    public EventDescription GetDescription()
+    {
+        return RuntimeManager.GetEventDescription(reference);
+    }
+
+    public int GetLength()
+    {
+        GetDescription().getLength(out var length);
+        return length;
     }
 }

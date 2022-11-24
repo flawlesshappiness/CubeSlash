@@ -41,7 +41,7 @@ public class AbilityStatView : View
         var display_stats = ability.Stats.stats.Where(stat => stat.type_display != StatParameter.DisplayType.TEXT);
         foreach (var stat in display_stats)
         {
-            var stat_current = ability.GetStat(stat.name);
+            var stat_current = ability.GetValue(stat.name);
             infos.CreateVariable().SetText(stat.name);
             var positive = stat_current.ComparePositiveTo(stat);
             var color = ColorPalette.Main.Get(positive ? ColorPalette.Type.HIGHLIGHT : ColorPalette.Type.WRONG);

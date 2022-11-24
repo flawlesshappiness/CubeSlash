@@ -3,7 +3,7 @@ Velocity
 Acceleration
 Health
 Health regen
-Spirit health
+Temp health
 Exp bonus
 Exp pickup range
 Global cooldown reduction

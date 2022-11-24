@@ -12,6 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 936a834acbcdd9146be0bb7cac7caa04, type: 3}
   m_Name: MusicDatabase
   m_EditorClassIdentifier: 
+  bgm_start_game:
+    reference:
+      Guid:
+        Data1: 399466152
+        Data2: 1224058666
+        Data3: 1777809578
+        Data4: -281874303
+      Path: event:/Music/start_001
   bgms_progress:
   - reference:
       Guid:

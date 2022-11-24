@@ -3,9 +3,6 @@ PLAYER:
 ABILITIES:
 Dash trail idle
 
-Split shoot
-Split projectile death
-
 Explode charge
 Explode explode
 

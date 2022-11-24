@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   duration: 90
   size: 100
-  frequency_spawn_enemy: 1
+  frequency_spawn_enemy: 0.6
   count_enemy_active: 20
   enemies:
   - name: Weak (Infinite)

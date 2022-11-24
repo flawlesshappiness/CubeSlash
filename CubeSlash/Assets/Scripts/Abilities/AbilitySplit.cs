@@ -7,8 +7,7 @@ public class AbilitySplit : Ability
 {
     [Header("SPLIT")]
     [SerializeField] private Projectile prefab_projectile;
-    private bool Firing { get; set; }
-    private float time_fire;
+    [SerializeField] private FMODEventReference sfx_shoot_projectiles;
 
     // Values
     private int Bursts { get; set; }
@@ -115,6 +114,12 @@ public class AbilitySplit : Ability
             p.Homing = false;
             p.Lifetime = 0.75f;
             p.Piercing = HasModifier(Type.CHARGE);
+        }
+
+        // Play sound
+        if(projectiles.Count > 0)
+        {
+            sfx_shoot_projectiles.Play();
         }
 
         // Cooldown

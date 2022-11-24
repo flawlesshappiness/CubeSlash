@@ -7,6 +7,11 @@ public class FMODController : Singleton
 {
     public static FMODController Instance { get { return Instance<FMODController>(); } }
 
+    protected override void Initialize()
+    {
+        base.Initialize();
+    }
+
     public void Play(string path)
     {
         RuntimeManager.PlayOneShot(path);

@@ -64,8 +64,17 @@ public class EnemyController : Singleton
 
             enemy.OnDeath += () =>
             {
-                var item = ItemController.Instance.SpawnAbilityItem(enemy.transform.position);
-                item.Initialize();
+                //var item = ItemController.Instance.SpawnAbilityItem(enemy.transform.position);
+                //item.Initialize();
+
+                for (int i = 0; i < 25; i++)
+                {
+                    var experience = ItemController.Instance.SpawnExperience(enemy.transform.position);
+                    experience.Initialize();
+                    experience.SetMeat();
+
+                    experience.transform.position = enemy.transform.position + Random.insideUnitCircle.ToVector3() * enemy.Settings.size * 0.5f;
+                }
             };
 
             // Particles

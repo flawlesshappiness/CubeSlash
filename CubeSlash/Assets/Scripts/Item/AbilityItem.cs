@@ -18,7 +18,7 @@ public class AbilityItem : Item
     protected override void Collect()
     {
         base.Collect();
-        GameController.Instance.OnPlayerGainAbility();
+        //GameController.Instance.OnPlayerGainAbility();
     }
 
     public override void Despawn()

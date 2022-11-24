@@ -10,79 +10,19 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 20d804d53a9e8a142a2077ae6c2d0b28, type: 3}
-  m_Name: DashStats
+  m_Name: SplitStats
   m_EditorClassIdentifier: 
-  id: dash
+  id: split
   stats:
-  - name: Distance
-    text_display: $ distance
+  - name: Cooldown
+    text_display: $s cooldown
     type_value: 1
     type_display: 1
-    higher_is_positive: 1
+    higher_is_positive: 0
     value_int: 0
-    value_float: 5
+    value_float: 1.25
     value_bool: 0
-    can_edit_name: 1
-    _editor_toggle_preview: 1
-  - name: Speed
-    text_display: $ speed
-    type_value: 1
-    type_display: 1
-    higher_is_positive: 1
-    value_int: 0
-    value_float: 30
-    value_bool: 0
-    can_edit_name: 1
-    _editor_toggle_preview: 1
-  - name: RadiusDamage
-    text_display: $ damage radius
-    type_value: 1
-    type_display: 1
-    higher_is_positive: 1
-    value_int: 0
-    value_float: 1
-    value_bool: 0
-    can_edit_name: 1
-    _editor_toggle_preview: 1
-  - name: RadiusKnockback
-    text_display: $ knockback radius
-    type_value: 1
-    type_display: 1
-    higher_is_positive: 1
-    value_int: 0
-    value_float: 12
-    value_bool: 0
-    can_edit_name: 1
-    _editor_toggle_preview: 1
-  - name: ForceKnockback
-    text_display: $ knockback force
-    type_value: 1
-    type_display: 1
-    higher_is_positive: 1
-    value_int: 0
-    value_float: 300
-    value_bool: 0
-    can_edit_name: 1
-    _editor_toggle_preview: 1
-  - name: TrailEnabled
-    text_display: Trail
-    type_value: 2
-    type_display: 3
-    higher_is_positive: 1
-    value_int: 0
-    value_float: 0
-    value_bool: 0
-    can_edit_name: 1
-    _editor_toggle_preview: 1
-  - name: CooldownOnHit
-    text_display: $ cooldown on hit
-    type_value: 1
-    type_display: 2
-    higher_is_positive: 1
-    value_int: 0
-    value_float: 1
-    value_bool: 0
-    can_edit_name: 1
+    can_edit_name: 0
     _editor_toggle_preview: 1
   - name: Charges
     text_display: $ charges
@@ -94,18 +34,58 @@ MonoBehaviour:
     value_bool: 0
     can_edit_name: 0
     _editor_toggle_preview: 1
-  - name: Cooldown
-    text_display: $s cooldown
+  - name: CountProjectiles
+    text_display: $ projectiles
+    type_value: 0
+    type_display: 0
+    higher_is_positive: 1
+    value_int: 3
+    value_float: 0
+    value_bool: 0
+    can_edit_name: 1
+    _editor_toggle_preview: 1
+  - name: SpeedProjectiles
+    text_display: $ projectile speed
+    type_value: 1
+    type_display: 1
+    higher_is_positive: 1
+    value_int: 0
+    value_float: 25
+    value_bool: 0
+    can_edit_name: 1
+    _editor_toggle_preview: 1
+  - name: ArcProjectiles
+    text_display: $ degree arc
     type_value: 1
     type_display: 1
     higher_is_positive: 0
     value_int: 0
-    value_float: 0.75
+    value_float: 15
     value_bool: 0
-    can_edit_name: 0
+    can_edit_name: 1
     _editor_toggle_preview: 1
-  - name: SplitModifier
-    text_display: +2 dashing clones
+  - name: SizeProjectiles
+    text_display: $ projectile size
+    type_value: 1
+    type_display: 1
+    higher_is_positive: 1
+    value_int: 0
+    value_float: 1
+    value_bool: 0
+    can_edit_name: 1
+    _editor_toggle_preview: 1
+  - name: Bursts
+    text_display: $ bursts
+    type_value: 0
+    type_display: 0
+    higher_is_positive: 1
+    value_int: 1
+    value_float: 0
+    value_bool: 0
+    can_edit_name: 1
+    _editor_toggle_preview: 1
+  - name: SplitProjectiles
+    text_display: Projectiles split into smaller projectiles on impact
     type_value: 2
     type_display: 3
     higher_is_positive: 1
@@ -113,9 +93,29 @@ MonoBehaviour:
     value_float: 0
     value_bool: 0
     can_edit_name: 1
+    _editor_toggle_preview: 0
+  - name: RadiusKnockback
+    text_display: $ knockback area
+    type_value: 1
+    type_display: 1
+    higher_is_positive: 1
+    value_int: 0
+    value_float: 0
+    value_bool: 0
+    can_edit_name: 1
+    _editor_toggle_preview: 1
+  - name: ForceKnockback
+    text_display: $ knockback force
+    type_value: 1
+    type_display: 1
+    higher_is_positive: 1
+    value_int: 0
+    value_float: 0
+    value_bool: 0
+    can_edit_name: 1
     _editor_toggle_preview: 1
   - name: ChargeModifier
-    text_display: Dash penetrates
+    text_display: Projectiles penetrate
     type_value: 2
     type_display: 3
     higher_is_positive: 1
@@ -125,7 +125,7 @@ MonoBehaviour:
     can_edit_name: 1
     _editor_toggle_preview: 1
   - name: ExplodeModifier
-    text_display: Explode on dash
+    text_display: Explode on hit
     type_value: 2
     type_display: 3
     higher_is_positive: 1
@@ -133,4 +133,4 @@ MonoBehaviour:
     value_float: 0
     value_bool: 0
     can_edit_name: 1
-    _editor_toggle_preview: 1
+    _editor_toggle_preview: 0

@@ -1,12 +1,15 @@
+using Newtonsoft.Json.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEngine;
 
 public class Player : Character
 {
     public static Player Instance;
     [SerializeField] private PlayerSettings settings;
+    [SerializeField] private StatCollection stats;
     [SerializeField] private FMODEventReference event_ability_on_cooldown;
     [SerializeField] private FMODEventReference event_levelup_slide;
     [SerializeField] private FMODEventReference event_levelup;
@@ -14,6 +17,7 @@ public class Player : Character
     public MinMaxFloat Experience { get; private set; } = new MinMaxFloat();
     public Health Health { get; private set; } = new Health();
     public int Level { get; private set; }
+    public int LevelsUntilAbility { get; private set; }
     public bool HasLevelledUp { get; private set; }
     public bool IsDead { get; private set; }
     public MultiLock InputLock { get; set; } = new MultiLock();
@@ -21,6 +25,7 @@ public class Player : Character
     public MultiLock AbilityLock { get; set; } = new MultiLock();
     public Vector3 MoveDirection { get; set; }
     public Ability AbilityQueued { get; private set; }
+    public StatValueCollection Values { get; private set; }
 
     // UPGRADE VALUES
     public float ChanceToAvoidDamage { get; private set; }
@@ -34,6 +39,9 @@ public class Player : Character
 
     public void Initialize()
     {
+        // Values
+        Values = new StatValueCollection(stats);
+
         // Experience
         Experience.onMax += OnLevelUp;
 
@@ -50,9 +58,9 @@ public class Player : Character
     {
         Level = 0;
         IsDead = false;
-        ResetExperience();
         ResetHealth();
-        ResetUpgradeValues();
+        ResetExperience();
+        ResetLevelsUntilAbility();
     }
 
     private void OnEnable()
@@ -174,91 +182,49 @@ public class Player : Character
     }
     #endregion
     #region UPGRADES
-    public void OnUpgradeSelected(Upgrade upgrade)
-    {
-        /*
-        if(upgrade.data.type == UpgradeData.Type.PLAYER_HEALTH)
-        {
-            if(upgrade.level == 1)
-            {
-                Health.AddHealth(HealthPoint.Type.TEMPORARY);
-            }
-            else if(upgrade.level == 2)
-            {
-                Health.AddHealth(HealthPoint.Type.FULL);
-            }
-        }
-        */
-    }
-
     public void ReapplyUpgrades()
     {
-        ResetUpgradeValues();
-
-        /*
-        UpgradeController.Instance.Database.upgrades.Select(data => UpgradeController.Instance.GetUpgrade(data.type))
-            .ToList().ForEach(upgrade => ApplyUpgrade(upgrade));
-        */
+        Values.ResetValues();
+        ApplyUpgrades();
+        ApplyUpgradeValues();
     }
 
-    private void ResetUpgradeValues()
+    private void ApplyUpgrades()
     {
-        LinearAcceleration = settings.linear_acceleration;
-        LinearVelocity = settings.linear_velocity;
-        ChanceToAvoidDamage = 0;
-        GlobalCooldownMultiplier = 1f;
-        DistanceCollect = 3f;
-        ExperienceMultiplier = 1f;
+        UpgradeController.Instance.GetUnlockedUpgrades()
+            .Where(info => !info.require_ability)
+            .ToList().ForEach(info => Values.ApplyEffects(info.upgrade.effects));
     }
 
-    private void ApplyUpgrade(Upgrade upgrade)
+    private void ApplyUpgradeValues()
     {
-        /*
-        if(upgrade.data.type == UpgradeData.Type.PLAYER_HEALTH)
+        LinearAcceleration = settings.linear_acceleration + Values.GetFloatValue("FlatAcceleration");
+        LinearVelocity = settings.linear_velocity + Values.GetFloatValue("FlatVelocity");
+        ChanceToAvoidDamage = Values.GetFloatValue("AvoidDamage");
+        GlobalCooldownMultiplier = 1f - Values.GetFloatValue("CooldownReduc");
+        DistanceCollect = Values.GetFloatValue("CollectRadius");
+        ExperienceMultiplier = 1f + Values.GetFloatValue("ExpBonus");
+    }
+
+    public void OnUpgradeSelected(Upgrade upgrade)
+    {
+        foreach(var e in upgrade.effects)
         {
-            if(upgrade.level >= 3)
+            if(e.variable.name == "Health")
             {
-                ChanceToAvoidDamage += 0.2f;
+                for (int i = 0; i < e.variable.value_int; i++)
+                {
+                    Health.AddHealth(HealthPoint.Type.FULL);
+                }
+            }
+            else if (e.variable.name == "Armor")
+            {
+                for (int i = 0; i < e.variable.value_int; i++)
+                {
+                    Health.AddHealth(HealthPoint.Type.TEMPORARY);
+                }
             }
         }
-        else if(upgrade.data.type == UpgradeData.Type.PLAYER_EXP)
-        {
-            if(upgrade.level >= 1)
-            {
-                DistanceCollect += 2f;
-            }
-
-            if (upgrade.level >= 2)
-            {
-                DistanceCollect += 2f;
-                ExperienceMultiplier += 0.2f;
-            }
-
-            if (upgrade.level >= 3)
-            {
-                // Undecided
-            }
-        }
-        else if(upgrade.data.type == UpgradeData.Type.PLAYER_SPEED)
-        {
-            if(upgrade.level >= 1)
-            {
-                LinearVelocity += 2f;
-            }
-
-            if(upgrade.level >= 2)
-            {
-                LinearVelocity += 2f;
-                LinearAcceleration += 7f;
-            }
-
-            if(upgrade.level >= 3)
-            {
-                LinearAcceleration += 5f;
-                GlobalCooldownMultiplier -= 0.2f;
-            }
-        }
-        */
     }
     #endregion
     #region ENEMY
@@ -295,7 +261,12 @@ public class Player : Character
     {
         if (Health == null) Health = new Health();
         Health.Clear();
-        for (int i = 0; i < 5; i++) Health.AddHealth(HealthPoint.Type.FULL);
+
+        var init_health = stats.GetStat("Health").value_int;
+        for (int i = 0; i < init_health; i++) Health.AddHealth(HealthPoint.Type.FULL);
+
+        var init_temp = stats.GetStat("Armor").value_int;
+        for (int i = 0; i < init_temp; i++) Health.AddHealth(HealthPoint.Type.TEMPORARY);
     }
 
     public void Kill()
@@ -401,6 +372,11 @@ public class Player : Character
     #region EXPERIENCE
     private void OnLevelUp()
     {
+        LevelUp();
+    }
+
+    private void LevelUp()
+    {
         if (!HasLevelledUp)
         {
             var ps = InstantiateParticle("Particles/ps_level_up")
@@ -413,6 +389,7 @@ public class Player : Character
 
             HasLevelledUp = true;
             Level++;
+            LevelsUntilAbility--;
             onLevelUp?.Invoke();
         }
 
@@ -438,6 +415,25 @@ public class Player : Character
         Experience.Max = (int)(Mathf.Lerp(settings.experience_min, settings.experience_max, t_exp));
         Experience.Value = Experience.Min;
         HasLevelledUp = false;
+    }
+
+    public bool CanGainAbility() => LevelsUntilAbility <= 0;
+
+    public void ResetLevelsUntilAbility()
+    {
+        var count = AbilityController.Instance.GetUnlockedAbilities().Count;
+        if(count < 3)
+        {
+            LevelsUntilAbility = 3;
+        }
+        else if(count < 5)
+        {
+            LevelsUntilAbility = 5;
+        }
+        else
+        {
+            LevelsUntilAbility = 8;
+        }
     }
     #endregion
 }

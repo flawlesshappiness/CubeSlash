@@ -15,7 +15,7 @@ MonoBehaviour:
   duration: 30
   size: 100
   frequency_spawn_enemy: 1.5
-  count_enemy_active: 15
+  count_enemy_active: 25
   enemies:
   - name: Weak (Infinite)
     enemy: {fileID: 11400000, guid: cfcae6b5621e50448a5872f62f68b1ba, type: 2}

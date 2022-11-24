@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   duration: 30
   size: 100
-  frequency_spawn_enemy: 1
+  frequency_spawn_enemy: 0.7
   count_enemy_active: 150
   enemies:
   - name: Weak (50)

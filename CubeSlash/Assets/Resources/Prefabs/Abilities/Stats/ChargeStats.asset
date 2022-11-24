@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 20d804d53a9e8a142a2077ae6c2d0b28, type: 3}
-  m_Name: SplitStats
+  m_Name: ChargeStats
   m_EditorClassIdentifier: 
-  id: split
+  id: charge
   stats:
   - name: Cooldown
     text_display: $s cooldown
@@ -20,7 +20,7 @@ MonoBehaviour:
     type_display: 1
     higher_is_positive: 0
     value_int: 0
-    value_float: 0.75
+    value_float: 0
     value_bool: 0
     can_edit_name: 0
     _editor_toggle_preview: 1
@@ -34,48 +34,48 @@ MonoBehaviour:
     value_bool: 0
     can_edit_name: 0
     _editor_toggle_preview: 1
-  - name: CountProjectiles
-    text_display: $ projectiles
-    type_value: 0
-    type_display: 0
-    higher_is_positive: 1
-    value_int: 3
-    value_float: 0
-    value_bool: 0
-    can_edit_name: 1
-    _editor_toggle_preview: 1
-  - name: SpeedProjectiles
-    text_display: $ projectile speed
-    type_value: 1
-    type_display: 1
-    higher_is_positive: 1
-    value_int: 0
-    value_float: 25
-    value_bool: 0
-    can_edit_name: 1
-    _editor_toggle_preview: 1
-  - name: ArcProjectiles
-    text_display: $ degree arc
+  - name: Width
+    text_display: $ beam width
     type_value: 1
     type_display: 1
     higher_is_positive: 0
-    value_int: 0
-    value_float: 15
-    value_bool: 0
-    can_edit_name: 1
-    _editor_toggle_preview: 1
-  - name: SizeProjectiles
-    text_display: $ projectile size
-    type_value: 1
-    type_display: 1
-    higher_is_positive: 1
     value_int: 0
     value_float: 1
     value_bool: 0
     can_edit_name: 1
     _editor_toggle_preview: 1
-  - name: Bursts
-    text_display: $ bursts
+  - name: ChargeTime
+    text_display: $s charge time
+    type_value: 1
+    type_display: 1
+    higher_is_positive: 1
+    value_int: 1
+    value_float: 1.5
+    value_bool: 0
+    can_edit_name: 1
+    _editor_toggle_preview: 1
+  - name: KnockbackSelf
+    text_display: $ self knockback
+    type_value: 1
+    type_display: 1
+    higher_is_positive: 0
+    value_int: 0
+    value_float: 500
+    value_bool: 0
+    can_edit_name: 1
+    _editor_toggle_preview: 1
+  - name: ChargeTimeOnKill
+    text_display: $ charge time per kill
+    type_value: 1
+    type_display: 2
+    higher_is_positive: 1
+    value_int: 0
+    value_float: 0
+    value_bool: 0
+    can_edit_name: 1
+    _editor_toggle_preview: 1
+  - name: BeamCount
+    text_display: $ beams
     type_value: 0
     type_display: 0
     higher_is_positive: 1
@@ -84,8 +84,18 @@ MonoBehaviour:
     value_bool: 0
     can_edit_name: 1
     _editor_toggle_preview: 1
-  - name: SplitProjectiles
-    text_display: Projectiles split into smaller projectiles on impact
+  - name: BeamArc
+    text_display: $ degree arc per beam
+    type_value: 1
+    type_display: 1
+    higher_is_positive: 1
+    value_int: 0
+    value_float: 0
+    value_bool: 0
+    can_edit_name: 1
+    _editor_toggle_preview: 1
+  - name: ChargeSucksExp
+    text_display: Pull exp closer while charging
     type_value: 2
     type_display: 3
     higher_is_positive: 1
@@ -93,9 +103,19 @@ MonoBehaviour:
     value_float: 0
     value_bool: 0
     can_edit_name: 1
-    _editor_toggle_preview: 0
-  - name: RadiusKnockback
-    text_display: $ knockback area
+    _editor_toggle_preview: 1
+  - name: BeamBack
+    text_display: Shoot another beam backwards
+    type_value: 2
+    type_display: 3
+    higher_is_positive: 1
+    value_int: 0
+    value_float: 0
+    value_bool: 0
+    can_edit_name: 1
+    _editor_toggle_preview: 1
+  - name: Knockback
+    text_display: $ enemy knockback
     type_value: 1
     type_display: 1
     higher_is_positive: 1
@@ -104,18 +124,8 @@ MonoBehaviour:
     value_bool: 0
     can_edit_name: 1
     _editor_toggle_preview: 1
-  - name: ForceKnockback
-    text_display: $ knockback force
-    type_value: 1
-    type_display: 1
-    higher_is_positive: 1
-    value_int: 0
-    value_float: 0
-    value_bool: 0
-    can_edit_name: 1
-    _editor_toggle_preview: 1
-  - name: ChargeModifier
-    text_display: Projectiles penetrate
+  - name: DashModifier
+    text_display: Trail
     type_value: 2
     type_display: 3
     higher_is_positive: 1
@@ -125,7 +135,7 @@ MonoBehaviour:
     can_edit_name: 1
     _editor_toggle_preview: 1
   - name: ExplodeModifier
-    text_display: Explode on hit
+    text_display: Enemies explode
     type_value: 2
     type_display: 3
     higher_is_positive: 1
@@ -133,4 +143,4 @@ MonoBehaviour:
     value_float: 0
     value_bool: 0
     can_edit_name: 1
-    _editor_toggle_preview: 0
+    _editor_toggle_preview: 1
