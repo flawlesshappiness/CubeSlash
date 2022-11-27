@@ -7,10 +7,6 @@ public class AI_BossHost : EntityAI
     public override void Initialize(Enemy enemy)
     {
         base.Initialize(enemy);
-        Self.LinearVelocity = Self.Settings.linear_velocity;
-        Self.LinearAcceleration = Self.Settings.linear_acceleration;
-        Self.AngularVelocity = Self.Settings.angular_velocity;
-        Self.AngularAcceleration = Self.Settings.angular_acceleration;
     }
 
     private void FixedUpdate()

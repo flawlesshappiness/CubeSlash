@@ -210,12 +210,13 @@ public class AbilityCharge : Ability
                 // Damage
                 Physics2D.CircleCastAll(Player.transform.position, Width * 0.5f, dir, distance)
                     .Select(hit => hit.collider.GetComponentInParent<IKillable>())
+                    .Distinct()
                     .Where(k => k != null && k.CanKill())
                     .ToList().ForEach(k =>
                     {
                         if (k.CanKill())
                         {
-                            k.Kill();
+                            Player.KillEnemy(k);
                             Kills++;
 
                             if (HasModifier(Type.EXPLODE))

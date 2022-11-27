@@ -7,6 +7,7 @@ public class CharacterSettings : ScriptableObject
     public Body body;
     public float linear_acceleration;
     public float linear_velocity;
+    public float linear_drag;
     public float angular_acceleration;
     public float angular_velocity;
     public float size = 1;

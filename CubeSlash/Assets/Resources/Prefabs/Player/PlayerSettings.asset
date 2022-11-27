@@ -15,6 +15,7 @@ MonoBehaviour:
   body: {fileID: 2759864362140732729, guid: f5fbfb80795043b4ca6e62aab876e931, type: 3}
   linear_acceleration: 20
   linear_velocity: 5
+  linear_drag: 20
   angular_acceleration: 0
   angular_velocity: 0
   size: 1

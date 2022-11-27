@@ -11,6 +11,7 @@ public abstract class Character : MonoBehaviourExtended
     public MultiLock StunLock { get; set; } = new MultiLock();
     public float LinearAcceleration { get; set; }
     public float LinearVelocity { get; set; }
+    public float LinearDrag { get; set; }
     public float AngularAcceleration { get; set; }
     public float AngularVelocity { get; set; }
 
@@ -59,11 +60,13 @@ public abstract class Character : MonoBehaviourExtended
 
     private void DragUpdate()
     {
-        if (StunLock.IsLocked || Time.time < time_stun)
+        if (IsStunned())
         {
-            if (Rigidbody.velocity.magnitude > LinearVelocity)
+            var max_velocity = Mathf.Max(0, LinearVelocity);
+            var has_max_velocity = max_velocity > 0;
+            if (Rigidbody.velocity.magnitude > max_velocity && has_max_velocity)
             {
-                Rigidbody.AddForce(-Rigidbody.velocity.normalized * LinearAcceleration * Rigidbody.mass);
+                Rigidbody.AddForce(-Rigidbody.velocity.normalized * LinearDrag * Rigidbody.mass);
             }
             else if(Time.time > time_stun)
             {
@@ -89,5 +92,10 @@ public abstract class Character : MonoBehaviourExtended
     {
         StunLock.AddLock(nameof(Character));
         time_stun = Time.time + time;
+    }
+
+    public bool IsStunned()
+    {
+        return StunLock.IsLocked || Time.time < time_stun;
     }
 }

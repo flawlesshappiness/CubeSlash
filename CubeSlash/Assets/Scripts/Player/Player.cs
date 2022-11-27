@@ -1,8 +1,7 @@
-using Newtonsoft.Json.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Unity.VisualScripting.Antlr3.Runtime.Misc;
+using UnityEditor;
 using UnityEngine;
 
 public class Player : Character
@@ -35,11 +34,16 @@ public class Player : Character
     public float CollectRadius { get; private set; }
     public bool CollectSpeedBoost { get; private set; }
     public bool ConvertHealthToArmor { get; private set; }
+    public bool InfiniteDrag { get; private set; }
+    public bool KillEnemyShieldRegen { get; private set; }
+    public bool PlantExpHealthRegen { get; private set; }
 
     public event System.Action onLevelUp;
     public event System.Action onDeath;
 
     private float timestamp_collect_last;
+    private int enemy_kills_until_shield_regen;
+    private int plant_exp_until_health_regen;
 
     public void Initialize()
     {
@@ -65,6 +69,8 @@ public class Player : Character
         ResetHealth();
         ResetExperience();
         ResetLevelsUntilAbility();
+        ResetKillsUntilShieldRegen();
+        ResetPlantExperienceUntilHealthRegen();
     }
 
     private void OnEnable()
@@ -96,13 +102,15 @@ public class Player : Character
         // Update move values
         var flat_acceleration = Values.GetFloatValue("FlatAcceleration");
         var flat_velocity = Values.GetFloatValue("FlatVelocity");
+        var perc_velocity = Values.GetFloatValue("PercVelocity");
 
         var t_collect_boost = (Time.time - timestamp_collect_last) / 0.5f;
         var collect_boost_acceleration = CollectSpeedBoost ? Mathf.Lerp(10, 0, t_collect_boost) : 0;
         var collect_boost_velocity = CollectSpeedBoost ? Mathf.Lerp(8, 0, t_collect_boost) : 0;
 
         LinearAcceleration = settings.linear_acceleration + flat_acceleration + collect_boost_acceleration;
-        LinearVelocity = settings.linear_velocity + flat_velocity + collect_boost_velocity;
+        LinearVelocity = (settings.linear_velocity + flat_velocity + collect_boost_velocity) * perc_velocity;
+        LinearDrag = settings.linear_drag;
 
         // Move
         var dir = PlayerInput.MoveDirection;
@@ -113,6 +121,10 @@ public class Player : Character
                 MoveDirection = dir.normalized;
                 Move(MoveDirection);
                 Body.SetLookDirection(MoveDirection);
+            }
+            else if(InfiniteDrag && !IsStunned())
+            {
+                Rigidbody.velocity = Vector2.zero;
             }
             else
             {
@@ -222,6 +234,9 @@ public class Player : Character
         CollectSpeedBoost = Values.GetBoolValue("CollectSpeedBoost");
         ConvertHealthToArmor = Values.GetBoolValue("ConvertHealthToArmor");
         Body.Size = settings.size + Values.GetFloatValue("BodySize");
+        InfiniteDrag = Values.GetBoolValue("InfiniteDrag");
+        KillEnemyShieldRegen = Values.GetBoolValue("KillEnemyShieldRegen");
+        PlantExpHealthRegen = Values.GetBoolValue("PlantExpHealthRegen");
     }
 
     public void OnUpgradeSelected(Upgrade upgrade)
@@ -276,6 +291,29 @@ public class Player : Character
                 enemy.Knockback(dir_knock, false, true);
             }
         }
+    }
+
+    public void KillEnemy(IKillable k)
+    {
+        k.Kill();
+        DecrementKillsUntilShieldRegen();
+    }
+
+    private void DecrementKillsUntilShieldRegen()
+    {
+        if (!KillEnemyShieldRegen) return;
+
+        enemy_kills_until_shield_regen--;
+        if(enemy_kills_until_shield_regen <= 0)
+        {
+            ResetKillsUntilShieldRegen();
+            Health.AddHealth(HealthPoint.Type.TEMPORARY);
+        }
+    }
+
+    private void ResetKillsUntilShieldRegen()
+    {
+        enemy_kills_until_shield_regen += 100;
     }
     #endregion
     #region HEALTH
@@ -425,7 +463,7 @@ public class Player : Character
         }
     }
 
-    public void CollectExperience()
+    public void CollectExperience(ExperienceType type)
     {
         timestamp_collect_last = Time.time;
         
@@ -434,6 +472,28 @@ public class Player : Character
         // Adjust ability cooldown
         AbilityController.Instance.GetEquippedAbilities()
             .ForEach(a => a.AdjustCooldownFlat(CollectCooldownReduction));
+
+        if(type == ExperienceType.PLANT)
+        {
+            DecrementPlantExperienceUntilHealthRegen();
+        }
+    }
+
+    private void DecrementPlantExperienceUntilHealthRegen()
+    {
+        if (!PlantExpHealthRegen) return;
+        plant_exp_until_health_regen--;
+
+        if (plant_exp_until_health_regen <= 0)
+        {
+            Health.Heal();
+            ResetPlantExperienceUntilHealthRegen();
+        }
+    }
+
+    private void ResetPlantExperienceUntilHealthRegen()
+    {
+        plant_exp_until_health_regen += 50;
     }
 
     public void ResetExperience()

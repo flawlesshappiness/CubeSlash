@@ -125,7 +125,7 @@ public class AbilityExplode : Ability
 
             if (k.CanKill())
             {
-                k.Kill();
+                Player.Instance.KillEnemy(k);
             }
         }
 

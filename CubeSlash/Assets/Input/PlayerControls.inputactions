@@ -382,6 +382,14 @@
                     "expectedControlType": "Quaternion",
                     "processors": "",
                     "interactions": ""
+                },
+                {
+                    "name": "DebugConsole",
+                    "type": "Button",
+                    "id": "930aeb9c-94c8-4462-81b5-bb932eb33ab8",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
                 }
             ],
             "bindings": [
@@ -811,6 +819,17 @@
                     "processors": "",
                     "groups": "XR",
                     "action": "TrackedDeviceOrientation",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "fabe8e11-dff4-40c0-8f15-b57f32527048",
+                    "path": "<Keyboard>/backquote",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "DebugConsole",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

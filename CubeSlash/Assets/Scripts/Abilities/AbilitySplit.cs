@@ -68,7 +68,7 @@ public class AbilitySplit : Ability
             if (k != null)
             {
                 onHit?.Invoke(p, k);
-                if (k.CanKill()) k.Kill();
+                if (k.CanKill()) Player.Instance.KillEnemy(k);
                 if (!p.Piercing) p.Kill();
             }
         };

@@ -19,7 +19,7 @@ public class UpgradeController : Singleton
         ConsoleController.Instance.RegisterCommand("ShowUnlockedUpgrades", PrintUnlockedUpgrades);
         ConsoleController.Instance.RegisterCommand("ShowUnlockableUpgrades", PrintUnlockableUpgrades);
         ConsoleController.Instance.RegisterCommand("UnlockAllUpgrades", UnlockAllUpgrades);
-        ConsoleController.Instance.RegisterCommand("UnlockUpgrade", UnlockUpgrade);
+        ConsoleController.Instance.RegisterCommand("UnlockUpgrade", CheatUnlockUpgrade);
     }
 
     private void InitializeUpgrades()
@@ -63,6 +63,7 @@ public class UpgradeController : Singleton
     public void UnlockUpgrade(string id) => GetUpgradeInfo(id).isUnlocked = true;
     public bool IsUpgradeUnlocked(string id) => GetUpgradeInfo(id).isUnlocked;
     public UpgradeInfo GetUpgradeInfo(string id) => upgrades[id];
+    public List<UpgradeInfo> GetUpgradeInfos() => upgrades.Values.ToList();
     public UpgradeNodeTree GetUpgradeTree(string id) => Database.trees.FirstOrDefault(tree => tree.Contains(id));
 
     public List<UpgradeInfo> GetUnlockableUpgrades()
@@ -109,7 +110,7 @@ public class UpgradeController : Singleton
         upgrades.Values.ToList().ForEach(info => info.isUnlocked = true);
     }
 
-    private void UnlockUpgrade(string[] args)
+    private void CheatUnlockUpgrade(string[] args)
     {
         if(args.Length > 1)
         {
@@ -123,10 +124,7 @@ public class UpgradeController : Singleton
                 }
                 else
                 {
-                    UnlockUpgrade(id);
-                    Player.Instance.OnUpgradeSelected(info.upgrade);
-                    Player.Instance.ReapplyUpgrades();
-                    Player.Instance.ReapplyAbilities();
+                    CheatUnlockUpgrade(info);
                     ConsoleController.Instance.LogOutput("Success!");
                 }
             }
@@ -139,5 +137,13 @@ public class UpgradeController : Singleton
         {
             ConsoleController.Instance.LogOutput("ERROR: No argument");
         }
+    }
+
+    public void CheatUnlockUpgrade(UpgradeInfo info)
+    {
+        UnlockUpgrade(info.upgrade.id);
+        Player.Instance.OnUpgradeSelected(info.upgrade);
+        Player.Instance.ReapplyUpgrades();
+        Player.Instance.ReapplyAbilities();
     }
 }

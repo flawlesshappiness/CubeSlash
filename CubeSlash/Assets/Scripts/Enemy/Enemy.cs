@@ -17,6 +17,12 @@ public class Enemy : Character, IKillable
     public void Initialize(EnemySettings settings)
     {
         this.Settings = settings;
+        LinearAcceleration = settings.linear_acceleration;
+        LinearVelocity = settings.linear_velocity;
+        LinearDrag = settings.linear_drag;
+        AngularAcceleration = settings.angular_acceleration;
+        AngularVelocity = settings.angular_velocity;
+
         transform.localScale = Vector3.one * settings.size;
         Rigidbody.mass = settings.mass;
         SetBody(settings.body);
@@ -68,7 +74,7 @@ public class Enemy : Character, IKillable
         Rigidbody.AddTorque(angle * AngularAcceleration * Rigidbody.mass);
     }
     #region HEALTH
-    public bool CanKill() => !Body.HasActiveHealthDuds();
+    public bool CanKill() => !Body.HasActiveHealthDuds() && !IsDead;
 
     public void Kill()
     {

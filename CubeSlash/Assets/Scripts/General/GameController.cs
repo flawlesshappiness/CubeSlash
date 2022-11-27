@@ -42,6 +42,7 @@ public class GameController : MonoBehaviour
         ConsoleController.Instance.RegisterCommand("ToggleDamage", () => DAMAGE_DISABLED = !DAMAGE_DISABLED);
         ConsoleController.Instance.RegisterCommand("Suicide", () => Player.Instance.Kill());
         ConsoleController.Instance.onToggle += OnToggleConsole;
+        ConsoleController.Instance.Enabled = false;
     }
 
     private void OnToggleConsole(bool toggle)
@@ -74,6 +75,7 @@ public class GameController : MonoBehaviour
 
     private void InitializeController()
     {
+        Singleton.EnsureExistence<DebugConsoleHandler>();
         Singleton.EnsureExistence<EnemyController>();
         Singleton.EnsureExistence<ItemController>();
         Singleton.EnsureExistence<PlayerInputController>();
@@ -152,7 +154,7 @@ public class GameController : MonoBehaviour
         PauseLock.AddLock(nameof(GameController));
     }
 
-    private void ResumeLevel()
+    public void ResumeLevel()
     {
         gameState = GameState.PLAYING;
         PauseLock.RemoveLock(nameof(GameController));

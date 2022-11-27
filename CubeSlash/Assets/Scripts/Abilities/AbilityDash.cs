@@ -159,10 +159,11 @@ public class AbilityDash : Ability
         var count = 0;
         Physics2D.OverlapCircleAll(position, radius)
             .Select(hit => hit.GetComponentInParent<IKillable>())
+            .Distinct()
             .Where(k => k != null && k.CanKill())
             .ToList().ForEach(k =>
             {
-                k.Kill();
+                Player.KillEnemy(k);
                 count++;
             });
 
