@@ -9,12 +9,27 @@ public class FMODEventReference
     [SerializeField]
     public EventReference reference;
 
+    private bool init_desc;
     private EventInstance current_instance;
+
+    private FMODEventReferenceInfo _info;
+    public FMODEventReferenceInfo Info { get { return _info ?? GetInfo(); } }
+    public string Path { get { return GetInfo().path; } }
 
     private static Dictionary<string, int> dicPlayCount = new Dictionary<string, int>();
     private static Dictionary<string, float> dicPlayTimestamp = new Dictionary<string, float>();
 
-    public int PlayCount { get { return dicPlayCount.ContainsKey(reference.Path) ? dicPlayCount[reference.Path] : 0; } }
+    public int PlayCount { get { return GetPlayCount(); } }
+
+    public FMODEventReferenceInfo GetInfo()
+    {
+        if(_info == null)
+        {
+            _info = new FMODEventReferenceInfo(reference);
+        }
+
+        return _info;
+    }
 
     public void Stop(FMOD.Studio.STOP_MODE mode = FMOD.Studio.STOP_MODE.IMMEDIATE)
     {
@@ -51,42 +66,57 @@ public class FMODEventReference
 
     private void IncrementPlayCount()
     {
-        if (!dicPlayCount.ContainsKey(reference.Path))
+        if (!dicPlayCount.ContainsKey(Path))
         {
-            dicPlayCount.Add(reference.Path, 0);
+            dicPlayCount.Add(Path, 0);
         }
 
-        dicPlayCount[reference.Path]++;
+        dicPlayCount[Path]++;
     }
 
     private void SetPlayTimestamp()
     {
-        if (!dicPlayTimestamp.ContainsKey(reference.Path))
+        if (!dicPlayTimestamp.ContainsKey(Path))
         {
-            dicPlayTimestamp.Add(reference.Path, Time.time);
+            dicPlayTimestamp.Add(Path, Time.time);
         }
         else
         {
-            dicPlayTimestamp[reference.Path] = Time.time;
+            dicPlayTimestamp[Path] = Time.time;
         }
     }
 
     private bool GetPlayTimestamp(out float timestamp)
     {
-        var key = reference.Path;
+        var key = Path;
         var contains = dicPlayTimestamp.ContainsKey(key);
         timestamp = contains ? dicPlayTimestamp[key] : 0;
         return contains;
     }
 
-    public EventDescription GetDescription()
+    private int GetPlayCount()
     {
-        return RuntimeManager.GetEventDescription(reference);
+        return dicPlayCount.ContainsKey(Path) ? dicPlayCount[Path] : 0;
     }
+}
 
-    public int GetLength()
+public class FMODEventReferenceInfo
+{
+    public EventDescription Description { get; private set; }
+    public string path;
+    public int length;
+
+    public FMODEventReferenceInfo(EventReference reference)
     {
-        GetDescription().getLength(out var length);
-        return length;
+        try
+        {
+            Description = RuntimeManager.GetEventDescription(reference);
+            Description.getPath(out path);
+            Description.getLength(out length);
+        }
+        catch (System.Exception e)
+        {
+            Debug.Log(e.StackTrace);
+        }
     }
 }

@@ -31,7 +31,7 @@ public class FMODButtonEvent : MonoBehaviour
 
     private void Play(FMODEventReference reference)
     {
-        if (string.IsNullOrEmpty(reference.reference.Path))
+        if (string.IsNullOrEmpty(reference.Path))
         {
 
         }

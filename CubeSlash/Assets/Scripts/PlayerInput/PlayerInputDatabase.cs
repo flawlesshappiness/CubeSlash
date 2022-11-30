@@ -22,6 +22,7 @@ public class PlayerInputDatabase : ScriptableObject
         public PlayerInput.DeviceType device;
         public Sprite sprite;
         public Color color = Color.white;
+        public string text = "";
     }
 
     private void OnValidate()

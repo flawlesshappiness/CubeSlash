@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -6,6 +7,7 @@ public class ImageInput : MonoBehaviourExtended
 {
     public PlayerInput.UIButtonType type_button;
     private Image Image { get { return GetComponentOnce<Image>(ComponentSearchType.THIS); } }
+    private TMP_Text Text { get { return GetComponentOnce<TMP_Text>(ComponentSearchType.CHILDREN); } }
 
     private void OnEnable()
     {
@@ -27,6 +29,7 @@ public class ImageInput : MonoBehaviourExtended
         var map = PlayerInput.Database.GetCurrentInputMap(type_button);
         Image.sprite = map.sprite;
         Image.color = map.color;
+        Text.text = map.text;
     }
 
     public void SetInputType(PlayerInput.UIButtonType type)

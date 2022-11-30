@@ -18,103 +18,124 @@ MonoBehaviour:
     maps:
     - name: KEYBOARD
       device: 0
-      sprite: {fileID: 21300000, guid: 3fdcb2d7d3a5d304381cc6fd27a777ef, type: 3}
+      sprite: {fileID: 21300000, guid: ad04c33e95d6c3a44ae583122b2f280f, type: 3}
       color: {r: 1, g: 1, b: 1, a: 1}
+      text: I
     - name: XBOX
       device: 1
       sprite: {fileID: 21300000, guid: f3565a7a017759148b71fa384df16242, type: 3}
       color: {r: 0.9, g: 0.78000003, b: 0.17999998, a: 1}
+      text: 
     - name: PLAYSTATION
       device: 2
       sprite: {fileID: 21300000, guid: 03d93f0af71a932438f67fe810db03b9, type: 3}
       color: {r: 0.16, g: 0.8, b: 0.19509307, a: 1}
+      text: 
   - name: EAST
     type: 1
     maps:
     - name: KEYBOARD
       device: 0
-      sprite: {fileID: 21300000, guid: 3fdcb2d7d3a5d304381cc6fd27a777ef, type: 3}
+      sprite: {fileID: 21300000, guid: ad04c33e95d6c3a44ae583122b2f280f, type: 3}
       color: {r: 1, g: 1, b: 1, a: 1}
+      text: L
     - name: XBOX
       device: 1
       sprite: {fileID: 21300000, guid: f4e83e5b560bef7408b322d1703b4d22, type: 3}
       color: {r: 0.8, g: 0.24000001, b: 0.24000001, a: 1}
+      text: 
     - name: PLAYSTATION
       device: 2
       sprite: {fileID: 21300000, guid: c4e2123aca855c547899d4e1cbd4312b, type: 3}
       color: {r: 0.8, g: 0.23921569, b: 0.23921569, a: 1}
+      text: 
   - name: SOUTH
     type: 2
     maps:
     - name: KEYBOARD
       device: 0
-      sprite: {fileID: 21300000, guid: 3fdcb2d7d3a5d304381cc6fd27a777ef, type: 3}
+      sprite: {fileID: 21300000, guid: ad04c33e95d6c3a44ae583122b2f280f, type: 3}
       color: {r: 1, g: 1, b: 1, a: 1}
+      text: K
     - name: XBOX
       device: 1
       sprite: {fileID: 21300000, guid: 19b84d13b4e51a64b8aa6f9532611ef6, type: 3}
       color: {r: 0.16078432, g: 0.8, b: 0.19607843, a: 1}
+      text: 
     - name: PLAYSTATION
       device: 2
       sprite: {fileID: 21300000, guid: 02b95ae4605dbb948aa440a62175c40e, type: 3}
       color: {r: 0.24000001, g: 0.60491145, b: 0.8, a: 1}
+      text: 
   - name: WEST
     type: 3
     maps:
     - name: KEYBOARD
       device: 0
-      sprite: {fileID: 21300000, guid: 3fdcb2d7d3a5d304381cc6fd27a777ef, type: 3}
+      sprite: {fileID: 21300000, guid: ad04c33e95d6c3a44ae583122b2f280f, type: 3}
       color: {r: 1, g: 1, b: 1, a: 1}
+      text: J
     - name: XBOX
       device: 1
       sprite: {fileID: 21300000, guid: 31261ef829c8d5443941fedf93581633, type: 3}
       color: {r: 0.24000001, g: 0.4255215, b: 0.8, a: 1}
+      text: 
     - name: PLAYSTATION
       device: 2
       sprite: {fileID: 21300000, guid: 02b95ae4605dbb948aa440a62175c40e, type: 3}
       color: {r: 0.7882353, g: 0.4, b: 0.8, a: 1}
+      text: 
   - name: NAV_UP_DOWN
     type: 8
     maps:
     - name: KEYBOARD
       device: 0
-      sprite: {fileID: 21300000, guid: 3fdcb2d7d3a5d304381cc6fd27a777ef, type: 3}
+      sprite: {fileID: 21300000, guid: 5765d0c2d64a33040af9c54787ad7418, type: 3}
       color: {r: 1, g: 1, b: 1, a: 1}
+      text: 
     - name: XBOX
       device: 1
       sprite: {fileID: 21300000, guid: 5765d0c2d64a33040af9c54787ad7418, type: 3}
       color: {r: 1, g: 1, b: 1, a: 1}
+      text: 
     - name: PLAYSTATION
       device: 2
       sprite: {fileID: 21300000, guid: 5765d0c2d64a33040af9c54787ad7418, type: 3}
       color: {r: 1, g: 1, b: 1, a: 1}
+      text: 
   - name: NAV_LEFT_RIGHT
     type: 9
     maps:
     - name: KEYBOARD
       device: 0
-      sprite: {fileID: 21300000, guid: 3fdcb2d7d3a5d304381cc6fd27a777ef, type: 3}
+      sprite: {fileID: 21300000, guid: 5e15ac1f91a3248428bfeb5aacfea078, type: 3}
       color: {r: 1, g: 1, b: 1, a: 1}
+      text: 
     - name: XBOX
       device: 1
       sprite: {fileID: 21300000, guid: 5e15ac1f91a3248428bfeb5aacfea078, type: 3}
       color: {r: 1, g: 1, b: 1, a: 1}
+      text: 
     - name: PLAYSTATION
       device: 2
       sprite: {fileID: 21300000, guid: 5e15ac1f91a3248428bfeb5aacfea078, type: 3}
       color: {r: 1, g: 1, b: 1, a: 1}
+      text: 
   - name: NAV_ALL
     type: 10
     maps:
     - name: KEYBOARD
       device: 0
-      sprite: {fileID: 21300000, guid: 3fdcb2d7d3a5d304381cc6fd27a777ef, type: 3}
+      sprite: {fileID: 21300000, guid: 00b091dc7bf12c342b2fb878622f1dac, type: 3}
       color: {r: 1, g: 1, b: 1, a: 1}
+      text: 
     - name: XBOX
       device: 1
       sprite: {fileID: 21300000, guid: 00b091dc7bf12c342b2fb878622f1dac, type: 3}
       color: {r: 1, g: 1, b: 1, a: 1}
+      text: 
     - name: PLAYSTATION
       device: 2
       sprite: {fileID: 21300000, guid: 00b091dc7bf12c342b2fb878622f1dac, type: 3}
       color: {r: 1, g: 1, b: 1, a: 1}
+      text: 

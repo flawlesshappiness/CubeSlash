@@ -29,8 +29,9 @@ public class UnlockUpgradeView : View
         layout_unlocked_upgrades.OnUpgradeLevelSelected += level => DisplayUpgradeText(level);
 
         // Fetch upgrades
+        var count_upgrades = Mathf.Min(4, AbilityController.Instance.GetEquippedAbilities().Count + 1);
         var upgrades = UpgradeController.Instance.GetUnlockableUpgrades()
-            .TakeRandom(4);
+            .TakeRandom(count_upgrades);
 
         // Create upgrade buttons
         ClearUpgradeButtons();
