@@ -1,3 +1,5 @@
+using Flawliz.Lerp;
+using System.Collections;
 using UnityEngine;
 
 public class FogLayer : MonoBehaviour
@@ -13,12 +15,14 @@ public class FogLayer : MonoBehaviour
         spr.transform.localScale = new Vector3(w, h, 1);
     }
 
-    public void Destroy(float time)
+    public Coroutine Destroy(float time)
     {
-        Lerp.Color(spr, time, spr.color.SetA(0))
-            .OnEnd(() =>
-            {
-                Destroy(gameObject);
-            });
+        return StartCoroutine(Cr());
+        IEnumerator Cr()
+        {
+            yield return Lerp.Alpha(spr, time, 0);
+            Destroy(gameObject);
+
+        }
     }
 }

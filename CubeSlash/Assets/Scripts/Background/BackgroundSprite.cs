@@ -1,3 +1,5 @@
+using Flawliz.Lerp;
+using System.Collections;
 using UnityEngine;
 
 public class BackgroundSprite : MonoBehaviour
@@ -9,13 +11,24 @@ public class BackgroundSprite : MonoBehaviour
     public Sprite Sprite { set { spr.sprite = value; } }
     public int SortingOrder { set { spr.sortingOrder = value * 10 + 1; } }
 
-    public void Destroy(float time)
+    public Coroutine AnimateAppear(float time)
     {
-        Lerp.Color(spr, time, spr.color.SetA(0))
-            .Delay(Random.Range(0, time * 0.5f))
-            .OnEnd(() =>
-            {
-                Destroy(gameObject);
-            });
+        return StartCoroutine(Cr());
+        IEnumerator Cr()
+        {
+            yield return new WaitForSeconds(Random.Range(0f, time * 0.5f));
+            yield return Lerp.Alpha(spr, time, 1);
+        }
+    }
+
+    public Coroutine Destroy(float time)
+    {
+        return StartCoroutine(Cr());
+        IEnumerator Cr()
+        {
+            yield return new WaitForSeconds(Random.Range(0, time * 0.5f));
+            yield return Lerp.Alpha(spr, time, 0);
+            Destroy(gameObject);
+        }
     }
 }

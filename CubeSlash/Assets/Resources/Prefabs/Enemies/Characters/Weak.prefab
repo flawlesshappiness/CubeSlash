@@ -56,7 +56,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7875275390701577481}
-  - component: {fileID: 6535444791780287965}
+  - component: {fileID: 863415056158122022}
   m_Layer: 0
   m_Name: Weak
   m_TagString: Untagged
@@ -81,7 +81,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6535444791780287965
+--- !u!114 &863415056158122022
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -90,13 +90,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 2973982606120359821}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6ad07938fa3e5e84b8d5d336919b7226, type: 3}
+  m_Script: {fileID: 11500000, guid: 7a870d008b4e8db41b738a75a8de1557, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   Collider: {fileID: 1421184977900173726}
   Trigger: {fileID: 5938915428007740160}
-  parent_health_duds: {fileID: 0}
   ps_death: {fileID: 1272193720796475515, guid: 56a4aa63eefd7704981ffb7c14788af0, type: 3}
+  parent_health_duds: {fileID: 0}
 --- !u!1 &7115478355917221534
 GameObject:
   m_ObjectHideFlags: 0

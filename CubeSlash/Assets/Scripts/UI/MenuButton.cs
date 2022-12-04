@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using Flawliz.Lerp;
 
 public class MenuButton : MonoBehaviour
 {
@@ -23,7 +24,7 @@ public class MenuButton : MonoBehaviour
         var scale_end = Vector2.right * (selected ? scale_show : scale_hide);
         var alpha_start = cvg_selected.alpha;
         var alpha_end = selected ? 1 : 0;
-        Lerp.Value(0.15f, "selected_" + GetInstanceID(), f =>
+        Lerp.Value("selected_" + GetInstanceID(), 0.15f, f =>
         {
             cvg_selected.alpha = Mathf.Lerp(alpha_start, alpha_end, f);
             rt_selected.sizeDelta = Vector2.Lerp(scale_start, scale_end, f);

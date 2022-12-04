@@ -11,10 +11,8 @@ public class ItemController : Singleton
 
     private List<ExperienceItem> experience_active = new List<ExperienceItem>();
     private List<ExperienceItem> experience_inactive = new List<ExperienceItem>();
-    private List<AbilityItem> ability_items_active = new List<AbilityItem>();
 
     private ExperienceItem prefab_experience;
-    private AbilityItem prefab_ability;
 
     private const int COUNT_POOL_EXTEND = 20;
 
@@ -24,7 +22,6 @@ public class ItemController : Singleton
     private void Start()
     {
         prefab_experience = Resources.Load<ExperienceItem>("Prefabs/Entities/Experience");
-        prefab_ability = Resources.Load<AbilityItem>("Prefabs/Entities/AbilityItem");
     }
 
     private void Update()
@@ -62,21 +59,6 @@ public class ItemController : Singleton
         return e;
     }
 
-    public AbilityItem SpawnAbilityItem(Vector3 position)
-    {
-        var item = Instantiate(prefab_ability, GameController.Instance.world);
-        item.gameObject.SetActive(true);
-        item.transform.position = position;
-        ability_items_active.Add(item);
-        return item;
-    }
-
-    public void OnAbilityItemDespawn(AbilityItem item)
-    {
-        ability_items_active.Remove(item);
-        Destroy(item.gameObject);
-    }
-
     private void ExtendPool(int count)
     {
         for (int i = 0; i < count; i++)
@@ -111,11 +93,6 @@ public class ItemController : Singleton
     public void DespawnAllActiveItems()
     {
         foreach(var item in experience_active.ToList())
-        {
-            item.Despawn();
-        }
-
-        foreach(var item in ability_items_active.ToList())
         {
             item.Despawn();
         }

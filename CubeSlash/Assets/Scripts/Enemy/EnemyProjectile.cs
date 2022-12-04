@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using Flawliz.Lerp;
 
 public class EnemyProjectile : Projectile
 {
@@ -7,8 +8,6 @@ public class EnemyProjectile : Projectile
     protected override void OnStart()
     {
         base.OnStart();
-        Lerp.Scale(spr.transform, 0.25f, Vector3.one, Vector3.one * 1.5f)
-            .Loop().Oscillate();
 
         OnHit += c =>
         {
@@ -18,5 +17,16 @@ public class EnemyProjectile : Projectile
                 player.Damage(transform.position);
             }
         };
+    }
+
+    IEnumerator AnimateBounceLoopCr()
+    {
+        var start = Vector3.one;
+        var end = Vector3.one * 1.5f;
+        while (true)
+        {
+            yield return Lerp.LocalScale(spr.transform, 0.25f, start, end);
+            yield return Lerp.LocalScale(spr.transform, 0.25f, end, start);
+        }
     }
 }

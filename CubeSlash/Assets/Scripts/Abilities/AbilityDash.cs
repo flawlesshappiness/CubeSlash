@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.EventSystems;
 
 public class AbilityDash : Ability
 {
@@ -57,7 +56,8 @@ public class AbilityDash : Ability
         Player.MovementLock.AddLock(nameof(AbilityDash));
         Player.DragLock.AddLock(nameof(AbilityDash));
         Player.InvincibilityLock.AddLock(nameof(AbilityDash));
-        Player.Body.gameObject.SetActive(false);
+        //Player.Body.gameObject.SetActive(false);
+        Player.Body.SetCollisionEnabled(false);
 
         event_dash_start.Play();
 
@@ -128,7 +128,8 @@ public class AbilityDash : Ability
 
                 CameraController.Instance.Target = Player.transform;
                 Player.transform.position = clone.transform.position;
-                Player.Body.gameObject.SetActive(true);
+                //Player.Body.gameObject.SetActive(true);
+                Player.Body.SetCollisionEnabled(true);
                 Player.Rigidbody.velocity = Player.MoveDirection * Speed * (hit_anything ? -1 : 1);
 
                 if (hit_anything)

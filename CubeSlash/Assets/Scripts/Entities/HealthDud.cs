@@ -1,4 +1,5 @@
 using UnityEngine;
+using Flawliz.Lerp;
 
 public class HealthDud : MonoBehaviour, IKillable
 {
@@ -27,9 +28,9 @@ public class HealthDud : MonoBehaviour, IKillable
         var end = active ? Vector3.one : Vector3.zero;
         if (animate)
         {
-            Lerp.Scale(g_armor.transform, 0.25f, end)
-            .Curve(active ? ac_armor_active : ac_armor_inactive)
-            .Unclamp();
+            var curve = active ? ac_armor_active : ac_armor_inactive;
+            Lerp.LocalScale(g_armor.transform, 0.25f, end)
+                .Curve(curve);
         }
         else
         {

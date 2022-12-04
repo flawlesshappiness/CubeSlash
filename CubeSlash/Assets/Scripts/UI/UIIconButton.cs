@@ -2,6 +2,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using Flawliz.Lerp;
 
 public class UIIconButton : MonoBehaviour
 {
@@ -29,8 +30,7 @@ public class UIIconButton : MonoBehaviour
         if (scale_on_selected)
         {
             var end = selected ? Vector3.one * 1.25f : Vector3.one;
-            Lerp.Scale(transform, 0.15f, end)
-                .UnscaledTime();
+            Lerp.LocalScale(transform, 0.15f, end).UnscaledTime();
         }
     }
 }

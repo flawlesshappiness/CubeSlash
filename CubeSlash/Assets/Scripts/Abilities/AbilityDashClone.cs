@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class AbilityDashClone : MonoBehaviourExtended
 {
+    [SerializeField] private SpriteRenderer spr;
     [SerializeField] private List<ParticleSystem> particles = new List<ParticleSystem>();
 
     public Rigidbody2D Rigidbody { get { return GetComponentOnce<Rigidbody2D>(); } }
@@ -17,6 +18,7 @@ public class AbilityDashClone : MonoBehaviourExtended
     {
         Dash = dash;
         HasPlayer = has_player;
+        SetSpriteEnabled(!has_player);
 
         // Trail
         Trail.gameObject.SetActive(Dash.TrailEnabled);
@@ -73,5 +75,10 @@ public class AbilityDashClone : MonoBehaviourExtended
         {
             Dash.Player.transform.position = transform.position;
         }
+    }
+
+    public void SetSpriteEnabled(bool enabled)
+    {
+        spr.enabled = enabled;
     }
 }

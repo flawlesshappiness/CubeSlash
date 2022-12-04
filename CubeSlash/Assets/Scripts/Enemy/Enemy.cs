@@ -9,6 +9,7 @@ public class Enemy : Character, IKillable
     private EntityAI AI { get; set; }
     public EnemySettings Settings { get; private set; }
     public Vector3 MoveDirection { get { return Body.transform.up; } }
+    public EnemyBody EnemyBody { get { return Body as EnemyBody; } }
 
     public bool IsDead { get; private set; }
 
@@ -74,7 +75,7 @@ public class Enemy : Character, IKillable
         Rigidbody.AddTorque(angle * AngularAcceleration * Rigidbody.mass);
     }
     #region HEALTH
-    public bool CanKill() => !Body.HasActiveHealthDuds() && !IsDead;
+    public bool CanKill() => !EnemyBody.HasActiveHealthDuds() && !IsDead;
 
     public void Kill()
     {

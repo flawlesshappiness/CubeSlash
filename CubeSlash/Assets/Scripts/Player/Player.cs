@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 
@@ -13,6 +14,7 @@ public class Player : Character
     [SerializeField] private FMODEventReference event_levelup_slide;
     [SerializeField] private FMODEventReference event_levelup;
     [SerializeField] private FMODEventReference event_damage;
+    public PlayerBody PlayerBody { get { return Body as PlayerBody; } }
     public MinMaxFloat Experience { get; private set; } = new MinMaxFloat();
     public Health Health { get; private set; } = new Health();
     public int Level { get; private set; }
@@ -154,7 +156,7 @@ public class Player : Character
     {
         var not_paused = !GameController.Instance.IsPaused;
         var not_blocking = AbilityLock.IsFree;
-        var not_cooldown = !ability.OnCooldown;
+        var not_cooldown = !ability.IsOnCooldown;
         return not_blocking && not_cooldown && not_paused;
     }
 
@@ -172,11 +174,7 @@ public class Player : Character
         else
         {
             event_ability_on_cooldown.Play();
-
-            if (ability.TimeCooldownLeft < 0.5f)
-            {
-                AbilityQueued = ability;
-            }
+            AbilityQueued = ability;
         }
     }
 
@@ -215,6 +213,7 @@ public class Player : Character
         Values.ResetValues();
         ApplyUpgrades();
         ApplyUpgradeValues();
+        ApplyBodyparts();
     }
 
     private void ApplyUpgrades()
@@ -261,6 +260,22 @@ public class Player : Character
             {
                 Health.SetConvertHealthToArmorEnabled(true);
             }
+        }
+    }
+
+    private void ApplyBodyparts()
+    {
+        PlayerBody.ClearBodyparts();
+
+        foreach(var ability in AbilityController.Instance.GetEquippedAbilities())
+        {
+            var bps = PlayerBody.CreateBodyparts(ability.prefab_bodypart);
+
+            foreach(var bp in bps)
+            {
+                bp.Initialize(ability);
+            }
+
         }
     }
     #endregion
@@ -445,7 +460,9 @@ public class Player : Character
                 .Play()
                 .Destroy(5);
 
-            StartCoroutine(PushCr(0.4f));
+            //StartCoroutine(PushCr(0.4f));
+            event_levelup.Play();
+            PushEnemiesInArea(transform.position, 12, 500);
 
             HasLevelledUp = true;
             Level++;

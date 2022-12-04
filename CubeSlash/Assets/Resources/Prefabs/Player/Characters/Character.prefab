@@ -1,5 +1,59 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &218202214467136173
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6217889257844421344}
+  - component: {fileID: 2311925212759914655}
+  m_Layer: 0
+  m_Name: Skeleton
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6217889257844421344
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 218202214467136173}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 5205924543401872854}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2311925212759914655
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 218202214467136173}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e73a2312cf564d54f8d36bdb591433b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  height: 1.05
+  offset: -0.06
+  t_test: 1
+  bones:
+  - 0.1
+  - 0.38
+  - 0.46
+  - 0.45
+  - 0.38
+  - 0.27
+  - 0.1
 --- !u!1 &471160801759177763
 GameObject:
   m_ObjectHideFlags: 0
@@ -9,7 +63,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5205924543401872854}
-  - component: {fileID: 2759864362140732729}
+  - component: {fileID: 1353097371446324401}
   m_Layer: 0
   m_Name: Character
   m_TagString: Untagged
@@ -31,10 +85,11 @@ Transform:
   - {fileID: 5785854363130186557}
   - {fileID: 4723267452187488837}
   - {fileID: 830748367432755795}
+  - {fileID: 6217889257844421344}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2759864362140732729
+--- !u!114 &1353097371446324401
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -43,13 +98,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 471160801759177763}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6ad07938fa3e5e84b8d5d336919b7226, type: 3}
+  m_Script: {fileID: 11500000, guid: 1132ac936d0352046a3343ba2671a633, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   Collider: {fileID: 5235407313936057418}
   Trigger: {fileID: 8281130317401904414}
-  parent_health_duds: {fileID: 0}
   ps_death: {fileID: 0}
+  skeleton: {fileID: 2311925212759914655}
 --- !u!1 &1431979091135737793
 GameObject:
   m_ObjectHideFlags: 0

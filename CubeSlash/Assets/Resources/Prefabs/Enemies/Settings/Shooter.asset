@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c301fa7d26535e4cb7056a730ebca5e, type: 3}
   m_Name: Shooter
   m_EditorClassIdentifier: 
-  body: {fileID: 6535444791780287965, guid: c3089b761f1048242b2fcb74c354cc49, type: 3}
+  body: {fileID: 8094660313205461888, guid: c3089b761f1048242b2fcb74c354cc49, type: 3}
   linear_acceleration: 9
   linear_velocity: 3
   linear_drag: 20

@@ -48,6 +48,7 @@ MonoBehaviour:
   Info: {fileID: 11400000, guid: 94bf2c62d7d24574882c13e46e18a041, type: 2}
   Stats: {fileID: 11400000, guid: 734a4049d8fce3b48a8e34c0596e5989, type: 2}
   ModifierUpgrades: {fileID: 11400000, guid: 1c73c92639b2fad469983727b62a8d8a, type: 2}
+  prefab_bodypart: {fileID: 2978501342247537998, guid: 288f60ef87b57c940999b752cc67d168, type: 3}
   template_clone: {fileID: 3936212779785393252}
   ac_push_enemies:
     serializedVersion: 2
@@ -9904,6 +9905,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: baaa734ba90e6a144a90d896a7864dff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  spr: {fileID: 3949762559360766642}
   particles:
   - {fileID: 6628548698120089524}
   - {fileID: 5451110289954627682}
@@ -15035,7 +15037,7 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 3
+      scalar: 2
       minScalar: 1
       maxCurve:
         serializedVersion: 2

@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using Flawliz.Lerp;
 
 public class UIAbilitySlotMove : MonoBehaviour
 {
@@ -24,7 +25,6 @@ public class UIAbilitySlotMove : MonoBehaviour
         var corner = corners[2];
         var dir = corner - slot.transform.position;
         var pos = slot.transform.position + dir.normalized * dir.magnitude * 1.1f;
-        Lerp.Position(transform, 0.1f, pos)
-            .UnscaledTime();
+        Lerp.Position(transform, 0.1f, pos).UnscaledTime();
     }
 }

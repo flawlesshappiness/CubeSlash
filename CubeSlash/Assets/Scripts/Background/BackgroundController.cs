@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Flawliz.Lerp;
 
 public class BackgroundController : Singleton
 {
@@ -58,7 +59,7 @@ public class BackgroundController : Singleton
                 var bg = Instantiate(Resources.Load<BackgroundSprite>("Prefabs/Background/BackgroundSprite"));
                 bg.Sprite = layer.sprites.Random();
                 bg.spr.color = bg.spr.color.SetA(0);
-                Lerp.Alpha(bg.spr, time, 1).Delay(Random.Range(0, time * 0.5f));
+                bg.AnimateAppear(time);
                 sprites.Add(bg);
 
                 bg.transform.parent = GameController.Instance.world;
@@ -168,7 +169,7 @@ public class BackgroundController : Singleton
     {
         var cam = CameraController.Instance.Camera;
         var start = cam.backgroundColor;
-        Lerp.Value(time, "background_color_" + GetInstanceID(), f =>
+        Lerp.Value("background_color_" + GetInstanceID(), time, f =>
         {
             CameraController.Instance.Camera.backgroundColor = Color.Lerp(start, level.color_bg, f);
         });

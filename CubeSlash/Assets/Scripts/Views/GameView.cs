@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using Flawliz.Lerp;
 
 public class GameView : View
 {
@@ -30,9 +31,9 @@ public class GameView : View
         var t = (float)exp.Value / exp.Max;
         if (animate)
         {
-            Lerp.Value(0.25f, img_experience.fillAmount, t, "fill_" + img_experience.GetInstanceID(), f => img_experience.fillAmount = f)
+            Lerp.Value("fill_" + img_experience.GetInstanceID(), 0.25f, img_experience.fillAmount, t, f => img_experience.fillAmount = f)
                 .Connect(img_experience.gameObject)
-                .Curve(Lerp.Curve.EASE_END);
+                .Curve(EasingCurves.EaseOutQuad);
         }
         else
         {

@@ -3,6 +3,7 @@ using System.Collections;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Flawliz.Lerp;
 
 public class GameController : MonoBehaviour
 {
@@ -103,12 +104,11 @@ public class GameController : MonoBehaviour
         Time.timeScale = PauseLock.IsLocked ? 0 : time;
     }
 
-    private Coroutine LerpTimeScale(float duration, float end)
+    private Lerp LerpTimeScale(float duration, float end)
     {
-        return Lerp.Value(duration, Time.timeScale, end, "TimeScale", f =>
-        {
-            SetTimeScale(f);
-        }).UnscaledTime().GetCoroutine();
+        var start = Time.timeScale;
+        return Lerp.Value("timescale", duration, f => SetTimeScale(Mathf.Lerp(start, end, f)))
+            .UnscaledTime();
     }
 
     private void Quit()

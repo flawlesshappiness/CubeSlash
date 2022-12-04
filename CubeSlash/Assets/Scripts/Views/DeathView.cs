@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Flawliz.Lerp;
 
 public class DeathView : View
 {
@@ -9,6 +10,6 @@ public class DeathView : View
 
     public void AnimateScaleTitle(float duration)
     {
-        Lerp.Scale(rt_title, duration, Vector3.one, Vector3.one * 1.2f);
+        Lerp.LocalScale(rt_title, duration, Vector3.one, Vector3.one * 1.2f);
     }
 }

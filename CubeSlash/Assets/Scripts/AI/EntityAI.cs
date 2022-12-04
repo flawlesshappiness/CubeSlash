@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Flawliz.Lerp;
 
 public abstract class EntityAI : MonoBehaviour
 {
@@ -89,8 +90,8 @@ public abstract class EntityAI : MonoBehaviour
         }
     }
 
-    protected void LerpAngularVelocity(float time, float end) => Lerp.Value(time, Self.AngularVelocity, end, "angular_velocity_" + Self.GetInstanceID(), f => Self.AngularVelocity = f);
-    protected void LerpAngularAcceleration(float time, float end) => Lerp.Value(time, Self.AngularAcceleration, end, "angular_acceleration_" + Self.GetInstanceID(), f => Self.AngularAcceleration = f);
-    protected void LerpLinearVelocity(float time, float end) => Lerp.Value(time, Self.LinearVelocity, end, "linear_velocity_" + Self.GetInstanceID(), f => Self.LinearVelocity = f);
-    protected void LerpLinearAcceleration(float time, float end) => Lerp.Value(time, Self.LinearAcceleration, end, "linear_acceleration_" + Self.GetInstanceID(), f => Self.LinearAcceleration = f);
+    protected void LerpAngularVelocity(float time, float end) => Lerp.Value("angular_velocity_" + Self.GetInstanceID(), time, Self.AngularVelocity, end, f => Self.AngularVelocity = f);
+    protected void LerpAngularAcceleration(float time, float end) => Lerp.Value("angular_acceleration_" + Self.GetInstanceID(), time, Self.AngularAcceleration, end, f => Self.AngularAcceleration = f);
+    protected void LerpLinearVelocity(float time, float end) => Lerp.Value("linear_velocity_" + Self.GetInstanceID(), time, Self.LinearVelocity, end, f => Self.LinearVelocity = f);
+    protected void LerpLinearAcceleration(float time, float end) => Lerp.Value("linear_acceleration_" + Self.GetInstanceID(), time, Self.LinearAcceleration, end, f => Self.LinearAcceleration = f);
 }

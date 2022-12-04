@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using Flawliz.Lerp;
 
 public class AbilityCharge : Ability
 {
@@ -330,10 +331,9 @@ public class AbilityCharge : Ability
         line.SetPosition(segments, end);
 
         // Width
-        yield return Lerp.Value(0.25f, "width_" + line.GetInstanceID(), f => line.widthMultiplier = (1f - f) * Width)
+        yield return Lerp.Value("width_" + line.GetInstanceID(), 0.25f, f => line.widthMultiplier = (1f - f) * Width)
             .Connect(line.gameObject)
-            .Curve(Lerp.Curve.EASE_END)
-            .GetCoroutine();
+            .Curve(EasingCurves.EaseOutQuad);
         line.gameObject.SetActive(false);
         Destroy(line.gameObject);
     }

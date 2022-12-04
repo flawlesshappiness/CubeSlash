@@ -9,6 +9,9 @@ public abstract class Ability : MonoBehaviourExtended
     public AbilityInfo Info;
     public StatCollection Stats;
     public AbilityModifierCollection ModifierUpgrades;
+    public Bodypart prefab_bodypart;
+
+    public System.Action onTrigger;
 
     public enum Type { DASH, SPLIT, CHARGE, EXPLODE }
     public Ability[] Modifiers { get; protected set; } = new Ability[ConstVars.COUNT_MODIFIERS];
@@ -20,8 +23,8 @@ public abstract class Ability : MonoBehaviourExtended
     public bool IsActive { get { return Equipped && !IsModifier; } }
     public float TimeCooldownStart { get; private set; }
     public float TimeCooldownEnd { get; private set; }
-    public float TimeCooldownLeft { get { return OnCooldown ? TimeCooldownEnd - Time.time : 0f; } }
-    public bool OnCooldown { get { return Time.time < TimeCooldownEnd; } }
+    public float TimeCooldownLeft { get { return IsOnCooldown ? TimeCooldownEnd - Time.time : 0f; } }
+    public bool IsOnCooldown { get { return Time.time < TimeCooldownEnd; } }
     public bool InUse { get; protected set; }
     public float CooldownPercentage { get { return (Time.time - TimeCooldownStart) / (TimeCooldownEnd - TimeCooldownStart); } }
     public int CurrentCharges { get; set; }
@@ -146,6 +149,7 @@ public abstract class Ability : MonoBehaviourExtended
     public virtual void Trigger()
     {
         // Trigger ability
+        onTrigger?.Invoke();
     }
     #endregion
     #region EQUIP

@@ -1,6 +1,3 @@
 TODO:
 Ability to refund level if you dont want an upgrade (unlock in meta layer)
 Preview when holding ability button
-Hold Y to view ability stats
-Gain ability on some level ups
-Show what upgrades have been unlocked already, in the tree view
