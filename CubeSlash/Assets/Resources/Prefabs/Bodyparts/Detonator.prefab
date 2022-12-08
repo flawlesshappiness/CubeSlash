@@ -56,7 +56,7 @@ Transform:
   m_GameObject: {fileID: 8132872295558035085}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 2, y: 2, z: 1}
+  m_LocalScale: {x: 3, y: 3, z: 1}
   m_Children:
   - {fileID: 8132872295607789092}
   m_Father: {fileID: 1626348074838801948}
@@ -87,7 +87,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8132872295607789093}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.16, z: 0}
+  m_LocalPosition: {x: 0, y: 0.1454, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 8132872295558035084}
@@ -154,7 +154,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8132872296055927328}
-  - component: {fileID: 2978501342247537998}
+  - component: {fileID: -2917802339203646303}
   m_Layer: 0
   m_Name: Detonator
   m_TagString: Untagged
@@ -177,7 +177,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2978501342247537998
+--- !u!114 &-2917802339203646303
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -186,10 +186,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 8132872296055927329}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 394f4a7d4814f3b47b81c6b2c7374582, type: 3}
+  m_Script: {fileID: 11500000, guid: bb0f090167afea146b3da3a5ebfbdfcb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  priority_position: 0
+  priority_position: 0.55
   pivot_animation: {fileID: 1626348074838801948}
-  scale_in: {x: 1.2, y: 0.8, z: 1}
-  scale_out: {x: 0.75, y: 1.25, z: 1}
+  scale_in: {x: 1.2, y: 0.25, z: 1}

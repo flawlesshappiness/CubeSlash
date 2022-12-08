@@ -173,7 +173,7 @@ public abstract class Ability : MonoBehaviourExtended
     }
     #endregion
     #region COOLDOWN
-    public void StartCooldown() => StartCooldown(GetFloatValue("Cooldown"));
+    public void StartCooldown() => StartCooldown(Cooldown);
 
     public void StartCooldown(float time)
     {
@@ -195,6 +195,11 @@ public abstract class Ability : MonoBehaviourExtended
 
             CurrentCharges = Charges;
         }
+    }
+
+    public float GetBaseCooldownTime()
+    {
+        return TimeCooldownStart + Cooldown * Player.Instance.GlobalCooldownMultiplier;
     }
 
     public void AdjustCooldownFlat(float seconds)

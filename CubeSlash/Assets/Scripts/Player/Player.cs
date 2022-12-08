@@ -275,7 +275,6 @@ public class Player : Character
             {
                 bp.Initialize(ability);
             }
-
         }
     }
     #endregion

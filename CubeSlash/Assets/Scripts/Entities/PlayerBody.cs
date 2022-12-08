@@ -1,4 +1,6 @@
 using System.Collections.Generic;
+using System.Linq;
+using UnityEditor;
 using UnityEngine;
 
 public class PlayerBody : Body
@@ -17,7 +19,7 @@ public class PlayerBody : Body
     public List<Bodypart> CreateBodyparts(Bodypart prefab)
     {
         var bps = new List<Bodypart>();
-        var position = skeleton.GetBonePosition(prefab.priority_position);
+        var position = GetClosestPriorityPosition(prefab.priority_position);
 
         Create(position.left);
 
@@ -41,6 +43,13 @@ public class PlayerBody : Body
             bp.transform.localRotation = rotation;
 
             bps.Add(bp);
+        }
+
+        BonePositionInfo GetClosestPriorityPosition(float position)
+        {
+            var other_bps = bodyparts.Where(bp => bp.priority_position == prefab.priority_position);
+            var offset = (position < 0.5f ? 1 : -1) * 0.03f * other_bps.Count();
+            return skeleton.GetBonePosition(position + offset);
         }
     }
 }
