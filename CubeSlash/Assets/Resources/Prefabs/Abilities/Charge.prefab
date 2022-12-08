@@ -24329,7 +24329,7 @@ MonoBehaviour:
   Info: {fileID: 11400000, guid: a77c9a9f9d872354fbd91946993903d8, type: 2}
   Stats: {fileID: 11400000, guid: dea22f17ad735a5429748d23a588c898, type: 2}
   ModifierUpgrades: {fileID: 11400000, guid: e5813a8d4b232a04ebec93b0b67e7015, type: 2}
-  prefab_bodypart: {fileID: 2978501342247537998, guid: 288f60ef87b57c940999b752cc67d168, type: 3}
+  prefab_bodypart: {fileID: 5244421003229509873, guid: 9ee26c5f6b007e64e96421732fcf5a9f, type: 3}
   prefab_line: {fileID: 3161495528270361273}
   template_trail: {fileID: 7448746127257476779}
   ps_charge: {fileID: 3355490899533344021}

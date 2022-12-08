@@ -268,9 +268,10 @@ public class AbilityCharge : Ability
         return GetCharge() >= 1f;
     }
 
-    private float GetCharge()
+    public float GetCharge()
     {
-        var t = Mathf.Clamp((Time.time - time_charge_start) / (time_charge_end - time_charge_start), 0f, 1f);
+        var p = (Time.time - time_charge_start) / (time_charge_end - time_charge_start);
+        var t = Mathf.Clamp(p, 0f, 1f);
         return t;
     }
 
