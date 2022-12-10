@@ -15,6 +15,7 @@ public class AbilityDash : Ability
     public float RadiusDamage { get; private set; }
     public float RadiusKnockback { get; private set; }
     public float ForceKnockback { get; private set; }
+    public float SelfKnockback { get; private set; }
     public float CooldownOnHit { get; private set; }
     public bool TrailEnabled { get; private set; }
 
@@ -39,6 +40,7 @@ public class AbilityDash : Ability
         RadiusDamage = GetFloatValue("RadiusDamage");
         RadiusKnockback = GetFloatValue("RadiusKnockback");
         ForceKnockback = GetFloatValue("ForceKnockback");
+        SelfKnockback = GetFloatValue("SelfKnockback");
         CooldownOnHit = GetFloatValue("CooldownOnHit");
         TrailEnabled = GetBoolValue("TrailEnabled");
     }
@@ -75,26 +77,11 @@ public class AbilityDash : Ability
         IEnumerator DashCr(Vector3 direction, bool has_player)
         {
             IKillable victim = null;
-            var clone = Instantiate(template_clone, GameController.Instance.world);
-            clone.transform.position = Player.transform.position;
-            clone.transform.rotation = Quaternion.LookRotation(Vector3.forward, direction);
-            clone.Initialize(this, has_player);
-            clone.gameObject.SetActive(true);
-            clone.onHitKillable += k => {
-                if (HasModifier(Type.CHARGE) && k.CanKill())
-                {
-                    HitEnemiesArea(clone.transform.position, RadiusDamage);
-                }
-                else
-                {
-                    victim = k;
-                }
-            };
-
-            yield return MoveCloneCr();
+            var clone = CreateClone();
+            yield return MoveCloneCr(clone);
             EndDash(clone, victim, has_player);
 
-            IEnumerator MoveCloneCr()
+            IEnumerator MoveCloneCr(AbilityDashClone clone)
             {
                 var velocity = direction * Speed;
                 var pos_origin = transform.position;
@@ -106,6 +93,26 @@ public class AbilityDash : Ability
                     yield return new WaitForFixedUpdate();
                 }
                 clone.DashUpdate();
+            }
+            
+            AbilityDashClone CreateClone()
+            {
+                var clone = Instantiate(template_clone, GameController.Instance.world);
+                clone.transform.position = Player.transform.position;
+                clone.transform.rotation = Quaternion.LookRotation(Vector3.forward, direction);
+                clone.Initialize(this, has_player);
+                clone.gameObject.SetActive(true);
+                clone.onHitKillable += k => {
+                    if (HasModifier(Type.CHARGE) && k.CanKill())
+                    {
+                        HitEnemiesArea(clone.transform.position, RadiusDamage);
+                    }
+                    else
+                    {
+                        victim = k;
+                    }
+                };
+                return clone;
             }
         }
 
@@ -134,7 +141,7 @@ public class AbilityDash : Ability
 
                 if (hit_anything)
                 {
-                    Player.Knockback(-Player.MoveDirection.normalized * 500, true, true);
+                    KnockbackSelf();
                 }
             }
 
@@ -174,5 +181,10 @@ public class AbilityDash : Ability
         }
 
         return count;
+    }
+
+    private void KnockbackSelf()
+    {
+        Player.Knockback(-Player.MoveDirection.normalized * SelfKnockback, true, true);
     }
 }

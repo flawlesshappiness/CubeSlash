@@ -6,6 +6,8 @@ using System.Collections.Generic;
 [System.Serializable]
 public class FMODEventReference
 {
+    public const bool DEBUG = false;
+
     [SerializeField]
     public EventReference reference;
 
@@ -116,7 +118,15 @@ public class FMODEventReferenceInfo
         }
         catch (System.Exception e)
         {
-            Debug.Log(e.StackTrace);
+            DebugLog(e.StackTrace);
+        }
+    }
+
+    private void DebugLog(string text)
+    {
+        if (FMODEventReference.DEBUG)
+        {
+            Debug.Log(text);
         }
     }
 }
