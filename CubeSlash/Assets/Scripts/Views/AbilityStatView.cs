@@ -24,17 +24,19 @@ public class AbilityStatView : View
         // Create columns
         var infos = CreateColumn();
         var main = CreateColumn();
+        /*
         var modifiers = new Dictionary<Ability, UIAbilityStatColumn>();
         foreach(var modifier in ability.Modifiers.Where(m => m != null))
         {
             var column = CreateColumn();
             modifiers.Add(modifier, column);
         }
+        */
 
         // Info
         infos.CreateVariable().SetText("Name");
         main.CreateVariable().SetText(ability.Info.name_ability);
-        modifiers.ToList().ForEach(kvp => kvp.Value.CreateVariable().SetText(kvp.Key.Info.name_ability + " (modifier)"));
+        //modifiers.ToList().ForEach(kvp => kvp.Value.CreateVariable().SetText(kvp.Key.Info.name_ability + " (modifier)"));
 
         CreateSpace();
 
@@ -49,6 +51,7 @@ public class AbilityStatView : View
         }
 
         // Modifiers
+        /*
         var modifier_kvps = modifiers.ToList();
         foreach(var kvp in modifier_kvps)
         {
@@ -84,6 +87,9 @@ public class AbilityStatView : View
                 }
             }
         }
+        */
+
+        dividers[dividers.Count - 1].gameObject.SetActive(false);
 
         void CreateSpace() => columns.ForEach(c => c.CreateSpace());
     }

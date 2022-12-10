@@ -3,6 +3,7 @@ using UnityEngine.UI;
 
 public class UIAbilitySlot : MonoBehaviour
 {
+    [SerializeField] public RectTransform rectTransform;
     [SerializeField] private Image img_icon;
     [SerializeField] private Image img_wrong;
     [SerializeField] private ButtonExtended button;
@@ -11,6 +12,11 @@ public class UIAbilitySlot : MonoBehaviour
 
     public Ability Ability { get; private set; }
     public ButtonExtended Button { get { return button; } }
+
+    private void OnValidate()
+    {
+        rectTransform = GetComponent<RectTransform>();
+    }
 
     public void SetAbility(Ability ability)
     {

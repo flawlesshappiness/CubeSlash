@@ -15,4 +15,4 @@ MonoBehaviour:
   type: 2
   name_ability: Charge
   desc_ability: Charge, then release a beam penetrating all enemies
-  sprite_icon: {fileID: 21300000, guid: 94183713bd98b1a43be5c3346b94799d, type: 3}
+  sprite_icon: {fileID: 21300000, guid: 2d660ce6a2b67084e9a287899a6025a5, type: 3}

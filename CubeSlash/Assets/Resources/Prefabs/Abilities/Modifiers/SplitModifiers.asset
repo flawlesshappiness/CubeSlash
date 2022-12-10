@@ -14,14 +14,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   modifiers:
   - name: EXPLODE
+    description: Bullets explode on impact
     type: 3
     upgrade: {fileID: 11400000, guid: d81ed3e33e6dddd4a903db4baddda8ee, type: 2}
   - name: CHARGE
+    description: Bullets penetrate anything
     type: 2
     upgrade: {fileID: 11400000, guid: 0faabc336110d9940923b409405fa5f5, type: 2}
   - name: SPLIT
+    description: More bullets
     type: 1
     upgrade: {fileID: 11400000, guid: bc2c8cfb7a8d3fa4cbb334332a762f6c, type: 2}
   - name: DASH
+    description: Adds 1 ability use
     type: 0
     upgrade: {fileID: 11400000, guid: fde8eb4d22d17ec448ed26ed1076cb72, type: 2}

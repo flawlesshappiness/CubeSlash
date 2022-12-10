@@ -5,21 +5,19 @@ using UnityEngine.UI;
 
 public class UIInputLayout : MonoBehaviour
 {
-    [SerializeField] private Image template_img;
+    [SerializeField] private ImageInput template_img;
     [SerializeField] private TMP_Text template_tmp;
 
     private List<Map> maps = new List<Map>();
 
     private class Map
     {
-        public Image Image { get; set; }
+        public ImageInput Image { get; set; }
         public TMP_Text Text { get; set; }
         public PlayerInput.UIButtonType Type { get; set; }
         public void UpdateSprite()
         {
-            var map = PlayerInput.Database.GetCurrentInputMap(Type);
-            Image.sprite = map.sprite;
-            Image.color = map.color;
+            Image.SetInputType(Type);
         }
     }
 
@@ -50,7 +48,7 @@ public class UIInputLayout : MonoBehaviour
     public void AddInput(PlayerInput.UIButtonType type, string text)
     {
         var map = new Map();
-        map.Image = Instantiate(template_img.gameObject, template_img.transform.parent).GetComponent<Image>();
+        map.Image = Instantiate(template_img, template_img.transform.parent);
         map.Image.gameObject.SetActive(true);
         map.Text = Instantiate(template_tmp.transform.gameObject, template_tmp.transform.parent).GetComponent<TMP_Text>();
         map.Text.transform.gameObject.SetActive(true);

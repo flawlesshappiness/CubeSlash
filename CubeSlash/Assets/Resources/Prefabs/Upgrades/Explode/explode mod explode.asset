@@ -16,4 +16,16 @@ MonoBehaviour:
   name: Explode modified by Explode
   icon: {fileID: 21300000, guid: 08899c7b95056de458c07a171209ec23, type: 3}
   id_stats: explode
-  effects: []
+  effects:
+  - type_effect: 0
+    variable:
+      name: Rings
+      text_display: $ rings
+      type_value: 0
+      type_display: 0
+      higher_is_positive: 0
+      value_int: 1
+      value_float: 0
+      value_bool: 0
+      can_edit_name: 1
+      _editor_toggle_preview: 0

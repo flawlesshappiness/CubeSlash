@@ -132,6 +132,7 @@ public class GameController : MonoBehaviour
         Player.Instance.ResetValues();
         AbilityController.Instance.Clear();
         UpgradeController.Instance.ClearUpgrades();
+        Player.Instance.gameObject.SetActive(true);
 
         PauseLevel();
         var view_unlock = ViewController.Instance.ShowView<UnlockAbilityView>(0);
@@ -141,7 +142,6 @@ public class GameController : MonoBehaviour
             view_ability.OnContinue += () =>
             {
                 ViewController.Instance.ShowView<GameView>(1);
-                Player.Instance.gameObject.SetActive(true);
                 SetLevel(0);
                 ResumeLevel();
                 MusicController.Instance.PlayStartMusic();

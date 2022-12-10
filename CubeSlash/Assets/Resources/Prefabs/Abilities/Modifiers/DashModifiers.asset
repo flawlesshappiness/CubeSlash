@@ -14,18 +14,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   modifiers:
   - name: EXPLODE
+    description: Create a ring explosion before dashing
     type: 3
     upgrade: {fileID: 11400000, guid: 6d0d79814e662ef43a5256c5a1892171, type: 2}
-    effects: []
   - name: CHARGE
+    description: Penetrate all killable enemies
     type: 2
     upgrade: {fileID: 11400000, guid: c5c74eae81dd7b04d9a3fc5d7834b241, type: 2}
-    effects: []
   - name: SPLIT
+    description: Create 2 clones that dash away from you
     type: 1
     upgrade: {fileID: 11400000, guid: 5faa26d5a265ada4a96a4db53c48bfb9, type: 2}
-    effects: []
   - name: DASH
+    description: Dash farther and faster
     type: 0
     upgrade: {fileID: 11400000, guid: 5cae6b8c952536f449d46d1d5365f67b, type: 2}
-    effects: []

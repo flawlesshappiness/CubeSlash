@@ -19,12 +19,9 @@ public class UIAbilitySlotMove : MonoBehaviour
 
     public void MoveToSlot(UIAbilitySlot slot)
     {
-        var corners = new Vector3[4];
-        var rt = slot.GetComponent<RectTransform>();
-        rt.GetWorldCorners(corners);
-        var corner = corners[2];
-        var dir = corner - slot.transform.position;
-        var pos = slot.transform.position + dir.normalized * dir.magnitude * 1.1f;
+        var rt = slot.rectTransform;
+        var rt_size = rt.rect.size;
+        var pos = rt.transform.position.ToVector2() + rt_size * 0.5f;
         Lerp.Position(transform, 0.1f, pos).UnscaledTime();
     }
 }

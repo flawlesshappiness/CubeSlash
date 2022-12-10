@@ -12,6 +12,8 @@ public class AbilityModifierCollectionEditor : Editor
 
     public override void OnInspectorGUI()
     {
+        GUIHelper.DrawAssetSaveButton(collection);
+
         EditorGUI.BeginChangeCheck();
         foreach(var modifier in collection.modifiers)
         {
@@ -21,7 +23,6 @@ public class AbilityModifierCollectionEditor : Editor
         if (EditorGUI.EndChangeCheck())
         {
             EditorUtility.SetDirty(collection);
-            AssetDatabase.SaveAssets();
         }
     }
 
@@ -31,5 +32,6 @@ public class AbilityModifierCollectionEditor : Editor
         GUILayout.Label(modifier.type.ToString(), GUILayout.Width(150));
         modifier.upgrade = EditorGUILayout.ObjectField(modifier.upgrade, typeof(Upgrade), false) as Upgrade;
         GUILayout.EndHorizontal();
+        modifier.description = EditorGUILayout.TextArea(modifier.description, GUILayout.Height(60));
     }
 }

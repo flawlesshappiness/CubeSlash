@@ -15,4 +15,4 @@ MonoBehaviour:
   type: 1
   name_ability: Split
   desc_ability: Fire an arc of projectiles
-  sprite_icon: {fileID: 21300000, guid: 50fb84945103796499ddae683a075ca9, type: 3}
+  sprite_icon: {fileID: 21300000, guid: aa601896f349e9c47acfcaef8d6bc4c6, type: 3}

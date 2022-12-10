@@ -18,6 +18,18 @@ public class StartView : View
         btn_play.SetSelectOnHover(true);
         btn_options.SetSelectOnHover(true);
         btn_quit.SetSelectOnHover(true);
+
+        StartCoroutine(Cr());
+        IEnumerator Cr()
+        {
+            CanvasGroup.blocksRaycasts = false;
+            CanvasGroup.interactable = false;
+            yield return new WaitForSecondsRealtime(0.5f);
+            CanvasGroup.blocksRaycasts = true;
+            CanvasGroup.interactable = true;
+            EventSystemController.Instance.EventSystem.SetSelectedGameObject(null);
+
+        }
     }
 
     private void ClickPlay()
