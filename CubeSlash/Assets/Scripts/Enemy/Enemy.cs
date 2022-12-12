@@ -88,7 +88,7 @@ public class Enemy : Character, IKillable
             .Destroy(10)
             .Play();
 
-            event_death.Play();
+            FMODController.Instance.PlayWithLimitDelay(event_death);
 
             // Event
             OnDeath?.Invoke();

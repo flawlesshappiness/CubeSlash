@@ -1,3 +1,4 @@
 TODO:
 Ability to refund level if you dont want an upgrade (unlock in meta layer)
 Preview when holding ability button
+When body is flickering, abilities will break the game when used

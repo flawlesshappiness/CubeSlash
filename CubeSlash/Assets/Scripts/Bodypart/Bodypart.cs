@@ -13,7 +13,7 @@ public class Bodypart : MonoBehaviour
         ability.onTrigger += OnAbilityTrigger;
     }
 
-    private void OnDisable()
+    private void OnDestroy()
     {
         Ability.onTrigger -= OnAbilityTrigger;
     }

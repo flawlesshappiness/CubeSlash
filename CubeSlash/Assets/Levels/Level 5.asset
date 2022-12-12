@@ -28,7 +28,7 @@ MonoBehaviour:
   bosses: []
   frequency_spawn_experience: 1
   count_experience_active: 25
-  color_fog: {r: 0.14276314, g: 0.35, b: 0.35, a: 1}
+  color_fog: {r: 0.08235294, g: 0.27450982, b: 0.54901963, a: 1}
   color_bg: {r: 0, g: 0, b: 0, a: 1}
   ac_alpha_fog:
     serializedVersion: 2

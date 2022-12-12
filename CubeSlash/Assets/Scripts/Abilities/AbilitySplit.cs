@@ -131,7 +131,7 @@ public class AbilitySplit : Ability
         var odd_count = count % 2 == 1;
         var directions = new List<Vector3>();
         var count_arc = ((count - 1) / 2);
-        var angle_per = angle_max / count_arc;
+        var angle_per = angle_max == 0 ? 0 : angle_max / count_arc;
         var i_start = odd_count ? 0 : 1;
         var i_end = count_arc + (odd_count ? 1 : 2);
         for (int i_arc = i_start; i_arc < i_end; i_arc++)

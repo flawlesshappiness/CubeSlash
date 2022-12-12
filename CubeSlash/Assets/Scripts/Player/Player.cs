@@ -526,11 +526,11 @@ public class Player : Character
     public void ResetLevelsUntilAbility()
     {
         var count = AbilityController.Instance.GetUnlockedAbilities().Count;
-        if(count < 3)
+        if(count < 1)
         {
             LevelsUntilAbility = 3;
         }
-        else if(count < 5)
+        else if(count < 2)
         {
             LevelsUntilAbility = 5;
         }

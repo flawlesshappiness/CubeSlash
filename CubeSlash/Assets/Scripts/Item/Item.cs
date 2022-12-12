@@ -1,3 +1,6 @@
+using EasingCurve;
+using Flawliz.Lerp;
+using System.Collections;
 using UnityEngine;
 
 public class Item : MonoBehaviour
@@ -7,8 +10,6 @@ public class Item : MonoBehaviour
     public float mul_dist_collect = 1f;
     public bool IsBeingCollected { get; set; }
     public bool IsDespawning { get; set; }
-    private float TimeCollected { get; set; }
-    private Vector3 PositionCollected { get; set; }
 
     public virtual void Initialize()
     {
@@ -34,20 +35,29 @@ public class Item : MonoBehaviour
     private void CollectUpdate()
     {
         if (Player.Instance == null) return;
+        if (IsDespawning) return;
+        if (IsBeingCollected) return;
 
-        if (IsBeingCollected)
+        var collect_distance = Player.Instance.CollectRadius * mul_dist_collect;
+        var can_collect = Vector3.Distance(transform.position, Player.Instance.transform.position) <= collect_distance;
+        if (can_collect)
         {
-            var t = (Time.time - TimeCollected) / 0.25f;
-            transform.position = Vector3.LerpUnclamped(PositionCollected, Player.Instance.transform.position, ac_collect.Evaluate(t));
+            IsBeingCollected = true;
+            this.StartCoroutineWithID(Cr(), "Collect_" + GetInstanceID());
         }
-        else
+
+        IEnumerator Cr()
         {
-            if (Vector3.Distance(transform.position, Player.Instance.transform.position) <= Player.Instance.CollectRadius * mul_dist_collect)
+            var start = transform.position;
+            var curve = ac_collect;
+            yield return Lerp.Value(0.25f, f =>
             {
-                IsBeingCollected = true;
-                TimeCollected = Time.time;
-                PositionCollected = transform.position;
-            }
+                var t = curve.Evaluate(f);
+                transform.position = Vector3.LerpUnclamped(start, Player.Instance.transform.position, t);
+            }).Connect(gameObject);
+
+            Collect();
+            Despawn();
         }
     }
 
@@ -55,16 +65,9 @@ public class Item : MonoBehaviour
     {
         if (Player.Instance == null) return;
         var too_far_away = Vector3.Distance(transform.position, Player.Instance.transform.position) > CameraController.Instance.Width * 2;
-        var in_collect_distance = Vector3.Distance(transform.position, Player.Instance.transform.position) <= 0.1f;
-
-        var should_despawn = too_far_away || in_collect_distance;
+        var should_despawn = too_far_away;
         if (should_despawn)
         {
-            if (in_collect_distance && !IsDespawning)
-            {
-                Collect();
-            }
-
             Despawn();
         }
     }

@@ -12,6 +12,8 @@ public class StartView : View
     private void Start()
     {
         btn_play.onClick.AddListener(ClickPlay);
+        btn_quit.onClick.AddListener(ClickQuit);
+
         EventSystemController.Instance.SetDefaultSelection(btn_play.gameObject);
         BackgroundController.Instance.FadeToLevel(LevelDatabase.Instance.levels[0], 5);
 
@@ -36,5 +38,10 @@ public class StartView : View
     {
         FMODButtonEvent.PreviousSelected = null;
         GameController.Instance.StartGame();
+    }
+
+    private void ClickQuit()
+    {
+        Application.Quit();
     }
 }

@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using Flawliz.Lerp;
+using UnityEngine.UIElements;
 
 public class AbilityCharge : Ability
 {
     [Header("CHARGE")]
-    [SerializeField] private LineRenderer prefab_line;
+    [SerializeField] private ChargeBeam template_beam;
     [SerializeField] private DamageTrail template_trail;
     [SerializeField] private ParticleSystem ps_charge;
     [SerializeField] private ParticleSystem ps_charge_end;
@@ -27,6 +28,9 @@ public class AbilityCharge : Ability
 
     private float time_charge_start;
     private float time_charge_end;
+
+    private List<ChargeBeam> beams = new List<ChargeBeam>();
+
     public bool Charging { get; private set; }
     public bool ChargeEnded { get; private set; }
     public int Kills { get; private set; }
@@ -60,7 +64,6 @@ public class AbilityCharge : Ability
     {
         base.InitializeFirstTime();
 
-        prefab_line.gameObject.SetActive(false);
         template_trail.gameObject.SetActive(false);
     }
 
@@ -79,12 +82,15 @@ public class AbilityCharge : Ability
         Charging = false;
         ChargeEnded = false;
         Kills = 0;
+
+        InitializeBeams();
     }
 
     public override void Pressed()
     {
         base.Pressed();
         BeginCharge();
+        ShowBeamPreviews();
     }
 
     public override void Released()
@@ -97,13 +103,14 @@ public class AbilityCharge : Ability
         else
         {
             sfx_shoot_premature.Play();
+            HideBeamPreviews();
         }
     }
 
     public override void Trigger()
     {
         base.Trigger();
-        Shoot(Player.MoveDirection, DISTANCE_MAX);
+        Shoot(Player.Body.transform.up, DISTANCE_MAX);
     }
 
     private Coroutine _cr_charge;
@@ -145,6 +152,7 @@ public class AbilityCharge : Ability
     {
         ChargeUpdate();
         SuckUpdate();
+        VisualUpdate();
     }
 
     private void ChargeUpdate()
@@ -170,6 +178,11 @@ public class AbilityCharge : Ability
         }
     }
 
+    private void VisualUpdate()
+    {
+        UpdateBeamPositions();
+    }
+    
     private void SuckUpdate()
     {
         if(Charging && !ChargeEnded && ChargeSucksExp)
@@ -193,9 +206,7 @@ public class AbilityCharge : Ability
     {
         Kills = 0;
 
-        var directions =
-            HasModifier(Type.SPLIT) ? AbilitySplit.GetSplitDirections(3, 15, dir) :
-            new List<Vector3> { dir };
+        var directions = GetBeamDirections();
         StartCoroutine(ShootCr(directions));
 
         if (BeamBack)
@@ -205,8 +216,10 @@ public class AbilityCharge : Ability
 
         IEnumerator ShootCr(List<Vector3> directions)
         {
-            foreach(var dir in directions)
+            for (int i = 0; i < directions.Count; i++)
             {
+                var dir = directions[i];
+
                 // Damage
                 Physics2D.CircleCastAll(Player.transform.position, Width * 0.5f, dir, distance)
                     .Select(hit => hit.collider.GetComponentInParent<IKillable>())
@@ -240,7 +253,9 @@ public class AbilityCharge : Ability
                 Player.Knockback(-dir.normalized * KnockbackSelf, true, true);
 
                 // Visual
-                StartVisual(Player.transform.position, Player.transform.position + dir * distance, 20);
+                //StartVisual(Player.transform.position, Player.transform.position + dir * distance, 20);
+                var beam = beams[i];
+                beam.AnimateFire();
 
                 // Trail
                 if (HasModifier(Type.DASH))
@@ -297,45 +312,63 @@ public class AbilityCharge : Ability
         return 0;
     }
 
-    private void StartVisual(Vector3 start, Vector3 end, int segments)
+    private void InitializeBeams()
     {
-        StartCoroutine(BeamVisualCr(start, end, segments));
+        // Clear beams
+        beams.ForEach(beam => Destroy(beam.gameObject));
+        beams.Clear();
 
-        var distance = Vector3.Distance(start, end);
-
-        // Particle System
-        var dir = end - start;
-        var angle = Vector3.SignedAngle(Vector3.up, dir, Vector3.forward);
-        var ps = ps_beam_dust.Duplicate().ps;
-
-        ps.transform.position = Vector3.Lerp(start, end, 0.5f);
-        ps.transform.eulerAngles = new Vector3(0, 0, angle);
-        ps.ModifyShape(shape => shape.scale = new Vector3(1, 1, distance));
-        ps.ModifyEmission(e => e.SetBurst(0, new ParticleSystem.Burst(0, distance * 5)));
-
-        ps.Play();
-        Destroy(ps.gameObject, 5f);
+        // Create beams
+        for (int i = 0; i < BeamCount; i++)
+        {
+            var beam = CreateBeamLocal();
+            beams.Add(beam);
+            beam.SetAlpha(0);
+        }
     }
 
-    private IEnumerator BeamVisualCr(Vector3 start, Vector3 end, int segments)
+    private ChargeBeam CreateBeamLocal()
     {
-        var line = Instantiate(prefab_line.gameObject, prefab_line.transform.parent).GetComponent<LineRenderer>();
-        line.gameObject.SetActive(true);
+        var beam = CreateBeam();
+        beam.transform.parent = transform;
+        beam.SetWidth(Width);
+        beam.SetLength(DISTANCE_MAX);
+        return beam;
+    }
 
-        // Segments
-        line.positionCount = segments + 1;
-        line.SetPosition(0, start);
-        for (int i = 0; i < segments; i++)
+    public static ChargeBeam CreateBeam()
+    {
+        var template = Resources.Load<ChargeBeam>("Prefabs/Abilities/Objects/Beam");
+        var beam = Instantiate(template);
+        beam.gameObject.SetActive(true);
+        return beam;
+    }
+
+    private void ShowBeamPreviews()
+    {
+        beams.ForEach(beam => beam.AnimateShowPreview(true, ChargeTime));
+    }
+
+    private void HideBeamPreviews()
+    {
+        beams.ForEach(beam => beam.AnimateShowPreview(false));
+    }
+
+    private void UpdateBeamPositions()
+    {
+        var directions = GetBeamDirections();
+        for (int i = 0; i < beams.Count; i++)
         {
-            line.SetPosition(i, Vector3.Lerp(start, end, (float)i / segments));
-        }
-        line.SetPosition(segments, end);
+            var beam = beams[i];
+            var direction = directions[i];
+            beam.SetPosition(Player.Body.transform.position);
+            beam.SetDirection(direction);
 
-        // Width
-        yield return Lerp.Value("width_" + line.GetInstanceID(), 0.25f, f => line.widthMultiplier = (1f - f) * Width)
-            .Connect(line.gameObject)
-            .Curve(EasingCurves.EaseOutQuad);
-        line.gameObject.SetActive(false);
-        Destroy(line.gameObject);
+        }
+    }
+
+    private List<Vector3> GetBeamDirections()
+    {
+        return AbilitySplit.GetSplitDirections(BeamCount, BeamArc, Player.Body.transform.up);
     }
 }

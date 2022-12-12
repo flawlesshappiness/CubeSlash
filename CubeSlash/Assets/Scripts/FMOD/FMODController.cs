@@ -2,10 +2,20 @@ using UnityEngine;
 using FMODUnity;
 using System.Collections;
 using FMOD.Studio;
+using System.Collections.Generic;
 
 public class FMODController : Singleton
 {
     public static FMODController Instance { get { return Instance<FMODController>(); } }
+
+    private Dictionary<string, LimitDelay> dicLimitDelay = new Dictionary<string, LimitDelay>();
+
+    private class LimitDelay
+    {
+        public string path;
+        public int count;
+        public CustomCoroutine coroutine;
+    }
 
     protected override void Initialize()
     {
@@ -24,6 +34,40 @@ public class FMODController : Singleton
         {
             yield return new WaitForSeconds(delay);
             reference.Play(modify_instance);
+        }
+    }
+
+    public void PlayWithLimitDelay(FMODEventReference reference)
+    {
+        var path = reference.Path;
+
+        if (!dicLimitDelay.ContainsKey(path))
+        {
+            var _ld = new LimitDelay { path = path };
+            dicLimitDelay.Add(path, _ld);
+        }
+
+        var ld = dicLimitDelay[path];
+        if (ld.count < 3)
+        {
+            ld.count++;
+        }
+
+        if (ld.coroutine == null)
+        {
+            ld.coroutine = this.StartCoroutineWithID(Cr(ld), $"{path}_{GetInstanceID()}");
+        }
+
+        IEnumerator Cr(LimitDelay ld)
+        {
+            while(ld.count > 0)
+            {
+                Play(path);
+                ld.count--;
+                yield return new WaitForSecondsRealtime(0.05f);
+            }
+
+            ld.coroutine = null;
         }
     }
 }
