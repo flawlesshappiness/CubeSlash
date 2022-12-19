@@ -16,14 +16,14 @@ MonoBehaviour:
   size: 100
   frequency_spawn_enemy: 0.3
   count_enemy_active: 999
-  enemies:
-  - name: Weak (50)
-    enemy: {fileID: 11400000, guid: cfcae6b5621e50448a5872f62f68b1ba, type: 2}
+  enemies: []
+  bosses:
+  - name: Boss_Host
+    enemy: {fileID: 11400000, guid: 4fe64771ce63226478a6456e661756ff, type: 2}
     chance: 1
-    max: 50
-  bosses: []
-  frequency_spawn_experience: 1
-  count_experience_active: 25
+    max: 1
+  frequency_spawn_experience: 0.25
+  count_experience_active: 200
   color_fog: {r: 0.13333334, g: 0.32941177, b: 0.19215687, a: 1}
   color_bg: {r: 0, g: 0, b: 0, a: 1}
   ac_alpha_fog:

@@ -9,6 +9,8 @@ public class ChargeBeam : MonoBehaviour
     [SerializeField] private SpriteRenderer spr_beam;
     [SerializeField] private ParticleSystem ps_dust_charge, ps_dust_fire;
 
+    private ParticleSystem ps_dust_charge_current;
+
     private float length;
     private float width;
 
@@ -41,10 +43,17 @@ public class ChargeBeam : MonoBehaviour
         spr_beam.color = spr_beam.color.SetA(alpha);
     }
 
+    public void SetColor(Color color)
+    {
+        spr_beam.color = color;
+        ps_dust_charge.ModifyMain(m => m.startColor = color);
+        ps_dust_fire.ModifyMain(m => m.startColor = color);
+    }
+
     public void UpdateVisual()
     {
         var position = new Vector3(0, length * 0.5f);
-        var scale = new Vector3(width, length);
+        var scale = new Vector3(width * 0.5f, length);
         pivot_sprite.localScale = scale;
 
         UpdatePS(ps_dust_charge);
@@ -61,7 +70,7 @@ public class ChargeBeam : MonoBehaviour
         return this.StartCoroutineWithID(Cr());
         IEnumerator Cr()
         {
-            ps_dust_charge.SetEmissionEnabled(show);
+            SetupPS();
 
             var scale_start = new Vector3(0f, length);
             var scale_end = new Vector3(width * 0.5f, length);
@@ -71,6 +80,35 @@ public class ChargeBeam : MonoBehaviour
             var end = show ? 0.25f : 0;
             yield return Lerp.Alpha(spr_beam, duration, start, end);
         }
+
+        void SetupPS()
+        {
+            if (show)
+            {
+                if (ps_dust_charge_current != null)
+                {
+                    Destroy(ps_dust_charge_current.gameObject);
+                }
+
+                ps_dust_charge_current = Instantiate(ps_dust_charge, ps_dust_charge.transform.parent);
+                ps_dust_charge_current.SetEmissionEnabled(true);
+            }
+            else
+            {
+                DestroyDustChargePS();
+            }
+        }
+    }
+
+    private void DestroyDustChargePS()
+    {
+        if (ps_dust_charge_current != null)
+        {
+            ps_dust_charge_current.SetEmissionEnabled(false);
+            ps_dust_charge_current.transform.parent = null;
+            Destroy(ps_dust_charge_current.gameObject, 5);
+            ps_dust_charge_current = null;
+        }
     }
 
     public CustomCoroutine AnimateFire()
@@ -79,14 +117,7 @@ public class ChargeBeam : MonoBehaviour
         return this.StartCoroutineWithID(Cr());
         IEnumerator Cr()
         {
-            ps_dust_charge.SetEmissionEnabled(false);
-            ps_dust_fire.Duplicate()
-                .Position(ps_dust_fire.transform.position)
-                .Rotation(ps_dust_fire.transform.rotation)
-                .Parent(GameController.Instance.world)
-                .Play()
-                .Destroy(5);
-
+            DestroyDustChargePS();
             yield return AnimateFireBeam();
         }
     }

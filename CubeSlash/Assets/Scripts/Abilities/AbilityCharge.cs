@@ -21,15 +21,21 @@ public class AbilityCharge : Ability
     [SerializeField] private FMODEventReference sfx_shoot;
     [SerializeField] private FMODEventReference sfx_shoot_premature;
 
-    private const float DISTANCE_MAX = 50f;
+    private class BeamInfo
+    {
+        public ChargeBeam graphic;
+        public Vector3 localDirection;
+        public float delay;
+    }
 
+    private const float DISTANCE_MAX = 50f;
     private const int COUNT_EMISSION_PS_MIN = 10;
     private const int COUNT_EMISSION_PS_MAX = 50;
 
     private float time_charge_start;
     private float time_charge_end;
 
-    private List<ChargeBeam> beams = new List<ChargeBeam>();
+    private List<BeamInfo> beam_infos = new List<BeamInfo>();
 
     public bool Charging { get; private set; }
     public bool ChargeEnded { get; private set; }
@@ -110,7 +116,7 @@ public class AbilityCharge : Ability
     public override void Trigger()
     {
         base.Trigger();
-        Shoot(Player.Body.transform.up, DISTANCE_MAX);
+        Shoot(DISTANCE_MAX);
     }
 
     private Coroutine _cr_charge;
@@ -202,23 +208,18 @@ public class AbilityCharge : Ability
         }
     }
 
-    private void Shoot(Vector3 dir, float distance)
+    private void Shoot(float distance)
     {
         Kills = 0;
 
-        var directions = GetBeamDirections();
-        StartCoroutine(ShootCr(directions));
-
-        if (BeamBack)
+        StartCoroutine(ShootCr());
+        IEnumerator ShootCr()
         {
-            StartCoroutine(ShootCr(new List<Vector3> { -Player.MoveDirection }));
-        }
-
-        IEnumerator ShootCr(List<Vector3> directions)
-        {
-            for (int i = 0; i < directions.Count; i++)
+            for (int i = 0; i < beam_infos.Count; i++)
             {
-                var dir = directions[i];
+                var info = beam_infos[i];
+                var rotation = Player.Body.transform.rotation;
+                var dir = rotation * info.localDirection;
 
                 // Damage
                 Physics2D.CircleCastAll(Player.transform.position, Width * 0.5f, dir, distance)
@@ -253,9 +254,7 @@ public class AbilityCharge : Ability
                 Player.Knockback(-dir.normalized * KnockbackSelf, true, true);
 
                 // Visual
-                //StartVisual(Player.transform.position, Player.transform.position + dir * distance, 20);
-                var beam = beams[i];
-                beam.AnimateFire();
+                info.graphic.AnimateFire();
 
                 // Trail
                 if (HasModifier(Type.DASH))
@@ -271,7 +270,11 @@ public class AbilityCharge : Ability
                 // Sound
                 sfx_shoot.Play();
 
-                yield return new WaitForSeconds(0.1f);
+                // Delay
+                if(info.delay > 0)
+                {
+                    yield return new WaitForSeconds(info.delay);
+                }
             }
 
             StartCooldown();
@@ -315,15 +318,30 @@ public class AbilityCharge : Ability
     private void InitializeBeams()
     {
         // Clear beams
-        beams.ForEach(beam => Destroy(beam.gameObject));
-        beams.Clear();
+        beam_infos.ForEach(beam => Destroy(beam.graphic));
+        beam_infos.Clear();
 
         // Create beams
-        for (int i = 0; i < BeamCount; i++)
+        var directions = AbilitySplit.GetSplitDirections(BeamCount, BeamArc, Vector3.up);
+        for (int i = 0; i < directions.Count; i++)
         {
-            var beam = CreateBeamLocal();
-            beams.Add(beam);
-            beam.SetAlpha(0);
+            var info = new BeamInfo();
+            info.graphic = CreateBeamLocal();
+            info.graphic.SetAlpha(0);
+            info.localDirection = directions[i];
+            info.delay = 0.1f;
+            beam_infos.Add(info);
+        }
+
+        // Create back beam
+        if (BeamBack)
+        {
+            var info = new BeamInfo();
+            info.graphic = CreateBeamLocal();
+            info.graphic.SetAlpha(0);
+            info.localDirection = Vector3.down;
+            info.delay = 0;
+            beam_infos.Insert(0, info);
         }
     }
 
@@ -346,29 +364,23 @@ public class AbilityCharge : Ability
 
     private void ShowBeamPreviews()
     {
-        beams.ForEach(beam => beam.AnimateShowPreview(true, ChargeTime));
+        beam_infos.ForEach(beam => beam.graphic.AnimateShowPreview(true, ChargeTime));
     }
 
     private void HideBeamPreviews()
     {
-        beams.ForEach(beam => beam.AnimateShowPreview(false));
+        beam_infos.ForEach(beam => beam.graphic.AnimateShowPreview(false));
     }
 
     private void UpdateBeamPositions()
     {
-        var directions = GetBeamDirections();
-        for (int i = 0; i < beams.Count; i++)
+        for (int i = 0; i < beam_infos.Count; i++)
         {
-            var beam = beams[i];
-            var direction = directions[i];
+            var info = beam_infos[i];
+            var beam = info.graphic;
+            var rotation = Player.Body.transform.rotation;
             beam.SetPosition(Player.Body.transform.position);
-            beam.SetDirection(direction);
-
+            beam.SetDirection(rotation * info.localDirection);
         }
-    }
-
-    private List<Vector3> GetBeamDirections()
-    {
-        return AbilitySplit.GetSplitDirections(BeamCount, BeamArc, Player.Body.transform.up);
     }
 }

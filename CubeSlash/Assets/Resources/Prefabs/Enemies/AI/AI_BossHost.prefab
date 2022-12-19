@@ -43,3 +43,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c43078bb2683c494fbf27d15c609adf6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  color_beam: {r: 0.6792453, g: 0.24029905, b: 0.24029905, a: 1}
+  speed_rotate_min_max: {x: 0.5, y: 3}

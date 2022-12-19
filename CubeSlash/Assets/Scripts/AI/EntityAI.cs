@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Flawliz.Lerp;
+using System.Linq;
 
 public abstract class EntityAI : MonoBehaviour
 {
@@ -66,7 +67,8 @@ public abstract class EntityAI : MonoBehaviour
 
     protected void MoveTowards(Vector3 position)
     {
-        Self.Move(Self.MoveDirection);
+        var dir = position - transform.position;
+        Self.Move(dir);
     }
 
     protected void MoveToStop(float mul = 1f)
@@ -94,4 +96,15 @@ public abstract class EntityAI : MonoBehaviour
     protected void LerpAngularAcceleration(float time, float end) => Lerp.Value("angular_acceleration_" + Self.GetInstanceID(), time, Self.AngularAcceleration, end, f => Self.AngularAcceleration = f);
     protected void LerpLinearVelocity(float time, float end) => Lerp.Value("linear_velocity_" + Self.GetInstanceID(), time, Self.LinearVelocity, end, f => Self.LinearVelocity = f);
     protected void LerpLinearAcceleration(float time, float end) => Lerp.Value("linear_acceleration_" + Self.GetInstanceID(), time, Self.LinearAcceleration, end, f => Self.LinearAcceleration = f);
+
+    protected void ShieldDuds(float duration)
+    {
+        StartCoroutine(Cr());
+        IEnumerator Cr()
+        {
+            Self.EnemyBody.Duds.Where(d => d.IsActive()).ToList().ForEach(d => d.SetArmorActive(true));
+            yield return new WaitForSeconds(duration);
+            Self.EnemyBody.Duds.Where(d => d.IsActive()).ToList().ForEach(d => d.SetArmorActive(false));
+        }
+    }
 }
