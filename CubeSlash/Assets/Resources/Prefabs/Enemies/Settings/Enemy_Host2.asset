@@ -10,14 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9c301fa7d26535e4cb7056a730ebca5e, type: 3}
-  m_Name: Weak
+  m_Name: Enemy_Host2
   m_EditorClassIdentifier: 
-  body: {fileID: 863415056158122022, guid: 45499daff63c9d64b8e9f610d9bfd8a4, type: 3}
-  linear_acceleration: 6
-  linear_velocity: 5
+  body: {fileID: 9004184585291785566, guid: 01f1f563247dab344b19b6b9a0e7db67, type: 3}
+  linear_acceleration: 2
+  linear_velocity: 3
   linear_drag: 20
   angular_acceleration: 5
-  angular_velocity: 200
-  size: 1
-  mass: 1
-  ai: {fileID: 8767035241809482896, guid: f11e61c706cb5664cb504211139ae209, type: 3}
+  angular_velocity: 25
+  size: 3
+  mass: 10
+  ai: {fileID: 4553349695835692437, guid: 229daa69c60e1f846a04ea5b669c9e19, type: 3}

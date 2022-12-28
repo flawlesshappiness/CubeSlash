@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6046504362380866051}
   - component: {fileID: 4553349695835692437}
   m_Layer: 0
-  m_Name: AI_HostFour
+  m_Name: AI_Enemy_Host2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -43,6 +43,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 661e92aac222e084d9137a89620a4b5d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemy_to_spawn: {fileID: 11400000, guid: f41298fdccde658438bc50f38c6c1f2d, type: 2}
+  enemy_to_spawn: {fileID: 11400000, guid: cfcae6b5621e50448a5872f62f68b1ba, type: 2}
   count_to_spawn: 2
   arc_spawn: 180

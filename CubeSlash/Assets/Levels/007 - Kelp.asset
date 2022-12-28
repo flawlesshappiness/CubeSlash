@@ -33,7 +33,7 @@ MonoBehaviour:
   frequency_spawn_experience: 1
   count_experience_active: 25
   color_fog: {r: 0.13333334, g: 0.32941177, b: 0.19215687, a: 1}
-  color_bg: {r: 0, g: 0, b: 0, a: 1}
+  color_bg: {r: 0.023529412, g: 0.02745098, b: 0.101960786, a: 1}
   ac_alpha_fog:
     serializedVersion: 2
     m_Curve:

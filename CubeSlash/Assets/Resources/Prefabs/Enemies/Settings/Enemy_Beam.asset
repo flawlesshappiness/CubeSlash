@@ -10,14 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9c301fa7d26535e4cb7056a730ebca5e, type: 3}
-  m_Name: Shooter
+  m_Name: Enemy_Beam
   m_EditorClassIdentifier: 
-  body: {fileID: 8094660313205461888, guid: c3089b761f1048242b2fcb74c354cc49, type: 3}
+  body: {fileID: 8094660313205461888, guid: 16394700295b38a449225118712fc88d, type: 3}
   linear_acceleration: 9
   linear_velocity: 3
   linear_drag: 20
-  angular_acceleration: 5
-  angular_velocity: 200
+  angular_acceleration: 0.2
+  angular_velocity: 50
   size: 1.5
   mass: 2
-  ai: {fileID: 3873106988618322131, guid: e8b3dcbf445451b44b56254a18515441, type: 3}
+  ai: {fileID: -6649530052586334543, guid: 64d9a4c264ef09e4ca88cddec0cae1d4, type: 3}

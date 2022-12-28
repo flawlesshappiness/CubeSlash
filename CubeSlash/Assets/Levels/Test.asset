@@ -17,14 +17,14 @@ MonoBehaviour:
   frequency_spawn_enemy: 1
   count_enemy_active: 999
   enemies:
-  - name: Host_Four (2)
-    enemy: {fileID: 11400000, guid: 5103badcabd8e2c42be0237f2f73cad1, type: 2}
+  - name: Enemy_Beam (15)
+    enemy: {fileID: 11400000, guid: e3fdf9a9032f5a547809171c6941ee82, type: 2}
     chance: 1
-    max: 2
+    max: 15
   bosses: []
   frequency_spawn_experience: 0.25
   count_experience_active: 200
-  color_fog: {r: 0.13333334, g: 0.32941177, b: 0.19215687, a: 1}
+  color_fog: {r: 0.060937494, g: 0.15, b: 0.08671875, a: 1}
   color_bg: {r: 0, g: 0, b: 0, a: 1}
   ac_alpha_fog:
     serializedVersion: 2
