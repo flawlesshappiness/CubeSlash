@@ -79,18 +79,26 @@ public class BackgroundController : Singleton
         var w2 = w * 2;
         var h = CameraController.Instance.Height;
         var h2 = h * 2;
-        var p = CameraController.Instance.Camera.transform.position.SetZ(0);
+        var pos_cam = CameraController.Instance.Camera.transform.position.SetZ(0);
         var layers = Level.Current.background_layers.Count;
         var pmin = Level.Current.parallax_min;
         var pmax = Level.Current.parallax_max;
         foreach(var sprite in sprites)
         {
+            var scale = sprite.transform.localScale.x;
+
             var t = 1f - Mathf.Clamp(sprite.Layer / (float)(layers-1), 0, 1);
             var tp = Mathf.Lerp(pmin, pmax, t);
-            var pp = sprite.StartPosition + -p * tp;
-            var ppx = (((pp.x % w2) + w2) % w2) - w;
-            var ppy = (((pp.y % h2) + h2) % h2) - h;
-            sprite.transform.localPosition = p + new Vector3(ppx, ppy, sprite.StartPosition.z);
+            var pp = sprite.StartPosition - pos_cam * tp;
+            sprite.transform.localPosition = pos_cam + new Vector3(pp.x, pp.y, sprite.StartPosition.z) + sprite.Offset;
+
+            var dir_from_cam = sprite.transform.position - pos_cam;
+            var w_max = scale + w;
+            var h_max = scale + h;
+            if (dir_from_cam.x < -w_max) sprite.Offset += new Vector3(w_max * 2, 0);
+            if (dir_from_cam.x > w_max) sprite.Offset -= new Vector3(w_max * 2, 0);
+            if (dir_from_cam.y < -h_max) sprite.Offset += new Vector3(0, h_max * 2);
+            if (dir_from_cam.y > h_max) sprite.Offset -= new Vector3(0, h_max * 2);
         }
     }
     #endregion

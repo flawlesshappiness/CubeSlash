@@ -10,22 +10,22 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ed170f98ca580f243b98b5b4d9a80757, type: 3}
-  m_Name: Level 4
+  m_Name: 003 - Ocean (Boss)
   m_EditorClassIdentifier: 
-  duration: 30
+  duration: 60
   size: 100
-  frequency_spawn_enemy: 0.8
-  count_enemy_active: 2
+  frequency_spawn_enemy: 0.9
+  count_enemy_active: 150
   enemies:
-  - name: Host_Two (1)
-    enemy: {fileID: 11400000, guid: f41298fdccde658438bc50f38c6c1f2d, type: 2}
-    chance: 999
-    max: 1
   - name: Weak (Infinite)
     enemy: {fileID: 11400000, guid: cfcae6b5621e50448a5872f62f68b1ba, type: 2}
     chance: 1
     max: 0
-  bosses: []
+  bosses:
+  - name: Boss_Host
+    enemy: {fileID: 11400000, guid: 4fe64771ce63226478a6456e661756ff, type: 2}
+    chance: 1
+    max: 0
   frequency_spawn_experience: 1
   count_experience_active: 25
   color_fog: {r: 0.08235294, g: 0.27450982, b: 0.54901963, a: 1}
@@ -35,18 +35,18 @@ MonoBehaviour:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0.6
-      inSlope: -0.0022974142
-      outSlope: -0.0022974142
+      value: 0.7
+      inSlope: -0.0041285106
+      outSlope: -0.0041285106
       tangentMode: 0
       weightedMode: 3
       inWeight: 0
-      outWeight: 0.615942
+      outWeight: 0.57125604
     - serializedVersion: 3
       time: 1
       value: 0
-      inSlope: -0.6
-      outSlope: -0.6
+      inSlope: -0.7
+      outSlope: -0.7
       tangentMode: 34
       weightedMode: 0
       inWeight: 0.33333334
@@ -58,29 +58,20 @@ MonoBehaviour:
   parallax_max: 0.8
   background_layers:
   - name: 0
-    size_sprite_min: 5
-    size_sprite_max: 10
-    count_sprite: 10
-    sprites:
-    - {fileID: 21300000, guid: f6c9c3fd0953f1648b7cd462b594a734, type: 3}
-    - {fileID: 21300000, guid: c3d0d0ba057129c49bbca5b65a84f69e, type: 3}
-    particles: []
+    size_sprite_min: 0
+    size_sprite_max: 0
+    count_sprite: 0
+    sprites: []
+    particles:
+    - {fileID: 7935337046598179359, guid: 4b69278ff55303c4a83b81a88ad7e1a1, type: 3}
+    - {fileID: 6471937910845384915, guid: 4227469584206424696bac83a7f5da41, type: 3}
     objects: []
   - name: 1
-    size_sprite_min: 15
-    size_sprite_max: 20
-    count_sprite: 5
-    sprites:
-    - {fileID: 21300000, guid: f6c9c3fd0953f1648b7cd462b594a734, type: 3}
-    - {fileID: 21300000, guid: c3d0d0ba057129c49bbca5b65a84f69e, type: 3}
-    particles: []
-    objects: []
-  - name: 2
-    size_sprite_min: 20
-    size_sprite_max: 25
-    count_sprite: 2
-    sprites:
-    - {fileID: 21300000, guid: 4e4e41cfc8fccd54c8220625d1a979a3, type: 3}
-    - {fileID: 21300000, guid: ddbfc5ec3f0aca24eba24112b3f10092, type: 3}
-    particles: []
+    size_sprite_min: 0
+    size_sprite_max: 0
+    count_sprite: 0
+    sprites: []
+    particles:
+    - {fileID: 7935337046598179359, guid: 4b69278ff55303c4a83b81a88ad7e1a1, type: 3}
+    - {fileID: 6471937910845384915, guid: 4227469584206424696bac83a7f5da41, type: 3}
     objects: []

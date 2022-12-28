@@ -10,22 +10,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ed170f98ca580f243b98b5b4d9a80757, type: 3}
-  m_Name: Level 3 (Boss)
+  m_Name: 001 - Ocean
   m_EditorClassIdentifier: 
-  duration: 60
+  duration: 30
   size: 100
-  frequency_spawn_enemy: 0.9
-  count_enemy_active: 150
+  frequency_spawn_enemy: 1.5
+  count_enemy_active: 25
   enemies:
   - name: Weak (Infinite)
     enemy: {fileID: 11400000, guid: cfcae6b5621e50448a5872f62f68b1ba, type: 2}
     chance: 1
     max: 0
-  bosses:
-  - name: Boss_Host
-    enemy: {fileID: 11400000, guid: 4fe64771ce63226478a6456e661756ff, type: 2}
-    chance: 1
-    max: 0
+  bosses: []
   frequency_spawn_experience: 1
   count_experience_active: 25
   color_fog: {r: 0.08235294, g: 0.27450982, b: 0.54901963, a: 1}

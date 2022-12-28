@@ -10,6 +10,7 @@ public class BackgroundSprite : MonoBehaviour
     public Vector3 StartPosition { get; set; }
     public Sprite Sprite { set { spr.sprite = value; } }
     public int SortingOrder { set { spr.sortingOrder = value * 10 + 1; } }
+    public Vector3 Offset { get; set; }
 
     public Coroutine AnimateAppear(float time)
     {
