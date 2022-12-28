@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed170f98ca580f243b98b5b4d9a80757, type: 3}
+  m_Name: 009 - Kelp (Boss)
+  m_EditorClassIdentifier: 
+  duration: 60
+  size: 100
+  frequency_spawn_enemy: 0.9
+  count_enemy_active: 150
+  enemies:
+  - name: Enemy_Weak (Infinite)
+    enemy: {fileID: 11400000, guid: cfcae6b5621e50448a5872f62f68b1ba, type: 2}
+    chance: 1
+    max: 0
+  - name: Enemy_Host2 (Infinite)
+    enemy: {fileID: 11400000, guid: f41298fdccde658438bc50f38c6c1f2d, type: 2}
+    chance: 0.25
+    max: 0
+  - name: Enemy_Shooter (25)
+    enemy: {fileID: 11400000, guid: db0782c6ad8291647b08bacf671fe0eb, type: 2}
+    chance: 0.25
+    max: 25
+  bosses: []
+  frequency_spawn_experience: 1
+  count_experience_active: 25
+  area: {fileID: 11400000, guid: d0a0597e506bddc4a9a4835efccc3573, type: 2}
