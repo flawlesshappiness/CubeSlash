@@ -1,4 +1,28 @@
-Bubbles - Blue
-Leaves - Blue / Green
-Kelp - Green
-Roots - Dark purple
+AREA 1: Bubbles
+Color: Blue
+Enemy: Simple 1-hit
+Boss: Rotating duds, shoots beams from dead duds
+
+
+AREA 2: Leaves
+Color: Blue / Green
+Enemy: 1 cell becomes 2 smaller cells
+Boss: Multi-Eye shooter
+
+
+AREA 3: Kelp
+Color: Green
+Enemy: Eye Shooter
+Boss: Stationary plant boss - Fires AOE at player, and teleports closer
+
+
+AREA 4: Roots
+Color: Dark purple
+Enemy: Beam enemy
+Boss: 
+
+
+AREA 5: Abyss
+Color: Black
+Enemy: 1 big cell becomes 2 cells becomes 4 smaller cells
+Boss: 

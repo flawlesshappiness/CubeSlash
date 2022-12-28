@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using static LevelAsset;
 
 public class EnemyController : Singleton
 {
@@ -113,13 +114,7 @@ public class EnemyController : Singleton
 
         var settings = random.Random();
         var enemy = SpawnEnemy(settings, position);
-
-        enemy.OnDeath += () =>
-        {
-            var experience = ItemController.Instance.SpawnExperience(enemy.transform.position);
-            experience.Initialize();
-            experience.SetMeat();
-        };
+        enemy.OnDeath += () => EnemyDeathSpawnMeat(enemy);
 
         return enemy;
     }
@@ -141,6 +136,13 @@ public class EnemyController : Singleton
         OnEnemySpawned?.Invoke(enemy);
         
         return enemy;
+    }
+
+    public void EnemyDeathSpawnMeat(Enemy enemy)
+    {
+        var experience = ItemController.Instance.SpawnExperience(enemy.transform.position);
+        experience.Initialize();
+        experience.SetMeat();
     }
     #endregion
     #region POOL

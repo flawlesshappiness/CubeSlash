@@ -12,12 +12,13 @@ public class HealthDud : MonoBehaviour, IKillable
     [SerializeField] private FMODEventReference sfx_death;
     public bool Dead { get; private set; }
     public bool ArmorActive { get; private set; }
+    public bool DudActive { get; private set; }
     public System.Action OnKilled;
 
     public void Initialize()
     {
-        g_armor.transform.localScale = Vector3.zero;
-        ArmorActive = false;
+        SetArmorActive(false, false);
+        SetDudActive(true, false);
         Dead = false;
     }
 
@@ -38,6 +39,23 @@ public class HealthDud : MonoBehaviour, IKillable
         }
     }
 
+    public void SetDudActive(bool active, bool animate = true)
+    {
+        DudActive = active;
+
+        var end = active ? Vector3.one : Vector3.zero;
+        if (animate)
+        {
+            var curve = active ? ac_armor_active : ac_armor_inactive;
+            Lerp.LocalScale(pivot.transform, 0.25f, end)
+                .Curve(curve);
+        }
+        else
+        {
+            pivot.transform.localScale = end;
+        }
+    }
+
     public bool IsActive() => !Dead;
 
     public void Kill()
@@ -50,6 +68,6 @@ public class HealthDud : MonoBehaviour, IKillable
         Dead = true;
     }
 
-    public bool CanKill() => IsActive() && !ArmorActive;
+    public bool CanKill() => IsActive() && !ArmorActive && DudActive;
     public Vector3 GetPosition() => transform.position;
 }

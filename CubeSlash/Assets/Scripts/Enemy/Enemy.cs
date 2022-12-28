@@ -12,11 +12,15 @@ public class Enemy : Character, IKillable
     public EnemyBody EnemyBody { get { return Body as EnemyBody; } }
 
     public bool IsDead { get; private set; }
+    public MultiLock InvincibleLock { get; private set; } = new MultiLock();
 
     public event System.Action OnDeath;
 
     public void Initialize(EnemySettings settings)
     {
+        IsDead = false;
+        OnDeath = null;
+
         this.Settings = settings;
         LinearAcceleration = settings.linear_acceleration;
         LinearVelocity = settings.linear_velocity;
@@ -28,9 +32,6 @@ public class Enemy : Character, IKillable
         Rigidbody.mass = settings.mass;
         SetBody(settings.body);
         SetAI(settings.ai);
-
-        IsDead = false;
-        OnDeath = null;
     }
 
     protected override void OnUpdate()
@@ -38,6 +39,8 @@ public class Enemy : Character, IKillable
         base.OnUpdate();
         RepositionUpdate();
     }
+
+    public Vector3 GetPosition() => transform.position;
 
     public void RepositionUpdate()
     {
@@ -75,7 +78,7 @@ public class Enemy : Character, IKillable
         Rigidbody.AddTorque(angle * AngularAcceleration * Rigidbody.mass);
     }
     #region HEALTH
-    public bool CanKill() => !EnemyBody.HasActiveHealthDuds() && !IsDead;
+    public bool CanKill() => !EnemyBody.HasActiveHealthDuds() && !IsDead && InvincibleLock.IsFree;
 
     public void Kill()
     {
@@ -107,6 +110,15 @@ public class Enemy : Character, IKillable
         EnemyController.Instance.EnemyKilled(this);
     }
 
-    public Vector3 GetPosition() => transform.position;
+    public void SetInvincible(string id, float duration)
+    {
+        this.StartCoroutineWithID(Cr(), "invincible_" + GetInstanceID());
+        IEnumerator Cr()
+        {
+            InvincibleLock.AddLock(id);
+            yield return new WaitForSeconds(duration);
+            InvincibleLock.RemoveLock(id);
+        }
+    }
     #endregion
 }

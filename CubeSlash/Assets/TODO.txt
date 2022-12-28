@@ -2,5 +2,8 @@ TODO:
 Ability to refund level if you dont want an upgrade (unlock in meta layer)
 When body is flickering, abilities will break the game when used (do something else instead of setting inactive)
 Plants that can be destroyed for exp
-make shooter boss better attack instead of machine gun
 Fix getting multiple levels at the same time
+enemies (cells) that split, to replace the host cells
+experience respawns when picked up, which fucks up the trail (gotta reset the trail)
+Add sound to bosses
+Rework EXPLODE into something more easy to use

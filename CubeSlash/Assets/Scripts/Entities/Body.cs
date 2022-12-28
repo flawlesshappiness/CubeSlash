@@ -9,7 +9,6 @@ public class Body : MonoBehaviourExtended
     [SerializeField] public CircleCollider2D Collider;
     [SerializeField] public CircleCollider2D Trigger;
     [SerializeField] public ParticleSystem ps_death;
-    [SerializeField] public BodySkeleton skeleton;
 
     public float Size { get; set; } = 1f;
 

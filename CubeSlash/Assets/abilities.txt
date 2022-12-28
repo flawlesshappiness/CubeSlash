@@ -39,3 +39,4 @@ Lob projectile
 Movement speed up
 Chain lightning
 Leave behind something on kill? Trap?
+Dash backwards, AoE

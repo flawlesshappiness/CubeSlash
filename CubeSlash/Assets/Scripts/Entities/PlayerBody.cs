@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class PlayerBody : Body
 {
+    [SerializeField] public BodySkeleton skeleton;
+
     private List<Bodypart> bodyparts = new List<Bodypart>();
 
     public void ClearBodyparts()

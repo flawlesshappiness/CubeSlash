@@ -12,7 +12,7 @@ public class AI_BossHost : EntityAI
     {
         base.Initialize(enemy);
         this.StartCoroutineWithID(BeamCooldownCr(), "BeamCooldown_" + GetInstanceID());
-        Self.EnemyBody.OnDudKilled += dud => ShieldDuds(4);
+        Self.EnemyBody.OnDudKilled += dud => HideDuds(4);
     }
 
     private void FixedUpdate()

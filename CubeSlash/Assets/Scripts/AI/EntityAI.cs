@@ -107,4 +107,15 @@ public abstract class EntityAI : MonoBehaviour
             Self.EnemyBody.Duds.Where(d => d.IsActive()).ToList().ForEach(d => d.SetArmorActive(false));
         }
     }
+
+    protected void HideDuds(float duration)
+    {
+        StartCoroutine(Cr());
+        IEnumerator Cr()
+        {
+            Self.EnemyBody.Duds.Where(d => d.IsActive()).ToList().ForEach(d => d.SetDudActive(false));
+            yield return new WaitForSeconds(duration);
+            Self.EnemyBody.Duds.Where(d => d.IsActive()).ToList().ForEach(d => d.SetDudActive(true));
+        }
+    }
 }

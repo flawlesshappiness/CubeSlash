@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class AI_BossShooter : EntityAI
@@ -14,17 +15,18 @@ public class AI_BossShooter : EntityAI
     private bool ignore_state;
     private bool attacking;
     private float time_attack;
+    private float time_circle_attack;
 
-    private Transform t_eye;
+    private BossShooterBody body_shooter;
 
     public override void Initialize(Enemy enemy)
     {
         base.Initialize(enemy);
         ResetSpeed();
 
-        t_eye = Self.Body.GetTransform("eye");
+        body_shooter = enemy.Body.GetComponent<BossShooterBody>();
 
-        Self.EnemyBody.OnDudKilled += dud => ShieldDuds(5);
+        Self.EnemyBody.OnDudKilled += dud => HideDuds(5);
     }
 
     private void ResetSpeed()
@@ -56,13 +58,10 @@ public class AI_BossShooter : EntityAI
 
                 if (!attacking && Time.time > time_attack)
                 {
-                    if(AngleTowards(PlayerPosition).Abs() > 60)
+                    var close_to_player = DistanceToPlayer() < 20f;
+                    if (close_to_player)
                     {
-                        StartCoroutine(AttackSpinShoot());
-                    }
-                    else
-                    {
-                        StartCoroutine(AttackShootFreq());
+                        SelectAttack();
                     }
                 }
             }
@@ -82,39 +81,55 @@ public class AI_BossShooter : EntityAI
         }
     }
 
-    private IEnumerator AttackShootFreq()
+    private void SelectAttack()
+    {
+        if(Time.time > time_circle_attack + 20)
+        {
+            this.StartCoroutineWithID(AttackShootCircle(), "attack_" + GetInstanceID());
+            time_circle_attack = Time.time;
+        }
+        else if (AngleTowards(PlayerPosition).Abs() > 60)
+        {
+            this.StartCoroutineWithID(AttackSpinShoot(), "attack_"+GetInstanceID());
+        }
+        else
+        {
+            var rnd = Random.Range(0f, 1f);
+            if (rnd < 0.2f)
+            {
+                this.StartCoroutineWithID(AttackSpinShoot(), "attack_" + GetInstanceID());
+            }
+            else
+            {
+                this.StartCoroutineWithID(AttackShootArc(), "attack_" + GetInstanceID());
+            }
+        }
+    }
+
+    private IEnumerator AttackShootArc()
     {
         attacking = true;
         ignore_state = true;
 
-        // Telegraph
-        TelegraphShootLong(0);
+        var count_shots = 5;
+        var arc = 45;
+        var radius = 5f;
 
-        var timestampA = Time.time;
-        while(Time.time < timestampA + 1.5f)
-        {
-            Self.AngularVelocity = 200;
-            TurnTowards(PlayerPosition, 0);
-            yield return null;
-        }
+        body_shooter.SetEyesArc();
 
-        var time_start = Time.time;
-        var time_end = Time.time + 2f;
+        yield return new WaitForSeconds(1.0f);
 
-        // Shoot
-        while(Time.time < time_end)
-        {
-            var t = Mathf.Clamp01((Time.time - time_start) / (time_end - time_start));
-            Shoot(Random.Range(-15, 15));
-            Self.LinearVelocity = 7;
-            Self.AngularVelocity = Mathf.Lerp(50, 200, t);
-            TurnTowards(PlayerPosition, 0);
-            yield return new WaitForSeconds(0.1f + 0.7f * t);
-        }
+        TelegraphShortMany(count_shots, arc);
 
-        ResetSpeed();
-        time_attack = Time.time + Random.Range(5f, 7f);
+        yield return new WaitForSeconds(1f);
+
+        ShootMany(count_shots, arc, radius);
+        body_shooter.SetEyesSingle();
+        Self.Knockback(-transform.up * 300, true, true);
+
+        time_attack = Time.time + Random.Range(4f, 5f);
         attacking = false;
+        ignore_state = false;
     }
 
     private IEnumerator AttackSpinShoot()
@@ -126,64 +141,143 @@ public class AI_BossShooter : EntityAI
         var dir = -DirectionToPlayer();
 
         var linearMax = 6;
-        var angularMax = 200;
-        var count_shots = 5;
-        var arc = 45;
+        var angular_max = 200;
+        var count_shots = 8;
+        var arc = 60;
+        var radius = 5f;
 
-        Telegraph(count_shots, arc);
+        body_shooter.SetEyesArc();
+
+        yield return new WaitForSeconds(1f);
+
+        TelegraphShortMany(count_shots, arc);
 
         while (AngleTowards(PlayerPosition).Abs() < 175f)
         {
             Self.LinearVelocity = linearMax;
-            Self.AngularVelocity = angularMax;
+            Self.AngularVelocity = angular_max;
             Self.Turn(sign < 0);
             Self.Move(dir);
             yield return null;
         }
 
-        Telegraph(count_shots, arc);
+        TelegraphShortMany(count_shots, arc);
 
         while (AngleTowards(PlayerPosition).Abs() > 5)
         {
             var angle = AngleTowards(PlayerPosition);
             var t_angle = angle.Abs() / 30;
             Self.LinearVelocity = Mathf.Lerp(0, linearMax, t_angle);
-            Self.AngularVelocity = Mathf.Lerp(25, angularMax, t_angle);
+            Self.AngularVelocity = Mathf.Lerp(25, angular_max, t_angle);
             Self.Turn(sign < 0);
             Self.Move(dir);
             yield return null;
         }
 
-        var arc_per = arc / count_shots;
-        for (int i = -count_shots; i < count_shots + 1; i++)
-        {
-            Shoot(i * arc_per);
-        }
+        ShootMany(count_shots, arc, radius);
+        body_shooter.SetEyesSingle();
+        Self.Knockback(-transform.up * 300, true, true);
 
         ResetSpeed();
         time_attack = Time.time + Random.Range(5f, 7f);
         attacking = false;
+    }
 
-        void Telegraph(int count, float arc)
+    IEnumerator AttackShootCircle()
+    {
+        attacking = true;
+        ignore_state = true;
+
+        body_shooter.SetEyesCircle();
+
+        var duration = 7f;
+        Self.AngularVelocity = 25;
+        Self.AngularAcceleration = 10;
+        this.StartCoroutineWithID(TurnCr(duration), "turn_" + GetInstanceID());
+        HideDuds(duration);
+
+        yield return new WaitForSeconds(1.0f);
+
+        TelegraphCircle();
+
+        yield return new WaitForSeconds(1.0f);
+
+        for (int i = 0; i < 5; i++)
         {
-            var arc_per = arc / count;
-            for (int i = -count; i < count + 1; i++)
+            ShootCircle();
+            yield return new WaitForSeconds(1.0f);
+        }
+
+        body_shooter.SetEyesSingle();
+
+        ResetSpeed();
+
+        time_attack = Time.time + Random.Range(4f, 5f);
+        attacking = false;
+        ignore_state = false;
+
+        IEnumerator TurnCr(float duration)
+        {
+            var right = Random.Range(0, 2) == 0;
+            var time_end = Time.time + duration;
+            while(Time.time < time_end)
             {
-                TelegraphShootShort(i * arc_per);
+                Self.Turn(right);
+                yield return null;
             }
         }
     }
 
-    private void Shoot(float angle)
+    private void Shoot(Vector3 position, Vector3 direction)
     {
         var velocity_projectile = 10;
-        var dir = Quaternion.AngleAxis(angle, Vector3.forward) * transform.up;
         var p = Instantiate(prefab_projectile.gameObject).GetComponent<Projectile>();
-        p.transform.position = t_eye.position;
-        p.Rigidbody.velocity = dir.normalized * velocity_projectile;
-        p.SetDirection(dir);
+        p.transform.position = position;
+        p.Rigidbody.velocity = direction.normalized * velocity_projectile;
+        p.SetDirection(direction);
         p.Lifetime = 999f;
-        Self.Rigidbody.AddForce(-dir * 50 * Self.Rigidbody.mass);
+        //Self.Rigidbody.AddForce(-direction * 50 * Self.Rigidbody.mass);
+    }
+
+    private void Shoot(float angle, float radius)
+    {
+        var dir = Quaternion.AngleAxis(angle, Vector3.forward) * transform.up;
+        var pos_front = body_shooter.GetFrontPosition();
+        var position = pos_front - (transform.up * radius) + (dir * radius);
+        Shoot(position, dir);
+    }
+
+    private void ShootMany(int count_shots, float arc, float radius)
+    {
+        var arc_min = -arc * 0.5f;
+        var arc_max = arc * 0.5f;
+        for (int i = 0; i < count_shots; i++)
+        {
+            var t = (float)i / (count_shots - 1);
+            var angle = Mathf.Lerp(arc_min, arc_max, t);
+            Shoot(angle, radius);
+        }
+    }
+
+    private void ShootCircle()
+    {
+        var ts = body_shooter.GetCircleTransforms();
+        foreach(var t in ts)
+        {
+            Shoot(t.position, t.up);
+        }
+    }
+
+    private void TelegraphShortMany(int count, float arc)
+    {
+        var arc_min = -arc * 0.5f;
+        var arc_max = arc * 0.5f;
+        for (int i = 0; i < count; i++)
+        {
+            var t = (float)i / (count - 1);
+            var angle = Mathf.Lerp(arc_min, arc_max, t);
+            TelegraphShootShort(angle);
+        }
     }
 
     private void TelegraphShootLong(float angle)
@@ -192,7 +286,7 @@ public class AI_BossShooter : EntityAI
             .Duplicate()
             .Parent(transform)
             .Scale(Vector3.one)
-            .Position(t_eye.position)
+            .Position(body_shooter.GetFrontPosition())
             .Rotation(transform.rotation * Quaternion.AngleAxis(angle, Vector3.forward))
             .Destroy(3f);
     }
@@ -203,8 +297,25 @@ public class AI_BossShooter : EntityAI
             .Duplicate()
             .Parent(transform)
             .Scale(Vector3.one)
-            .Position(t_eye.position)
+            .Position(body_shooter.GetFrontPosition())
             .Rotation(transform.rotation * Quaternion.AngleAxis(angle, Vector3.forward))
             .Destroy(3f);
+    }
+
+    private void TelegraphCircle()
+    {
+        var eye_transforms = body_shooter.GetCircleTransforms();
+
+        foreach(var t in eye_transforms)
+        {
+            var angle = Vector3.SignedAngle(Vector3.up, t.up, Vector3.forward);
+            var psd = Resources.Load<ParticleSystem>("particles/ps_telegraph_shoot_short")
+            .Duplicate()
+            .Parent(transform)
+            .Scale(Vector3.one)
+            .Position(t.position)
+            .Rotation(transform.rotation * Quaternion.AngleAxis(angle, Vector3.forward))
+            .Destroy(3f);
+        }
     }
 }

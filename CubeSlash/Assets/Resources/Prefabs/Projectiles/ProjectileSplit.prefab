@@ -5073,11 +5073,11 @@ MonoBehaviour:
   sfx_death:
     reference:
       Guid:
-        Data1: 771590777
-        Data2: 1117013070
-        Data3: 729043125
-        Data4: 1166786284
-      Path: event:/Game/Abilities/split_projectile_death_001
+        Data1: 0
+        Data2: 0
+        Data3: 0
+        Data4: 0
+      Path: 
   ps_death: {fileID: 3411674202280282923}
   ps_trail: {fileID: 4236737699428214933}
 --- !u!50 &2903384162585443172

@@ -12,12 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c301fa7d26535e4cb7056a730ebca5e, type: 3}
   m_Name: Boss_Shooter
   m_EditorClassIdentifier: 
-  body: {fileID: 5455034702171242308, guid: 85e579033e61c1b46a34e2dccd45913a, type: 3}
+  body: {fileID: 1232204010968448353, guid: 85e579033e61c1b46a34e2dccd45913a, type: 3}
   linear_acceleration: 5
   linear_velocity: 3
   linear_drag: 20
-  angular_acceleration: 5
-  angular_velocity: 50
+  angular_acceleration: 3
+  angular_velocity: 75
   size: 10
   mass: 100
   ai: {fileID: -4310067352924480310, guid: 58b68234838ebb3488f554bf0e889c71, type: 3}

@@ -6,7 +6,6 @@ using UnityEngine;
 public class Projectile : MonoBehaviourExtended
 {
     [SerializeField] private bool hits_player, hits_enemy;
-    [SerializeField] private FMODEventReference sfx_death;
     [SerializeField] private ParticleSystem ps_death, ps_trail;
     public float TurnSpeed { get; set; }
     public float Drag { get; set; } = 1f;
@@ -134,8 +133,6 @@ public class Projectile : MonoBehaviourExtended
             ps_trail.transform.parent = null;
             Destroy(ps_trail.gameObject, 2);
         }
-
-        sfx_death.PlayWithTimeLimit(0.1f);
 
         gameObject.SetActive(false);
         Destroy(gameObject);
