@@ -8,6 +8,8 @@ public class AI_Beam : EntityAI
     [SerializeField] private float beam_width;
     [SerializeField] private Color beam_color;
     [SerializeField] private ChargeBeam template_beam;
+    [SerializeField] private FMODEventReference sfx_charge;
+    [SerializeField] private FMODEventReference sfx_shoot;
 
     private Vector3 pos_player_prev;
     private float cd_shoot;
@@ -75,6 +77,8 @@ public class AI_Beam : EntityAI
             var time_start = Time.time;
             var time_end = time_start + duration;
             beam.AnimateShowPreview(true, duration);
+            sfx_charge.PlayWithPitch(5);
+
             while(Time.time < time_end)
             {
                 var t = (Time.time - time_start) / duration;
@@ -85,6 +89,9 @@ public class AI_Beam : EntityAI
             }
 
             beam.AnimateFire();
+            sfx_charge.Stop();
+            sfx_shoot.PlayWithPitch(5);
+
             Shoot();
             cd_shoot = Time.time + cooldown_shoot;
             Self.Knockback(-Self.Body.transform.up * 600f, true, true);

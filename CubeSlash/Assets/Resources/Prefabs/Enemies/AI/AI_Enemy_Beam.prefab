@@ -48,3 +48,19 @@ MonoBehaviour:
   beam_width: 2
   beam_color: {r: 0.8018868, g: 0.3290762, b: 0.3290762, a: 1}
   template_beam: {fileID: 4577559274492983157, guid: 7890aea33356ee846b6b9000844b46ee, type: 3}
+  sfx_charge:
+    reference:
+      Guid:
+        Data1: 264187058
+        Data2: 1206686304
+        Data3: 1389975950
+        Data4: 999229046
+      Path: event:/Game/Abilities/charge_start_001
+  sfx_shoot:
+    reference:
+      Guid:
+        Data1: 927798703
+        Data2: 1119834803
+        Data3: 447513531
+        Data4: 1199017499
+      Path: event:/Game/Abilities/charge_end_001

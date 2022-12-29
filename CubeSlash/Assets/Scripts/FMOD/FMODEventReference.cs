@@ -59,7 +59,7 @@ public class FMODEventReference
     public void PlayWithPitch(int pitch)
     {
         var delta_note = 1 / 12f;
-        var delta_pitch = delta_note * pitch;
+        var delta_pitch = 1f + delta_note * pitch;
         Play(e =>
         {
             e.setPitch(delta_pitch);
