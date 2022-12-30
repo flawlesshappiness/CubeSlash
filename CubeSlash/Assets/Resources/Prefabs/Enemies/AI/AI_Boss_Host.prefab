@@ -45,3 +45,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   color_beam: {r: 0.6792453, g: 0.24029905, b: 0.24029905, a: 1}
   speed_rotate_min_max: {x: 0.5, y: 3}
+  sfx_charge:
+    reference:
+      Guid:
+        Data1: 264187058
+        Data2: 1206686304
+        Data3: 1389975950
+        Data4: 999229046
+      Path: event:/Game/Abilities/charge_start_001
+  sfx_shoot:
+    reference:
+      Guid:
+        Data1: 927798703
+        Data2: 1119834803
+        Data3: 447513531
+        Data4: 1199017499
+      Path: event:/Game/Abilities/charge_end_001

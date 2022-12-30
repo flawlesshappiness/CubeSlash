@@ -44,4 +44,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   template_wall: {fileID: 7244421911640677601, guid: c48d9ab44a1e61b4db14ec8e5b5ba12f, type: 3}
+  template_pillar: {fileID: 2881529307739850907, guid: c7f4d2895e7cfb14d929441d010398cd, type: 3}
   template_dud: {fileID: 3405480637174817150, guid: cb9a48fd5be8c2540ade64d9bdb5d536, type: 3}

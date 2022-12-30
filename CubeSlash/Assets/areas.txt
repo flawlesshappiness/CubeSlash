@@ -26,3 +26,10 @@ AREA 5: Abyss
 Color: Black
 Enemy: 1 big cell becomes 2 cells becomes 4 smaller cells
 Boss: 
+
+
+
+
+
+Enemy ideas:
+Jellyfish-like movement

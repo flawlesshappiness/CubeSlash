@@ -15,21 +15,25 @@ MonoBehaviour:
   duration: 60
   size: 100
   frequency_spawn_enemy: 0.9
-  count_enemy_active: 150
+  count_enemy_active: 50
   enemies:
   - name: Enemy_Weak (Infinite)
     enemy: {fileID: 11400000, guid: cfcae6b5621e50448a5872f62f68b1ba, type: 2}
     chance: 1
     max: 0
-  - name: Enemy_Host2 (Infinite)
+  - name: Enemy_Host2 (5)
     enemy: {fileID: 11400000, guid: f41298fdccde658438bc50f38c6c1f2d, type: 2}
     chance: 0.25
-    max: 0
+    max: 5
   - name: Enemy_Shooter (25)
     enemy: {fileID: 11400000, guid: db0782c6ad8291647b08bacf671fe0eb, type: 2}
     chance: 0.25
     max: 25
-  bosses: []
+  bosses:
+  - name: Boss_Plant
+    enemy: {fileID: 11400000, guid: 8d0d7ea4526316246bbdc4a47f15c606, type: 2}
+    chance: 1
+    max: 1
   frequency_spawn_experience: 1
   count_experience_active: 25
   area: {fileID: 11400000, guid: d0a0597e506bddc4a9a4835efccc3573, type: 2}

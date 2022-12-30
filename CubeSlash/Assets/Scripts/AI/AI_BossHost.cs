@@ -6,6 +6,8 @@ public class AI_BossHost : EntityAI
 {
     [SerializeField] private Color color_beam;
     [SerializeField] private Vector2 speed_rotate_min_max;
+    [SerializeField] private FMODEventReference sfx_charge, sfx_shoot;
+
     private Vector3 destination;
 
     public override void Initialize(Enemy enemy)
@@ -83,7 +85,12 @@ public class AI_BossHost : EntityAI
             beam.UpdateVisual();
             beam.AnimateShowPreview(true);
 
+            sfx_charge.Play();
+
             yield return new WaitForSeconds(2f);
+
+            sfx_charge.Stop();
+            sfx_shoot.Play();
 
             dir = dud.transform.up;
             Physics2D.CircleCastAll(dud.transform.position, width * 0.25f, dir, length)

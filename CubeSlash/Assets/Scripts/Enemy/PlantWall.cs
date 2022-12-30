@@ -8,9 +8,7 @@ public class PlantWall : Obstacle
     [SerializeField] private Transform pivot_dud;
     [SerializeField] private ParticleSystem ps_death;
 
-    public Vector3 GetDudPosition() => pivot_dud.position;
-    public Vector3 GetDudScale() => pivot_dud.localScale;
-    public Quaternion GetDudRotation() => pivot_dud.rotation;
+    public Transform GetDudTransform() => pivot_dud;
 
     public CustomCoroutine AnimateAppear()
     {
@@ -30,7 +28,7 @@ public class PlantWall : Obstacle
         }
     }
 
-    public void Destroy()
+    public void Kill()
     {
         ps_death.Duplicate()
             .Position(transform.position)

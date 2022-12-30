@@ -5,8 +5,7 @@ public class HealthDud : MonoBehaviour, IKillable
 {
     [SerializeField] private GameObject pivot;
     [SerializeField] private GameObject g_armor;
-    [SerializeField] private ParticleSystem ps_kill;
-    [SerializeField] private ParticleSystem ps_ooze;
+    [SerializeField] private ParticleSystem ps_kill, ps_ooze, ps_glow;
     [SerializeField] private AnimationCurve ac_armor_active;
     [SerializeField] private AnimationCurve ac_armor_inactive;
     [SerializeField] private FMODEventReference sfx_death;
@@ -54,6 +53,11 @@ public class HealthDud : MonoBehaviour, IKillable
         {
             pivot.transform.localScale = end;
         }
+    }
+
+    public void SetGlowEnabled(bool enabled)
+    {
+        ps_glow.SetEmissionEnabled(enabled);
     }
 
     public bool IsActive() => !Dead;

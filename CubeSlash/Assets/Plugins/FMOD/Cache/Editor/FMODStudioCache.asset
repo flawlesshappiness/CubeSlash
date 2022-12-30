@@ -42,7 +42,7 @@ MonoBehaviour:
   Path: Assets/FMOD/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 638078650967955454
+  lastModified: 638080300943532224
   FileSizes: []
   Exists: 1
 --- !u!114 &-6648804991705279764
@@ -522,13 +522,42 @@ MonoBehaviour:
   - {fileID: 7863103116885566477}
   - {fileID: -5770864616696661268}
   - {fileID: 3917951965893975697}
+  - {fileID: 2256211412419773527}
+  - {fileID: 5992827859230917708}
   EditorParameters: []
   MasterBanks:
   - {fileID: -8060980804293988741}
   StringsBanks:
   - {fileID: 5917708036578608240}
-  cacheTime: 638078650967975452
+  cacheTime: 638080300943562240
   cacheVersion: 131593
+--- !u!114 &2256211412419773527
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Game/Enemy/plant_pillar_spawn_001
+  m_EditorClassIdentifier: 
+  Path: event:/Game/Enemy/plant_pillar_spawn_001
+  Guid:
+    Data1: 1492486598
+    Data2: 1273588589
+    Data3: -1187495024
+    Data4: 2048756952
+  Banks:
+  - {fileID: -8060980804293988741}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
 --- !u!114 &2267956152613183766
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -760,11 +789,38 @@ MonoBehaviour:
   Path: Assets/FMOD/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 638078650967975452
+  lastModified: 638080300943562240
   FileSizes:
   - Name: 
-    Value: 2210
+    Value: 2314
   Exists: 1
+--- !u!114 &5992827859230917708
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Game/Enemy/plant_pillar_warn_001
+  m_EditorClassIdentifier: 
+  Path: event:/Game/Enemy/plant_pillar_warn_001
+  Guid:
+    Data1: -1904204150
+    Data2: 1087882346
+    Data3: -217691242
+    Data4: 873599701
+  Banks:
+  - {fileID: -8060980804293988741}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
 --- !u!114 &6642678424488806187
 MonoBehaviour:
   m_ObjectHideFlags: 0
