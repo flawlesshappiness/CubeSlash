@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9c301fa7d26535e4cb7056a730ebca5e, type: 3}
+  m_Name: Boss_Plant
+  m_EditorClassIdentifier: 
+  body: {fileID: 8995362243463947397, guid: a9ef3d1755cc74d43aa924d6e8512470, type: 3}
+  linear_acceleration: 5
+  linear_velocity: 3
+  linear_drag: 20
+  angular_acceleration: 3
+  angular_velocity: 75
+  size: 10
+  mass: 100
+  ai: {fileID: -1242169110560231747, guid: 0df5d05b9bec3f544ad0f74d26c1a5bd, type: 3}

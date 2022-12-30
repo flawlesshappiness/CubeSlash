@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4576115086430819632}
   - component: {fileID: 8224403435722928764}
   m_Layer: 0
-  m_Name: AI_BossHost
+  m_Name: AI_Boss_Host
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

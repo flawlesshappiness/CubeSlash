@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class Enemy : Character, IKillable
+public class Enemy : Character, IKillable, IHurt
 {
     [SerializeField] private FMODEventReference event_death;
     private EntityAI AI { get; set; }
@@ -85,11 +85,16 @@ public class Enemy : Character, IKillable
         if (!IsDead)
         {
             IsDead = true;
-            Body.ps_death.Duplicate()
-            .Position(transform.position)
-            .Scale(Vector3.one * Settings.size)
-            .Destroy(10)
-            .Play();
+
+            // PS
+            if(Body.ps_death != null)
+            {
+                Body.ps_death.Duplicate()
+                    .Position(transform.position)
+                    .Scale(Vector3.one * Settings.size)
+                    .Destroy(10)
+                    .Play();
+            }
 
             FMODController.Instance.PlayWithLimitDelay(event_death);
 
@@ -120,5 +125,8 @@ public class Enemy : Character, IKillable
             InvincibleLock.RemoveLock(id);
         }
     }
+    #endregion
+    #region IHURT
+    public bool CanHurt() => true;
     #endregion
 }

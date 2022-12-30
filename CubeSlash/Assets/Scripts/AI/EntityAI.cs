@@ -19,26 +19,6 @@ public abstract class EntityAI : MonoBehaviour
         Destroy(gameObject);
     }
 
-    public virtual void Knockback(float time, Vector3 velocity, float drag)
-    {
-        StartCoroutine(Cr());
-
-        IEnumerator Cr()
-        {
-            var time_end = Time.time + time;
-            Self.MovementLock.AddLock("Knockback");
-            Self.DragLock.AddLock("Knockback");
-            Self.Rigidbody.velocity = velocity;
-            while (Time.time < time_end)
-            {
-                Self.Rigidbody.velocity = Self.Rigidbody.velocity * drag;
-                yield return null;
-            }
-            Self.MovementLock.RemoveLock("Knockback");
-            Self.DragLock.RemoveLock("Knockback");
-        }
-    }
-
     protected Vector3 GetPositionNearPlayer()
     {
         return Player.Instance.transform.position + Random.insideUnitCircle.ToVector3() * Random.Range(1f, 15f);

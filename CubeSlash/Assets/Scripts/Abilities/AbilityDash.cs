@@ -93,6 +93,11 @@ public class AbilityDash : Ability
                     yield return new WaitForFixedUpdate();
                 }
                 clone.DashUpdate();
+
+                if(victim != null)
+                {
+                    event_dash_impact.PlayWithTimeLimit(0.1f);
+                }
             }
             
             AbilityDashClone CreateClone()
@@ -174,12 +179,6 @@ public class AbilityDash : Ability
                 Player.KillEnemy(k);
                 count++;
             });
-
-        if(count > 0)
-        {
-            event_dash_impact.PlayWithTimeLimit(0.1f);
-        }
-
         return count;
     }
 

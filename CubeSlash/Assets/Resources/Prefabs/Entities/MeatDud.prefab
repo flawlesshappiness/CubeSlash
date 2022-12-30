@@ -9738,7 +9738,7 @@ GameObject:
   - component: {fileID: 5090685796167623138}
   - component: {fileID: 3405480637174817150}
   m_Layer: 0
-  m_Name: HealthDud
+  m_Name: MeatDud
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9922,7 +9922,7 @@ GameObject:
   - component: {fileID: 6098737048098404075}
   - component: {fileID: 5905226287541430336}
   m_Layer: 0
-  m_Name: Body
+  m_Name: Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

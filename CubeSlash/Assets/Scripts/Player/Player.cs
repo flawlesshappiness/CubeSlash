@@ -281,9 +281,9 @@ public class Player : Character
     #region ENEMY
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        var enemy = collision.gameObject.GetComponentInParent<Enemy>();
-        if (enemy == null) return;
-        Damage(enemy.transform.position);
+        var hurt = collision.gameObject.GetComponentInParent<IHurt>();
+        if (hurt == null) return;
+        Damage(hurt.GetPosition());
     }
 
     public static void PushEnemiesInArea(Vector3 position, float radius, float force, AnimationCurve curve_force = null)
