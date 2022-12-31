@@ -26,6 +26,6 @@ MonoBehaviour:
     enemy: {fileID: 11400000, guid: 4fe64771ce63226478a6456e661756ff, type: 2}
     chance: 1
     max: 0
-  frequency_spawn_experience: 1
-  count_experience_active: 25
+  frequency_spawn_experience: 0.5
+  count_experience_active: 40
   area: {fileID: 11400000, guid: 05cda483061ecb540840d2b69f3e52ca, type: 2}

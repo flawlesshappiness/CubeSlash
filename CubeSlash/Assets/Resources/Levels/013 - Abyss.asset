@@ -39,5 +39,5 @@ MonoBehaviour:
     max: 5
   bosses: []
   frequency_spawn_experience: 1
-  count_experience_active: 25
+  count_experience_active: 0
   area: {fileID: 11400000, guid: 57a6e213ab910cb4bb164a7019edbd19, type: 2}

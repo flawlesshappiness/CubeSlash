@@ -17,7 +17,11 @@ MonoBehaviour:
   frequency_spawn_enemy: 0.25
   count_enemy_active: 999
   enemies: []
-  bosses: []
+  bosses:
+  - name: Boss_Shooter
+    enemy: {fileID: 11400000, guid: f1d890245d5d5544c964565e2efdfaca, type: 2}
+    chance: 1
+    max: 1
   frequency_spawn_experience: 0.25
   count_experience_active: 0
   area: {fileID: 11400000, guid: 426a543348b726d4b8ff81b9d40961dd, type: 2}
