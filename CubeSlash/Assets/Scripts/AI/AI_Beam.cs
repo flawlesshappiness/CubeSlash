@@ -24,6 +24,8 @@ public class AI_Beam : EntityAI
         beam.SetColor(beam_color);
         beam.SetWidth(beam_width);
         beam.SetAlpha(0);
+
+        Self.OnDeath += OnDeath;
     }
 
     private void FixedUpdate()
@@ -32,6 +34,11 @@ public class AI_Beam : EntityAI
         MoveUpdate();
         BeamUpdate();
         ShootUpdate();
+    }
+
+    private void OnDeath()
+    {
+        sfx_charge.Stop();
     }
 
     private void BeamUpdate()

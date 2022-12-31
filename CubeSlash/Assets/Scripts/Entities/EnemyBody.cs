@@ -42,7 +42,7 @@ public class EnemyBody : Body
             {
                 if (t != parent_health_duds)
                 {
-                    var dud = Instantiate(Resources.Load<HealthDud>("Prefabs/Entities/HealthDud"), t);
+                    var dud = Instantiate(Resources.Load<HealthDud>("Prefabs/Entities/MeatDud"), t);
                     dud.transform.SetGlobalScale(t.localScale);
                     dud.transform.localPosition = Vector3.zero;
                     dud.transform.localRotation = Quaternion.identity;

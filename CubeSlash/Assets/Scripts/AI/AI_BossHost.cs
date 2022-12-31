@@ -15,6 +15,7 @@ public class AI_BossHost : EntityAI
         base.Initialize(enemy);
         this.StartCoroutineWithID(BeamCooldownCr(), "BeamCooldown_" + GetInstanceID());
         Self.EnemyBody.OnDudKilled += dud => HideDuds(4);
+        Self.OnDeath += OnDeath;
     }
 
     private void FixedUpdate()
@@ -35,6 +36,11 @@ public class AI_BossHost : EntityAI
     private void LateUpdate()
     {
         RotateBodyUpdate();
+    }
+
+    private void OnDeath()
+    {
+        sfx_charge.Stop();
     }
 
     private void RotateBodyUpdate()
@@ -85,7 +91,7 @@ public class AI_BossHost : EntityAI
             beam.UpdateVisual();
             beam.AnimateShowPreview(true);
 
-            sfx_charge.Play();
+            sfx_charge.PlayWithTimeLimit(0.2f);
 
             yield return new WaitForSeconds(2f);
 

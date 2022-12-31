@@ -14,19 +14,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   duration: 300
   size: 100
-  frequency_spawn_enemy: 0.7
+  frequency_spawn_enemy: 0.5
   count_enemy_active: 150
   enemies:
-  - name: Enemy_Weak (50)
+  - name: Enemy_Weak (Infinite)
     enemy: {fileID: 11400000, guid: cfcae6b5621e50448a5872f62f68b1ba, type: 2}
     chance: 1
-    max: 50
-  - name: Enemy_Host2 (2)
+    max: 0
+  - name: Enemy_Host2 (15)
     enemy: {fileID: 11400000, guid: f41298fdccde658438bc50f38c6c1f2d, type: 2}
     chance: 0.25
-    max: 2
-  - name: Enemy_Shooter (5)
+    max: 15
+  - name: Enemy_Shooter (10)
     enemy: {fileID: 11400000, guid: db0782c6ad8291647b08bacf671fe0eb, type: 2}
+    chance: 0.25
+    max: 10
+  - name: Enemy_Beam (5)
+    enemy: {fileID: 11400000, guid: e3fdf9a9032f5a547809171c6941ee82, type: 2}
     chance: 0.25
     max: 5
   bosses: []
