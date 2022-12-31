@@ -12,14 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2a24aa1140318f84bb86c4b408b90009, type: 3}
   m_Name: Ocean
   m_EditorClassIdentifier: 
-  color_fog: {r: 0.08235294, g: 0.27450982, b: 0.54901963, a: 1}
+  color_fog: {r: 0.04500001, g: 0.21176468, b: 0.45, a: 1}
   color_bg: {r: 0.023529412, g: 0.02745098, b: 0.101960786, a: 1}
   ac_alpha_fog:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0.7
+      value: 0.6
       inSlope: -0.0041285106
       outSlope: -0.0041285106
       tangentMode: 0
@@ -29,11 +29,11 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 1
       value: 0
-      inSlope: -0.7
-      outSlope: -0.7
-      tangentMode: 34
+      inSlope: -1.9173262
+      outSlope: -1.9173262
+      tangentMode: 0
       weightedMode: 0
-      inWeight: 0.33333334
+      inWeight: 0.026570022
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
@@ -47,9 +47,16 @@ MonoBehaviour:
     count_sprite: 0
     sprites: []
     particles:
-    - {fileID: 7935337046598179359, guid: 4b69278ff55303c4a83b81a88ad7e1a1, type: 3}
     - {fileID: 6471937910845384915, guid: 4227469584206424696bac83a7f5da41, type: 3}
   - name: 1
+    size_sprite_min: 0
+    size_sprite_max: 0
+    count_sprite: 0
+    sprites: []
+    particles:
+    - {fileID: 7935337046598179359, guid: 4b69278ff55303c4a83b81a88ad7e1a1, type: 3}
+    - {fileID: 6471937910845384915, guid: 4227469584206424696bac83a7f5da41, type: 3}
+  - name: 2
     size_sprite_min: 0
     size_sprite_max: 0
     count_sprite: 0

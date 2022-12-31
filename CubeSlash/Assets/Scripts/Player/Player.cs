@@ -520,9 +520,8 @@ public class Player : Character
 
     public void ResetExperience()
     {
-        var t_level = Level / (float)settings.experience_level_max;
-        var t_exp = settings.curve_experience.Evaluate(t_level);
-        Experience.Max = (int)(Mathf.Lerp(settings.experience_min, settings.experience_max, t_exp));
+        var max = (int)settings.curve_experience.Evaluate(Level);
+        Experience.Max = max;
         Experience.Value = Experience.Min;
         HasLevelledUp = false;
     }

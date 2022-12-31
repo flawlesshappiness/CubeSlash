@@ -15,7 +15,7 @@ public class StartView : View
         btn_quit.onClick.AddListener(ClickQuit);
 
         EventSystemController.Instance.SetDefaultSelection(btn_play.gameObject);
-        BackgroundController.Instance.FadeToLevel(LevelDatabase.Instance.levels[0], 5);
+        BackgroundController.Instance.FadeToLevel(LevelDatabase.Instance.levels[0]);
 
         btn_play.SetSelectOnHover(true);
         btn_options.SetSelectOnHover(true);

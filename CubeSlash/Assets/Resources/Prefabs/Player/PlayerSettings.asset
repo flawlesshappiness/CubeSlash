@@ -20,44 +20,41 @@ MonoBehaviour:
   angular_velocity: 0
   size: 1.25
   mass: 1
-  experience_level_max: 50
-  experience_min: 10
-  experience_max: 400
   curve_experience:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
-      inSlope: 0.4
-      outSlope: 0.4
-      tangentMode: 34
-      weightedMode: 0
+      value: 15
+      inSlope: 1.7182008
+      outSlope: 1.7182008
+      tangentMode: 0
+      weightedMode: 3
       inWeight: 0
+      outWeight: 0.28378662
+    - serializedVersion: 3
+      time: 10
+      value: 50.000004
+      inSlope: 6.016358
+      outSlope: 6.016358
+      tangentMode: 0
+      weightedMode: 3
+      inWeight: 0.51337516
+      outWeight: 0.6411761
+    - serializedVersion: 3
+      time: 25
+      value: 150
+      inSlope: 6.333333
+      outSlope: 6.333333
+      tangentMode: 34
+      weightedMode: 3
+      inWeight: 0.33333334
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 0.25
-      value: 0.1
-      inSlope: 0.4295645
-      outSlope: 0.4295645
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.12089775
-    - serializedVersion: 3
-      time: 0.8
-      value: 0.5
-      inSlope: 0.97941285
-      outSlope: 0.97941285
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.34550253
-    - serializedVersion: 3
-      time: 1
-      value: 1
-      inSlope: 2.5000002
-      outSlope: 2.5000002
+      time: 50
+      value: 300
+      inSlope: 6
+      outSlope: 6
       tangentMode: 34
       weightedMode: 0
       inWeight: 0.33333334

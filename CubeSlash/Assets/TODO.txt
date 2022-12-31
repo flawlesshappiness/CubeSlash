@@ -1,8 +1,6 @@
 TODO:
 Ability to refund level if you dont want an upgrade (unlock in meta layer)
 Plants that can be destroyed for exp
-Fix getting multiple levels at the same time
 Rework EXPLODE into something more easy to use
-particle systems parallax
 
 Sometimes beam persists??

@@ -16,11 +16,7 @@ MonoBehaviour:
   size: 100
   frequency_spawn_enemy: 0.25
   count_enemy_active: 999
-  enemies:
-  - name: Enemy_Beam (1)
-    enemy: {fileID: 11400000, guid: e3fdf9a9032f5a547809171c6941ee82, type: 2}
-    chance: 1
-    max: 1
+  enemies: []
   bosses: []
   frequency_spawn_experience: 0.25
   count_experience_active: 0
