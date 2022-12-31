@@ -12,15 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed170f98ca580f243b98b5b4d9a80757, type: 3}
   m_Name: 015 - Abyss (Boss)
   m_EditorClassIdentifier: 
-  duration: 300
+  duration: 60
   size: 100
   frequency_spawn_enemy: 0.3
-  count_enemy_active: 150
+  count_enemy_active: 9999
   enemies:
-  - name: Enemy_Weak (Infinite)
+  - name: Enemy_Weak (500)
     enemy: {fileID: 11400000, guid: cfcae6b5621e50448a5872f62f68b1ba, type: 2}
     chance: 1
-    max: 0
+    max: 500
   - name: Enemy_Host2 (15)
     enemy: {fileID: 11400000, guid: f41298fdccde658438bc50f38c6c1f2d, type: 2}
     chance: 0.25
@@ -31,6 +31,10 @@ MonoBehaviour:
     max: 10
   - name: Enemy_Beam (5)
     enemy: {fileID: 11400000, guid: e3fdf9a9032f5a547809171c6941ee82, type: 2}
+    chance: 0.25
+    max: 5
+  - name: Enemy_Host4 (5)
+    enemy: {fileID: 11400000, guid: 5103badcabd8e2c42be0237f2f73cad1, type: 2}
     chance: 0.25
     max: 5
   bosses: []

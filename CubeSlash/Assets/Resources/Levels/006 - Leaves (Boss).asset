@@ -15,12 +15,12 @@ MonoBehaviour:
   duration: 60
   size: 100
   frequency_spawn_enemy: 1
-  count_enemy_active: 150
+  count_enemy_active: 9999
   enemies:
-  - name: Enemy_Weak (Infinite)
+  - name: Enemy_Weak (200)
     enemy: {fileID: 11400000, guid: cfcae6b5621e50448a5872f62f68b1ba, type: 2}
     chance: 1
-    max: 0
+    max: 200
   - name: Enemy_Host2 (1)
     enemy: {fileID: 11400000, guid: f41298fdccde658438bc50f38c6c1f2d, type: 2}
     chance: 999

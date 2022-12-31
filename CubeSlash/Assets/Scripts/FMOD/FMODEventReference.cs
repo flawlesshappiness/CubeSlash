@@ -33,7 +33,7 @@ public class FMODEventReference
         return _info;
     }
 
-    public void Stop(FMOD.Studio.STOP_MODE mode = FMOD.Studio.STOP_MODE.IMMEDIATE)
+    public void Stop(FMOD.Studio.STOP_MODE mode = FMOD.Studio.STOP_MODE.ALLOWFADEOUT)
     {
         current_instance.stop(mode);
     }

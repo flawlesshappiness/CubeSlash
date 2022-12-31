@@ -42,7 +42,7 @@ MonoBehaviour:
   Path: Assets/FMOD/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 638080300943532224
+  lastModified: 638080512528468761
   FileSizes: []
   Exists: 1
 --- !u!114 &-6648804991705279764
@@ -423,6 +423,33 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 0
+--- !u!114 &-516832858661760120
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Game/Abilities/charge_idle_002
+  m_EditorClassIdentifier: 
+  Path: event:/Game/Abilities/charge_idle_002
+  Guid:
+    Data1: 1625743898
+    Data2: 1281816307
+    Data3: -1112447579
+    Data4: 96023982
+  Banks:
+  - {fileID: -8060980804293988741}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 0
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 8000
 --- !u!114 &-243892825821260796
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -524,12 +551,14 @@ MonoBehaviour:
   - {fileID: 3917951965893975697}
   - {fileID: 2256211412419773527}
   - {fileID: 5992827859230917708}
+  - {fileID: -516832858661760120}
+  - {fileID: 7165123541163880063}
   EditorParameters: []
   MasterBanks:
   - {fileID: -8060980804293988741}
   StringsBanks:
   - {fileID: 5917708036578608240}
-  cacheTime: 638080300943562240
+  cacheTime: 638080512528498763
   cacheVersion: 131593
 --- !u!114 &2256211412419773527
 MonoBehaviour:
@@ -789,10 +818,10 @@ MonoBehaviour:
   Path: Assets/FMOD/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 638080300943562240
+  lastModified: 638080512528498763
   FileSizes:
   - Name: 
-    Value: 2314
+    Value: 2402
   Exists: 1
 --- !u!114 &5992827859230917708
 MonoBehaviour:
@@ -848,6 +877,33 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 0
+--- !u!114 &7165123541163880063
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Game/Abilities/charge_start_002
+  m_EditorClassIdentifier: 
+  Path: event:/Game/Abilities/charge_start_002
+  Guid:
+    Data1: 630917250
+    Data2: 1214473809
+    Data3: 1052052410
+    Data4: -297316490
+  Banks:
+  - {fileID: -8060980804293988741}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 0
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 8000
 --- !u!114 &7863103116885566477
 MonoBehaviour:
   m_ObjectHideFlags: 0

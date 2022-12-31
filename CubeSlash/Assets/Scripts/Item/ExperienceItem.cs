@@ -10,9 +10,16 @@ public class ExperienceItem : Item
 
     private ExperienceType type_experience;
 
+    public override void Initialize()
+    {
+        base.Initialize();
+        trail.enabled = true;
+    }
+
     public override void Despawn()
     {
         base.Despawn();
+        trail.enabled = false;
         ItemController.Instance.OnExperienceDespawned(this);
     }
 

@@ -19382,19 +19382,19 @@ MonoBehaviour:
   sfx_charge:
     reference:
       Guid:
-        Data1: 264187058
-        Data2: 1206686304
-        Data3: 1389975950
-        Data4: 999229046
-      Path: event:/Game/Abilities/charge_start_001
+        Data1: 630917250
+        Data2: 1214473809
+        Data3: 1052052410
+        Data4: -297316490
+      Path: event:/Game/Abilities/charge_start_002
   sfx_charge_idle:
     reference:
       Guid:
-        Data1: 1183244009
-        Data2: 1291060210
-        Data3: -1672864599
-        Data4: 1720805592
-      Path: event:/Game/Abilities/charge_idle_001
+        Data1: 1625743898
+        Data2: 1281816307
+        Data3: -1112447579
+        Data4: 96023982
+      Path: event:/Game/Abilities/charge_idle_002
   sfx_shoot:
     reference:
       Guid:

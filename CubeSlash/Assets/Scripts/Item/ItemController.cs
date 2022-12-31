@@ -56,6 +56,22 @@ public class ItemController : Singleton
         return e;
     }
 
+    public ExperienceItem SpawnPlant(Vector3 position)
+    {
+        var e = SpawnExperience(position);
+        e.Initialize();
+        e.SetPlant();
+        return e;
+    }
+
+    public ExperienceItem SpawnMeat(Vector3 position)
+    {
+        var e = SpawnExperience(position);
+        e.Initialize();
+        e.SetMeat();
+        return e;
+    }
+
     private void ExtendPool(int count)
     {
         for (int i = 0; i < count; i++)

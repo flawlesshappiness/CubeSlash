@@ -1,8 +1,8 @@
 TODO:
 Ability to refund level if you dont want an upgrade (unlock in meta layer)
-When body is flickering, abilities will break the game when used (do something else instead of setting inactive)
 Plants that can be destroyed for exp
 Fix getting multiple levels at the same time
-experience respawns when picked up, which fucks up the trail (gotta reset the trail)
 Rework EXPLODE into something more easy to use
 particle systems parallax
+
+Sometimes beam persists??

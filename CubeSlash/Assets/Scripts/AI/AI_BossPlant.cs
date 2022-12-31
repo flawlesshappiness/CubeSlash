@@ -60,6 +60,7 @@ public class AI_BossPlant : EntityAI
             wall.transform.position = point + offset;
             wall.transform.rotation = rotation;
             walls.Add(wall);
+            wall.AnimateAppear();
 
             distance += wall_length;
         }
@@ -118,8 +119,7 @@ public class AI_BossPlant : EntityAI
             {
                 var rnd = Random.insideUnitCircle * SIZE_WALL * 0.25f;
                 var pos = wall.transform.position + rnd.ToVector3();
-                var exp = ItemController.Instance.SpawnExperience(pos);
-                exp.SetPlant();
+                var exp = ItemController.Instance.SpawnPlant(pos);
             }
 
             wall.Kill();

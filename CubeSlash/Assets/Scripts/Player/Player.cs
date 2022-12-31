@@ -10,6 +10,7 @@ public class Player : Character
     public static Player Instance;
     [SerializeField] private PlayerSettings settings;
     [SerializeField] private StatCollection stats;
+    [SerializeField] private GameObject g_invincible;
     [SerializeField] private FMODEventReference event_ability_on_cooldown;
     [SerializeField] private FMODEventReference event_levelup_slide;
     [SerializeField] private FMODEventReference event_levelup;
@@ -62,6 +63,8 @@ public class Player : Character
         SetBody(settings.body);
         Body.transform.localEulerAngles = Vector3.one * settings.size;
         MoveDirection = transform.up;
+
+        g_invincible.SetActive(false);
     }
 
     public void ResetValues()
@@ -418,12 +421,15 @@ public class Player : Character
         var time_end = Time.time + time;
         while (Time.time < time_end)
         {
-            Body.gameObject.SetActive(false);
+            //Body.gameObject.SetActive(false);
+            g_invincible.SetActive(true);
             yield return new WaitForSeconds(0.1f);
-            Body.gameObject.SetActive(true);
+            //Body.gameObject.SetActive(true);
+            g_invincible.SetActive(false);
             yield return new WaitForSeconds(0.1f);
         }
-        Body.gameObject.SetActive(true);
+        //Body.gameObject.SetActive(true);
+        g_invincible.SetActive(false);
     }
 
     private IEnumerator PlayerDamagePushCr(Vector3 dir, float time)
