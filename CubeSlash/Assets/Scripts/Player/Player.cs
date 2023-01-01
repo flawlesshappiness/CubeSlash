@@ -11,6 +11,7 @@ public class Player : Character
     [SerializeField] private PlayerSettings settings;
     [SerializeField] private StatCollection stats;
     [SerializeField] private GameObject g_invincible;
+    [SerializeField] private ParticleSystem ps_collect_meat, ps_collect_plant;
     [SerializeField] private FMODEventReference event_ability_on_cooldown;
     [SerializeField] private FMODEventReference event_levelup_slide;
     [SerializeField] private FMODEventReference event_levelup;
@@ -498,6 +499,11 @@ public class Player : Character
         if(type == ExperienceType.PLANT)
         {
             DecrementPlantExperienceUntilHealthRegen();
+            ps_collect_plant.Play();
+        }
+        else if(type == ExperienceType.MEAT)
+        {
+            ps_collect_meat.Play();
         }
     }
 

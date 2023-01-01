@@ -350,7 +350,7 @@ public class AbilityView : View
         {
             DisplayNoAbility();
         }
-        else
+        else if(equipment_slot.Ability != null)
         {
             var modifier = equipment_slot.Ability.ModifierUpgrades.GetModifier(modifier_ability.Info.type);
             string s = $"{modifier_ability.Info.name_ability} (Modifier)";
