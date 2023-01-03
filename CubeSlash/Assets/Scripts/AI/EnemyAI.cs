@@ -4,7 +4,7 @@ using UnityEngine;
 using Flawliz.Lerp;
 using System.Linq;
 
-public abstract class EntityAI : MonoBehaviour
+public abstract class EnemyAI : MonoBehaviour
 {
     protected Enemy Self { get; private set; }
     protected Vector3 Position { get { return Self.transform.position; } }
@@ -88,14 +88,24 @@ public abstract class EntityAI : MonoBehaviour
         }
     }
 
-    protected void HideDuds(float duration)
+    protected void HideAndShowDuds(float duration)
     {
         StartCoroutine(Cr());
         IEnumerator Cr()
         {
-            Self.EnemyBody.Duds.Where(d => d.IsActive()).ToList().ForEach(d => d.SetDudActive(false));
+            HideDuds();
             yield return new WaitForSeconds(duration);
-            Self.EnemyBody.Duds.Where(d => d.IsActive()).ToList().ForEach(d => d.SetDudActive(true));
+            ShowDuds();
         }
+    }
+
+    protected void HideDuds()
+    {
+        Self.EnemyBody.Duds.Where(d => d.IsActive()).ToList().ForEach(d => d.SetDudActive(false));
+    }
+
+    protected void ShowDuds()
+    {
+        Self.EnemyBody.Duds.Where(d => d.IsActive()).ToList().ForEach(d => d.SetDudActive(true));
     }
 }

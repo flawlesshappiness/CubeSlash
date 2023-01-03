@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class AI_SlowMove : EntityAI
+public class AI_SlowMove : EnemyAI
 {
     private Vector3 pos_player_prev;
 

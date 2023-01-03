@@ -2,7 +2,7 @@ using System.Collections;
 using System.Linq;
 using UnityEngine;
 
-public class AI_BossHost : EntityAI
+public class AI_BossHost : EnemyAI
 {
     [SerializeField] private Color color_beam;
     [SerializeField] private Vector2 speed_rotate_min_max;
@@ -14,23 +14,13 @@ public class AI_BossHost : EntityAI
     {
         base.Initialize(enemy);
         this.StartCoroutineWithID(BeamCooldownCr(), "BeamCooldown_" + GetInstanceID());
-        Self.EnemyBody.OnDudKilled += dud => HideDuds(4);
+        Self.EnemyBody.OnDudKilled += dud => HideAndShowDuds(4);
         Self.OnDeath += OnDeath;
     }
 
     private void FixedUpdate()
     {
-        if(IsPlayerAlive())
-        {
-            destination = PlayerPosition;
-        }
-
-        var dir = (destination - Position).normalized;
-        var offset = dir * Self.Settings.size * 0.7f;
-        var t = (Vector3.Distance(Position + offset, destination)) / (CameraController.Instance.Width * 0.5f);
-        Self.AngularAcceleration = Mathf.Lerp(Self.Settings.angular_acceleration * 0.25f, Self.Settings.angular_acceleration, t);
-        Self.AngularVelocity = Mathf.Lerp(Self.Settings.angular_velocity * 0.25f, Self.Settings.angular_velocity, t);
-        MoveTowards(PlayerPosition);
+        MoveTowardsPlayer();
     }
 
     private void LateUpdate()
@@ -41,6 +31,21 @@ public class AI_BossHost : EntityAI
     private void OnDeath()
     {
         sfx_charge.Stop();
+    }
+
+    private void MoveTowardsPlayer()
+    {
+        if (IsPlayerAlive())
+        {
+            destination = PlayerPosition;
+        }
+
+        var dir = (destination - Position).normalized;
+        var offset = dir * Self.Settings.size * 0.7f;
+        var t = (Vector3.Distance(Position + offset, destination)) / (CameraController.Instance.Width * 0.5f);
+        Self.AngularAcceleration = Mathf.Lerp(Self.Settings.angular_acceleration * 0.25f, Self.Settings.angular_acceleration, t);
+        Self.AngularVelocity = Mathf.Lerp(Self.Settings.angular_velocity * 0.25f, Self.Settings.angular_velocity, t);
+        MoveTowards(PlayerPosition);
     }
 
     private void RotateBodyUpdate()
@@ -54,7 +59,6 @@ public class AI_BossHost : EntityAI
         var angle_mod = angle % 360f;
         var q = Quaternion.AngleAxis(angle_mod, Vector3.forward);
         body.transform.rotation = Quaternion.Lerp(body.transform.rotation, q, Time.deltaTime * 10f);
-
     }
 
     IEnumerator BeamCooldownCr()

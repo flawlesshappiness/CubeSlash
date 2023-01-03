@@ -65,7 +65,7 @@ public class Projectile : MonoBehaviourExtended
 
     private void DistanceUpdate()
     {
-        var dist = CameraController.Instance.Width;
+        var dist = CameraController.Instance.Width * 2;
         if(Vector3.Distance(transform.position, Player.Instance.transform.position) > dist)
         {
             Kill();

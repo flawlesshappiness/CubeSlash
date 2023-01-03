@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class AI_DeathSpawn : EntityAI
+public class AI_DeathSpawn : EnemyAI
 {
     [SerializeField] private EnemySettings enemy_to_spawn;
     [SerializeField] private int count_to_spawn;

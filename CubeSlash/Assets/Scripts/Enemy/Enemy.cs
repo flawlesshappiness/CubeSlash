@@ -6,7 +6,7 @@ using UnityEngine;
 public class Enemy : Character, IKillable, IHurt
 {
     [SerializeField] private FMODEventReference event_death;
-    private EntityAI AI { get; set; }
+    private EnemyAI AI { get; set; }
     public EnemySettings Settings { get; private set; }
     public Vector3 MoveDirection { get { return Body.transform.up; } }
     public EnemyBody EnemyBody { get { return Body as EnemyBody; } }
@@ -57,7 +57,7 @@ public class Enemy : Character, IKillable, IHurt
         if (pos.y > center.y + sh) transform.position -= new Vector3(0, size);
     }
 
-    private void SetAI(EntityAI prefab)
+    private void SetAI(EnemyAI prefab)
     {
         if (AI)
         {
@@ -67,7 +67,7 @@ public class Enemy : Character, IKillable, IHurt
 
         if (prefab)
         {
-            AI = Instantiate(prefab.gameObject, transform).GetComponent<EntityAI>();
+            AI = Instantiate(prefab.gameObject, transform).GetComponent<EnemyAI>();
             AI.Initialize(this);
         }
     }

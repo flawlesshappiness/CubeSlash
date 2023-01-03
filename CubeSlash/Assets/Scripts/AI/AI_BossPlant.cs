@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Collections;
 
-public class AI_BossPlant : EntityAI
+public class AI_BossPlant : EnemyAI
 {
     [SerializeField] private PlantWall template_wall;
     [SerializeField] private PlantPillar template_pillar;

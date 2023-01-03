@@ -3,7 +3,7 @@ using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class AI_BossShooter : EntityAI
+public class AI_BossShooter : EnemyAI
 {
     [SerializeField] private Projectile prefab_projectile;
     [SerializeField] private FMODEventReference sfx_shoot;
@@ -27,7 +27,7 @@ public class AI_BossShooter : EntityAI
 
         body_shooter = enemy.Body.GetComponent<BossShooterBody>();
 
-        Self.EnemyBody.OnDudKilled += dud => HideDuds(5);
+        Self.EnemyBody.OnDudKilled += dud => HideAndShowDuds(5);
     }
 
     private void ResetSpeed()
@@ -195,7 +195,7 @@ public class AI_BossShooter : EntityAI
         Self.AngularVelocity = 25;
         Self.AngularAcceleration = 10;
         this.StartCoroutineWithID(TurnCr(duration), "turn_" + GetInstanceID());
-        HideDuds(duration);
+        HideAndShowDuds(duration);
 
         yield return new WaitForSeconds(1.0f);
 

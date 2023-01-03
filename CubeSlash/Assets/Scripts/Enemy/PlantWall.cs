@@ -10,12 +10,17 @@ public class PlantWall : Obstacle
 
     public Transform GetDudTransform() => pivot_dud;
 
-    public CustomCoroutine AnimateAppear()
+    public void SetHidden()
+    {
+        pivot_animation.localScale = Vector3.zero;
+    }
+
+    public CustomCoroutine AnimateAppear(float duration = 1f)
     {
         return this.StartCoroutineWithID(Cr(), "scale_"+GetInstanceID());
         IEnumerator Cr()
         {
-            yield return LerpEnumerator.LocalScale(pivot_animation, 1f, Vector3.zero, Vector3.one);
+            yield return LerpEnumerator.LocalScale(pivot_animation, duration, Vector3.zero, Vector3.one);
         }
     }
 

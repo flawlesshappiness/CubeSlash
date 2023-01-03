@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-public class AI_Beam : EntityAI
+public class AI_Beam : EnemyAI
 {
     [SerializeField] private float dist_max_mul_shoot;
     [SerializeField] private float cooldown_shoot;

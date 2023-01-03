@@ -6,5 +6,5 @@ using UnityEngine;
 public class EnemySettings : CharacterSettings
 {
     [Header("AI")]
-    public EntityAI ai;
+    public EnemyAI ai;
 }
