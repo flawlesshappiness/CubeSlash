@@ -18,6 +18,8 @@ public class AbilitySplit : Ability
     private float RadiusKnockback { get; set; }
     private float ForceKnockback { get; set; }
     private bool SplitProjectiles { get; set; }
+    private bool ChainLightning { get; set; }
+    private float HitCooldownReduc { get; set; }
 
     public override void InitializeFirstTime()
     {
@@ -37,6 +39,8 @@ public class AbilitySplit : Ability
         SizeProjectiles = GetFloatValue("SizeProjectiles");
         Bursts = GetIntValue("Bursts");
         SplitProjectiles = GetBoolValue("SplitProjectiles");
+        ChainLightning = GetBoolValue("ChainLightning");
+        HitCooldownReduc = GetFloatValue("HitCooldownReduc");
     }
 
     public override void Trigger()
@@ -62,13 +66,16 @@ public class AbilitySplit : Ability
         p.Rigidbody.velocity = direction * speed;
         p.SetDirection(direction);
 
-        p.OnHit += c =>
+        p.onHit += c =>
         {
             var k = c.GetComponentInParent<IKillable>();
             if (k != null)
             {
                 onHit?.Invoke(p, k);
-                if (k.CanKill()) Player.Instance.KillEnemy(k);
+                if (k.CanKill())
+                {
+                    Player.Instance.KillEnemy(k);
+                }
                 if (!p.Piercing) p.Kill();
             }
         };
@@ -100,11 +107,22 @@ public class AbilitySplit : Ability
                     }
                 }
 
+                if(HitCooldownReduc < 0)
+                {
+                    TimeCooldownEnd -= Mathf.Abs(HitCooldownReduc);
+                }
+
                 if (HasModifier(Type.EXPLODE))
                 {
-                    AbilityExplode.Explode(p.transform.position, 2f, 1.5f, 50);
+                    AbilityExplode.Explode(p.transform.position, 2f, 50);
                 }
             });
+
+            if (ChainLightning)
+            {
+                p.StartCoroutine(ChainLightningCr(p));
+            }
+
             projectiles.Add(p);
         }
 
@@ -124,6 +142,23 @@ public class AbilitySplit : Ability
 
         // Cooldown
         StartCooldown();
+
+        IEnumerator ChainLightningCr(Projectile p)
+        {
+            var time_zap = Time.time + 0.25f;
+            while (true)
+            {
+                if(Time.time > time_zap)
+                {
+                    var success = AbilityChain.TryChainToTarget(p.transform.position, 6f, 1, 1, 1);
+                    if (success)
+                    {
+                        time_zap = Time.time + 0.5f;
+                    }
+                }
+                yield return null;
+            }
+        }
     }
 
     public static List<Vector3> GetSplitDirections(int count, float angle_max, Vector3 forward)

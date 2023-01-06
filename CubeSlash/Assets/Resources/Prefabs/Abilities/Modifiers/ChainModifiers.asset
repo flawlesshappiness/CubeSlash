@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e72ec920637b88348b294d24f48bf858, type: 3}
+  m_Name: ChainModifiers
+  m_EditorClassIdentifier: 
+  modifiers:
+  - name: EXPLODE
+    description: Zapped enemies explode harming nearby enemies
+    type: 3
+    upgrade: {fileID: 11400000, guid: b2365a88168cc3048b356f08a087539a, type: 2}
+  - name: CHARGE
+    description: Charge and release to zap with multiple strikes
+    type: 2
+    upgrade: {fileID: 11400000, guid: ac4355303d2a23d4397b547121d7de50, type: 2}
+  - name: SPLIT
+    description: Zaps split when chaining
+    type: 1
+    upgrade: {fileID: 11400000, guid: 8845efc7cb026e64c869887b0d546050, type: 2}
+  - name: DASH
+    description: Zaps have increased frequency, but decreased chaining
+    type: 0
+    upgrade: {fileID: 11400000, guid: ff0868db98172454397ee57bb775eef6, type: 2}
+  - name: CHAIN
+    description: 
+    type: 4
+    upgrade: {fileID: 0}

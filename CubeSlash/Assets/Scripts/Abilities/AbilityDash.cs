@@ -18,6 +18,7 @@ public class AbilityDash : Ability
     public float SelfKnockback { get; private set; }
     public float CooldownOnHit { get; private set; }
     public bool TrailEnabled { get; private set; }
+    public bool TeleportBack { get; private set; }
 
     [Header("DASH")]
     [SerializeField] private AbilityDashClone template_clone;
@@ -43,6 +44,7 @@ public class AbilityDash : Ability
         SelfKnockback = GetFloatValue("SelfKnockback");
         CooldownOnHit = GetFloatValue("CooldownOnHit");
         TrailEnabled = GetBoolValue("TrailEnabled");
+        TeleportBack = GetBoolValue("TeleportBack");
     }
 
     public override void Trigger()
@@ -60,6 +62,7 @@ public class AbilityDash : Ability
         Player.InvincibilityLock.AddLock(nameof(AbilityDash));
         //Player.Body.gameObject.SetActive(false);
         Player.Body.SetCollisionEnabled(false);
+        PositionOrigin = Player.Instance.transform.position;
 
         event_dash_start.Play();
 
@@ -71,7 +74,7 @@ public class AbilityDash : Ability
 
         if (HasModifier(Type.EXPLODE))
         {
-            AbilityExplode.Explode(Player.transform.position, 3f, 2f, 200);
+            AbilityExplode.Explode(Player.transform.position, 3f, 200);
         }
 
         IEnumerator DashCr(Vector3 direction, bool has_player)
@@ -184,6 +187,22 @@ public class AbilityDash : Ability
 
     private void KnockbackSelf()
     {
-        Player.Knockback(-Player.MoveDirection.normalized * SelfKnockback, true, true);
+        if (TeleportBack)
+        {
+            StartCoroutine(TeleportBackCr());
+        }
+        else
+        {
+            Player.Knockback(-Player.MoveDirection.normalized * SelfKnockback, true, true);
+        }
+
+        IEnumerator TeleportBackCr()
+        {
+            var start = Player.Instance.transform.position;
+            AbilityChain.CreateZapPS(start, PositionOrigin);
+            AbilityChain.CreateImpactPS(start);
+            yield return new WaitForSeconds(0.1f);
+            Player.Instance.transform.position = PositionOrigin;
+        }
     }
 }

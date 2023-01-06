@@ -26,6 +26,10 @@ MonoBehaviour:
     type: 1
     upgrade: {fileID: 11400000, guid: 5faa26d5a265ada4a96a4db53c48bfb9, type: 2}
   - name: DASH
-    description: Dash farther and faster
+    description: 
     type: 0
-    upgrade: {fileID: 11400000, guid: 5cae6b8c952536f449d46d1d5365f67b, type: 2}
+    upgrade: {fileID: 0}
+  - name: CHAIN
+    description: Teleport back on collision
+    type: 4
+    upgrade: {fileID: 11400000, guid: 33dcf79c1391bf34585336b97547584c, type: 2}

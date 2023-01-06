@@ -273,6 +273,8 @@ public class Player : Character
 
         foreach(var ability in AbilityController.Instance.GetEquippedAbilities())
         {
+            if (ability.prefab_bodypart == null) continue;
+
             var bps = PlayerBody.CreateBodyparts(ability.prefab_bodypart);
 
             foreach(var bp in bps)

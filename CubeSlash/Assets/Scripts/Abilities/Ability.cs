@@ -13,7 +13,7 @@ public abstract class Ability : MonoBehaviourExtended
 
     public System.Action onTrigger;
 
-    public enum Type { DASH, SPLIT, CHARGE, EXPLODE }
+    public enum Type { DASH, SPLIT, CHARGE, EXPLODE, CHAIN }
     public Ability[] Modifiers { get; protected set; } = new Ability[ConstVars.COUNT_MODIFIERS];
     public Player Player { get; set; }
     public bool IsPressed { get; set; }
@@ -22,17 +22,15 @@ public abstract class Ability : MonoBehaviourExtended
     public bool IsModifier { get { return ModifierParent != null; } }
     public bool IsActive { get { return Equipped && !IsModifier; } }
     public float TimeCooldownStart { get; private set; }
-    public float TimeCooldownEnd { get; private set; }
+    public float TimeCooldownEnd { get; protected set; }
     public float TimeCooldownLeft { get { return IsOnCooldown ? TimeCooldownEnd - Time.time : 0f; } }
     public bool IsOnCooldown { get { return Time.time < TimeCooldownEnd; } }
     public bool InUse { get; protected set; }
     public float CooldownPercentage { get { return (Time.time - TimeCooldownStart) / (TimeCooldownEnd - TimeCooldownStart); } }
-    public int CurrentCharges { get; set; }
     public StatValueCollection Values { get; private set; }
 
     // Values
     public float Cooldown { get; protected set; }
-    public int Charges { get; protected set; }
 
     private void OnValidate()
     {
@@ -51,19 +49,6 @@ public abstract class Ability : MonoBehaviourExtended
                     higher_is_positive = false,
                 });
             }
-
-            if (!Stats.stats.Any(v => v.name == "Charges"))
-            {
-                Stats.stats.Add(new StatParameter
-                {
-                    name = "Charges",
-                    text_display = "$ charges",
-                    type_display = StatParameter.DisplayType.INT,
-                    type_value = StatParameter.ValueType.INT,
-                    can_edit_name = false,
-                    higher_is_positive = true,
-                });
-            }
         }
     }
 
@@ -75,7 +60,6 @@ public abstract class Ability : MonoBehaviourExtended
     public virtual void OnValuesApplied() 
     {
         Cooldown = Values.GetFloatValue("Cooldown");
-        Charges = Values.GetIntValue("Charges");
     }
 
     #region APPLY
@@ -178,13 +162,9 @@ public abstract class Ability : MonoBehaviourExtended
     public void StartCooldown(float time)
     {
         InUse = false;
-        CurrentCharges--;
-        if (CurrentCharges <= 0)
-        {
-            TimeCooldownStart = Time.time;
-            TimeCooldownEnd = TimeCooldownStart + time * Player.Instance.GlobalCooldownMultiplier;
-            StartCoroutine(WaitForCooldownCr());
-        }
+        TimeCooldownStart = Time.time;
+        TimeCooldownEnd = TimeCooldownStart + time * Player.Instance.GlobalCooldownMultiplier;
+        StartCoroutine(WaitForCooldownCr());
 
         IEnumerator WaitForCooldownCr()
         {
@@ -192,8 +172,6 @@ public abstract class Ability : MonoBehaviourExtended
             {
                 yield return null;
             }
-
-            CurrentCharges = Charges;
         }
     }
 

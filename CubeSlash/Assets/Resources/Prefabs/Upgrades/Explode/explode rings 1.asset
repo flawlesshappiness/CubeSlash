@@ -20,22 +20,12 @@ MonoBehaviour:
   - type_effect: 0
     variable:
       name: Rings
-      text_display: $ rings
+      text_display: $ explosions
       type_value: 0
       type_display: 0
+      higher_is_positive: 0
       value_int: 1
       value_float: -1
       value_bool: 1
-      can_edit_name: 1
-      _editor_toggle_preview: 0
-  - type_effect: 1
-    variable:
-      name: Width
-      text_display: $ ring width
-      type_value: 1
-      type_display: 1
-      value_int: 0
-      value_float: -0.25
-      value_bool: 0
       can_edit_name: 1
       _editor_toggle_preview: 0

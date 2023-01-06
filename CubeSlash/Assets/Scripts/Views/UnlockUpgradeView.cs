@@ -136,6 +136,9 @@ public class UnlockUpgradeView : View
 
     private void ShowUpgradeTree()
     {
+        if (upgrade_selected == null) return;
+        if (button_selected == null) return;
+
         Interactable = false;
 
         rt_upgrades.gameObject.SetActive(false);
@@ -148,6 +151,9 @@ public class UnlockUpgradeView : View
 
     private void HideUpgradeTree()
     {
+        if (upgrade_selected == null) return;
+        if (button_selected == null) return;
+
         ViewController.Instance.CloseView(0, "UpgradeTree");
 
         rt_upgrades.gameObject.SetActive(true);

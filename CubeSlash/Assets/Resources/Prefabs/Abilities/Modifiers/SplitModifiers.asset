@@ -22,10 +22,14 @@ MonoBehaviour:
     type: 2
     upgrade: {fileID: 11400000, guid: 0faabc336110d9940923b409405fa5f5, type: 2}
   - name: SPLIT
-    description: More bullets
+    description: 
     type: 1
-    upgrade: {fileID: 11400000, guid: bc2c8cfb7a8d3fa4cbb334332a762f6c, type: 2}
+    upgrade: {fileID: 0}
   - name: DASH
-    description: Adds 1 ability use
+    description: Hits decrease cooldown
     type: 0
     upgrade: {fileID: 11400000, guid: fde8eb4d22d17ec448ed26ed1076cb72, type: 2}
+  - name: CHAIN
+    description: Projectiles zap nearby enemies
+    type: 4
+    upgrade: {fileID: 11400000, guid: 74dacd12765208f42914e9dcbc298c0e, type: 2}

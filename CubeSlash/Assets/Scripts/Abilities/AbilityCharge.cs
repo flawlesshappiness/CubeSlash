@@ -2,8 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using Flawliz.Lerp;
-using UnityEngine.UIElements;
 
 public class AbilityCharge : Ability
 {
@@ -51,6 +49,7 @@ public class AbilityCharge : Ability
     private float ChargeTimeOnKill { get; set; }
     private bool ChargeSucksExp { get; set; }
     private bool BeamBack { get; set; }
+    private bool ChainLightning { get; set; }
 
     private void Start()
     {
@@ -85,6 +84,7 @@ public class AbilityCharge : Ability
         BeamBack = GetBoolValue("BeamBack");
         ChargeSucksExp = GetBoolValue("ChargeSucksExp");
         ChargeTimeOnKill = GetFloatValue("ChargeTimeOnKill");
+        ChainLightning = GetBoolValue("ChainLightning");
         Charging = false;
         ChargeEnded = false;
         Kills = 0;
@@ -230,12 +230,18 @@ public class AbilityCharge : Ability
                     {
                         if (k.CanKill())
                         {
+                            var position = k.GetPosition();
                             Player.KillEnemy(k);
                             Kills++;
 
+                            if (ChainLightning)
+                            {
+                                StartCoroutine(ChainLightningCr(position));
+                            }
+
                             if (HasModifier(Type.EXPLODE))
                             {
-                                AbilityExplode.Explode(k.GetPosition(), 2f, 1.5f, 50);
+                                StartCoroutine(ExplodeCr(position));
                             }
                         }
                     });
@@ -279,6 +285,18 @@ public class AbilityCharge : Ability
 
             StartCooldown();
         }
+
+        IEnumerator ChainLightningCr(Vector3 position)
+        {
+            yield return new WaitForSeconds(0.25f);
+            AbilityChain.TryChainToTarget(position, 6f, 1, 1, 0);
+        }
+
+        IEnumerator ExplodeCr(Vector3 position)
+        {
+            yield return new WaitForSeconds(0.25f);
+            AbilityExplode.Explode(position, 2f, 50);
+        }
     }
 
     public bool IsFullyCharged()
@@ -304,11 +322,8 @@ public class AbilityCharge : Ability
         {
             return ModifierParent.Info.type switch
             {
-                Type.DASH => 1f,
-                Type.SPLIT => 1f,
                 Type.CHARGE => ((AbilityCharge)ModifierParent).GetChargeTime(),
-                Type.EXPLODE => 1f,
-                _ => 0,
+                _ => 1f,
             };
         }
 

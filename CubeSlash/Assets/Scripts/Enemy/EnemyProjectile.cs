@@ -9,7 +9,7 @@ public class EnemyProjectile : Projectile
     {
         base.OnStart();
 
-        OnHit += c =>
+        onHit += c =>
         {
             var player = c.GetComponentInParent<Player>();
             if(player != null)

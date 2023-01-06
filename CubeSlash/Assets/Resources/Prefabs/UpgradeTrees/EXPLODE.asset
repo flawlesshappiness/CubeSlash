@@ -17,38 +17,34 @@ MonoBehaviour:
   nodes:
   - id: 0
     id_name: explode_delay_001
-    _editorPosition: {x: 877, y: 161}
+    _editorPosition: {x: 787, y: 157}
     children: 010000000400000007000000
   - id: 1
     id_name: explode_delay_002
-    _editorPosition: {x: 876, y: 318}
+    _editorPosition: {x: 783, y: 374}
     children: 02000000
   - id: 2
     id_name: explode_delay_003
-    _editorPosition: {x: 879, y: 517}
+    _editorPosition: {x: 786, y: 573}
     children: 03000000
   - id: 3
     id_name: explode_delay_pull
-    _editorPosition: {x: 871, y: 723}
+    _editorPosition: {x: 778, y: 779}
     children: 
   - id: 4
-    id_name: explode_width_001
-    _editorPosition: {x: 475, y: 309}
-    children: 0500000006000000
+    id_name: explode_rings_001
+    _editorPosition: {x: 382, y: 365}
+    children: 05000000
   - id: 5
-    id_name: explode_width_002
-    _editorPosition: {x: 478, y: 525}
-    children: 
-  - id: 6
-    id_name: explode_radius_001
-    _editorPosition: {x: 119, y: 521}
+    id_name: explode_rings_002
+    _editorPosition: {x: 385, y: 581}
     children: 
   - id: 7
-    id_name: explode_rings_001
-    _editorPosition: {x: 1291, y: 317}
+    id_name: explode_knockback_001
+    _editorPosition: {x: 1198, y: 373}
     children: 08000000
   - id: 8
-    id_name: explode_rings_002
-    _editorPosition: {x: 1298, y: 504}
+    id_name: explode_knockback_002
+    _editorPosition: {x: 1205, y: 560}
     children: 
   id_node: 9

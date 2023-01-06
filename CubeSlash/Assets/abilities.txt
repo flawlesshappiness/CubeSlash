@@ -28,15 +28,18 @@ Huge projectile (CHONK) - Can take multiple hits - Gets smaller after each hit
 - CHARGE: Charge to increase size (technically more damage)
 - EXPLODE: Explodes upon hitting enemy
 
+Bouncer (BOUNCE) - Shoot a ball that bounces between enemies based on upgrades
+
 Melee (MELEE) - Close range attack? maybe slightly boost forward
 
 Sniper (SNIPER) - Red dot line of sight - bolt action - one powerful shot
+
+Chain lightning (CHAIN) - Hold to zap nearby enemies
 
 Make enemies attack eachother
 Invisibility
 Heal - Life steal?
 Lob projectile
 Movement speed up
-Chain lightning
 Leave behind something on kill? Trap?
 Dash backwards, AoE

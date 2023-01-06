@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 616189df85cb92d40806459b9c9111b7, type: 3}
   m_Name: split mod charge
   m_EditorClassIdentifier: 
-  id: projectile_speed_002
-  name: Projectile speed 2
+  id: split_mod_charge
+  name: Split modified by Charge
   icon: {fileID: 21300000, guid: 84f667a0eed51a340b7b37327afb72ea, type: 3}
   id_stats: split
   effects:

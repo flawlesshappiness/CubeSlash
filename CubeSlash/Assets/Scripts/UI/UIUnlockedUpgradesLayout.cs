@@ -19,16 +19,10 @@ public class UIUnlockedUpgradesLayout : MonoBehaviour
 
         UpgradeController.Instance.GetUnlockedUpgrades().ForEach(u =>
         {
-            /*
-            for (int i = 0; i < u.level; i++)
-            {
-                var level = u.data.levels[i];
-                var btn = Instantiate(temp_btn, temp_btn.transform.parent);
-                btn.gameObject.SetActive(true);
-                btn.Icon = level.icon;
-                btn.Button.OnSelectedChanged += s => OnSelected(s, level);
-            }
-            */
+            var btn = Instantiate(temp_btn, temp_btn.transform.parent);
+            btn.gameObject.SetActive(true);
+            btn.Icon = u.upgrade.icon;
+            btn.Button.OnSelectedChanged += s => OnSelected(s, u.upgrade);
         });
 
         void OnSelected(bool selected, Upgrade upgrade)

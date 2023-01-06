@@ -1,0 +1,50 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c1768de72cb88cc448152c0e1ccb611a, type: 3}
+  m_Name: CHAIN
+  m_EditorClassIdentifier: 
+  require_ability: 1
+  ability_type_required: 4
+  nodes:
+  - id: 0
+    id_name: chain_targets_001
+    _editorPosition: {x: 791, y: 99}
+    children: 01000000080000000a000000
+  - id: 1
+    id_name: chain_targets_002
+    _editorPosition: {x: 789, y: 264}
+    children: 02000000
+  - id: 2
+    id_name: chain_targets_003
+    _editorPosition: {x: 790, y: 451}
+    children: 03000000
+  - id: 3
+    id_name: chain_strikes
+    _editorPosition: {x: 787, y: 629}
+    children: 
+  - id: 8
+    id_name: chain_radius_001
+    _editorPosition: {x: 461, y: 277}
+    children: 09000000
+  - id: 9
+    id_name: chain_radius_002
+    _editorPosition: {x: 457, y: 450}
+    children: 
+  - id: 10
+    id_name: chain_delay_001
+    _editorPosition: {x: 1119, y: 286}
+    children: 0b000000
+  - id: 11
+    id_name: chain_delay_002
+    _editorPosition: {x: 1124, y: 453}
+    children: 
+  id_node: 12

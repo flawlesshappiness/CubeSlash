@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Linq;
 using UnityEngine;
@@ -11,10 +12,10 @@ public class AbilityExplode : Ability
     // Values
     public float Delay { get; private set; }
     public float Radius { get; private set; }
-    public float Width { get; private set; }
     public float Knockback { get; private set; }
     public int Rings { get; private set; }
     public bool DelayPull { get; private set; }
+    public bool ChainExplode { get; private set; }
 
     public override void InitializeFirstTime()
     {
@@ -27,10 +28,10 @@ public class AbilityExplode : Ability
         base.OnValuesApplied();
         Delay = GetFloatValue("Delay");
         Radius = GetFloatValue("Radius");
-        Width = GetFloatValue("Width");
         Knockback = GetFloatValue("Knockback");
         Rings = GetIntValue("Rings");
         DelayPull = GetBoolValue("DelayPull");
+        ChainExplode = GetBoolValue("ChainExplode");
 
         if (HasModifier(Type.DASH))
         {
@@ -51,29 +52,31 @@ public class AbilityExplode : Ability
             var dir = Player.MoveDirection;
             var p_instance = AbilitySplit.ShootProjectile(p, start, dir, 1f, 15, (p, k) =>
             {
-                TriggerExplode(p.transform.parent, p.transform.position, dir);
+                var position = p.transform.position;
+                TriggerExplode(p.transform.parent, () => position, dir);
             });
-            p_instance.OnDeath += () =>
+            p_instance.onDeath += () =>
             {
-                TriggerExplode(p_instance.transform.parent, p_instance.transform.position, dir);
+                var position = p_instance.transform.position;
+                TriggerExplode(p_instance.transform.parent, () => position, dir);
             };
         }
         else
         {
-            TriggerExplode(Player.transform, Player.transform.position, Player.Instance.MoveDirection);
+            TriggerExplode(Player.transform, () => Player.transform.position, Player.Instance.MoveDirection);
         }
     }
 
-    private void TriggerExplode(Transform parent, Vector3 position, Vector3 direction)
+    private void TriggerExplode(Transform parent, Func<Vector3> getPosition, Vector3 direction)
     {
         if (HasModifier(Type.CHARGE))
         {
-            Vector3 pos = position;
+            Vector3 pos = getPosition();
             for (int i = 0; i < Rings; i++)
             {
-                var radius = Radius + Width * i;
-                pos = pos + direction.normalized * radius;
-                Explode(pos, radius, Width, Knockback);
+                var r = Radius * (1 + 0.15f * i);
+                pos = pos + direction.normalized * r;
+                Explode(pos, r * (1 + 0.15f * i), Knockback);
             }
 
             InUse = false;
@@ -83,18 +86,19 @@ public class AbilityExplode : Ability
         {
             for (int i = 0; i < Rings; i++)
             {
-                StartCoroutine(ExplodeCr(parent, position, Radius + Width * i, Width, 0.2f * i));
+                var r = Radius * (1 + 0.5f * i);
+                StartCoroutine(ExplodeCr(parent, getPosition, r, (Delay * 0.5f) * i));
             }
         }
     }
 
-    private IEnumerator ExplodeCr(Transform parent, Vector3 position, float radius, float width, float ring_delay = 0)
+    private IEnumerator ExplodeCr(Transform parent, Func<Vector3> getPosition, float radius, float ring_delay = 0)
     {
         yield return new WaitForSeconds(ring_delay);
 
         var psd = ps_charge.Duplicate()
             .Parent(parent)
-            .Position(position)
+            .Position(getPosition())
             .Scale(Vector3.one * radius * 2);
 
         psd.ps.ModifyMain(m =>
@@ -102,53 +106,96 @@ public class AbilityExplode : Ability
             m.startLifetime = new ParticleSystem.MinMaxCurve { constant = Delay };
         });
         psd.Play();
-        yield return new WaitForSeconds(Delay);
-        Explode(position, radius, width, Knockback);
+
+        yield return WaitForDelay(Delay, getPosition());
+
+        Explode(getPosition(), radius, Knockback, OnHit);
 
         InUse = false;
         StartCooldown();
     }
 
-    public static void Explode(Vector3 position, float radius, float width, float force)
+    private void OnHit(IKillable k)
     {
-        var wh = width * 0.5f;
-        var hits = Physics2D.OverlapCircleAll(position, radius + wh);
+        var position = k.GetPosition();
+        if (ChainExplode)
+        {
+            StartCoroutine(ExplodeCr(position));
+        }
+
+        IEnumerator ExplodeCr(Vector3 position)
+        {
+            yield return new WaitForSeconds(0.25f);
+            Explode(position, Radius * 0.75f, Knockback * 0.5f);
+        }
+    }
+
+    public static void Explode(Vector3 position, float radius, float force, System.Action<IKillable> onHit = null)
+    {
+        var hits = Physics2D.OverlapCircleAll(position, radius);
         foreach(var hit in hits)
         {
-            var ray_hit = Physics2D.RaycastAll(position, hit.transform.position - position)
-                .FirstOrDefault(h => h.collider == hit);
-            var dist = ray_hit.distance;
-            if ((dist - radius).Abs() > wh) continue;
-
             var k = hit.GetComponentInParent<IKillable>();
             if (k == null) continue;
 
             if (k.CanKill())
             {
+                onHit?.Invoke(k);
                 Player.Instance.KillEnemy(k);
             }
         }
 
         // Knockback
-        Player.PushEnemiesInArea(position, radius * 3, force);
+        if(force > 0)
+        {
+            Player.PushEnemiesInArea(position, radius * 3, force);
+        }
 
         // Fx
-        var ps_explode_point = Resources.Load<ParticleSystem>("Particles/ps_explode_point");
-        var count_points = (int)(radius * 5);
-        var points = CircleHelper.Points(radius, count_points);
-        foreach(var point in points)
-        {
-            ps_explode_point.Duplicate()
-                .Position(position + point.ToVector3())
-                .Scale(Vector3.one * width)
-                .Play()
-                .Destroy(5);
-        }
+        var template_explosion = Resources.Load<GameObject>("Particles/ExplosionEffect");
+        var explosion = Instantiate(template_explosion, GameController.Instance.world);
+        explosion.transform.position = position;
+        explosion.transform.localScale = Vector3.one * radius * 2;
+        Destroy(explosion, 2f);
 
         var ps_explode = Resources.Load<ParticleSystem>("Particles/ps_explode");
         ps_explode.Duplicate()
-            .Scale(Vector3.one * radius * 3)
+            .Scale(Vector3.one * radius * 2)
             .Position(position)
             .Play();
+    }
+
+    private IEnumerator WaitForDelay(float duration, Vector3 position)
+    {
+        if (DelayPull)
+        {
+            var r_max = Radius * 2;
+            var r_min = Radius * 0.75f;
+            var force_min = 5f;
+            var force_max = 25f;
+            var time_end = Time.time + duration;
+            while(Time.time < time_end)
+            {
+                var enemies = Physics2D.OverlapCircleAll(position, r_max)
+                    .Select(hit => hit.GetComponentInParent<Enemy>())
+                    .Where(hit => hit != null)
+                    .Distinct();
+
+                foreach(var e in enemies)
+                {
+                    var dir = position - e.GetPosition();
+                    var t = (dir.magnitude - r_min) / (r_max - r_min);
+                    var force = Mathf.LerpUnclamped(force_min, force_max, t);
+                    var velocity = dir.normalized * force;
+                    e.Rigidbody.AddForce(velocity);
+                }
+
+                yield return null;
+            }
+        }
+        else
+        {
+            yield return new WaitForSeconds(duration);
+        }
     }
 }
