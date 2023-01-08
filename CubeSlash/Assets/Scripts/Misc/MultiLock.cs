@@ -11,6 +11,12 @@ public class MultiLock
 
     private List<string> locks = new List<string>();
 
+    public void ClearLock()
+    {
+        locks.Clear();
+        OnLockChanged?.Invoke(IsLocked);
+    }
+
     public void AddLock(string id)
     {
         if (!locks.Contains(id))

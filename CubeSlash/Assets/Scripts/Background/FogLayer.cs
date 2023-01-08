@@ -8,7 +8,7 @@ public class FogLayer : MonoBehaviour
 
     public int SortingOrder { set { spr.sortingOrder = value * 10 + 9; } }
 
-    private void Start()
+    private void Update()
     {
         var w = CameraController.Instance.Width * 1.1f;
         var h = CameraController.Instance.Height * 1.1f;

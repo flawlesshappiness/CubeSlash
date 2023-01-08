@@ -12,8 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed170f98ca580f243b98b5b4d9a80757, type: 3}
   m_Name: 015 - Abyss (Boss)
   m_EditorClassIdentifier: 
-  duration: 60
+  duration: 99999
   size: 100
+  is_final_level: 1
   frequency_spawn_enemy: 0.3
   count_enemy_active: 9999
   enemies:

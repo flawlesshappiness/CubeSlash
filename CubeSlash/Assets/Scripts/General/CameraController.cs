@@ -1,3 +1,4 @@
+using Flawliz.Lerp;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -35,5 +36,25 @@ public class CameraController : Singleton
     {
         _cam = Camera.main;
         return _cam;
+    }
+
+    public void SetSize(float size)
+    {
+        Camera.orthographicSize = size;
+        CoroutineController.Instance.Kill("AnimateSize_" + GetInstanceID());
+    }
+
+    public CustomCoroutine AnimateSize(float duration, float size, AnimationCurve curve = null)
+    {
+        var start = Camera.orthographicSize;
+        return this.StartCoroutineWithID(Cr(), "AnimateSize_" + GetInstanceID());
+        IEnumerator Cr()
+        {
+            yield return LerpEnumerator.Value(duration, f =>
+            {
+                var t = curve != null ? curve.Evaluate(f) : f;
+                Camera.orthographicSize = Mathf.Lerp(start, size, t);
+            });
+        }
     }
 }

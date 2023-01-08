@@ -17,6 +17,7 @@ public class GameController : MonoBehaviour
 
     public System.Action OnResume { get; set; }
     public bool IsGameStarted { get; private set; }
+    public bool IsGameEnded { get; private set; }
     public bool IsPaused { get { return PauseLock.IsLocked; } }
     public MultiLock PauseLock { get; private set; } = new MultiLock();
     public int LevelIndex { get; set; }
@@ -277,11 +278,13 @@ public class GameController : MonoBehaviour
     private void MainMenu()
     {
         IsGameStarted = false;
+        IsGameEnded = false;
         gameState = GameState.MENU;
         EnemyController.Instance.RemoveActiveEnemies();
         ItemController.Instance.DespawnAllActiveItems();
         Player.Instance.gameObject.SetActive(false);
         ViewController.Instance.ShowView<StartView>(0.25f);
+        CameraController.Instance.SetSize(15f);
     }
 
     private void CheatLevelUp()
@@ -297,5 +300,28 @@ public class GameController : MonoBehaviour
         {
             ResumeLevel();
         };
+    }
+
+    public void Win()
+    {
+        MusicController.Instance.StopBGM();
+        IsGameEnded = true;
+        EnemyController.Instance.KillActiveEnemies();
+        StartCoroutine(Cr());
+        IEnumerator Cr()
+        {
+            CameraController.Instance.AnimateSize(8f, 25f);
+            yield return new WaitForSeconds(2f);
+            // Show view
+            var win_view = ViewController.Instance.ShowView<WinView>(2.0f, "Win");
+            win_view.AnimateScaleTitle(6);
+            yield return new WaitForSeconds(2f);
+            var bg_view = ViewController.Instance.ShowView<BackgroundView>(2.0f, "Background");
+            yield return new WaitForSeconds(3f);
+            win_view.Close(1.0f);
+            yield return new WaitForSeconds(1f);
+            bg_view.Close(0.5f);
+            MainMenu();
+        }
     }
 }

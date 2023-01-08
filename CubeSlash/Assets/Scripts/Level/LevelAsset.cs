@@ -7,6 +7,7 @@ public class LevelAsset : ScriptableObject
 {
     public float duration;
     public float size;
+    public bool is_final_level;
 
     [Header("ENEMY")]
     public float frequency_spawn_enemy;

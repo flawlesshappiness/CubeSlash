@@ -77,6 +77,7 @@ public class Player : Character
         ResetLevelsUntilAbility();
         ResetKillsUntilShieldRegen();
         ResetPlantExperienceUntilHealthRegen();
+        ResetLocks();
     }
 
     private void OnEnable()
@@ -101,6 +102,11 @@ public class Player : Character
     {
         base.OnFixedUpdate();
         MoveUpdate();
+    }
+
+    private void ResetLocks()
+    {
+        AbilityLock.ClearLock();
     }
 
     private void MoveUpdate()

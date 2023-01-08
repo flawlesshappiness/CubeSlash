@@ -29,6 +29,7 @@ public class EnemyController : Singleton
     private void Update()
     {
         if (!GameController.Instance.IsGameStarted) return;
+        if (GameController.Instance.IsGameEnded) return;
         SpawnUpdate();
     }
 
@@ -60,21 +61,26 @@ public class EnemyController : Singleton
 
         foreach (var boss in Level.Current.bosses)
         {
+            var is_final_level = Level.Current.is_final_level;
+
             var enemy = SpawnEnemy(boss.enemy, CameraController.Instance.GetPositionOutsideCamera());
             enemies.Add(enemy);
-
             enemy.OnDeath += () =>
             {
-                //var item = ItemController.Instance.SpawnAbilityItem(enemy.transform.position);
-                //item.Initialize();
-
-                for (int i = 0; i < 25; i++)
+                if (is_final_level)
                 {
-                    var experience = ItemController.Instance.SpawnExperience(enemy.transform.position);
-                    experience.Initialize();
-                    experience.SetMeat();
+                    GameController.Instance.Win();
+                }
+                else
+                {
+                    for (int i = 0; i < 25; i++)
+                    {
+                        var experience = ItemController.Instance.SpawnExperience(enemy.transform.position);
+                        experience.Initialize();
+                        experience.SetMeat();
 
-                    experience.transform.position = enemy.transform.position + Random.insideUnitCircle.ToVector3() * enemy.Settings.size * 0.5f;
+                        experience.transform.position = enemy.transform.position + Random.insideUnitCircle.ToVector3() * enemy.Settings.size * 0.5f;
+                    }
                 }
             };
 
@@ -175,6 +181,14 @@ public class EnemyController : Singleton
         enemies_active.Remove(enemy);
         enemies_inactive.Add(enemy);
         OnEnemyKilled?.Invoke();
+    }
+
+    public void KillActiveEnemies()
+    {
+        foreach(var enemy in enemies_active.ToList())
+        {
+            enemy.Kill();
+        }
     }
 
     public void RemoveActiveEnemies()
