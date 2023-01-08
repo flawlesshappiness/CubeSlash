@@ -107,7 +107,12 @@ public class AbilityExplode : Ability
         });
         psd.Play();
 
+        var sfx = FMODEventReferenceDatabase.Load().sfx_explode_charge;
+        sfx.Play();
+
         yield return WaitForDelay(Delay, getPosition());
+
+        sfx.Stop();
 
         Explode(getPosition(), radius, Knockback, OnHit);
 
@@ -150,6 +155,10 @@ public class AbilityExplode : Ability
         {
             Player.PushEnemiesInArea(position, radius * 3, force);
         }
+
+        // Sfx
+        var sfx_explode = FMODEventReferenceDatabase.Load().sfx_explode_explode;
+        FMODController.Instance.PlayWithLimitDelay(sfx_explode);
 
         // Fx
         var template_explosion = Resources.Load<GameObject>("Particles/ExplosionEffect");

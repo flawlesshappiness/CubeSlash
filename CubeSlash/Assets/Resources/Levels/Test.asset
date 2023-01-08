@@ -13,15 +13,15 @@ MonoBehaviour:
   m_Name: Test
   m_EditorClassIdentifier: 
   duration: 99999
-  size: 100
+  size: 125
   frequency_spawn_enemy: 0.25
   count_enemy_active: 999
   enemies: []
   bosses:
-  - name: Boss_Bone
-    enemy: {fileID: 11400000, guid: c27a6b5c0fe4b3f4a9dcc2af39fb178f, type: 2}
+  - name: Boss_Host
+    enemy: {fileID: 11400000, guid: 4fe64771ce63226478a6456e661756ff, type: 2}
     chance: 1
     max: 1
   frequency_spawn_experience: 0.25
   count_experience_active: 0
-  area: {fileID: 11400000, guid: 426a543348b726d4b8ff81b9d40961dd, type: 2}
+  area: {fileID: 11400000, guid: 57a6e213ab910cb4bb164a7019edbd19, type: 2}

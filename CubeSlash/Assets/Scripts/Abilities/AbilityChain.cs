@@ -52,8 +52,11 @@ public class AbilityChain : Ability
     public override void Trigger()
     {
         base.Trigger();
-        var center = Player.Instance.transform.position;
-        TryChainToTarget(center, Radius, Chains, Strikes, ChainStrikes, HitTarget);
+        if (HasModifier(Type.CHARGE))
+        {
+            var center = Player.Instance.transform.position;
+            TryChainToTarget(center, Radius, Chains, Strikes, ChainStrikes, HitTarget);
+        }
     }
 
     private void Update()
@@ -116,6 +119,9 @@ public class AbilityChain : Ability
         // Create particle system
         CreateZapPS(center, target_position);
         CreateImpactPS(target_position);
+
+        // Audio
+        FMODEventReferenceDatabase.Load().sfx_chain_zap.Play();
         
         // Kill target
         onHit?.Invoke(k);

@@ -5,6 +5,9 @@ public class FMODEventReferenceDatabase : ScriptableObject
 {
     public FMODEventReference collect_experience;
     public FMODEventReference lose_game;
+    public FMODEventReference sfx_chain_zap;
+    public FMODEventReference sfx_explode_charge;
+    public FMODEventReference sfx_explode_explode;
 
     private static FMODEventReferenceDatabase instance;
 

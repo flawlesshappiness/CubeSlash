@@ -42,9 +42,36 @@ MonoBehaviour:
   Path: Assets/FMOD/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 638080512528468761
+  lastModified: 638086158358928992
   FileSizes: []
   Exists: 1
+--- !u!114 &-7809730102017663126
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Game/Abilities/explode_explode
+  m_EditorClassIdentifier: 
+  Path: event:/Game/Abilities/explode_explode
+  Guid:
+    Data1: 1694411132
+    Data2: 1126925785
+    Data3: -850677329
+    Data4: 1342194502
+  Banks:
+  - {fileID: -8060980804293988741}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
 --- !u!114 &-6648804991705279764
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -553,12 +580,15 @@ MonoBehaviour:
   - {fileID: 5992827859230917708}
   - {fileID: -516832858661760120}
   - {fileID: 7165123541163880063}
+  - {fileID: 6039242139335841192}
+  - {fileID: 2638402112156830713}
+  - {fileID: -7809730102017663126}
   EditorParameters: []
   MasterBanks:
   - {fileID: -8060980804293988741}
   StringsBanks:
   - {fileID: 5917708036578608240}
-  cacheTime: 638080512528498763
+  cacheTime: 638086158358948989
   cacheVersion: 131593
 --- !u!114 &2256211412419773527
 MonoBehaviour:
@@ -641,6 +671,33 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 0
+--- !u!114 &2638402112156830713
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Game/Abilities/explode_charge
+  m_EditorClassIdentifier: 
+  Path: event:/Game/Abilities/explode_charge
+  Guid:
+    Data1: 767572272
+    Data2: 1239142846
+    Data3: 1606252960
+    Data4: 1039353130
+  Banks:
+  - {fileID: -8060980804293988741}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 0
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 4000
 --- !u!114 &3321090432137604491
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -818,10 +875,10 @@ MonoBehaviour:
   Path: Assets/FMOD/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 638080512528498763
+  lastModified: 638086158358948989
   FileSizes:
   - Name: 
-    Value: 2402
+    Value: 2550
   Exists: 1
 --- !u!114 &5992827859230917708
 MonoBehaviour:
@@ -850,6 +907,33 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 0
+--- !u!114 &6039242139335841192
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Game/Abilities/chain_zap_001
+  m_EditorClassIdentifier: 
+  Path: event:/Game/Abilities/chain_zap_001
+  Guid:
+    Data1: 836378376
+    Data2: 1265313106
+    Data3: 1833363865
+    Data4: -753924053
+  Banks:
+  - {fileID: -8060980804293988741}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 2000
 --- !u!114 &6642678424488806187
 MonoBehaviour:
   m_ObjectHideFlags: 0

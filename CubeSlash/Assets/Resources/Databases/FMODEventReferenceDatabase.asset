@@ -28,3 +28,27 @@ MonoBehaviour:
         Data3: 189750964
         Data4: -1995803853
       Path: event:/Game/Events/lose_game
+  sfx_chain_zap:
+    reference:
+      Guid:
+        Data1: 836378376
+        Data2: 1265313106
+        Data3: 1833363865
+        Data4: -753924053
+      Path: event:/Game/Abilities/chain_zap_001
+  sfx_explode_charge:
+    reference:
+      Guid:
+        Data1: 767572272
+        Data2: 1239142846
+        Data3: 1606252960
+        Data4: 1039353130
+      Path: event:/Game/Abilities/explode_charge
+  sfx_explode_explode:
+    reference:
+      Guid:
+        Data1: 1694411132
+        Data2: 1126925785
+        Data3: -850677329
+        Data4: 1342194502
+      Path: event:/Game/Abilities/explode_explode

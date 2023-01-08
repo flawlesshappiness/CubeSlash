@@ -202,6 +202,7 @@ public class AbilityDash : Ability
             AbilityChain.CreateZapPS(start, PositionOrigin);
             AbilityChain.CreateImpactPS(start);
             yield return new WaitForSeconds(0.1f);
+            FMODEventReferenceDatabase.Load().sfx_chain_zap.Play();
             Player.Instance.transform.position = PositionOrigin;
         }
     }

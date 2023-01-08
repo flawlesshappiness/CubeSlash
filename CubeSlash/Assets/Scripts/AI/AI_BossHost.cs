@@ -45,7 +45,7 @@ public class AI_BossHost : EnemyAI
         var t = (Vector3.Distance(Position + offset, destination)) / (CameraController.Instance.Width * 0.5f);
         Self.AngularAcceleration = Mathf.Lerp(Self.Settings.angular_acceleration * 0.25f, Self.Settings.angular_acceleration, t);
         Self.AngularVelocity = Mathf.Lerp(Self.Settings.angular_velocity * 0.25f, Self.Settings.angular_velocity, t);
-        MoveTowards(PlayerPosition);
+        MoveTowards(destination);
     }
 
     private void RotateBodyUpdate()

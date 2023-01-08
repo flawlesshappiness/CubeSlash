@@ -28,27 +28,30 @@ public class BodySkeleton : MonoBehaviour
         Gizmos.color = Color.white;
         Gizmos.DrawLine(Top, Bottom);
 
-        for (int i = 0; i < boneInfos.Count; i++)
+        if(boneInfos != null)
         {
-            Gizmos.color = Color.white;
-            var info = GetBone(i);
-            var left = Center + info.left.localPosition;
-            var right = Center + info.right.localPosition;
-
-            if(i > 0)
+            for (int i = 0; i < boneInfos.Count; i++)
             {
-                var info_prev = GetBone(i - 1);
-                Gizmos.DrawLine(left, Center + info_prev.left.localPosition);
-                Gizmos.DrawLine(right, Center + info_prev.right.localPosition);
+                Gizmos.color = Color.white;
+                var info = GetBone(i);
+                var left = Center + info.left.localPosition;
+                var right = Center + info.right.localPosition;
+
+                if (i > 0)
+                {
+                    var info_prev = GetBone(i - 1);
+                    Gizmos.DrawLine(left, Center + info_prev.left.localPosition);
+                    Gizmos.DrawLine(right, Center + info_prev.right.localPosition);
+                }
+
+                Gizmos.DrawLine(left, right);
+                Gizmos.DrawSphere(Center + info.localPosition, 0.03f);
+
+                // Normals
+                Gizmos.color = Color.cyan;
+                Gizmos.DrawLine(left, left + info.left.normal);
+                Gizmos.DrawLine(right, right + info.right.normal);
             }
-
-            Gizmos.DrawLine(left, right);
-            Gizmos.DrawSphere(Center + info.localPosition, 0.03f);
-
-            // Normals
-            Gizmos.color = Color.cyan;
-            Gizmos.DrawLine(left, left + info.left.normal);
-            Gizmos.DrawLine(right, right+ info.right.normal);
         }
 
         var bone_position = GetBonePosition(t_test);

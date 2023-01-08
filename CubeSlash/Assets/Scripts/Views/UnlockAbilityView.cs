@@ -19,8 +19,9 @@ public class UnlockAbilityView : View
         temp_btn_ability.gameObject.SetActive(false);
         DisplayAbility(null);
 
-        var abilities = AbilityController.Instance.GetUnlockedAbilities().Count == 0 ?
-            new List<Ability> { AbilityController.Instance.GetAbility(Ability.Type.DASH), AbilityController.Instance.GetAbility(Ability.Type.SPLIT) }
+        var is_first = AbilityController.Instance.GetUnlockedAbilities().Count == 0;
+        var abilities = is_first ?
+            AbilityController.Instance.GetUnlockableAbilities()
             : AbilityController.Instance.GetUnlockableAbilities().TakeRandom(2);
 
         ClearButtons();

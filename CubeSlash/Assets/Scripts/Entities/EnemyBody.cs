@@ -5,6 +5,7 @@ using UnityEngine;
 public class EnemyBody : Body
 {
     [SerializeField] public Transform parent_health_duds;
+    [SerializeField] public HealthDud template_dud;
 
     public List<HealthDud> Duds { get { return health_duds.ToList(); } }
 
@@ -42,7 +43,7 @@ public class EnemyBody : Body
             {
                 if (t != parent_health_duds)
                 {
-                    var dud = Instantiate(Resources.Load<HealthDud>("Prefabs/Entities/MeatDud"), t);
+                    var dud = Instantiate(template_dud, t);
                     dud.transform.SetGlobalScale(t.localScale);
                     dud.transform.localPosition = Vector3.zero;
                     dud.transform.localRotation = Quaternion.identity;

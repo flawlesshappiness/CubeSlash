@@ -221,8 +221,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Collider: {fileID: 1421184977900173726}
   Trigger: {fileID: 5938915428007740160}
-  ps_death: {fileID: 1272193720796475515, guid: 56a4aa63eefd7704981ffb7c14788af0, type: 3}
+  ps_death: {fileID: 1272193720796475515, guid: fd5afc43bece25445bb6d64a73e7328b, type: 3}
   parent_health_duds: {fileID: 2512613168863538346}
+  template_dud: {fileID: 3405480637174817150, guid: 23ec884aeae69e74c9efdd36a40fc296, type: 3}
 --- !u!1 &4008918390735960948
 GameObject:
   m_ObjectHideFlags: 0
