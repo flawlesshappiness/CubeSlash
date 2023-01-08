@@ -33,7 +33,11 @@ MonoBehaviour:
     enemy: {fileID: 11400000, guid: e3fdf9a9032f5a547809171c6941ee82, type: 2}
     chance: 0.25
     max: 5
-  bosses: []
+  bosses:
+  - name: Boss_Bone
+    enemy: {fileID: 11400000, guid: c27a6b5c0fe4b3f4a9dcc2af39fb178f, type: 2}
+    chance: 1
+    max: 1
   frequency_spawn_experience: 0.5
   count_experience_active: 50
   area: {fileID: 11400000, guid: 426a543348b726d4b8ff81b9d40961dd, type: 2}
