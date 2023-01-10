@@ -10,6 +10,10 @@ public class FMODController : Singleton
 
     private Dictionary<string, LimitDelay> dicLimitDelay = new Dictionary<string, LimitDelay>();
 
+    private Bus Music;
+    private Bus SFX;
+    private Bus Master;
+
     private class LimitDelay
     {
         public string path;
@@ -20,6 +24,10 @@ public class FMODController : Singleton
     protected override void Initialize()
     {
         base.Initialize();
+
+        Music = RuntimeManager.GetBus("bus:/Master/Music");
+        SFX = RuntimeManager.GetBus("bus:/Master/SFX");
+        Master = RuntimeManager.GetBus("bus:/Master");
     }
 
     public void Play(string path)
@@ -69,5 +77,18 @@ public class FMODController : Singleton
 
             ld.coroutine = null;
         }
+    }
+
+    public void SetMusicVolume(float volume) => Music.setVolume(volume);
+    public void SetSFXVolume(float volume) => SFX.setVolume(volume);
+    public void SetMasterVolume(float volume) => Master.setVolume(volume);
+    public float GetMusicVolume() => GetBusVolume(Music);
+    public float GetSFXVolume() => GetBusVolume(SFX);
+    public float GetMasterVolume() => GetBusVolume(Master);
+
+    private float GetBusVolume(Bus bus)
+    {
+        bus.getVolume(out var volume);
+        return volume;
     }
 }

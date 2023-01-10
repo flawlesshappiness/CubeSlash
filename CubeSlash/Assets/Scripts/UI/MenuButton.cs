@@ -28,6 +28,6 @@ public class MenuButton : MonoBehaviour
         {
             cvg_selected.alpha = Mathf.Lerp(alpha_start, alpha_end, f);
             rt_selected.sizeDelta = Vector2.Lerp(scale_start, scale_end, f);
-        }).Connect(gameObject);
+        }).Connect(gameObject).UnscaledTime();
     }
 }

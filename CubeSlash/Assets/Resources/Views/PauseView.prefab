@@ -109,7 +109,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: -88}
-  m_SizeDelta: {x: 562.4763, y: 495.52832}
+  m_SizeDelta: {x: 600, y: 495.52832}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &4811061142449229779
 GameObject:
@@ -450,6 +450,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 4066922812944281842}
     m_Modifications:
     - target: {fileID: 1082461466369086601, guid: f1eb4b7acc478a54b91879fe6b8e5451, type: 3}
+      propertyPath: m_text
+      value: Continue
+      objectReference: {fileID: 0}
+    - target: {fileID: 1082461466369086601, guid: f1eb4b7acc478a54b91879fe6b8e5451, type: 3}
       propertyPath: m_fontSize
       value: 70
       objectReference: {fileID: 0}
@@ -711,6 +715,30 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2901112867142272348}
     m_Modifications:
+    - target: {fileID: 225796375793892910, guid: 81a069b11e2b131418b14818bf2518bf, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 225796375793892910, guid: 81a069b11e2b131418b14818bf2518bf, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 225796375793892910, guid: 81a069b11e2b131418b14818bf2518bf, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 225796375793892910, guid: 81a069b11e2b131418b14818bf2518bf, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 225796375793892910, guid: 81a069b11e2b131418b14818bf2518bf, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 225796375793892910, guid: 81a069b11e2b131418b14818bf2518bf, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1972338686046909685, guid: 81a069b11e2b131418b14818bf2518bf, type: 3}
       propertyPath: m_Name
       value: UnlockedUpgrades

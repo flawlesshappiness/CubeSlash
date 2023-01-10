@@ -7,9 +7,9 @@ public class PauseView : View
 {
     public static bool Exists { get; private set; }
 
-    [SerializeField] private Button btnContinue;
-    [SerializeField] private Button btnOptions;
-    [SerializeField] private Button btnMainMenu;
+    [SerializeField] private ButtonExtended btnContinue;
+    [SerializeField] private ButtonExtended btnOptions;
+    [SerializeField] private ButtonExtended btnMainMenu;
 
     private void OnEnable()
     {
@@ -21,15 +21,39 @@ public class PauseView : View
     {
         Exists = false;
         GameController.Instance.PauseLock.RemoveLock(nameof(PauseView));
+
+        PlayerInput.Controls.Player.Menu.started -= Menu_started;
     }
 
     private void Start()
     {
+        PlayerInput.Controls.Player.Menu.started += Menu_started;
+
         btnContinue.onClick.AddListener(ClickContinue);
         btnOptions.onClick.AddListener(ClickOptions);
         btnMainMenu.onClick.AddListener(ClickMainMenu);
 
         EventSystemController.Instance.SetDefaultSelection(btnContinue.gameObject);
+
+        btnContinue.SetSelectOnHover(true);
+        btnOptions.SetSelectOnHover(true);
+        btnMainMenu.SetSelectOnHover(true);
+
+        StartCoroutine(Cr());
+        IEnumerator Cr()
+        {
+            CanvasGroup.blocksRaycasts = false;
+            CanvasGroup.interactable = false;
+            yield return new WaitForSecondsRealtime(0.1f);
+            CanvasGroup.blocksRaycasts = true;
+            CanvasGroup.interactable = true;
+            EventSystemController.Instance.EventSystem.SetSelectedGameObject(null);
+        }
+    }
+
+    private void Menu_started(UnityEngine.InputSystem.InputAction.CallbackContext obj)
+    {
+        ClickContinue();
     }
 
     private void ClickContinue()

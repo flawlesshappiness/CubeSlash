@@ -318,8 +318,8 @@ public class GameController : MonoBehaviour
             yield return new WaitForSeconds(2f);
             var bg_view = ViewController.Instance.ShowView<BackgroundView>(2.0f, "Background");
             yield return new WaitForSeconds(3f);
-            win_view.Close(1.0f);
-            yield return new WaitForSeconds(1f);
+            win_view.Close(2.0f);
+            yield return new WaitForSeconds(2f);
             bg_view.Close(0.5f);
             MainMenu();
         }

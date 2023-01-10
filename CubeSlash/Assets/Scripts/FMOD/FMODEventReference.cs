@@ -11,7 +11,6 @@ public class FMODEventReference
     [SerializeField]
     public EventReference reference;
 
-    private bool init_desc;
     private EventInstance current_instance;
 
     private FMODEventReferenceInfo _info;
@@ -21,6 +20,7 @@ public class FMODEventReference
     private static Dictionary<string, int> dicPlayCount = new Dictionary<string, int>();
     private static Dictionary<string, float> dicPlayTimestamp = new Dictionary<string, float>();
 
+    public bool Exists { get { return Info.has_description; } }
     public int PlayCount { get { return GetPlayCount(); } }
 
     public FMODEventReferenceInfo GetInfo()
@@ -107,6 +107,7 @@ public class FMODEventReferenceInfo
     public EventDescription Description { get; private set; }
     public string path;
     public int length;
+    public bool has_description;
 
     public FMODEventReferenceInfo(EventReference reference)
     {
@@ -115,6 +116,7 @@ public class FMODEventReferenceInfo
             Description = RuntimeManager.GetEventDescription(reference);
             Description.getPath(out path);
             Description.getLength(out length);
+            has_description = true;
         }
         catch (System.Exception e)
         {

@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   duration: 90
   size: 100
+  is_final_level: 0
   frequency_spawn_enemy: 0.6
   count_enemy_active: 9999
   enemies:
@@ -33,3 +34,11 @@ MonoBehaviour:
   frequency_spawn_experience: 0.5
   count_experience_active: 80
   area: {fileID: 11400000, guid: d0a0597e506bddc4a9a4835efccc3573, type: 2}
+  bgm:
+    reference:
+      Guid:
+        Data1: -1820905848
+        Data2: 1333989044
+        Data3: -787764304
+        Data4: 642457650
+      Path: event:/Music/game_001

@@ -17,6 +17,8 @@ public class AbilityExplode : Ability
     public bool DelayPull { get; private set; }
     public bool ChainExplode { get; private set; }
 
+    private bool charge_sfx_has_played = false;
+
     public override void InitializeFirstTime()
     {
         base.InitializeFirstTime();
@@ -41,6 +43,7 @@ public class AbilityExplode : Ability
 
     public override void Trigger()
     {
+        if (InUse) return;
         base.Trigger();
         InUse = true;
 
@@ -69,6 +72,8 @@ public class AbilityExplode : Ability
 
     private void TriggerExplode(Transform parent, Func<Vector3> getPosition, Vector3 direction)
     {
+        charge_sfx_has_played = false;
+
         if (HasModifier(Type.CHARGE))
         {
             Vector3 pos = getPosition();
@@ -108,7 +113,11 @@ public class AbilityExplode : Ability
         psd.Play();
 
         var sfx = FMODEventReferenceDatabase.Load().sfx_explode_charge;
-        sfx.Play();
+        if (!charge_sfx_has_played)
+        {
+            charge_sfx_has_played = true;
+            sfx.Play();
+        }
 
         yield return WaitForDelay(Delay, getPosition());
 

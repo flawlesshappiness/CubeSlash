@@ -1,6 +1,5 @@
 TODO:
 Ability to refund level if you dont want an upgrade (unlock in meta layer)
 Plants that can be destroyed for exp
-Rework EXPLODE into something more easy to use
-
-Sometimes beam persists??
+Options menu
+Pause menu

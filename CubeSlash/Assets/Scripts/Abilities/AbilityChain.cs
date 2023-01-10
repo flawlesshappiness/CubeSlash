@@ -1,3 +1,4 @@
+using Flawliz.Lerp;
 using System.Collections;
 using System.Linq;
 using UnityEngine;
@@ -5,6 +6,9 @@ using UnityEngine.InputSystem.HID;
 
 public class AbilityChain : Ability
 {
+    [SerializeField] private Transform pivot_preview;
+    [SerializeField] private SpriteRenderer spr_preview;
+
     public float Radius { get; private set; }
     public float Frequency { get; private set; }
     public float FrequencyPerc { get; private set; }
@@ -31,6 +35,9 @@ public class AbilityChain : Ability
         Strikes = GetIntValue("Strikes");
         ChainStrikes = GetIntValue("ChainStrikes");
         HitsExplode = GetBoolValue("HitsExplode");
+
+        pivot_preview.localScale = Vector3.one * Radius * 2;
+        spr_preview.SetAlpha(0);
     }
 
     public override void Pressed()
@@ -39,6 +46,7 @@ public class AbilityChain : Ability
         if (HasModifier(Type.CHARGE)) return;
         InUse = true;
         Player.Instance.AbilityLock.AddLock(nameof(AbilityChain));
+        AnimateShowPreview(true);
     }
 
     public override void Released()
@@ -47,6 +55,7 @@ public class AbilityChain : Ability
         if (HasModifier(Type.CHARGE)) return;
         InUse = false;
         Player.Instance.AbilityLock.RemoveLock(nameof(AbilityChain));
+        AnimateShowPreview(false);
     }
 
     public override void Trigger()
@@ -56,6 +65,8 @@ public class AbilityChain : Ability
         {
             var center = Player.Instance.transform.position;
             TryChainToTarget(center, Radius, Chains, Strikes, ChainStrikes, HitTarget);
+            StartCooldown(Cooldown + Frequency * FrequencyPerc);
+            CreateImpactPS(Player.transform.position);
         }
     }
 
@@ -163,5 +174,15 @@ public class AbilityChain : Ability
 
         ps.Play();
         Destroy(ps.gameObject, 5f);
+    }
+
+    private CustomCoroutine AnimateShowPreview(bool show)
+    {
+        return this.StartCoroutineWithID(Cr(), "show_preview_" + GetInstanceID());
+        IEnumerator Cr()
+        {
+            var end = show ? 0.05f : 0f;
+            yield return LerpEnumerator.Alpha(spr_preview, 0.25f, end);
+        }
     }
 }

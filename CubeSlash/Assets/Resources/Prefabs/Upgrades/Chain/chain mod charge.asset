@@ -29,3 +29,15 @@ MonoBehaviour:
       value_bool: 0
       can_edit_name: 1
       _editor_toggle_preview: 0
+  - type_effect: 0
+    variable:
+      name: Cooldown
+      text_display: $s cooldown
+      type_value: 1
+      type_display: 1
+      higher_is_positive: 0
+      value_int: 0
+      value_float: 2
+      value_bool: 0
+      can_edit_name: 1
+      _editor_toggle_preview: 0

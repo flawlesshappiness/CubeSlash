@@ -22,6 +22,9 @@ public class LevelAsset : ScriptableObject
     [Header("AREA")]
     public Area area;
 
+    [Header("MUSIC")]
+    public FMODEventReference bgm;
+
     private void OnValidate()
     {
         foreach(var enemy in enemies)
