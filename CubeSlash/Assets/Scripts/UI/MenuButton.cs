@@ -1,16 +1,16 @@
 using UnityEngine;
 using UnityEngine.UI;
 using Flawliz.Lerp;
+using System.Collections;
 
 public class MenuButton : MonoBehaviour
 {
     [SerializeField] private RectTransform rt_selected;
     [SerializeField] private CanvasGroup cvg_selected;
-    private ButtonExtended button;
+    [SerializeField] private ButtonExtended button;
 
     private void OnEnable()
     {
-        button = GetComponent<ButtonExtended>();
         button.OnSelectedChanged += OnSelectionChanged;
         cvg_selected.alpha = 0;
         rt_selected.sizeDelta = Vector2.right * 100f;
@@ -24,10 +24,17 @@ public class MenuButton : MonoBehaviour
         var scale_end = Vector2.right * (selected ? scale_show : scale_hide);
         var alpha_start = cvg_selected.alpha;
         var alpha_end = selected ? 1 : 0;
-        Lerp.Value("selected_" + GetInstanceID(), 0.15f, f =>
+
+        this.StartCoroutineWithID(Cr(), "scale_select_" + GetInstanceID());
+        IEnumerator Cr()
         {
-            cvg_selected.alpha = Mathf.Lerp(alpha_start, alpha_end, f);
-            rt_selected.sizeDelta = Vector2.Lerp(scale_start, scale_end, f);
-        }).Connect(gameObject).UnscaledTime();
+            var lerp = LerpEnumerator.Value(0.15f, f =>
+            {
+                cvg_selected.alpha = Mathf.Lerp(alpha_start, alpha_end, f);
+                rt_selected.sizeDelta = Vector2.Lerp(scale_start, scale_end, f);
+            });
+            lerp.UnscaledTime = true;
+            yield return lerp;
+        }
     }
 }

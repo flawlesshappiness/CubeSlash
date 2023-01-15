@@ -50,11 +50,12 @@ public class Enemy : Character, IKillable, IHurt
         var sh = size * 0.5f;
         var center = Player.Instance.transform.position;
         var pos = transform.position;
-
+        
         if (pos.x < center.x - sh) transform.position += new Vector3(size, 0);
         if (pos.x > center.x + sh) transform.position -= new Vector3(size, 0);
         if (pos.y < center.y - sh) transform.position += new Vector3(0, size);
         if (pos.y > center.y + sh) transform.position -= new Vector3(0, size);
+        
     }
 
     private void SetAI(EnemyAI prefab)

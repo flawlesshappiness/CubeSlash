@@ -25,7 +25,7 @@ MonoBehaviour:
       type_display: 1
       higher_is_positive: 0
       value_int: 1
-      value_float: -0.5
+      value_float: -0.1
       value_bool: 1
       can_edit_name: 1
       _editor_toggle_preview: 0

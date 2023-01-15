@@ -89,16 +89,18 @@ public class AI_BossShooter : EnemyAI
             this.StartCoroutineWithID(AttackShootCircle(), "attack_" + GetInstanceID());
             time_circle_attack = Time.time;
         }
+        /*
         else if (AngleTowards(PlayerPosition).Abs() > 60)
         {
             this.StartCoroutineWithID(AttackSpinShoot(), "attack_"+GetInstanceID());
         }
+        */
         else
         {
             var rnd = Random.Range(0f, 1f);
             if (rnd < 0.2f)
             {
-                this.StartCoroutineWithID(AttackSpinShoot(), "attack_" + GetInstanceID());
+                this.StartCoroutineWithID(AttackShootArc(), "attack_" + GetInstanceID());
             }
             else
             {

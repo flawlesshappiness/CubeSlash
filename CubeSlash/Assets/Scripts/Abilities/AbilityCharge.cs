@@ -65,6 +65,12 @@ public class AbilityCharge : Ability
         });
     }
 
+    private void OnDisable()
+    {
+        sfx_charge.Stop();
+        sfx_charge_idle.Stop();
+    }
+
     public override void InitializeFirstTime()
     {
         base.InitializeFirstTime();
@@ -333,7 +339,7 @@ public class AbilityCharge : Ability
     private void InitializeBeams()
     {
         // Clear beams
-        beam_infos.ForEach(beam => Destroy(beam.graphic));
+        beam_infos.ForEach(beam => Destroy(beam.graphic.gameObject));
         beam_infos.Clear();
 
         // Create beams

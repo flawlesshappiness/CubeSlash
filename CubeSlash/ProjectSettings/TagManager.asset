@@ -56,3 +56,6 @@ TagManager:
   - name: Particles_Front
     uniqueID: 1797311287
     locked: 0
+  - name: Vignette
+    uniqueID: 4068451197
+    locked: 0

@@ -16,6 +16,8 @@ public class AI_BossAngler : EnemyAI
         angler_body = enemy.Body as BossAnglerBody;
         var lamp_target = angler_body.GetLampTarget();
 
+        Self.OnDeath += OnDeath;
+
         lamp = Instantiate(template_lamp, GameController.Instance.world);
         lamp.transform.localScale = Vector3.one * Self.Settings.size;
         lamp.SetTarget(lamp_target);
@@ -24,15 +26,37 @@ public class AI_BossAngler : EnemyAI
         this.StartCoroutineWithID(AttacksCr(), "attacks_" + GetInstanceID());
     }
 
+    private void OnDisable()
+    {
+        if(lamp != null)
+        {
+            lamp.gameObject.SetActive(false);
+        }
+    }
+
+    private void OnEnable()
+    {
+        if (lamp != null)
+        {
+            lamp.gameObject.SetActive(true);
+        }
+    }
+
+    private void OnDeath()
+    {
+        if(lamp != null)
+        {
+            Destroy(lamp.gameObject);
+        }
+    }
+
     private IEnumerator AttacksCr()
     {
         while (true)
         {
             angler_body.gameObject.SetActive(true);
-            lamp.gameObject.SetActive(true);
             yield return DashAttackCr();
             angler_body.gameObject.SetActive(false);
-            lamp.gameObject.SetActive(false);
             //yield return SmallBiteAttackCr();
             yield return BigBiteAttackCr();
         }

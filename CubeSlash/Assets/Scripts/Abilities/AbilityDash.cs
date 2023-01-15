@@ -74,7 +74,16 @@ public class AbilityDash : Ability
 
         if (HasModifier(Type.EXPLODE))
         {
-            AbilityExplode.Explode(Player.transform.position, 3f, 200);
+            var position = Player.Instance.transform.position;
+            StartCoroutine(AbilityExplode.ExplodeCr(new AbilityExplode.ExplodeChargeInfo
+            {
+                parent = GameController.Instance.world,
+                radius = 3f,
+                delay = 1f,
+                force = 50f,
+                play_charge_sfx = true,
+                getPosition = () => position,
+            }));
         }
 
         IEnumerator DashCr(Vector3 direction, bool has_player)

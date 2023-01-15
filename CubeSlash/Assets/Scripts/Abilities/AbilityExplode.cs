@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Linq;
 using UnityEngine;
@@ -7,7 +6,6 @@ public class AbilityExplode : Ability
 {
     [Header("EXPLODE")]
     [SerializeField] private Projectile projectile_split_modifier;
-    private ParticleSystem ps_charge;
 
     // Values
     public float Delay { get; private set; }
@@ -22,7 +20,6 @@ public class AbilityExplode : Ability
     public override void InitializeFirstTime()
     {
         base.InitializeFirstTime();
-        ps_charge = Resources.Load<ParticleSystem>("Particles/ps_explode_charge");
     }
 
     public override void OnValuesApplied()
@@ -70,7 +67,7 @@ public class AbilityExplode : Ability
         }
     }
 
-    private void TriggerExplode(Transform parent, Func<Vector3> getPosition, Vector3 direction)
+    private void TriggerExplode(Transform parent, System.Func<Vector3> getPosition, Vector3 direction)
     {
         charge_sfx_has_played = false;
 
@@ -89,44 +86,71 @@ public class AbilityExplode : Ability
         }
         else
         {
+            StartCoroutine(ExplodeDelayCr());
+        }
+
+        IEnumerator ExplodeDelayCr()
+        {
+            InUse = true;
+            Player.Instance.AbilityLock.AddLock(nameof(AbilityChain));
+
+            var ring_delay = Delay * 0.5f;
             for (int i = 0; i < Rings; i++)
             {
                 var r = Radius * (1 + 0.5f * i);
-                StartCoroutine(ExplodeCr(parent, getPosition, r, (Delay * 0.5f) * i));
+
+                StartCoroutine(ExplodeCr(new ExplodeChargeInfo
+                {
+                    parent = parent,
+                    radius = r,
+                    delay = Delay,
+                    force = Knockback,
+                    pull_enemies = DelayPull,
+                    getPosition = getPosition,
+                    onHit = OnHit,
+                }));
+
+                yield return new WaitForSeconds(ring_delay);
             }
+
+            InUse = false;
+            StartCooldown();
+            Player.Instance.AbilityLock.RemoveLock(nameof(AbilityChain));
         }
     }
 
-    private IEnumerator ExplodeCr(Transform parent, Func<Vector3> getPosition, float radius, float ring_delay = 0)
+    public class ExplodeChargeInfo
     {
-        yield return new WaitForSeconds(ring_delay);
+        public Transform parent;
+        public float radius;
+        public float delay;
+        public float force;
+        public bool pull_enemies;
+        public bool play_charge_sfx;
+        public System.Func<Vector3> getPosition;
+        public System.Action<IKillable> onHit;
+    }
 
-        var psd = ps_charge.Duplicate()
-            .Parent(parent)
-            .Position(getPosition())
-            .Scale(Vector3.one * radius * 2);
+    public static IEnumerator ExplodeCr(ExplodeChargeInfo info)
+    {
+        var parent = info.parent;
+        var radius = info.radius;
+        var delay = info.delay;
+        var force = info.force;
+        var pull = info.pull_enemies;
+        var onHit = info.onHit;
+        var getPosition = info.getPosition;
 
-        psd.ps.ModifyMain(m =>
-        {
-            m.startLifetime = new ParticleSystem.MinMaxCurve { constant = Delay };
-        });
-        psd.Play();
+        CreateChargeEffect(parent, getPosition(), radius, delay);
 
         var sfx = FMODEventReferenceDatabase.Load().sfx_explode_charge;
-        if (!charge_sfx_has_played)
-        {
-            charge_sfx_has_played = true;
-            sfx.Play();
-        }
+        if (info.play_charge_sfx) sfx.Play();
 
-        yield return WaitForDelay(Delay, getPosition());
+        yield return WaitForDelay(delay, radius, getPosition(), pull);
 
         sfx.Stop();
 
-        Explode(getPosition(), radius, Knockback, OnHit);
-
-        InUse = false;
-        StartCooldown();
+        Explode(getPosition(), radius, force, onHit);
     }
 
     private void OnHit(IKillable k)
@@ -170,25 +194,15 @@ public class AbilityExplode : Ability
         FMODController.Instance.PlayWithLimitDelay(sfx_explode);
 
         // Fx
-        var template_explosion = Resources.Load<GameObject>("Particles/ExplosionEffect");
-        var explosion = Instantiate(template_explosion, GameController.Instance.world);
-        explosion.transform.position = position;
-        explosion.transform.localScale = Vector3.one * radius * 2;
-        Destroy(explosion, 2f);
-
-        var ps_explode = Resources.Load<ParticleSystem>("Particles/ps_explode");
-        ps_explode.Duplicate()
-            .Scale(Vector3.one * radius * 2)
-            .Position(position)
-            .Play();
+        CreateExplodeEffect(position, radius);
     }
 
-    private IEnumerator WaitForDelay(float duration, Vector3 position)
+    private static IEnumerator WaitForDelay(float duration, float radius, Vector3 position, bool pull_enemies)
     {
-        if (DelayPull)
+        if (pull_enemies)
         {
-            var r_max = Radius * 2;
-            var r_min = Radius * 0.75f;
+            var r_max = radius * 3;
+            var r_min = radius * 0.75f;
             var force_min = 5f;
             var force_max = 25f;
             var time_end = Time.time + duration;
@@ -215,5 +229,35 @@ public class AbilityExplode : Ability
         {
             yield return new WaitForSeconds(duration);
         }
+    }
+
+    private static void CreateChargeEffect(Transform parent, Vector3 position, float radius, float duration)
+    {
+        var ps = Resources.Load<ParticleSystem>("Particles/ps_explode_charge");
+        var psd = ps.Duplicate()
+            .Parent(parent)
+            .Position(position)
+            .Scale(Vector3.one * radius * 2);
+
+        psd.ps.ModifyMain(m =>
+        {
+            m.startLifetime = new ParticleSystem.MinMaxCurve { constant = duration };
+        });
+        psd.Play();
+    }
+
+    private static void CreateExplodeEffect(Vector3 position, float radius)
+    {
+        var template_explosion = Resources.Load<GameObject>("Particles/ExplosionEffect");
+        var explosion = Instantiate(template_explosion, GameController.Instance.world);
+        explosion.transform.position = position;
+        explosion.transform.localScale = Vector3.one * radius * 2;
+        Destroy(explosion, 2f);
+
+        var ps_explode = Resources.Load<ParticleSystem>("Particles/ps_explode");
+        ps_explode.Duplicate()
+            .Scale(Vector3.one * radius * 2)
+            .Position(position)
+            .Play();
     }
 }

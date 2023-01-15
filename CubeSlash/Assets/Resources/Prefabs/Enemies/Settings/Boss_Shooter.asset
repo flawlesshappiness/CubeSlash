@@ -16,7 +16,7 @@ MonoBehaviour:
   linear_acceleration: 5
   linear_velocity: 3
   linear_drag: 20
-  angular_acceleration: 3
+  angular_acceleration: 4
   angular_velocity: 75
   size: 10
   mass: 100

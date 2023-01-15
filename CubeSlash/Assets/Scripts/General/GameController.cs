@@ -13,7 +13,7 @@ public class GameController : MonoBehaviour
     public static bool DAMAGE_DISABLED = false;
 
     public enum GameState { PLAYING, MENU }
-    private GameState gameState = GameState.PLAYING;
+    public GameState gameState = GameState.PLAYING;
 
     public System.Action OnResume { get; set; }
     public bool IsGameStarted { get; private set; }
@@ -23,6 +23,7 @@ public class GameController : MonoBehaviour
     public int LevelIndex { get; set; }
 
     public System.Action OnNextLevel { get; set; }
+    public System.Action OnMainMenu { get; set; }
 
     public const string TAG_ABILITY_VIEW = "Ability";
 
@@ -84,6 +85,7 @@ public class GameController : MonoBehaviour
         Singleton.EnsureExistence<BackgroundController>();
         Singleton.EnsureExistence<ProgressController>();
         Singleton.EnsureExistence<MusicController>();
+        Singleton.EnsureExistence<VignetteController>();
     }
 
     public void OpenPauseView()
@@ -112,7 +114,7 @@ public class GameController : MonoBehaviour
             .UnscaledTime();
     }
 
-    private void Quit()
+    public void Quit()
     {
 #if UNITY_EDITOR
         EditorApplication.ExitPlaymode();
@@ -285,6 +287,8 @@ public class GameController : MonoBehaviour
         Player.Instance.gameObject.SetActive(false);
         ViewController.Instance.ShowView<StartView>(0.25f);
         CameraController.Instance.SetSize(15f);
+
+        OnMainMenu?.Invoke();
     }
 
     private void CheatLevelUp()

@@ -25,9 +25,9 @@ public class FMODController : Singleton
     {
         base.Initialize();
 
-        Music = RuntimeManager.GetBus("bus:/Master/Music");
-        SFX = RuntimeManager.GetBus("bus:/Master/SFX");
-        Master = RuntimeManager.GetBus("bus:/Master");
+        Music = RuntimeManager.GetBus("bus:/Music");
+        SFX = RuntimeManager.GetBus("bus:/SFX");
+        Master = RuntimeManager.GetBus("bus:/");
     }
 
     public void Play(string path)

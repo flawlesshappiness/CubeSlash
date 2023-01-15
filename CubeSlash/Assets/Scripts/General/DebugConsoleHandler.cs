@@ -44,6 +44,7 @@ public class DebugConsoleHandler : Singleton
         window.CreateButton("Unlock Ability", ClickUnlockAbility);
         window.CreateButton("Level up", ClickLevelUp);
         window.CreateButton("Equipment", ClickEquipment);
+        window.CreateButton(GameController.DAMAGE_DISABLED ? "Enable damage" : "Disable damage", ClickToggleDamage);
     }
 
     private void ClickUnlockUpgrade()
@@ -113,5 +114,11 @@ public class DebugConsoleHandler : Singleton
         {
             GameController.Instance.ResumeLevel();
         };
+    }
+
+    private void ClickToggleDamage()
+    {
+        GameController.DAMAGE_DISABLED = !GameController.DAMAGE_DISABLED;
+        CloseView();
     }
 }

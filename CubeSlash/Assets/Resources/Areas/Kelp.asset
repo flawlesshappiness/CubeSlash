@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2a24aa1140318f84bb86c4b408b90009, type: 3}
   m_Name: Kelp
   m_EditorClassIdentifier: 
-  color_fog: {r: 0.08095238, g: 0.2, b: 0.11666667, a: 1}
+  color_fog: {r: 0.061764713, g: 0.15, b: 0.0882353, a: 1}
   color_bg: {r: 0.023529412, g: 0.02745098, b: 0.101960786, a: 1}
   ac_alpha_fog:
     serializedVersion: 2
@@ -66,3 +66,32 @@ MonoBehaviour:
     sprites: []
     particles:
     - {fileID: 6471937910845384915, guid: 4227469584206424696bac83a7f5da41, type: 3}
+  vignette_gradient:
+    serializedVersion: 2
+    key0: {r: 0.07609471, g: 0.3584906, b: 0.16081347, a: 1}
+    key1: {r: 0.18600929, g: 0.7169812, b: 0.34530082, a: 1}
+    key2: {r: 0, g: 0, b: 0, a: 0}
+    key3: {r: 0, g: 0, b: 0, a: 0}
+    key4: {r: 0, g: 0, b: 0, a: 0}
+    key5: {r: 0, g: 0, b: 0, a: 0}
+    key6: {r: 0, g: 0, b: 0, a: 0}
+    key7: {r: 0, g: 0, b: 0, a: 0}
+    ctime0: 0
+    ctime1: 65535
+    ctime2: 0
+    ctime3: 0
+    ctime4: 0
+    ctime5: 0
+    ctime6: 0
+    ctime7: 0
+    atime0: 0
+    atime1: 65535
+    atime2: 0
+    atime3: 0
+    atime4: 0
+    atime5: 0
+    atime6: 0
+    atime7: 0
+    m_Mode: 0
+    m_NumColorKeys: 2
+    m_NumAlphaKeys: 2

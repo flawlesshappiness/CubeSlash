@@ -15,7 +15,7 @@ MonoBehaviour:
   id: player
   stats:
   - name: Health
-    text_display: When you health reaches 0, you die
+    text_display: $ health
     type_value: 0
     type_display: 0
     higher_is_positive: 1
@@ -25,7 +25,7 @@ MonoBehaviour:
     can_edit_name: 1
     _editor_toggle_preview: 1
   - name: Armor
-    text_display: Like health, but cannot be regenerated
+    text_display: $ armor
     type_value: 0
     type_display: 0
     higher_is_positive: 1

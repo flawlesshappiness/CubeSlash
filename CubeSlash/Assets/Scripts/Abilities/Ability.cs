@@ -25,12 +25,14 @@ public abstract class Ability : MonoBehaviourExtended
     public float TimeCooldownEnd { get; protected set; }
     public float TimeCooldownLeft { get { return IsOnCooldown ? TimeCooldownEnd - Time.time : 0f; } }
     public bool IsOnCooldown { get { return Time.time < TimeCooldownEnd; } }
-    public bool InUse { get; protected set; }
+    public bool InUse { get; set; }
     public float CooldownPercentage { get { return (Time.time - TimeCooldownStart) / (TimeCooldownEnd - TimeCooldownStart); } }
     public StatValueCollection Values { get; private set; }
 
     // Values
     public float Cooldown { get; protected set; }
+
+    private Coroutine cr_release;
 
     private void OnValidate()
     {
@@ -89,16 +91,22 @@ public abstract class Ability : MonoBehaviourExtended
     }
     #endregion
     #region INPUT
+    public void ResetInput()
+    {
+        IsPressed = false;
+        InUse = false;
+    }
+
     public virtual void Pressed()
     {
         IsPressed = true;
 
         var charge = GetModifier<AbilityCharge>(Type.CHARGE);
-        if(Info.type == Type.CHARGE)
+        if (Info.type == Type.CHARGE)
         {
             // Do nothing
         }
-        else if(charge != null)
+        else if (charge != null)
         {
             charge.BeginCharge();
         }
@@ -130,10 +138,31 @@ public abstract class Ability : MonoBehaviourExtended
         }
     }
 
+    public void TryRelease()
+    {
+        if (!IsPressed) return;
+        if (cr_release != null) return;
+        cr_release = StartCoroutine(Cr());
+        IEnumerator Cr()
+        {
+            yield return WaitForGamestatePlaying();
+            Released();
+            cr_release = null;
+        }
+    }
+
     public virtual void Trigger()
     {
         // Trigger ability
         onTrigger?.Invoke();
+    }
+
+    private IEnumerator WaitForGamestatePlaying()
+    {
+        while(GameController.Instance.gameState != GameController.GameState.PLAYING)
+        {
+            yield return null;
+        }
     }
     #endregion
     #region EQUIP

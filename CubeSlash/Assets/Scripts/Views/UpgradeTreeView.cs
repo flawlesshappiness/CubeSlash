@@ -30,9 +30,14 @@ public class UpgradeTreeView : View
         CreateButtons(tree);
         PositionButtons();
         ConnectButtons(tree);
+    }
 
-        EventSystemController.Instance.SetDefaultSelection(maps[0].button.Button.gameObject);
-        EventSystemController.Instance.EventSystem.SetSelectedGameObject(maps[0].button.Button.gameObject);
+    public void SetSelectedUpgrade(Upgrade upgrade)
+    {
+        var map = maps.FirstOrDefault(m => m.upgrade == upgrade);
+        var btn = map.button;
+        EventSystemController.Instance.SetDefaultSelection(btn.Button.gameObject);
+        EventSystemController.Instance.EventSystem.SetSelectedGameObject(btn.Button.gameObject);
     }
 
     private void CreateButtons(UpgradeNodeTree tree)

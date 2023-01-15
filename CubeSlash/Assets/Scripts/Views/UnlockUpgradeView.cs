@@ -10,6 +10,7 @@ public class UnlockUpgradeView : View
     [SerializeField] private UIIconButton temp_btn_upgrade;
     [SerializeField] private TMP_Text tmp_upgrade;
     [SerializeField] private RectTransform rt_upgrades, rt_desc;
+    [SerializeField] private UIInputLayout input_layout;
     [SerializeField] private FMODEventReference sfx_unlock_upgrade;
 
     public event System.Action<Upgrade> OnUpgradeSelected;
@@ -45,6 +46,9 @@ public class UnlockUpgradeView : View
 
         // Set default ui
         EventSystemController.Instance.SetDefaultSelection(btns_upgrade[0].Button.gameObject);
+
+        // Input
+        DisplayInput();
 
         void OnSelected(bool selected, UIIconButton button, Upgrade upgrade)
         {
@@ -147,6 +151,7 @@ public class UnlockUpgradeView : View
         var view = ViewController.Instance.ShowView<UpgradeTreeView>(0, "UpgradeTree");
         var tree = UpgradeController.Instance.GetUpgradeTree(upgrade_selected.id);
         view.SetTree(tree);
+        view.SetSelectedUpgrade(upgrade_selected);
     }
 
     private void HideUpgradeTree()
@@ -162,5 +167,12 @@ public class UnlockUpgradeView : View
         Interactable = true;
         EventSystemController.Instance.SetDefaultSelection(btns_upgrade[0].Button.gameObject);
         EventSystemController.Instance.EventSystem.SetSelectedGameObject(button_selected.Button.gameObject);
+    }
+
+    private void DisplayInput()
+    {
+        input_layout.Clear();
+        input_layout.AddInput(PlayerInput.UIButtonType.SOUTH, "Select");
+        input_layout.AddInput(PlayerInput.UIButtonType.NORTH, "Upgrade tree");
     }
 }

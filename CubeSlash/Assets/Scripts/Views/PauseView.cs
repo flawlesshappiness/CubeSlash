@@ -34,21 +34,11 @@ public class PauseView : View
         btnMainMenu.onClick.AddListener(ClickMainMenu);
 
         EventSystemController.Instance.SetDefaultSelection(btnContinue.gameObject);
+        EventSystemController.Instance.EventSystem.SetSelectedGameObject(null);
 
         btnContinue.SetSelectOnHover(true);
         btnOptions.SetSelectOnHover(true);
         btnMainMenu.SetSelectOnHover(true);
-
-        StartCoroutine(Cr());
-        IEnumerator Cr()
-        {
-            CanvasGroup.blocksRaycasts = false;
-            CanvasGroup.interactable = false;
-            yield return new WaitForSecondsRealtime(0.1f);
-            CanvasGroup.blocksRaycasts = true;
-            CanvasGroup.interactable = true;
-            EventSystemController.Instance.EventSystem.SetSelectedGameObject(null);
-        }
     }
 
     private void Menu_started(UnityEngine.InputSystem.InputAction.CallbackContext obj)
@@ -63,7 +53,9 @@ public class PauseView : View
 
     private void ClickOptions()
     {
-
+        var view = ViewController.Instance.ShowView<OptionsView>(0);
+        view.onClickBack += () => ViewController.Instance.ShowView<PauseView>(0);
+        Close(0);
     }
 
     private void ClickMainMenu()

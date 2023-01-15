@@ -4,12 +4,18 @@ using UnityEngine;
 [CreateAssetMenu(fileName = nameof(Area), menuName = "Game/" + nameof(Area), order = 1)]
 public class Area : ScriptableObject
 {
+    [Header("FOG")]
     public Color color_fog = Color.white;
     public Color color_bg = Color.white;
     public AnimationCurve ac_alpha_fog;
+
+    [Header("PARALLAX")]
     [Range(0, 1)] public float parallax_min;
     [Range(0, 1)] public float parallax_max;
     public List<BackgroundLayer> background_layers = new List<BackgroundLayer>();
+
+    [Header("VIGNETTE")]
+    public Gradient vignette_gradient;
 
     private void OnValidate()
     {

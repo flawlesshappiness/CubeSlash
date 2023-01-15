@@ -12,10 +12,15 @@ public class StartView : View
     private void Start()
     {
         btn_play.onClick.AddListener(ClickPlay);
+        btn_options.onClick.AddListener(ClickOptions);
         btn_quit.onClick.AddListener(ClickQuit);
 
         EventSystemController.Instance.SetDefaultSelection(btn_play.gameObject);
-        BackgroundController.Instance.FadeToLevel(LevelDatabase.Instance.levels[0]);
+        EventSystemController.Instance.EventSystem.SetSelectedGameObject(null);
+
+        var first_level = LevelDatabase.Instance.levels[0];
+        BackgroundController.Instance.FadeToLevel(first_level);
+        VignetteController.Instance.SetLevel(first_level);
 
         btn_play.SetSelectOnHover(true);
         btn_options.SetSelectOnHover(true);
@@ -29,8 +34,6 @@ public class StartView : View
             yield return new WaitForSecondsRealtime(0.5f);
             CanvasGroup.blocksRaycasts = true;
             CanvasGroup.interactable = true;
-            EventSystemController.Instance.EventSystem.SetSelectedGameObject(null);
-
         }
     }
 
@@ -40,8 +43,15 @@ public class StartView : View
         GameController.Instance.StartGame();
     }
 
+    private void ClickOptions()
+    {
+        FMODButtonEvent.PreviousSelected = null;
+        var view = ViewController.Instance.ShowView<OptionsView>(0);
+        view.onClickBack += () => ViewController.Instance.ShowView<StartView>(0);
+    }
+
     private void ClickQuit()
     {
-        Application.Quit();
+        GameController.Instance.Quit();
     }
 }
