@@ -42,6 +42,8 @@ public class HealthDud : MonoBehaviour, IKillable
     {
         DudActive = active;
 
+        SetGlowEnabled(active);
+
         var end = active ? Vector3.one : Vector3.zero;
         if (animate)
         {

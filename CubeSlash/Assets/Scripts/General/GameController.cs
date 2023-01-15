@@ -210,8 +210,8 @@ public class GameController : MonoBehaviour
         StartCoroutine(Cr());
         IEnumerator Cr()
         {
-            gameState = GameState.MENU;
             yield return LerpTimeScale(2f, 0f);
+            gameState = GameState.MENU;
             PauseLevel();
             var view = ViewController.Instance.ShowView<UnlockUpgradeView>(0, TAG_ABILITY_VIEW);
             view.OnUpgradeSelected += u =>
@@ -227,8 +227,8 @@ public class GameController : MonoBehaviour
         StartCoroutine(Cr());
         IEnumerator Cr()
         {
-            gameState = GameState.MENU;
             yield return LerpTimeScale(2f, 0f);
+            gameState = GameState.MENU;
             PauseLevel();
             var view_unlock = ViewController.Instance.ShowView<UnlockAbilityView>(0, TAG_ABILITY_VIEW);
             view_unlock.OnAbilitySelected += () =>

@@ -345,6 +345,12 @@ public class Player : Character
     }
     #endregion
     #region HEALTH
+    public void Suicide()
+    {
+        if (IsDead) return;
+        Kill();
+    }
+
     private void ResetHealth()
     {
         if (Health == null) Health = new Health();

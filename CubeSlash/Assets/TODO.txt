@@ -9,4 +9,4 @@ unlock bodies in main menu
 Upgrade reroll
 Plants that can be destroyed for exp and health
 Ability to refund level if you dont want an upgrade (unlock in meta layer)
-make duds more easy to see
+bone boss doesn't clean up correctly maybe

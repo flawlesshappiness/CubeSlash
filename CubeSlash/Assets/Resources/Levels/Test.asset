@@ -17,15 +17,15 @@ MonoBehaviour:
   is_final_level: 0
   frequency_spawn_enemy: 0.1
   count_enemy_active: 999
-  enemies:
-  - name: Enemy_Weak (Infinite)
-    enemy: {fileID: 11400000, guid: cfcae6b5621e50448a5872f62f68b1ba, type: 2}
+  enemies: []
+  bosses:
+  - name: Boss_Plant
+    enemy: {fileID: 11400000, guid: 8d0d7ea4526316246bbdc4a47f15c606, type: 2}
     chance: 1
-    max: 0
-  bosses: []
+    max: 1
   frequency_spawn_experience: 0.25
   count_experience_active: 0
-  area: {fileID: 11400000, guid: d0a0597e506bddc4a9a4835efccc3573, type: 2}
+  area: {fileID: 11400000, guid: 426a543348b726d4b8ff81b9d40961dd, type: 2}
   bgm:
     reference:
       Guid:

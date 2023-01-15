@@ -38,6 +38,11 @@ public class AI_BossPlant : EnemyAI
         CreateDud();
     }
 
+    private void OnDisable()
+    {
+        Cleanup();
+    }
+
     private void CreateArena()
     {
         var points = CircleHelper.Points(RADIUS, 10);
@@ -112,7 +117,13 @@ public class AI_BossPlant : EnemyAI
 
     private void End()
     {
-        foreach(var wall in walls)
+        Cleanup();
+        Self.Respawn();
+    }
+
+    private void Cleanup()
+    {
+        foreach (var wall in walls)
         {
             // Spawn exp
             for (int i = 0; i < EXP_PER_WALL; i++)
@@ -125,15 +136,13 @@ public class AI_BossPlant : EnemyAI
             wall.Kill();
         }
 
-        foreach(var pillar in pillars)
+        foreach (var pillar in pillars)
         {
-            if(pillar != null)
+            if (pillar != null)
             {
                 pillar.Kill();
             }
         }
-
-        Self.Respawn();
     }
 
     private float GetHealthPercentage()
@@ -143,6 +152,8 @@ public class AI_BossPlant : EnemyAI
 
     private void Update()
     {
+        if (Player.Instance.IsDead) return;
+
         var t = GetHealthPercentage();
         if(Time.time > time_until_pillar)
         {
