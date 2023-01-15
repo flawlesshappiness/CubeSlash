@@ -33,7 +33,8 @@ public class GameView : View
         {
             Lerp.Value("fill_" + img_experience.GetInstanceID(), 0.25f, img_experience.fillAmount, t, f => img_experience.fillAmount = f)
                 .Connect(img_experience.gameObject)
-                .Curve(EasingCurves.EaseOutQuad);
+                .Curve(EasingCurves.EaseOutQuad)
+                .UnscaledTime();
         }
         else
         {

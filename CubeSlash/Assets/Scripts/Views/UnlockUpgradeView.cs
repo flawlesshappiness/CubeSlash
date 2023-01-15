@@ -1,8 +1,10 @@
+using Flawliz.Lerp;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class UnlockUpgradeView : View
 {
@@ -11,7 +13,8 @@ public class UnlockUpgradeView : View
     [SerializeField] private TMP_Text tmp_upgrade;
     [SerializeField] private RectTransform rt_upgrades, rt_desc;
     [SerializeField] private UIInputLayout input_layout;
-    [SerializeField] private FMODEventReference sfx_unlock_upgrade;
+    [SerializeField] private Image img_fg_refund;
+    [SerializeField] private FMODEventReference sfx_unlock_upgrade, sfx_hold_refund, sfx_refund;
 
     public event System.Action<Upgrade> OnUpgradeSelected;
 
@@ -20,6 +23,8 @@ public class UnlockUpgradeView : View
 
     private UIIconButton button_selected;
     private Upgrade upgrade_selected;
+
+    private Coroutine cr_refund;
 
     private void Start()
     {
@@ -76,12 +81,18 @@ public class UnlockUpgradeView : View
     {
         PlayerInput.Controls.Player.North.started += OnNorthPressed;
         PlayerInput.Controls.Player.North.canceled += OnNorthReleased;
+
+        PlayerInput.Controls.Player.West.started += RefundPressed;
+        PlayerInput.Controls.Player.West.canceled += RefundReleased;
     }
 
     private void OnDisable()
     {
         PlayerInput.Controls.Player.North.started -= OnNorthPressed;
         PlayerInput.Controls.Player.North.canceled -= OnNorthReleased;
+
+        PlayerInput.Controls.Player.West.started -= RefundPressed;
+        PlayerInput.Controls.Player.West.canceled -= RefundReleased;
     }
 
     private void OnNorthPressed(InputAction.CallbackContext context)
@@ -174,5 +185,58 @@ public class UnlockUpgradeView : View
         input_layout.Clear();
         input_layout.AddInput(PlayerInput.UIButtonType.SOUTH, "Select");
         input_layout.AddInput(PlayerInput.UIButtonType.NORTH, "Upgrade tree");
+        input_layout.AddInput(PlayerInput.UIButtonType.WEST, "(HOLD) Refund 25% exp");
+    }
+
+    private void RefundPressed(InputAction.CallbackContext context)
+    {
+        HoldRefund(true);
+    }
+
+    private void RefundReleased(InputAction.CallbackContext context)
+    {
+        HoldRefund(false);
+    }
+
+    private void HoldRefund(bool holding)
+    {
+        if (holding)
+        {
+            if (cr_refund != null) return;
+            cr_refund = StartCoroutine(RefundCr());
+        }
+        else
+        {
+            if (cr_refund == null) return;
+            StopCoroutine(cr_refund);
+            cr_refund = null;
+            img_fg_refund.SetAlpha(0);
+            sfx_hold_refund.Stop();
+        }
+
+        IEnumerator RefundCr()
+        {
+            sfx_hold_refund.Play();
+
+            var anim = LerpEnumerator.Alpha(img_fg_refund, 2f, 0f, 0.25f);
+            anim.AnimationCurve = EasingCurves.EaseInQuad;
+            anim.UnscaledTime = true;
+            yield return anim;
+
+            sfx_hold_refund.Stop();
+
+            Refund();
+        }
+    }
+
+    private void Refund()
+    {
+        sfx_refund.Play();
+
+        Player.Instance.Experience.Value += Player.Instance.Experience.Max * 0.25f;
+
+        var view = ViewController.Instance.ShowView<AbilityView>(0, GameController.TAG_ABILITY_VIEW);
+        view.OnContinue += GameController.Instance.ResumeLevel;
+        Close(0);
     }
 }

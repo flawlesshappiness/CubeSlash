@@ -167,8 +167,7 @@ public class Player : Character
         var not_paused = !GameController.Instance.IsPaused;
         var not_blocking = AbilityLock.IsFree;
         var not_cooldown = !ability.IsOnCooldown;
-        var not_menu = GameController.Instance.gameState == GameController.GameState.PLAYING;
-        return not_blocking && not_cooldown && not_paused && not_menu;
+        return not_blocking && not_cooldown && not_paused;
     }
 
     private void PressAbility(PlayerInput.ButtonType button)
@@ -176,6 +175,7 @@ public class Player : Character
         if (InputLock.IsLocked) return;
         var ability = AbilityController.Instance.GetEquippedAbility(button);
         if (ability == null) return;
+        if (GameController.Instance.gameState != GameController.GameState.PLAYING) return;
 
         if (CanUseAbility(ability))
         {
