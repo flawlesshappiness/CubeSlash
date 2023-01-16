@@ -1,4 +1,6 @@
 TODO:
+Upgrade reroll
+waves that push things in a direction
 Ability SWIPE that swipes to the sides
 simple introduction/tutorial for low-skill players
 enemy that pushes the player
@@ -6,6 +8,4 @@ enemy that pulls the player
 enemy that explodes on impact or hit
 choose player body/ability/speed/health on start
 unlock bodies in main menu
-Upgrade reroll
 Plants that can be destroyed for exp and health
-Ability to refund level if you dont want an upgrade (unlock in meta layer)

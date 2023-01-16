@@ -5,9 +5,7 @@ using static UnityEngine.GraphicsBuffer;
 
 public class UIHealthPoint : MonoBehaviour
 {
-    [SerializeField] private GameObject g_full;
-    [SerializeField] private GameObject g_temp;
-    [SerializeField] private GameObject g_empty;
+    [SerializeField] private Animator animator_img;
 
     private UIHealth parent;
 
@@ -38,9 +36,7 @@ public class UIHealthPoint : MonoBehaviour
 
     public void SetType(HealthPoint.Type type)
     {
-        g_full.SetActive(type == HealthPoint.Type.FULL);
-        g_empty.SetActive(type == HealthPoint.Type.EMPTY);
-        g_temp.SetActive(type == HealthPoint.Type.TEMPORARY);
+        animator_img.SetInteger("type", (int)type);
     }
 
     private void _OnFull()
@@ -55,7 +51,14 @@ public class UIHealthPoint : MonoBehaviour
 
     private void _OnDestroy()
     {
+        animator_img.SetTrigger("destroy");
         parent.RemoveHealthPoint(this);
-        Destroy(gameObject);
+        StartCoroutine(Cr());
+
+        IEnumerator Cr()
+        {
+            yield return new WaitForSeconds(0.5f);
+            Destroy(gameObject);
+        }
     }
 }
