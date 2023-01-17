@@ -2,7 +2,6 @@ using Flawliz.Lerp;
 using System.Collections;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.InputSystem.HID;
 
 public class AbilityChain : Ability
 {
@@ -113,12 +112,15 @@ public class AbilityChain : Ability
 
         if (hits.Count() == 0) return false;
 
+        var count_hits = 0;
         var order_by_dist = hits.OrderBy(hit => Vector3.Distance(center, hit.GetPosition()));
-        var enemies_to_strike = order_by_dist.Take(Mathf.Max(1, strikes));
-
-        foreach(var e in enemies_to_strike)
+        foreach(var hit in order_by_dist)
         {
-            ChainToTarget(e, center, radius, chains_left, chain_strikes, onHit);
+            if (!hit.CanKill()) continue;
+            if (count_hits >= strikes) break;
+            count_hits++;
+
+            ChainToTarget(hit, center, radius, chains_left, chain_strikes, onHit);
         }
         return true;
     }

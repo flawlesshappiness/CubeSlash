@@ -182,15 +182,18 @@ public class AbilityDash : Ability
     private int HitEnemiesArea(Vector3 position, float radius)
     {
         var count = 0;
-        Physics2D.OverlapCircleAll(position, radius)
+        var hits = Physics2D.OverlapCircleAll(position, radius)
             .Select(hit => hit.GetComponentInParent<IKillable>())
             .Distinct()
-            .Where(k => k != null && k.CanKill())
-            .ToList().ForEach(k =>
-            {
-                Player.KillEnemy(k);
-                count++;
-            });
+            .Where(k => k != null && k.CanKill());
+
+        foreach(var hit in hits)
+        {
+            if (!hit.CanKill()) continue;
+            Player.KillEnemy(hit);
+            count++;
+        }
+
         return count;
     }
 

@@ -6,7 +6,8 @@ simple introduction/tutorial for low-skill players
 enemy that pushes the player
 enemy that pulls the player
 enemy that explodes on impact or hit
-more angler attacks
+foreground particles / objects
+turn down sounds when in menu
 choose player body/ability/speed/health on start
 unlock bodies in main menu
-fix boss dud multihit
+more angler attacks
