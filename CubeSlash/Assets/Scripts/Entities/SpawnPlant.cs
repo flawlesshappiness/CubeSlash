@@ -5,6 +5,8 @@ public class SpawnPlant : SpawnObject, IKillable
     public int exp_min;
     public int exp_max;
     public float spawn_radius;
+    public float chance_health;
+    public HealthPoint.Type type_health;
 
     [SerializeField] private Rigidbody2D Rigidbody;
     [SerializeField] private ParticleSystem ps_death;
@@ -20,6 +22,7 @@ public class SpawnPlant : SpawnObject, IKillable
         if (IsDead) return;
 
         SpawnExp();
+        SpawnHealth();
 
         ps_death.Duplicate()
             .Position(transform.position)
@@ -56,6 +59,22 @@ public class SpawnPlant : SpawnObject, IKillable
         {
             var position = transform.position + Random.insideUnitCircle.ToVector3() * spawn_radius;
             var exp = ItemController.Instance.SpawnPlant(position);
+        }
+    }
+
+    private void SpawnHealth()
+    {
+        var chance = Random.Range(0f, 1f);
+        if(chance < chance_health)
+        {
+            if(type_health == HealthPoint.Type.TEMPORARY)
+            {
+                ItemController.Instance.SpawnArmor(transform.position);
+            }
+            else if(type_health == HealthPoint.Type.FULL)
+            {
+                ItemController.Instance.SpawnHealth(transform.position);
+            }
         }
     }
 }

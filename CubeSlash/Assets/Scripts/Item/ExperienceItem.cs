@@ -14,12 +14,14 @@ public class ExperienceItem : Item
     {
         base.Initialize();
         trail.enabled = true;
+        trail.emitting = true;
     }
 
     public override void Despawn()
     {
         base.Despawn();
         trail.enabled = false;
+        trail.emitting = false;
         ItemController.Instance.OnExperienceDespawned(this);
     }
 
@@ -27,7 +29,6 @@ public class ExperienceItem : Item
     {
         base.Collect();
         Player.Instance.CollectExperience(type_experience);
-        ItemController.Instance.CollectExperience();
     }
 
     public void SetMeat()

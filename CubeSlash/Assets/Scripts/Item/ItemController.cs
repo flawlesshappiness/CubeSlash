@@ -13,12 +13,17 @@ public class ItemController : Singleton
     private List<ExperienceItem> experience_inactive = new List<ExperienceItem>();
 
     private ExperienceItem prefab_experience;
+    private HealthItem prefab_health;
+    private HealthItem prefab_armor;
+    private float time_spawn;
 
     private const int COUNT_POOL_EXTEND = 20;
 
     private void Start()
     {
         prefab_experience = Resources.Load<ExperienceItem>("Prefabs/Entities/Experience");
+        prefab_health = Resources.Load<HealthItem>("Prefabs/Entities/Health");
+        prefab_armor = Resources.Load<HealthItem>("Prefabs/Entities/Armor");
     }
 
     private void Update()
@@ -28,7 +33,7 @@ public class ItemController : Singleton
         SpawnExperienceUpdate();
     }
 
-    private float time_spawn;
+    #region EXPERIENCE
     private void SpawnExperienceUpdate()
     {
         if (Time.time < time_spawn) return;
@@ -102,6 +107,22 @@ public class ItemController : Singleton
         experience_active.Remove(e);
         experience_inactive.Add(e);
     }
+    #endregion
+    #region HEALTH
+    public void SpawnHealth(Vector3 position)
+    {
+        var inst = Instantiate(prefab_health, GameController.Instance.world);
+        inst.transform.position = position;
+        inst.Initialize();
+    }
+
+    public void SpawnArmor(Vector3 position)
+    {
+        var inst = Instantiate(prefab_armor, GameController.Instance.world);
+        inst.transform.position = position;
+        inst.Initialize();
+    }
+    #endregion
 
     public void DespawnAllActiveItems()
     {
@@ -112,10 +133,4 @@ public class ItemController : Singleton
     }
 
     public List<ExperienceItem> GetActiveExperiences() => experience_active.ToList();
-
-    public void CollectExperience()
-    {
-        var sfx = FMODEventReferenceDatabase.Load().collect_experience;
-        FMODController.Instance.PlayWithLimitDelay(sfx);
-    }
 }

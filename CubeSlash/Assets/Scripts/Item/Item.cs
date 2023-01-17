@@ -7,6 +7,7 @@ public class Item : MonoBehaviour
 {
     [Header("ITEM")]
     [SerializeField] private AnimationCurve ac_collect;
+    public float duration_collect = 0.25f;
     public float mul_dist_collect = 1f;
     public bool IsBeingCollected { get; set; }
     public bool IsDespawning { get; set; }
@@ -50,7 +51,7 @@ public class Item : MonoBehaviour
         {
             var start = transform.position;
             var curve = ac_collect;
-            yield return Lerp.Value(0.25f, f =>
+            yield return LerpEnumerator.Value(duration_collect, f =>
             {
                 var t = curve.Evaluate(f);
                 transform.position = Vector3.LerpUnclamped(start, Player.Instance.transform.position, t);

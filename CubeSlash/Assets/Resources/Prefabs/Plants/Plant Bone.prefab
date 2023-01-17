@@ -5027,6 +5027,8 @@ MonoBehaviour:
   exp_min: 1
   exp_max: 2
   spawn_radius: 3
+  chance_health: 0.02
+  type_health: 0
   Rigidbody: {fileID: 846135433586441108}
   ps_death: {fileID: 6440868705710943848}
   sfx_death:
