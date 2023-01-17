@@ -6,9 +6,19 @@ public class AnglerTeeth : MonoBehaviour
 {
     [SerializeField] private Transform pivot_animation;
     [SerializeField] private SpriteRenderer teeth_upper, teeth_lower, eye_left, eye_right;
+    [SerializeField] private ParticleSystem ps_bite;
+    [SerializeField] private FMODEventReference sfx_bite;
+    [SerializeField] private FMODEventReference sfx_bite_charge_long;
+    [SerializeField] private FMODEventReference sfx_bite_charge_short;
 
     private const float Y_MOUTH_CLOSED = 0.05f;
     private const float Y_MOUTH_OPEN = 0.2f;
+
+    private void OnDisable()
+    {
+        sfx_bite_charge_long.Stop();
+        sfx_bite_charge_short.Stop();
+    }
 
     public void SetHidden()
     {
@@ -52,7 +62,8 @@ public class AnglerTeeth : MonoBehaviour
             yield return LerpEnumerator.Value(duration, f =>
             {
                 var t = curve.Evaluate(f);
-                pivot_animation.localScale = Vector3.Lerp(scale, Vector3.zero, t);
+                var scale_end = Vector3.one * 0.25f;
+                pivot_animation.localScale = Vector3.Lerp(scale, scale_end, t);
 
                 teeth_upper.color = Color.Lerp(color_start, color_end, f);
                 teeth_lower.color = Color.Lerp(color_start, color_end, f);
@@ -67,6 +78,10 @@ public class AnglerTeeth : MonoBehaviour
         return StartCoroutine(Cr());
         IEnumerator Cr()
         {
+            pivot_animation.eulerAngles = new Vector3(0, 0, Random.Range(-30f, 30f));
+
+            sfx_bite_charge_short.Play();
+
             var teeth_closed = new Vector3(0, Y_MOUTH_CLOSED);
             var teeth_open = new Vector3(0, Y_MOUTH_OPEN);
             yield return LerpEnumerator.Value(duration_open, f =>
@@ -76,12 +91,16 @@ public class AnglerTeeth : MonoBehaviour
             });
 
             var curve_close = EasingCurves.EaseInBack;
-            yield return LerpEnumerator.Value(0.25f, f =>
+            yield return LerpEnumerator.Value(0.15f, f =>
             {
                 var t = curve_close.Evaluate(f);
                 teeth_upper.transform.localPosition = Vector3.LerpUnclamped(teeth_open, teeth_closed, t);
                 teeth_lower.transform.localPosition = Vector3.LerpUnclamped(-teeth_open, -teeth_closed, t);
             });
+
+            ps_bite.Play();
+            sfx_bite.Play();
+            sfx_bite_charge_short.Stop();
         }
     }
 
@@ -90,6 +109,10 @@ public class AnglerTeeth : MonoBehaviour
         return StartCoroutine(Cr());
         IEnumerator Cr()
         {
+            pivot_animation.eulerAngles = new Vector3(0, 0, Random.Range(-30f, 30f));
+
+            sfx_bite_charge_long.Play();
+
             var teeth_closed = new Vector3(0, Y_MOUTH_CLOSED);
             var teeth_open = new Vector3(0, Y_MOUTH_OPEN);
             yield return LerpEnumerator.Value(duration_open, f =>
@@ -103,12 +126,16 @@ public class AnglerTeeth : MonoBehaviour
             });
 
             var curve_close = EasingCurves.EaseInBack;
-            yield return LerpEnumerator.Value(0.25f, f =>
+            yield return LerpEnumerator.Value(0.15f, f =>
             {
                 var t = curve_close.Evaluate(f);
                 teeth_upper.transform.localPosition = Vector3.LerpUnclamped(teeth_open, teeth_closed, t);
                 teeth_lower.transform.localPosition = Vector3.LerpUnclamped(-teeth_open, -teeth_closed, t);
             });
+
+            ps_bite.Play();
+            sfx_bite.Play();
+            sfx_bite_charge_long.Stop();
         }
     }
 }

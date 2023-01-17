@@ -318,7 +318,7 @@ public class Player : Character
                 var t_force = curve_force == null ? 1 : curve_force.Evaluate(t_dist);
                 var calc_force = force * t_force;
                 var dir_knock = dir.normalized.ToVector2() * calc_force;
-                enemy.Knockback(dir_knock, false, true);
+                enemy.Knockback(dir_knock, false, false);
             }
         }
     }

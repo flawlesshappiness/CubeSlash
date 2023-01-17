@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   body: {fileID: 4793739910255355596, guid: f833f9fe7ab117a42a52bc444bb10ab7, type: 3}
   linear_acceleration: 5
-  linear_velocity: 3
+  linear_velocity: 4
   linear_drag: 20
   angular_acceleration: 3
   angular_velocity: 75

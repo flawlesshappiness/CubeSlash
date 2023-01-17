@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Drawing;
 using UnityEngine;
 
 public class AI_BossAngler : EnemyAI
@@ -9,6 +10,8 @@ public class AI_BossAngler : EnemyAI
     private BossAnglerBody angler_body;
     private AnglerLamp lamp;
 
+    private int hits_taken;
+
     public override void Initialize(Enemy enemy)
     {
         base.Initialize(enemy);
@@ -17,6 +20,8 @@ public class AI_BossAngler : EnemyAI
         var lamp_target = angler_body.GetLampTarget();
 
         Self.OnDeath += OnDeath;
+        Self.EnemyBody.OnDudKilled += dud => HideDuds();
+        Self.EnemyBody.OnDudKilled += dud => hits_taken++;
 
         lamp = Instantiate(template_lamp, GameController.Instance.world);
         lamp.transform.localScale = Vector3.one * Self.Settings.size;
@@ -54,11 +59,15 @@ public class AI_BossAngler : EnemyAI
     {
         while (true)
         {
+            lamp.gameObject.SetActive(true);
             angler_body.gameObject.SetActive(true);
+            ShowDuds();
             yield return DashAttackCr();
+            lamp.gameObject.SetActive(false);
             angler_body.gameObject.SetActive(false);
-            //yield return SmallBiteAttackCr();
+            yield return SmallBiteAttackCr();
             yield return BigBiteAttackCr();
+            if(hits_taken > 3) yield return BigBiteAttackCr();
         }
     }
 
@@ -75,7 +84,7 @@ public class AI_BossAngler : EnemyAI
         var has_accelerated = false;
         var time_accelerate = Time.time + 5f;
 
-        LerpLinearVelocity(0.1f, 10f);
+        LerpLinearVelocity(0.1f, 12f);
         Self.LinearAcceleration = 10f;
         Self.transform.position = start_position;
         Self.transform.rotation = start_rotation;
@@ -119,28 +128,27 @@ public class AI_BossAngler : EnemyAI
 
     private IEnumerator SmallBiteAttackCr()
     {
-        Coroutine last = null;
-        var player_position = Player.Instance.transform.position;
-        var dist = 15f;
-        for (int i = 0; i < 5; i++)
+        var count = Random.Range(2f, 4f);
+        if (hits_taken > 2) count++;
+        if (hits_taken > 4) count++;
+        for (int i = 0; i < count; i++)
         {
-            var pos = player_position + Random.insideUnitCircle.normalized.ToVector3() * Random.Range(-dist, dist);
-            last = StartCoroutine(CreateBite(pos));
-            yield return new WaitForSeconds(0.2f);
+            yield return StartCoroutine(CreateBite(Player.Instance.transform.position));
+            yield return new WaitForSeconds(0.1f);
         }
-
-        yield return last;
 
         IEnumerator CreateBite(Vector3 position)
         {
+            var size = 10f;
             var teeth = Instantiate(template_teeth, GameController.Instance.world);
             teeth.transform.position = position;
             teeth.SetHidden();
-            teeth.AnimateAppear(1f, 10f);
-            yield return teeth.AnimateSmallBite(2f);
+            teeth.AnimateAppear(1f, size);
+            yield return teeth.AnimateSmallBite(1f);
+            Bite(teeth.transform.position, size * 0.3f);
             yield return new WaitForSeconds(0.5f);
-            teeth.AnimateHide(0.25f);
-            Destroy(teeth.gameObject, 0.25f);
+            yield return teeth.AnimateHide(0.25f);
+            Destroy(teeth.gameObject);
         }
     }
 
@@ -162,9 +170,9 @@ public class AI_BossAngler : EnemyAI
 
         yield return anim_bite;
 
-        Bite(teeth.transform.position, size * 0.25f);
+        Bite(teeth.transform.position, size * 0.3f);
 
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.25f);
 
         teeth.AnimateHide(0.25f);
         Destroy(teeth.gameObject, 0.25f);
