@@ -9,6 +9,9 @@ public class Area : ScriptableObject
     public Color color_bg = Color.white;
     public AnimationCurve ac_alpha_fog;
 
+    [Header("CAMERA")]
+    public float camera_size;
+
     [Header("PARALLAX")]
     [Range(0, 1)] public float parallax_min;
     [Range(0, 1)] public float parallax_max;
@@ -16,6 +19,9 @@ public class Area : ScriptableObject
 
     [Header("VIGNETTE")]
     public Gradient vignette_gradient;
+
+    [Header("OBJECTS")]
+    public List<SpawnObjectInfo> spawn_objects = new List<SpawnObjectInfo>();
 
     private void OnValidate()
     {
@@ -28,4 +34,12 @@ public class Area : ScriptableObject
         parallax_min = Mathf.Min(parallax_min, parallax_max);
         parallax_max = Mathf.Max(parallax_min, parallax_max);
     }
+}
+
+[System.Serializable]
+public class SpawnObjectInfo
+{
+    public SpawnObject prefab;
+    public float delay;
+    public int count;
 }

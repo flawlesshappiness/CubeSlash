@@ -15,6 +15,12 @@ public class CameraController : Singleton
     protected override void Initialize()
     {
         base.Initialize();
+        GameController.Instance.OnNextLevel += OnNextLevel;
+        GameController.Instance.OnMainMenu += OnMainMenu;
+
+        var level = LevelDatabase.Instance.levels[0];
+        var area = level.area;
+        Camera.orthographicSize = area.camera_size;
     }
 
     private void LateUpdate()
@@ -56,5 +62,34 @@ public class CameraController : Singleton
                 Camera.orthographicSize = Mathf.Lerp(start, size, t);
             });
         }
+    }
+
+    private void AnimateCameraSize(float duration, float size)
+    {
+        this.StartCoroutineWithID(SizeCr(), "size_" + GetInstanceID());
+        IEnumerator SizeCr()
+        {
+            var start = Camera.orthographicSize;
+            var end = size;
+            var curve = EasingCurves.EaseInOutQuad;
+            yield return LerpEnumerator.Value(duration, f =>
+            {
+                var t = curve.Evaluate(f);
+                Camera.orthographicSize = Mathf.Lerp(start, end, t);
+            });
+        }
+    }
+
+    private void OnNextLevel()
+    {
+        var area = Level.Current.area;
+        AnimateCameraSize(5f, area.camera_size);
+    }
+
+    private void OnMainMenu()
+    {
+        var level = LevelDatabase.Instance.levels[0];
+        var area = level.area;
+        AnimateCameraSize(5f, area.camera_size);
     }
 }

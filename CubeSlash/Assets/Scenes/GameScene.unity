@@ -255,6 +255,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   world: {fileID: 1461538084}
+  gameState: 0
 --- !u!1 &1342233884
 GameObject:
   m_ObjectHideFlags: 0

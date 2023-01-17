@@ -38,6 +38,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  camera_size: 13
   parallax_min: 0.5
   parallax_max: 0.8
   background_layers:
@@ -101,3 +102,7 @@ MonoBehaviour:
     m_Mode: 0
     m_NumColorKeys: 2
     m_NumAlphaKeys: 2
+  spawn_objects:
+  - prefab: {fileID: 3561371122137596645, guid: 29173bc13e6ed5742800a3744eaf42cc, type: 3}
+    delay: 10
+    count: 5

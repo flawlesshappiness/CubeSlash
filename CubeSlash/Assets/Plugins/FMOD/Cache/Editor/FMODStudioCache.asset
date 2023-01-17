@@ -42,7 +42,7 @@ MonoBehaviour:
   Path: Assets/FMOD/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 638089810136895902
+  lastModified: 638095240587033938
   FileSizes: []
   Exists: 1
 --- !u!114 &-7809730102017663126
@@ -584,12 +584,13 @@ MonoBehaviour:
   - {fileID: 2638402112156830713}
   - {fileID: -7809730102017663126}
   - {fileID: 159336944855883450}
+  - {fileID: 5904259344797910633}
   EditorParameters: []
   MasterBanks:
   - {fileID: -8060980804293988741}
   StringsBanks:
   - {fileID: 5917708036578608240}
-  cacheTime: 638089810136925912
+  cacheTime: 638095240587063936
   cacheVersion: 131593
 --- !u!114 &159336944855883450
 MonoBehaviour:
@@ -888,6 +889,33 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 249907
+--- !u!114 &5904259344797910633
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Game/Impact/bubble_pop_001
+  m_EditorClassIdentifier: 
+  Path: event:/Game/Impact/bubble_pop_001
+  Guid:
+    Data1: 774247800
+    Data2: 1229503722
+    Data3: -497733754
+    Data4: 1594072794
+  Banks:
+  - {fileID: -8060980804293988741}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
 --- !u!114 &5917708036578608240
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -903,10 +931,10 @@ MonoBehaviour:
   Path: Assets/FMOD/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 638089810136925912
+  lastModified: 638095240587063936
   FileSizes:
   - Name: 
-    Value: 2664
+    Value: 2722
   Exists: 1
 --- !u!114 &5992827859230917708
 MonoBehaviour:

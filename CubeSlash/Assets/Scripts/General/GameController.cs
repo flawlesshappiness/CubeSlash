@@ -86,6 +86,7 @@ public class GameController : MonoBehaviour
         Singleton.EnsureExistence<ProgressController>();
         Singleton.EnsureExistence<MusicController>();
         Singleton.EnsureExistence<VignetteController>();
+        Singleton.EnsureExistence<ObjectSpawnController>();
     }
 
     public void OpenPauseView()

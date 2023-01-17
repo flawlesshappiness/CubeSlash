@@ -117,11 +117,11 @@ public class AI_BossPlant : EnemyAI
 
     private void End()
     {
-        Cleanup();
+        CleanupAndSpawnExp();
         Self.Respawn();
     }
 
-    private void Cleanup()
+    private void CleanupAndSpawnExp()
     {
         foreach (var wall in walls)
         {
@@ -135,6 +135,7 @@ public class AI_BossPlant : EnemyAI
 
             wall.Kill();
         }
+        walls.Clear();
 
         foreach (var pillar in pillars)
         {
@@ -143,6 +144,22 @@ public class AI_BossPlant : EnemyAI
                 pillar.Kill();
             }
         }
+        pillars.Clear();
+    }
+
+    private void Cleanup()
+    {
+        foreach(var wall in walls)
+        {
+            Destroy(wall.gameObject);
+        }
+        walls.Clear();
+
+        foreach(var pillar in pillars)
+        {
+            Destroy(pillar.gameObject);
+        }
+        pillars.Clear();
     }
 
     private float GetHealthPercentage()
