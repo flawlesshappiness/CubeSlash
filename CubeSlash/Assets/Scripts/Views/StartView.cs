@@ -9,6 +9,11 @@ public class StartView : View
     [SerializeField] private ButtonExtended btn_options;
     [SerializeField] private ButtonExtended btn_quit;
 
+    private void OnEnable()
+    {
+        GameStateController.Instance.SetGameState(GameStateType.MENU);
+    }
+
     private void Start()
     {
         btn_play.onClick.AddListener(ClickPlay);

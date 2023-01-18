@@ -12,9 +12,6 @@ public class GameController : MonoBehaviour
     public static GameController Instance;
     public static bool DAMAGE_DISABLED = false;
 
-    public enum GameState { PLAYING, MENU }
-    public GameState gameState = GameState.PLAYING;
-
     public System.Action OnResume { get; set; }
     public bool IsGameStarted { get; private set; }
     public bool IsGameEnded { get; private set; }
@@ -26,6 +23,8 @@ public class GameController : MonoBehaviour
     public System.Action OnMainMenu { get; set; }
 
     public const string TAG_ABILITY_VIEW = "Ability";
+
+    private GameStateType GameState { get { return GameStateController.Instance.GameState; } }
 
     private void Awake()
     {
@@ -87,13 +86,14 @@ public class GameController : MonoBehaviour
         Singleton.EnsureExistence<MusicController>();
         Singleton.EnsureExistence<VignetteController>();
         Singleton.EnsureExistence<ObjectSpawnController>();
+        Singleton.EnsureExistence <AudioController>();
     }
 
     public void OpenPauseView()
     {
         if (!IsGameStarted) return;
         if (PauseView.Exists) return;
-        if (gameState != GameState.PLAYING) return;
+        if (GameState != GameStateType.PLAYING) return;
         if (PauseLock.IsLocked) return;
         ViewController.Instance.ShowView<PauseView>(0, nameof(PauseView));
     }
@@ -131,7 +131,7 @@ public class GameController : MonoBehaviour
 
     public void StartGame()
     {
-        gameState = GameState.MENU;
+        GameStateController.Instance.SetGameState(GameStateType.MENU);
         IsGameStarted = true;
 
         SetLevel(0);
@@ -147,7 +147,7 @@ public class GameController : MonoBehaviour
 
     public void ResumeLevel()
     {
-        gameState = GameState.PLAYING;
+        GameStateController.Instance.SetGameState(GameStateType.PLAYING);
         PauseLock.RemoveLock(nameof(GameController));
         Player.Instance.ReapplyUpgrades();
         Player.Instance.ReapplyAbilities();
@@ -199,7 +199,7 @@ public class GameController : MonoBehaviour
         IEnumerator Cr()
         {
             yield return LerpTimeScale(2f, 0f);
-            gameState = GameState.MENU;
+            GameStateController.Instance.SetGameState(GameStateType.MENU);
             PauseLevel();
             var view = ViewController.Instance.ShowView<UnlockUpgradeView>(0, TAG_ABILITY_VIEW);
             view.OnUpgradeSelected += u =>
@@ -216,7 +216,7 @@ public class GameController : MonoBehaviour
         IEnumerator Cr()
         {
             yield return LerpTimeScale(2f, 0f);
-            gameState = GameState.MENU;
+            GameStateController.Instance.SetGameState(GameStateType.MENU);
             PauseLevel();
             var view_unlock = ViewController.Instance.ShowView<UnlockAbilityView>(0, TAG_ABILITY_VIEW);
             view_unlock.OnAbilitySelected += () =>
@@ -237,7 +237,7 @@ public class GameController : MonoBehaviour
 
         IEnumerator Cr()
         {
-            gameState = GameState.MENU;
+            GameStateController.Instance.SetGameState(GameStateType.MENU);
             MusicController.Instance.StopBGM();
             FMODEventReferenceDatabase.Load().lose_game.Play();
             yield return new WaitForSeconds(0.5f);
@@ -259,7 +259,7 @@ public class GameController : MonoBehaviour
         StartCoroutine(Cr());
         IEnumerator Cr()
         {
-            gameState = GameState.MENU;
+            GameStateController.Instance.SetGameState(GameStateType.MENU);
             var bg_view = ViewController.Instance.ShowView<BackgroundView>(0.5f, "Background");
             yield return new WaitForSeconds(0.5f);
             bg_view.Close(0.5f);
@@ -273,7 +273,7 @@ public class GameController : MonoBehaviour
 
         IsGameStarted = false;
         IsGameEnded = false;
-        gameState = GameState.MENU;
+        GameStateController.Instance.SetGameState(GameStateType.MENU);
         EnemyController.Instance.RemoveActiveEnemies();
         ItemController.Instance.DespawnAllActiveItems();
         Player.Instance.gameObject.SetActive(false);

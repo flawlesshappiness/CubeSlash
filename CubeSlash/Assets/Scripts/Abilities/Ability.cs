@@ -159,7 +159,7 @@ public abstract class Ability : MonoBehaviourExtended
 
     private IEnumerator WaitForGamestatePlaying()
     {
-        while(GameController.Instance.gameState != GameController.GameState.PLAYING)
+        while(GameStateController.Instance.GameState != GameStateType.PLAYING)
         {
             yield return null;
         }

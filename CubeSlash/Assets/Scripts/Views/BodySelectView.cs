@@ -54,6 +54,8 @@ public class BodySelectView : View
         PlayerInput.Controls.Player.South.canceled += ConfirmReleased;
 
         PlayerInput.Controls.Player.East.started += PressBack;
+
+        GameStateController.Instance.SetGameState(GameStateType.MENU);
     }
 
     private void OnDisable()

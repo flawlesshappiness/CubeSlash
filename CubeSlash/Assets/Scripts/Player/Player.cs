@@ -194,7 +194,7 @@ public class Player : Character
         if (InputLock.IsLocked) return;
         var ability = AbilityController.Instance.GetEquippedAbility(button);
         if (ability == null) return;
-        if (GameController.Instance.gameState != GameController.GameState.PLAYING) return;
+        if (GameStateController.Instance.GameState != GameStateType.PLAYING) return;
 
         if (CanUseAbility(ability))
         {

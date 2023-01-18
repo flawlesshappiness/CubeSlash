@@ -10,24 +10,11 @@ public class FMODController : Singleton
 
     private Dictionary<string, LimitDelay> dicLimitDelay = new Dictionary<string, LimitDelay>();
 
-    private Bus Music;
-    private Bus SFX;
-    private Bus Master;
-
     private class LimitDelay
     {
         public string path;
         public int count;
         public CustomCoroutine coroutine;
-    }
-
-    protected override void Initialize()
-    {
-        base.Initialize();
-
-        Music = RuntimeManager.GetBus("bus:/Music");
-        SFX = RuntimeManager.GetBus("bus:/SFX");
-        Master = RuntimeManager.GetBus("bus:/");
     }
 
     public void Play(string path)
@@ -79,16 +66,20 @@ public class FMODController : Singleton
         }
     }
 
-    public void SetMusicVolume(float volume) => Music.setVolume(volume);
-    public void SetSFXVolume(float volume) => SFX.setVolume(volume);
-    public void SetMasterVolume(float volume) => Master.setVolume(volume);
-    public float GetMusicVolume() => GetBusVolume(Music);
-    public float GetSFXVolume() => GetBusVolume(SFX);
-    public float GetMasterVolume() => GetBusVolume(Master);
-
-    private float GetBusVolume(Bus bus)
+    public float GetBusVolume(Bus bus)
     {
         bus.getVolume(out var volume);
         return volume;
+    }
+
+    public Bus GetMasterBus() => GetBus("");
+    public Bus GetBus(string path)
+    {
+        return RuntimeManager.GetBus($"bus:/{path}");
+    }
+
+    public EventInstance CreateSnapshotInstance(string path)
+    {
+        return RuntimeManager.CreateInstance($"snapshot:/{path}");
     }
 }

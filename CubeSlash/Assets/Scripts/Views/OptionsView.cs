@@ -34,21 +34,21 @@ public class OptionsView : View
     private void AdjustMasterVolume()
     {
         var value = slider_master.GetPercentage();
-        FMODController.Instance.SetMasterVolume(value);
+        AudioController.Instance.SetMasterVolume(value);
         Save.Game.volume_master = value;
     }
 
     private void AdjustMusicVolume()
     {
         var value = slider_music.GetPercentage();
-        FMODController.Instance.SetMusicVolume(value);
+        AudioController.Instance.SetMusicVolume(value);
         Save.Game.volume_music = value;
     }
 
     private void AdjustSFXVolume()
     {
         var value = slider_sfx.GetPercentage();
-        FMODController.Instance.SetSFXVolume(value);
+        AudioController.Instance.SetSFXVolume(value);
         Save.Game.volume_sfx = value;
     }
 
