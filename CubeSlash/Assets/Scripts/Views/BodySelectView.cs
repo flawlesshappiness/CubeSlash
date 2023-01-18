@@ -14,6 +14,10 @@ public class BodySelectView : View
     [SerializeField] private Transform pivot_arrow_left, pivot_arrow_right;
     [SerializeField] private UIInputLayout controls_confirm, controls_back;
     [SerializeField] private PlayerBodySettingsDatabase db_player_body_settings;
+    [SerializeField] private FMODEventReference sfx_confirm_charge;
+    [SerializeField] private FMODEventReference sfx_confirm;
+    [SerializeField] private FMODEventReference sfx_back;
+    [SerializeField] private FMODEventReference sfx_change_body;
 
     private List<GameObject> health_points = new List<GameObject>();
     private List<GameObject> spd_points = new List<GameObject>();
@@ -63,6 +67,8 @@ public class BodySelectView : View
 
         Player.Instance.MovementLock.RemoveLock(nameof(BodySelectView));
         Player.Instance.AbilityLock.RemoveLock(nameof(BodySelectView));
+
+        sfx_confirm_charge.Stop();
     }
 
     private void Navigate(InputAction.CallbackContext context)
@@ -131,6 +137,9 @@ public class BodySelectView : View
         // Ability
         var ability = AbilityController.Instance.GetAbility(settings.ability_type);
         SetAbility(ability);
+
+        // Sound
+        sfx_change_body.Play();
     }
 
     private void SetAbility(Ability ability)
@@ -202,11 +211,16 @@ public class BodySelectView : View
         cr_confirm = StartCoroutine(Cr());
         IEnumerator Cr()
         {
-            CameraController.Instance.AnimateSize(2f, 4f);
+            sfx_confirm_charge.Play();
+
+            CameraController.Instance.AnimateSize(2f, 5f);
             yield return LerpEnumerator.Value(2f, f =>
             {
 
             });
+
+            sfx_confirm_charge.Stop();
+            sfx_confirm.Play();
 
             GameController.Instance.StartGame();
             Close(0);
@@ -219,6 +233,8 @@ public class BodySelectView : View
         StopCoroutine(cr_confirm);
         cr_confirm = null;
         ResetCamera();
+
+        sfx_confirm_charge.Stop();
     }
 
     private void PressBack(InputAction.CallbackContext context)
@@ -228,6 +244,8 @@ public class BodySelectView : View
         ConfirmReleased(context);
         Close(0);
         ViewController.Instance.ShowView<StartView>(0);
+
+        sfx_back.Play();
     }
 
     private void ResetCamera()

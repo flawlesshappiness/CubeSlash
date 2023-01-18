@@ -1,6 +1,7 @@
 TODO:
 Upgrade reroll
 waves that push things in a direction
+unlock bodies in main menu
 Ability SWIPE that swipes to the sides
 simple introduction/tutorial for low-skill players
 enemy that pushes the player
@@ -9,5 +10,3 @@ enemy that explodes on impact or hit
 abyss music with breathes
 foreground particles / objects
 turn down sounds when in menu
-choose player body/ability/speed/health on start
-unlock bodies in main menu
