@@ -60,7 +60,7 @@ public class GameController : MonoBehaviour
         }
     }
 
-    private void InitializePlayer()
+    public void InitializePlayer()
     {
         var prefab_player = Resources.Load<GameObject>("Prefabs/Entities/Player");
         Player.Instance = Instantiate(prefab_player, world).GetComponent<Player>();
@@ -133,24 +133,11 @@ public class GameController : MonoBehaviour
     {
         gameState = GameState.MENU;
         IsGameStarted = true;
-        Player.Instance.ResetValues();
-        AbilityController.Instance.Clear();
-        UpgradeController.Instance.ClearUpgrades();
-        Player.Instance.gameObject.SetActive(true);
 
-        PauseLevel();
-        var view_unlock = ViewController.Instance.ShowView<UnlockAbilityView>(0);
-        view_unlock.OnAbilitySelected += () =>
-        {
-            var view_ability = ViewController.Instance.ShowView<AbilityView>(0);
-            view_ability.OnContinue += () =>
-            {
-                ViewController.Instance.ShowView<GameView>(1);
-                SetLevel(0);
-                ResumeLevel();
-                MusicController.Instance.PlayStartMusic();
-            };
-        };
+        SetLevel(0);
+        ResumeLevel();
+        MusicController.Instance.PlayStartMusic();
+        ViewController.Instance.ShowView<GameView>(1);
     }
 
     private void PauseLevel()
@@ -245,6 +232,7 @@ public class GameController : MonoBehaviour
 
     private void OnPlayerDeath()
     {
+        StopCoroutine(_cr_next_level);
         StartCoroutine(Cr());
 
         IEnumerator Cr()
@@ -267,6 +255,7 @@ public class GameController : MonoBehaviour
 
     public void ReturnToMainMenu()
     {
+        StopCoroutine(_cr_next_level);
         StartCoroutine(Cr());
         IEnumerator Cr()
         {
@@ -280,6 +269,8 @@ public class GameController : MonoBehaviour
 
     private void MainMenu()
     {
+        StopCoroutine(_cr_next_level);
+
         IsGameStarted = false;
         IsGameEnded = false;
         gameState = GameState.MENU;

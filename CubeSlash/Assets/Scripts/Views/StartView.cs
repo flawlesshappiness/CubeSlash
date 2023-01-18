@@ -40,7 +40,8 @@ public class StartView : View
     private void ClickPlay()
     {
         FMODButtonEvent.PreviousSelected = null;
-        GameController.Instance.StartGame();
+        //GameController.Instance.StartGame();
+        ViewController.Instance.ShowView<BodySelectView>(0);
     }
 
     private void ClickOptions()

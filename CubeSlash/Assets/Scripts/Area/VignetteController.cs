@@ -96,7 +96,7 @@ public class VignetteController : Singleton
 
     private VignetteGlow CreateGlow()
     {
-        var inst = Instantiate(prefab_glow);
+        var inst = Instantiate(prefab_glow, GameController.Instance.world);
         glows.Add(inst);
         return inst;
     }

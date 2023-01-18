@@ -1,11 +1,12 @@
 using System.Collections.Generic;
 using System.Linq;
-using UnityEditor;
 using UnityEngine;
 
 public class PlayerBody : Body
 {
     [SerializeField] public BodySkeleton skeleton;
+
+    public PlayerBodySettings Settings { get; set; }
 
     private List<Bodypart> bodyparts = new List<Bodypart>();
 

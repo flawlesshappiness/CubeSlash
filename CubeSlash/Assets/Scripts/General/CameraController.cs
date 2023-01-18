@@ -11,6 +11,7 @@ public class CameraController : Singleton
     public Transform Target { get; set; }
     public float Height { get { return Camera.orthographicSize * 2f; } }
     public float Width { get { return Height * Camera.aspect; } }
+    private float TargetSize { get; set; }
 
     protected override void Initialize()
     {
@@ -21,6 +22,7 @@ public class CameraController : Singleton
         var level = LevelDatabase.Instance.levels[0];
         var area = level.area;
         Camera.orthographicSize = area.camera_size;
+        TargetSize = area.camera_size;
     }
 
     private void LateUpdate()
@@ -33,8 +35,9 @@ public class CameraController : Singleton
 
     public Vector3 GetPositionOutsideCamera()
     {
+        var w = TargetSize * 2f * Camera.aspect;
         var dir = Random.insideUnitCircle.normalized.ToVector3();
-        var dist = Width * 0.5f * Random.Range(1.3f, 2.0f);
+        var dist = w * 0.5f * Random.Range(1.3f, 2.0f);
         return Camera.transform.position.SetZ(0) + dir * dist;
     }
 
@@ -47,11 +50,13 @@ public class CameraController : Singleton
     public void SetSize(float size)
     {
         Camera.orthographicSize = size;
+        TargetSize = size;
         CoroutineController.Instance.Kill("AnimateSize_" + GetInstanceID());
     }
 
     public CustomCoroutine AnimateSize(float duration, float size, AnimationCurve curve = null)
     {
+        TargetSize = size;
         var start = Camera.orthographicSize;
         return this.StartCoroutineWithID(Cr(), "AnimateSize_" + GetInstanceID());
         IEnumerator Cr()
@@ -64,32 +69,16 @@ public class CameraController : Singleton
         }
     }
 
-    private void AnimateCameraSize(float duration, float size)
-    {
-        this.StartCoroutineWithID(SizeCr(), "size_" + GetInstanceID());
-        IEnumerator SizeCr()
-        {
-            var start = Camera.orthographicSize;
-            var end = size;
-            var curve = EasingCurves.EaseInOutQuad;
-            yield return LerpEnumerator.Value(duration, f =>
-            {
-                var t = curve.Evaluate(f);
-                Camera.orthographicSize = Mathf.Lerp(start, end, t);
-            });
-        }
-    }
-
     private void OnNextLevel()
     {
         var area = Level.Current.area;
-        AnimateCameraSize(5f, area.camera_size);
+        AnimateSize(5f, area.camera_size, EasingCurves.EaseInOutQuad);
     }
 
     private void OnMainMenu()
     {
         var level = LevelDatabase.Instance.levels[0];
         var area = level.area;
-        AnimateCameraSize(5f, area.camera_size);
+        AnimateSize(5f, area.camera_size, EasingCurves.EaseInOutQuad);
     }
 }

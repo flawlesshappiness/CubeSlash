@@ -19,7 +19,7 @@ MonoBehaviour:
     type_value: 0
     type_display: 0
     higher_is_positive: 1
-    value_int: 5
+    value_int: 0
     value_float: 0
     value_bool: 0
     can_edit_name: 1

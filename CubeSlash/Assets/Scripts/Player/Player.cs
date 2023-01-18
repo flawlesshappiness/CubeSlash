@@ -59,15 +59,29 @@ public class Player : Character
         // Experience
         Experience.onMax += OnLevelUp;
 
-        // Speed
+        // Setup
+        MoveDirection = transform.up;
+        g_invincible.SetActive(false);
+    }
+
+    public void SetPlayerBody(PlayerBodySettings settings)
+    {
+        SetBody(settings.body);
+        PlayerBody.Settings = settings;
+        Body.Size = settings.body_size;
         Rigidbody.mass = settings.mass;
 
-        // Character
-        SetBody(settings.body);
-        Body.transform.localEulerAngles = Vector3.one * settings.size;
+        Body.transform.localEulerAngles = Vector3.one * settings.body_size;
         MoveDirection = transform.up;
 
-        g_invincible.SetActive(false);
+        // Add ability
+        AbilityController.Instance.Clear();
+        var ability = AbilityController.Instance.UnlockAbility(settings.ability_type);
+        AbilityController.Instance.EquipAbility(ability, PlayerInput.ButtonType.WEST);
+
+        ResetValues();
+        ReapplyUpgrades();
+        ReapplyAbilities();
     }
 
     public void ResetValues()
@@ -113,6 +127,8 @@ public class Player : Character
 
     private void MoveUpdate()
     {
+        if (!GameController.Instance.IsGameStarted) return;
+
         // Update move values
         var flat_acceleration = Values.GetFloatValue("FlatAcceleration");
         var flat_velocity = Values.GetFloatValue("FlatVelocity");
@@ -122,9 +138,9 @@ public class Player : Character
         var collect_boost_acceleration = CollectSpeedBoost ? Mathf.Lerp(10, 0, t_collect_boost) : 0;
         var collect_boost_velocity = CollectSpeedBoost ? Mathf.Lerp(8, 0, t_collect_boost) : 0;
 
-        LinearAcceleration = settings.linear_acceleration + flat_acceleration + collect_boost_acceleration;
-        LinearVelocity = (settings.linear_velocity + flat_velocity + collect_boost_velocity) * perc_velocity;
-        LinearDrag = settings.linear_drag;
+        LinearAcceleration = PlayerBody.Settings.linear_acceleration + flat_acceleration + collect_boost_acceleration;
+        LinearVelocity = (PlayerBody.Settings.linear_velocity + flat_velocity + collect_boost_velocity) * perc_velocity;
+        LinearDrag = PlayerBody.Settings.linear_drag;
 
         // Move
         var dir = PlayerInput.MoveDirection;
@@ -169,7 +185,8 @@ public class Player : Character
         var not_paused = !GameController.Instance.IsPaused;
         var not_blocking = AbilityLock.IsFree;
         var not_cooldown = !ability.IsOnCooldown;
-        return not_blocking && not_cooldown && not_paused;
+        var game_started = GameController.Instance.IsGameStarted;
+        return not_blocking && not_cooldown && not_paused && game_started;
     }
 
     private void PressAbility(PlayerInput.ButtonType button)
@@ -246,7 +263,7 @@ public class Player : Character
         CollectCooldownReduction = Values.GetFloatValue("CollectCooldownReduc");
         CollectSpeedBoost = Values.GetBoolValue("CollectSpeedBoost");
         ConvertHealthToArmor = Values.GetBoolValue("ConvertHealthToArmor");
-        Body.Size = settings.size + Values.GetFloatValue("BodySize");
+        Body.Size = PlayerBody.Settings.body_size + Values.GetFloatValue("BodySize");
         InfiniteDrag = Values.GetBoolValue("InfiniteDrag");
         KillEnemyShieldRegen = Values.GetBoolValue("KillEnemyShieldRegen");
         PlantExpHealthRegen = Values.GetBoolValue("PlantExpHealthRegen");
@@ -358,10 +375,10 @@ public class Player : Character
         if (Health == null) Health = new Health();
         Health.Clear();
 
-        var init_health = stats.GetStat("Health").value_int;
+        var init_health = PlayerBody.Settings.health + stats.GetStat("Health").value_int;
         for (int i = 0; i < init_health; i++) Health.AddHealth(HealthPoint.Type.FULL);
 
-        var init_temp = stats.GetStat("Armor").value_int;
+        var init_temp = PlayerBody.Settings.armor + stats.GetStat("Armor").value_int;
         for (int i = 0; i < init_temp; i++) Health.AddHealth(HealthPoint.Type.TEMPORARY);
     }
 
