@@ -22,7 +22,7 @@ MonoBehaviour:
   - id: 1
     id_name: dash_speed_001
     _editorPosition: {x: 235, y: 341}
-    children: 0a0000000c000000
+    children: 0a000000
   - id: 4
     id_name: dash_area_001
     _editorPosition: {x: 1340, y: 356}
@@ -54,9 +54,5 @@ MonoBehaviour:
   - id: 11
     id_name: dash_trail
     _editorPosition: {x: 417, y: 804}
-    children: 
-  - id: 12
-    id_name: dash_charge_001
-    _editorPosition: {x: 47, y: 577}
     children: 
   id_node: 13

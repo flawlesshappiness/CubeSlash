@@ -45,8 +45,8 @@ MonoBehaviour:
   bgm:
     reference:
       Guid:
-        Data1: -1820905848
-        Data2: 1333989044
-        Data3: -787764304
-        Data4: 642457650
-      Path: event:/Music/game_001
+        Data1: -2099893669
+        Data2: 1184289244
+        Data3: -1133450321
+        Data4: 326138994
+      Path: event:/Music/abyss_001

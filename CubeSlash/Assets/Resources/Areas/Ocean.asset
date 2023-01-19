@@ -43,6 +43,7 @@ MonoBehaviour:
   parallax_max: 0.8
   background_layers:
   - name: 0
+    is_foreground: 0
     size_sprite_min: 0
     size_sprite_max: 0
     count_sprite: 0
@@ -50,6 +51,7 @@ MonoBehaviour:
     particles:
     - {fileID: 6471937910845384915, guid: 4227469584206424696bac83a7f5da41, type: 3}
   - name: 1
+    is_foreground: 0
     size_sprite_min: 0
     size_sprite_max: 0
     count_sprite: 0
@@ -58,6 +60,7 @@ MonoBehaviour:
     - {fileID: 7935337046598179359, guid: 4b69278ff55303c4a83b81a88ad7e1a1, type: 3}
     - {fileID: 6471937910845384915, guid: 4227469584206424696bac83a7f5da41, type: 3}
   - name: 2
+    is_foreground: 0
     size_sprite_min: 0
     size_sprite_max: 0
     count_sprite: 0
@@ -65,6 +68,31 @@ MonoBehaviour:
     particles:
     - {fileID: 7935337046598179359, guid: 4b69278ff55303c4a83b81a88ad7e1a1, type: 3}
     - {fileID: 6471937910845384915, guid: 4227469584206424696bac83a7f5da41, type: 3}
+  foreground_layers:
+  - name: 
+    is_foreground: 1
+    size_sprite_min: 0
+    size_sprite_max: 0
+    count_sprite: 0
+    sprites: []
+    particles:
+    - {fileID: 7935337046598179359, guid: 894e4e39671054444b22d63843074c79, type: 3}
+  - name: 
+    is_foreground: 1
+    size_sprite_min: 0
+    size_sprite_max: 0
+    count_sprite: 0
+    sprites: []
+    particles:
+    - {fileID: 6471937910845384915, guid: 461cfdd42b06a744285774ad70165406, type: 3}
+  - name: 
+    is_foreground: 1
+    size_sprite_min: 0
+    size_sprite_max: 0
+    count_sprite: 0
+    sprites: []
+    particles:
+    - {fileID: 6471937910845384915, guid: 461cfdd42b06a744285774ad70165406, type: 3}
   vignette_gradient:
     serializedVersion: 2
     key0: {r: 0, g: 0.24861261, b: 0.6037736, a: 1}

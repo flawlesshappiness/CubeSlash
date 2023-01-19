@@ -5,6 +5,7 @@ using UnityEngine;
 public class BackgroundLayer
 {
     [HideInInspector] public string name;
+    public bool is_foreground;
     public float size_sprite_min;
     public float size_sprite_max;
     public float count_sprite;

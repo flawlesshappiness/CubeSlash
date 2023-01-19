@@ -1,3 +1,4 @@
+using Flawliz.Lerp;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,7 +7,11 @@ using UnityEngine;
 public class Projectile : MonoBehaviourExtended
 {
     [SerializeField] private bool hits_player, hits_enemy;
+    [SerializeField] private Transform pivot_animation;
     [SerializeField] private ParticleSystem ps_death, ps_trail;
+    [SerializeField] private float anim_scale_duration;
+    [SerializeField] private float anim_rotation;
+    [SerializeField] private AnimationCurve curve_scale;
     public float TurnSpeed { get; set; }
     public float Drag { get; set; } = 1f;
     public float SearchRadius { get; set; } = 20f;
@@ -31,7 +36,11 @@ public class Projectile : MonoBehaviourExtended
         OnStart();
     }
 
-    protected virtual void OnStart() { }
+    protected virtual void OnStart() 
+    {
+        StartCoroutine(AnimateScaleCr());
+        StartCoroutine(AnimateRotationCr());
+    }
 
     private void Update()
     {
@@ -194,5 +203,28 @@ public class Projectile : MonoBehaviourExtended
 
         targets = targets.OrderByDescending(target => target.Value).ToList();
         Target = targets.Count == 0 ? null : targets[0].Enemy;
+    }
+
+    private IEnumerator AnimateScaleCr()
+    {
+        while (true)
+        {
+            yield return LerpEnumerator.Value(anim_scale_duration, f =>
+            {
+                var t = curve_scale.Evaluate(f);
+                pivot_animation.localScale = Vector3.LerpUnclamped(Vector3.zero, Vector3.one, t);
+            });
+        }
+    }
+
+    private IEnumerator AnimateRotationCr()
+    {
+        var angle = Random.Range(-anim_rotation, anim_rotation);
+        while (true)
+        {
+            var z = (pivot_animation.eulerAngles.z + angle * Time.deltaTime) % 360f;
+            pivot_animation.eulerAngles = pivot_animation.eulerAngles.SetZ(z);
+            yield return null;
+        }
     }
 }

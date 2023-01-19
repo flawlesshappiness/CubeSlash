@@ -70,7 +70,7 @@ MonoBehaviour:
   Path: Assets/FMOD/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 638096654021040498
+  lastModified: 638097020478727585
   FileSizes: []
   Exists: 1
 --- !u!114 &-7809730102017663126
@@ -699,12 +699,13 @@ MonoBehaviour:
   - {fileID: -6354703245554512797}
   - {fileID: -3379141545452202479}
   - {fileID: -9075606872324565979}
+  - {fileID: 1399565695188976922}
   EditorParameters: []
   MasterBanks:
   - {fileID: -8060980804293988741}
   StringsBanks:
   - {fileID: 5917708036578608240}
-  cacheTime: 638096654021070497
+  cacheTime: 638097020478757585
   cacheVersion: 131593
 --- !u!114 &159336944855883450
 MonoBehaviour:
@@ -733,6 +734,33 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 102857
+--- !u!114 &1399565695188976922
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Music/abyss_001
+  m_EditorClassIdentifier: 
+  Path: event:/Music/abyss_001
+  Guid:
+    Data1: -2099893669
+    Data2: 1184289244
+    Data3: -1133450321
+    Data4: 326138994
+  Banks:
+  - {fileID: -8060980804293988741}
+  IsStream: 1
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 98666
 --- !u!114 &1768831851793833534
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1069,10 +1097,10 @@ MonoBehaviour:
   Path: Assets/FMOD/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 638096654021070497
+  lastModified: 638097020478757585
   FileSizes:
   - Name: 
-    Value: 3050
+    Value: 3090
   Exists: 1
 --- !u!114 &5992827859230917708
 MonoBehaviour:

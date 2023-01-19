@@ -40,6 +40,7 @@ public class FMODEventReference
 
     public void Play(System.Action<EventInstance> modifyInstance = null)
     {
+        if (!Info.has_description) return;
         current_instance = RuntimeManager.CreateInstance(reference);
         modifyInstance?.Invoke(current_instance);
         current_instance.start();

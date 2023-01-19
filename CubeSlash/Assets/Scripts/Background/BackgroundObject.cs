@@ -29,7 +29,7 @@ public abstract class BackgroundObject : MonoBehaviour
     {
         var layer_count = GetLayerCount();
         var t = 1f - Mathf.Clamp(Layer / (float)(layer_count - 1), 0, 1);
-        var tp = Mathf.Lerp(parallax.x, parallax.y, t);
+        var tp = Mathf.Lerp(parallax.x, parallax.y, t.Abs());
         var pp = StartPosition - camera_position * tp;
         transform.localPosition = camera_position + new Vector3(pp.x, pp.y, StartPosition.z) + Offset;
     }
