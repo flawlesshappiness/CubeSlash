@@ -23,7 +23,8 @@ MonoBehaviour:
       text_display: $ bursts
       type_value: 0
       type_display: 0
-      value_int: 2
+      higher_is_positive: 0
+      value_int: 1
       value_float: 0
       value_bool: 0
       can_edit_name: 1
