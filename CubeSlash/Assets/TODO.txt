@@ -6,4 +6,3 @@ waves that push things in a direction
 unlock bodies in main menu
 Ability SWIPE that swipes to the sides
 simple introduction/tutorial for low-skill players
-upgrades are not removed on replay

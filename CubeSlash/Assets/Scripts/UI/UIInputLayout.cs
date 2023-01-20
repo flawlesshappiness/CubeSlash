@@ -5,26 +5,13 @@ using UnityEngine.UI;
 
 public class UIInputLayout : MonoBehaviour
 {
-    [SerializeField] private ImageInput template_img;
-    [SerializeField] private TMP_Text template_tmp;
+    [SerializeField] private UIInputLayoutRow template_row;
 
-    private List<Map> maps = new List<Map>();
-
-    private class Map
-    {
-        public ImageInput Image { get; set; }
-        public TMP_Text Text { get; set; }
-        public PlayerInput.UIButtonType Type { get; set; }
-        public void UpdateSprite()
-        {
-            Image.SetInputType(Type);
-        }
-    }
+    private List<UIInputLayoutRow> rows = new List<UIInputLayoutRow>();
 
     private void Start()
     {
-        template_img.gameObject.SetActive(false);
-        template_tmp.transform.gameObject.SetActive(false);
+        template_row.gameObject.SetActive(false);
     }
 
     private void OnEnable()
@@ -39,32 +26,25 @@ public class UIInputLayout : MonoBehaviour
 
     private void OnDeviceChanged(PlayerInput.DeviceType type)
     {
-        foreach(var map in maps)
-        {
-            map.UpdateSprite();
-        }
+        rows.ForEach(row => row.Image.SetInputType(row.Image.type_button));
     }
 
     public void AddInput(PlayerInput.UIButtonType type, string text)
     {
-        var map = new Map();
-        map.Image = Instantiate(template_img, template_img.transform.parent);
-        map.Image.gameObject.SetActive(true);
-        map.Text = Instantiate(template_tmp.transform.gameObject, template_tmp.transform.parent).GetComponent<TMP_Text>();
-        map.Text.transform.gameObject.SetActive(true);
-        map.Text.text = text;
-        map.Type = type;
-        map.UpdateSprite();
-        maps.Add(map);
+        var row = Instantiate(template_row, template_row.transform.parent);
+        row.gameObject.SetActive(true);
+        rows.Add(row);
+
+        row.Image.SetInputType(type);
+        row.Text = text;
     }
 
     public void Clear()
     {
-        foreach(var map in maps)
+        foreach(var row in rows)
         {
-            Destroy(map.Image.gameObject);
-            Destroy(map.Text.transform.gameObject);
+            Destroy(row.gameObject);
         }
-        maps.Clear();
+        rows.Clear();
     }
 }
