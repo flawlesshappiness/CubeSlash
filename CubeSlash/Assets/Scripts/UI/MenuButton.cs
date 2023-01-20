@@ -1,13 +1,15 @@
 using UnityEngine;
-using UnityEngine.UI;
 using Flawliz.Lerp;
 using System.Collections;
 
 public class MenuButton : MonoBehaviour
 {
     [SerializeField] private RectTransform rt_selected;
-    [SerializeField] private CanvasGroup cvg_selected;
+    [SerializeField] private CanvasGroup cvg_selected, cvg_main;
     [SerializeField] private ButtonExtended button;
+
+    public CanvasGroup CanvasGroup { get { return cvg_main; } }
+    public ButtonExtended Button { get { return button; } }
 
     private void OnEnable()
     {
@@ -16,7 +18,7 @@ public class MenuButton : MonoBehaviour
         rt_selected.sizeDelta = Vector2.right * 100f;
     }
 
-    private void OnSelectionChanged(bool selected)
+    public void OnSelectionChanged(bool selected)
     {
         var scale_show = 0f;
         var scale_hide = 100f;

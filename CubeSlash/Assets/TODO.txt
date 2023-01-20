@@ -6,4 +6,3 @@ Ability SWIPE that swipes to the sides
 simple introduction/tutorial for low-skill players
 enemy that pushes the player
 enemy that pulls the player
-menu switcher

@@ -2,6 +2,7 @@ using Flawliz.Lerp;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using UnityEditor.Animations;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
@@ -25,6 +26,7 @@ public class BodySelectView : View
     private List<GameObject> acc_points = new List<GameObject>();
 
     private int idx_body_selected = -1;
+    private bool transitioning;
 
     private Coroutine cr_confirm;
 
@@ -47,16 +49,46 @@ public class BodySelectView : View
         SetBody(0);
 
         StartCoroutine(AppearCr());
-        IEnumerator AppearCr()
-        {
-            cvg_controls.alpha = 0;
-            pivot_stats.localScale = Vector3.zero;
-            pivot_ability.localScale = Vector3.zero;
-            AnimatePivotScaleAppear(pivot_ability, 0);
-            AnimatePivotScaleAppear(pivot_stats, 0.2f);
-            yield return new WaitForSeconds(0.5f);
-            Lerp.Value(1f, f => cvg_controls.alpha = Mathf.Lerp(0f, 1f, f)).Connect(cvg_controls.gameObject);
-        }
+    }
+
+    IEnumerator AppearCr()
+    {
+        cvg_controls.alpha = 0;
+        pivot_stats.localScale = Vector3.zero;
+        pivot_ability.localScale = Vector3.zero;
+        AnimatePivotScaleShow(pivot_ability, true, 0);
+        AnimatePivotScaleShow(pivot_stats, true, 0.2f);
+        yield return new WaitForSeconds(0.5f);
+        yield return LerpEnumerator.Value(1f, f => cvg_controls.alpha = Mathf.Lerp(0f, 1f, f));
+    }
+
+    private IEnumerator HideCr()
+    {
+        CanvasGroup.blocksRaycasts = false;
+        CanvasGroup.interactable = false;
+
+        var cr1 = AnimatePivotScaleShow(pivot_ability, false, 0);
+        var cr2 = AnimatePivotScaleShow(pivot_stats, false, 0.2f);
+        var alpha_start = cvg_controls.alpha;
+        yield return LerpEnumerator.Value(0.5f, f => cvg_controls.alpha = Mathf.Lerp(alpha_start, 0f, f));
+        yield return cr1;
+        yield return cr2;
+    }
+
+    private IEnumerator TransitionToMainMenu()
+    {
+        transitioning = true;
+        yield return HideCr();
+        ViewController.Instance.ShowView<StartView>(0.5f);
+        Close(0);
+    }
+
+    private IEnumerator TransitionToGame()
+    {
+        transitioning = true;
+        yield return HideCr();
+        GameController.Instance.StartGame();
+        Close(0);
     }
 
     private void OnEnable()
@@ -100,6 +132,8 @@ public class BodySelectView : View
             {
                 NavigateLeft();
             }
+
+            sfx_change_body.Play();
         }
     }
 
@@ -152,9 +186,6 @@ public class BodySelectView : View
         // Ability
         var ability = AbilityController.Instance.GetAbility(settings.ability_type);
         SetAbility(ability);
-
-        // Sound
-        sfx_change_body.Play();
     }
 
     private void SetAbility(Ability ability)
@@ -229,16 +260,12 @@ public class BodySelectView : View
             sfx_confirm_charge.Play();
 
             CameraController.Instance.AnimateSize(2f, 5f, EasingCurves.EaseOutQuad);
-            yield return LerpEnumerator.Value(2f, f =>
-            {
-
-            });
+            yield return new WaitForSeconds(2f);
 
             sfx_confirm_charge.Stop();
             sfx_confirm.Play();
 
-            GameController.Instance.StartGame();
-            Close(0);
+            StartCoroutine(TransitionToGame());
         }
     }
 
@@ -254,13 +281,15 @@ public class BodySelectView : View
 
     private void PressBack(InputAction.CallbackContext context)
     {
+        if (transitioning) return;
+
         Player.Instance.gameObject.SetActive(false);
 
         ConfirmReleased(context);
-        Close(0);
-        ViewController.Instance.ShowView<StartView>(0);
 
         sfx_back.Play();
+
+        StartCoroutine(TransitionToMainMenu());
     }
 
     private void ResetCamera()
@@ -284,13 +313,17 @@ public class BodySelectView : View
             .Curve(EasingCurves.EaseOutBack);
     }
 
-    private void AnimatePivotScaleAppear(Transform pivot, float delay)
+    private Coroutine AnimatePivotScaleShow(Transform pivot, bool show, float delay)
     {
-        StartCoroutine(Cr());
+        return StartCoroutine(Cr());
         IEnumerator Cr()
         {
             yield return new WaitForSeconds(delay);
-            yield return LerpEnumerator.LocalScale(pivot, 1f, Vector3.zero, Vector3.one).Curve(EasingCurves.EaseOutBack);
+            var start = pivot.transform.localScale;
+            var end = show ? Vector3.one : Vector3.zero;
+            var curve = show ? EasingCurves.EaseOutBack : EasingCurves.EaseInBack;
+            var duration = show ? 1f : 0.5f;
+            yield return LerpEnumerator.LocalScale(pivot, duration, start, end).Curve(curve);
         }
     }
 }

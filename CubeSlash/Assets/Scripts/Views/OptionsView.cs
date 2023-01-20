@@ -1,3 +1,4 @@
+using Flawliz.Lerp;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -29,6 +30,29 @@ public class OptionsView : View
 
         EventSystemController.Instance.SetDefaultSelection(btn_back.gameObject);
         EventSystemController.Instance.EventSystem.SetSelectedGameObject(null);
+
+        StartCoroutine(TransitionShowCr(true));
+    }
+
+    private IEnumerator TransitionShowCr(bool show)
+    {
+        var start = show ? 0f : 1f;
+        var end = show ? 1f : 0f;
+        CanvasGroup.alpha = start;
+
+        var lerp = LerpEnumerator.Value(0.5f, f =>
+        {
+            CanvasGroup.alpha = Mathf.Lerp(start, end, f);
+        });
+        lerp.UnscaledTime = true;
+        yield return lerp;
+    }
+
+    private IEnumerator TransitionBackCr()
+    {
+        yield return TransitionShowCr(false);
+        Close(0);
+        onClickBack();
     }
 
     private void OnEnable()
@@ -64,7 +88,6 @@ public class OptionsView : View
 
     private void ClickBack()
     {
-        Close(0);
-        onClickBack();
+        StartCoroutine(TransitionBackCr());
     }
 }

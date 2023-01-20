@@ -444,6 +444,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6739507350967738137}
   - component: {fileID: 8305361871400762816}
+  - component: {fileID: 7937242585966034816}
   m_Layer: 5
   m_Name: MenuButton
   m_TagString: Untagged
@@ -486,7 +487,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rt_selected: {fileID: 8217783833880834924}
   cvg_selected: {fileID: 5895905536645871223}
+  cvg_main: {fileID: 7937242585966034816}
   button: {fileID: 8929123683665316535}
+--- !u!225 &7937242585966034816
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5281460540265361662}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &8941903001969181926
 GameObject:
   m_ObjectHideFlags: 0
