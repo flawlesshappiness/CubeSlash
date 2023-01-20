@@ -70,7 +70,7 @@ MonoBehaviour:
   Path: Assets/FMOD/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 638097020478727585
+  lastModified: 638097795003327536
   FileSizes: []
   Exists: 1
 --- !u!114 &-7809730102017663126
@@ -397,6 +397,60 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 0
+--- !u!114 &-2396034613374441782
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Game/Enemy/volatile_charge_001
+  m_EditorClassIdentifier: 
+  Path: event:/Game/Enemy/volatile_charge_001
+  Guid:
+    Data1: -1995268906
+    Data2: 1129415655
+    Data3: -318124657
+    Data4: 161583939
+  Banks:
+  - {fileID: -8060980804293988741}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
+--- !u!114 &-2297037270938223247
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Game/Enemy/volatile_charge_002
+  m_EditorClassIdentifier: 
+  Path: event:/Game/Enemy/volatile_charge_002
+  Guid:
+    Data1: 590598242
+    Data2: 1146419174
+    Data3: -1522191444
+    Data4: -1542859453
+  Banks:
+  - {fileID: -8060980804293988741}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
 --- !u!114 &-2045402373136644028
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -700,12 +754,14 @@ MonoBehaviour:
   - {fileID: -3379141545452202479}
   - {fileID: -9075606872324565979}
   - {fileID: 1399565695188976922}
+  - {fileID: -2396034613374441782}
+  - {fileID: -2297037270938223247}
   EditorParameters: []
   MasterBanks:
   - {fileID: -8060980804293988741}
   StringsBanks:
   - {fileID: 5917708036578608240}
-  cacheTime: 638097020478757585
+  cacheTime: 638097795003357548
   cacheVersion: 131593
 --- !u!114 &159336944855883450
 MonoBehaviour:
@@ -1097,10 +1153,10 @@ MonoBehaviour:
   Path: Assets/FMOD/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 638097020478757585
+  lastModified: 638097795003357548
   FileSizes:
   - Name: 
-    Value: 3090
+    Value: 3184
   Exists: 1
 --- !u!114 &5992827859230917708
 MonoBehaviour:

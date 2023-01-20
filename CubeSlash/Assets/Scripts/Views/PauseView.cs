@@ -48,6 +48,7 @@ public class PauseView : View
 
     private void ClickContinue()
     {
+        GameStateController.Instance.SetGameState(GameStateType.PLAYING);
         Close(0);
     }
 

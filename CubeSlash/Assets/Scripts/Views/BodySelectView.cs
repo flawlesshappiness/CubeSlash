@@ -11,9 +11,10 @@ public class BodySelectView : View
     [SerializeField] private Image img_ability;
     [SerializeField] private TMP_Text tmp_ability;
     [SerializeField] private GameObject template_health_point, template_armor_point, template_spd, template_acc;
-    [SerializeField] private Transform pivot_arrow_left, pivot_arrow_right;
+    [SerializeField] private Transform pivot_arrow_left, pivot_arrow_right, pivot_ability, pivot_stats;
     [SerializeField] private UIInputLayout controls_confirm, controls_back;
     [SerializeField] private PlayerBodySettingsDatabase db_player_body_settings;
+    [SerializeField] private CanvasGroup cvg_controls;
     [SerializeField] private FMODEventReference sfx_confirm_charge;
     [SerializeField] private FMODEventReference sfx_confirm;
     [SerializeField] private FMODEventReference sfx_back;
@@ -44,6 +45,18 @@ public class BodySelectView : View
         ResetCamera();
 
         SetBody(0);
+
+        StartCoroutine(AppearCr());
+        IEnumerator AppearCr()
+        {
+            cvg_controls.alpha = 0;
+            pivot_stats.localScale = Vector3.zero;
+            pivot_ability.localScale = Vector3.zero;
+            AnimatePivotScaleAppear(pivot_ability, 0);
+            AnimatePivotScaleAppear(pivot_stats, 0.2f);
+            yield return new WaitForSeconds(0.5f);
+            Lerp.Value(1f, f => cvg_controls.alpha = Mathf.Lerp(0f, 1f, f)).Connect(cvg_controls.gameObject);
+        }
     }
 
     private void OnEnable()
@@ -215,7 +228,7 @@ public class BodySelectView : View
         {
             sfx_confirm_charge.Play();
 
-            CameraController.Instance.AnimateSize(2f, 5f);
+            CameraController.Instance.AnimateSize(2f, 5f, EasingCurves.EaseOutQuad);
             yield return LerpEnumerator.Value(2f, f =>
             {
 
@@ -269,5 +282,15 @@ public class BodySelectView : View
         var end = Vector3.zero;
         Lerp.LocalPosition(pivot_arrow_right, 0.5f, start, end)
             .Curve(EasingCurves.EaseOutBack);
+    }
+
+    private void AnimatePivotScaleAppear(Transform pivot, float delay)
+    {
+        StartCoroutine(Cr());
+        IEnumerator Cr()
+        {
+            yield return new WaitForSeconds(delay);
+            yield return LerpEnumerator.LocalScale(pivot, 1f, Vector3.zero, Vector3.one).Curve(EasingCurves.EaseOutBack);
+        }
     }
 }

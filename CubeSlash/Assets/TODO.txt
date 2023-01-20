@@ -6,6 +6,4 @@ Ability SWIPE that swipes to the sides
 simple introduction/tutorial for low-skill players
 enemy that pushes the player
 enemy that pulls the player
-enemy that explodes on impact or hit - sprite done
-reduce enemy bullet size
-enemy bullet animation and rotation
+menu switcher

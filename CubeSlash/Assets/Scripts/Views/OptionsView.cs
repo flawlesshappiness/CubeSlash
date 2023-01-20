@@ -31,6 +31,16 @@ public class OptionsView : View
         EventSystemController.Instance.EventSystem.SetSelectedGameObject(null);
     }
 
+    private void OnEnable()
+    {
+        GameController.Instance.PauseLock.AddLock(nameof(OptionsView));
+    }
+
+    private void OnDisable()
+    {
+        GameController.Instance.PauseLock.RemoveLock(nameof(OptionsView));
+    }
+
     private void AdjustMasterVolume()
     {
         var value = slider_master.GetPercentage();

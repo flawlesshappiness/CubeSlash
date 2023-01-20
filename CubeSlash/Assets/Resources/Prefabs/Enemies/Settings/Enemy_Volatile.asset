@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9c301fa7d26535e4cb7056a730ebca5e, type: 3}
+  m_Name: Enemy_Volatile
+  m_EditorClassIdentifier: 
+  body: {fileID: 1809117779056012468, guid: 50202d01f816e9946a8fdcf3873ff1bd, type: 3}
+  linear_acceleration: 8
+  linear_velocity: 4
+  linear_drag: 20
+  angular_acceleration: 8
+  angular_velocity: 200
+  size: 1.5
+  mass: 1
+  ai: {fileID: 8529912573728219307, guid: 1811bf8816686ed4b81fc60137d56b47, type: 3}

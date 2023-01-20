@@ -107,6 +107,7 @@ public class AbilityExplode : Ability
                     force = Knockback,
                     pull_enemies = DelayPull,
                     getPosition = getPosition,
+                    play_charge_sfx = i == 0,
                     onHit = OnHit,
                 }));
 
@@ -189,10 +190,6 @@ public class AbilityExplode : Ability
             Player.PushEnemiesInArea(position, radius * 3, force);
         }
 
-        // Sfx
-        var sfx_explode = FMODEventReferenceDatabase.Load().sfx_explode_explode;
-        FMODController.Instance.PlayWithLimitDelay(sfx_explode);
-
         // Fx
         CreateExplodeEffect(position, radius);
     }
@@ -231,7 +228,7 @@ public class AbilityExplode : Ability
         }
     }
 
-    private static void CreateChargeEffect(Transform parent, Vector3 position, float radius, float duration)
+    public static void CreateChargeEffect(Transform parent, Vector3 position, float radius, float duration)
     {
         var ps = Resources.Load<ParticleSystem>("Particles/ps_explode_charge");
         var psd = ps.Duplicate()
@@ -246,12 +243,15 @@ public class AbilityExplode : Ability
         psd.Play();
     }
 
-    private static void CreateExplodeEffect(Vector3 position, float radius)
+    public static void CreateExplodeEffect(Vector3 position, float radius, Color? color = null)
     {
-        var template_explosion = Resources.Load<GameObject>("Particles/ExplosionEffect");
+        Color actual_color = color ?? Color.white;
+
+        var template_explosion = Resources.Load<ExplosionEffect>("Particles/ExplosionEffect");
         var explosion = Instantiate(template_explosion, GameController.Instance.world);
         explosion.transform.position = position;
         explosion.transform.localScale = Vector3.one * radius * 2;
+        explosion.SetColor(actual_color);
         Destroy(explosion, 2f);
 
         var ps_explode = Resources.Load<ParticleSystem>("Particles/ps_explode");
@@ -259,5 +259,9 @@ public class AbilityExplode : Ability
             .Scale(Vector3.one * radius * 2)
             .Position(position)
             .Play();
+
+        // Sfx
+        var sfx_explode = FMODEventReferenceDatabase.Load().sfx_explode_explode;
+        FMODController.Instance.PlayWithLimitDelay(sfx_explode);
     }
 }

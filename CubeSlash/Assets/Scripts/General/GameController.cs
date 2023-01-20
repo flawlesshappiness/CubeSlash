@@ -95,6 +95,7 @@ public class GameController : MonoBehaviour
         if (PauseView.Exists) return;
         if (GameState != GameStateType.PLAYING) return;
         if (PauseLock.IsLocked) return;
+        GameStateController.Instance.SetGameState(GameStateType.MENU);
         ViewController.Instance.ShowView<PauseView>(0, nameof(PauseView));
     }
 
