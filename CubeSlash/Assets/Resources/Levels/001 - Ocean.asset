@@ -14,6 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   duration: 30
   size: 100
+  is_final_level: 0
+  show_tutorial: 1
   frequency_spawn_enemy: 1.5
   count_enemy_active: 9999
   enemies:
@@ -25,3 +27,11 @@ MonoBehaviour:
   frequency_spawn_experience: 0.5
   count_experience_active: 40
   area: {fileID: 11400000, guid: 05cda483061ecb540840d2b69f3e52ca, type: 2}
+  bgm:
+    reference:
+      Guid:
+        Data1: 0
+        Data2: 0
+        Data3: 0
+        Data4: 0
+      Path: 
