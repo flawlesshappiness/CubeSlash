@@ -76,6 +76,7 @@ public class Player : Character
 
         // Add ability
         AbilityController.Instance.Clear();
+        UpgradeController.Instance.ClearUpgrades();
         var ability = AbilityController.Instance.UnlockAbility(settings.ability_type);
         AbilityController.Instance.EquipAbility(ability, PlayerInput.ButtonType.WEST);
 

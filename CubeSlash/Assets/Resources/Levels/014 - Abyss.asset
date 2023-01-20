@@ -38,6 +38,10 @@ MonoBehaviour:
     enemy: {fileID: 11400000, guid: 5103badcabd8e2c42be0237f2f73cad1, type: 2}
     chance: 0.25
     max: 5
+  - name: Enemy_Volatile (5)
+    enemy: {fileID: 11400000, guid: 446594942849cc545a50a1af0a528adc, type: 2}
+    chance: 0.25
+    max: 5
   bosses: []
   frequency_spawn_experience: 1
   count_experience_active: 0

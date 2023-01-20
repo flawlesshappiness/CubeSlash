@@ -1,8 +1,9 @@
 TODO:
+enemy that pushes the player
+enemy that pulls the player
 Upgrade reroll
 waves that push things in a direction
 unlock bodies in main menu
 Ability SWIPE that swipes to the sides
 simple introduction/tutorial for low-skill players
-enemy that pushes the player
-enemy that pulls the player
+upgrades are not removed on replay

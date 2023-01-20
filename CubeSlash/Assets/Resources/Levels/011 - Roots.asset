@@ -34,6 +34,10 @@ MonoBehaviour:
     enemy: {fileID: 11400000, guid: e3fdf9a9032f5a547809171c6941ee82, type: 2}
     chance: 0.25
     max: 5
+  - name: Enemy_Host4 (4)
+    enemy: {fileID: 11400000, guid: 5103badcabd8e2c42be0237f2f73cad1, type: 2}
+    chance: 0.25
+    max: 4
   bosses: []
   frequency_spawn_experience: 0.5
   count_experience_active: 50

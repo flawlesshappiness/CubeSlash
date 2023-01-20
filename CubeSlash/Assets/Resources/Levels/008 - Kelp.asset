@@ -26,6 +26,10 @@ MonoBehaviour:
     enemy: {fileID: 11400000, guid: f41298fdccde658438bc50f38c6c1f2d, type: 2}
     chance: 1
     max: 10
+  - name: Enemy_Host4 (4)
+    enemy: {fileID: 11400000, guid: 5103badcabd8e2c42be0237f2f73cad1, type: 2}
+    chance: 1
+    max: 4
   - name: Enemy_Shooter (25)
     enemy: {fileID: 11400000, guid: db0782c6ad8291647b08bacf671fe0eb, type: 2}
     chance: 1

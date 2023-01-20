@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   duration: 30
   size: 100
+  is_final_level: 0
   frequency_spawn_enemy: 0.3
   count_enemy_active: 9999
   enemies:
@@ -37,7 +38,19 @@ MonoBehaviour:
     enemy: {fileID: 11400000, guid: 5103badcabd8e2c42be0237f2f73cad1, type: 2}
     chance: 0.25
     max: 5
+  - name: Enemy_Volatile (2)
+    enemy: {fileID: 11400000, guid: 446594942849cc545a50a1af0a528adc, type: 2}
+    chance: 0.25
+    max: 2
   bosses: []
   frequency_spawn_experience: 1
   count_experience_active: 0
   area: {fileID: 11400000, guid: 57a6e213ab910cb4bb164a7019edbd19, type: 2}
+  bgm:
+    reference:
+      Guid:
+        Data1: 0
+        Data2: 0
+        Data3: 0
+        Data4: 0
+      Path: 
