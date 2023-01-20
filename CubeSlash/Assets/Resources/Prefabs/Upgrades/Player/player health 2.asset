@@ -20,7 +20,7 @@ MonoBehaviour:
   - type_effect: 0
     variable:
       name: Health
-      text_display: When you health reaches 0, you die
+      text_display: $ health
       type_value: 0
       type_display: 0
       higher_is_positive: 0
