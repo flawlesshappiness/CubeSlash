@@ -1,3 +1,4 @@
+using Flawliz.Lerp;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -41,6 +42,27 @@ public class PauseView : View
         btnMainMenu.SetSelectOnHover(true);
     }
 
+    IEnumerator TransitionToOptionsCr()
+    {
+        CanvasGroup.blocksRaycasts = false;
+        CanvasGroup.interactable = false;
+        EventSystemController.Instance.SetDefaultSelection(null);
+        EventSystemController.Instance.EventSystem.SetSelectedGameObject(null);
+
+        var lerp = LerpEnumerator.Value(0.5f, f =>
+        {
+            CanvasGroup.alpha = Mathf.Lerp(1f, 0f, f);
+        });
+        lerp.UnscaledTime = true;
+        yield return lerp;
+
+        FMODButtonEvent.PreviousSelected = null;
+        var view = ViewController.Instance.ShowView<OptionsView>(0);
+        view.onClickBack += () => ViewController.Instance.ShowView<PauseView>(0.5f);
+
+        Close(0);
+    }
+
     private void Menu_started(UnityEngine.InputSystem.InputAction.CallbackContext obj)
     {
         ClickContinue();
@@ -54,9 +76,7 @@ public class PauseView : View
 
     private void ClickOptions()
     {
-        var view = ViewController.Instance.ShowView<OptionsView>(0);
-        view.onClickBack += () => ViewController.Instance.ShowView<PauseView>(0);
-        Close(0);
+        StartCoroutine(TransitionToOptionsCr());
     }
 
     private void ClickMainMenu()
