@@ -11,8 +11,8 @@ public class AI_Volatile : EnemyAI
     private EnemyVolatileBody volatile_body;
     private bool exploding;
 
-    private const float RADIUS_NEAR = 4f;
-    private const float RADIUS_EXPLODE = 5f;
+    private const float RADIUS_NEAR = 6f;
+    private const float RADIUS_EXPLODE = 8f;
 
     public override void Initialize(Enemy enemy)
     {

@@ -5,3 +5,4 @@ Upgrade reroll
 waves that push things in a direction
 unlock bodies in main menu
 Ability SWIPE that swipes to the sides
+Draw player bodies

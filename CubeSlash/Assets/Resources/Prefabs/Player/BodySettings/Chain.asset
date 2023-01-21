@@ -19,5 +19,5 @@ MonoBehaviour:
   linear_velocity: 5
   linear_acceleration: 20
   linear_drag: 20
-  body: {fileID: 1353097371446324401, guid: f5fbfb80795043b4ca6e62aab876e931, type: 3}
+  body: {fileID: 1353097371446324401, guid: 0d0fa95c8dc7c34478522c4af9dfc8f6, type: 3}
   ability_type: 4

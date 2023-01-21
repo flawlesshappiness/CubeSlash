@@ -45,6 +45,8 @@ public class PlayerBody : Body
             var rotation = Quaternion.AngleAxis(angle, Vector3.forward);
             bp.transform.localRotation = rotation;
 
+            bp.transform.localScale = Vector3.one;
+
             bps.Add(bp);
         }
 
