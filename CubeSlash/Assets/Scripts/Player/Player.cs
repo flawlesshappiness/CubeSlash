@@ -409,7 +409,7 @@ public class Player : Character
 
         if (!GameController.DAMAGE_DISABLED)
         {
-            if(ChanceToAvoidDamage == 0 || Random.Range(0f, 1f) < ChanceToAvoidDamage)
+            if(ChanceToAvoidDamage == 0 || Random.Range(0f, 1f) > ChanceToAvoidDamage)
             {
                 Health.Damage();
                 event_damage.Play();
