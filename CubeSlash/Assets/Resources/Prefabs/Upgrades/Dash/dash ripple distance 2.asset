@@ -10,22 +10,22 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 616189df85cb92d40806459b9c9111b7, type: 3}
-  m_Name: dash speed 2
+  m_Name: dash ripple distance 2
   m_EditorClassIdentifier: 
-  id: dash_speed_002
-  name: Speed 2
-  icon: {fileID: 21300000, guid: d44bd0b5da1b9ac45b98cce2498f1d7d, type: 3}
+  id: dash_ripple_distance_002
+  name: Longer wave
+  icon: {fileID: 21300000, guid: 6df22128a224dd7479815d31a22ac44c, type: 3}
   id_stats: dash
   effects:
   - type_effect: 0
     variable:
-      name: Speed
-      text_display: $ speed
+      name: RippleDistance
+      text_display: $ shockwave distance
       type_value: 1
-      type_display: 1
+      type_display: 2
       higher_is_positive: 0
-      value_int: 0
-      value_float: 8
-      value_bool: 0
+      value_int: 1
+      value_float: 1
+      value_bool: 1
       can_edit_name: 1
       _editor_toggle_preview: 0

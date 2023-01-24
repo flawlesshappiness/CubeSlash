@@ -6,7 +6,7 @@ Boss: Rotating duds, shoots beams from dead duds
 
 AREA 2: Leaves
 Color: Blue / Green
-Enemy: 1 cell becomes 2 smaller cells
+Enemy: Double Cell and Quad Cell
 Boss: Multi-Eye shooter
 
 
@@ -24,7 +24,7 @@ Boss:
 
 AREA 5: Abyss
 Color: Black
-Enemy: 1 big cell becomes 2 cells becomes 4 smaller cells
+Enemy: Volatile Cell
 Boss: 
 
 

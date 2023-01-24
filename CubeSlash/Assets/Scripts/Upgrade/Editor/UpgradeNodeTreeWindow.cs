@@ -9,6 +9,7 @@ public class UpgradeNodeTreeWindow : NodeEditorWindow
     private static UpgradeNodeTreeWindow window;
     private UpgradeNodeTree Tree { get; set; }
     private UpgradeDatabase UpgradeDatabase { get; set; }
+    private AbilityDatabase AbilityDatabase { get; set; }
 
     private enum State { NONE, CONNECT_CHILD }
     private State state = State.NONE;
@@ -26,6 +27,7 @@ public class UpgradeNodeTreeWindow : NodeEditorWindow
         ClearGUI();
         Tree = tree;
         UpgradeDatabase = UpgradeDatabase.LoadAsset();
+        AbilityDatabase = AbilityDatabase.LoadAsset();
 
         // Create root node
         if (Tree.nodes.Count == 0)
@@ -207,7 +209,10 @@ public class UpgradeNodeTreeWindow : NodeEditorWindow
 
     private void UpdateNodeProperties(UpgradeNode node)
     {
-        var ids = UpgradeDatabase.upgrades.Select(u => u.id).ToArray();
+        var id_stats = Tree.require_ability ? AbilityDatabase.GetAbility(Tree.ability_type_required).Stats.id : "player";
+        var ids = UpgradeDatabase.upgrades
+            .Where(u => u.id_stats == id_stats)
+            .Select(u => u.id).ToArray();
 
         node.ClearProperties();
         node.AddProperty("ID", node.data.id_name, ids, true, v => 

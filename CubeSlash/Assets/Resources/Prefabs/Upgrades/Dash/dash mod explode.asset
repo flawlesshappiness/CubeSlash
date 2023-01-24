@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: dash mod explode
   m_EditorClassIdentifier: 
   id: dash_mod_explode
-  name: Trail
+  name: Dash modified by Explode
   icon: {fileID: 21300000, guid: 083237d4baf78d143b4251ca612f18dd, type: 3}
   id_stats: dash
   effects:
@@ -43,8 +43,8 @@ MonoBehaviour:
       _editor_toggle_preview: 0
   - type_effect: 0
     variable:
-      name: ExplodeModifier
-      text_display: Explode when dashing
+      name: ExplodeOnImpact
+      text_display: Enemies explode on impact
       type_value: 2
       type_display: 3
       higher_is_positive: 0

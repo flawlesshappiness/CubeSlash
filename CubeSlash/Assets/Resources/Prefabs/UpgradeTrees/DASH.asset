@@ -17,42 +17,46 @@ MonoBehaviour:
   nodes:
   - id: 0
     id_name: dash_distance_001
-    _editorPosition: {x: 796, y: 163}
-    children: 010000000400000005000000
-  - id: 1
-    id_name: dash_speed_001
-    _editorPosition: {x: 235, y: 341}
-    children: 0a000000
+    _editorPosition: {x: 1061, y: 141}
+    children: 04000000050000000e00000010000000
   - id: 4
     id_name: dash_area_001
-    _editorPosition: {x: 1340, y: 356}
+    _editorPosition: {x: 387, y: 345}
     children: 0800000009000000
   - id: 5
     id_name: dash_distance_002
-    _editorPosition: {x: 794, y: 358}
+    _editorPosition: {x: 761, y: 348}
     children: 06000000
   - id: 6
     id_name: dash_distance_003
-    _editorPosition: {x: 779, y: 554}
+    _editorPosition: {x: 734, y: 543}
     children: 07000000
   - id: 7
     id_name: dash_cooldown_on_hit
-    _editorPosition: {x: 789, y: 812}
+    _editorPosition: {x: 740, y: 733}
     children: 
   - id: 8
     id_name: dash_area_002
-    _editorPosition: {x: 1185, y: 551}
+    _editorPosition: {x: 385, y: 533}
     children: 
   - id: 9
     id_name: dash_knockback_001
-    _editorPosition: {x: 1518, y: 562}
+    _editorPosition: {x: 34, y: 530}
     children: 
-  - id: 10
-    id_name: dash_speed_001
-    _editorPosition: {x: 424, y: 562}
-    children: 0b000000
-  - id: 11
-    id_name: dash_trail
-    _editorPosition: {x: 417, y: 804}
+  - id: 14
+    id_name: dash_ripple_size_001
+    _editorPosition: {x: 1092, y: 342}
+    children: 0f000000
+  - id: 15
+    id_name: dash_ripple_size_002
+    _editorPosition: {x: 1084, y: 539}
     children: 
-  id_node: 13
+  - id: 16
+    id_name: dash_ripple_distance_001
+    _editorPosition: {x: 1407, y: 344}
+    children: 11000000
+  - id: 17
+    id_name: dash_ripple_distance_002
+    _editorPosition: {x: 1421, y: 534}
+    children: 
+  id_node: 18

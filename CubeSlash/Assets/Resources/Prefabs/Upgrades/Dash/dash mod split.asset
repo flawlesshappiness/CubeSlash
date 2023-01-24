@@ -17,18 +17,6 @@ MonoBehaviour:
   icon: {fileID: 21300000, guid: 083237d4baf78d143b4251ca612f18dd, type: 3}
   id_stats: dash
   effects:
-  - type_effect: 0
-    variable:
-      name: Distance
-      text_display: $ distance
-      type_value: 1
-      type_display: 1
-      higher_is_positive: 0
-      value_int: 0
-      value_float: 1
-      value_bool: 0
-      can_edit_name: 1
-      _editor_toggle_preview: 0
   - type_effect: 1
     variable:
       name: Cooldown
@@ -37,18 +25,18 @@ MonoBehaviour:
       type_display: 1
       higher_is_positive: 0
       value_int: 0
-      value_float: 2
+      value_float: 1
       value_bool: 0
       can_edit_name: 1
       _editor_toggle_preview: 0
   - type_effect: 0
     variable:
-      name: SplitModifier
-      text_display: 2 clones split from you and dash in the same direction
-      type_value: 2
-      type_display: 3
+      name: RippleCount
+      text_display: $ ripples on impact
+      type_value: 0
+      type_display: 0
       higher_is_positive: 0
-      value_int: 0
+      value_int: 2
       value_float: 0
       value_bool: 1
       can_edit_name: 1
