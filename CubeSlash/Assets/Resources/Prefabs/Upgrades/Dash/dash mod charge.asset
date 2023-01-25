@@ -31,13 +31,49 @@ MonoBehaviour:
       _editor_toggle_preview: 0
   - type_effect: 0
     variable:
-      name: RippleBounce
-      text_display: Ripple bounces between enemies
+      name: OnlyRipple
+      text_display: Create shockwave instead of dashing
       type_value: 2
       type_display: 3
       higher_is_positive: 0
       value_int: 0
       value_float: 0
       value_bool: 1
+      can_edit_name: 1
+      _editor_toggle_preview: 0
+  - type_effect: 0
+    variable:
+      name: RippleSpeed
+      text_display: $ shockwave speed
+      type_value: 1
+      type_display: 2
+      higher_is_positive: 0
+      value_int: 0
+      value_float: 0.75
+      value_bool: 0
+      can_edit_name: 1
+      _editor_toggle_preview: 0
+  - type_effect: 0
+    variable:
+      name: RippleSize
+      text_display: $ shockwave size
+      type_value: 1
+      type_display: 2
+      higher_is_positive: 0
+      value_int: 0
+      value_float: 1
+      value_bool: 0
+      can_edit_name: 1
+      _editor_toggle_preview: 0
+  - type_effect: 0
+    variable:
+      name: RippleDistance
+      text_display: $ shockwave distance
+      type_value: 1
+      type_display: 2
+      higher_is_positive: 0
+      value_int: 0
+      value_float: 1
+      value_bool: 0
       can_edit_name: 1
       _editor_toggle_preview: 0

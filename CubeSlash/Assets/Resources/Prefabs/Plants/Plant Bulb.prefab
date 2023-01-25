@@ -5034,11 +5034,11 @@ MonoBehaviour:
   sfx_death:
     reference:
       Guid:
-        Data1: 774247800
-        Data2: 1229503722
-        Data3: -497733754
-        Data4: 1594072794
-      Path: event:/Game/Impact/bubble_pop_001
+        Data1: 236413035
+        Data2: 1336558619
+        Data3: 975733157
+        Data4: -2109526787
+      Path: event:/Game/Enemy/enemy_death_001
 --- !u!1 &846135435091995519
 GameObject:
   m_ObjectHideFlags: 0

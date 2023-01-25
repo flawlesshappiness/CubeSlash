@@ -82,7 +82,6 @@ public class GameController : MonoBehaviour
         Singleton.EnsureExistence<ItemController>();
         Singleton.EnsureExistence<PlayerInputController>();
         Singleton.EnsureExistence<BackgroundController>();
-        Singleton.EnsureExistence<ProgressController>();
         Singleton.EnsureExistence<MusicController>();
         Singleton.EnsureExistence<VignetteController>();
         Singleton.EnsureExistence<ObjectSpawnController>();
@@ -277,6 +276,7 @@ public class GameController : MonoBehaviour
         GameStateController.Instance.SetGameState(GameStateType.MENU);
         EnemyController.Instance.RemoveActiveEnemies();
         ItemController.Instance.DespawnAllActiveItems();
+        ProjectileController.Instance.ClearProjectiles();
         Player.Instance.gameObject.SetActive(false);
         ViewController.Instance.ShowView<StartView>(0.25f);
         CameraController.Instance.SetSize(15f);

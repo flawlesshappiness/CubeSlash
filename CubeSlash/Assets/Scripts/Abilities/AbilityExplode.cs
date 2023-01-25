@@ -50,20 +50,25 @@ public class AbilityExplode : Ability
             var p = projectile_split_modifier;
             var start = Player.transform.position;
             var dir = Player.MoveDirection;
-            var p_instance = AbilitySplit.ShootProjectile(p, start, dir, 1f, 15, (p, k) =>
+            var p_instance = ProjectileController.Instance.ShootPlayerProjectile(new ProjectileController.PlayerShootInfo
             {
-                var position = p.transform.position;
-                TriggerExplode(p.transform.parent, () => position, dir);
+                prefab = p,
+                position_start = start,
+                velocity = start * 15f,
+                onHit = ProjectileExplode
             });
-            p_instance.onDeath += () =>
-            {
-                var position = p_instance.transform.position;
-                TriggerExplode(p_instance.transform.parent, () => position, dir);
-            };
+
+            p_instance.onDeath += () => ProjectileExplode(p_instance);
         }
         else
         {
             TriggerExplode(Player.transform, () => Player.transform.position, Player.Instance.MoveDirection);
+        }
+
+        void ProjectileExplode(Projectile p, IKillable k = null)
+        {
+            var position = p.transform.position;
+            TriggerExplode(p.transform.parent, () => position, p.transform.up);
         }
     }
 
@@ -99,7 +104,7 @@ public class AbilityExplode : Ability
             {
                 var r = Radius * (1 + 0.5f * i);
 
-                StartCoroutine(ExplodeCr(new ExplodeChargeInfo
+                StartCoroutine(ExplodeCr(new ChargeInfo
                 {
                     parent = parent,
                     radius = r,
@@ -120,7 +125,7 @@ public class AbilityExplode : Ability
         }
     }
 
-    public class ExplodeChargeInfo
+    public class ChargeInfo
     {
         public Transform parent;
         public float radius;
@@ -132,7 +137,7 @@ public class AbilityExplode : Ability
         public System.Action<IKillable> onHit;
     }
 
-    public static IEnumerator ExplodeCr(ExplodeChargeInfo info)
+    public static IEnumerator ExplodeCr(ChargeInfo info)
     {
         var parent = info.parent;
         var radius = info.radius;

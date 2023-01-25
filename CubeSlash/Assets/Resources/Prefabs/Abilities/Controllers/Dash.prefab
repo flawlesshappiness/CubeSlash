@@ -50,6 +50,7 @@ MonoBehaviour:
   ModifierUpgrades: {fileID: 11400000, guid: 1c73c92639b2fad469983727b62a8d8a, type: 2}
   prefab_bodypart: {fileID: 2978501342247537998, guid: 288f60ef87b57c940999b752cc67d168, type: 3}
   template_clone: {fileID: 3936212779785393252}
+  prefab_shockwave: {fileID: 2903384162585443173, guid: 3d0c0635b0c9efc4080bece802368277, type: 3}
   ac_push_enemies:
     serializedVersion: 2
     m_Curve:

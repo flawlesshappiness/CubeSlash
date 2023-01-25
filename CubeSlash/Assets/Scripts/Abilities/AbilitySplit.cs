@@ -58,31 +58,6 @@ public class AbilitySplit : Ability
         }
     }
 
-    public static Projectile ShootProjectile(Projectile prefab, Vector3 start_position, Vector3 direction, float size, float speed, System.Action<Projectile, IKillable> onHit = null)
-    {
-        var p = Instantiate(prefab);
-        p.transform.position = start_position;
-        p.transform.localScale = Vector3.one * size;
-        p.Rigidbody.velocity = direction * speed;
-        p.SetDirection(direction);
-
-        p.onHit += c =>
-        {
-            var k = c.GetComponentInParent<IKillable>();
-            if (k != null)
-            {
-                onHit?.Invoke(p, k);
-                if (k.CanKill())
-                {
-                    Player.Instance.KillEnemy(k);
-                }
-                if (!p.Piercing) p.Kill();
-            }
-        };
-
-        return p;
-    }
-
     private void ShootProjectiles()
     {
         // Spawn projectiles
@@ -92,31 +67,15 @@ public class AbilitySplit : Ability
         var directions = GetSplitDirections(CountProjectiles, arc, forward);
         foreach(var direction in directions)
         {
-            var p = ShootProjectile(prefab_projectile, Player.transform.position, direction, SizeProjectiles, SpeedProjectiles, (p, k) =>
+            var p = ProjectileController.Instance.ShootPlayerProjectile(new ProjectileController.PlayerShootInfo
             {
-                Player.PushEnemiesInArea(p.transform.position, RadiusKnockback, ForceKnockback);
-
-                if (SplitProjectiles)
-                {
-                    var count = 3;
-                    var angle_delta = 360f / count;
-                    for (int i = 0; i < count; i++)
-                    {
-                        var d = Quaternion.AngleAxis(angle_delta * i, Vector3.forward) * direction;
-                        ShootProjectile(prefab_projectile, p.transform.position, d, SizeProjectiles * 0.5f, SpeedProjectiles);
-                    }
-                }
-
-                if(HitCooldownReduc < 0)
-                {
-                    TimeCooldownEnd -= Mathf.Abs(HitCooldownReduc);
-                }
-
-                if (HasModifier(Type.EXPLODE))
-                {
-                    AbilityExplode.Explode(p.transform.position, 2f, 50);
-                }
+                prefab = prefab_projectile,
+                position_start = Player.transform.position,
+                velocity = direction * SpeedProjectiles,
+                onHit = OnHit
             });
+
+            p.transform.localScale = Vector3.one * SizeProjectiles;
 
             if (ChainLightning)
             {
@@ -157,6 +116,39 @@ public class AbilitySplit : Ability
                     }
                 }
                 yield return null;
+            }
+        }
+
+        void OnHit(Projectile p, IKillable k)
+        {
+            Player.PushEnemiesInArea(p.transform.position, RadiusKnockback, ForceKnockback);
+
+            if (SplitProjectiles)
+            {
+                var count = 3;
+                var angle_delta = 360f / count;
+                for (int i = 0; i < count; i++)
+                {
+                    var d = Quaternion.AngleAxis(angle_delta * i, Vector3.forward) * p.transform.up;
+                    var _p = ProjectileController.Instance.ShootPlayerProjectile(new ProjectileController.PlayerShootInfo
+                    {
+                        prefab = prefab_projectile,
+                        position_start = p.transform.position,
+                        velocity = d * SpeedProjectiles,
+                    });
+
+                    _p.transform.localScale = 0.5f * SizeProjectiles * Vector3.one;
+                }
+            }
+
+            if (HitCooldownReduc < 0)
+            {
+                TimeCooldownEnd -= Mathf.Abs(HitCooldownReduc);
+            }
+
+            if (HasModifier(Type.EXPLODE))
+            {
+                AbilityExplode.Explode(p.transform.position, 3f, 50);
             }
         }
     }

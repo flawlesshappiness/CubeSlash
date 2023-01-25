@@ -46,6 +46,7 @@ public class Player : Character
 
     public event System.Action onLevelUp;
     public event System.Action onDeath;
+    public event System.Action<Collider2D> onTriggerEnter;
 
     private float timestamp_collect_last;
     private int enemy_kills_until_shield_regen;
@@ -315,6 +316,8 @@ public class Player : Character
     #region ENEMY
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        onTriggerEnter?.Invoke(collision);
+
         var hurt = collision.gameObject.GetComponentInParent<IHurt>();
         if (hurt == null) return;
         Damage(hurt.GetPosition());

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class AbilityDash : Ability
 {
@@ -19,17 +20,37 @@ public class AbilityDash : Ability
     public float CooldownOnHit { get; private set; }
     public bool TrailEnabled { get; private set; }
     public bool TeleportBack { get; private set; }
+    public int RippleCount { get; private set; }
+    public float RippleSpeed { get; private set; }
+    public float RippleSize { get; private set; }
+    public float RippleDistance { get; private set; }
+    public bool RippleBounce { get; private set; }
+    public bool OnlyRipple { get; private set; }
+    public bool ExplodeOnImpact { get; private set; }
 
     [Header("DASH")]
     [SerializeField] private AbilityDashClone template_clone;
+    [SerializeField] private Projectile prefab_shockwave;
     [SerializeField] private AnimationCurve ac_push_enemies;
     [SerializeField] private FMODEventReference event_dash_start;
     [SerializeField] private FMODEventReference event_dash_impact;
+
+    private Coroutine cr_dash;
+
+    private const float RIPPLE_SPEED = 25f;
+    private const float RIPPLE_SIZE = 2f;
+    private const float RIPPLE_DISTANCE = 7f;
 
     public override void InitializeFirstTime()
     {
         base.InitializeFirstTime();
         template_clone.gameObject.SetActive(false);
+        Player.onTriggerEnter += OnImpact;
+    }
+
+    private void OnDestroy()
+    {
+        Player.onTriggerEnter -= OnImpact;
     }
 
     public override void OnValuesApplied()
@@ -45,6 +66,13 @@ public class AbilityDash : Ability
         CooldownOnHit = GetFloatValue("CooldownOnHit");
         TrailEnabled = GetBoolValue("TrailEnabled");
         TeleportBack = GetBoolValue("TeleportBack");
+        RippleCount = GetIntValue("RippleCount");
+        RippleSpeed = GetFloatValue("RippleSpeed");
+        RippleSize = GetFloatValue("RippleSize");
+        RippleDistance = GetFloatValue("RippleDistance");
+        RippleBounce = GetBoolValue("RippleBounce");
+        OnlyRipple = GetBoolValue("OnlyRipple");
+        ExplodeOnImpact = GetBoolValue("ExplodeOnImpact");
     }
 
     public override void Trigger()
@@ -56,126 +84,78 @@ public class AbilityDash : Ability
 
     private void StartDashing()
     {
-        Dashing = true;
-        Player.MovementLock.AddLock(nameof(AbilityDash));
-        Player.DragLock.AddLock(nameof(AbilityDash));
-        Player.InvincibilityLock.AddLock(nameof(AbilityDash));
-        //Player.Body.gameObject.SetActive(false);
-        Player.Body.SetCollisionEnabled(false);
-        PositionOrigin = Player.Instance.transform.position;
+        if (OnlyRipple)
+        {
+            ShootShockwaves(Player.MoveDirection);
+        }
+        else
+        {
+            Dashing = true;
+            Player.MovementLock.AddLock(nameof(AbilityDash));
+            Player.DragLock.AddLock(nameof(AbilityDash));
+            Player.InvincibilityLock.AddLock(nameof(AbilityDash));
+            PositionOrigin = Player.Instance.transform.position;
+            cr_dash = StartCoroutine(DashCr(Player.MoveDirection));
+        }
+    }
+
+    private IEnumerator DashCr(Vector3 direction)
+    {
+        IKillable victim = null;
+        var velocity = direction * Speed;
+        var pos_origin = transform.position;
 
         event_dash_start.Play();
 
-        var directions = HasModifier(Type.SPLIT) ? AbilitySplit.GetSplitDirections(3, 25, Player.MoveDirection) : new List<Vector3> { Player.MoveDirection };
-        for (int i = 0; i < directions.Count; i++)
+        while (victim == null && Vector3.Distance(Player.transform.position, pos_origin) < Distance)
         {
-            StartCoroutine(DashCr(directions[i], i == 0));
+            Player.Rigidbody.velocity = velocity;
+            yield return new WaitForFixedUpdate();
         }
 
-        if (HasModifier(Type.EXPLODE))
+        EndDash(victim);
+    }
+
+    private void OnImpact(Collider2D c)
+    {
+        if (!Dashing) return;
+        var k = c.GetComponentInParent<IKillable>();
+        HitEnemiesArea(k.GetPosition(), RadiusDamage);
+        EndDash(k);
+    }
+
+    private void EndDash(IKillable victim)
+    {
+        StopCoroutine(cr_dash);
+        cr_dash = null;
+
+        var hit_anything = victim != null;
+        if (!hit_anything)
         {
-            var position = Player.Instance.transform.position;
-            StartCoroutine(AbilityExplode.ExplodeCr(new AbilityExplode.ExplodeChargeInfo
-            {
-                parent = GameController.Instance.world,
-                radius = 3f,
-                delay = 1f,
-                force = 50f,
-                play_charge_sfx = true,
-                getPosition = () => position,
-            }));
+            var radius = Player.Instance.PlayerBody.Size * 1.5f;
+            hit_anything = HitEnemiesArea(Player.transform.position, radius) > 0; // Try to hit something
         }
 
-        IEnumerator DashCr(Vector3 direction, bool has_player)
+        if (hit_anything)
         {
-            IKillable victim = null;
-            var clone = CreateClone();
-            yield return MoveCloneCr(clone);
-            EndDash(clone, victim, has_player);
-
-            IEnumerator MoveCloneCr(AbilityDashClone clone)
-            {
-                var velocity = direction * Speed;
-                var pos_origin = transform.position;
-
-                while (victim == null && Vector3.Distance(clone.transform.position, pos_origin) < Distance)
-                {
-                    clone.Rigidbody.velocity = velocity;
-                    clone.DashUpdate();
-                    yield return new WaitForFixedUpdate();
-                }
-                clone.DashUpdate();
-
-                if(victim != null)
-                {
-                    event_dash_impact.PlayWithTimeLimit(0.1f);
-                }
-            }
-            
-            AbilityDashClone CreateClone()
-            {
-                var clone = Instantiate(template_clone, GameController.Instance.world);
-                clone.transform.position = Player.transform.position;
-                clone.transform.rotation = Quaternion.LookRotation(Vector3.forward, direction);
-                clone.Initialize(this, has_player);
-                clone.gameObject.SetActive(true);
-                clone.onHitKillable += k => {
-                    if (HasModifier(Type.CHARGE) && k.CanKill())
-                    {
-                        HitEnemiesArea(clone.transform.position, RadiusDamage);
-                    }
-                    else
-                    {
-                        victim = k;
-                    }
-                };
-                return clone;
-            }
+            KnockbackSelf();
+            event_dash_impact.PlayWithTimeLimit(0.1f);
+            Player.PushEnemiesInArea(Player.transform.position, RadiusKnockback, ForceKnockback, ac_push_enemies);
+            ShootShockwaves(Player.MoveDirection);
         }
 
-        void EndDash(AbilityDashClone clone, IKillable victim, bool has_player)
+        Dashing = false;
+        Player.MovementLock.RemoveLock(nameof(AbilityDash));
+        Player.DragLock.RemoveLock(nameof(AbilityDash));
+
+        var cd = hit_anything ? Cooldown * CooldownOnHit : Cooldown;
+        StartCooldown(cd);
+
+        StartCoroutine(InvincibleCr());
+        IEnumerator InvincibleCr()
         {
-            var hit_anything = victim != null;
-            if (!hit_anything)
-            {
-                hit_anything = HitEnemiesArea(clone.transform.position, 1.0f) > 0; // Try to hit something
-            }
-
-            if (has_player)
-            {
-                Dashing = false;
-                Player.MovementLock.RemoveLock(nameof(AbilityDash));
-                Player.DragLock.RemoveLock(nameof(AbilityDash));
-
-                var cd = hit_anything ? Cooldown * CooldownOnHit : Cooldown;
-                StartCooldown(cd);
-
-                CameraController.Instance.Target = Player.transform;
-                Player.transform.position = clone.transform.position;
-                //Player.Body.gameObject.SetActive(true);
-                Player.Body.SetCollisionEnabled(true);
-                Player.Rigidbody.velocity = Player.MoveDirection * Speed * (hit_anything ? -1 : 1);
-
-                if (hit_anything)
-                {
-                    KnockbackSelf();
-                }
-            }
-
-            if (hit_anything || HasModifier(Type.CHARGE))
-            {
-                HitEnemiesArea(clone.transform.position, RadiusDamage);
-                Player.PushEnemiesInArea(clone.transform.position, RadiusKnockback, ForceKnockback, ac_push_enemies);
-            }
-
-            clone.Destroy();
-
-            StartCoroutine(EndInvincibilityCr());
-            IEnumerator EndInvincibilityCr()
-            {
-                yield return new WaitForSeconds(0.2f);
-                Player.InvincibilityLock.RemoveLock(nameof(AbilityDash));
-            }
+            yield return null;
+            Player.InvincibilityLock.RemoveLock(nameof(AbilityDash));
         }
     }
 
@@ -192,6 +172,19 @@ public class AbilityDash : Ability
             if (!hit.CanKill()) continue;
             Player.KillEnemy(hit);
             count++;
+
+            if (ExplodeOnImpact)
+            {
+                var hitPosition = hit.GetPosition();
+                StartCoroutine(AbilityExplode.ExplodeCr(new AbilityExplode.ChargeInfo
+                {
+                    parent = GameController.Instance.world,
+                    delay = 0.5f,
+                    getPosition = () => hitPosition,
+                    radius = 3f,
+                    play_charge_sfx = count == 1,
+                }));
+            }
         }
 
         return count;
@@ -217,5 +210,74 @@ public class AbilityDash : Ability
             FMODEventReferenceDatabase.Load().sfx_chain_zap.Play();
             Player.Instance.transform.position = PositionOrigin;
         }
+    }
+
+    private void ShootShockwaves(Vector3 direction)
+    {
+        if(RippleCount > 1)
+        {
+            var directions = AbilitySplit.GetSplitDirections(3, 45, direction);
+            foreach(var dir in directions)
+            {
+                ShootShockwave(dir);
+            }
+        }
+        else if(RippleCount == 1 || OnlyRipple)
+        {
+            ShootShockwave(direction);
+        }
+    }
+
+    private void ShootShockwave(Vector3 direction)
+    {
+        var speed = RIPPLE_SPEED * RippleSpeed;
+        var distance = RIPPLE_DISTANCE * RippleDistance;
+
+        var p = ProjectileController.Instance.ShootPlayerProjectile(new ProjectileController.PlayerShootInfo
+        {
+            prefab = prefab_shockwave,
+            position_start = Player.transform.position,
+            velocity = direction * speed,
+            onHit = OnHit,
+        });
+        p.Piercing = true;
+
+        p.Lifetime = distance / speed; // distance / speed
+
+        var size = RIPPLE_SIZE * RippleSize;
+        p.transform.localScale = Vector3.one * size;
+
+        if (RippleBounce && !OnlyRipple)
+        {
+            SetRippleDirectionToClosest(p);
+        }
+
+        void OnHit(Projectile p, IKillable k)
+        {
+            if (RippleBounce)
+            {
+                SetRippleDirectionToClosest(p);
+                p.Lifetime += 5f / speed;
+                AbilityChain.CreateImpactPS(p.transform.position);
+            }
+        }
+    }
+
+    private void SetRippleDirectionToClosest(Projectile p)
+    {
+        var radius = 15f;
+        var start_position = p.transform.position;
+        var closest = Physics2D.OverlapCircleAll(p.transform.position, radius)
+            .Select(hit => hit.GetComponentInParent<IKillable>())
+            .Where(hit => hit != null)
+            .Select(hit => hit.GetPosition())
+            .OrderBy(position => Vector3.Distance(position, start_position))
+            .FirstOrDefault();
+
+        if (closest == Vector3.zero) return;
+        var dir = closest - p.transform.position;
+        var vel = dir.normalized * RIPPLE_SPEED * RippleSpeed;
+        p.SetDirection(vel);
+        p.Rigidbody.velocity = vel;
     }
 }

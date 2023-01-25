@@ -99,7 +99,7 @@ public class AbilityChain : Ability
         IEnumerator ExplodeCr(Vector3 position)
         {
             yield return new WaitForSeconds(0.25f);
-            AbilityExplode.Explode(position, 2f, 0);
+            AbilityExplode.Explode(position, 3f, 0);
         }
     }
 
