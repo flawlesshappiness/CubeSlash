@@ -22,10 +22,10 @@ MonoBehaviour:
       name: Distance
       text_display: $ distance
       type_value: 1
-      type_display: 1
+      type_display: 2
       higher_is_positive: 0
       value_int: 0
-      value_float: 2
+      value_float: 0.66
       value_bool: 1
       can_edit_name: 1
       _editor_toggle_preview: 0

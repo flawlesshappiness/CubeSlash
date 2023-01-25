@@ -17,6 +17,10 @@ public class AbilityExplode : Ability
 
     private bool charge_sfx_has_played = false;
 
+    private const float DELAY = 0.5f;
+    private const float RADIUS = 4f;
+    private const float FORCE = 200f;
+
     public override void InitializeFirstTime()
     {
         base.InitializeFirstTime();
@@ -25,9 +29,9 @@ public class AbilityExplode : Ability
     public override void OnValuesApplied()
     {
         base.OnValuesApplied();
-        Delay = GetFloatValue("Delay");
-        Radius = GetFloatValue("Radius");
-        Knockback = GetFloatValue("Knockback");
+        Delay = DELAY * GetFloatValue("Delay");
+        Radius = RADIUS * GetFloatValue("Radius");
+        Knockback = FORCE * GetFloatValue("Knockback");
         Rings = GetIntValue("Rings");
         DelayPull = GetBoolValue("DelayPull");
         ChainExplode = GetBoolValue("ChainExplode");

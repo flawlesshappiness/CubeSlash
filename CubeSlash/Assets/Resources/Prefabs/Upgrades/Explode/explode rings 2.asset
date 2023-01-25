@@ -32,12 +32,12 @@ MonoBehaviour:
   - type_effect: 1
     variable:
       name: Delay
-      text_display: $s explosion delay
+      text_display: $ explosion delay
       type_value: 1
-      type_display: 1
+      type_display: 2
       higher_is_positive: 0
       value_int: 0
-      value_float: 0.25
+      value_float: 0.5
       value_bool: 0
       can_edit_name: 1
       _editor_toggle_preview: 0

@@ -27,7 +27,7 @@ MonoBehaviour:
   - name: Width
     text_display: $ beam width
     type_value: 1
-    type_display: 1
+    type_display: 2
     higher_is_positive: 0
     value_int: 0
     value_float: 1
@@ -35,22 +35,22 @@ MonoBehaviour:
     can_edit_name: 1
     _editor_toggle_preview: 1
   - name: ChargeTime
-    text_display: $s charge time
+    text_display: $ charge time
     type_value: 1
-    type_display: 1
+    type_display: 2
     higher_is_positive: 1
     value_int: 1
-    value_float: 1.5
+    value_float: 1
     value_bool: 0
     can_edit_name: 1
     _editor_toggle_preview: 1
   - name: KnockbackSelf
     text_display: $ self knockback
     type_value: 1
-    type_display: 1
+    type_display: 2
     higher_is_positive: 0
     value_int: 0
-    value_float: 500
+    value_float: 1
     value_bool: 0
     can_edit_name: 1
     _editor_toggle_preview: 1
@@ -107,7 +107,7 @@ MonoBehaviour:
   - name: Knockback
     text_display: $ enemy knockback
     type_value: 1
-    type_display: 1
+    type_display: 2
     higher_is_positive: 1
     value_int: 0
     value_float: 0

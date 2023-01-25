@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.EventSystems;
 
 public class AbilityDash : Ability
 {
@@ -37,6 +36,12 @@ public class AbilityDash : Ability
 
     private Coroutine cr_dash;
 
+    private const float DISTANCE = 3;
+    private const float SPEED = 30;
+    private const float RADIUS_DAMAGE = 1.5f;
+    private const float RADIUS_FORCE = 12f;
+    private const float FORCE = 200;
+    private const float FORCE_SELF = 750;
     private const float RIPPLE_SPEED = 25f;
     private const float RIPPLE_SIZE = 2f;
     private const float RIPPLE_DISTANCE = 7f;
@@ -57,19 +62,19 @@ public class AbilityDash : Ability
     {
         base.OnValuesApplied();
 
-        Distance = GetFloatValue("Distance");
-        Speed = GetFloatValue("Speed");
-        RadiusDamage = GetFloatValue("RadiusDamage");
-        RadiusKnockback = GetFloatValue("RadiusKnockback");
-        ForceKnockback = GetFloatValue("ForceKnockback");
-        SelfKnockback = GetFloatValue("SelfKnockback");
+        Distance = DISTANCE * GetFloatValue("Distance");
+        Speed = SPEED * GetFloatValue("Speed");
+        RadiusDamage = RADIUS_DAMAGE * GetFloatValue("RadiusDamage");
+        RadiusKnockback = RADIUS_FORCE * GetFloatValue("RadiusKnockback");
+        ForceKnockback = FORCE * GetFloatValue("ForceKnockback");
+        SelfKnockback = FORCE_SELF * GetFloatValue("SelfKnockback");
         CooldownOnHit = GetFloatValue("CooldownOnHit");
         TrailEnabled = GetBoolValue("TrailEnabled");
         TeleportBack = GetBoolValue("TeleportBack");
         RippleCount = GetIntValue("RippleCount");
-        RippleSpeed = GetFloatValue("RippleSpeed");
-        RippleSize = GetFloatValue("RippleSize");
-        RippleDistance = GetFloatValue("RippleDistance");
+        RippleSpeed = RIPPLE_SPEED * GetFloatValue("RippleSpeed");
+        RippleSize = RIPPLE_SIZE * GetFloatValue("RippleSize");
+        RippleDistance = RIPPLE_DISTANCE * GetFloatValue("RippleDistance");
         RippleBounce = GetBoolValue("RippleBounce");
         OnlyRipple = GetBoolValue("OnlyRipple");
         ExplodeOnImpact = GetBoolValue("ExplodeOnImpact");
@@ -230,8 +235,8 @@ public class AbilityDash : Ability
 
     private void ShootShockwave(Vector3 direction)
     {
-        var speed = RIPPLE_SPEED * RippleSpeed;
-        var distance = RIPPLE_DISTANCE * RippleDistance;
+        var speed = RippleSpeed;
+        var distance = RippleDistance;
 
         var p = ProjectileController.Instance.ShootPlayerProjectile(new ProjectileController.PlayerShootInfo
         {
@@ -242,9 +247,9 @@ public class AbilityDash : Ability
         });
         p.Piercing = true;
 
-        p.Lifetime = distance / speed; // distance / speed
+        p.Lifetime = distance / speed; // distance / speed = time
 
-        var size = RIPPLE_SIZE * RippleSize;
+        var size = RippleSize;
         p.transform.localScale = Vector3.one * size;
 
         if (RippleBounce && !OnlyRipple)
@@ -257,7 +262,7 @@ public class AbilityDash : Ability
             if (RippleBounce)
             {
                 SetRippleDirectionToClosest(p);
-                p.Lifetime += 5f / speed;
+                p.Lifetime += 5f / speed; // distance / speed = time
                 AbilityChain.CreateImpactPS(p.transform.position);
             }
         }
@@ -276,7 +281,7 @@ public class AbilityDash : Ability
 
         if (closest == Vector3.zero) return;
         var dir = closest - p.transform.position;
-        var vel = dir.normalized * RIPPLE_SPEED * RippleSpeed;
+        var vel = dir.normalized * RippleSpeed;
         p.SetDirection(vel);
         p.Rigidbody.velocity = vel;
     }

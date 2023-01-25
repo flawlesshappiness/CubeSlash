@@ -30,6 +30,11 @@ public class AbilityCharge : Ability
     private const int COUNT_EMISSION_PS_MIN = 10;
     private const int COUNT_EMISSION_PS_MAX = 50;
 
+    private const float WIDTH = 1f;
+    private const float CHARGE_TIME = 1.5f;
+    private const float FORCE = 200f;
+    private const float FORCE_SELF = 500f;
+
     private float time_charge_start;
     private float time_charge_end;
 
@@ -81,10 +86,10 @@ public class AbilityCharge : Ability
     public override void OnValuesApplied()
     {
         base.OnValuesApplied();
-        Width = GetFloatValue("Width");
-        ChargeTime = GetFloatValue("ChargeTime");
-        KnockbackSelf = GetFloatValue("KnockbackSelf");
-        Knockback = GetFloatValue("Knockback");
+        Width = WIDTH * GetFloatValue("Width");
+        ChargeTime = CHARGE_TIME * GetFloatValue("ChargeTime");
+        KnockbackSelf = FORCE_SELF * GetFloatValue("KnockbackSelf");
+        Knockback = FORCE * GetFloatValue("Knockback");
         BeamCount = GetIntValue("BeamCount");
         BeamArc = GetFloatValue("BeamArc");
         BeamBack = GetBoolValue("BeamBack");

@@ -18,6 +18,8 @@ public class AbilityChain : Ability
 
     private float time_attack;
 
+    private const float RADIUS = 6;
+
     public override void InitializeFirstTime()
     {
         base.InitializeFirstTime();
@@ -27,7 +29,7 @@ public class AbilityChain : Ability
     {
         base.OnValuesApplied();
 
-        Radius = GetFloatValue("Radius");
+        Radius = RADIUS * GetFloatValue("Radius");
         Frequency = GetFloatValue("Frequency");
         FrequencyPerc = GetFloatValue("FrequencyPerc");
         Chains = GetIntValue("Chains");

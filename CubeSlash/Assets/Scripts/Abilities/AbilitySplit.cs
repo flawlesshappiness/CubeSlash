@@ -21,6 +21,12 @@ public class AbilitySplit : Ability
     private bool ChainLightning { get; set; }
     private float HitCooldownReduc { get; set; }
 
+    private const float PROJECTILE_SPEED = 20f;
+    private const float PROJECTILE_ARC = 15f;
+    private const float PROJECTILE_SIZE = 1f;
+    private const float FORCE_RADIUS = 5f;
+    private const float FORCE = 100f;
+
     public override void InitializeFirstTime()
     {
         base.InitializeFirstTime();
@@ -31,12 +37,11 @@ public class AbilitySplit : Ability
         base.OnValuesApplied();
 
         CountProjectiles = GetIntValue("CountProjectiles");
-        SpeedProjectiles = GetFloatValue("SpeedProjectiles");
-        ArcProjectiles = GetFloatValue("ArcProjectiles");
-        SizeProjectiles = GetFloatValue("SizeProjectiles");
-        RadiusKnockback = GetFloatValue("RadiusKnockback");
-        ForceKnockback = GetFloatValue("ForceKnockback");
-        SizeProjectiles = GetFloatValue("SizeProjectiles");
+        SpeedProjectiles = PROJECTILE_SPEED * GetFloatValue("SpeedProjectiles");
+        ArcProjectiles = PROJECTILE_ARC * GetFloatValue("ArcProjectiles");
+        SizeProjectiles = PROJECTILE_SIZE * GetFloatValue("SizeProjectiles");
+        RadiusKnockback = FORCE_RADIUS * GetFloatValue("RadiusKnockback");
+        ForceKnockback = FORCE * GetFloatValue("ForceKnockback");
         Bursts = GetIntValue("Bursts");
         SplitProjectiles = GetBoolValue("SplitProjectiles");
         ChainLightning = GetBoolValue("ChainLightning");

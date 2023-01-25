@@ -6,10 +6,8 @@ endless mode
 Upgrade reroll
 unlock bodies in main menu
 waves that push things in a direction
-boss near sound
 Ability SWIPE that swipes to the sides
 dash invulnerability briefly after dash
 randomize areas, unlocking enemies at different times
-turn upgrades into percentages. Easier to understand for the player.
-dash shoot out ripple on impact
-fix dash too close bug
+sound for dash
+sound for boss proximity

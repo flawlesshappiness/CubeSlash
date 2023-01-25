@@ -27,13 +27,13 @@ MonoBehaviour:
   - name: Radius
     text_display: $ radius
     type_value: 1
-    type_display: 1
+    type_display: 2
     higher_is_positive: 1
     value_int: 0
-    value_float: 6
+    value_float: 1
     value_bool: 0
     can_edit_name: 1
-    _editor_toggle_preview: 0
+    _editor_toggle_preview: 1
   - name: Frequency
     text_display: $s frequency
     type_value: 1
