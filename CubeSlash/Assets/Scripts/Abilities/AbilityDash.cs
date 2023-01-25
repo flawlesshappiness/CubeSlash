@@ -28,7 +28,6 @@ public class AbilityDash : Ability
     public bool ExplodeOnImpact { get; private set; }
 
     [Header("DASH")]
-    [SerializeField] private AbilityDashClone template_clone;
     [SerializeField] private Projectile prefab_shockwave;
     [SerializeField] private ParticleSystem ps_bubbles, ps_trail;
     [SerializeField] private AnimationCurve ac_push_enemies;
@@ -50,7 +49,6 @@ public class AbilityDash : Ability
     public override void InitializeFirstTime()
     {
         base.InitializeFirstTime();
-        template_clone.gameObject.SetActive(false);
         Player.onTriggerEnter += OnImpact;
 
         ps_trail.SetEmissionEnabled(false);

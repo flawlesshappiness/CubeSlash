@@ -132,15 +132,16 @@ public class Player : Character
         if (!GameController.Instance.IsGameStarted) return;
 
         // Update move values
-        var flat_acceleration = Values.GetFloatValue("FlatAcceleration");
         var flat_velocity = Values.GetFloatValue("FlatVelocity");
+        var flat_acceleration = Values.GetFloatValue("FlatAcceleration");
         var perc_velocity = Values.GetFloatValue("PercVelocity");
+        var perc_acceleration = Values.GetFloatValue("PercAcceleration");
 
         var t_collect_boost = (Time.time - timestamp_collect_last) / 0.5f;
         var collect_boost_acceleration = CollectSpeedBoost ? Mathf.Lerp(10, 0, t_collect_boost) : 0;
         var collect_boost_velocity = CollectSpeedBoost ? Mathf.Lerp(8, 0, t_collect_boost) : 0;
 
-        LinearAcceleration = PlayerBody.Settings.linear_acceleration + flat_acceleration + collect_boost_acceleration;
+        LinearAcceleration = (PlayerBody.Settings.linear_acceleration + flat_acceleration + collect_boost_acceleration) * perc_acceleration;
         LinearVelocity = (PlayerBody.Settings.linear_velocity + flat_velocity + collect_boost_velocity) * perc_velocity;
         LinearDrag = PlayerBody.Settings.linear_drag;
 

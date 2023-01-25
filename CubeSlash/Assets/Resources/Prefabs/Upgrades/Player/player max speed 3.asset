@@ -19,13 +19,13 @@ MonoBehaviour:
   effects:
   - type_effect: 0
     variable:
-      name: FlatVelocity
-      text_display: $ max speed
+      name: PercVelocity
+      text_display: $ velocity
       type_value: 1
-      type_display: 1
+      type_display: 2
       higher_is_positive: 0
       value_int: 1
-      value_float: 2
+      value_float: 0.4
       value_bool: 1
       can_edit_name: 1
       _editor_toggle_preview: 0
