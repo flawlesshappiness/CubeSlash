@@ -30,6 +30,7 @@ public class AbilityDash : Ability
     [Header("DASH")]
     [SerializeField] private AbilityDashClone template_clone;
     [SerializeField] private Projectile prefab_shockwave;
+    [SerializeField] private ParticleSystem ps_bubbles, ps_trail;
     [SerializeField] private AnimationCurve ac_push_enemies;
     [SerializeField] private FMODEventReference event_dash_start;
     [SerializeField] private FMODEventReference event_dash_impact;
@@ -51,6 +52,8 @@ public class AbilityDash : Ability
         base.InitializeFirstTime();
         template_clone.gameObject.SetActive(false);
         Player.onTriggerEnter += OnImpact;
+
+        ps_trail.SetEmissionEnabled(false);
     }
 
     private void OnDestroy()
@@ -112,11 +115,22 @@ public class AbilityDash : Ability
 
         event_dash_start.Play();
 
+        ps_trail.SetEmissionEnabled(true);
+
+        ps_bubbles.Duplicate()
+            .Parent(GameController.Instance.world)
+            .Position(Player.transform.position)
+            .Rotation(Player.Body.transform.rotation)
+            .Play()
+            .Destroy(5);
+
         while (victim == null && Vector3.Distance(Player.transform.position, pos_origin) < Distance)
         {
             Player.Rigidbody.velocity = velocity;
             yield return new WaitForFixedUpdate();
         }
+
+        ps_trail.SetEmissionEnabled(false);
 
         EndDash(victim);
     }
