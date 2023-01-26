@@ -1,12 +1,14 @@
+using EasingCurve;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
 public class EnemyBody : Body
 {
+    [Header("DUDS (OPTIONAL)")]
     [SerializeField] public Transform parent_health_duds;
     [SerializeField] public HealthDud template_dud;
-
+    
     public List<HealthDud> Duds { get { return health_duds.ToList(); } }
 
     private List<HealthDud> health_duds = new List<HealthDud>();

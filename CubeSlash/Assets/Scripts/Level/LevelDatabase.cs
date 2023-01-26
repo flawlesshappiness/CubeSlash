@@ -5,11 +5,15 @@ using UnityEngine;
 public class LevelDatabase : ScriptableObject
 {
     private static LevelDatabase _instance;
-    public static LevelDatabase Instance { get { return _instance ?? Load(); } }
+    public static LevelDatabase Instance { get { return _instance ?? LoadAsset(); } }
 
-    public List<LevelAsset> levels = new List<LevelAsset>();
+    [SerializeField] private List<LevelAsset> levels = new List<LevelAsset>();
 
-    private static LevelDatabase Load()
+    [Header("TESTING")]
+    public LevelAsset test_level;
+    public bool testing_enabled;
+
+    public static LevelDatabase LoadAsset()
     {
         if(_instance == null)
         {
@@ -17,4 +21,11 @@ public class LevelDatabase : ScriptableObject
         }
         return _instance;
     }
+
+    public LevelAsset GetLevel(int i)
+    {
+        return testing_enabled ? test_level : levels[Mathf.Clamp(i, 0, levels.Count - 1)];
+    }
+
+    public int GetLevelCount() => levels.Count;
 }

@@ -19,7 +19,7 @@ public class CameraController : Singleton
         GameController.Instance.OnNextLevel += OnNextLevel;
         GameController.Instance.OnMainMenu += OnMainMenu;
 
-        var level = LevelDatabase.Instance.levels[0];
+        var level = LevelDatabase.Instance.GetLevel(0);
         var area = level.area;
         Camera.orthographicSize = area.camera_size;
         TargetSize = area.camera_size;
@@ -77,7 +77,7 @@ public class CameraController : Singleton
 
     private void OnMainMenu()
     {
-        var level = LevelDatabase.Instance.levels[0];
+        var level = LevelDatabase.Instance.GetLevel(0);
         var area = level.area;
         AnimateSize(5f, area.camera_size, EasingCurves.EaseInOutQuad);
     }

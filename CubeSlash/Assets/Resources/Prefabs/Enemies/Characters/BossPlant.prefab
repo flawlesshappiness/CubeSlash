@@ -47,3 +47,13 @@ MonoBehaviour:
   Trigger: {fileID: 0}
   ps_death: {fileID: 0}
   parent_health_duds: {fileID: 0}
+  template_dud: {fileID: 0}
+  volume_proximity_max: 0.5
+  sfx_proximity:
+    reference:
+      Guid:
+        Data1: 587128435
+        Data2: 1295019151
+        Data3: 2122816644
+        Data4: -1594795463
+      Path: event:/Game/Enemy/boss_proximity_001

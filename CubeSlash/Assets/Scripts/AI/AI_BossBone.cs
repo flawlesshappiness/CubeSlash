@@ -23,7 +23,6 @@ public class AI_BossBone : EnemyAI
     private const float LENGTH_AREA = 150f;
 
     private List<PlantWall> walls = new List<PlantWall>();
-    private List<Projectile> projectiles = new List<Projectile>();
 
     public override void Initialize(Enemy enemy)
     {
@@ -36,7 +35,6 @@ public class AI_BossBone : EnemyAI
     private void OnDisable()
     {
         DestroyWalls();
-        DestroyProjectiles();
     }
 
     private void FixedUpdate()
@@ -166,15 +164,6 @@ public class AI_BossBone : EnemyAI
         walls.Clear();
     }
 
-    private void DestroyProjectiles()
-    {
-        foreach(var p in projectiles)
-        {
-            p.Kill();
-        }
-        projectiles.Clear();
-    }
-
     private void CreateWallArea()
     {
         wall_area_center = Player.Instance.transform.position;
@@ -216,13 +205,11 @@ public class AI_BossBone : EnemyAI
 
     private void ShootProjectile(Vector3 start, Vector3 dir)
     {
-        var p = Instantiate(template_projectile, GameController.Instance.world);
+        var p = ProjectileController.Instance.CreateProjectile(template_projectile);
         p.transform.localScale = Vector3.one * 3f;
         p.transform.position = start;
         p.Lifetime = 10f;
         p.Rigidbody.velocity = dir;
-        projectiles.Add(p);
-        p.onDeath += () => projectiles.Remove(p);
     }
 
     IEnumerator GetAttackCr()

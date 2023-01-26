@@ -4,6 +4,13 @@ using UnityEngine;
 [CreateAssetMenu(fileName = nameof(Area), menuName = "Game/" + nameof(Area), order = 1)]
 public class Area : ScriptableObject
 {
+    [Header("PROPERTIES")]
+    public int index_level_min;
+
+    [Header("ENEMIES")]
+    public EnemySettings boss;
+    public List<AreaEnemyInfo> enemies;
+
     [Header("FOG")]
     public Color color_fog = Color.white;
     public Color color_bg = Color.white;
@@ -42,4 +49,12 @@ public class SpawnObjectInfo
     public SpawnObject prefab;
     public float delay;
     public int count;
+}
+
+[System.Serializable]
+public class AreaEnemyInfo
+{
+    public EnemySettings enemy;
+    public float chance;
+    public int max;
 }

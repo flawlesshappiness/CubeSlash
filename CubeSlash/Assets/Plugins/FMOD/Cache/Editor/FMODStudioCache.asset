@@ -70,7 +70,7 @@ MonoBehaviour:
   Path: Assets/FMOD/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 638099555955457400
+  lastModified: 638103397324117984
   FileSizes: []
   Exists: 1
 --- !u!114 &-7809730102017663126
@@ -370,6 +370,33 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 0
+--- !u!114 &-4132772219434995871
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Game/Misc/Wooshing_001
+  m_EditorClassIdentifier: 
+  Path: event:/Game/Misc/Wooshing_001
+  Guid:
+    Data1: -612471767
+    Data2: 1161538074
+    Data3: 1918885765
+    Data4: -454547392
+  Banks:
+  - {fileID: -8060980804293988741}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 0
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 7328
 --- !u!114 &-3379141545452202479
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -756,12 +783,16 @@ MonoBehaviour:
   - {fileID: 1399565695188976922}
   - {fileID: -2396034613374441782}
   - {fileID: -2297037270938223247}
+  - {fileID: 1510993300958059848}
+  - {fileID: -4132772219434995871}
+  - {fileID: 9213378766139412985}
+  - {fileID: 8756300243174599417}
   EditorParameters: []
   MasterBanks:
   - {fileID: -8060980804293988741}
   StringsBanks:
   - {fileID: 5917708036578608240}
-  cacheTime: 638099555955487397
+  cacheTime: 638103397324157985
   cacheVersion: 131593
 --- !u!114 &159336944855883450
 MonoBehaviour:
@@ -817,6 +848,33 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 98666
+--- !u!114 &1510993300958059848
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Game/Enemy/boss_proximity_001
+  m_EditorClassIdentifier: 
+  Path: event:/Game/Enemy/boss_proximity_001
+  Guid:
+    Data1: 587128435
+    Data2: 1295019151
+    Data3: 2122816644
+    Data4: -1594795463
+  Banks:
+  - {fileID: -8060980804293988741}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 0
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 7328
 --- !u!114 &1768831851793833534
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1153,10 +1211,10 @@ MonoBehaviour:
   Path: Assets/FMOD/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 638099555955487397
+  lastModified: 638103397324157985
   FileSizes:
   - Name: 
-    Value: 3184
+    Value: 3356
   Exists: 1
 --- !u!114 &5992827859230917708
 MonoBehaviour:
@@ -1374,3 +1432,57 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 0
+--- !u!114 &8756300243174599417
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Game/Misc/Wooshing_002
+  m_EditorClassIdentifier: 
+  Path: event:/Game/Misc/Wooshing_002
+  Guid:
+    Data1: 1615513983
+    Data2: 1241425378
+    Data3: -25988473
+    Data4: -587570692
+  Banks:
+  - {fileID: -8060980804293988741}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 0
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 7328
+--- !u!114 &9213378766139412985
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Game/Misc/Wooshing_003
+  m_EditorClassIdentifier: 
+  Path: event:/Game/Misc/Wooshing_003
+  Guid:
+    Data1: -146147025
+    Data2: 1149436455
+    Data3: -1782469699
+    Data4: 1146720271
+  Banks:
+  - {fileID: -8060980804293988741}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 0
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 7328

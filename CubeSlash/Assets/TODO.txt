@@ -9,5 +9,3 @@ waves that push things in a direction
 Ability SWIPE that swipes to the sides
 dash invulnerability briefly after dash
 randomize areas, unlocking enemies at different times
-sound for dash
-sound for boss proximity

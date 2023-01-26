@@ -67,6 +67,11 @@ public class FMODEventReference
         });
     }
 
+    public void SetVolume(float f)
+    {
+        current_instance.setVolume(f);
+    }
+
     private void IncrementPlayCount()
     {
         if (!dicPlayCount.ContainsKey(Path))
