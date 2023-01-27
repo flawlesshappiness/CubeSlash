@@ -7,6 +7,7 @@ public class AudioController : Singleton
 
     private Bus Music;
     private Bus SFX;
+    private Bus UI;
     private Bus Master;
 
     private EventInstance snapshot_menu;
@@ -24,6 +25,7 @@ public class AudioController : Singleton
     {
         Music = FMODController.Instance.GetBus("Music");
         SFX = FMODController.Instance.GetBus("SFX");
+        UI = FMODController.Instance.GetBus("UI");
         Master = FMODController.Instance.GetMasterBus();
     }
 
@@ -36,9 +38,11 @@ public class AudioController : Singleton
 
     public void SetMusicVolume(float volume) => Music.setVolume(volume);
     public void SetSFXVolume(float volume) => SFX.setVolume(volume);
+    public void SetUIVolume(float volume) => UI.setVolume(volume);
     public void SetMasterVolume(float volume) => Master.setVolume(volume);
     public float GetMusicVolume() => FMODController.Instance.GetBusVolume(Music);
     public float GetSFXVolume() => FMODController.Instance.GetBusVolume(SFX);
+    public float GetUIVolume() => FMODController.Instance.GetBusVolume(UI);
     public float GetMasterVolume() => FMODController.Instance.GetBusVolume(Master);
 
     public void SetInMenu(bool in_menu)

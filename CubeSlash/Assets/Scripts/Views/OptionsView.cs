@@ -83,6 +83,7 @@ public class OptionsView : View
     {
         var value = slider_sfx.GetPercentage();
         AudioController.Instance.SetSFXVolume(value);
+        AudioController.Instance.SetUIVolume(value);
         Save.Game.volume_sfx = value;
     }
 

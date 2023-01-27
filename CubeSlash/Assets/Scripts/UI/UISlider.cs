@@ -6,8 +6,9 @@ public class UISlider : MonoBehaviour
 {
     [SerializeField] private UISliderNotch template_notch;
     [SerializeField] public ButtonExtended btn;
-
     public int max_notches;
+    public FMODEventReference sfx_change_value;
+
 
     public System.Action onValueChanged;
 
@@ -122,6 +123,8 @@ public class UISlider : MonoBehaviour
         {
             selected_notch.SetSelected(false);
         }
+
+        sfx_change_value.Play();
 
         selected_notch = notch;
         selected_notch.SetSelected(true);

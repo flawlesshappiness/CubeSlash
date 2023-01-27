@@ -262,7 +262,7 @@ CanvasGroup:
   m_GameObject: {fileID: 2581348467552618525}
   m_Enabled: 1
   m_Alpha: 1
-  m_Interactable: 0
+  m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
 --- !u!1 &3295187383605004689
@@ -578,6 +578,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   template_notch: {fileID: 1903179565100907201}
   btn: {fileID: 8306265766388260735}
+  sfx_change_value:
+    reference:
+      Guid:
+        Data1: -488556006
+        Data2: 1262379110
+        Data3: -1992291445
+        Data4: -574275927
+      Path: event:/UI/ui_move_ability_001
   max_notches: 10
 --- !u!1 &7287455531170774902
 GameObject:
