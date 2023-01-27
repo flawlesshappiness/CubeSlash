@@ -49,12 +49,12 @@ public class UIAbilityCooldownLayout : MonoBehaviour
 
     private void OnEnable()
     {
-        GameController.Instance.OnResume += UpdateAbilities;
+        GameController.Instance.onResume += UpdateAbilities;
     }
 
     private void OnDisable()
     {
-        GameController.Instance.OnResume -= UpdateAbilities;
+        GameController.Instance.onResume -= UpdateAbilities;
     }
 
     private void UpdateAbilities()

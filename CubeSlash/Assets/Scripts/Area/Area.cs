@@ -30,6 +30,11 @@ public class Area : ScriptableObject
     [Header("OBJECTS")]
     public List<SpawnObjectInfo> spawn_objects = new List<SpawnObjectInfo>();
 
+    [Header("MUSIC")]
+    public FMODEventReference bgm;
+
+    public static Area Current;
+
     private void OnValidate()
     {
         for (int i = 0; i < background_layers.Count; i++)

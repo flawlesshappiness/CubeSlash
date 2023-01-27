@@ -10,14 +10,14 @@ public class BackgroundController : Singleton
     private List<FogLayer> fogs = new List<FogLayer>();
     private List<BackgroundObject> objects = new List<BackgroundObject>();
 
-    private LevelAsset currentLevel;
+    private Area current_area;
 
     public const float OBJECT_FADE_TIME = 5f;
 
     protected override void Initialize()
     {
         base.Initialize();
-        GameController.Instance.OnNextLevel += OnNextLevel;
+        AreaController.Instance.onNextArea += OnNextArea;
     }
 
     private void Update()
@@ -25,21 +25,21 @@ public class BackgroundController : Singleton
         ParallaxUpdate();
     }
 
-    private void OnNextLevel()
+    private void OnNextArea(Area area)
     {
-        FadeToLevel(Level.Current);
+        FadeToArea(area);
     }
 
-    public void FadeToLevel(LevelAsset level)
+    public void FadeToArea(Area area)
     {
-        if (currentLevel == level) return;
-        currentLevel = level;
+        if (current_area == area) return;
+        current_area = area;
 
         ClearObjects();
-        CreateSprites(level.area.background_layers);
-        CreateParticles(level.area.background_layers);
-        FadeBackground(level);
-        FadeFog(level);
+        CreateSprites(area);
+        CreateParticles(area);
+        FadeBackground(area);
+        FadeFog(area);
     }
 
     private void ParallaxUpdate()
@@ -62,9 +62,10 @@ public class BackgroundController : Singleton
         objects.Clear();
     }
 
-    private void CreateSprites(List<BackgroundLayer> layers)
+    private void CreateSprites(Area area)
     {
         // Create
+        var layers = area.background_layers;
         for (int i_layer = 0; i_layer < layers.Count; i_layer++)
         {
             var layer = layers[i_layer];
@@ -83,14 +84,15 @@ public class BackgroundController : Singleton
                 bg.transform.localPosition = new Vector3(r.x, r.y) * CameraController.Instance.Width + Vector3.forward * (2 + 10 + 10 * i_layer);
                 bg.transform.localScale = Vector3.one * Random.Range(layer.size_sprite_min, layer.size_sprite_min);
                 bg.transform.rotation = Quaternion.AngleAxis(Random.Range(0, 360), Vector3.forward);
-                bg.Initialize();
+                bg.Initialize(area);
             }
         }
     }
 
-    private void CreateParticles(List<BackgroundLayer> layers)
+    private void CreateParticles(Area area)
     {
         // Create
+        var layers = area.background_layers;
         for (int i_layer = 0; i_layer < layers.Count; i_layer++)
         {
             var layer = layers[i_layer];
@@ -102,25 +104,25 @@ public class BackgroundController : Singleton
                 bg.transform.parent = GameController.Instance.world;
 
                 bg.transform.position = Player.Instance.transform.position;
-                bg.Initialize();
+                bg.Initialize(area);
                 bg.SetPrefab(ps_prefab);
             }
         }
     }
 
     #region FOG
-    private void FadeFog(LevelAsset level)
+    private void FadeFog(Area area)
     {
-        var layers = level.area.background_layers;
+        var layers = area.background_layers;
         var count = Mathf.Max(fogs.Count, layers.Count);
         for (int i = 0; i < count; i++)
         {
             var t = Mathf.Clamp(i / (float)(count + 1), 0, 1);
-            var alpha = level.area.ac_alpha_fog.Evaluate(t);
+            var alpha = area.ac_alpha_fog.Evaluate(t);
             if(i >= fogs.Count) // Create new fog
             {
                 var fog = CreateFog(i);
-                fog.spr.color = level.area.color_fog.SetA(0);
+                fog.spr.color = area.color_fog.SetA(0);
                 Lerp.Alpha(fog.spr, OBJECT_FADE_TIME, alpha);
                 fogs.Add(fog);
             }
@@ -132,7 +134,7 @@ public class BackgroundController : Singleton
             }
             else // Fade fog
             {
-                Lerp.Color(fogs[i].spr, OBJECT_FADE_TIME, level.area.color_fog.SetA(alpha));
+                Lerp.Color(fogs[i].spr, OBJECT_FADE_TIME, area.color_fog.SetA(alpha));
             }
         }
     }
@@ -145,13 +147,13 @@ public class BackgroundController : Singleton
         return fog;
     }
 
-    private void FadeBackground(LevelAsset level)
+    private void FadeBackground(Area area)
     {
         var cam = CameraController.Instance.Camera;
         var start = cam.backgroundColor;
         Lerp.Value("background_color_" + GetInstanceID(), OBJECT_FADE_TIME, f =>
         {
-            CameraController.Instance.Camera.backgroundColor = Color.Lerp(start, level.area.color_bg, f);
+            CameraController.Instance.Camera.backgroundColor = Color.Lerp(start, area.color_bg, f);
         });
     }
     #endregion

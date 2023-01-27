@@ -46,7 +46,7 @@ public class Enemy : Character, IKillable, IHurt
     {
         if (Player.Instance == null) return;
 
-        var size = Level.Current.size;
+        var size = GameSettings.Instance.area_size;
         var sh = size * 0.5f;
         var center = Player.Instance.transform.position;
         var pos = transform.position;

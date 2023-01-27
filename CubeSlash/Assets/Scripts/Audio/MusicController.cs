@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Linq;
 using UnityEngine;
 
@@ -8,23 +9,44 @@ public class MusicController : Singleton
 
     private FMODEventReference current_bgm;
 
+    private Coroutine cr_bgm_delay;
+
     private void Start()
     {
-        GameController.Instance.OnNextLevel += OnNextLevel;
+        GameController.Instance.onMainMenu += OnMainMenu;
+        AreaController.Instance.onNextArea += OnNextArea;
     }
 
-    private void OnNextLevel()
+    private void OnMainMenu()
     {
-        var level = Level.Current;
-        if (level.bgm.Exists)
+        if(cr_bgm_delay != null)
         {
-            PlayBGM(level.bgm);
+            StopCoroutine(cr_bgm_delay);
+            cr_bgm_delay = null;
         }
+
+        StopBGM();
+    }
+
+    private void OnNextArea(Area area)
+    {
+        var delay = GameSettings.Instance.area_duration * GameSettings.Instance.time_bgm_play;
+        PlayBGM(area.bgm, GameSettings.Instance.time_bgm_play);
     }
 
     public void PlayStartMusic()
     {
         PlayBGM(Database.bgm_start_game);
+    }
+
+    private void PlayBGM(FMODEventReference bgm, float delay)
+    {
+        cr_bgm_delay = StartCoroutine(Cr());
+        IEnumerator Cr()
+        {
+            yield return new WaitForSeconds(delay);
+            PlayBGM(bgm);
+        }
     }
 
     private void PlayBGM(FMODEventReference bgm)

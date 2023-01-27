@@ -9,9 +9,9 @@ public class BackgroundSprite : BackgroundObject
     public Sprite Sprite { set { spr.sprite = value; } }
     public int SortingOrder { set { spr.sortingOrder = value * 10 + 1; } }
 
-    public override void Initialize()
+    public override void Initialize(Area area)
     {
-        base.Initialize();
+        base.Initialize(area);
         Scale = transform.localScale.x;
     }
 

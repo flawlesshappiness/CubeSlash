@@ -10,9 +10,9 @@ public class BackgroundParticleSystem : BackgroundObject
 
     private Vector3 offset_ps;
 
-    public override void Initialize()
+    public override void Initialize(Area area)
     {
-        base.Initialize();
+        base.Initialize(area);
         Camera = CameraController.Instance.Camera;
         MaxWidth = CameraController.Instance.Width;
     }

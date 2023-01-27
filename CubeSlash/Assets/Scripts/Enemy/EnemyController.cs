@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using static LevelAsset;
 
 public class EnemyController : Singleton
 {
@@ -11,6 +10,7 @@ public class EnemyController : Singleton
     private Enemy prefab_enemy;
     private List<Enemy> enemies_active = new List<Enemy>();
     private List<Enemy> enemies_inactive = new List<Enemy>();
+    private List<AreaEnemyInfo> enemies_unlocked = new List<AreaEnemyInfo>();
 
     public System.Action OnEnemyKilled { get; set; }
     public System.Action<Enemy> OnEnemySpawned { get; set; }
@@ -18,12 +18,13 @@ public class EnemyController : Singleton
 
     private const int COUNT_ENEMY_POOL_EXTEND = 20;
 
-    private bool has_spawned_boss = true;
+    private Coroutine cr_spawn_boss;
 
     protected override void Initialize()
     {
         prefab_enemy = Resources.Load<Enemy>("Prefabs/Entities/Enemy");
-        GameController.Instance.OnNextLevel += OnNextLevel;
+        AreaController.Instance.onNextArea += OnNextArea;
+        GameController.Instance.onGameEnd += OnGameEnd;
     }
 
     private void Update()
@@ -33,65 +34,103 @@ public class EnemyController : Singleton
         SpawnUpdate();
     }
 
-    private void OnNextLevel()
+    private void OnNextArea(Area area)
     {
-        has_spawned_boss = false;
+        enemies_unlocked.AddRange(area.enemies);
+
+        var boss_spawn_delay = GameSettings.Instance.area_duration * GameSettings.Instance.time_boss_spawn;
+        cr_spawn_boss = StartCoroutine(SpawnBossCr(area.boss, boss_spawn_delay));
+    }
+
+    private void OnGameEnd()
+    {
+        // Clear boss
+        if(cr_spawn_boss != null)
+        {
+            StopCoroutine(cr_spawn_boss);
+            cr_spawn_boss = null;
+        }
+
+        // Clear unlocked enemies
+        enemies_unlocked.Clear();
     }
 
     #region SPAWNING
+    private float GetSpawnFrequency()
+    {
+        var settings = GameSettings.Instance;
+
+        // Game
+        var max_game_duration = settings.areas_to_win * settings.area_duration;
+        var current_game_duration = Time.time - GameController.Instance.TimeGameStart;
+        var t_game_duration = current_game_duration / max_game_duration;
+        var freq_game = settings.enemy_freq_game.Evaluate(t_game_duration);
+
+        // Area
+        var max_area_duration = settings.area_duration;
+        var current_area_duration = Time.time - AreaController.Instance.TimeAreaStart;
+        var t_area_duration = current_area_duration / max_area_duration;
+        var freq_area = settings.enemy_freq_area.Evaluate(t_area_duration);
+
+        // Endless
+        if (AreaController.Instance.IsEndless)
+        {
+            var max_endless_duration = settings.endless_duration;
+            var current_endless_duration = Time.time - AreaController.Instance.TimeEndlessStart;
+            var t_endless_duration = current_endless_duration / max_endless_duration;
+            freq_game = settings.enemy_freq_endless.Evaluate(t_endless_duration);
+        }
+
+        return freq_game + freq_area;
+    }
+
     private float time_spawn;
     private void SpawnUpdate()
     {
-        if (!has_spawned_boss)
-        {
-            has_spawned_boss = true;
-            SpawnBosses();
-        }
-
         if (Time.time < time_spawn) return;
-        if (Level.Current.enemies.Count == 0) return;
-        if (enemies_active.Count >= Level.Current.count_enemy_active) return;
-        time_spawn = Time.time + Level.Current.frequency_spawn_enemy;
+        if (enemies_unlocked.Count == 0) return;
+        //if (enemies_active.Count >= Level.Current.count_enemy_active) return;
+        time_spawn = Time.time + GetSpawnFrequency();
         SpawnRandomEnemy(CameraController.Instance.GetPositionOutsideCamera());
     }
 
-    private List<Enemy> SpawnBosses()
+    private IEnumerator SpawnBossCr(EnemySettings boss, float delay)
     {
-        var enemies = new List<Enemy>();
+        yield return new WaitForSeconds(delay);
+        SpawnBoss(boss);
+    }
 
-        foreach (var boss in Level.Current.bosses)
+    private Enemy SpawnBoss(EnemySettings boss)
+    {
+        var is_game_winning = (AreaController.Instance.AreaIndex + 1) == GameSettings.Instance.areas_to_win;
+
+        var enemy = SpawnEnemy(boss, CameraController.Instance.GetPositionOutsideCamera());
+        enemy.OnDeath += () =>
         {
-            var is_final_level = Level.Current.is_final_level;
-
-            var enemy = SpawnEnemy(boss.enemy, CameraController.Instance.GetPositionOutsideCamera());
-            enemies.Add(enemy);
-            enemy.OnDeath += () =>
+            // Win
+            if (is_game_winning)
             {
-                if (is_final_level)
-                {
-                    GameController.Instance.Win();
-                }
-                else
-                {
-                    for (int i = 0; i < 25; i++)
-                    {
-                        var experience = ItemController.Instance.SpawnExperience(enemy.transform.position);
-                        experience.Initialize();
-                        experience.SetMeat();
+                GameController.Instance.Win();
+            }
 
-                        experience.transform.position = enemy.transform.position + Random.insideUnitCircle.ToVector3() * enemy.Settings.size * 0.5f;
-                    }
-                }
-            };
-        }
+            // Exp
+            for (int i = 0; i < 25; i++)
+            {
+                var experience = ItemController.Instance.SpawnExperience(enemy.transform.position);
+                experience.Initialize();
+                experience.SetMeat();
 
-        return enemies;
+                experience.transform.position = enemy.transform.position + Random.insideUnitCircle.ToVector3() * enemy.Settings.size * 0.5f;
+            }
+        };
+
+        return enemy;
     }
 
     private Enemy SpawnRandomEnemy(Vector3 position)
     {
         var random = new WeightedRandom<EnemySettings>();
-        foreach(var e in Level.Current.enemies)
+        foreach(var e in enemies_unlocked)
         {
             var count = enemies_active.Count(x => x.Settings == e.enemy);
             if(count < e.max || e.max <= 0)

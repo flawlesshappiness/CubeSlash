@@ -31,7 +31,7 @@ public class VignetteController : Singleton
         base.Initialize();
         prefab_glow = Resources.Load<VignetteGlow>("Prefabs/Vignette/VignetteGlow");
 
-        GameController.Instance.OnNextLevel += OnNextLevel;
+        AreaController.Instance.onNextArea += OnNextArea;
 
         CreateGlows();
         FadeIn();
@@ -45,14 +45,13 @@ public class VignetteController : Singleton
         }
     }
 
-    private void OnNextLevel()
+    private void OnNextArea(Area area)
     {
-        SetLevel(Level.Current);
+        SetArea(area);
     }
 
-    public void SetLevel(LevelAsset level)
+    public void SetArea(Area area)
     {
-        var area = level.area;
         foreach (var glow in glows)
         {
             var color = area.vignette_gradient.Evaluate(Random.Range(0f, 1f));

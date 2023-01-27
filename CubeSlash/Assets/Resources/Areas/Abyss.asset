@@ -12,6 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2a24aa1140318f84bb86c4b408b90009, type: 3}
   m_Name: Abyss
   m_EditorClassIdentifier: 
+  index_level_min: 4
+  boss: {fileID: 11400000, guid: 4fbbd0666cfd0cb4c8967515c2fd4eeb, type: 2}
+  enemies:
+  - enemy: {fileID: 11400000, guid: 446594942849cc545a50a1af0a528adc, type: 2}
+    chance: 0.25
+    max: 5
   color_fog: {r: 0, g: 0, b: 0, a: 1}
   color_bg: {r: 0.023529412, g: 0.02745098, b: 0.101960786, a: 1}
   ac_alpha_fog:
@@ -43,12 +49,14 @@ MonoBehaviour:
   parallax_max: 0.8
   background_layers:
   - name: 0
+    is_foreground: 0
     size_sprite_min: 10
     size_sprite_max: 20
     count_sprite: 0
     sprites: []
     particles: []
   - name: 1
+    is_foreground: 0
     size_sprite_min: 10
     size_sprite_max: 20
     count_sprite: 0
@@ -56,6 +64,7 @@ MonoBehaviour:
     particles:
     - {fileID: 6471937910845384915, guid: 4227469584206424696bac83a7f5da41, type: 3}
   - name: 2
+    is_foreground: 0
     size_sprite_min: 10
     size_sprite_max: 20
     count_sprite: 0
@@ -63,6 +72,7 @@ MonoBehaviour:
     particles:
     - {fileID: 6471937910845384915, guid: 4227469584206424696bac83a7f5da41, type: 3}
   - name: 3
+    is_foreground: 0
     size_sprite_min: 10
     size_sprite_max: 20
     count_sprite: 0
@@ -99,3 +109,11 @@ MonoBehaviour:
     m_NumColorKeys: 2
     m_NumAlphaKeys: 2
   spawn_objects: []
+  bgm:
+    reference:
+      Guid:
+        Data1: -2099893669
+        Data2: 1184289244
+        Data3: -1133450321
+        Data4: 326138994
+      Path: event:/Music/abyss_001

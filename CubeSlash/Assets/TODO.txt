@@ -7,5 +7,4 @@ Upgrade reroll
 unlock bodies in main menu
 waves that push things in a direction
 Ability SWIPE that swipes to the sides
-dash invulnerability briefly after dash
-randomize areas, unlocking enemies at different times
+experience trail still fucked

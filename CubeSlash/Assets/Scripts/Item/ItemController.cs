@@ -37,8 +37,8 @@ public class ItemController : Singleton
     private void SpawnExperienceUpdate()
     {
         if (Time.time < time_spawn) return;
-        if (experience_active.Count >= Level.Current.count_experience_active) return;
-        time_spawn = Time.time + Level.Current.frequency_spawn_experience;
+        if (experience_active.Count >= GameSettings.Instance.count_experience_active) return;
+        time_spawn = Time.time + GameSettings.Instance.frequency_spawn_experience;
         var e = SpawnExperience(CameraController.Instance.GetPositionOutsideCamera());
         e.Initialize();
         e.SetPlant();

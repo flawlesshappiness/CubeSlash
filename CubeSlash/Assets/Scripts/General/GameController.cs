@@ -12,15 +12,17 @@ public class GameController : MonoBehaviour
     public static GameController Instance;
     public static bool DAMAGE_DISABLED = false;
 
-    public System.Action OnResume { get; set; }
     public bool IsGameStarted { get; private set; }
     public bool IsGameEnded { get; private set; }
     public bool IsPaused { get { return PauseLock.IsLocked; } }
     public MultiLock PauseLock { get; private set; } = new MultiLock();
     public int LevelIndex { get; set; }
+    public float TimeGameStart { get; private set; }
+    public float TimeGameEnd { get; private set; }
 
-    public System.Action OnNextLevel { get; set; }
-    public System.Action OnMainMenu { get; set; }
+    public System.Action onResume { get; set; }
+    public System.Action onGameEnd { get; set; }
+    public System.Action onMainMenu { get; set; }
 
     public const string TAG_ABILITY_VIEW = "Ability";
 
@@ -35,16 +37,6 @@ public class GameController : MonoBehaviour
         ViewController.Instance.ShowView<StartView>(0);
 
         PauseLock.OnLockChanged += OnPauseChanged;
-
-        ConsoleController.Instance.RegisterCommand("UnlockAllAbilities", AbilityController.Instance.UnlockAllAbilities);
-        ConsoleController.Instance.RegisterCommand("Kill", EnemyController.Instance.RemoveActiveEnemies);
-        ConsoleController.Instance.RegisterCommand("LevelUp", CheatLevelUp);
-        ConsoleController.Instance.RegisterCommand("NextLevel", () => SetLevel(LevelIndex + 1));
-        ConsoleController.Instance.RegisterCommand("Equipment", CheatOpenEquipment);
-        ConsoleController.Instance.RegisterCommand("ToggleDamage", () => DAMAGE_DISABLED = !DAMAGE_DISABLED);
-        ConsoleController.Instance.RegisterCommand("Suicide", () => Player.Instance.Kill());
-        ConsoleController.Instance.onToggle += OnToggleConsole;
-        ConsoleController.Instance.Enabled = false;
     }
 
     private void OnToggleConsole(bool toggle)
@@ -131,13 +123,21 @@ public class GameController : MonoBehaviour
 
     public void StartGame()
     {
-        GameStateController.Instance.SetGameState(GameStateType.MENU);
         IsGameStarted = true;
+        TimeGameStart = Time.time;
 
-        SetLevel(0);
-        ResumeLevel();
+        GameStateController.Instance.SetGameState(GameStateType.MENU);
+        AreaController.Instance.StartAreaCoroutine();
         MusicController.Instance.PlayStartMusic();
         ViewController.Instance.ShowView<GameView>(1);
+        ResumeLevel();
+    }
+
+    private void EndGame()
+    {
+        IsGameEnded = true;
+        TimeGameEnd = Time.time;
+        onGameEnd?.Invoke();
     }
 
     private void PauseLevel()
@@ -151,30 +151,7 @@ public class GameController : MonoBehaviour
         PauseLock.RemoveLock(nameof(GameController));
         Player.Instance.ReapplyUpgrades();
         Player.Instance.ReapplyAbilities();
-        OnResume?.Invoke();
-    }
-
-    private Coroutine _cr_next_level;
-    private IEnumerator NextLevelCr()
-    {
-        while (true)
-        {
-            yield return new WaitForSeconds(Level.Current.duration);
-            Level.Completed();
-            OnNextLevel?.Invoke();
-        }
-    }
-
-    private void SetLevel(int idx)
-    {
-        if(_cr_next_level != null)
-        {
-            StopCoroutine(_cr_next_level);
-        }
-
-        LevelIndex = idx;
-        OnNextLevel?.Invoke();
-        _cr_next_level = StartCoroutine(NextLevelCr());
+        onResume?.Invoke();
     }
 
     private void OnPlayerLevelUp()
@@ -232,7 +209,7 @@ public class GameController : MonoBehaviour
 
     private void OnPlayerDeath()
     {
-        StopCoroutine(_cr_next_level);
+        EndGame();
         StartCoroutine(Cr());
 
         IEnumerator Cr()
@@ -255,7 +232,7 @@ public class GameController : MonoBehaviour
 
     public void ReturnToMainMenu()
     {
-        StopCoroutine(_cr_next_level);
+        EndGame();
         StartCoroutine(Cr());
         IEnumerator Cr()
         {
@@ -269,8 +246,6 @@ public class GameController : MonoBehaviour
 
     private void MainMenu()
     {
-        StopCoroutine(_cr_next_level);
-
         IsGameStarted = false;
         IsGameEnded = false;
         GameStateController.Instance.SetGameState(GameStateType.MENU);
@@ -281,7 +256,7 @@ public class GameController : MonoBehaviour
         ViewController.Instance.ShowView<StartView>(0.25f);
         CameraController.Instance.SetSize(15f);
 
-        OnMainMenu?.Invoke();
+        onMainMenu?.Invoke();
     }
 
     private void CheatLevelUp()
@@ -301,8 +276,8 @@ public class GameController : MonoBehaviour
 
     public void Win()
     {
+        EndGame();
         MusicController.Instance.StopBGM();
-        IsGameEnded = true;
         EnemyController.Instance.KillActiveEnemies();
         StartCoroutine(Cr());
         IEnumerator Cr()

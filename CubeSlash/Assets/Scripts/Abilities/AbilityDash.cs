@@ -128,8 +128,6 @@ public class AbilityDash : Ability
             yield return new WaitForFixedUpdate();
         }
 
-        ps_trail.SetEmissionEnabled(false);
-
         EndDash(victim);
     }
 
@@ -145,6 +143,8 @@ public class AbilityDash : Ability
     {
         StopCoroutine(cr_dash);
         cr_dash = null;
+
+        ps_trail.SetEmissionEnabled(false);
 
         var hit_anything = victim != null;
         if (!hit_anything)

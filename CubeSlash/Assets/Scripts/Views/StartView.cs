@@ -26,8 +26,8 @@ public class StartView : View
         EventSystemController.Instance.EventSystem.SetSelectedGameObject(null);
 
         var first_level = LevelDatabase.Instance.GetLevel(0);
-        BackgroundController.Instance.FadeToLevel(first_level);
-        VignetteController.Instance.SetLevel(first_level);
+        BackgroundController.Instance.FadeToArea(GameSettings.Instance.main_menu_area);
+        VignetteController.Instance.SetArea(GameSettings.Instance.main_menu_area);
         CameraController.Instance.AnimateSize(2f, 15f, EasingCurves.EaseInOutQuad);
 
         btn_play.Button.SetSelectOnHover(true);

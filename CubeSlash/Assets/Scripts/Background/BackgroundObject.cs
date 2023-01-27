@@ -10,16 +10,20 @@ public abstract class BackgroundObject : MonoBehaviour
     protected Vector2 World { get; private set; }
     private Vector2 parallax;
 
+    private Area area;
+
     public abstract void Destroy();
 
-    public virtual void Initialize()
+    public virtual void Initialize(Area area)
     {
+        this.area = area;
+
         var w = CameraController.Instance.Width;
         var h = CameraController.Instance.Height;
         World = new Vector2(w,h);
 
-        var parallax_min = Level.Current.area.parallax_min;
-        var parallax_max = Level.Current.area.parallax_max;
+        var parallax_min = area.parallax_min;
+        var parallax_max = area.parallax_max;
         parallax = new Vector2(parallax_min, parallax_max);
 
         StartPosition = transform.localPosition;
@@ -34,5 +38,5 @@ public abstract class BackgroundObject : MonoBehaviour
         transform.localPosition = camera_position + new Vector3(pp.x, pp.y, StartPosition.z) + Offset;
     }
 
-    private int GetLayerCount() => Level.Current.area.background_layers.Count;
+    private int GetLayerCount() => area.background_layers.Count;
 }

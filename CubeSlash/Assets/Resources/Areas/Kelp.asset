@@ -12,6 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2a24aa1140318f84bb86c4b408b90009, type: 3}
   m_Name: Kelp
   m_EditorClassIdentifier: 
+  index_level_min: 1
+  boss: {fileID: 11400000, guid: 8d0d7ea4526316246bbdc4a47f15c606, type: 2}
+  enemies:
+  - enemy: {fileID: 11400000, guid: db0782c6ad8291647b08bacf671fe0eb, type: 2}
+    chance: 0.5
+    max: 15
   color_fog: {r: 0.061764713, g: 0.15, b: 0.0882353, a: 1}
   color_bg: {r: 0.023529412, g: 0.02745098, b: 0.101960786, a: 1}
   ac_alpha_fog:
@@ -43,6 +49,7 @@ MonoBehaviour:
   parallax_max: 0.8
   background_layers:
   - name: 0
+    is_foreground: 0
     size_sprite_min: 5
     size_sprite_max: 10
     count_sprite: 25
@@ -52,6 +59,7 @@ MonoBehaviour:
     particles:
     - {fileID: 6471937910845384915, guid: 4227469584206424696bac83a7f5da41, type: 3}
   - name: 1
+    is_foreground: 0
     size_sprite_min: 10
     size_sprite_max: 20
     count_sprite: 50
@@ -61,6 +69,7 @@ MonoBehaviour:
     particles:
     - {fileID: 6471937910845384915, guid: 4227469584206424696bac83a7f5da41, type: 3}
   - name: 2
+    is_foreground: 0
     size_sprite_min: 10
     size_sprite_max: 20
     count_sprite: 0
@@ -100,3 +109,11 @@ MonoBehaviour:
   - prefab: {fileID: 3561371122137596645, guid: 43cf28e00c020e14fa42509606b0bd08, type: 3}
     delay: 10
     count: 5
+  bgm:
+    reference:
+      Guid:
+        Data1: -1820905848
+        Data2: 1333989044
+        Data3: -787764304
+        Data4: 642457650
+      Path: event:/Music/game_001

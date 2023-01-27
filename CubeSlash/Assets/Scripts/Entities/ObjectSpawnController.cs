@@ -14,13 +14,12 @@ public class ObjectSpawnController : Singleton
     protected override void Initialize()
     {
         base.Initialize();
-        GameController.Instance.OnNextLevel += OnNextLevel;
-        GameController.Instance.OnMainMenu += Clear;
+        AreaController.Instance.onNextArea += OnNextArea;
+        GameController.Instance.onMainMenu += Clear;
     }
 
-    private void OnNextLevel()
+    private void OnNextArea(Area area)
     {
-        var area = Level.Current.area;
         if (current_area == area) return;
         current_area = area;
 

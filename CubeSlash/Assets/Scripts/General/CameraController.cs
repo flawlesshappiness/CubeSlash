@@ -16,8 +16,8 @@ public class CameraController : Singleton
     protected override void Initialize()
     {
         base.Initialize();
-        GameController.Instance.OnNextLevel += OnNextLevel;
-        GameController.Instance.OnMainMenu += OnMainMenu;
+        AreaController.Instance.onNextArea += OnNextArea;
+        GameController.Instance.onMainMenu += OnMainMenu;
 
         var level = LevelDatabase.Instance.GetLevel(0);
         var area = level.area;
@@ -69,9 +69,8 @@ public class CameraController : Singleton
         }
     }
 
-    private void OnNextLevel()
+    private void OnNextArea(Area area)
     {
-        var area = Level.Current.area;
         AnimateSize(5f, area.camera_size, EasingCurves.EaseInOutQuad);
     }
 
