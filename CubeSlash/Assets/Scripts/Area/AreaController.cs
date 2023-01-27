@@ -24,6 +24,8 @@ public class AreaController : Singleton
     public Area CurrentArea { get { return current_area; } }
     public bool IsEndless { get { return area_refills > 0; } }
 
+    private bool force_next_area;
+
     protected override void Initialize()
     {
         base.Initialize();
@@ -55,17 +57,28 @@ public class AreaController : Singleton
     {
         index_area = -1;
         area_refills = -1;
-        visited_areas.Clear();
         while (true)
         {
             index_area++;
             current_area = GetNextArea();
             visited_areas.Add(current_area);
+            available_areas.Remove(current_area);
             TimeAreaStart = Time.time;
 
             onNextArea?.Invoke(current_area);
-            yield return new WaitForSeconds(GameSettings.Instance.area_duration);
+
+            var time_next = Time.time + GameSettings.Instance.area_duration;
+            while(Time.time < time_next && !force_next_area)
+            {
+                yield return null;
+            }
+            force_next_area = false;
         }
+    }
+
+    public void ForceNextArea()
+    {
+        force_next_area = true;
     }
 
     private Area GetNextArea()
@@ -73,6 +86,7 @@ public class AreaController : Singleton
         if(available_areas.Count == 0)
         {
             area_refills++;
+            visited_areas.Clear();
             available_areas.AddRange(db.areas);
 
             // First time endless

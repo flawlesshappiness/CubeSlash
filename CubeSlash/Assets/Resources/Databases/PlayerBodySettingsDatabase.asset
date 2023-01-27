@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: PlayerBodySettingsDatabase
   m_EditorClassIdentifier: 
   settings:
-  - {fileID: 11400000, guid: 61b4841dcc10eb24ab1938c89363db9e, type: 2}
-  - {fileID: 11400000, guid: 88aa07991d6b13b43bfa991bf6109874, type: 2}
   - {fileID: 11400000, guid: e2a020462edc5c14a8c4a3d35f4ae1d2, type: 2}
-  - {fileID: 11400000, guid: c23df453c64593c4b9e3da5847d36920, type: 2}
   - {fileID: 11400000, guid: 7530fd707ee7dad4a825a2bafd5f5493, type: 2}
+  - {fileID: 11400000, guid: 88aa07991d6b13b43bfa991bf6109874, type: 2}
+  - {fileID: 11400000, guid: c23df453c64593c4b9e3da5847d36920, type: 2}
+  - {fileID: 11400000, guid: 61b4841dcc10eb24ab1938c89363db9e, type: 2}

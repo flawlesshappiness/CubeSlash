@@ -46,6 +46,7 @@ public class DebugConsoleHandler : Singleton
         window.CreateButton("Equipment", ClickEquipment);
         window.CreateButton(GameController.DAMAGE_DISABLED ? "Enable damage" : "Disable damage", ClickToggleDamage);
         window.CreateButton("Suicide", ClickSuicide);
+        window.CreateButton("Next Area", ClickNextArea);
     }
 
     private void ClickUnlockUpgrade()
@@ -126,6 +127,12 @@ public class DebugConsoleHandler : Singleton
     private void ClickSuicide()
     {
         Player.Instance.Suicide();
+        CloseView();
+    }
+
+    private void ClickNextArea()
+    {
+        AreaController.Instance.ForceNextArea();
         CloseView();
     }
 }

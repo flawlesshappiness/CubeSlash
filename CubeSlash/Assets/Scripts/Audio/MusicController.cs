@@ -31,7 +31,7 @@ public class MusicController : Singleton
     private void OnNextArea(Area area)
     {
         var delay = GameSettings.Instance.area_duration * GameSettings.Instance.time_bgm_play;
-        PlayBGM(area.bgm, GameSettings.Instance.time_bgm_play);
+        PlayBGM(area.bgm, delay);
     }
 
     public void PlayStartMusic()
