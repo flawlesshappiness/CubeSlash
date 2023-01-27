@@ -25,6 +25,7 @@ public class EnemyController : Singleton
         prefab_enemy = Resources.Load<Enemy>("Prefabs/Entities/Enemy");
         AreaController.Instance.onNextArea += OnNextArea;
         GameController.Instance.onGameEnd += OnGameEnd;
+        GameController.Instance.onMainMenu += OnMainMenu;
     }
 
     private void Update()
@@ -53,6 +54,11 @@ public class EnemyController : Singleton
 
         // Clear unlocked enemies
         enemies_unlocked.Clear();
+    }
+
+    private void OnMainMenu()
+    {
+        RemoveActiveEnemies();
     }
 
     #region SPAWNING

@@ -16,8 +16,8 @@ MonoBehaviour:
   main_menu_area: {fileID: 11400000, guid: 05cda483061ecb540840d2b69f3e52ca, type: 2}
   area_duration: 120
   area_size: 100
-  time_bgm_play: 0
-  time_boss_spawn: 0.7
+  time_bgm_play: 0.3
+  time_boss_spawn: 0.6
   endless_duration: 600
   enemy_freq_area:
     serializedVersion: 2

@@ -249,9 +249,6 @@ public class GameController : MonoBehaviour
         IsGameStarted = false;
         IsGameEnded = false;
         GameStateController.Instance.SetGameState(GameStateType.MENU);
-        EnemyController.Instance.RemoveActiveEnemies();
-        ItemController.Instance.DespawnAllActiveItems();
-        ProjectileController.Instance.ClearProjectiles();
         Player.Instance.gameObject.SetActive(false);
         ViewController.Instance.ShowView<StartView>(0.25f);
         CameraController.Instance.SetSize(15f);

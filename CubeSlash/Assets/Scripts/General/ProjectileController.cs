@@ -8,6 +8,17 @@ public class ProjectileController : Singleton
 
     private List<Projectile> active_projectiles = new List<Projectile>();
 
+    protected override void Initialize()
+    {
+        base.Initialize();
+        GameController.Instance.onMainMenu += OnMainMenu;
+    }
+
+    private void OnMainMenu()
+    {
+        ClearProjectiles();
+    }
+
     public T CreateProjectile<T>(T projectile) where T : Projectile
     {
         var p = Instantiate(projectile);

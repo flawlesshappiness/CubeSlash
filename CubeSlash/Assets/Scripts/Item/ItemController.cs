@@ -19,11 +19,14 @@ public class ItemController : Singleton
 
     private const int COUNT_POOL_EXTEND = 20;
 
-    private void Start()
+    protected override void Initialize()
     {
+        base.Initialize();
         prefab_experience = Resources.Load<ExperienceItem>("Prefabs/Entities/Experience");
         prefab_health = Resources.Load<HealthItem>("Prefabs/Entities/Health");
         prefab_armor = Resources.Load<HealthItem>("Prefabs/Entities/Armor");
+
+        GameController.Instance.onMainMenu += OnMainMenu;
     }
 
     private void Update()
@@ -31,6 +34,11 @@ public class ItemController : Singleton
         if (!GameController.Instance.IsGameStarted) return;
 
         SpawnExperienceUpdate();
+    }
+
+    private void OnMainMenu()
+    {
+        DespawnAllActiveItems();
     }
 
     #region EXPERIENCE

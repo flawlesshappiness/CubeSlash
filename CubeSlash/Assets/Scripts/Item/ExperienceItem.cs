@@ -13,6 +13,7 @@ public class ExperienceItem : Item
     public override void Initialize()
     {
         base.Initialize();
+        trail.Clear();
         trail.enabled = true;
         trail.emitting = true;
     }
