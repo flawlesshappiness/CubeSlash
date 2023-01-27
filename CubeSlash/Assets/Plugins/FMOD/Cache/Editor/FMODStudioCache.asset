@@ -70,7 +70,7 @@ MonoBehaviour:
   Path: Assets/FMOD/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 638103397324117984
+  lastModified: 638104376752772319
   FileSizes: []
   Exists: 1
 --- !u!114 &-7809730102017663126
@@ -280,6 +280,33 @@ MonoBehaviour:
     Data2: 1117013070
     Data3: 729043125
     Data4: 1166786284
+  Banks:
+  - {fileID: -8060980804293988741}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
+--- !u!114 &-5679579426369800562
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/UI/ui_boom_001
+  m_EditorClassIdentifier: 
+  Path: event:/UI/ui_boom_001
+  Guid:
+    Data1: -780082958
+    Data2: 1163232061
+    Data3: 1613986490
+    Data4: 1563063974
   Banks:
   - {fileID: -8060980804293988741}
   IsStream: 0
@@ -787,12 +814,13 @@ MonoBehaviour:
   - {fileID: -4132772219434995871}
   - {fileID: 9213378766139412985}
   - {fileID: 8756300243174599417}
+  - {fileID: -5679579426369800562}
   EditorParameters: []
   MasterBanks:
   - {fileID: -8060980804293988741}
   StringsBanks:
   - {fileID: 5917708036578608240}
-  cacheTime: 638103397324157985
+  cacheTime: 638104376752802332
   cacheVersion: 131593
 --- !u!114 &159336944855883450
 MonoBehaviour:
@@ -1211,10 +1239,10 @@ MonoBehaviour:
   Path: Assets/FMOD/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 638103397324157985
+  lastModified: 638104376752802332
   FileSizes:
   - Name: 
-    Value: 3356
+    Value: 3406
   Exists: 1
 --- !u!114 &5992827859230917708
 MonoBehaviour:

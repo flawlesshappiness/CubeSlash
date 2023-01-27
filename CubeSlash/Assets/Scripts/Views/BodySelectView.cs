@@ -1,6 +1,7 @@
 using Flawliz.Lerp;
 using System.Collections;
 using System.Collections.Generic;
+using System.Drawing;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -15,7 +16,6 @@ public class BodySelectView : View
     [SerializeField] private UIInputLayout controls_confirm, controls_back;
     [SerializeField] private PlayerBodySettingsDatabase db_player_body_settings;
     [SerializeField] private CanvasGroup cvg_controls;
-    [SerializeField] private FMODEventReference sfx_confirm_charge;
     [SerializeField] private FMODEventReference sfx_confirm;
     [SerializeField] private FMODEventReference sfx_back;
     [SerializeField] private FMODEventReference sfx_change_body;
@@ -24,6 +24,7 @@ public class BodySelectView : View
     private List<GameObject> spd_points = new List<GameObject>();
     private List<GameObject> acc_points = new List<GameObject>();
 
+    private int taps_to_confirm = 3;
     private int idx_body_selected = -1;
     private bool transitioning;
 
@@ -36,14 +37,14 @@ public class BodySelectView : View
         template_spd.SetActive(false);
         template_acc.SetActive(false);
 
-        controls_confirm.AddInput(PlayerInput.UIButtonType.SOUTH, "Hold to confirm");
+        UpdateConfirmInput();
         controls_back.AddInput(PlayerInput.UIButtonType.EAST, "Back");
 
         Player.Instance.gameObject.SetActive(true);
         Player.Instance.MovementLock.AddLock(nameof(BodySelectView));
         Player.Instance.AbilityLock.AddLock(nameof(BodySelectView));
 
-        ResetCamera();
+        ResetCamera(1f);
 
         SetBody(0);
 
@@ -85,7 +86,10 @@ public class BodySelectView : View
     private IEnumerator TransitionToGame()
     {
         transitioning = true;
-        yield return HideCr();
+        yield return LerpEnumerator.Value(0.5f, f =>
+        {
+            CanvasGroup.alpha = Mathf.Lerp(1f, 0f, f);
+        });
         GameController.Instance.StartGame();
         Close(0);
     }
@@ -93,10 +97,7 @@ public class BodySelectView : View
     private void OnEnable()
     {
         PlayerInput.Controls.UI.Navigate.started += Navigate;
-
-        PlayerInput.Controls.Player.South.started += ConfirmHeld;
-        PlayerInput.Controls.Player.South.canceled += ConfirmReleased;
-
+        PlayerInput.Controls.Player.South.started += PressConfirm;
         PlayerInput.Controls.Player.East.started += PressBack;
 
         GameStateController.Instance.SetGameState(GameStateType.MENU);
@@ -105,16 +106,11 @@ public class BodySelectView : View
     private void OnDisable()
     {
         PlayerInput.Controls.UI.Navigate.started -= Navigate;
-
-        PlayerInput.Controls.Player.South.started -= ConfirmHeld;
-        PlayerInput.Controls.Player.South.canceled -= ConfirmReleased;
-
+        PlayerInput.Controls.Player.South.started -= PressConfirm;
         PlayerInput.Controls.Player.East.started -= PressBack;
 
         Player.Instance.MovementLock.RemoveLock(nameof(BodySelectView));
         Player.Instance.AbilityLock.RemoveLock(nameof(BodySelectView));
-
-        sfx_confirm_charge.Stop();
     }
 
     private void Navigate(InputAction.CallbackContext context)
@@ -132,6 +128,7 @@ public class BodySelectView : View
                 NavigateLeft();
             }
 
+            ResetConfirm();
             sfx_change_body.Play();
         }
     }
@@ -250,32 +247,46 @@ public class BodySelectView : View
         }
     }
 
-    private void ConfirmHeld(InputAction.CallbackContext context)
+    private void PressConfirm(InputAction.CallbackContext context)
     {
-        if (cr_confirm != null) return;
+        taps_to_confirm--;
+        UpdateConfirmInput();
+
+        var t_taps = 1f - ((float)taps_to_confirm / 2);
+        var volume = EasingCurves.EaseInQuad.Evaluate(t_taps);
+        sfx_confirm.SetVolume(volume);
+        sfx_confirm.Play();
+
+        if(cr_confirm != null) StopCoroutine(cr_confirm);
+
+        var size = Mathf.Clamp(Camera.main.orthographicSize - 0.5f, 1f, 100);
+        CameraController.Instance.AnimateSize(0.25f, size, EasingCurves.EaseOutQuad);
+
+        if (taps_to_confirm <= 0)
+        {
+            StartCoroutine(TransitionToGame());
+            return;
+        }
+
         cr_confirm = StartCoroutine(Cr());
         IEnumerator Cr()
         {
-            sfx_confirm_charge.Play();
-
-            CameraController.Instance.AnimateSize(2f, 5f, EasingCurves.EaseOutQuad);
-            yield return new WaitForSeconds(2f);
-
-            sfx_confirm_charge.Stop();
-            sfx_confirm.Play();
-
-            StartCoroutine(TransitionToGame());
+            yield return new WaitForSeconds(3f);
+            ResetConfirm();
         }
     }
 
-    private void ConfirmReleased(InputAction.CallbackContext context)
+    private void ResetConfirm()
     {
-        if (cr_confirm == null) return;
-        StopCoroutine(cr_confirm);
-        cr_confirm = null;
-        ResetCamera();
+        if(cr_confirm != null)
+        {
+            StopCoroutine(cr_confirm);
+            cr_confirm = null;
+        }
 
-        sfx_confirm_charge.Stop();
+        taps_to_confirm = 3;
+        UpdateConfirmInput();
+        ResetCamera(1f);
     }
 
     private void PressBack(InputAction.CallbackContext context)
@@ -284,16 +295,14 @@ public class BodySelectView : View
 
         Player.Instance.gameObject.SetActive(false);
 
-        ConfirmReleased(context);
-
         sfx_back.Play();
 
         StartCoroutine(TransitionToMainMenu());
     }
 
-    private void ResetCamera()
+    private void ResetCamera(float duration)
     {
-        CameraController.Instance.AnimateSize(1f, 6f, EasingCurves.EaseInOutQuad);
+        CameraController.Instance.AnimateSize(duration, 6f, EasingCurves.EaseInOutQuad);
     }
 
     private void AnimateArrowLeft()
@@ -324,5 +333,11 @@ public class BodySelectView : View
             var duration = show ? 1f : 0.5f;
             yield return LerpEnumerator.LocalScale(pivot, duration, start, end).Curve(curve);
         }
+    }
+
+    private void UpdateConfirmInput()
+    {
+        controls_confirm.Clear();
+        controls_confirm.AddInput(PlayerInput.UIButtonType.SOUTH, $"({taps_to_confirm}) Tap to confirm");
     }
 }

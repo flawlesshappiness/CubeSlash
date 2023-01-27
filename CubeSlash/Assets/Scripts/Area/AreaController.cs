@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEditor.Timeline.Actions;
 using UnityEngine;
 
 public class AreaController : Singleton
@@ -31,11 +32,19 @@ public class AreaController : Singleton
         base.Initialize();
         db = AreaDatabase.Instance;
         GameController.Instance.onGameEnd += OnGameEnd;
+        GameController.Instance.onMainMenu += OnMainMenu;
     }
 
     private void OnGameEnd()
     {
         StopAreaCoroutine();
+    }
+
+    private void OnMainMenu()
+    {
+        visited_areas.Clear();
+        available_areas.Clear();
+        force_next_area = false;
     }
 
     public void StartAreaCoroutine()
