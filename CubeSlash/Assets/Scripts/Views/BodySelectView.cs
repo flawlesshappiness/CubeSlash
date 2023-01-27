@@ -249,6 +249,8 @@ public class BodySelectView : View
 
     private void PressConfirm(InputAction.CallbackContext context)
     {
+        if (taps_to_confirm <= 0) return;
+
         taps_to_confirm--;
         UpdateConfirmInput();
 

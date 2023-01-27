@@ -175,7 +175,7 @@ public class GameController : MonoBehaviour
         StartCoroutine(Cr());
         IEnumerator Cr()
         {
-            yield return LerpTimeScale(2f, 0f);
+            yield return LerpTimeScale(2f, 0.25f);
             GameStateController.Instance.SetGameState(GameStateType.MENU);
             PauseLevel();
             var view = ViewController.Instance.ShowView<UnlockUpgradeView>(0, TAG_ABILITY_VIEW);
@@ -192,7 +192,7 @@ public class GameController : MonoBehaviour
         StartCoroutine(Cr());
         IEnumerator Cr()
         {
-            yield return LerpTimeScale(2f, 0f);
+            yield return LerpTimeScale(2f, 0.25f);
             GameStateController.Instance.SetGameState(GameStateType.MENU);
             PauseLevel();
             var view_unlock = ViewController.Instance.ShowView<UnlockAbilityView>(0, TAG_ABILITY_VIEW);
@@ -254,21 +254,6 @@ public class GameController : MonoBehaviour
         CameraController.Instance.SetSize(15f);
 
         onMainMenu?.Invoke();
-    }
-
-    private void CheatLevelUp()
-    {
-        Player.Instance.Experience.Value = Player.Instance.Experience.Max;
-    }
-
-    private void CheatOpenEquipment()
-    {
-        SetTimeScale(0);
-        var view = ViewController.Instance.ShowView<AbilityView>(0, TAG_ABILITY_VIEW);
-        view.OnContinue += () =>
-        {
-            ResumeLevel();
-        };
     }
 
     public void Win()

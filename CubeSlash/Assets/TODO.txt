@@ -7,5 +7,3 @@ Upgrade reroll
 unlock bodies in main menu
 waves that push things in a direction
 Ability SWIPE that swipes to the sides
-start game hold isn't very impactful. Change please.
-change order of player bodies
