@@ -29,7 +29,7 @@ MonoBehaviour:
     type_value: 0
     type_display: 0
     higher_is_positive: 1
-    value_int: 1
+    value_int: 2
     value_float: 0
     value_bool: 0
     can_edit_name: 1
@@ -39,13 +39,13 @@ MonoBehaviour:
     type_value: 0
     type_display: 0
     higher_is_positive: 1
-    value_int: 3
+    value_int: 4
     value_float: 0
     value_bool: 0
     can_edit_name: 1
     _editor_toggle_preview: 1
   - name: MineSize
-    text_display: $ mine size
+    text_display: $ shell size
     type_value: 1
     type_display: 2
     higher_is_positive: 1
@@ -64,3 +64,33 @@ MonoBehaviour:
     value_bool: 0
     can_edit_name: 1
     _editor_toggle_preview: 1
+  - name: MineLifetime
+    text_display: $ shell lifetime
+    type_value: 1
+    type_display: 2
+    higher_is_positive: 1
+    value_int: 1
+    value_float: 1
+    value_bool: 0
+    can_edit_name: 1
+    _editor_toggle_preview: 1
+  - name: FragmentLifetime
+    text_display: $ fragment lifetime
+    type_value: 1
+    type_display: 2
+    higher_is_positive: 1
+    value_int: 0
+    value_float: 1
+    value_bool: 0
+    can_edit_name: 1
+    _editor_toggle_preview: 1
+  - name: SeekingMines
+    text_display: Mines move towards enemies
+    type_value: 2
+    type_display: 3
+    higher_is_positive: 1
+    value_int: 0
+    value_float: 0
+    value_bool: 0
+    can_edit_name: 1
+    _editor_toggle_preview: 0

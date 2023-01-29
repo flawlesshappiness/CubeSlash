@@ -98,6 +98,7 @@ public class Projectile : MonoBehaviourExtended
         else if(angle.Abs() < TurnSpeed)
         {
             SetDirection(dir);
+            Rigidbody.velocity = transform.up * Rigidbody.velocity.magnitude;
         }
         else
         {

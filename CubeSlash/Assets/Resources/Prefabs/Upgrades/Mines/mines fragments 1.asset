@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 616189df85cb92d40806459b9c9111b7, type: 3}
+  m_Name: mines fragments 1
+  m_EditorClassIdentifier: 
+  id: mines_fragments_001
+  name: Fragments+
+  icon: {fileID: 21300000, guid: 4431157a7f2973844abd7415c32e8731, type: 3}
+  id_stats: mines
+  effects:
+  - type_effect: 0
+    variable:
+      name: FragmentCount
+      text_display: $ fragments
+      type_value: 0
+      type_display: 0
+      higher_is_positive: 0
+      value_int: 1
+      value_float: 0
+      value_bool: 1
+      can_edit_name: 1
+      _editor_toggle_preview: 0

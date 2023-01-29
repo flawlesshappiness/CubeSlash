@@ -4,6 +4,11 @@ enemy that pulls the player
 
 endless mode
 Upgrade reroll
-unlock bodies in main menu
 waves that push things in a direction
-Ability SWIPE that swipes to the sides
+unlockable "charms" in main menu
+unlock bodies in main menu
+gain points when playing game
+Bone wall destroy sound
+Bone boss teleport sound appear/disappear
+Mine explode sound
+MINES ability
