@@ -13,7 +13,12 @@ public class AbilityMines : Ability
     private float FragmentSize { get; set; }
     private float MineLifetime { get; set; }
     private float FragmentLifetime { get; set; }
+    private float MineTurnSpeed { get; set; }
     private bool SeekingMines { get; set; }
+    private bool ExplodingFragments { get; set; }
+    private bool OnlyFragments { get; set; }
+    private bool DoubleShells { get; set; }
+    private bool FragmentChain { get; set; }
 
     private const float MINE_SPEED = 10f;
     private const float MINE_SPEED_SEEKING = 4f;
@@ -42,13 +47,42 @@ public class AbilityMines : Ability
         FragmentSize = FRAGMENT_SIZE * GetFloatValue("FragmentSize");
         MineLifetime = MINE_LIFETIME * GetFloatValue("MineLifetime");
         FragmentLifetime = FRAGMENT_LIFETIME * GetFloatValue("FragmentLifetime");
+        MineTurnSpeed = MINE_TURN_SEEKING * GetFloatValue("MineTurnSpeed");
         SeekingMines = GetBoolValue("SeekingMines");
+        ExplodingFragments = GetBoolValue("ExplodingFragments");
+        OnlyFragments = GetBoolValue("OnlyFragments");
+        DoubleShells = GetBoolValue("DoubleShells");
+        FragmentChain = GetBoolValue("FragmentChain");
     }
 
     public override void Trigger()
     {
         base.Trigger();
-        ShootMines(MineCount);
+
+        if (OnlyFragments)
+        {
+            var position = Player.transform.position;
+            var count = GetMineCount() * FragmentCount;
+
+            if (FragmentChain)
+            {
+                ChainFragments(position, count);
+            }
+            else
+            {
+                var ps = ShootFragments(position, prefab_fragment, count, FRAGMENT_SPEED, FragmentSize);
+                foreach (var p in ps)
+                {
+                    SetupMineFragment(p);
+                }
+            }
+
+            StartCooldown();
+        }
+        else
+        {
+            ShootMines(GetMineCount());
+        }
     }
 
     private void ShootMines(int count)
@@ -93,18 +127,61 @@ public class AbilityMines : Ability
         p.Lifetime = MINE_LIFETIME;
         p.Homing = SeekingMines;
         p.SearchRadius = 100f;
-        p.TurnSpeed = SeekingMines ? MINE_TURN_SEEKING : 0;
+        p.TurnSpeed = SeekingMines ? MineTurnSpeed : 0;
         p.onDeath += () => OnMineExplode(p);
     }
 
     private void OnMineExplode(Projectile projectile, IKillable k = null)
     {
-        var ps = ShootFragments(projectile.transform.position, prefab_fragment, FragmentCount, FRAGMENT_SPEED, FRAGMENT_SIZE);
-
-        foreach(var p in ps)
+        if (ExplodingFragments)
         {
-            p.Lifetime = FRAGMENT_LIFETIME;
-            p.Drag = FRAGMENT_DRAG;
+            AbilityExplode.Explode(projectile.transform.position, 3f, 0);
+        }
+
+        if (FragmentChain)
+        {
+            ChainFragments(projectile.transform.position, FragmentCount);
+        }
+        else
+        {
+            var ps = ShootFragments(projectile.transform.position, prefab_fragment, FragmentCount, FRAGMENT_SPEED, FragmentSize);
+            foreach (var p in ps)
+            {
+                SetupMineFragment(p);
+            }
+        }
+    }
+
+    private void ChainFragments(Vector3 position, int count)
+    {
+        AbilityChain.CreateImpactPS(position);
+        AbilityChain.TryChainToTarget(position, 5f, 1, count, 0);
+    }
+
+    private void SetupMineFragment(Projectile p)
+    {
+        p.Lifetime = FRAGMENT_LIFETIME * Random.Range(0.8f, 1.2f);
+        p.Rigidbody.velocity = p.Rigidbody.velocity.normalized * p.Rigidbody.velocity.magnitude * Random.Range(0.8f, 1f);
+        p.Drag = FRAGMENT_DRAG;
+
+        p.onHit += c => OnCollide(p, c);
+        p.onDeath += () => OnFragment(p);
+
+        void OnCollide(Projectile p, Collider2D c)
+        {
+            var k = c.GetComponentInParent<IKillable>();
+            if(k != null)
+            {
+                OnFragment(p);
+            }
+        }
+
+        void OnFragment(Projectile p)
+        {
+            if (ExplodingFragments)
+            {
+                AbilityExplode.Explode(p.transform.position, 2f, 0);
+            }
         }
     }
 
@@ -145,5 +222,10 @@ public class AbilityMines : Ability
 
         p.transform.localScale = Vector3.one * size;
         return p;
+    }
+
+    private int GetMineCount()
+    {
+        return DoubleShells ? MineCount * 2 : MineCount;
     }
 }

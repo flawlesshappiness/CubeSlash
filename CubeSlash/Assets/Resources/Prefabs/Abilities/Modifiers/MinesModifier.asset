@@ -14,25 +14,25 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   modifiers:
   - name: EXPLODE
-    description: 
+    description: Shells and fragments explode
     type: 3
-    upgrade: {fileID: 0}
+    upgrade: {fileID: 11400000, guid: 000b0bc905e86d2449894e701cecb8d5, type: 2}
   - name: CHARGE
-    description: 
+    description: Release all fragments instantly
     type: 2
-    upgrade: {fileID: 0}
+    upgrade: {fileID: 11400000, guid: 43e2a67e49f7cff4c84c524cabb9f714, type: 2}
   - name: SPLIT
-    description: 
+    description: Double shell count, but half shell size
     type: 1
-    upgrade: {fileID: 0}
+    upgrade: {fileID: 11400000, guid: d9feab64c92b44c4a9d104abebf82eb3, type: 2}
   - name: DASH
-    description: 
+    description: Shells seek enemies with improved movement
     type: 0
-    upgrade: {fileID: 0}
+    upgrade: {fileID: 11400000, guid: b4dff11b88caecf48bd23e12099904ef, type: 2}
   - name: CHAIN
-    description: 
+    description: Fragments bounce from the first enemy
     type: 4
-    upgrade: {fileID: 0}
+    upgrade: {fileID: 11400000, guid: c5ad8c3f76883414989bc083f0a3f7ba, type: 2}
   - name: MINES
     description: 
     type: 5
