@@ -13,7 +13,7 @@ public abstract class Ability : MonoBehaviourExtended
 
     public System.Action onTrigger;
 
-    public enum Type { DASH, SPLIT, CHARGE, EXPLODE, CHAIN }
+    public enum Type { DASH, SPLIT, CHARGE, EXPLODE, CHAIN, MINES }
     public Ability[] Modifiers { get; protected set; } = new Ability[ConstVars.COUNT_MODIFIERS];
     public Player Player { get; set; }
     public bool IsPressed { get; set; }

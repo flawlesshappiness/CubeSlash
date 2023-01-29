@@ -70,7 +70,7 @@ public abstract class Character : MonoBehaviourExtended
             }
             else if(Time.time > time_stun)
             {
-                StunLock.RemoveLock(nameof(Character));
+                ResetStun();
             }
         }
         else if (DragLock.IsFree)
@@ -92,6 +92,12 @@ public abstract class Character : MonoBehaviourExtended
     {
         StunLock.AddLock(nameof(Character));
         time_stun = Time.time + time;
+    }
+
+    public void ResetStun()
+    {
+        StunLock.RemoveLock(nameof(Character));
+        time_stun = Time.time;
     }
 
     public bool IsStunned()

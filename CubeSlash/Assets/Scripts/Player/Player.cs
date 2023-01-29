@@ -433,6 +433,7 @@ public class Player : Character
             StartCoroutine(PlayerDamageInvincibilityCr(2));
             StartCoroutine(PlayerDamageFlashCr(2));
 
+            ResetStun();
             var dir = transform.position - damage_origin;
             StartCoroutine(PlayerDamagePushCr(dir, 0.15f));
         }
