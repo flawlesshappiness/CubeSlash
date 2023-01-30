@@ -36,6 +36,7 @@ public class ProjectileController : Singleton
     {
         foreach(var p in active_projectiles)
         {
+            if (p == null) continue;
             Destroy(p.gameObject);
         }
         active_projectiles.Clear();
