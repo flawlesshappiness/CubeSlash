@@ -12,12 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 262b9172431af8d45a4367eaf424b899, type: 3}
   m_Name: Mines
   m_EditorClassIdentifier: 
-  health: 1
-  armor: 3
-  body_size: 1.2
+  health: 3
+  armor: 0
+  body_size: 1.25
   mass: 1
-  linear_velocity: 5
-  linear_acceleration: 20
+  linear_velocity: 5.5
+  linear_acceleration: 18
   linear_drag: 20
-  body: {fileID: 1353097371446324401, guid: 1f04232427ff176429fd0e28497d0b3a, type: 3}
+  body: {fileID: 1353097371446324401, guid: 42a5130acdbd63b41abdef7f9141aabf, type: 3}
   ability_type: 5

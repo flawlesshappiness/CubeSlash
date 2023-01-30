@@ -46,7 +46,7 @@ MonoBehaviour:
   Info: {fileID: 11400000, guid: 015b2150053ec634e8bb89d868f46651, type: 2}
   Stats: {fileID: 11400000, guid: b500760c88b102b4d9deb35a2bccce30, type: 2}
   ModifierUpgrades: {fileID: 11400000, guid: b70a156231423fe4bafd44a38fe49f40, type: 2}
-  prefab_bodypart: {fileID: 1981302560155398986, guid: 28af7074ad5cb4c47a11ef1ef8d3cdab, type: 3}
+  prefab_bodypart: {fileID: 907548112857068121, guid: 38cf3bf170882eb4d80a25cb6818a808, type: 3}
   prefab_mine: {fileID: 2903384162585443173, guid: cdc1554d482d63e4cb8a5767d2530f54, type: 3}
   prefab_fragment: {fileID: 2903384162585443173, guid: ddcb15fa1e981794fb20b9ac54b20037, type: 3}
   sfx_mine_spawn:

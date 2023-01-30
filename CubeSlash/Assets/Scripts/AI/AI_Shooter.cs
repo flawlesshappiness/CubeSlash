@@ -70,7 +70,7 @@ public class AI_Shooter : EnemyAI
     private void Shoot()
     {
         var dir = DirectionToPlayer();
-        var p = Instantiate(prefab_projectile.gameObject).GetComponent<Projectile>();
+        var p = ProjectileController.Instance.CreateProjectile(prefab_projectile);
         p.transform.position = Position;
         p.Rigidbody.velocity = dir.normalized * velocity_projectile;
         p.SetDirection(dir);
