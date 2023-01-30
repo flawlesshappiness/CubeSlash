@@ -25,7 +25,6 @@ public class StartView : View
         EventSystemController.Instance.SetDefaultSelection(btn_play.Button.gameObject);
         EventSystemController.Instance.EventSystem.SetSelectedGameObject(null);
 
-        var first_level = LevelDatabase.Instance.GetLevel(0);
         BackgroundController.Instance.FadeToArea(GameSettings.Instance.main_menu_area);
         VignetteController.Instance.SetArea(GameSettings.Instance.main_menu_area);
         CameraController.Instance.AnimateSize(2f, 15f, EasingCurves.EaseInOutQuad);

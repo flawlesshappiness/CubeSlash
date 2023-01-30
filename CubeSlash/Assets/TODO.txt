@@ -8,7 +8,4 @@ waves that push things in a direction
 unlockable "charms" in main menu
 unlock bodies in main menu
 gain points when playing game
-Bone wall destroy sound
-Bone boss teleport sound appear/disappear
-Mine explode sound
 MINES ability

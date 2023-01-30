@@ -22,7 +22,7 @@ MonoBehaviour:
     type: 2
     upgrade: {fileID: 11400000, guid: 43e2a67e49f7cff4c84c524cabb9f714, type: 2}
   - name: SPLIT
-    description: Double shell count, but half shell size
+    description: Shell count is doubled, but shell size is halved
     type: 1
     upgrade: {fileID: 11400000, guid: d9feab64c92b44c4a9d104abebf82eb3, type: 2}
   - name: DASH
@@ -30,7 +30,7 @@ MonoBehaviour:
     type: 0
     upgrade: {fileID: 11400000, guid: b4dff11b88caecf48bd23e12099904ef, type: 2}
   - name: CHAIN
-    description: Fragments bounce from the first enemy
+    description: Shells zap a number of nearby enemies based on fragment count
     type: 4
     upgrade: {fileID: 11400000, guid: c5ad8c3f76883414989bc083f0a3f7ba, type: 2}
   - name: MINES

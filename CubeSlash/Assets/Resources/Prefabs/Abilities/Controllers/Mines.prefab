@@ -49,3 +49,19 @@ MonoBehaviour:
   prefab_bodypart: {fileID: 1981302560155398986, guid: 28af7074ad5cb4c47a11ef1ef8d3cdab, type: 3}
   prefab_mine: {fileID: 2903384162585443173, guid: cdc1554d482d63e4cb8a5767d2530f54, type: 3}
   prefab_fragment: {fileID: 2903384162585443173, guid: ddcb15fa1e981794fb20b9ac54b20037, type: 3}
+  sfx_mine_spawn:
+    reference:
+      Guid:
+        Data1: 771590777
+        Data2: 1117013070
+        Data3: 729043125
+        Data4: 1166786284
+      Path: event:/Game/Abilities/split_projectile_death_001
+  sfx_mine_explode:
+    reference:
+      Guid:
+        Data1: 1686672197
+        Data2: 1124373891
+        Data3: -730342474
+        Data4: -1847069713
+      Path: event:/Game/Abilities/mines_explode_001

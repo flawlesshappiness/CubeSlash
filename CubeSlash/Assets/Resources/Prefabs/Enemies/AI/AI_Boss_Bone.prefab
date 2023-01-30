@@ -46,3 +46,35 @@ MonoBehaviour:
   template_wall: {fileID: 7244421911640677601, guid: 28d950f22a56f5642802e630dd401864, type: 3}
   template_projectile: {fileID: 8265945175610929254, guid: f8e3cf4bf91b10b4eb88b315f4d28e24, type: 3}
   speed_rotate_min_max: {x: 0.5, y: 2}
+  sfx_teleport_disappear:
+    reference:
+      Guid:
+        Data1: 383281688
+        Data2: 1219068295
+        Data3: -1976303974
+        Data4: -1468765451
+      Path: event:/Game/Enemy/teleport_disappear_001
+  sfx_teleport_appear:
+    reference:
+      Guid:
+        Data1: 1947975579
+        Data2: 1296592411
+        Data3: -1272963709
+        Data4: 1499383659
+      Path: event:/Game/Enemy/teleport_appear_001
+  sfx_teleport_spawn_walls:
+    reference:
+      Guid:
+        Data1: 2044575349
+        Data2: 1176920756
+        Data3: 1092076455
+        Data4: -1930710316
+      Path: event:/Game/Enemy/bone_wall_appear_001
+  sfx_teleport_destroy_walls:
+    reference:
+      Guid:
+        Data1: -322562786
+        Data2: 1333945573
+        Data3: 564514446
+        Data4: 814939433
+      Path: event:/Game/Enemy/bone_wall_destroy_001

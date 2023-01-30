@@ -10,6 +10,10 @@ public class AI_BossBone : EnemyAI
     [SerializeField] private PlantWall template_wall;
     [SerializeField] private EnemyProjectile template_projectile;
     [SerializeField] private Vector2 speed_rotate_min_max;
+    [SerializeField] private FMODEventReference sfx_teleport_disappear;
+    [SerializeField] private FMODEventReference sfx_teleport_appear;
+    [SerializeField] private FMODEventReference sfx_teleport_spawn_walls;
+    [SerializeField] private FMODEventReference sfx_teleport_destroy_walls;
 
     private BossBoneBody body_bone;
     private Vector3 destination;
@@ -100,6 +104,7 @@ public class AI_BossBone : EnemyAI
 
     private void TeleportHide()
     {
+        sfx_teleport_disappear.Play();
         PlayTeleportPS();
         Self.Body.gameObject.SetActive(false);
     }
@@ -109,6 +114,7 @@ public class AI_BossBone : EnemyAI
         var dir = Random.insideUnitCircle.normalized.ToVector3();
         Self.transform.position = Player.Instance.transform.position + dir * 25f;
 
+        sfx_teleport_appear.Play();
         PlayTeleportPS();
         StartCoroutine(Cr());
 
@@ -157,6 +163,8 @@ public class AI_BossBone : EnemyAI
 
     private void DestroyWalls()
     {
+        sfx_teleport_destroy_walls.Play();
+
         foreach(var wall in walls)
         {
             wall.Kill();
@@ -166,6 +174,8 @@ public class AI_BossBone : EnemyAI
 
     private void CreateWallArea()
     {
+        sfx_teleport_spawn_walls.Play();
+
         wall_area_center = Player.Instance.transform.position;
         wall_area_direction = Random.insideUnitCircle.normalized;
         wall_area_normal = Vector3.Cross(wall_area_direction, Vector3.forward);

@@ -6,6 +6,8 @@ public class AbilityMines : Ability
 {
     [SerializeField] private Projectile prefab_mine;
     [SerializeField] private Projectile prefab_fragment;
+    [SerializeField] private FMODEventReference sfx_mine_spawn;
+    [SerializeField] private FMODEventReference sfx_mine_explode;
 
     private int MineCount { get; set; }
     private int FragmentCount { get; set; }
@@ -112,6 +114,8 @@ public class AbilityMines : Ability
 
     private void ShootMine(Vector3 direction)
     {
+        sfx_mine_spawn.Play();
+
         var speed = SeekingMines ? MINE_SPEED_SEEKING : MINE_SPEED;
 
         var p = ProjectileController.Instance.ShootPlayerProjectile(new ProjectileController.PlayerShootInfo
@@ -124,7 +128,7 @@ public class AbilityMines : Ability
 
         p.transform.localScale = Vector3.one * MineSize;
         p.Drag = SeekingMines ? MINE_DRAG_SEEKING : MINE_DRAG;
-        p.Lifetime = MINE_LIFETIME;
+        p.Lifetime = MineLifetime;
         p.Homing = SeekingMines;
         p.SearchRadius = 100f;
         p.TurnSpeed = SeekingMines ? MineTurnSpeed : 0;
@@ -133,9 +137,12 @@ public class AbilityMines : Ability
 
     private void OnMineExplode(Projectile projectile, IKillable k = null)
     {
+        sfx_mine_explode.Play();
+
         if (ExplodingFragments)
         {
-            AbilityExplode.Explode(projectile.transform.position, 3f, 0);
+            var radius = 3f * MineSize;
+            AbilityExplode.Explode(projectile.transform.position, radius, 0);
         }
 
         if (FragmentChain)
@@ -160,7 +167,7 @@ public class AbilityMines : Ability
 
     private void SetupMineFragment(Projectile p)
     {
-        p.Lifetime = FRAGMENT_LIFETIME * Random.Range(0.8f, 1.2f);
+        p.Lifetime = FragmentLifetime * Random.Range(0.8f, 1.2f);
         p.Rigidbody.velocity = p.Rigidbody.velocity.normalized * p.Rigidbody.velocity.magnitude * Random.Range(0.8f, 1f);
         p.Drag = FRAGMENT_DRAG;
 
@@ -180,7 +187,8 @@ public class AbilityMines : Ability
         {
             if (ExplodingFragments)
             {
-                AbilityExplode.Explode(p.transform.position, 2f, 0);
+                var radius = 2f * FragmentSize;
+                AbilityExplode.Explode(p.transform.position, radius, 0);
             }
         }
     }

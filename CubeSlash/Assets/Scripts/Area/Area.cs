@@ -34,6 +34,7 @@ public class Area : ScriptableObject
     public FMODEventReference bgm;
 
     public static Area Current;
+    public static Area First { get { return AreaDatabase.LoadAsset().areas[0]; } }
 
     private void OnValidate()
     {
