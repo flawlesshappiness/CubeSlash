@@ -33,3 +33,7 @@ MonoBehaviour:
     description: Enemies hit zap nearby enemies
     type: 4
     upgrade: {fileID: 11400000, guid: 7a6afca77c2efac4aa9a3a38ad9c097f, type: 2}
+  - name: MINES
+    description: 
+    type: 5
+    upgrade: {fileID: 11400000, guid: 78c41f73b28eb57438cd14b28bd9ebaa, type: 2}

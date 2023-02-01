@@ -22,6 +22,7 @@ public class Projectile : MonoBehaviourExtended
     public Rigidbody2D Rigidbody { get { return GetComponentOnce<Rigidbody2D>(ComponentSearchType.THIS); } }
     public System.Action<Collider2D> onHit;
     public System.Action onDeath;
+    public System.Action onDestroy;
     public Enemy Target { get; set; }
 
     private const float ANGLE_MAX = 90;
@@ -143,6 +144,8 @@ public class Projectile : MonoBehaviourExtended
             ps_trail.transform.parent = null;
             Destroy(ps_trail.gameObject, 2);
         }
+
+        onDestroy?.Invoke();
 
         gameObject.SetActive(false);
         Destroy(gameObject);

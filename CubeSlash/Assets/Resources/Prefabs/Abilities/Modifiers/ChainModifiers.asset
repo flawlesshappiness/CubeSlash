@@ -33,3 +33,7 @@ MonoBehaviour:
     description: 
     type: 4
     upgrade: {fileID: 0}
+  - name: MINES
+    description: 
+    type: 5
+    upgrade: {fileID: 11400000, guid: c3829cdc39dddbf4786cbaaa49542218, type: 2}

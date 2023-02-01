@@ -1,3 +1,4 @@
+using Flawliz.Lerp;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,10 +27,11 @@ public class AbilityDash : Ability
     public bool RippleBounce { get; private set; }
     public bool OnlyRipple { get; private set; }
     public bool ExplodeOnImpact { get; private set; }
+    public bool ShockwaveLinger { get; private set; }
 
     [Header("DASH")]
     [SerializeField] private Projectile prefab_shockwave;
-    [SerializeField] private ParticleSystem ps_bubbles, ps_trail;
+    [SerializeField] private ParticleSystem ps_bubbles, ps_trail, ps_starpower;
     [SerializeField] private AnimationCurve ac_push_enemies;
     [SerializeField] private FMODEventReference event_dash_start;
     [SerializeField] private FMODEventReference event_dash_impact;
@@ -79,6 +81,7 @@ public class AbilityDash : Ability
         RippleBounce = GetBoolValue("RippleBounce");
         OnlyRipple = GetBoolValue("OnlyRipple");
         ExplodeOnImpact = GetBoolValue("ExplodeOnImpact");
+        ShockwaveLinger = GetBoolValue("ShockwaveLinger");
     }
 
     public override void Trigger()
@@ -135,6 +138,7 @@ public class AbilityDash : Ability
     {
         if (!Dashing) return;
         var k = c.GetComponentInParent<IKillable>();
+        if (k == null) return;
         HitEnemiesArea(k.GetPosition(), RadiusDamage);
         EndDash(k);
     }
@@ -239,7 +243,7 @@ public class AbilityDash : Ability
                 ShootShockwave(dir);
             }
         }
-        else if(RippleCount == 1 || OnlyRipple)
+        else if(RippleCount == 1 || OnlyRipple || ShockwaveLinger)
         {
             ShootShockwave(direction);
         }
@@ -258,8 +262,8 @@ public class AbilityDash : Ability
             onHit = OnHit,
         });
         p.Piercing = true;
-
-        p.Lifetime = distance / speed; // distance / speed = time
+        var lifetime = Calculator.DST_Time(distance, speed);
+        p.Lifetime = Mathf.Clamp(lifetime, 0.1f, 5);
 
         var size = RippleSize;
         p.transform.localScale = Vector3.one * size;
@@ -269,14 +273,28 @@ public class AbilityDash : Ability
             SetRippleDirectionToClosest(p);
         }
 
+        if (ShockwaveLinger)
+        {
+            p.Drag = 0.95f;
+            p.StartCoroutine(AnimateSizeCr(p));
+        }
+
         void OnHit(Projectile p, IKillable k)
         {
             if (RippleBounce)
             {
                 SetRippleDirectionToClosest(p);
-                p.Lifetime += 5f / speed; // distance / speed = time
+                var lifetime = Calculator.DST_Time(5f, speed);
+                p.Lifetime += Mathf.Clamp(lifetime, 0.1f, 5);
                 AbilityChain.CreateImpactPS(p.transform.position);
             }
+        }
+
+        IEnumerator AnimateSizeCr(Projectile p)
+        {
+            var start = p.transform.localScale;
+            var end = p.transform.localScale * 1.5f;
+            yield return LerpEnumerator.LocalScale(p.transform, p.Lifetime, start, end);
         }
     }
 

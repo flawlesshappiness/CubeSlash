@@ -15,8 +15,11 @@ public class AbilityChain : Ability
     public int Strikes { get; private set; }
     public int ChainStrikes { get; private set; }
     public bool HitsExplode { get; private set; }
+    public bool StoreZaps { get; private set; }
 
     private float time_attack;
+    private float time_store;
+    private int stored_zaps;
 
     private const float RADIUS = 6;
 
@@ -36,6 +39,7 @@ public class AbilityChain : Ability
         Strikes = GetIntValue("Strikes");
         ChainStrikes = GetIntValue("ChainStrikes");
         HitsExplode = GetBoolValue("HitsExplode");
+        StoreZaps = GetBoolValue("StoreZaps");
 
         pivot_preview.localScale = Vector3.one * Radius * 2;
         spr_preview.SetAlpha(0);
@@ -79,12 +83,24 @@ public class AbilityChain : Ability
         var center = Player.Instance.transform.position;
         var success = TryChainToTarget(center, Radius, Chains, Strikes, ChainStrikes, HitTarget);
 
+        var time_success = Time.time + Frequency * FrequencyPerc;
+        var time_fail = Time.time + 0.1f;
+
         if (success)
         {
-            time_attack = Time.time + Frequency * FrequencyPerc;
+            stored_zaps = Mathf.Max(0, stored_zaps - 1);
+            time_attack = stored_zaps > 0 ? time_fail : time_success;
+            time_store = time_success;
         }
         else
         {
+            if(StoreZaps && Time.time > time_store)
+            {
+                time_store = time_success;
+                stored_zaps++;
+                CreateImpactPS(Player.transform.position);
+            }
+
             time_attack = Time.time + 0.1f;
         }
     }

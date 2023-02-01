@@ -114,3 +114,13 @@ MonoBehaviour:
     value_bool: 0
     can_edit_name: 1
     _editor_toggle_preview: 0
+  - name: HasFragments
+    text_display: Release fragments
+    type_value: 2
+    type_display: 3
+    higher_is_positive: 1
+    value_int: 0
+    value_float: 0
+    value_bool: 0
+    can_edit_name: 1
+    _editor_toggle_preview: 1

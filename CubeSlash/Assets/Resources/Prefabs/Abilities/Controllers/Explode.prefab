@@ -48,3 +48,4 @@ MonoBehaviour:
   ModifierUpgrades: {fileID: 11400000, guid: 161417befd49f914f8a016a009f566af, type: 2}
   prefab_bodypart: {fileID: -2917802339203646303, guid: a598b6e1237c46d4aaa610523957efa6, type: 3}
   projectile_split_modifier: {fileID: 2903384162585443173, guid: c2e3bb02feeb6014fbc7fef251de104d, type: 3}
+  projectile_fragment: {fileID: 2903384162585443173, guid: ddcb15fa1e981794fb20b9ac54b20037, type: 3}

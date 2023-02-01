@@ -8,4 +8,4 @@ waves that push things in a direction
 unlockable "charms" in main menu
 unlock bodies in main menu
 gain points when playing game
-MINES ability
+MINES modifiers on other abilities

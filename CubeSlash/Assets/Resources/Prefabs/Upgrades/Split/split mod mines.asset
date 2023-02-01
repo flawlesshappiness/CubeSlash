@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 616189df85cb92d40806459b9c9111b7, type: 3}
-  m_Name: split mod split
+  m_Name: split mod mines
   m_EditorClassIdentifier: 
-  id: split_mod_split
-  name: Split modified by split
+  id: split_mod_mines
+  name: Split modified by Mines
   icon: {fileID: 21300000, guid: 84f667a0eed51a340b7b37327afb72ea, type: 3}
   id_stats: split
   effects:
@@ -31,13 +31,13 @@ MonoBehaviour:
       _editor_toggle_preview: 0
   - type_effect: 0
     variable:
-      name: CountProjectiles
-      text_display: $ projectiles
-      type_value: 0
-      type_display: 0
+      name: ProjectileLinger
+      text_display: Projectiles linger for a while
+      type_value: 2
+      type_display: 3
       higher_is_positive: 0
-      value_int: 3
+      value_int: 0
       value_float: 0
-      value_bool: 0
+      value_bool: 1
       can_edit_name: 1
       _editor_toggle_preview: 0

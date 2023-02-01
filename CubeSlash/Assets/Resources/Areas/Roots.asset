@@ -18,8 +18,8 @@ MonoBehaviour:
   - enemy: {fileID: 11400000, guid: e3fdf9a9032f5a547809171c6941ee82, type: 2}
     chance: 0.2
     max: 10
-  color_fog: {r: 0.023529412, g: 0.011764706, b: 0.050980393, a: 1}
-  color_bg: {r: 0.023529412, g: 0.02745098, b: 0.101960786, a: 1}
+  color_fog: {r: 0.07273173, g: 0.044158533, b: 0.213, a: 1}
+  color_bg: {r: 0.036655035, g: 0.02352941, b: 0.101960786, a: 1}
   ac_alpha_fog:
     serializedVersion: 2
     m_Curve:

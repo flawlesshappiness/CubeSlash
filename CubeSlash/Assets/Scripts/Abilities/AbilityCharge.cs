@@ -8,6 +8,7 @@ public class AbilityCharge : Ability
     [Header("CHARGE")]
     [SerializeField] private ChargeBeam template_beam;
     [SerializeField] private DamageTrail template_trail;
+    [SerializeField] private Projectile template_fragment_projectile;
     [SerializeField] private ParticleSystem ps_charge;
     [SerializeField] private ParticleSystem ps_charge_end;
     [SerializeField] private ParticleSystem ps_charged;
@@ -55,6 +56,7 @@ public class AbilityCharge : Ability
     private bool ChargeSucksExp { get; set; }
     private bool BeamBack { get; set; }
     private bool ChainLightning { get; set; }
+    private bool EnemyFragments { get; set; }
 
     private void Start()
     {
@@ -96,6 +98,8 @@ public class AbilityCharge : Ability
         ChargeSucksExp = GetBoolValue("ChargeSucksExp");
         ChargeTimeOnKill = GetFloatValue("ChargeTimeOnKill");
         ChainLightning = GetBoolValue("ChainLightning");
+        EnemyFragments = GetBoolValue("EnemyFragments");
+
         Charging = false;
         ChargeEnded = false;
         Kills = 0;
@@ -219,6 +223,11 @@ public class AbilityCharge : Ability
         }
     }
 
+    private void StartShoot()
+    {
+
+    }
+
     private void Shoot(float distance)
     {
         Kills = 0;
@@ -253,6 +262,15 @@ public class AbilityCharge : Ability
                             if (HasModifier(Type.EXPLODE))
                             {
                                 StartCoroutine(ExplodeCr(position));
+                            }
+
+                            if (EnemyFragments)
+                            {
+                                var fragments = AbilityMines.ShootFragments(position, template_fragment_projectile, 3, 20, 1.0f);
+                                foreach(var fragment in fragments)
+                                {
+                                    fragment.Lifetime = 0.25f;
+                                }
                             }
                         }
                     });

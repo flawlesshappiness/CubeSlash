@@ -33,3 +33,7 @@ MonoBehaviour:
     description: Enemies explode when hit
     type: 4
     upgrade: {fileID: 11400000, guid: 623baa5d4f9813044940b4741b6ee52c, type: 2}
+  - name: MINES
+    description: 
+    type: 5
+    upgrade: {fileID: 11400000, guid: 6a17f7364d61c7d4b8af32772556b77b, type: 2}

@@ -19,6 +19,7 @@ public class AbilitySplit : Ability
     private float ForceKnockback { get; set; }
     private bool SplitProjectiles { get; set; }
     private bool ChainLightning { get; set; }
+    private bool ProjectileLinger { get; set; }
     private float HitCooldownReduc { get; set; }
 
     private const float PROJECTILE_SPEED = 20f;
@@ -45,6 +46,7 @@ public class AbilitySplit : Ability
         Bursts = GetIntValue("Bursts");
         SplitProjectiles = GetBoolValue("SplitProjectiles");
         ChainLightning = GetBoolValue("ChainLightning");
+        ProjectileLinger = GetBoolValue("ProjectileLinger");
         HitCooldownReduc = GetFloatValue("HitCooldownReduc");
     }
 
@@ -81,6 +83,14 @@ public class AbilitySplit : Ability
             });
 
             p.transform.localScale = Vector3.one * SizeProjectiles;
+            p.Piercing = HasModifier(Type.CHARGE);
+            p.Lifetime = 0.75f;
+
+            if (ProjectileLinger)
+            {
+                p.Drag = 0.95f;
+                p.Lifetime *= 5f;
+            }
 
             if (ChainLightning)
             {
@@ -88,14 +98,6 @@ public class AbilitySplit : Ability
             }
 
             projectiles.Add(p);
-        }
-
-        // Setup projectiles
-        foreach(var p in projectiles)
-        {
-            p.Homing = false;
-            p.Lifetime = 0.75f;
-            p.Piercing = HasModifier(Type.CHARGE);
         }
 
         // Play sound

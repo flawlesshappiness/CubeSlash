@@ -33,3 +33,7 @@ MonoBehaviour:
     description: Projectiles zap nearby enemies
     type: 4
     upgrade: {fileID: 11400000, guid: 74dacd12765208f42914e9dcbc298c0e, type: 2}
+  - name: MINES
+    description: 
+    type: 5
+    upgrade: {fileID: 11400000, guid: 44b29fd8bb4775148a48450eab23be88, type: 2}

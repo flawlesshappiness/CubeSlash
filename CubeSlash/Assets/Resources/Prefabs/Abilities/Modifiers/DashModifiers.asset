@@ -33,3 +33,7 @@ MonoBehaviour:
     description: Shockwave bounces between enemies
     type: 4
     upgrade: {fileID: 11400000, guid: 33dcf79c1391bf34585336b97547584c, type: 2}
+  - name: MINES
+    description: 
+    type: 5
+    upgrade: {fileID: 11400000, guid: 4dd15793733422a4b84de0c44ea2e466, type: 2}

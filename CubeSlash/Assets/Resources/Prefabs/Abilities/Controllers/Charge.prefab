@@ -19327,6 +19327,7 @@ MonoBehaviour:
   prefab_bodypart: {fileID: 5244421003229509873, guid: 9ee26c5f6b007e64e96421732fcf5a9f, type: 3}
   template_beam: {fileID: 4577559274492983157, guid: 7890aea33356ee846b6b9000844b46ee, type: 3}
   template_trail: {fileID: 7448746127257476779}
+  template_fragment_projectile: {fileID: 2903384162585443173, guid: 35cef0c126fc33849af54dc196d327f6, type: 3}
   ps_charge: {fileID: 3355490899533344021}
   ps_charge_end: {fileID: 3894950489769590115}
   ps_charged: {fileID: 5712313451047496011}

@@ -6,6 +6,7 @@ public class AbilityExplode : Ability
 {
     [Header("EXPLODE")]
     [SerializeField] private Projectile projectile_split_modifier;
+    [SerializeField] private Projectile projectile_fragment;
 
     // Values
     public float Delay { get; private set; }
@@ -14,8 +15,7 @@ public class AbilityExplode : Ability
     public int Rings { get; private set; }
     public bool DelayPull { get; private set; }
     public bool ChainExplode { get; private set; }
-
-    private bool charge_sfx_has_played = false;
+    public bool HasFragments { get; private set; }
 
     private const float DELAY = 0.5f;
     private const float RADIUS = 4f;
@@ -35,6 +35,7 @@ public class AbilityExplode : Ability
         Rings = GetIntValue("Rings");
         DelayPull = GetBoolValue("DelayPull");
         ChainExplode = GetBoolValue("ChainExplode");
+        HasFragments = GetBoolValue("HasFragments");
 
         if (HasModifier(Type.DASH))
         {
@@ -47,6 +48,7 @@ public class AbilityExplode : Ability
         if (InUse) return;
         base.Trigger();
         InUse = true;
+        Player.AbilityLock.AddLock(nameof(AbilityExplode));
 
         if (HasModifier(Type.SPLIT))
         {
@@ -54,14 +56,17 @@ public class AbilityExplode : Ability
             var p = projectile_split_modifier;
             var start = Player.transform.position;
             var dir = Player.MoveDirection;
+            var speed = 15;
+            var velocity = dir * speed;
             var p_instance = ProjectileController.Instance.ShootPlayerProjectile(new ProjectileController.PlayerShootInfo
             {
                 prefab = p,
                 position_start = start,
-                velocity = start * 15f,
+                velocity = velocity,
                 onHit = ProjectileExplode
             });
 
+            p_instance.Lifetime = Calculator.DST_Time(7f, speed);
             p_instance.onDeath += () => ProjectileExplode(p_instance);
         }
         else
@@ -78,8 +83,6 @@ public class AbilityExplode : Ability
 
     private void TriggerExplode(Transform parent, System.Func<Vector3> getPosition, Vector3 direction)
     {
-        charge_sfx_has_played = false;
-
         if (HasModifier(Type.CHARGE))
         {
             Vector3 pos = getPosition();
@@ -88,9 +91,11 @@ public class AbilityExplode : Ability
                 var r = Radius * (1 + 0.15f * i);
                 pos = pos + direction.normalized * r;
                 Explode(pos, r * (1 + 0.15f * i), Knockback);
+                OnExplode(pos);
             }
 
             InUse = false;
+            Player.AbilityLock.RemoveLock(nameof(AbilityExplode));
             StartCooldown();
         }
         else
@@ -101,7 +106,7 @@ public class AbilityExplode : Ability
         IEnumerator ExplodeDelayCr()
         {
             InUse = true;
-            Player.Instance.AbilityLock.AddLock(nameof(AbilityChain));
+            Player.Instance.AbilityLock.AddLock(nameof(AbilityExplode));
 
             var ring_delay = Delay * 0.5f;
             for (int i = 0; i < Rings; i++)
@@ -118,6 +123,7 @@ public class AbilityExplode : Ability
                     getPosition = getPosition,
                     play_charge_sfx = i == 0,
                     onHit = OnHit,
+                    onExplode = OnExplode,
                 }));
 
                 yield return new WaitForSeconds(ring_delay);
@@ -125,7 +131,19 @@ public class AbilityExplode : Ability
 
             InUse = false;
             StartCooldown();
-            Player.Instance.AbilityLock.RemoveLock(nameof(AbilityChain));
+            Player.Instance.AbilityLock.RemoveLock(nameof(AbilityExplode));
+        }
+
+        void OnExplode(Vector3 position)
+        {
+            if (HasFragments)
+            {
+                var fragments = AbilityMines.ShootFragments(position, projectile_fragment, 10, 20, 0.75f);
+                foreach(var fragment in fragments)
+                {
+                    fragment.Lifetime = Random.Range(0.5f, 1f);
+                }
+            }
         }
     }
 
@@ -139,6 +157,7 @@ public class AbilityExplode : Ability
         public bool play_charge_sfx;
         public System.Func<Vector3> getPosition;
         public System.Action<IKillable> onHit;
+        public System.Action<Vector3> onExplode;
     }
 
     public static IEnumerator ExplodeCr(ChargeInfo info)
@@ -160,7 +179,9 @@ public class AbilityExplode : Ability
 
         sfx.Stop();
 
-        Explode(getPosition(), radius, force, onHit);
+        var position = getPosition();
+        Explode(position, radius, force, onHit);
+        info.onExplode?.Invoke(position);
     }
 
     private void OnHit(IKillable k)

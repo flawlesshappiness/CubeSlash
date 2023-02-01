@@ -32,6 +32,14 @@ public class Enemy : Character, IKillable, IHurt
         Rigidbody.mass = settings.mass;
         SetBody(settings.body);
         SetAI(settings.ai);
+
+        StartCoroutine(InvincibleCr());
+        IEnumerator InvincibleCr()
+        {
+            InvincibleLock.AddLock("Spawn");
+            yield return new WaitForSeconds(0.5f);
+            InvincibleLock.RemoveLock("Spawn");
+        }
     }
 
     protected override void OnUpdate()
