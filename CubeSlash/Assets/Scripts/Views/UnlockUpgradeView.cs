@@ -220,7 +220,7 @@ public class UnlockUpgradeView : View
 
             var anim = LerpEnumerator.Alpha(img_fg_refund, 2f, 0f, 0.25f);
             anim.AnimationCurve = EasingCurves.EaseInQuad;
-            anim.UnscaledTime = true;
+            anim.UseUnscaledTime = true;
             yield return anim;
 
             sfx_hold_refund.Stop();

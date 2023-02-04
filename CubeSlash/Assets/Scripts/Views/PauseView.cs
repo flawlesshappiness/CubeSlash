@@ -53,7 +53,7 @@ public class PauseView : View
         {
             CanvasGroup.alpha = Mathf.Lerp(1f, 0f, f);
         });
-        lerp.UnscaledTime = true;
+        lerp.UseUnscaledTime = true;
         yield return lerp;
 
         FMODButtonEvent.PreviousSelected = null;

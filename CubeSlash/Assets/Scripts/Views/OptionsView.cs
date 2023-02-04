@@ -44,7 +44,7 @@ public class OptionsView : View
         {
             CanvasGroup.alpha = Mathf.Lerp(start, end, f);
         });
-        lerp.UnscaledTime = true;
+        lerp.UseUnscaledTime = true;
         yield return lerp;
     }
 

@@ -95,12 +95,12 @@ public class GameController : MonoBehaviour
         SetTimeScale(paused ? 0 : 1);
     }
 
-    private void SetTimeScale(float time)
+    public void SetTimeScale(float time)
     {
         Time.timeScale = PauseLock.IsLocked ? 0 : time;
     }
 
-    private Lerp LerpTimeScale(float duration, float end)
+    public Lerp LerpTimeScale(float duration, float end)
     {
         var start = Time.timeScale;
         return Lerp.Value("timescale", duration, f => SetTimeScale(Mathf.Lerp(start, end, f)))
@@ -133,7 +133,7 @@ public class GameController : MonoBehaviour
         ResumeLevel();
     }
 
-    private void EndGame()
+    public void EndGame()
     {
         IsGameEnded = true;
         TimeGameEnd = Time.time;
@@ -221,7 +221,7 @@ public class GameController : MonoBehaviour
             var death_view = ViewController.Instance.ShowView<DeathView>(2f, "Death");
             death_view.AnimateScaleTitle(6);
             yield return new WaitForSeconds(2.0f);
-            var bg_view = ViewController.Instance.ShowView<BackgroundView>(2.0f, "Background");
+            var bg_view = ViewController.Instance.ShowView<BackgroundView>(2.0f, "Foreground");
             yield return new WaitForSeconds(3.0f);
             death_view.Close(1.0f);
             yield return new WaitForSeconds(1.0f);
@@ -237,14 +237,14 @@ public class GameController : MonoBehaviour
         IEnumerator Cr()
         {
             GameStateController.Instance.SetGameState(GameStateType.MENU);
-            var bg_view = ViewController.Instance.ShowView<BackgroundView>(0.5f, "Background");
-            yield return new WaitForSeconds(0.5f);
+            var bg_view = ViewController.Instance.ShowView<BackgroundView>(0.5f, "Foreground");
+            yield return new WaitForSecondsRealtime(0.5f);
             bg_view.Close(0.5f);
             MainMenu();
         }
     }
 
-    private void MainMenu()
+    public void MainMenu()
     {
         IsGameStarted = false;
         IsGameEnded = false;
@@ -258,24 +258,24 @@ public class GameController : MonoBehaviour
 
     public void Win()
     {
-        EndGame();
+        //EndGame();
+        GameStateController.Instance.SetGameState(GameStateType.MENU);
         MusicController.Instance.StopBGM();
         EnemyController.Instance.KillActiveEnemies();
+
         StartCoroutine(Cr());
         IEnumerator Cr()
         {
-            CameraController.Instance.AnimateSize(8f, 25f);
-            yield return new WaitForSeconds(2f);
-            // Show view
-            var win_view = ViewController.Instance.ShowView<WinView>(2.0f, "Win");
-            win_view.AnimateScaleTitle(6);
-            yield return new WaitForSeconds(2f);
+            yield return LerpTimeScale(1f, 0f);
+            var win_view = ViewController.Instance.ShowView<EndView>(1.0f, "Win");
+            /*
             var bg_view = ViewController.Instance.ShowView<BackgroundView>(2.0f, "Background");
             yield return new WaitForSeconds(3f);
             win_view.Close(2.0f);
             yield return new WaitForSeconds(2f);
             bg_view.Close(0.5f);
             MainMenu();
+            */
         }
     }
 }

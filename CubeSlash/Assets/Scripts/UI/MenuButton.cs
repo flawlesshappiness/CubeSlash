@@ -35,7 +35,7 @@ public class MenuButton : MonoBehaviour
                 cvg_selected.alpha = Mathf.Lerp(alpha_start, alpha_end, f);
                 rt_selected.sizeDelta = Vector2.Lerp(scale_start, scale_end, f);
             });
-            lerp.UnscaledTime = true;
+            lerp.UseUnscaledTime = true;
             yield return lerp;
         }
     }
