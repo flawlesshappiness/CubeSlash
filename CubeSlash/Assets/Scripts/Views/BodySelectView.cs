@@ -129,7 +129,6 @@ public class BodySelectView : View
             }
 
             ResetConfirm();
-            sfx_change_body.Play();
         }
     }
 
@@ -138,6 +137,7 @@ public class BodySelectView : View
         if(SetBody(idx_body_selected + 1))
         {
             AnimateArrowRight();
+            sfx_change_body.Play();
         }
     }
 
@@ -146,6 +146,7 @@ public class BodySelectView : View
         if(SetBody(idx_body_selected - 1))
         {
             AnimateArrowLeft();
+            sfx_change_body.Play();
         }
     }
 
@@ -170,10 +171,14 @@ public class BodySelectView : View
         AddHealthPoints(settings.health);
         AddArmorPoints(settings.armor);
 
-        var velocity_points = (int)(settings.linear_velocity / 0.5f);
+        var velocity_min = 4;
+        var velocity = settings.linear_velocity - velocity_min;
+        var velocity_points = (int)(velocity / 0.5f);
         AddSpeedPoints(velocity_points);
 
-        var acc_points = (int)(settings.linear_acceleration / 2f);
+        var acc_min = 10;
+        var acc = settings.linear_acceleration - acc_min;
+        var acc_points = (int)(acc / 2f);
         AddAccelerationPoints(acc_points);
 
         // Body

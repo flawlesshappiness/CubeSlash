@@ -1,7 +1,6 @@
 using Flawliz.Lerp;
 using System.Collections;
 using System.Collections.Generic;
-using System.Threading;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -9,32 +8,51 @@ using UnityEngine.UI;
 
 public class EndView : View
 {
-    [SerializeField] private Image img_hold;
     [SerializeField] private UIInputLayout input;
-    [SerializeField] private TMP_Text tmp_text_level, tmp_text_enemies, tmp_text_currency;
-    [SerializeField] private TMP_Text tmp_value_level, tmp_value_enemies, tmp_value_currency;
+    [SerializeField] private TMP_Text tmp_title_win, tmp_title_lose;
+    [SerializeField] private TMP_Text tmp_text_level, tmp_text_enemies, tmp_text_currency, tmp_text_time;
+    [SerializeField] private TMP_Text tmp_value_level, tmp_value_enemies, tmp_value_currency, tmp_value_time;
+    [SerializeField] private Image img_title_gradient;
+    [SerializeField] private CanvasGroup cvg_title, cvg_stats, cvg_background;
     [SerializeField] private FMODEventReference sfx_stats_row;
     [SerializeField] private FMODEventReference sfx_tally;
 
     private Coroutine cr_animate_stats;
-    private bool animating;
+    private bool starting;
+    private bool animating_stats;
     private bool exiting;
 
-    private bool InputDisabled { get { return animating || exiting; } }
+    private bool InputDisabled { get { return starting || animating_stats || exiting; } }
 
     private void Start()
     {
-        img_hold.SetAlpha(0);
+        SetTextAlpha(0);
         SetupInput();
 
-        tmp_text_level.SetAlpha(0);
-        tmp_text_enemies.SetAlpha(0);
-        tmp_text_currency.SetAlpha(0);
-        tmp_value_level.SetAlpha(0);
-        tmp_value_enemies.SetAlpha(0);
-        tmp_value_currency.SetAlpha(0);
+        input.gameObject.SetActive(false);
+        cvg_title.alpha = 0;
+        cvg_stats.alpha = 0;
+        cvg_background.alpha = 0;
 
-        cr_animate_stats = StartCoroutine(AnimateStatsCr());
+        var data = SessionController.Instance.CurrentData;
+        tmp_title_win.enabled = data.won;
+        tmp_title_lose.enabled = !data.won;
+
+        Save.Game.currency += data.GetCurrencyEarned();
+
+        StartCoroutine(Cr());
+        IEnumerator Cr()
+        {
+            starting = true;
+
+            if (data.won) yield return AnimateWonCr();
+            else yield return AnimateLoseCr();
+
+            cr_animate_stats = StartCoroutine(AnimateStatsCr());
+            yield return cr_animate_stats;
+
+            starting = false;
+        }
     }
 
     private void OnEnable()
@@ -55,20 +73,59 @@ public class EndView : View
 
     private void SetupInput()
     {
-        input.AddInput(PlayerInput.UIButtonType.SOUTH, "Hold to return to menu");
-        input.AddInput(PlayerInput.UIButtonType.WEST, "Hold to play endless");
+        input.AddInput(PlayerInput.UIButtonType.SOUTH, "Return to main menu");
+
+        if (SessionController.Instance.CurrentData.won)
+        {
+            input.AddInput(PlayerInput.UIButtonType.WEST, "Continue playing (endless)");
+        }
+    }
+
+    IEnumerator AnimateLoseCr()
+    {
+        img_title_gradient.enabled = true;
+        yield return LerpEnumerator.Value(3f, f =>
+        {
+            cvg_title.alpha = Mathf.Lerp(0, 1, f);
+        }).UnscaledTime();
+
+        yield return LerpEnumerator.Value(1f, f =>
+        {
+            img_title_gradient.SetAlpha(Mathf.Lerp(1, 0, f));
+            cvg_background.alpha = Mathf.Lerp(0, 1, f);
+            cvg_stats.alpha = Mathf.Lerp(0, 1, f);
+
+        }).UnscaledTime();
+
+        yield return new WaitForSecondsRealtime(1f);
+    }
+
+    IEnumerator AnimateWonCr()
+    {
+        img_title_gradient.enabled = false;
+        yield return LerpEnumerator.Value(1f, f =>
+        {
+            cvg_background.alpha = Mathf.Lerp(0, 1, f);
+            cvg_title.alpha = Mathf.Lerp(0, 1, f);
+            cvg_stats.alpha = Mathf.Lerp(0, 1, f);
+        }).UnscaledTime();
+        yield return new WaitForSecondsRealtime(1f);
     }
 
     IEnumerator AnimateStatsCr()
     {
-        animating = true;
-        yield return new WaitForSecondsRealtime(1f);
-        yield return RowCr(tmp_text_level, tmp_value_level, 9);
+        animating_stats = true;
+        var data = SessionController.Instance.CurrentData;
+        var lifetime = Time.time - data.time_start;
+        yield return RowCr(tmp_text_level, tmp_value_level, data.levels_gained);
         yield return new WaitForSecondsRealtime(0.2f);
-        yield return RowCr(tmp_text_enemies, tmp_value_enemies, 99);
-        yield return new WaitForSecondsRealtime(0.3f);
-        yield return RowCr(tmp_text_currency, tmp_value_currency, 999);
-        animating = false;
+        yield return RowCr(tmp_text_time, tmp_value_time, (int)lifetime);
+        yield return new WaitForSecondsRealtime(0.2f);
+        yield return RowCr(tmp_text_enemies, tmp_value_enemies, data.enemies_killed);
+        yield return new WaitForSecondsRealtime(0.5f);
+        yield return RowCr(tmp_text_currency, tmp_value_currency, data.GetCurrencyEarned());
+        input.gameObject.SetActive(true);
+        animating_stats = false;
 
         IEnumerator RowCr(TMP_Text tmp_text, TMP_Text tmp_value, int value)
         {
@@ -91,13 +148,31 @@ public class EndView : View
     private void SkipAnimateStats()
     {
         StopCoroutine(cr_animate_stats);
-        tmp_text_level.SetAlpha(1);
-        tmp_text_enemies.SetAlpha(1);
-        tmp_text_currency.SetAlpha(1);
-        tmp_value_level.SetAlpha(1);
-        tmp_value_enemies.SetAlpha(1);
-        tmp_value_currency.SetAlpha(1);
-        animating = false;
+        SetTextAlpha(1);
+        animating_stats = false;
+    }
+
+    private void SetTextAlpha(float a)
+    {
+        SetTextAlpha(a, 
+            tmp_text_level, 
+            tmp_text_time, 
+            tmp_text_enemies, 
+            tmp_text_currency, 
+
+            tmp_value_level, 
+            tmp_value_time, 
+            tmp_value_enemies, 
+            tmp_value_currency
+            );
+    }
+
+    private void SetTextAlpha(float alpha, params TMP_Text[] tmps)
+    {
+        foreach(var tmp in tmps)
+        {
+            tmp.SetAlpha(alpha);
+        }
     }
 
     private void ReturnToMainMenu()
@@ -119,21 +194,16 @@ public class EndView : View
     private void PlayEndless()
     {
         Close(0);
-        GameController.Instance.SetTimeScale(1f);
-        GameStateController.Instance.SetGameState(GameStateType.PLAYING);
+        GameController.Instance.ResumeEndless();
     }
 
     private void PressReturn(InputAction.CallbackContext c)
     {
-        if (animating)
+        if (animating_stats)
         {
             SkipAnimateStats();
         }
-        else if (InputDisabled)
-        {
-            // Do nothing
-        }
-        else
+        else if (!InputDisabled)
         {
             ReturnToMainMenu();
             sfx_stats_row.Play();
@@ -142,15 +212,11 @@ public class EndView : View
 
     private void PressPlayEndless(InputAction.CallbackContext c)
     {
-        if (animating)
+        if (animating_stats)
         {
             SkipAnimateStats();
         }
-        else if (InputDisabled)
-        {
-            // Do nothing
-        }
-        else
+        else if (!InputDisabled)
         {
             PlayEndless();
             sfx_stats_row.Play();

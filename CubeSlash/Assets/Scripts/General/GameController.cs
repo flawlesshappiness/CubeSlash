@@ -21,8 +21,10 @@ public class GameController : MonoBehaviour
     public float TimeGameEnd { get; private set; }
 
     public System.Action onResume { get; set; }
+    public System.Action onGameStart { get; set; }
     public System.Action onGameEnd { get; set; }
     public System.Action onMainMenu { get; set; }
+    public System.Action onPlayerLevelUp { get; set; }
 
     public const string TAG_ABILITY_VIEW = "Ability";
 
@@ -78,6 +80,7 @@ public class GameController : MonoBehaviour
         Singleton.EnsureExistence<VignetteController>();
         Singleton.EnsureExistence<ObjectSpawnController>();
         Singleton.EnsureExistence <AudioController>();
+        Singleton.EnsureExistence <SessionController>();
     }
 
     public void OpenPauseView()
@@ -130,6 +133,8 @@ public class GameController : MonoBehaviour
         AreaController.Instance.StartAreaCoroutine();
         MusicController.Instance.PlayStartMusic();
         ViewController.Instance.ShowView<GameView>(1);
+
+        onGameStart?.Invoke();
         ResumeLevel();
     }
 
@@ -157,6 +162,7 @@ public class GameController : MonoBehaviour
     private void OnPlayerLevelUp()
     {
         Player.Instance.ResetExperience();
+        onPlayerLevelUp?.Invoke();
 
         //Debug.Log($"{Player.Instance.LevelsUntilAbility} {Player.Instance.CanGainAbility()} {AbilityController.Instance.CanUnlockAbility()}");
         if (Player.Instance.CanGainAbility() && AbilityController.Instance.CanUnlockAbility())
@@ -210,6 +216,7 @@ public class GameController : MonoBehaviour
     private void OnPlayerDeath()
     {
         EndGame();
+        SessionController.Instance.CurrentData.won = false;
         StartCoroutine(Cr());
 
         IEnumerator Cr()
@@ -218,15 +225,7 @@ public class GameController : MonoBehaviour
             MusicController.Instance.StopBGM();
             FMODEventReferenceDatabase.Load().lose_game.Play();
             yield return new WaitForSeconds(0.5f);
-            var death_view = ViewController.Instance.ShowView<DeathView>(2f, "Death");
-            death_view.AnimateScaleTitle(6);
-            yield return new WaitForSeconds(2.0f);
-            var bg_view = ViewController.Instance.ShowView<BackgroundView>(2.0f, "Foreground");
-            yield return new WaitForSeconds(3.0f);
-            death_view.Close(1.0f);
-            yield return new WaitForSeconds(1.0f);
-            bg_view.Close(0.5f);
-            MainMenu();
+            var lose_view = ViewController.Instance.ShowView<EndView>(0, "Win");
         }
     }
 
@@ -258,24 +257,23 @@ public class GameController : MonoBehaviour
 
     public void Win()
     {
-        //EndGame();
-        GameStateController.Instance.SetGameState(GameStateType.MENU);
+        SessionController.Instance.CurrentData.won = true;
         MusicController.Instance.StopBGM();
         EnemyController.Instance.KillActiveEnemies();
+        IsGameEnded = true;
 
         StartCoroutine(Cr());
         IEnumerator Cr()
         {
-            yield return LerpTimeScale(1f, 0f);
-            var win_view = ViewController.Instance.ShowView<EndView>(1.0f, "Win");
-            /*
-            var bg_view = ViewController.Instance.ShowView<BackgroundView>(2.0f, "Background");
-            yield return new WaitForSeconds(3f);
-            win_view.Close(2.0f);
             yield return new WaitForSeconds(2f);
-            bg_view.Close(0.5f);
-            MainMenu();
-            */
+            GameStateController.Instance.SetGameState(GameStateType.MENU);
+            var win_view = ViewController.Instance.ShowView<EndView>(0, "Win");
         }
+    }
+
+    public void ResumeEndless()
+    {
+        IsGameEnded = false;
+        GameStateController.Instance.SetGameState(GameStateType.PLAYING);
     }
 }
