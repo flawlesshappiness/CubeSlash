@@ -18,7 +18,7 @@ MonoBehaviour:
   area_size: 100
   time_bgm_play: 0.3
   time_boss_spawn: 0.6
-  endless_duration: 600
+  endless_duration: 1200
   enemy_freq_area:
     serializedVersion: 2
     m_Curve:
@@ -58,38 +58,29 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 0
       value: 1.4
-      inSlope: -9.104229
-      outSlope: -9.104229
+      inSlope: -5.2301874
+      outSlope: -5.2301874
       tangentMode: 0
       weightedMode: 3
       inWeight: 0
-      outWeight: 0.35024154
+      outWeight: 0.27777776
     - serializedVersion: 3
-      time: 0.1
+      time: 0.2
       value: 1
-      inSlope: 0
-      outSlope: 0
+      inSlope: -0.42729875
+      outSlope: -0.42729875
       tangentMode: 0
-      weightedMode: 3
-      inWeight: 0.3333333
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 0.5
-      value: 0.9
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 3
-      inWeight: 0.3333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 1
-      value: 0.6
-      inSlope: -0.5999999
-      outSlope: -0.5999999
-      tangentMode: 34
       weightedMode: 3
       inWeight: 0.33333334
+      outWeight: 0.3146135
+    - serializedVersion: 3
+      time: 1
+      value: 0.8
+      inSlope: -0.32959154
+      outSlope: -0.32959154
+      tangentMode: 0
+      weightedMode: 3
+      inWeight: 0.35778984
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
@@ -99,21 +90,45 @@ MonoBehaviour:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0.2
-      inSlope: -0.44915098
-      outSlope: -0.44915098
-      tangentMode: 0
+      value: 0.8
+      inSlope: -0.75
+      outSlope: -0.75
+      tangentMode: 34
       weightedMode: 3
       inWeight: 0
-      outWeight: 0.31400964
+      outWeight: 0.33333334
     - serializedVersion: 3
       time: 1
       value: 0.05
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
+      inSlope: -0.75
+      outSlope: -0.75
+      tangentMode: 34
       weightedMode: 3
-      inWeight: 0.33333302
+      inWeight: 0.33333334
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  enemy_freq_difficulty:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 2
+      outSlope: 2
+      tangentMode: 34
+      weightedMode: 3
+      inWeight: 0
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 2
+      inSlope: 2
+      outSlope: 2
+      tangentMode: 34
+      weightedMode: 3
+      inWeight: 0.33333334
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2

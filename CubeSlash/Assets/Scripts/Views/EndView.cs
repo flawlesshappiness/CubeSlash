@@ -2,6 +2,7 @@ using Flawliz.Lerp;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
@@ -10,10 +11,11 @@ public class EndView : View
 {
     [SerializeField] private UIInputLayout input;
     [SerializeField] private TMP_Text tmp_title_win, tmp_title_lose;
-    [SerializeField] private TMP_Text tmp_text_level, tmp_text_enemies, tmp_text_currency, tmp_text_time;
+    [SerializeField] private CanvasGroup cvg_text_level, cvg_text_enemies, cvg_text_currency, cvg_text_time;
     [SerializeField] private TMP_Text tmp_value_level, tmp_value_enemies, tmp_value_currency, tmp_value_time;
     [SerializeField] private Image img_title_gradient;
     [SerializeField] private CanvasGroup cvg_title, cvg_stats, cvg_background;
+    [SerializeField] private UICurrencyBar currencybar;
     [SerializeField] private FMODEventReference sfx_stats_row;
     [SerializeField] private FMODEventReference sfx_tally;
 
@@ -22,6 +24,8 @@ public class EndView : View
     private bool animating_stats;
     private bool exiting;
 
+    private int currency_earned;
+
     private bool InputDisabled { get { return starting || animating_stats || exiting; } }
 
     private void Start()
@@ -29,6 +33,7 @@ public class EndView : View
         SetTextAlpha(0);
         SetupInput();
 
+        currencybar.gameObject.SetActive(false);
         input.gameObject.SetActive(false);
         cvg_title.alpha = 0;
         cvg_stats.alpha = 0;
@@ -37,8 +42,9 @@ public class EndView : View
         var data = SessionController.Instance.CurrentData;
         tmp_title_win.enabled = data.won;
         tmp_title_lose.enabled = !data.won;
-
-        Save.Game.currency += data.GetCurrencyEarned();
+        currency_earned = data.GetCurrencyEarned();
+        Save.Game.currency += currency_earned;
+        data.has_received_currency = true;
 
         StartCoroutine(Cr());
         IEnumerator Cr()
@@ -117,30 +123,40 @@ public class EndView : View
         animating_stats = true;
         var data = SessionController.Instance.CurrentData;
         var lifetime = Time.time - data.time_start;
-        yield return RowCr(tmp_text_level, tmp_value_level, data.levels_gained);
+        yield return RowCr(cvg_text_level, tmp_value_level, data.levels_gained);
         yield return new WaitForSecondsRealtime(0.2f);
-        yield return RowCr(tmp_text_time, tmp_value_time, (int)lifetime);
+        yield return RowCr(cvg_text_time, tmp_value_time, (int)lifetime);
         yield return new WaitForSecondsRealtime(0.2f);
-        yield return RowCr(tmp_text_enemies, tmp_value_enemies, data.enemies_killed);
+        yield return RowCr(cvg_text_enemies, tmp_value_enemies, data.enemies_killed);
         yield return new WaitForSecondsRealtime(0.5f);
-        yield return RowCr(tmp_text_currency, tmp_value_currency, data.GetCurrencyEarned());
+        currencybar.gameObject.SetActive(true);
+        currencybar.SetValueText(Save.Game.currency - currency_earned);
+        currencybar.AnimateUpdateValue(0.5f, EasingCurves.EaseOutQuad);
+        yield return RowCr(cvg_text_currency, tmp_value_currency, currency_earned);
         input.gameObject.SetActive(true);
         animating_stats = false;
 
-        IEnumerator RowCr(TMP_Text tmp_text, TMP_Text tmp_value, int value)
+        IEnumerator RowCr(CanvasGroup cvg_text, TMP_Text tmp_value, int value)
         {
             sfx_stats_row.Play();
-            tmp_text.SetAlpha(1);
+            cvg_text.alpha = 1;
             tmp_value.SetAlpha(1);
             yield return TallyPointsCr(0.5f, tmp_value, value);
         }
 
         IEnumerator TallyPointsCr(float duration, TMP_Text text, int value)
         {
+            var i_last = 0;
             yield return LerpEnumerator.Value(duration, f =>
             {
                 var v = (int)Mathf.Lerp(0, value, f);
                 text.text = v.ToString();
+
+                if(v > i_last)
+                {
+                    i_last = v;
+                    FMODController.Instance.PlayWithLimitDelay(sfx_tally);
+                }
             }).UnscaledTime().Curve(EasingCurves.EaseOutQuad);
         }
     }
@@ -155,15 +171,17 @@ public class EndView : View
     private void SetTextAlpha(float a)
     {
         SetTextAlpha(a, 
-            tmp_text_level, 
-            tmp_text_time, 
-            tmp_text_enemies, 
-            tmp_text_currency, 
-
             tmp_value_level, 
             tmp_value_time, 
             tmp_value_enemies, 
             tmp_value_currency
+            );
+
+        SetCanvasGroupAlpha(a,
+            cvg_text_level,
+            cvg_text_time,
+            cvg_text_enemies,
+            cvg_text_currency
             );
     }
 
@@ -172,6 +190,14 @@ public class EndView : View
         foreach(var tmp in tmps)
         {
             tmp.SetAlpha(alpha);
+        }
+    }
+
+    private void SetCanvasGroupAlpha(float alpha, params CanvasGroup[] cvgs)
+    {
+        foreach (var cvg in cvgs)
+        {
+            cvg.alpha = alpha;
         }
     }
 

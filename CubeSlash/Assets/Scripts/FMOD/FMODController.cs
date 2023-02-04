@@ -34,6 +34,7 @@ public class FMODController : Singleton
 
     public void PlayWithLimitDelay(FMODEventReference reference)
     {
+        if (!reference.Info.has_description) return;
         var path = reference.Path;
 
         if (!dicLimitDelay.ContainsKey(path))

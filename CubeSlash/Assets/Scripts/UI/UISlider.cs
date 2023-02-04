@@ -33,10 +33,12 @@ public class UISlider : MonoBehaviour
         if(v.x > 0.1f)
         {
             IncrementValue();
+            sfx_change_value.Play();
         }
         else if(v.x < -0.1f)
         {
             DecrementValue();
+            sfx_change_value.Play();
         }
     }
 
@@ -113,6 +115,7 @@ public class UISlider : MonoBehaviour
 
         void ClickNotch(UISliderNotch notch)
         {
+            sfx_change_value.Play();
             SetSelectedNotch(notch);
         }
     }
@@ -123,8 +126,6 @@ public class UISlider : MonoBehaviour
         {
             selected_notch.SetSelected(false);
         }
-
-        sfx_change_value.Play();
 
         selected_notch = notch;
         selected_notch.SetSelected(true);

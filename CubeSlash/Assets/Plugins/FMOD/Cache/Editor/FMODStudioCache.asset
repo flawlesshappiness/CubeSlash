@@ -97,7 +97,7 @@ MonoBehaviour:
   Path: Assets/FMOD/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 638106886785112543
+  lastModified: 638111312516926799
   FileSizes: []
   Exists: 1
 --- !u!114 &-7809730102017663126
@@ -145,6 +145,33 @@ MonoBehaviour:
     Data2: 1333945573
     Data3: 564514446
     Data4: 814939433
+  Banks:
+  - {fileID: -8060980804293988741}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
+--- !u!114 &-6860863777937447673
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/UI/ui_boom_002
+  m_EditorClassIdentifier: 
+  Path: event:/UI/ui_boom_002
+  Guid:
+    Data1: 551728765
+    Data2: 1228176803
+    Data3: -1119487074
+    Data4: 843589799
   Banks:
   - {fileID: -8060980804293988741}
   IsStream: 0
@@ -235,33 +262,6 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 245869
---- !u!114 &-6362446530669809572
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
-  m_Name: event:/Game/Events/lose_game
-  m_EditorClassIdentifier: 
-  Path: event:/Game/Events/lose_game
-  Guid:
-    Data1: -771218821
-    Data2: 1128927549
-    Data3: 189750964
-    Data4: -1995803853
-  Banks:
-  - {fileID: -8060980804293988741}
-  IsStream: 0
-  Is3D: 0
-  IsOneShot: 1
-  Parameters: []
-  MinDistance: 1
-  MaxDistance: 20
-  Length: 0
 --- !u!114 &-6354703245554512797
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -424,6 +424,33 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 0
+--- !u!114 &-5059305671119162150
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Music/lose_game
+  m_EditorClassIdentifier: 
+  Path: event:/Music/lose_game
+  Guid:
+    Data1: -771218821
+    Data2: 1128927549
+    Data3: 189750964
+    Data4: -1995803853
+  Banks:
+  - {fileID: -8060980804293988741}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
 --- !u!114 &-4653878745155567962
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -442,6 +469,33 @@ MonoBehaviour:
     Data2: 1216149096
     Data3: -642046800
     Data4: -679409612
+  Banks:
+  - {fileID: -8060980804293988741}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
+--- !u!114 &-4466014634672810618
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/UI/ui_tally_002
+  m_EditorClassIdentifier: 
+  Path: event:/UI/ui_tally_002
+  Guid:
+    Data1: -1766365042
+    Data2: 1337390988
+    Data3: 222887101
+    Data4: -1658983842
   Banks:
   - {fileID: -8060980804293988741}
   IsStream: 0
@@ -968,7 +1022,6 @@ MonoBehaviour:
   - {fileID: -8307252730091020738}
   - {fileID: -4653878745155567962}
   - {fileID: 2606001295264177313}
-  - {fileID: -6362446530669809572}
   - {fileID: -189976109974734642}
   - {fileID: -243892825821260796}
   - {fileID: 2267956152613183766}
@@ -1014,12 +1067,16 @@ MonoBehaviour:
   - {fileID: -7670678753385872427}
   - {fileID: -6344884087125308512}
   - {fileID: -3822667265114807796}
+  - {fileID: -5059305671119162150}
+  - {fileID: -6860863777937447673}
+  - {fileID: -4466014634672810618}
+  - {fileID: 4337013461181109370}
   EditorParameters: []
   MasterBanks:
   - {fileID: -8060980804293988741}
   StringsBanks:
   - {fileID: 5917708036578608240}
-  cacheTime: 638106886785152543
+  cacheTime: 638111312516966809
   cacheVersion: 131593
 --- !u!114 &159336944855883450
 MonoBehaviour:
@@ -1423,6 +1480,33 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 249907
+--- !u!114 &4337013461181109370
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/UI/ui_tally_001
+  m_EditorClassIdentifier: 
+  Path: event:/UI/ui_tally_001
+  Guid:
+    Data1: -441240914
+    Data2: 1232832515
+    Data3: 954617766
+    Data4: 77190578
+  Banks:
+  - {fileID: -8060980804293988741}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
 --- !u!114 &4606787002058727218
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1492,10 +1576,10 @@ MonoBehaviour:
   Path: Assets/FMOD/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 638106886785152543
+  lastModified: 638111312516966809
   FileSizes:
   - Name: 
-    Value: 3856
+    Value: 3978
   Exists: 1
 --- !u!114 &5992827859230917708
 MonoBehaviour:

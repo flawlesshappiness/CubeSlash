@@ -152,7 +152,8 @@ public class AbilityChain : Ability
         CreateImpactPS(target_position);
 
         // Audio
-        FMODEventReferenceDatabase.Load().sfx_chain_zap.Play();
+        var sfx_chain_zap = FMODEventReferenceDatabase.Load().sfx_chain_zap;
+        FMODController.Instance.PlayWithLimitDelay(sfx_chain_zap);
         
         // Kill target
         onHit?.Invoke(k);

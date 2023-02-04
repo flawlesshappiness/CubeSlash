@@ -17,8 +17,6 @@ public class GameController : MonoBehaviour
     public bool IsPaused { get { return PauseLock.IsLocked; } }
     public MultiLock PauseLock { get; private set; } = new MultiLock();
     public int LevelIndex { get; set; }
-    public float TimeGameStart { get; private set; }
-    public float TimeGameEnd { get; private set; }
 
     public System.Action onResume { get; set; }
     public System.Action onGameStart { get; set; }
@@ -127,7 +125,6 @@ public class GameController : MonoBehaviour
     public void StartGame()
     {
         IsGameStarted = true;
-        TimeGameStart = Time.time;
 
         GameStateController.Instance.SetGameState(GameStateType.MENU);
         AreaController.Instance.StartAreaCoroutine();
@@ -141,7 +138,6 @@ public class GameController : MonoBehaviour
     public void EndGame()
     {
         IsGameEnded = true;
-        TimeGameEnd = Time.time;
         onGameEnd?.Invoke();
     }
 

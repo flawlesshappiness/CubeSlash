@@ -20,6 +20,7 @@ public class GameSettings : ScriptableObject
     public AnimationCurve enemy_freq_area;
     public AnimationCurve enemy_freq_game;
     public AnimationCurve enemy_freq_endless;
+    public AnimationCurve enemy_freq_difficulty;
 
     [Header("EXPERIENCE")]
     public float frequency_spawn_experience;

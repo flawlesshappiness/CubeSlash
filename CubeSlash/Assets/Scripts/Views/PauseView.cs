@@ -57,8 +57,8 @@ public class PauseView : View
         yield return lerp;
 
         FMODButtonEvent.PreviousSelected = null;
-        var view = ViewController.Instance.ShowView<OptionsView>(0);
-        view.onClickBack += () => ViewController.Instance.ShowView<PauseView>(0.5f);
+        var view = ViewController.Instance.ShowView<OptionsView>(0, nameof(OptionsView));
+        view.onClickBack += () => ViewController.Instance.ShowView<PauseView>(0.5f, nameof(PauseView));
 
         Close(0);
     }

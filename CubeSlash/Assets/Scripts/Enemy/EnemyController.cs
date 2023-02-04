@@ -66,9 +66,13 @@ public class EnemyController : Singleton
     {
         var settings = GameSettings.Instance;
 
+        // Difficulty
+        var difficulty = 0.0f;
+        var freq_difficulty = settings.enemy_freq_difficulty.Evaluate(difficulty);
+
         // Game
         var max_game_duration = settings.areas_to_win * settings.area_duration;
-        var current_game_duration = Time.time - GameController.Instance.TimeGameStart;
+        var current_game_duration = Time.time - SessionController.Instance.CurrentData.time_start;
         var t_game_duration = current_game_duration / max_game_duration;
         var freq_game = settings.enemy_freq_game.Evaluate(t_game_duration);
 
@@ -83,11 +87,11 @@ public class EnemyController : Singleton
         {
             var max_endless_duration = settings.endless_duration;
             var current_endless_duration = Time.time - AreaController.Instance.TimeEndlessStart;
-            var t_endless_duration = current_endless_duration / max_endless_duration;
+            var t_endless_duration = Mathf.Clamp01(current_endless_duration / max_endless_duration);
             freq_game = settings.enemy_freq_endless.Evaluate(t_endless_duration);
         }
 
-        return freq_game + freq_area;
+        return freq_game + freq_area - freq_difficulty;
     }
 
     private float time_spawn;

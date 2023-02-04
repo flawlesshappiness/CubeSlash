@@ -11,14 +11,16 @@ public class SessionController : Singleton
         public int levels_gained;
         public float time_start;
         public bool won;
+        public bool has_received_currency;
 
         public int GetCurrencyEarned()
         {
             var enemies = enemies_killed;
             var levels = levels_gained * 100;
             var time = (int)(Time.time - time_start);
-            var win = won ? 5000 : 0;
-            return enemies + levels + time + win;
+            var win = won ? 1000 : 0;
+            var mul_received = has_received_currency ? 0 : 1;
+            return (enemies + levels + time + win) * mul_received;
         }
     }
 
