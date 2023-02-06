@@ -20,4 +20,6 @@ MonoBehaviour:
   linear_acceleration: 14
   linear_drag: 20
   body: {fileID: 1353097371446324401, guid: 2e30f06ea3772804eb821dfea87f7b61, type: 3}
+  body_sprite: {fileID: 21300000, guid: 4f557c7b0abbaa547ab0764742ba9a12, type: 3}
   ability_type: 2
+  shop_product: {fileID: 11400000, guid: ac32a8d4b43374d4b8b6879bf8865765, type: 2}

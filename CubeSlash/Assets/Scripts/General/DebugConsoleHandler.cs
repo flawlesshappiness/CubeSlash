@@ -40,14 +40,20 @@ public class DebugConsoleHandler : Singleton
     {
         var window = view.ShowGrid();
         window.Clear();
-        window.CreateButton("Unlock Upgrade", ClickUnlockUpgrade);
-        window.CreateButton("Unlock Ability", ClickUnlockAbility);
-        window.CreateButton("Level up", ClickLevelUp);
-        window.CreateButton("Equipment", ClickEquipment);
-        window.CreateButton(GameController.DAMAGE_DISABLED ? "Enable damage" : "Disable damage", ClickToggleDamage);
-        window.CreateButton("Suicide", ClickSuicide);
-        window.CreateButton("Next Area", ClickNextArea);
-        window.CreateButton("Win", ClickWin);
+
+        if (GameController.Instance.IsGameStarted)
+        {
+            window.CreateButton("Unlock Upgrade", ClickUnlockUpgrade);
+            window.CreateButton("Unlock Ability", ClickUnlockAbility);
+            window.CreateButton("Level up", ClickLevelUp);
+            window.CreateButton("Equipment", ClickEquipment);
+            window.CreateButton(GameController.DAMAGE_DISABLED ? "Enable damage" : "Disable damage", ClickToggleDamage);
+            window.CreateButton("Next Area", ClickNextArea);
+            window.CreateButton("Suicide", ClickSuicide);
+            window.CreateButton("Win", ClickWin);
+        }
+
+        window.CreateButton("Give money", ClickGiveCurrency);
     }
 
     private void ClickUnlockUpgrade()
@@ -140,6 +146,12 @@ public class DebugConsoleHandler : Singleton
     private void ClickWin()
     {
         GameController.Instance.Win();
+        CloseView();
+    }
+
+    private void ClickGiveCurrency()
+    {
+        CurrencyController.Instance.Gain(CurrencyType.DNA, 100000);
         CloseView();
     }
 }

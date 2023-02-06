@@ -31,24 +31,12 @@ public class GameController : MonoBehaviour
     private void Awake()
     {
         Instance = this;
+        Singleton.CreateAllSingletons();
         InitializePlayer();
         InitializeData();
-        InitializeController();
         ViewController.Instance.ShowView<StartView>(0);
 
         PauseLock.OnLockChanged += OnPauseChanged;
-    }
-
-    private void OnToggleConsole(bool toggle)
-    {
-        if (toggle)
-        {
-            PauseLock.AddLock("Console");
-        }
-        else
-        {
-            PauseLock.RemoveLock("Console");
-        }
     }
 
     public void InitializePlayer()
@@ -65,20 +53,6 @@ public class GameController : MonoBehaviour
     private void InitializeData()
     {
         Data.SaveGameData();
-    }
-
-    private void InitializeController()
-    {
-        Singleton.EnsureExistence<DebugConsoleHandler>();
-        Singleton.EnsureExistence<EnemyController>();
-        Singleton.EnsureExistence<ItemController>();
-        Singleton.EnsureExistence<PlayerInputController>();
-        Singleton.EnsureExistence<BackgroundController>();
-        Singleton.EnsureExistence<MusicController>();
-        Singleton.EnsureExistence<VignetteController>();
-        Singleton.EnsureExistence<ObjectSpawnController>();
-        Singleton.EnsureExistence <AudioController>();
-        Singleton.EnsureExistence <SessionController>();
     }
 
     public void OpenPauseView()

@@ -5,6 +5,6 @@ enemy that pulls the player
 endless mode
 Upgrade reroll
 waves that push things in a direction
+change graphic palette to be more adjustable/extendable (Scriptable objects)
 unlockable "charms" in main menu
 unlock bodies in main menu
-gain points when playing game

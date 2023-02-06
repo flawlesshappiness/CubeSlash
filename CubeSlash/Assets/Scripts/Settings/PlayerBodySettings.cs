@@ -14,7 +14,22 @@ public class PlayerBodySettings : ScriptableObject
 
     [Header("BODY")]
     public PlayerBody body;
+    public Sprite body_sprite;
 
     [Header("ABILITY")]
     public Ability.Type ability_type;
+
+    [Header("SHOP")]
+    public InternalShopProduct shop_product;
+
+    public bool IsUnlocked()
+    {
+        return shop_product == null || InternalShopController.Instance.IsPurchased(shop_product);
+    }
+
+    public AbilityInfo GetAbilityInfo()
+    {
+        var ability = AbilityDatabase.LoadAsset().GetAbility(ability_type);
+        return ability.Info;
+    }
 }

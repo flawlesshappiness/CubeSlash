@@ -43,7 +43,7 @@ public class EndView : View
         tmp_title_win.enabled = data.won;
         tmp_title_lose.enabled = !data.won;
         currency_earned = data.GetCurrencyEarned();
-        Save.Game.currency += currency_earned;
+        CurrencyController.Instance.Gain(CurrencyType.DNA, currency_earned);
         data.has_received_currency = true;
 
         StartCoroutine(Cr());
@@ -130,7 +130,8 @@ public class EndView : View
         yield return RowCr(cvg_text_enemies, tmp_value_enemies, data.enemies_killed);
         yield return new WaitForSecondsRealtime(0.5f);
         currencybar.gameObject.SetActive(true);
-        currencybar.SetValueText(Save.Game.currency - currency_earned);
+        var prev_currency = Currency.DNA - currency_earned;
+        currencybar.SetValueText(prev_currency);
         currencybar.AnimateUpdateValue(0.5f, EasingCurves.EaseOutQuad);
         yield return RowCr(cvg_text_currency, tmp_value_currency, currency_earned);
         input.gameObject.SetActive(true);
