@@ -67,7 +67,7 @@ public class EnemyController : Singleton
         var settings = GameSettings.Instance;
 
         // Difficulty
-        var difficulty = 0.0f;
+        var difficulty = DifficultyController.Instance.DifficultyValue;
         var freq_difficulty = settings.enemy_freq_difficulty.Evaluate(difficulty);
 
         // Game

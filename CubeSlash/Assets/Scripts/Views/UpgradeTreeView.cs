@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class UpgradeTreeView : View
@@ -36,8 +37,7 @@ public class UpgradeTreeView : View
     {
         var map = maps.FirstOrDefault(m => m.upgrade == upgrade);
         var btn = map.button;
-        EventSystemController.Instance.SetDefaultSelection(btn.Button.gameObject);
-        EventSystemController.Instance.EventSystem.SetSelectedGameObject(btn.Button.gameObject);
+        EventSystem.current.SetSelectedGameObject(btn.Button.gameObject);
     }
 
     private void CreateButtons(UpgradeNodeTree tree)

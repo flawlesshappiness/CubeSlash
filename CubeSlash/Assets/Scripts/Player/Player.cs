@@ -65,6 +65,12 @@ public class Player : Character
         g_invincible.SetActive(false);
     }
 
+    public void Clear()
+    {
+        AbilityController.Instance.Clear();
+        UpgradeController.Instance.ClearUpgrades();
+    }
+
     public void SetPlayerBody(PlayerBodySettings settings)
     {
         SetBody(settings.body);
@@ -76,8 +82,6 @@ public class Player : Character
         MoveDirection = transform.up;
 
         // Add ability
-        AbilityController.Instance.Clear();
-        UpgradeController.Instance.ClearUpgrades();
         var ability = AbilityController.Instance.UnlockAbility(settings.ability_type);
         AbilityController.Instance.EquipAbility(ability, PlayerInput.ButtonType.WEST);
 

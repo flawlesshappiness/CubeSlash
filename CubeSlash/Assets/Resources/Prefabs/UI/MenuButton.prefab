@@ -226,7 +226,9 @@ MonoBehaviour:
     m_DisabledTrigger: Disabled
   m_Interactable: 1
   m_TargetGraphic: {fileID: 0}
+  submittable: 1
   select_on_start: 0
+  cvg: {fileID: 7937242585966034816}
   select_animation: {fileID: 5881255240199565831}
   sfx_select:
     reference:
@@ -236,6 +238,14 @@ MonoBehaviour:
         Data3: -1992291445
         Data4: -574275927
       Path: event:/UI/ui_move_ability_001
+  sfx_submit:
+    reference:
+      Guid:
+        Data1: 1813566338
+        Data2: 1276579812
+        Data3: 1129842584
+        Data4: 940544334
+      Path: event:/UI/ui_insert_001
 --- !u!1001 &5295591983158374564
 PrefabInstance:
   m_ObjectHideFlags: 0

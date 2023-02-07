@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class UIAbilityPanel : MonoBehaviour
 {
@@ -8,17 +9,19 @@ public class UIAbilityPanel : MonoBehaviour
     [SerializeField] private UIBodyPartPanel part_panel;
     [SerializeField] private UILock uilock;
     [SerializeField] private GameObject icon_body, icon_ability;
-    [SerializeField] private FMODEventReference sfx_change_body;
+    [SerializeField] private FMODEventReference sfx_move;
 
     private int idx_settings;
     private View parent_view;
 
     public PlayerBodySettings CurrentSettings { get; private set; }
 
+    public System.Action onSettingsChanged;
+
     private void Start()
     {
         menu.onMove += OnMove;
-        menu.onClick += OnClick;
+        menu.onSubmit += OnClick;
 
         parent_view = GetComponentInParent<View>();
 
@@ -33,12 +36,14 @@ public class UIAbilityPanel : MonoBehaviour
 
         if(idx_settings != idx_prev)
         {
-            sfx_change_body.Play();
+            sfx_move.Play();
         }
     }
 
     private void SetSettings(int i)
     {
+        idx_settings = i;
+
         var settings = db_player_body_settings.settings[i];
         body_panel.SetSettings(settings);
         part_panel.SetSettings(settings);
@@ -49,17 +54,21 @@ public class UIAbilityPanel : MonoBehaviour
         icon_ability.SetActive(!is_locked);
         icon_body.SetActive(!is_locked);
 
+        menu.submittable = is_locked;
+
         if (is_locked)
         {
             uilock.Price = settings.shop_product.price.amount;
         }
+
+        onSettingsChanged?.Invoke();
     }
 
     private void OnClick()
     {
         if (!CurrentSettings.IsUnlocked())
         {
-            var selected_button = EventSystemController.Instance.EventSystem.currentSelectedGameObject;
+            var selected_button = EventSystem.current.currentSelectedGameObject;
             parent_view.Interactable = false;
 
             var view = ViewController.Instance.ShowView<ConfirmPurchaseView>(0, nameof(ConfirmPurchaseView));
@@ -73,7 +82,7 @@ public class UIAbilityPanel : MonoBehaviour
             {
                 view.Close(0);
                 parent_view.Interactable = true;
-                EventSystemController.Instance.EventSystem.SetSelectedGameObject(selected_button);
+                EventSystem.current.SetSelectedGameObject(selected_button);
             }
         }
     }

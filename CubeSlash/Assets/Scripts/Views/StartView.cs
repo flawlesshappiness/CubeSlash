@@ -18,12 +18,9 @@ public class StartView : View
 
     private void Start()
     {
-        btn_play.onClick += ClickPlay;
-        btn_options.onClick += ClickOptions;
-        btn_quit.onClick += ClickQuit;
-
-        EventSystemController.Instance.SetDefaultSelection(btn_play.gameObject);
-        EventSystemController.Instance.EventSystem.SetSelectedGameObject(null);
+        btn_play.onSubmit += ClickPlay;
+        btn_options.onSubmit += ClickOptions;
+        btn_quit.onSubmit += ClickQuit;
 
         BackgroundController.Instance.FadeToArea(GameSettings.Instance.main_menu_area);
         VignetteController.Instance.SetArea(GameSettings.Instance.main_menu_area);
@@ -48,31 +45,26 @@ public class StartView : View
     IEnumerator TransitionToBodySelectCr()
     {
         Interactable = false;
-        EventSystemController.Instance.SetDefaultSelection(null);
-        EventSystemController.Instance.EventSystem.SetSelectedGameObject(null);
+        SelectableMenuItem.RemoveSelection();
 
         yield return LerpEnumerator.Value(0.5f, f =>
         {
             CanvasGroup.alpha = Mathf.Lerp(1f, 0f, f);
         });
 
-        FMODButtonEvent.PreviousSelected = null;
-        //ViewController.Instance.ShowView<BodySelectView>(0);
-        ViewController.Instance.ShowView<GameSetupView>(0);
+        ViewController.Instance.ShowView<GameSetupView>(0.5f);
     }
 
     IEnumerator TransitionToOptions()
     {
         Interactable = false;
-        EventSystemController.Instance.SetDefaultSelection(null);
-        EventSystemController.Instance.EventSystem.SetSelectedGameObject(null);
+        SelectableMenuItem.RemoveSelection();
 
         yield return LerpEnumerator.Value(0.5f, f =>
         {
             CanvasGroup.alpha = Mathf.Lerp(1f, 0f, f);
         });
 
-        FMODButtonEvent.PreviousSelected = null;
         var view = ViewController.Instance.ShowView<OptionsView>(0);
         view.onClickBack += () => ViewController.Instance.ShowView<StartView>(0.5f);
 

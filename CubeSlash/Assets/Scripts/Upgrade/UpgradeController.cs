@@ -60,6 +60,16 @@ public class UpgradeController : Singleton
         }
     }
 
+    public void UnlockUpgrade(Upgrade upgrade)
+    {
+        var info = upgrades.ContainsKey(upgrade.id) ? GetUpgradeInfo(upgrade.id) : null;
+        if(info == null)
+        {
+            info = new UpgradeInfo(upgrade);
+            upgrades.Add(upgrade.id, info);
+        }
+        info.isUnlocked = true;
+    }
     public void UnlockUpgrade(string id) => GetUpgradeInfo(id).isUnlocked = true;
     public bool IsUpgradeUnlocked(string id) => GetUpgradeInfo(id).isUnlocked;
     public UpgradeInfo GetUpgradeInfo(string id) => upgrades[id];

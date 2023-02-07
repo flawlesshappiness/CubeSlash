@@ -90,6 +90,7 @@ public class EndView : View
     IEnumerator AnimateLoseCr()
     {
         img_title_gradient.enabled = true;
+        img_title_gradient.SetAlpha(1);
         yield return LerpEnumerator.Value(3f, f =>
         {
             cvg_title.alpha = Mathf.Lerp(0, 1, f);

@@ -18,5 +18,10 @@ public class UIBodyPartPanel : MonoBehaviour
         img_part.enabled = !is_locked;
         tmp_name.text = ability.Info.name_ability;
         tmp_desc.text = ability.Info.desc_ability;
+
+        if (is_locked)
+        {
+            tmp_name.text += " (Locked)";
+        }
     }
 }

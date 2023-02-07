@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
@@ -49,8 +50,8 @@ public class UnlockUpgradeView : View
             btn.Button.onClick.AddListener(() => OnClick(btn, info.upgrade));
         }
 
-        // Set default ui
-        EventSystemController.Instance.SetDefaultSelection(btns_upgrade[0].Button.gameObject);
+        // Set default UI selection
+        EventSystem.current.SetSelectedGameObject(btns_upgrade[0].Button.gameObject);
 
         // Input
         DisplayInput();
@@ -176,8 +177,7 @@ public class UnlockUpgradeView : View
         rt_desc.gameObject.SetActive(true);
 
         Interactable = true;
-        EventSystemController.Instance.SetDefaultSelection(btns_upgrade[0].Button.gameObject);
-        EventSystemController.Instance.EventSystem.SetSelectedGameObject(button_selected.Button.gameObject);
+        EventSystem.current.SetSelectedGameObject(button_selected.Button.gameObject);
     }
 
     private void DisplayInput()

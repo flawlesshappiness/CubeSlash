@@ -3,6 +3,7 @@ using UnityEngine;
 using System.Linq;
 using TMPro;
 using UnityEngine.InputSystem;
+using UnityEngine.EventSystems;
 
 public class AbilityView : View
 {
@@ -36,10 +37,6 @@ public class AbilityView : View
 
         // Cards
         InitializeAbilitySlots();
-
-        // UI
-        EventSystemController.Instance.SetDefaultSelection(slots[0].Button.gameObject);
-        EventSystemController.Instance.EventSystem.SetSelectedGameObject(slots[0].Button.gameObject);
     }
 
     private void OnEnable()
@@ -86,8 +83,6 @@ public class AbilityView : View
         }
         UpdateEquipment();
         UpdateEquipmentOrder(PlayerInput.CurrentDevice);
-
-        EventSystemController.Instance.EventSystem.SetSelectedGameObject(equipments[0].Slot.Button.gameObject);
     }
 
     private void InitializeAbilitySlot(Ability ability)
@@ -387,7 +382,7 @@ public class AbilityView : View
     {
         if (btn_continue.interactable)
         {
-            EventSystemController.Instance.EventSystem.SetSelectedGameObject(btn_continue.gameObject);
+            EventSystem.current.SetSelectedGameObject(btn_continue.gameObject);
         }
     }
 

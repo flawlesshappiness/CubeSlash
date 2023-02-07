@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -18,8 +17,8 @@ public class ConfirmPurchaseView : View
 
     private void Start()
     {
-        btn_confirm.onClick += ClickConfirm;
-        btn_decline.onClick += ClickDecline;
+        btn_confirm.onSubmit += ClickConfirm;
+        btn_decline.onSubmit += ClickDecline;
     }
 
     public void SetProduct(InternalShopProduct product)
@@ -35,7 +34,7 @@ public class ConfirmPurchaseView : View
         if (!CurrencyController.Instance.CanAfford(product.price))
         {
             btn_confirm.interactable = false;
-            btn_confirm.gameObject.SetActive(false);
+            btn_confirm.CanvasGroup.alpha = 0.25f;
         }
 
         currencybar.SetCurrencyType(product.price.type);

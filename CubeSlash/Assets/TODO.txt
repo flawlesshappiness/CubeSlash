@@ -7,4 +7,4 @@ Upgrade reroll
 waves that push things in a direction
 change graphic palette to be more adjustable/extendable (Scriptable objects)
 unlockable "charms" in main menu
-unlock bodies in main menu
+end view skip doesn't work properly

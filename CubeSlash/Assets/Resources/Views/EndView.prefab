@@ -2819,6 +2819,26 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4296463824431152371, guid: 33a49f184e4d79241b98dd340037f16c, type: 3}
+      propertyPath: sfx_tally.reference.Path
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 4296463824431152371, guid: 33a49f184e4d79241b98dd340037f16c, type: 3}
+      propertyPath: sfx_tally.reference.Guid.Data1
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4296463824431152371, guid: 33a49f184e4d79241b98dd340037f16c, type: 3}
+      propertyPath: sfx_tally.reference.Guid.Data2
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4296463824431152371, guid: 33a49f184e4d79241b98dd340037f16c, type: 3}
+      propertyPath: sfx_tally.reference.Guid.Data3
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4296463824431152371, guid: 33a49f184e4d79241b98dd340037f16c, type: 3}
+      propertyPath: sfx_tally.reference.Guid.Data4
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8696790169806044833, guid: 33a49f184e4d79241b98dd340037f16c, type: 3}
       propertyPath: m_Name
       value: DNA Bar (CurrencyBar)

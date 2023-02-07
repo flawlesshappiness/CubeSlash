@@ -46,7 +46,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.4
+  m_Radius: 0.5
 --- !u!1 &846135433196877506
 GameObject:
   m_ObjectHideFlags: 0
@@ -93,7 +93,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.5
+  m_Radius: 0.4
 --- !u!1 &846135433586441098
 GameObject:
   m_ObjectHideFlags: 0
@@ -163,7 +163,7 @@ MonoBehaviour:
   exp_min: 1
   exp_max: 3
   spawn_radius: 1
-  chance_health: 0.02
+  chance_health: 0.05
   type_health: 0
   Rigidbody: {fileID: 846135433586441108}
   ps_death: {fileID: 6440868705710943848}
@@ -5168,7 +5168,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.5
+  m_Radius: 0.4
 --- !u!1 &8534312178426075222
 GameObject:
   m_ObjectHideFlags: 0

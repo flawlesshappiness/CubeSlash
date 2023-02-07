@@ -33,21 +33,12 @@ public class PauseView : View
         btnContinue.onClick.AddListener(ClickContinue);
         btnOptions.onClick.AddListener(ClickOptions);
         btnMainMenu.onClick.AddListener(ClickMainMenu);
-
-        EventSystemController.Instance.SetDefaultSelection(btnContinue.gameObject);
-        EventSystemController.Instance.EventSystem.SetSelectedGameObject(null);
-
-        btnContinue.SetSelectOnHover(true);
-        btnOptions.SetSelectOnHover(true);
-        btnMainMenu.SetSelectOnHover(true);
     }
 
     IEnumerator TransitionToOptionsCr()
     {
-        CanvasGroup.blocksRaycasts = false;
-        CanvasGroup.interactable = false;
-        EventSystemController.Instance.SetDefaultSelection(null);
-        EventSystemController.Instance.EventSystem.SetSelectedGameObject(null);
+        Interactable = false;
+        SelectableMenuItem.RemoveSelection();
 
         var lerp = LerpEnumerator.Value(0.5f, f =>
         {

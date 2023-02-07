@@ -23,14 +23,6 @@ public class OptionsView : View
 
         btn_back.onClick.AddListener(ClickBack);
 
-        slider_master.btn.SetSelectOnHover(true);
-        slider_music.btn.SetSelectOnHover(true);
-        slider_sfx.btn.SetSelectOnHover(true);
-        btn_back.SetSelectOnHover(true);
-
-        EventSystemController.Instance.SetDefaultSelection(btn_back.gameObject);
-        EventSystemController.Instance.EventSystem.SetSelectedGameObject(null);
-
         StartCoroutine(TransitionShowCr(true));
     }
 
