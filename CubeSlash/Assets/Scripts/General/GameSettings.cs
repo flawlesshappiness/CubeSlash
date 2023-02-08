@@ -27,6 +27,10 @@ public class GameSettings : ScriptableObject
     public int count_experience_active;
     public AnimationCurve experience_mul_difficulty;
 
+    [Header("REWARD")]
+    public int currency_reward_win;
+    public AnimationCurve currency_mul_difficulty;
+
     public static GameSettings Instance { get { return _instance ?? LoadAsset(); } }
     private static GameSettings _instance;
 

@@ -18,9 +18,10 @@ public class SessionController : Singleton
             var enemies = enemies_killed;
             var levels = levels_gained * 100;
             var time = (int)(Time.time - time_start);
-            var win = won ? 1000 : 0;
+            var win = won ? GameSettings.Instance.currency_reward_win : 0;
+            var mul_difficulty = GameSettings.Instance.currency_mul_difficulty.Evaluate(DifficultyController.Instance.DifficultyValue);
             var mul_received = has_received_currency ? 0 : 1;
-            return (enemies + levels + time + win) * mul_received;
+            return (int)((enemies + levels + time + win) * mul_received * mul_difficulty);
         }
     }
 

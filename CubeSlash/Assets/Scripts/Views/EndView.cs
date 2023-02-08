@@ -130,10 +130,7 @@ public class EndView : View
         yield return new WaitForSecondsRealtime(0.2f);
         yield return RowCr(cvg_text_enemies, tmp_value_enemies, data.enemies_killed);
         yield return new WaitForSecondsRealtime(0.5f);
-        currencybar.gameObject.SetActive(true);
-        var prev_currency = Currency.DNA - currency_earned;
-        currencybar.SetValueText(prev_currency);
-        currencybar.AnimateUpdateValue(0.5f, EasingCurves.EaseOutQuad);
+        AnimateCurrencyBar();
         yield return RowCr(cvg_text_currency, tmp_value_currency, currency_earned);
         input.gameObject.SetActive(true);
         animating_stats = false;
@@ -163,11 +160,28 @@ public class EndView : View
         }
     }
 
+    private void AnimateCurrencyBar()
+    {
+        var prev_currency = Currency.DNA - currency_earned;
+        currencybar.gameObject.SetActive(true);
+        currencybar.SetValueText(prev_currency);
+        currencybar.AnimateUpdateValue(0.5f, EasingCurves.EaseOutQuad);
+    }
+
     private void SkipAnimateStats()
     {
+        starting = false;
+        animating_stats = false;
         StopCoroutine(cr_animate_stats);
         SetTextAlpha(1);
-        animating_stats = false;
+        input.gameObject.SetActive(true);
+
+        var data = SessionController.Instance.CurrentData;
+        tmp_value_level.text = data.levels_gained.ToString();
+        tmp_value_enemies.text = data.enemies_killed.ToString();
+        tmp_value_currency.text = currency_earned.ToString();
+
+        AnimateCurrencyBar();
     }
 
     private void SetTextAlpha(float a)
