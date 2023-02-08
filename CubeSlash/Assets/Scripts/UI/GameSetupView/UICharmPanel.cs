@@ -9,9 +9,9 @@ using UnityEngine.EventSystems;
 public class UICharmPanel : MonoBehaviour
 {
     [SerializeField] private LeftRightMenuItem menu;
-    [SerializeField] private TMP_Text tmp_name, tmp_desc;
+    [SerializeField] private TMP_Text tmp_name, tmp_desc, tmp_unlock;
     [SerializeField] private UICharm template_charm;
-    [SerializeField] private RectTransform pivot_select;
+    [SerializeField] private RectTransform pivot_select, content;
     [SerializeField] private FMODEventReference sfx_move;
 
     private View parent_view;
@@ -26,22 +26,31 @@ public class UICharmPanel : MonoBehaviour
     {
         parent_view = GetComponentInParent<View>();
 
+        // Charms
         InitializeCharms();
+        charms_to_activate = MAX_CHARMS;
 
+        // Actions
         menu.onMove += OnMove;
         menu.onSelect += OnSelect;
         menu.onDeselect += OnDeselect;
         menu.onSubmit += OnClick;
 
-        charms_to_activate = MAX_CHARMS;
-
+        // Reset select
         pivot_select.transform.localScale = Vector3.zero;
+
+        // First run
+        var first_run = Save.Game.runs_completed <= 0;
+        tmp_unlock.enabled = first_run;
+        content.gameObject.SetActive(!first_run);
+        menu.interactable = !first_run;
 
         StartCoroutine(Cr());
         IEnumerator Cr()
         {
             yield return null;
             SetSelectedCharm(0);
+            OnDeselect();
         }
     }
 
@@ -162,6 +171,7 @@ public class UICharmPanel : MonoBehaviour
     private void OnSelect()
     {
         Lerp.LocalScale(pivot_select, 0.15f, Vector3.one);
+        SetSelectedCharm(idx_selected);
     }
 
     private void OnDeselect()
@@ -173,6 +183,11 @@ public class UICharmPanel : MonoBehaviour
         {
             var i = charms.IndexOf(charm);
             SetSelectedCharm(i);
+        }
+        else
+        {
+            tmp_name.text = "";
+            tmp_desc.text = "";
         }
     }
 }

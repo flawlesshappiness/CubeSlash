@@ -553,8 +553,9 @@ public class Player : Character
     public void CollectExperience(ExperienceType type)
     {
         timestamp_collect_last = Time.time;
-        
-        Experience.Value += 1f * ExperienceMultiplier;
+
+        var mul_difficulty = GameSettings.Instance.experience_mul_difficulty.Evaluate(DifficultyController.Instance.DifficultyValue);
+        Experience.Value += 1f * ExperienceMultiplier * mul_difficulty;
 
         // Adjust ability cooldown
         AbilityController.Instance.GetEquippedAbilities()

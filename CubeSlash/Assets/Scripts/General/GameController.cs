@@ -183,22 +183,6 @@ public class GameController : MonoBehaviour
         }
     }
 
-    private void OnPlayerDeath()
-    {
-        EndGame();
-        SessionController.Instance.CurrentData.won = false;
-        StartCoroutine(Cr());
-
-        IEnumerator Cr()
-        {
-            GameStateController.Instance.SetGameState(GameStateType.MENU);
-            MusicController.Instance.StopBGM();
-            FMODEventReferenceDatabase.Load().lose_game.Play();
-            yield return new WaitForSeconds(0.5f);
-            var lose_view = ViewController.Instance.ShowView<EndView>(0, "Win");
-        }
-    }
-
     public void ReturnToMainMenu()
     {
         EndGame();
@@ -225,20 +209,37 @@ public class GameController : MonoBehaviour
         onMainMenu?.Invoke();
     }
 
+    private void OnPlayerDeath()
+    {
+        EndGame();
+        SessionController.Instance.CurrentData.won = false;
+        MusicController.Instance.StopBGM();
+        FMODEventReferenceDatabase.Load().lose_game.Play();
+        StartCoroutine(EndGameCr());
+    }
+
     public void Win()
     {
+        // Difficulty
+        if(Save.Game.idx_difficulty_completed < DifficultyController.Instance.DifficultyIndex)
+        {
+            Save.Game.idx_difficulty_completed = DifficultyController.Instance.DifficultyIndex;
+        }
+
+        // End
         SessionController.Instance.CurrentData.won = true;
         MusicController.Instance.StopBGM();
         EnemyController.Instance.KillActiveEnemies();
-        IsGameEnded = true;
+        StartCoroutine(EndGameCr());
+    }
 
-        StartCoroutine(Cr());
-        IEnumerator Cr()
-        {
-            yield return new WaitForSeconds(2f);
-            GameStateController.Instance.SetGameState(GameStateType.MENU);
-            var win_view = ViewController.Instance.ShowView<EndView>(0, "Win");
-        }
+    private IEnumerator EndGameCr()
+    {
+        Save.Game.runs_completed++;
+        IsGameEnded = true;
+        yield return new WaitForSeconds(1f);
+        GameStateController.Instance.SetGameState(GameStateType.MENU);
+        var end_view = ViewController.Instance.ShowView<EndView>(0, "End");
     }
 
     public void ResumeEndless()

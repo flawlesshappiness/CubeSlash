@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Armor
   m_EditorClassIdentifier: 
   charm_name: Armor
-  charm_description: Start the game with extra armor
+  charm_description: Extra armor
   sprite: {fileID: 21300000, guid: 4d7dedcf2aeff374a989ca565c568a46, type: 3}
   upgrade: {fileID: 11400000, guid: b5eda7102d2d0ba4dbed4e3e4143e4a8, type: 2}
   shop_product: {fileID: 11400000, guid: 5ad7a75431ed7394f9c129a11517aac2, type: 2}

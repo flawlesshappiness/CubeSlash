@@ -4,6 +4,7 @@ using UnityEngine;
 public class UIDifficulty : MonoBehaviour
 {
     [SerializeField] private TMP_Text tmp_title, tmp_desc;
+    [SerializeField] private UILock uilock;
 
     public RectTransform RectTransform { get { return _rt ?? GetRectTransform(); } }
     public DifficultyInfo Difficulty { get; private set; }
@@ -22,5 +23,13 @@ public class UIDifficulty : MonoBehaviour
     {
         if(_rt == null) _rt = GetComponent<RectTransform>();
         return _rt;
+    }
+
+    public void SetLocked(bool locked)
+    {
+        uilock.gameObject.SetActive(locked);
+        uilock.Text = "Locked";
+        tmp_title.enabled = !locked;
+        tmp_desc.enabled = !locked;
     }
 }

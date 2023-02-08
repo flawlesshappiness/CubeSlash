@@ -1,6 +1,7 @@
 using Flawliz.Lerp;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class UIDifficultyPanel : MonoBehaviour
@@ -8,19 +9,26 @@ public class UIDifficultyPanel : MonoBehaviour
     [SerializeField] private LeftRightMenuItem menu;
     [SerializeField] private UIDifficulty template_difficulty;
     [SerializeField] private GameObject template_divider;
-    [SerializeField] private RectTransform pivot_selected;
+    [SerializeField] private TMP_Text tmp_unlock;
+    [SerializeField] private RectTransform pivot_selected, content;
     [SerializeField] private FMODEventReference sfx_move;
 
     private List<UIDifficulty> difficulties = new List<UIDifficulty>();
 
     private int idx_selected;
     public DifficultyInfo Selected { get; private set; }
+    public int SelectedIndex { get { return idx_selected; } }
 
     private void Start()
     {
         InitializeDifficulties();
 
         menu.onMove += OnMove;
+
+        var first_run = Save.Game.runs_completed <= 0;
+        tmp_unlock.enabled = first_run;
+        content.gameObject.SetActive(!first_run);
+        menu.interactable = !first_run;
 
         StartCoroutine(Cr());
         IEnumerator Cr()
@@ -46,9 +54,16 @@ public class UIDifficultyPanel : MonoBehaviour
             var inst = Instantiate(template_difficulty, template_difficulty.transform.parent);
             inst.gameObject.SetActive(true);
             inst.Initialize(d);
-            difficulties.Add(inst);
 
-            if(i < db.collection.Count - 1)
+            var is_locked = Save.Game.idx_difficulty_completed < (i - 1);
+            inst.SetLocked(is_locked);
+
+            if (!is_locked)
+            {
+                difficulties.Add(inst);
+            }
+
+            if (i < db.collection.Count - 1)
             {
                 var div = Instantiate(template_divider, template_divider.transform.parent);
                 div.gameObject.SetActive(true);

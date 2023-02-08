@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 82cb847149cd9564ba1328eea0862e9f, type: 3}
   m_Name: Easy
   m_EditorClassIdentifier: 
-  difficulty_name: Easy
-  difficulty_description: Fewer enemies
+  difficulty_name: shallows
+  difficulty_description: normal difficulty
   difficulty_value: 0

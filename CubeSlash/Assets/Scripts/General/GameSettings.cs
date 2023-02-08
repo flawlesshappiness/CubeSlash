@@ -25,6 +25,7 @@ public class GameSettings : ScriptableObject
     [Header("EXPERIENCE")]
     public float frequency_spawn_experience;
     public int count_experience_active;
+    public AnimationCurve experience_mul_difficulty;
 
     public static GameSettings Instance { get { return _instance ?? LoadAsset(); } }
     private static GameSettings _instance;

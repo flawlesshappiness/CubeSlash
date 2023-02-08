@@ -68,7 +68,7 @@ public class GameSetupView : View
         yield return LerpEnumerator.Alpha(CanvasGroup, 1f, 0f).UnscaledTime();
 
         // Set difficulty
-        DifficultyController.Instance.SetDifficulty(difficulty_panel.Selected);
+        DifficultyController.Instance.SetDifficulty(difficulty_panel.SelectedIndex);
 
         // Setup player
         Player.Instance.gameObject.SetActive(true);

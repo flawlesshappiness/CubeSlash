@@ -12,6 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 82cb847149cd9564ba1328eea0862e9f, type: 3}
   m_Name: Hard
   m_EditorClassIdentifier: 
-  difficulty_name: Hard
-  difficulty_description: More enemies
+  difficulty_name: abyss
+  difficulty_description: 'even more enemies
+
+    slow evolving'
   difficulty_value: 1

@@ -8,6 +8,7 @@ waves that push things in a direction
 change graphic palette to be more adjustable/extendable (Scriptable objects)
 unlockable "charms" in main menu
 Shooter boss only do big attack when hit
+uilock animation
 add cool animations for opening and unlocking upgrades and abilities
 end view skip doesn't work properly
 hide some things on GameSetupView the first time you play, to avoid confusion

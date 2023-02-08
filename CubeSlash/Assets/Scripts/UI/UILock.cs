@@ -11,6 +11,7 @@ public class UILock : MonoBehaviour
     [SerializeField] private TMP_Text tmp_price;
 
     public int Price { set { tmp_price.text = CurrencyController.FormatCurrencyString(value); ; } }
+    public string Text { set { tmp_price.text = value; } }
 
     public Coroutine AnimateUnlock()
     {
