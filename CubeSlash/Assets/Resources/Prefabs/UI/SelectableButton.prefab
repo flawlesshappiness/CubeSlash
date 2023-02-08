@@ -135,9 +135,11 @@ GameObject:
   m_Component:
   - component: {fileID: 4284847401797518280}
   - component: {fileID: 1778866881298859731}
+  - component: {fileID: 4980217723858408459}
   - component: {fileID: 1793508673724629667}
+  - component: {fileID: 601599736140509859}
   m_Layer: 5
-  m_Name: SelectedButton
+  m_Name: SelectableButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -175,6 +177,22 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
+--- !u!114 &4980217723858408459
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3847690082678010946}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5585d1a181c004e44bd26a80921ee325, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  duration: 0
+  animations:
+  - {fileID: 1793508673724629667}
+  - {fileID: 601599736140509859}
 --- !u!114 &1793508673724629667
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -187,9 +205,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 53415c2e78d21d64db88dde9a72779c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  duration: 0.15
   pivot_animation: {fileID: 4084903786205958237}
-  cvg_animation: {fileID: 6815807570063178379}
-  cvg_main: {fileID: 1778866881298859731}
+  scale_deselected: {x: 0, y: 0, z: 0}
+  scale_selected: {x: 100, y: 0, z: 0}
+--- !u!114 &601599736140509859
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3847690082678010946}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cba308f38a6a29141b813af15b6fb297, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  duration: 0.15
+  cvg: {fileID: 1778866881298859731}
+  alpha_deselect: 0
+  alpha_selected: 1
 --- !u!1 &8434293456432197130
 GameObject:
   m_ObjectHideFlags: 0

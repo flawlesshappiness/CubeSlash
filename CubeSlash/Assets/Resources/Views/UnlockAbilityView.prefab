@@ -659,7 +659,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 0.5019608}
+  m_Color: {r: 0, g: 0, b: 0, a: 0.7490196}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -842,7 +842,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5463d78bab2cf64419f128a61953ac8e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  temp_btn_ability: {fileID: 7474798089283018882}
+  temp_btn_ability: {fileID: 2263455653444013287}
   tmp_desc: {fileID: 2583120460113071657}
   sfx_unlock_ability:
     reference:
@@ -1291,9 +1291,9 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 7116416093371426031, guid: 10a7ef8d1fd0e1846bcb118e37b2f092, type: 3}
   m_PrefabInstance: {fileID: 6637980993863724198}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &7474798089283018882 stripped
+--- !u!114 &2263455653444013287 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4297852178597481508, guid: 10a7ef8d1fd0e1846bcb118e37b2f092, type: 3}
+  m_CorrespondingSourceObject: {fileID: 4861548283248238657, guid: 10a7ef8d1fd0e1846bcb118e37b2f092, type: 3}
   m_PrefabInstance: {fileID: 6637980993863724198}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}

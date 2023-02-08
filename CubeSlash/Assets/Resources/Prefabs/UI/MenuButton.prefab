@@ -92,7 +92,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 18
+  m_fontSize: 109.15
   m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -229,7 +229,7 @@ MonoBehaviour:
   submittable: 1
   select_on_start: 0
   cvg: {fileID: 7937242585966034816}
-  select_animation: {fileID: 5881255240199565831}
+  select_animation: {fileID: 891978240445441199}
   sfx_select:
     reference:
       Guid:
@@ -348,14 +348,14 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 4284847401797518280, guid: 5db28a78d00d4494597b23ae72e0f895, type: 3}
   m_PrefabInstance: {fileID: 5295591983158374564}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &5881255240199565831 stripped
+--- !u!114 &891978240445441199 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1793508673724629667, guid: 5db28a78d00d4494597b23ae72e0f895, type: 3}
+  m_CorrespondingSourceObject: {fileID: 4980217723858408459, guid: 5db28a78d00d4494597b23ae72e0f895, type: 3}
   m_PrefabInstance: {fileID: 5295591983158374564}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 53415c2e78d21d64db88dde9a72779c3, type: 3}
+  m_Script: {fileID: 11500000, guid: 5585d1a181c004e44bd26a80921ee325, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

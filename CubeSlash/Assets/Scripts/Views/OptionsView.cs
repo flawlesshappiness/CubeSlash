@@ -2,12 +2,13 @@ using Flawliz.Lerp;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 public class OptionsView : View
 {
     [SerializeField] private UISlider slider_master, slider_music, slider_sfx;
-    [SerializeField] private ButtonExtended btn_back;
+    [SerializeField] private UIInputLayout input;
 
     public System.Action onClickBack;
 
@@ -21,9 +22,9 @@ public class OptionsView : View
         slider_music.onValueChanged += AdjustMusicVolume;
         slider_sfx.onValueChanged += AdjustSFXVolume;
 
-        btn_back.onClick.AddListener(ClickBack);
-
         StartCoroutine(TransitionShowCr(true));
+
+        input.AddInput(PlayerInput.UIButtonType.EAST, "Back");
     }
 
     private IEnumerator TransitionShowCr(bool show)
@@ -50,11 +51,20 @@ public class OptionsView : View
     private void OnEnable()
     {
         GameController.Instance.PauseLock.AddLock(nameof(OptionsView));
+
+        PlayerInput.Controls.Player.East.started += PressBack;
     }
 
     private void OnDisable()
     {
         GameController.Instance.PauseLock.RemoveLock(nameof(OptionsView));
+
+        PlayerInput.Controls.Player.East.started -= PressBack;
+    }
+
+    private void PressBack(InputAction.CallbackContext context)
+    {
+        StartCoroutine(TransitionBackCr());
     }
 
     private void AdjustMasterVolume()
@@ -77,10 +87,5 @@ public class OptionsView : View
         AudioController.Instance.SetSFXVolume(value);
         AudioController.Instance.SetUIVolume(value);
         Save.Game.volume_sfx = value;
-    }
-
-    private void ClickBack()
-    {
-        StartCoroutine(TransitionBackCr());
     }
 }

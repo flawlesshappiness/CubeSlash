@@ -355,8 +355,11 @@ GameObject:
   - component: {fileID: 1139547590892203595}
   - component: {fileID: 2884757806313788589}
   - component: {fileID: 4714635068350934158}
+  - component: {fileID: 8400898986258215878}
+  - component: {fileID: 7064820446156143586}
+  - component: {fileID: 183726904774362227}
   m_Layer: 5
-  m_Name: SelectedLeftRight
+  m_Name: SelectableLeftRight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -406,9 +409,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f4e20e873823e142834cffbeffe9a8e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pivot_animation: {fileID: 4507181818180499290}
-  cvg_animation: {fileID: 9145432687734874770}
-  cvg_main: {fileID: 2884757806313788589}
   rt_anim_left: {fileID: 7027013131211160297}
   rt_anim_right: {fileID: 1051826046835928210}
   anim_distance: 50
@@ -446,3 +446,51 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &8400898986258215878
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7933619197145597275}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5585d1a181c004e44bd26a80921ee325, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  duration: 0
+  animations:
+  - {fileID: 7064820446156143586}
+  - {fileID: 183726904774362227}
+--- !u!114 &7064820446156143586
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7933619197145597275}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 53415c2e78d21d64db88dde9a72779c3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  duration: 0.15
+  pivot_animation: {fileID: 4507181818180499290}
+  scale_deselected: {x: 0, y: 0, z: 0}
+  scale_selected: {x: 100, y: 0, z: 0}
+--- !u!114 &183726904774362227
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7933619197145597275}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cba308f38a6a29141b813af15b6fb297, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  duration: 0.15
+  cvg: {fileID: 2884757806313788589}
+  alpha_deselect: 0
+  alpha_selected: 1

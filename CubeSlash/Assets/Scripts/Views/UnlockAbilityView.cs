@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class UnlockAbilityView : View
@@ -29,17 +30,12 @@ public class UnlockAbilityView : View
         {
             var btn = CreateButton();
             btn.Icon = ability.Info.sprite_icon;
-            btn.Button.OnSelectedChanged += s => OnSelected(s, ability);
-            btn.Button.onClick.AddListener(() => Click(btn, ability));
+            btn.Button.onSelect += () => DisplayAbility(ability);
+            btn.Button.onSubmit += () => Click(btn, ability);
         }
 
-        void OnSelected(bool selected, Ability ability)
-        {
-            if (selected)
-            {
-                DisplayAbility(ability);
-            }
-        }
+        // Set default UI selection
+        EventSystem.current.SetSelectedGameObject(btns_ability[0].gameObject);
 
         void Click(UIIconButton btn, Ability ability)
         {

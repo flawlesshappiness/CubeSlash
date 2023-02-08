@@ -46,24 +46,21 @@ public class UnlockUpgradeView : View
         {
             var btn = CreateUpgradeButton();
             btn.Icon = info.upgrade.icon;
-            btn.Button.OnSelectedChanged += s => OnSelected(s, btn, info.upgrade);
-            btn.Button.onClick.AddListener(() => OnClick(btn, info.upgrade));
+            btn.Button.onSelect += () => OnSelect(btn, info.upgrade);
+            btn.Button.onSubmit += () => OnClick(btn, info.upgrade);
         }
 
         // Set default UI selection
-        EventSystem.current.SetSelectedGameObject(btns_upgrade[0].Button.gameObject);
+        EventSystem.current.SetSelectedGameObject(btns_upgrade[0].gameObject);
 
         // Input
         DisplayInput();
 
-        void OnSelected(bool selected, UIIconButton button, Upgrade upgrade)
+        void OnSelect(UIIconButton button, Upgrade upgrade)
         {
-            if (selected)
-            {
-                button_selected = button;
-                upgrade_selected = upgrade;
-                DisplayUpgradeText(upgrade);
-            }
+            button_selected = button;
+            upgrade_selected = upgrade;
+            DisplayUpgradeText(upgrade);
         }
 
         void OnClick(UIIconButton btn, Upgrade upgrade)

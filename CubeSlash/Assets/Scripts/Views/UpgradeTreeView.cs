@@ -137,13 +137,7 @@ public class UpgradeTreeView : View
             upgrade = upgrade
         };
 
-        btn.Button.OnSelectedChanged += selected =>
-        {
-            if (selected)
-            {
-                DisplayUpgrade(upgrade);
-            }
-        };
+        btn.Button.onSelect += () => DisplayUpgrade(upgrade);
 
         maps.Add(map);
         return map;

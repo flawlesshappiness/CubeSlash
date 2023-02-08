@@ -1,19 +1,16 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class UISlider : MonoBehaviour
 {
+    [SerializeField] private LeftRightMenuItem menu;
     [SerializeField] private UISliderNotch template_notch;
-    [SerializeField] public ButtonExtended btn;
     public int max_notches;
-    public FMODEventReference sfx_change_value;
-
+    [SerializeField] private FMODEventReference sfx_click_notch;
 
     public System.Action onValueChanged;
 
     private bool initialized;
-    private bool is_select;
     private int selected_index;
     private UISliderNotch selected_notch;
     private List<UISliderNotch> notches = new List<UISliderNotch>();
@@ -21,30 +18,18 @@ public class UISlider : MonoBehaviour
     private void Start()
     {
         Initialize();
-        btn.OnSelectedChanged += OnSelect;
-
-        PlayerInput.Controls.UI.Navigate.started += AdjustVolume;
+        menu.onMove += OnMove;
     }
 
-    private void AdjustVolume(UnityEngine.InputSystem.InputAction.CallbackContext obj)
+    private void OnMove(int dir)
     {
-        if (!is_select) return;
-        var v = obj.ReadValue<Vector2>();
-        if(v.x > 0.1f)
-        {
-            IncrementValue();
-            sfx_change_value.Play();
-        }
-        else if(v.x < -0.1f)
-        {
-            DecrementValue();
-            sfx_change_value.Play();
-        }
-    }
+        var prev_index = selected_index;
+        SetValue(selected_index + dir);
 
-    private void OnDisable()
-    {
-        PlayerInput.Controls.UI.Navigate.started -= AdjustVolume;
+        if(selected_index != prev_index)
+        {
+            sfx_click_notch.Play();
+        }
     }
 
     public void Initialize()
@@ -52,11 +37,6 @@ public class UISlider : MonoBehaviour
         if (initialized) return;
         CreateNotches();
         initialized = true;
-    }
-
-    private void OnSelect(bool select)
-    {
-        is_select = select;
     }
 
     public void SetValue(int value)
@@ -115,8 +95,9 @@ public class UISlider : MonoBehaviour
 
         void ClickNotch(UISliderNotch notch)
         {
-            sfx_change_value.Play();
+            sfx_click_notch.Play();
             SetSelectedNotch(notch);
+            menu.Select();
         }
     }
 

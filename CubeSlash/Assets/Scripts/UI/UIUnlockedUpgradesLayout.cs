@@ -22,15 +22,12 @@ public class UIUnlockedUpgradesLayout : MonoBehaviour
             var btn = Instantiate(temp_btn, temp_btn.transform.parent);
             btn.gameObject.SetActive(true);
             btn.Icon = u.upgrade.icon;
-            btn.Button.OnSelectedChanged += s => OnSelected(s, u.upgrade);
+            btn.Button.onSelect += () => OnSelect(u.upgrade);
         });
 
-        void OnSelected(bool selected, Upgrade upgrade)
+        void OnSelect(Upgrade upgrade)
         {
-            if (selected)
-            {
-                OnUpgradeLevelSelected?.Invoke(upgrade);
-            }
+            OnUpgradeLevelSelected?.Invoke(upgrade);
         }
     }
 }
