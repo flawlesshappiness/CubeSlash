@@ -1230,6 +1230,14 @@ PrefabInstance:
       propertyPath: eventOnSelect.reference.Guid.Data4
       value: -574275927
       objectReference: {fileID: 0}
+    - target: {fileID: 2294335775885666038, guid: 10a7ef8d1fd0e1846bcb118e37b2f092, type: 3}
+      propertyPath: InitialModule.startSize.scalar
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 2294335775885666038, guid: 10a7ef8d1fd0e1846bcb118e37b2f092, type: 3}
+      propertyPath: InitialModule.startSize.minScalar
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 3008806182268100467, guid: 10a7ef8d1fd0e1846bcb118e37b2f092, type: 3}
       propertyPath: m_TargetGraphic
       value: 

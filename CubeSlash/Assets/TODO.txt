@@ -8,3 +8,4 @@ change graphic palette to be more adjustable/extendable (Scriptable objects)
 uilock animation
 add cool animations for opening and unlocking upgrades and abilities
 Shooter boss only do big attack when hit
+fix ability view

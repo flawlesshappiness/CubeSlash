@@ -1180,9 +1180,45 @@ PrefabInstance:
       propertyPath: eventOnSelect.reference.Guid.Data4
       value: -574275927
       objectReference: {fileID: 0}
+    - target: {fileID: 2294335775885666038, guid: 10a7ef8d1fd0e1846bcb118e37b2f092, type: 3}
+      propertyPath: InitialModule.rotation3D
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2294335775885666038, guid: 10a7ef8d1fd0e1846bcb118e37b2f092, type: 3}
+      propertyPath: InitialModule.startSize.scalar
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 2294335775885666038, guid: 10a7ef8d1fd0e1846bcb118e37b2f092, type: 3}
+      propertyPath: InitialModule.startSize.minScalar
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3008806182268100467, guid: 10a7ef8d1fd0e1846bcb118e37b2f092, type: 3}
+      propertyPath: sfx_submit.reference.Path
+      value: event:/UI/ui_unlock_ability_001
+      objectReference: {fileID: 0}
+    - target: {fileID: 3008806182268100467, guid: 10a7ef8d1fd0e1846bcb118e37b2f092, type: 3}
+      propertyPath: sfx_submit.reference.Guid.Data1
+      value: 175011373
+      objectReference: {fileID: 0}
+    - target: {fileID: 3008806182268100467, guid: 10a7ef8d1fd0e1846bcb118e37b2f092, type: 3}
+      propertyPath: sfx_submit.reference.Guid.Data2
+      value: 1097586406
+      objectReference: {fileID: 0}
+    - target: {fileID: 3008806182268100467, guid: 10a7ef8d1fd0e1846bcb118e37b2f092, type: 3}
+      propertyPath: sfx_submit.reference.Guid.Data3
+      value: 343695514
+      objectReference: {fileID: 0}
+    - target: {fileID: 3008806182268100467, guid: 10a7ef8d1fd0e1846bcb118e37b2f092, type: 3}
+      propertyPath: sfx_submit.reference.Guid.Data4
+      value: 1588041429
+      objectReference: {fileID: 0}
     - target: {fileID: 4199395762272161313, guid: 10a7ef8d1fd0e1846bcb118e37b2f092, type: 3}
       propertyPath: m_Name
       value: IconButton
+      objectReference: {fileID: 0}
+    - target: {fileID: 4861548283248238657, guid: 10a7ef8d1fd0e1846bcb118e37b2f092, type: 3}
+      propertyPath: glowing
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7116416093371426031, guid: 10a7ef8d1fd0e1846bcb118e37b2f092, type: 3}
       propertyPath: m_Pivot.x

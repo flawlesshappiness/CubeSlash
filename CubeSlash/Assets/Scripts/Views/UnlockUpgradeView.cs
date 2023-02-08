@@ -1,4 +1,5 @@
 using Flawliz.Lerp;
+using PathCreation;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -35,44 +36,15 @@ public class UnlockUpgradeView : View
 
         layout_unlocked_upgrades.OnUpgradeLevelSelected += level => DisplayUpgradeText(level);
 
-        // Fetch upgrades
-        var count_upgrades = Mathf.Min(4, AbilityController.Instance.GetEquippedAbilities().Count + 1);
-        var upgrades = UpgradeController.Instance.GetUnlockableUpgrades()
-            .TakeRandom(count_upgrades);
-
-        // Create upgrade buttons
-        ClearUpgradeButtons();
-        foreach (var info in upgrades)
-        {
-            var btn = CreateUpgradeButton();
-            btn.Icon = info.upgrade.icon;
-            btn.Button.onSelect += () => OnSelect(btn, info.upgrade);
-            btn.Button.onSubmit += () => OnClick(btn, info.upgrade);
-        }
+        // Upgrades
+        CreateUpgrades();
+        AnimateShowUpgrade();
 
         // Set default UI selection
         EventSystem.current.SetSelectedGameObject(btns_upgrade[0].gameObject);
 
         // Input
         DisplayInput();
-
-        void OnSelect(UIIconButton button, Upgrade upgrade)
-        {
-            button_selected = button;
-            upgrade_selected = upgrade;
-            DisplayUpgradeText(upgrade);
-        }
-
-        void OnClick(UIIconButton btn, Upgrade upgrade)
-        {
-            FMODButtonEvent.PreviousSelected = null;
-            CanvasGroup.interactable = false;
-            CanvasGroup.blocksRaycasts = false;
-            UpgradeController.Instance.UnlockUpgrade(upgrade.id);
-            sfx_unlock_upgrade.Play();
-            OnUpgradeSelected?.Invoke(upgrade);
-            Close(0);
-        }
     }
 
     private void OnEnable()
@@ -106,6 +78,42 @@ public class UnlockUpgradeView : View
         HideUpgradeTree();
     }
 
+    private void CreateUpgrades()
+    {
+        // Fetch upgrades
+        var count_upgrades = Mathf.Min(4, AbilityController.Instance.GetEquippedAbilities().Count + 1);
+        var upgrades = UpgradeController.Instance.GetUnlockableUpgrades()
+            .TakeRandom(count_upgrades);
+
+        // Create upgrade buttons
+        ClearUpgradeButtons();
+        foreach (var info in upgrades)
+        {
+            var btn = CreateUpgradeButton();
+            btn.Icon = info.upgrade.icon;
+            btn.Button.onSelect += () => OnSelect(btn, info.upgrade);
+            btn.Button.onSubmit += () => OnClick(btn, info.upgrade);
+        }
+
+        void OnSelect(UIIconButton button, Upgrade upgrade)
+        {
+            button_selected = button;
+            upgrade_selected = upgrade;
+            DisplayUpgradeText(upgrade);
+        }
+
+        void OnClick(UIIconButton btn, Upgrade upgrade)
+        {
+            FMODButtonEvent.PreviousSelected = null;
+            CanvasGroup.interactable = false;
+            CanvasGroup.blocksRaycasts = false;
+            UpgradeController.Instance.UnlockUpgrade(upgrade.id);
+            sfx_unlock_upgrade.Play();
+            OnUpgradeSelected?.Invoke(upgrade);
+            Close(0);
+        }
+    }
+
     private UIIconButton CreateUpgradeButton()
     {
         var btn = Instantiate(temp_btn_upgrade, temp_btn_upgrade.transform.parent);
@@ -118,6 +126,46 @@ public class UnlockUpgradeView : View
     {
         btns_upgrade.ForEach(b => Destroy(b.gameObject));
         btns_upgrade.Clear();
+    }
+
+    private Coroutine AnimateShowUpgrade()
+    {
+        var crs = new List<Coroutine>();
+        var start_position = Camera.main.WorldToScreenPoint(Player.Instance.transform.position);
+        foreach(var btn in btns_upgrade)
+        {
+            var pivot = btn.AnimationPivot;
+            pivot.transform.localScale = Vector3.zero;
+            var cr = StartCoroutine(AnimateCr(pivot));
+            crs.Add(cr);
+        }
+
+        return StartCoroutine(WaitForCoroutinesCr(crs));
+
+        IEnumerator WaitForCoroutinesCr(List<Coroutine> crs)
+        {
+            foreach(var cr in crs)
+            {
+                yield return cr;
+            }
+        }
+
+        IEnumerator AnimateCr(RectTransform pivot)
+        {
+            yield return null;
+            var end_position = pivot.parent.position;
+            var mid_position = Vector3.LerpUnclamped(start_position, end_position, 0.7f).AddY(75f);
+            var points = new Vector2[] { start_position, mid_position, end_position };
+            var bezier = new BezierPath(points, false);
+            var path = new VertexPath(bezier, transform);
+            var curve = EasingCurves.EaseOutSine;
+            yield return LerpEnumerator.Value(0.5f, f =>
+            {
+                var t = curve.Evaluate(f);
+                pivot.position = path.GetPointAtTime(Mathf.Lerp(0, 0.999f, t)) - start_position;
+                pivot.localScale = Vector3.one * Mathf.Lerp(0f, 1f, t);
+            }).UnscaledTime();
+        }
     }
 
     private TMP_Text CreateUpgradeText(string text, Color color)
