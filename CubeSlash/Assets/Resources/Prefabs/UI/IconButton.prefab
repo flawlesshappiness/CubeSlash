@@ -568,7 +568,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cba308f38a6a29141b813af15b6fb297, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  duration: 0.15
+  duration: 0.1
   cvg: {fileID: 1133752380359427372}
   alpha_deselect: 0
   alpha_selected: 1

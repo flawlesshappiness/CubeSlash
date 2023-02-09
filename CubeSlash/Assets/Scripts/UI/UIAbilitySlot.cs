@@ -6,12 +6,12 @@ public class UIAbilitySlot : MonoBehaviour
     [SerializeField] public RectTransform rectTransform;
     [SerializeField] private Image img_icon;
     [SerializeField] private Image img_wrong;
-    [SerializeField] private ButtonExtended button;
+    [SerializeField] private SelectableMenuItem button;
 
     public bool IsWrong { get; private set; }
 
     public Ability Ability { get; private set; }
-    public ButtonExtended Button { get { return button; } }
+    public SelectableMenuItem Button { get { return button; } }
 
     private void OnValidate()
     {

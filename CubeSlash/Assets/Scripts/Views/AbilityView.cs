@@ -37,6 +37,9 @@ public class AbilityView : View
 
         // Cards
         InitializeAbilitySlots();
+
+        // Selection
+        EventSystem.current.SetSelectedGameObject(slots_unlocked[0].Button.gameObject);
     }
 
     private void OnEnable()
@@ -95,10 +98,9 @@ public class AbilityView : View
         slots.Add(slot);
         slots_unlocked.Add(slot);
 
-        slot.Button.onClick.AddListener(() => ClickSlot(slot));
-        slot.Button.OnHoverChanged += hovered => HoverSlot(slot, hovered);
-        slot.Button.OnSelectedChanged += selected => SelectSlot(slot, false, selected);
-        slot.Button.OnSelectedChanged += selected => SelectInventorySlot(slot, selected);
+        slot.Button.onSubmit += () => ClickSlot(slot);
+        slot.Button.onSelect += () => SelectSlot(slot, false);
+        slot.Button.onSelect += () => SelectInventorySlot(slot);
     }
 
     private void InitializeEquipmentSlot(UIAbilityEquipment equipment)
@@ -109,16 +111,15 @@ public class AbilityView : View
 
         slots.Add(equipment.Slot);
 
-        equipment.Slot.Button.onClick.AddListener(() => ClickSlot(equipment.Slot));
-        equipment.Slot.Button.OnHoverChanged += hovered => HoverSlot(equipment.Slot, hovered);
-        equipment.Slot.Button.OnSelectedChanged += selected => SelectSlot(equipment.Slot,false, selected);
-        equipment.Slot.Button.OnSelectedChanged += selected => SelectEquipmentSlot(equipment.Slot, selected);
+        equipment.Slot.Button.onSubmit += () => ClickSlot(equipment.Slot);
+        equipment.Slot.Button.onSelect += () => SelectSlot(equipment.Slot, false);
+        equipment.Slot.Button.onSelect += () => SelectEquipmentSlot(equipment.Slot);
 
         foreach (var slot in equipment.ModifierSlots)
         {
             slots.Add(slot);
-            slot.Button.onClick.AddListener(() => ClickSlot(slot));
-            slot.Button.OnSelectedChanged += selected => SelectSlot(slot, true, selected);
+            slot.Button.onSubmit += () => ClickSlot(slot);
+            slot.Button.onSelect += () => SelectSlot(slot, true);
         }
     }
 
@@ -186,15 +187,8 @@ public class AbilityView : View
         event_insert_slot.Play();
     }
 
-    private void HoverSlot(UIAbilitySlot slot, bool hovered)
+    private void SelectSlot(UIAbilitySlot slot, bool is_modifier)
     {
-        if (!hovered) return;
-        slot.Button.Select();
-    }
-
-    private void SelectSlot(UIAbilitySlot slot, bool is_modifier, bool selected)
-    {
-        if (!selected) return;
         slot_move.MoveToSlot(slot);
 
         if(slot.Ability != null)
@@ -245,22 +239,16 @@ public class AbilityView : View
         }
     }
 
-    private void SelectEquipmentSlot(UIAbilitySlot slot, bool selected)
+    private void SelectEquipmentSlot(UIAbilitySlot slot)
     {
-        if (selected)
-        {
-            selected_slot = slot;
-            SetTextBoxEnabled(false);
-        }
+        selected_slot = slot;
+        SetTextBoxEnabled(false);
     }
 
-    private void SelectInventorySlot(UIAbilitySlot slot, bool selected)
+    private void SelectInventorySlot(UIAbilitySlot slot)
     {
-        if (selected)
-        {
-            selected_slot = null;
-            SetTextBoxEnabled(false);
-        }
+        selected_slot = null;
+        SetTextBoxEnabled(false);
     }
 
     private bool IsMovingAbility() => slot_move.Ability != null;
