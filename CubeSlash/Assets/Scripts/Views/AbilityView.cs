@@ -7,7 +7,7 @@ using UnityEngine.EventSystems;
 
 public class AbilityView : View
 {
-    [SerializeField] private ButtonExtended btn_continue;
+    [SerializeField] private SelectableMenuItem btn_continue;
     [SerializeField] private TMP_Text tmp_desc;
     [SerializeField] private UIInputLayout layout_input;
     [SerializeField] private UIAbilitySlot template_slot_unlocked;
@@ -32,8 +32,8 @@ public class AbilityView : View
         SetTextBoxEnabled(false);
 
         // Buttons
-        btn_continue.onClick.AddListener(ClickContinue);
-        btn_continue.OnSelectedChanged += OnSelectContinue;
+        btn_continue.onSubmit += ClickContinue;
+        btn_continue.onSelect += OnSelectContinue;
 
         // Cards
         InitializeAbilitySlots();
@@ -283,12 +283,9 @@ public class AbilityView : View
         OnContinue?.Invoke();
     }
 
-    private void OnSelectContinue(bool selected)
+    private void OnSelectContinue()
     {
-        if (selected)
-        {
-            selected_slot = null;
-        }
+        selected_slot = null;
     }
     #endregion
     #region DISPLAY
@@ -378,6 +375,9 @@ public class AbilityView : View
     {
         if(selected_slot != null && selected_slot.Ability != null)
         {
+            Interactable = false;
+            SelectableMenuItem.RemoveSelection();
+
             UpdatePlayer();
             Player.Instance.ReapplyUpgrades();
             Player.Instance.ReapplyAbilities();
@@ -393,6 +393,9 @@ public class AbilityView : View
         {
             view_stats.Close(0);
             view_stats = null;
+
+            Interactable = true;
+            EventSystem.current.SetSelectedGameObject(selected_slot.Button.gameObject);
         }
     }
     #endregion

@@ -51,10 +51,10 @@ public class StatValue
         switch (parameter.type_value)
         {
             case StatParameter.ValueType.INT:
-                return parameter.higher_is_positive ? value_int >= parameter.value_int : value_int < parameter.value_int;
+                return parameter.higher_is_positive ? value_int >= parameter.value_int : value_int <= parameter.value_int;
 
             case StatParameter.ValueType.FLOAT:
-                return parameter.higher_is_positive ? value_float >= parameter.value_float : value_float < parameter.value_float;
+                return parameter.higher_is_positive ? value_float >= parameter.value_float : value_float <= parameter.value_float;
 
             case StatParameter.ValueType.BOOL:
                 return parameter.higher_is_positive == parameter.value_bool;

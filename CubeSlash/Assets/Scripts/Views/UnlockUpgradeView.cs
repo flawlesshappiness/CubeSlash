@@ -7,6 +7,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
+using UnityEngine.UI.Extensions;
 
 public class UnlockUpgradeView : View
 {
@@ -16,7 +17,8 @@ public class UnlockUpgradeView : View
     [SerializeField] private RectTransform rt_upgrades, rt_desc;
     [SerializeField] private UIInputLayout input_layout;
     [SerializeField] private Image img_fg_refund;
-    [SerializeField] private FMODEventReference sfx_unlock_upgrade, sfx_hold_refund, sfx_refund;
+    [SerializeField] private CanvasGroup cvg_upgrades, cvg_background, cvg_description, cvg_past_upgrades;
+    [SerializeField] private FMODEventReference sfx_unlock_upgrade, sfx_hold_refund, sfx_refund, sfx_level_up;
 
     public event System.Action<Upgrade> OnUpgradeSelected;
 
@@ -38,13 +40,11 @@ public class UnlockUpgradeView : View
 
         // Upgrades
         CreateUpgrades();
-        AnimateShowUpgrade();
-
-        // Set default UI selection
-        EventSystem.current.SetSelectedGameObject(btns_upgrade[0].gameObject);
 
         // Input
         DisplayInput();
+
+        StartCoroutine(AnimateStartCr());
     }
 
     private void OnEnable()
@@ -63,6 +63,26 @@ public class UnlockUpgradeView : View
 
         PlayerInput.Controls.Player.West.started -= RefundPressed;
         PlayerInput.Controls.Player.West.canceled -= RefundReleased;
+    }
+
+    private IEnumerator AnimateStartCr()
+    {
+        cvg_background.alpha = 0;
+        cvg_description.alpha = 0;
+        cvg_past_upgrades.alpha = 0;
+        input_layout.CanvasGroup.alpha = 0;
+        cvg_upgrades.alpha = 1;
+        Interactable = false;
+
+        yield return AnimateShowUpgrade();
+
+        // Show other elements
+        Interactable = true;
+        EventSystem.current.SetSelectedGameObject(btns_upgrade[0].gameObject);
+
+        cvg_description.alpha = 1;
+        cvg_past_upgrades.alpha = 1;
+        input_layout.CanvasGroup.alpha = 1;
     }
 
     private void OnNorthPressed(InputAction.CallbackContext context)
@@ -130,17 +150,23 @@ public class UnlockUpgradeView : View
 
     private Coroutine AnimateShowUpgrade()
     {
-        var crs = new List<Coroutine>();
         var start_position = Camera.main.WorldToScreenPoint(Player.Instance.transform.position);
-        foreach(var btn in btns_upgrade)
-        {
-            var pivot = btn.AnimationPivot;
-            pivot.transform.localScale = Vector3.zero;
-            var cr = StartCoroutine(AnimateCr(pivot));
-            crs.Add(cr);
-        }
+        return StartCoroutine(Cr());
 
-        return StartCoroutine(WaitForCoroutinesCr(crs));
+        IEnumerator Cr()
+        {
+            var crs = new List<Coroutine>();
+            foreach (var btn in btns_upgrade)
+            {
+                var pivot = btn.AnimationPivot;
+                pivot.transform.localScale = Vector3.zero;
+                var cr = StartCoroutine(AnimateCr(pivot));
+                crs.Add(cr);
+            }
+
+            yield return LerpEnumerator.Alpha(cvg_background, 0.5f, 1).UnscaledTime();
+            yield return StartCoroutine(WaitForCoroutinesCr(crs));
+        }
 
         IEnumerator WaitForCoroutinesCr(List<Coroutine> crs)
         {
@@ -156,13 +182,13 @@ public class UnlockUpgradeView : View
             var end_position = pivot.parent.position;
             var mid_position = Vector3.LerpUnclamped(start_position, end_position, 0.7f).AddY(75f);
             var points = new Vector2[] { start_position, mid_position, end_position };
-            var bezier = new BezierPath(points, false);
+            var bezier = new PathCreation.BezierPath(points, false);
             var path = new VertexPath(bezier, transform);
             var curve = EasingCurves.EaseOutSine;
             yield return LerpEnumerator.Value(0.5f, f =>
             {
                 var t = curve.Evaluate(f);
-                pivot.position = path.GetPointAtTime(Mathf.Lerp(0, 0.999f, t)) - start_position;
+                pivot.position = path.GetPointAtTime(Mathf.Lerp(0, 0.999f, t)) - transform.position;
                 pivot.localScale = Vector3.one * Mathf.Lerp(0f, 1f, t);
             }).UnscaledTime();
         }

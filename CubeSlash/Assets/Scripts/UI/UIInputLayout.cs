@@ -6,6 +6,9 @@ using UnityEngine.UI;
 public class UIInputLayout : MonoBehaviour
 {
     [SerializeField] private UIInputLayoutRow template_row;
+    [SerializeField] private CanvasGroup cvg;
+
+    public CanvasGroup CanvasGroup { get { return cvg; } }
 
     private List<UIInputLayoutRow> rows = new List<UIInputLayoutRow>();
 

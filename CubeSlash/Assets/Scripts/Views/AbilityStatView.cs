@@ -24,19 +24,10 @@ public class AbilityStatView : View
         // Create columns
         var infos = CreateColumn();
         var main = CreateColumn();
-        /*
-        var modifiers = new Dictionary<Ability, UIAbilityStatColumn>();
-        foreach(var modifier in ability.Modifiers.Where(m => m != null))
-        {
-            var column = CreateColumn();
-            modifiers.Add(modifier, column);
-        }
-        */
 
         // Info
         infos.CreateVariable().SetText("Name");
         main.CreateVariable().SetText(ability.Info.name_ability);
-        //modifiers.ToList().ForEach(kvp => kvp.Value.CreateVariable().SetText(kvp.Key.Info.name_ability + " (modifier)"));
 
         CreateSpace();
 
@@ -49,45 +40,6 @@ public class AbilityStatView : View
             var color = ColorPalette.Main.Get(positive ? ColorPalette.Type.HIGHLIGHT : ColorPalette.Type.WRONG);
             main.CreateVariable().SetFromToText(stat.GetValueString(false), stat_current.GetValueString().Color(color));
         }
-
-        // Modifiers
-        /*
-        var modifier_kvps = modifiers.ToList();
-        foreach(var kvp in modifier_kvps)
-        {
-            var upgrade = ability.ModifierUpgrades.GetModifier(kvp.Key.Info.type).upgrade;
-
-            if(upgrade != null)
-            {
-                // Current stats
-                var used_effects = new List<string>();
-                foreach (var stat in display_stats)
-                {
-                    if (upgrade != null)
-                    {
-                        var effect = upgrade.effects.FirstOrDefault(e => e.variable.name == stat.name && stat.type_display != StatParameter.DisplayType.TEXT);
-                        if (effect == null)
-                        {
-                            kvp.Value.CreateSpace();
-                        }
-                        else
-                        {
-                            used_effects.Add(effect.variable.name);
-                            var positive = effect.type_effect == Upgrade.Effect.TypeEffect.POSITIVE;
-                            var color = ColorPalette.Main.Get(positive ? ColorPalette.Type.HIGHLIGHT : ColorPalette.Type.WRONG);
-                            kvp.Value.CreateVariable().SetText(effect.variable.GetValueString(true).Color(color));
-                        }
-                    }
-                }
-
-                // Extra effects
-                foreach (var effect in upgrade.effects.Where(e => !used_effects.Contains(e.variable.name)))
-                {
-                    kvp.Value.CreateVariable().SetText(effect.variable.GetDisplayString(true));
-                }
-            }
-        }
-        */
 
         dividers[dividers.Count - 1].gameObject.SetActive(false);
 

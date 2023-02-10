@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 8820175662307918848}
   - component: {fileID: 2763893632203302924}
   - component: {fileID: 6641236644483169486}
+  - component: {fileID: 7316671813737354196}
   m_Layer: 5
   m_Name: UnlockedUpgrades
   m_TagString: Untagged
@@ -75,6 +76,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   temp_btn: {fileID: 6331888591504295039}
+--- !u!225 &7316671813737354196
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1972338686046909685}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1001 &1488671981906535486
 PrefabInstance:
   m_ObjectHideFlags: 0

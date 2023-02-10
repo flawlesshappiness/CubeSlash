@@ -178,7 +178,7 @@ MonoBehaviour:
     text_display: $ shockwave distance
     type_value: 1
     type_display: 2
-    higher_is_positive: 0
+    higher_is_positive: 1
     value_int: 0
     value_float: 1
     value_bool: 0

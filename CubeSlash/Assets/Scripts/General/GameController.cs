@@ -134,52 +134,40 @@ public class GameController : MonoBehaviour
         Player.Instance.ResetExperience();
         onPlayerLevelUp?.Invoke();
 
-        //Debug.Log($"{Player.Instance.LevelsUntilAbility} {Player.Instance.CanGainAbility()} {AbilityController.Instance.CanUnlockAbility()}");
-        if (Player.Instance.CanGainAbility() && AbilityController.Instance.CanUnlockAbility())
-        {
-            Player.Instance.ResetLevelsUntilAbility();
-            UnlockAbility();
-        }
-        else if (UpgradeController.Instance.CanUnlockUpgrade())
-        {
-            UnlockUpgrade();
-        }
-    }
+        var unlock_ability = Player.Instance.CanGainAbility() && AbilityController.Instance.CanUnlockAbility();
+        var unlock_upgrade = UpgradeController.Instance.CanUnlockUpgrade();
 
-    private void UnlockUpgrade()
-    {
         StartCoroutine(Cr());
         IEnumerator Cr()
         {
-            yield return LerpTimeScale(2f, 0.25f);
+            Player.Instance.PlayLevelUpFX();
+            Player.PushEnemiesInArea(Player.Instance.transform.position, 12, 500);
+            yield return LerpTimeScale(1.0f, 0.25f);
             GameStateController.Instance.SetGameState(GameStateType.MENU);
             PauseLevel();
-            var view = ViewController.Instance.ShowView<UnlockUpgradeView>(0, TAG_ABILITY_VIEW);
-            view.OnUpgradeSelected += u =>
-            {
-                ResumeLevel();
-                Player.Instance.OnUpgradeSelected(u);
-            };
-        }
-    }
 
-    private void UnlockAbility()
-    {
-        StartCoroutine(Cr());
-        IEnumerator Cr()
-        {
-            yield return LerpTimeScale(2f, 0.25f);
-            GameStateController.Instance.SetGameState(GameStateType.MENU);
-            PauseLevel();
-            var view_unlock = ViewController.Instance.ShowView<UnlockAbilityView>(0, TAG_ABILITY_VIEW);
-            view_unlock.OnAbilitySelected += () =>
+            if (unlock_ability)
             {
-                var view_ability = ViewController.Instance.ShowView<AbilityView>(0, TAG_ABILITY_VIEW);
-                view_ability.OnContinue += () =>
+                Player.Instance.ResetLevelsUntilAbility();
+                var view_unlock = ViewController.Instance.ShowView<UnlockAbilityView>(0, TAG_ABILITY_VIEW);
+                view_unlock.OnAbilitySelected += () =>
+                {
+                    var view_ability = ViewController.Instance.ShowView<AbilityView>(0, TAG_ABILITY_VIEW);
+                    view_ability.OnContinue += () =>
+                    {
+                        ResumeLevel();
+                    };
+                };
+            }
+            else if (unlock_upgrade)
+            {
+                var view = ViewController.Instance.ShowView<UnlockUpgradeView>(0, TAG_ABILITY_VIEW);
+                view.OnUpgradeSelected += u =>
                 {
                     ResumeLevel();
+                    Player.Instance.OnUpgradeSelected(u);
                 };
-            };
+            }
         }
     }
 

@@ -11,13 +11,14 @@ public class Player : Character
     [SerializeField] private PlayerSettings settings;
     [SerializeField] private StatCollection stats;
     [SerializeField] private GameObject g_invincible;
-    [SerializeField] private ParticleSystem ps_collect_meat, ps_collect_plant, ps_collect_health;
+    [SerializeField] private ParticleSystem ps_collect_meat, ps_collect_plant, ps_collect_health, ps_level_up;
     [SerializeField] private FMODEventReference event_ability_on_cooldown;
     [SerializeField] private FMODEventReference event_levelup_slide;
     [SerializeField] private FMODEventReference event_levelup;
     [SerializeField] private FMODEventReference event_damage;
     [SerializeField] private FMODEventReference sfx_collect_experience;
     [SerializeField] private FMODEventReference sfx_collect_health;
+    [SerializeField] private FMODEventReference sfx_level_up;
     public PlayerBody PlayerBody { get { return Body as PlayerBody; } }
     public MinMaxFloat Experience { get; private set; } = new MinMaxFloat();
     public Health Health { get; private set; } = new Health();
@@ -524,16 +525,6 @@ public class Player : Character
     {
         if (!HasLevelledUp)
         {
-            var ps = InstantiateParticle("Particles/ps_level_up")
-                .Parent(transform)
-                .Position(transform.position)
-                .Play()
-                .Destroy(5);
-
-            //StartCoroutine(PushCr(0.4f));
-            event_levelup.Play();
-            PushEnemiesInArea(transform.position, 12, 500);
-
             HasLevelledUp = true;
             Level++;
             LevelsUntilAbility--;
@@ -617,6 +608,13 @@ public class Player : Character
         {
             LevelsUntilAbility = 8;
         }
+    }
+    #endregion
+    #region EFFECTS
+    public void PlayLevelUpFX()
+    {
+        ps_level_up.Play();
+        sfx_level_up.Play();
     }
     #endregion
 }

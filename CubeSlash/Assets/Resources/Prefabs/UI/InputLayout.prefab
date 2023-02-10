@@ -455,6 +455,7 @@ GameObject:
   - component: {fileID: 2748636569429692037}
   - component: {fileID: 5695420955162303582}
   - component: {fileID: 498549289180804080}
+  - component: {fileID: 7434583862501166183}
   m_Layer: 5
   m_Name: InputLayout
   m_TagString: Untagged
@@ -497,6 +498,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   template_row: {fileID: 2760045868613436528}
+  cvg: {fileID: 7434583862501166183}
 --- !u!114 &5695420955162303582
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -537,6 +539,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_HorizontalFit: 2
   m_VerticalFit: 2
+--- !u!225 &7434583862501166183
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4193453710027271639}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &4964529238872040580
 GameObject:
   m_ObjectHideFlags: 0
