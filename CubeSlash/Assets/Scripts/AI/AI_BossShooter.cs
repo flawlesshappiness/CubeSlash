@@ -16,7 +16,7 @@ public class AI_BossShooter : EnemyAI
     private bool ignore_state;
     private bool attacking;
     private float time_attack;
-    private float time_circle_attack;
+    private bool do_circle_attack;
 
     private BossShooterBody body_shooter;
 
@@ -27,7 +27,13 @@ public class AI_BossShooter : EnemyAI
 
         body_shooter = enemy.Body.GetComponent<BossShooterBody>();
 
-        Self.EnemyBody.OnDudKilled += dud => HideAndShowDuds(5);
+        Self.EnemyBody.OnDudKilled += OnDudKilled;
+    }
+
+    private void OnDudKilled(HealthDud dud)
+    {
+        HideDuds();
+        do_circle_attack = true;
     }
 
     private void ResetSpeed()
@@ -84,28 +90,14 @@ public class AI_BossShooter : EnemyAI
 
     private void SelectAttack()
     {
-        if(Time.time > time_circle_attack + 20)
+        if(do_circle_attack)
         {
             this.StartCoroutineWithID(AttackShootCircle(), "attack_" + GetInstanceID());
-            time_circle_attack = Time.time;
+            do_circle_attack = false;
         }
-        /*
-        else if (AngleTowards(PlayerPosition).Abs() > 60)
-        {
-            this.StartCoroutineWithID(AttackSpinShoot(), "attack_"+GetInstanceID());
-        }
-        */
         else
         {
-            var rnd = Random.Range(0f, 1f);
-            if (rnd < 0.2f)
-            {
-                this.StartCoroutineWithID(AttackShootArc(), "attack_" + GetInstanceID());
-            }
-            else
-            {
-                this.StartCoroutineWithID(AttackShootArc(), "attack_" + GetInstanceID());
-            }
+            this.StartCoroutineWithID(AttackShootArc(), "attack_" + GetInstanceID());
         }
     }
 
@@ -218,6 +210,8 @@ public class AI_BossShooter : EnemyAI
         time_attack = Time.time + Random.Range(4f, 5f);
         attacking = false;
         ignore_state = false;
+
+        ShowDuds();
 
         IEnumerator TurnCr(float duration)
         {
