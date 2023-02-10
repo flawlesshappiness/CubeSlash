@@ -62,7 +62,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.06538462, g: 0.1, b: 0.061538465, a: 1}
+  m_Color: {r: 0.06666667, g: 0.101960786, b: 0.0627451, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -104,7 +104,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f6284c260384d4419c133d680a4774a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  type: 3
+  value:
+    editor_update: 0
+    palette_index: 0
+    palette_name: Main
+    map_index: 0
+    map_name: Background
+    color: {r: 0.06666667, g: 0.101960786, b: 0.0627451, a: 1}
   graphic: {fileID: 7055364996138121857}
 --- !u!1 &4199395762272161313
 GameObject:
@@ -421,7 +427,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.15, g: 0.3, b: 0.16764705, a: 1}
+  m_Color: {r: 0.14901961, g: 0.29803923, b: 0.16862746, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -450,7 +456,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f6284c260384d4419c133d680a4774a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  type: 0
+  value:
+    editor_update: 0
+    palette_index: 0
+    palette_name: Main
+    map_index: 1
+    map_name: Main
+    color: {r: 0.14901961, g: 0.29803923, b: 0.16862746, a: 1}
   graphic: {fileID: 8755296301667719883}
 --- !u!1 &8010789689868417567
 GameObject:
@@ -542,7 +554,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f6284c260384d4419c133d680a4774a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  type: 2
+  value:
+    editor_update: 0
+    palette_index: 0
+    palette_name: Main
+    map_index: 2
+    map_name: Highlight
+    color: {r: 1, g: 1, b: 1, a: 1}
   graphic: {fileID: 2448051759986544054}
 --- !u!225 &1133752380359427372
 CanvasGroup:

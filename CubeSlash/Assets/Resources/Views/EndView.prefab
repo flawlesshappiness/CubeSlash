@@ -147,7 +147,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f6284c260384d4419c133d680a4774a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  type: 2
+  value:
+    editor_update: 0
+    palette_index: 0
+    palette_name: Main
+    map_index: 2
+    map_name: Highlight
+    color: {r: 1, g: 1, b: 1, a: 1}
   graphic: {fileID: 825904108112587959}
 --- !u!1 &285862123901233080
 GameObject:
@@ -296,7 +302,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f6284c260384d4419c133d680a4774a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  type: 2
+  value:
+    editor_update: 0
+    palette_index: 0
+    palette_name: Main
+    map_index: 2
+    map_name: Highlight
+    color: {r: 1, g: 1, b: 1, a: 1}
   graphic: {fileID: 3339985465826169711}
 --- !u!1 &667002344229555988
 GameObject:
@@ -445,7 +457,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f6284c260384d4419c133d680a4774a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  type: 2
+  value:
+    editor_update: 0
+    palette_index: 0
+    palette_name: Main
+    map_index: 2
+    map_name: Highlight
+    color: {r: 1, g: 1, b: 1, a: 1}
   graphic: {fileID: 5153363599697581661}
 --- !u!1 &863819717815578586
 GameObject:
@@ -888,7 +906,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f6284c260384d4419c133d680a4774a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  type: 2
+  value:
+    editor_update: 0
+    palette_index: 0
+    palette_name: Main
+    map_index: 2
+    map_name: Highlight
+    color: {r: 1, g: 1, b: 1, a: 1}
   graphic: {fileID: 9086875981041421211}
 --- !u!1 &2529695518823942882
 GameObject:
@@ -1037,7 +1061,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f6284c260384d4419c133d680a4774a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  type: 2
+  value:
+    editor_update: 0
+    palette_index: 0
+    palette_name: Main
+    map_index: 2
+    map_name: Highlight
+    color: {r: 1, g: 1, b: 1, a: 1}
   graphic: {fileID: 1074992782055797434}
 --- !u!1 &2848197399236396857
 GameObject:
@@ -1050,6 +1080,7 @@ GameObject:
   - component: {fileID: 2636005645415726837}
   - component: {fileID: 709814770241429064}
   - component: {fileID: 6327056445479136842}
+  - component: {fileID: 3961821388185876597}
   m_Layer: 5
   m_Name: Image
   m_TagString: Untagged
@@ -1114,6 +1145,26 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &3961821388185876597
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2848197399236396857}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f6284c260384d4419c133d680a4774a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  value:
+    editor_update: 0
+    palette_index: 0
+    palette_name: Main
+    map_index: 2
+    map_name: Highlight
+    color: {r: 1, g: 1, b: 1, a: 1}
+  graphic: {fileID: 6327056445479136842}
 --- !u!1 &3016016295381789444
 GameObject:
   m_ObjectHideFlags: 0
@@ -1572,7 +1623,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f6284c260384d4419c133d680a4774a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  type: 2
+  value:
+    editor_update: 0
+    palette_index: 0
+    palette_name: Main
+    map_index: 2
+    map_name: Highlight
+    color: {r: 1, g: 1, b: 1, a: 1}
   graphic: {fileID: 7374344590157515899}
 --- !u!1 &4237882365187704141
 GameObject:
@@ -1788,7 +1845,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f6284c260384d4419c133d680a4774a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  type: 2
+  value:
+    editor_update: 0
+    palette_index: 0
+    palette_name: Main
+    map_index: 2
+    map_name: Highlight
+    color: {r: 1, g: 1, b: 1, a: 1}
   graphic: {fileID: 6329302470063758520}
 --- !u!1 &5465023747194872182
 GameObject:
@@ -2667,7 +2730,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f6284c260384d4419c133d680a4774a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  type: 2
+  value:
+    editor_update: 0
+    palette_index: 0
+    palette_name: Main
+    map_index: 2
+    map_name: Highlight
+    color: {r: 1, g: 1, b: 1, a: 1}
   graphic: {fileID: 4523642982241709425}
 --- !u!1 &8871791117864695123
 GameObject:

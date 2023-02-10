@@ -212,11 +212,13 @@ public class UnlockUpgradeView : View
 
     private void DisplayUpgradeText(Upgrade upgrade)
     {
+        var db_color = ColorDatabase.Load();
+
         ClearUpgradeTexts();
-        CreateUpgradeText(upgrade.name, ColorPalette.Main.Get(ColorPalette.Type.HIGHLIGHT));
+        CreateUpgradeText(upgrade.name, db_color.text_normal.GetColor());
         foreach(var effect in upgrade.effects)
         {
-            var color = effect.type_effect == Upgrade.Effect.TypeEffect.POSITIVE ? ColorPalette.Main.Get(ColorPalette.Type.HIGHLIGHT) : ColorPalette.Main.Get(ColorPalette.Type.WRONG);
+            var color = effect.type_effect == Upgrade.Effect.TypeEffect.POSITIVE ? db_color.text_normal.GetColor() : db_color.text_wrong.GetColor();
             var tmp = CreateUpgradeText(effect.variable.GetDisplayString(true), color);
         }
     }

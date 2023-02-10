@@ -145,13 +145,14 @@ public class UpgradeTreeView : View
 
     private void DisplayUpgrade(Upgrade upgrade)
     {
-        var text = upgrade.name.Color(ColorPalette.Main.Get(ColorPalette.Type.PRIMARY));
+        var db_color = ColorDatabase.Load();
+        var text = upgrade.name.Color(db_color.text_normal.GetColor());
 
         for (int i = 0; i < upgrade.effects.Count; i++)
         {
             var effect = upgrade.effects[i];
-            var color = effect.type_effect == Upgrade.Effect.TypeEffect.POSITIVE ? ColorPalette.Type.HIGHLIGHT : ColorPalette.Type.WRONG;
-            text += "\n" + effect.variable.GetDisplayString(true).Color(ColorPalette.Main.Get(color));
+            var color = effect.type_effect == Upgrade.Effect.TypeEffect.POSITIVE ? db_color.text_normal.GetColor() : db_color.text_wrong.GetColor();
+            text += "\n" + effect.variable.GetDisplayString(true).Color(color);
         }
 
         tmp_desc.text = text;

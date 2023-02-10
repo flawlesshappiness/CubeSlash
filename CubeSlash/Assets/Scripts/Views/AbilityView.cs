@@ -294,9 +294,11 @@ public class AbilityView : View
         var any_wrong = slots.Any(slot => slot.IsWrong);
         var any_filled = equipments.Any(e => e.Slot.Ability != null);
 
+        var db_color = ColorDatabase.Load();
+
         if (any_wrong)
         {
-            tmp_desc.text = "Some slots are " + "invalid".Color(ColorPalette.Main.Get(ColorPalette.Type.WRONG)) + ".";
+            tmp_desc.text = "Some slots are " + "invalid".Color(db_color.text_wrong.GetColor()) + ".";
         }
         else if (!any_filled)
         {

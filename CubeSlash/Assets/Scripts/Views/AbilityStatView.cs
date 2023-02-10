@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
-using static Upgrade;
 
 public class AbilityStatView : View
 {
@@ -37,7 +36,8 @@ public class AbilityStatView : View
             var stat_current = ability.GetValue(stat.name);
             infos.CreateVariable().SetText(stat.name);
             var positive = stat_current.ComparePositiveTo(stat);
-            var color = ColorPalette.Main.Get(positive ? ColorPalette.Type.HIGHLIGHT : ColorPalette.Type.WRONG);
+            var db_color = Database.Load<ColorDatabase>();
+            var color = positive ? db_color.text_normal.GetColor() : db_color.text_wrong.GetColor();
             main.CreateVariable().SetFromToText(stat.GetValueString(false), stat_current.GetValueString().Color(color));
         }
 

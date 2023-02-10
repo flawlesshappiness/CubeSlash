@@ -624,10 +624,10 @@ RectTransform:
   m_Father: {fileID: 7264894561188987561}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 30}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 185.25, y: -70}
+  m_SizeDelta: {x: 370.5, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1320961201063093537
 GameObject:
@@ -823,6 +823,7 @@ GameObject:
   - component: {fileID: 1312667734570246915}
   - component: {fileID: 8407924182164614879}
   - component: {fileID: 1048669988587208741}
+  - component: {fileID: 6826011644964112383}
   m_Layer: 5
   m_Name: tmp_unlock_later
   m_TagString: Untagged
@@ -946,6 +947,26 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &6826011644964112383
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1683523985416828507}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f6284c260384d4419c133d680a4774a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  value:
+    editor_update: 0
+    palette_index: 0
+    palette_name: Main
+    map_index: 2
+    map_name: Highlight
+    color: {r: 1, g: 1, b: 1, a: 1}
+  graphic: {fileID: 1048669988587208741}
 --- !u!1 &1703760275373460497
 GameObject:
   m_ObjectHideFlags: 0
@@ -1097,10 +1118,10 @@ RectTransform:
   m_Father: {fileID: 7264894561188987561}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 30}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 185.25, y: -100}
+  m_SizeDelta: {x: 370.5, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &2430431832262905165
 GameObject:
@@ -1283,7 +1304,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.15, g: 0.3, b: 0.16764705, a: 1}
+  m_Color: {r: 0.14901961, g: 0.29803923, b: 0.16862746, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -1312,7 +1333,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f6284c260384d4419c133d680a4774a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  type: 0
+  value:
+    editor_update: 0
+    palette_index: 0
+    palette_name: Main
+    map_index: 1
+    map_name: Main
+    color: {r: 0.14901961, g: 0.29803923, b: 0.16862746, a: 1}
   graphic: {fileID: 8142094100653418823}
 --- !u!1 &2777978262514974341
 GameObject:
@@ -1440,7 +1467,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.15, g: 0.3, b: 0.16764705, a: 1}
+  m_Color: {r: 0.14901961, g: 0.29803923, b: 0.16862746, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -1469,7 +1496,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f6284c260384d4419c133d680a4774a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  type: 0
+  value:
+    editor_update: 0
+    palette_index: 0
+    palette_name: Main
+    map_index: 1
+    map_name: Main
+    color: {r: 0.14901961, g: 0.29803923, b: 0.16862746, a: 1}
   graphic: {fileID: 4399946363823482052}
 --- !u!1 &3269862238128967068
 GameObject:
@@ -2115,6 +2148,7 @@ GameObject:
   - component: {fileID: 8638835764741506002}
   - component: {fileID: 673797777440597308}
   - component: {fileID: 6611122803039019167}
+  - component: {fileID: 8026032679350136277}
   m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
@@ -2238,6 +2272,26 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &8026032679350136277
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3713078576700563091}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f6284c260384d4419c133d680a4774a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  value:
+    editor_update: 0
+    palette_index: 0
+    palette_name: Main
+    map_index: 2
+    map_name: Highlight
+    color: {r: 1, g: 1, b: 1, a: 1}
+  graphic: {fileID: 6611122803039019167}
 --- !u!1 &3802166394888870102
 GameObject:
   m_ObjectHideFlags: 0
@@ -2385,7 +2439,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f6284c260384d4419c133d680a4774a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  type: 2
+  value:
+    editor_update: 0
+    palette_index: 0
+    palette_name: Main
+    map_index: 2
+    map_name: Highlight
+    color: {r: 1, g: 1, b: 1, a: 1}
   graphic: {fileID: 4451996547147770156}
 --- !u!1 &3883047761915058204
 GameObject:
@@ -2463,7 +2523,7 @@ MonoBehaviour:
   m_fontColor32:
     serializedVersion: 2
     rgba: 4281027622
-  m_fontColor: {r: 0.15, g: 0.3, b: 0.16764705, a: 1}
+  m_fontColor: {r: 0.14901961, g: 0.29803923, b: 0.16862746, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -2534,7 +2594,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f6284c260384d4419c133d680a4774a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  type: 0
+  value:
+    editor_update: 0
+    palette_index: 0
+    palette_name: Main
+    map_index: 1
+    map_name: Main
+    color: {r: 0.14901961, g: 0.29803923, b: 0.16862746, a: 1}
   graphic: {fileID: 5847376197322643824}
 --- !u!1 &4094604259802044117
 GameObject:
@@ -2595,7 +2661,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.06538462, g: 0.1, b: 0.061538465, a: 1}
+  m_Color: {r: 0.06666667, g: 0.101960786, b: 0.0627451, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -2624,7 +2690,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f6284c260384d4419c133d680a4774a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  type: 3
+  value:
+    editor_update: 0
+    palette_index: 0
+    palette_name: Main
+    map_index: 0
+    map_name: Background
+    color: {r: 0.06666667, g: 0.101960786, b: 0.0627451, a: 1}
   graphic: {fileID: 5441614906270069824}
 --- !u!1 &4142632297041183013
 GameObject:
@@ -2904,7 +2976,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f6284c260384d4419c133d680a4774a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  type: 2
+  value:
+    editor_update: 0
+    palette_index: 0
+    palette_name: Main
+    map_index: 2
+    map_name: Highlight
+    color: {r: 1, g: 1, b: 1, a: 1}
   graphic: {fileID: 5082811621576470669}
 --- !u!1 &4389625317752663248
 GameObject:
@@ -3558,7 +3636,7 @@ MonoBehaviour:
   m_fontColor32:
     serializedVersion: 2
     rgba: 4281027622
-  m_fontColor: {r: 0.15, g: 0.3, b: 0.16764705, a: 1}
+  m_fontColor: {r: 0.14901961, g: 0.29803923, b: 0.16862746, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -3629,7 +3707,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f6284c260384d4419c133d680a4774a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  type: 0
+  value:
+    editor_update: 0
+    palette_index: 0
+    palette_name: Main
+    map_index: 1
+    map_name: Main
+    color: {r: 0.14901961, g: 0.29803923, b: 0.16862746, a: 1}
   graphic: {fileID: 1744684547410699751}
 --- !u!1 &4983254650631111689
 GameObject:
@@ -3817,7 +3901,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f6284c260384d4419c133d680a4774a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  type: 2
+  value:
+    editor_update: 0
+    palette_index: 0
+    palette_name: Main
+    map_index: 2
+    map_name: Highlight
+    color: {r: 1, g: 1, b: 1, a: 1}
   graphic: {fileID: 7571156461253045455}
 --- !u!1 &5062832089763521927
 GameObject:
@@ -4157,7 +4247,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.15, g: 0.3, b: 0.16764705, a: 1}
+  m_Color: {r: 0.14901961, g: 0.29803923, b: 0.16862746, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -4186,7 +4276,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f6284c260384d4419c133d680a4774a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  type: 0
+  value:
+    editor_update: 0
+    palette_index: 0
+    palette_name: Main
+    map_index: 1
+    map_name: Main
+    color: {r: 0.14901961, g: 0.29803923, b: 0.16862746, a: 1}
   graphic: {fileID: 2665750626133002460}
 --- !u!1 &5264840272323775009
 GameObject:
@@ -4264,7 +4360,7 @@ MonoBehaviour:
   m_fontColor32:
     serializedVersion: 2
     rgba: 4293298222
-  m_fontColor: {r: 0.18039215, g: 0.5324887, b: 0.9019608, a: 1}
+  m_fontColor: {r: 0.18039216, g: 0.53333336, b: 0.9019608, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -4335,7 +4431,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f6284c260384d4419c133d680a4774a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  type: 4
+  value:
+    editor_update: 0
+    palette_index: 0
+    palette_name: Main
+    map_index: 4
+    map_name: Player
+    color: {r: 0.18039216, g: 0.53333336, b: 0.9019608, a: 1}
   graphic: {fileID: 1132270991570455153}
 --- !u!114 &4742102195954788797
 MonoBehaviour:
@@ -4416,7 +4518,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.15, g: 0.3, b: 0.16764705, a: 1}
+  m_Color: {r: 0.14901961, g: 0.29803923, b: 0.16862746, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -4445,7 +4547,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f6284c260384d4419c133d680a4774a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  type: 0
+  value:
+    editor_update: 0
+    palette_index: 0
+    palette_name: Main
+    map_index: 1
+    map_name: Main
+    color: {r: 0.14901961, g: 0.29803923, b: 0.16862746, a: 1}
   graphic: {fileID: 7549265821886816172}
 --- !u!1 &5514732245267750207
 GameObject:
@@ -4708,7 +4816,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.15, g: 0.3, b: 0.16764705, a: 1}
+  m_Color: {r: 0.14901961, g: 0.29803923, b: 0.16862746, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -4737,7 +4845,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f6284c260384d4419c133d680a4774a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  type: 0
+  value:
+    editor_update: 0
+    palette_index: 0
+    palette_name: Main
+    map_index: 1
+    map_name: Main
+    color: {r: 0.14901961, g: 0.29803923, b: 0.16862746, a: 1}
   graphic: {fileID: 6278576801927599058}
 --- !u!1 &6216201402913256228
 GameObject:
@@ -4750,6 +4864,7 @@ GameObject:
   - component: {fileID: 7473450550461310743}
   - component: {fileID: 1085763295068209635}
   - component: {fileID: 569493385222138307}
+  - component: {fileID: 470749786308018918}
   m_Layer: 5
   m_Name: tmp_unlock_later
   m_TagString: Untagged
@@ -4873,6 +4988,26 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &470749786308018918
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6216201402913256228}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f6284c260384d4419c133d680a4774a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  value:
+    editor_update: 0
+    palette_index: 0
+    palette_name: Main
+    map_index: 2
+    map_name: Highlight
+    color: {r: 1, g: 1, b: 1, a: 1}
+  graphic: {fileID: 569493385222138307}
 --- !u!1 &6217112962398350499
 GameObject:
   m_ObjectHideFlags: 0
@@ -5072,7 +5207,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.15, g: 0.3, b: 0.16764705, a: 1}
+  m_Color: {r: 0.14901961, g: 0.29803923, b: 0.16862746, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -5101,7 +5236,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f6284c260384d4419c133d680a4774a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  type: 0
+  value:
+    editor_update: 0
+    palette_index: 0
+    palette_name: Main
+    map_index: 1
+    map_name: Main
+    color: {r: 0.14901961, g: 0.29803923, b: 0.16862746, a: 1}
   graphic: {fileID: 1085497152192485366}
 --- !u!1 &6452100182293665752
 GameObject:
@@ -5173,10 +5314,10 @@ RectTransform:
   m_Father: {fileID: 7264894561188987561}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 30}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 185.25, y: -40}
+  m_SizeDelta: {x: 370.5, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &6684028237380053235
 GameObject:
@@ -5709,7 +5850,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.15, g: 0.3, b: 0.16764705, a: 1}
+  m_Color: {r: 0.14901961, g: 0.29803923, b: 0.16862746, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -5738,7 +5879,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f6284c260384d4419c133d680a4774a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  type: 0
+  value:
+    editor_update: 0
+    palette_index: 0
+    palette_name: Main
+    map_index: 1
+    map_name: Main
+    color: {r: 0.14901961, g: 0.29803923, b: 0.16862746, a: 1}
   graphic: {fileID: 465261627847848244}
 --- !u!1 &7921676876501027690
 GameObject:
@@ -5913,7 +6060,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.06538462, g: 0.1, b: 0.061538465, a: 1}
+  m_Color: {r: 0.06666667, g: 0.101960786, b: 0.0627451, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -5942,7 +6089,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f6284c260384d4419c133d680a4774a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  type: 3
+  value:
+    editor_update: 0
+    palette_index: 0
+    palette_name: Main
+    map_index: 0
+    map_name: Background
+    color: {r: 0.06666667, g: 0.101960786, b: 0.0627451, a: 1}
   graphic: {fileID: 8847089112721389975}
 --- !u!1 &8005103007626241395
 GameObject:
@@ -5955,6 +6108,7 @@ GameObject:
   - component: {fileID: 4647650540777938896}
   - component: {fileID: 3659417194247529755}
   - component: {fileID: 178301781910535430}
+  - component: {fileID: 7669469059319818629}
   m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
@@ -6078,6 +6232,26 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &7669469059319818629
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8005103007626241395}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f6284c260384d4419c133d680a4774a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  value:
+    editor_update: 0
+    palette_index: 0
+    palette_name: Main
+    map_index: 2
+    map_name: Highlight
+    color: {r: 1, g: 1, b: 1, a: 1}
+  graphic: {fileID: 178301781910535430}
 --- !u!1 &8209242084227388736
 GameObject:
   m_ObjectHideFlags: 0
@@ -6137,7 +6311,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.06538462, g: 0.1, b: 0.061538465, a: 1}
+  m_Color: {r: 0.06666667, g: 0.101960786, b: 0.0627451, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -6166,7 +6340,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f6284c260384d4419c133d680a4774a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  type: 3
+  value:
+    editor_update: 0
+    palette_index: 0
+    palette_name: Main
+    map_index: 0
+    map_name: Background
+    color: {r: 0.06666667, g: 0.101960786, b: 0.0627451, a: 1}
   graphic: {fileID: 617718473623919074}
 --- !u!1 &8283487584106619776
 GameObject:
@@ -6227,7 +6407,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.15, g: 0.3, b: 0.16764705, a: 1}
+  m_Color: {r: 0.14901961, g: 0.29803923, b: 0.16862746, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -6256,7 +6436,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f6284c260384d4419c133d680a4774a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  type: 0
+  value:
+    editor_update: 0
+    palette_index: 0
+    palette_name: Main
+    map_index: 1
+    map_name: Main
+    color: {r: 0.14901961, g: 0.29803923, b: 0.16862746, a: 1}
   graphic: {fileID: 7640007213400832893}
 --- !u!1 &8446932262958832641
 GameObject:
@@ -6495,7 +6681,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.15, g: 0.3, b: 0.16764705, a: 1}
+  m_Color: {r: 0.14901961, g: 0.29803923, b: 0.16862746, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -6524,7 +6710,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f6284c260384d4419c133d680a4774a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  type: 0
+  value:
+    editor_update: 0
+    palette_index: 0
+    palette_name: Main
+    map_index: 1
+    map_name: Main
+    color: {r: 0.14901961, g: 0.29803923, b: 0.16862746, a: 1}
   graphic: {fileID: 4664170498096778858}
 --- !u!1 &8615060366607478215
 GameObject:
@@ -6776,6 +6968,7 @@ GameObject:
   - component: {fileID: 4228068162175392164}
   - component: {fileID: 6509620197113146080}
   - component: {fileID: 4409238607251503709}
+  - component: {fileID: 4480162963152611289}
   m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
@@ -6899,6 +7092,26 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &4480162963152611289
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9081229038030438542}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f6284c260384d4419c133d680a4774a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  value:
+    editor_update: 0
+    palette_index: 0
+    palette_name: Main
+    map_index: 2
+    map_name: Highlight
+    color: {r: 1, g: 1, b: 1, a: 1}
+  graphic: {fileID: 4409238607251503709}
 --- !u!1 &9133289245475174452
 GameObject:
   m_ObjectHideFlags: 0
@@ -7760,11 +7973,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4e0236264ee5ea64087b4f82591b89b0, type: 3}
---- !u!224 &4483650974796631723 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 282353913190712527, guid: 4e0236264ee5ea64087b4f82591b89b0, type: 3}
-  m_PrefabInstance: {fileID: 4454692994644888164}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &1735833028932072974 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2721534667560336490, guid: 4e0236264ee5ea64087b4f82591b89b0, type: 3}
@@ -7776,6 +7984,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5536164de0bf31847a6cbe4f3ee964ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!224 &4483650974796631723 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 282353913190712527, guid: 4e0236264ee5ea64087b4f82591b89b0, type: 3}
+  m_PrefabInstance: {fileID: 4454692994644888164}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &5349048798458161954 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8640609053945291078, guid: 4e0236264ee5ea64087b4f82591b89b0, type: 3}
@@ -8143,22 +8356,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 41fee86e14308d144918ef7c8a15dd8e, type: 3}
---- !u!114 &1412932529138050217 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8400898986258215878, guid: 41fee86e14308d144918ef7c8a15dd8e, type: 3}
-  m_PrefabInstance: {fileID: 7425947293385365359}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5585d1a181c004e44bd26a80921ee325, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!224 &7556547348718565668 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 1139547590892203595, guid: 41fee86e14308d144918ef7c8a15dd8e, type: 3}
-  m_PrefabInstance: {fileID: 7425947293385365359}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &2766331834155023329 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4714635068350934158, guid: 41fee86e14308d144918ef7c8a15dd8e, type: 3}
@@ -8168,6 +8365,22 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6f4e20e873823e142834cffbeffe9a8e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!224 &7556547348718565668 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 1139547590892203595, guid: 41fee86e14308d144918ef7c8a15dd8e, type: 3}
+  m_PrefabInstance: {fileID: 7425947293385365359}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1412932529138050217 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8400898986258215878, guid: 41fee86e14308d144918ef7c8a15dd8e, type: 3}
+  m_PrefabInstance: {fileID: 7425947293385365359}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5585d1a181c004e44bd26a80921ee325, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1001 &7782875635023801850

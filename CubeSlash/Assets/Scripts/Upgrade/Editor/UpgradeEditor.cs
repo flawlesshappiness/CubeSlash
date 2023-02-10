@@ -148,10 +148,12 @@ public class UpgradeEditor : Editor
             stat_collection.stats.FirstOrDefault(v => v.name == effect.variable.name) ??
             (stat_collection.stats.Count > 0 ? stat_collection.stats[0] : null);
 
+        var db_color = ColorDatabase.Load();
+
         // Preview
         GUILayout.FlexibleSpace();
-        var type_color = effect.type_effect == Upgrade.Effect.TypeEffect.POSITIVE ? ColorPalette.Type.HIGHLIGHT : ColorPalette.Type.WRONG;
-        GUIHelper.PushColor(ColorPalette.Main.Get(type_color));
+        var color = effect.type_effect == Upgrade.Effect.TypeEffect.POSITIVE ? db_color.text_normal.GetColor() : db_color.text_wrong.GetColor();
+        GUIHelper.PushColor(color);
         var ali_prev = GUI.skin.box.alignment;
         GUI.skin.box.alignment = TextAnchor.MiddleCenter;
         var text = variable != null ? effect.variable.GetDisplayString(true) : "No variable";
