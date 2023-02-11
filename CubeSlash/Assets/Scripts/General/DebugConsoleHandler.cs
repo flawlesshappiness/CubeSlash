@@ -46,6 +46,7 @@ public class DebugConsoleHandler : Singleton
             window.CreateButton("Unlock Upgrade", ClickUnlockUpgrade);
             window.CreateButton("Unlock Ability", ClickUnlockAbility);
             window.CreateButton("Level up", ClickLevelUp);
+            window.CreateButton("Gain Ability", ClickGainAbility);
             window.CreateButton("Equipment", ClickEquipment);
             window.CreateButton(GameController.DAMAGE_DISABLED ? "Enable damage" : "Disable damage", ClickToggleDamage);
             window.CreateButton("Next Area", ClickNextArea);
@@ -54,6 +55,7 @@ public class DebugConsoleHandler : Singleton
         }
 
         window.CreateButton("Give money", ClickGiveCurrency);
+        window.CreateButton("Log", ClickLog);
     }
 
     private void ClickUnlockUpgrade()
@@ -108,10 +110,28 @@ public class DebugConsoleHandler : Singleton
         }
     }
 
+    private void ClickLog()
+    {
+        var window = view.ShowList();
+        view.ShowBackButton(ShowFunctionsWindow);
+        window.Clear();
+
+        foreach(var log in LogController.Instance.LoggedMessages)
+        {
+            window.CreateText(log.message);
+        }
+    }
+
     private void ClickLevelUp()
     {
         CloseView();
         Player.Instance.Experience.Value = Player.Instance.Experience.Max;
+    }
+
+    private void ClickGainAbility()
+    {
+        Player.Instance.CheatLevelsUntilNextAbility(1);
+        ClickLevelUp();
     }
 
     private void ClickEquipment()

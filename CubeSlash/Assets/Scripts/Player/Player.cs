@@ -595,18 +595,28 @@ public class Player : Character
 
     public void ResetLevelsUntilAbility()
     {
+        LevelsUntilAbility = GetMaxLevelsUntilAbility();
+    }
+
+    public void CheatLevelsUntilNextAbility(int i)
+    {
+        LevelsUntilAbility = i;
+    }
+
+    public int GetMaxLevelsUntilAbility()
+    {
         var count = AbilityController.Instance.GetUnlockedAbilities().Count;
-        if(count < 1)
+        if (count < 2)
         {
-            LevelsUntilAbility = 3;
+            return 5;
         }
-        else if(count < 2)
+        else if (count < 3)
         {
-            LevelsUntilAbility = 5;
+            return 8;
         }
         else
         {
-            LevelsUntilAbility = 8;
+            return 10;
         }
     }
     #endregion

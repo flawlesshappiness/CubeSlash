@@ -1,7 +1,6 @@
 using Flawliz.Lerp;
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting.ReorderableList;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
@@ -15,6 +14,8 @@ public class GameSetupView : View
     [SerializeField] private UIInputLayout input;
 
     [SerializeField] private FMODEventReference sfx_back;
+
+    private bool transitioning;
 
     private void Start()
     {
@@ -36,6 +37,7 @@ public class GameSetupView : View
 
     private void ClickPlay()
     {
+        transitioning = false;
         Interactable = false;
         SelectableMenuItem.RemoveSelection();
         StartCoroutine(TransitionToGameCr());
@@ -43,6 +45,9 @@ public class GameSetupView : View
 
     private void PressBack(InputAction.CallbackContext context)
     {
+        if (transitioning) return;
+        transitioning = true;
+
         Interactable = false;
         SelectableMenuItem.RemoveSelection();
         StartCoroutine(Cr());

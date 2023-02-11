@@ -27,7 +27,7 @@ public class UpgradeNodeTreeWindow : NodeEditorWindow
         ClearGUI();
         Tree = tree;
         UpgradeDatabase = UpgradeDatabase.LoadAsset();
-        AbilityDatabase = AbilityDatabase.LoadAsset();
+        AbilityDatabase = Database.Load<AbilityDatabase>();
 
         // Create root node
         if (Tree.nodes.Count == 0)

@@ -16,6 +16,7 @@ public class UnlockUpgradeView : View
     [SerializeField] private TMP_Text tmp_upgrade;
     [SerializeField] private RectTransform rt_upgrades, rt_desc;
     [SerializeField] private UIInputLayout input_layout;
+    [SerializeField] private UIUnlockAbilityBar ability_bar;
     [SerializeField] private Image img_fg_refund;
     [SerializeField] private CanvasGroup cvg_upgrades, cvg_background, cvg_description, cvg_past_upgrades;
     [SerializeField] private FMODEventReference sfx_unlock_upgrade, sfx_hold_refund, sfx_refund, sfx_level_up;
@@ -71,6 +72,7 @@ public class UnlockUpgradeView : View
         cvg_description.alpha = 0;
         cvg_past_upgrades.alpha = 0;
         input_layout.CanvasGroup.alpha = 0;
+        ability_bar.CanvasGroup.alpha = 0;
         cvg_upgrades.alpha = 1;
         Interactable = false;
 
@@ -83,6 +85,9 @@ public class UnlockUpgradeView : View
         cvg_description.alpha = 1;
         cvg_past_upgrades.alpha = 1;
         input_layout.CanvasGroup.alpha = 1;
+        ability_bar.CanvasGroup.alpha = 1;
+
+        ability_bar.AnimateLevelsUntilAbility(1f, EasingCurves.EaseOutQuad);
     }
 
     private void OnNorthPressed(InputAction.CallbackContext context)
@@ -151,9 +156,9 @@ public class UnlockUpgradeView : View
     private Coroutine AnimateShowUpgrade()
     {
         var start_position = Camera.main.WorldToScreenPoint(Player.Instance.transform.position);
-        return StartCoroutine(Cr());
+        return StartCoroutine(AnimateButtonsCr());
 
-        IEnumerator Cr()
+        IEnumerator AnimateButtonsCr()
         {
             var crs = new List<Coroutine>();
             foreach (var btn in btns_upgrade)

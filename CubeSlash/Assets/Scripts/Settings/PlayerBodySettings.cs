@@ -29,7 +29,7 @@ public class PlayerBodySettings : ScriptableObject
 
     public AbilityInfo GetAbilityInfo()
     {
-        var ability = AbilityDatabase.LoadAsset().GetAbility(ability_type);
+        var ability = Database.Load<AbilityDatabase>().GetAbility(ability_type);
         return ability.Info;
     }
 }

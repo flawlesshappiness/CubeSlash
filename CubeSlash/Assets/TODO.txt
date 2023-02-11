@@ -6,3 +6,4 @@ endless mode
 waves that push things in a direction
 uilock animation
 add cool animations for opening and unlocking upgrades and abilities
+bar to unlock ability in upgrade view

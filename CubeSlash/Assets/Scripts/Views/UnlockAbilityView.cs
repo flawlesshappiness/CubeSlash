@@ -1,3 +1,5 @@
+using Flawliz.Lerp;
+using PathCreation;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -9,6 +11,9 @@ public class UnlockAbilityView : View
 {
     [SerializeField] private UIIconButton temp_btn_ability;
     [SerializeField] private TMP_Text tmp_desc;
+    [SerializeField] private RectTransform pivot_ability_bar;
+    [SerializeField] private CanvasGroup cvg_background, cvg_abilities, cvg_description;
+    [SerializeField] private UIUnlockAbilityBar ability_bar;
     [SerializeField] private FMODEventReference sfx_unlock_ability;
 
     public event System.Action OnAbilitySelected;
@@ -34,8 +39,8 @@ public class UnlockAbilityView : View
             btn.Button.onSubmit += () => Click(btn, ability);
         }
 
-        // Set default UI selection
-        EventSystem.current.SetSelectedGameObject(btns_ability[0].gameObject);
+        // Animate
+        StartCoroutine(AnimateStartCr());
 
         void Click(UIIconButton btn, Ability ability)
         {
@@ -73,5 +78,79 @@ public class UnlockAbilityView : View
         }
 
         tmp_desc.text = text;
+    }
+
+    IEnumerator AnimateStartCr()
+    {
+        Interactable = false;
+        ability_bar.CanvasGroup.alpha = 0;
+        cvg_background.alpha = 0;
+        cvg_abilities.alpha = 0;
+        cvg_description.alpha = 0;
+
+        Lerp.Alpha(ability_bar.CanvasGroup, 0.25f, 1).UnscaledTime();
+        Lerp.Alpha(cvg_background, 0.25f, 1).UnscaledTime();
+
+        ability_bar.SetPreviousValue();
+        yield return new WaitForSecondsRealtime(0.25f);
+        yield return ability_bar.AnimateLevelsUntilAbility(1.5f, EasingCurves.EaseOutQuad);
+        yield return LerpEnumerator.AnchoredPosition(pivot_ability_bar, 0.5f, pivot_ability_bar.anchoredPosition.AddY(300))
+            .Curve(EasingCurves.EaseOutQuad)
+            .UnscaledTime();
+
+        cvg_abilities.alpha = 1;
+        yield return AnimateButtons();
+
+        cvg_description.alpha = 1;
+        Interactable = true;
+
+        // Set selection
+        EventSystem.current.SetSelectedGameObject(btns_ability[0].gameObject);
+    }
+
+    private Coroutine AnimateButtons()
+    {
+        var start_position = Camera.main.WorldToScreenPoint(Player.Instance.transform.position);
+        return StartCoroutine(AnimateButtonsCr());
+
+        IEnumerator AnimateButtonsCr()
+        {
+            var crs = new List<Coroutine>();
+            foreach (var btn in btns_ability)
+            {
+                var pivot = btn.AnimationPivot;
+                pivot.transform.localScale = Vector3.zero;
+                var cr = StartCoroutine(AnimateCr(pivot));
+                crs.Add(cr);
+            }
+
+            yield return LerpEnumerator.Alpha(cvg_background, 0.5f, 1).UnscaledTime();
+            yield return StartCoroutine(WaitForCoroutinesCr(crs));
+        }
+
+        IEnumerator WaitForCoroutinesCr(List<Coroutine> crs)
+        {
+            foreach (var cr in crs)
+            {
+                yield return cr;
+            }
+        }
+
+        IEnumerator AnimateCr(RectTransform pivot)
+        {
+            yield return null;
+            var end_position = pivot.parent.position;
+            var mid_position = Vector3.LerpUnclamped(start_position, end_position, 0.7f).AddY(75f);
+            var points = new Vector2[] { start_position, mid_position, end_position };
+            var bezier = new PathCreation.BezierPath(points, false);
+            var path = new VertexPath(bezier, transform);
+            var curve = EasingCurves.EaseOutSine;
+            yield return LerpEnumerator.Value(0.5f, f =>
+            {
+                var t = curve.Evaluate(f);
+                pivot.position = path.GetPointAtTime(Mathf.Lerp(0, 0.999f, t)) - transform.position;
+                pivot.localScale = Vector3.one * Mathf.Lerp(0f, 1f, t);
+            }).UnscaledTime();
+        }
     }
 }

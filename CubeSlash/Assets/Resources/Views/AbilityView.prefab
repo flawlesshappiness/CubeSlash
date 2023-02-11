@@ -770,8 +770,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4281027622
-  m_fontColor: {r: 0.14901961, g: 0.29803923, b: 0.16862746, a: 1}
+    rgba: 4294967295
+  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -846,9 +846,9 @@ MonoBehaviour:
     editor_update: 0
     palette_index: 0
     palette_name: Main
-    map_index: 1
-    map_name: Main
-    color: {r: 0.14901961, g: 0.29803923, b: 0.16862746, a: 1}
+    map_index: 2
+    map_name: Highlight
+    color: {r: 1, g: 1, b: 1, a: 1}
   graphic: {fileID: 2537766109103177846}
 --- !u!1 &3579639303863263614
 GameObject:

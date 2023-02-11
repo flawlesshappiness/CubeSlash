@@ -148,13 +148,13 @@ public class GameController : MonoBehaviour
 
             if (unlock_ability)
             {
-                Player.Instance.ResetLevelsUntilAbility();
                 var view_unlock = ViewController.Instance.ShowView<UnlockAbilityView>(0, TAG_ABILITY_VIEW);
                 view_unlock.OnAbilitySelected += () =>
                 {
                     var view_ability = ViewController.Instance.ShowView<AbilityView>(0, TAG_ABILITY_VIEW);
                     view_ability.OnContinue += () =>
                     {
+                        Player.Instance.ResetLevelsUntilAbility();
                         ResumeLevel();
                     };
                 };

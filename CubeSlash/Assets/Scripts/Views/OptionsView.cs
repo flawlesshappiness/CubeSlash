@@ -12,6 +12,8 @@ public class OptionsView : View
 
     public System.Action onClickBack;
 
+    private bool transitioning;
+
     private void Start()
     {
         slider_master.SetValue(Save.Game.volume_master);
@@ -64,6 +66,8 @@ public class OptionsView : View
 
     private void PressBack(InputAction.CallbackContext context)
     {
+        if (transitioning) return;
+        transitioning = true;
         StartCoroutine(TransitionBackCr());
     }
 
