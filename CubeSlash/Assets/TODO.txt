@@ -6,4 +6,3 @@ endless mode
 waves that push things in a direction
 uilock animation
 add cool animations for opening and unlocking upgrades and abilities
-change graphic palette to be more adjustable/extendable (Scriptable objects)
