@@ -36,7 +36,7 @@ public class AI_DeathSpawn : EnemyAI
 
             var e = EnemyController.Instance.SpawnEnemy(enemy_to_spawn, transform.position);
             e.Knockback(dir * 200, true, true);
-            e.SetInvincible("spawn_" + GetInstanceID(), 0.1f);
+            e.SetInvincible("spawn_" + GetInstanceID(), 0.01f);
             e.OnDeath += () => EnemyController.Instance.EnemyDeathSpawnMeat(e);
         }
     }

@@ -8,9 +8,9 @@ public class PauseView : View
 {
     public static bool Exists { get; private set; }
 
-    [SerializeField] private ButtonExtended btnContinue;
-    [SerializeField] private ButtonExtended btnOptions;
-    [SerializeField] private ButtonExtended btnMainMenu;
+    [SerializeField] private SelectableMenuItem btnContinue;
+    [SerializeField] private SelectableMenuItem btnOptions;
+    [SerializeField] private SelectableMenuItem btnMainMenu;
 
     private void OnEnable()
     {
@@ -30,9 +30,9 @@ public class PauseView : View
     {
         PlayerInput.Controls.Player.Menu.started += Menu_started;
 
-        btnContinue.onClick.AddListener(ClickContinue);
-        btnOptions.onClick.AddListener(ClickOptions);
-        btnMainMenu.onClick.AddListener(ClickMainMenu);
+        btnContinue.onSubmit += ClickContinue;
+        btnOptions.onSubmit += ClickOptions;
+        btnMainMenu.onSubmit += ClickMainMenu;
     }
 
     IEnumerator TransitionToOptionsCr()

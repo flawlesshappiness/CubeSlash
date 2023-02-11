@@ -177,10 +177,12 @@ public class GameController : MonoBehaviour
         StartCoroutine(Cr());
         IEnumerator Cr()
         {
+            PauseLock.AddLock("MainMenu");
             GameStateController.Instance.SetGameState(GameStateType.MENU);
             var bg_view = ViewController.Instance.ShowView<BackgroundView>(0.5f, "Foreground");
             yield return new WaitForSecondsRealtime(0.5f);
             bg_view.Close(0.5f);
+            PauseLock.RemoveLock("MainMenu");
             MainMenu();
         }
     }

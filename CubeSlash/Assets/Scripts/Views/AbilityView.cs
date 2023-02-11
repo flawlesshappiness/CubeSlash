@@ -12,7 +12,6 @@ public class AbilityView : View
     [SerializeField] private UIInputLayout layout_input;
     [SerializeField] private UIAbilitySlot template_slot_unlocked;
     [SerializeField] private UIAbilitySlotMove slot_move;
-    [SerializeField] private UIFloatingTextBox text_box;
 
     [Header("AUDIO")]
     [SerializeField] private FMODEventReference event_move_slot;
@@ -29,8 +28,6 @@ public class AbilityView : View
 
     private void Start()
     {
-        SetTextBoxEnabled(false);
-
         // Buttons
         btn_continue.onSubmit += ClickContinue;
         btn_continue.onSelect += OnSelectContinue;
@@ -182,7 +179,6 @@ public class AbilityView : View
         slot_move.SetAbility(temp);
 
         UpdateEquipment();
-        SetTextBoxEnabled(false);
 
         event_insert_slot.Play();
     }
@@ -222,33 +218,14 @@ public class AbilityView : View
         }
     }
 
-    private void SelectModifierSlot(UIAbilitySlot slot, UIAbilitySlot equipment_slot, bool selected)
-    {
-        if (!selected) return;
-
-        if(equipment_slot.Ability != null)
-        {
-            var modifier_ability = slot_move.Ability ?? slot.Ability;
-            if(modifier_ability != null)
-            {
-                var modifier = equipment_slot.Ability.ModifierUpgrades.GetModifier(modifier_ability.Info.type);
-                SetTextBoxEnabled(true);
-                text_box.Text = modifier.description;
-                text_box.SetPosition(slot.rectTransform, UIFloatingTextBox.Orientation.Bottom, new Vector2(0, -25));
-            }
-        }
-    }
-
     private void SelectEquipmentSlot(UIAbilitySlot slot)
     {
         selected_slot = slot;
-        SetTextBoxEnabled(false);
     }
 
     private void SelectInventorySlot(UIAbilitySlot slot)
     {
         selected_slot = null;
-        SetTextBoxEnabled(false);
     }
 
     private bool IsMovingAbility() => slot_move.Ability != null;
@@ -340,11 +317,6 @@ public class AbilityView : View
             tmp_desc.text = s;
             DisplayInputAbility();
         }
-    }
-
-    private void SetTextBoxEnabled(bool enabled)
-    {
-        text_box.gameObject.SetActive(enabled);
     }
     #endregion
     #region INPUT
