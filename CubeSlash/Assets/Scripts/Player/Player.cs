@@ -83,7 +83,7 @@ public class Player : Character
         MoveDirection = transform.up;
 
         // Add ability
-        var ability = AbilityController.Instance.UnlockAbility(settings.ability_type);
+        var ability = AbilityController.Instance.GainAbility(settings.ability_type);
         AbilityController.Instance.EquipAbility(ability, PlayerInput.ButtonType.WEST);
 
         ResetValues();
@@ -605,7 +605,7 @@ public class Player : Character
 
     public int GetMaxLevelsUntilAbility()
     {
-        var count = AbilityController.Instance.GetUnlockedAbilities().Count;
+        var count = AbilityController.Instance.GetGainedAbilities().Count;
         if (count < 2)
         {
             return 5;

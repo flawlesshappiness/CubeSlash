@@ -98,14 +98,14 @@ public class DebugConsoleHandler : Singleton
         {
             var ability = AbilityController.Instance.GetAbility(type);
             var btn = window.CreateButton(type.ToString(), () => UnlockAbility(ability));
-            var is_unlocked = AbilityController.Instance.IsAbilityUnlocked(type);
+            var is_unlocked = AbilityController.Instance.HasAbility(type);
 
             btn.TextRight = is_unlocked ? "Unlocked" : "";
         }
 
         void UnlockAbility(Ability ability)
         {
-            AbilityController.Instance.UnlockAbility(ability.Info.type);
+            AbilityController.Instance.GainAbility(ability.Info.type);
             ShowFunctionsWindow();
         }
     }

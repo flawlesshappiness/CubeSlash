@@ -134,7 +134,7 @@ public class GameController : MonoBehaviour
         Player.Instance.ResetExperience();
         onPlayerLevelUp?.Invoke();
 
-        var unlock_ability = Player.Instance.CanGainAbility() && AbilityController.Instance.CanUnlockAbility();
+        var unlock_ability = Player.Instance.CanGainAbility() && AbilityController.Instance.CanGainAbility();
         var unlock_upgrade = UpgradeController.Instance.CanUnlockUpgrade();
 
         StartCoroutine(Cr());

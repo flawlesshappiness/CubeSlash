@@ -31,7 +31,7 @@ public class UIAbilityPanel : MonoBehaviour
     private void OnMove(int dir)
     {
         var idx_prev = idx_settings;
-        idx_settings = Mathf.Clamp(idx_settings + dir, 0, db_player_body_settings.settings.Count - 1);
+        idx_settings = Mathf.Clamp(idx_settings + dir, 0, db_player_body_settings.collection.Count - 1);
         SetSettings(idx_settings);
 
         if(idx_settings != idx_prev)
@@ -44,7 +44,7 @@ public class UIAbilityPanel : MonoBehaviour
     {
         idx_settings = i;
 
-        var settings = db_player_body_settings.settings[i];
+        var settings = db_player_body_settings.collection[i];
         body_panel.SetSettings(settings);
         part_panel.SetSettings(settings);
         CurrentSettings = settings;

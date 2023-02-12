@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 83de654b3feb8c346ade78387c0d5c3b, type: 3}
   m_Name: PlayerBodySettingsDatabase
   m_EditorClassIdentifier: 
-  settings:
+  collection:
   - {fileID: 11400000, guid: e2a020462edc5c14a8c4a3d35f4ae1d2, type: 2}
   - {fileID: 11400000, guid: 7530fd707ee7dad4a825a2bafd5f5493, type: 2}
   - {fileID: 11400000, guid: df212819bf6854f44b0b59565abe1170, type: 2}

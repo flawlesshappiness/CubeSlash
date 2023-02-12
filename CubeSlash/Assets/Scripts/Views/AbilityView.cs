@@ -71,7 +71,7 @@ public class AbilityView : View
 
         // Unlocked slots
         template_slot_unlocked.gameObject.SetActive(false);
-        foreach(var ability in AbilityController.Instance.GetUnlockedAbilities())
+        foreach(var ability in AbilityController.Instance.GetGainedAbilities())
         {
             InitializeAbilitySlot(ability);
         }

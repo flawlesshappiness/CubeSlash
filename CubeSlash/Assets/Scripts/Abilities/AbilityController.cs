@@ -6,14 +6,14 @@ public class AbilityController : Singleton
 {
     public static AbilityController Instance { get { return Instance<AbilityController>(); } }
 
-    private AbilityDatabase Database { get; set; }
+    private AbilityDatabase DB { get; set; }
     private List<Ability> abilities = new List<Ability>();
     private Dictionary<PlayerInput.ButtonType, Ability> equipment = new Dictionary<PlayerInput.ButtonType, Ability>();
 
     protected override void Initialize()
     {
         base.Initialize();
-        Database = Resources.Load<AbilityDatabase>("Databases/" + nameof(AbilityDatabase));
+        DB = Resources.Load<AbilityDatabase>("Databases/" + nameof(AbilityDatabase));
         Clear();
     }
 
@@ -33,22 +33,29 @@ public class AbilityController : Singleton
         InitializeEquipment();
     }
 
-    #region UNLOCK
-    public bool CanUnlockAbility() => GetUnlockableAbilities().Count > 0;
-    public List<Ability> GetUnlockableAbilities()
+    #region GAIN
+    public bool CanGainAbility() => GetAvailableAbilities().Count > 0;
+    public List<Ability> GetAvailableAbilities()
     {
-        var unlocked_types = abilities.Select(ability => ability.Info.type).ToList();
+        var gained_types = abilities.Select(ability => ability.Info.type).ToList();
         return System.Enum.GetValues(typeof(Ability.Type)).Cast<Ability.Type>()
-            .Where(type => !unlocked_types.Contains(type))
-            .Select(type => Database.GetAbility(type)).ToList();
+            .Where(type => IsValid(type))
+            .Select(type => DB.GetAbility(type)).ToList();
+
+        bool IsValid(Ability.Type type)
+        {
+            var not_gained = !gained_types.Contains(type);
+            var unlocked = IsAbilityUnlocked(type);
+            return not_gained && unlocked;
+        }
     }
 
-    public Ability GetAbility(Ability.Type type) => Database.GetAbility(type);
-    public List<Ability> GetUnlockedAbilities() => abilities.ToList();
-    public bool IsAbilityUnlocked(Ability.Type type) => abilities.Any(a => a.Info.type == type);
-    public Ability UnlockAbility(Ability.Type type)
+    public Ability GetAbility(Ability.Type type) => DB.GetAbility(type);
+    public List<Ability> GetGainedAbilities() => abilities.ToList();
+    public bool HasAbility(Ability.Type type) => abilities.Any(a => a.Info.type == type);
+    public Ability GainAbility(Ability.Type type)
     {
-        var prefab = Database.GetAbility(type);
+        var prefab = DB.GetAbility(type);
         var ability = Instantiate(prefab.gameObject).GetComponent<Ability>();
         if (ability)
         {
@@ -59,11 +66,20 @@ public class AbilityController : Singleton
         return ability;
     }
 
-    public void UnlockAllAbilities()
+    public void GainAllAbilities()
     {
         System.Enum.GetValues(typeof(Ability.Type)).Cast<Ability.Type>().ToArray()
-            .Where(type => !IsAbilityUnlocked(type))
-            .ToList().ForEach(type => UnlockAbility(type));
+            .Where(type => !HasAbility(type))
+            .ToList().ForEach(type => GainAbility(type));
+    }
+
+    public bool IsAbilityUnlocked(Ability.Type type)
+    {
+        var db = Database.Load<PlayerBodySettingsDatabase>();
+        var entry = db.collection.FirstOrDefault(e => e.ability_type == type);
+        if (entry == null) return true;
+        if (entry.shop_product == null) return true;
+        return entry.shop_product.IsUnlocked();
     }
     #endregion
     #region EQUIP

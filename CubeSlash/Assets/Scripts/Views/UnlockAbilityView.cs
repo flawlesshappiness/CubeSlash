@@ -25,10 +25,10 @@ public class UnlockAbilityView : View
         temp_btn_ability.gameObject.SetActive(false);
         DisplayAbility(null);
 
-        var is_first = AbilityController.Instance.GetUnlockedAbilities().Count == 0;
+        var is_first = AbilityController.Instance.GetGainedAbilities().Count == 0;
         var abilities = is_first ?
-            AbilityController.Instance.GetUnlockableAbilities()
-            : AbilityController.Instance.GetUnlockableAbilities().TakeRandom(2);
+            AbilityController.Instance.GetAvailableAbilities()
+            : AbilityController.Instance.GetAvailableAbilities().TakeRandom(2);
 
         ClearButtons();
         foreach(var ability in abilities)
@@ -45,7 +45,7 @@ public class UnlockAbilityView : View
         void Click(UIIconButton btn, Ability ability)
         {
             FMODButtonEvent.PreviousSelected = null;
-            AbilityController.Instance.UnlockAbility(ability.Info.type);
+            AbilityController.Instance.GainAbility(ability.Info.type);
             sfx_unlock_ability.Play();
             OnAbilitySelected?.Invoke();
             Close(0);
@@ -110,47 +110,29 @@ public class UnlockAbilityView : View
 
     private Coroutine AnimateButtons()
     {
-        var start_position = Camera.main.WorldToScreenPoint(Player.Instance.transform.position);
         return StartCoroutine(AnimateButtonsCr());
-
         IEnumerator AnimateButtonsCr()
         {
-            var crs = new List<Coroutine>();
+            var crs = new List<Lerp>();
+            btns_ability.ForEach(btn => btn.AnimationPivot.localScale = Vector3.zero);
             foreach (var btn in btns_ability)
             {
                 var pivot = btn.AnimationPivot;
-                pivot.transform.localScale = Vector3.zero;
-                var cr = StartCoroutine(AnimateCr(pivot));
-                crs.Add(cr);
+                pivot.transform.position = btn.transform.position;
+                var lerp = Lerp.LocalScale(pivot, 0.25f, Vector3.zero, Vector3.one).Curve(EasingCurves.EaseOutQuad).UnscaledTime();
+                crs.Add(lerp);
+                yield return new WaitForSecondsRealtime(0.1f);
             }
 
-            yield return LerpEnumerator.Alpha(cvg_background, 0.5f, 1).UnscaledTime();
             yield return StartCoroutine(WaitForCoroutinesCr(crs));
         }
 
-        IEnumerator WaitForCoroutinesCr(List<Coroutine> crs)
+        IEnumerator WaitForCoroutinesCr(List<Lerp> crs)
         {
             foreach (var cr in crs)
             {
                 yield return cr;
             }
-        }
-
-        IEnumerator AnimateCr(RectTransform pivot)
-        {
-            yield return null;
-            var end_position = pivot.parent.position;
-            var mid_position = Vector3.LerpUnclamped(start_position, end_position, 0.7f).AddY(75f);
-            var points = new Vector2[] { start_position, mid_position, end_position };
-            var bezier = new PathCreation.BezierPath(points, false);
-            var path = new VertexPath(bezier, transform);
-            var curve = EasingCurves.EaseOutSine;
-            yield return LerpEnumerator.Value(0.5f, f =>
-            {
-                var t = curve.Evaluate(f);
-                pivot.position = path.GetPointAtTime(Mathf.Lerp(0, 0.999f, t)) - transform.position;
-                pivot.localScale = Vector3.one * Mathf.Lerp(0f, 1f, t);
-            }).UnscaledTime();
         }
     }
 }
