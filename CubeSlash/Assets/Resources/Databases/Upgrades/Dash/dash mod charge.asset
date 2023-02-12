@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: dash_mod_charge
   name: Dash modified by Charge
-  icon: {fileID: 21300000, guid: 083237d4baf78d143b4251ca612f18dd, type: 3}
+  icon: {fileID: 21300000, guid: 2d660ce6a2b67084e9a287899a6025a5, type: 3}
   id_stats: dash
   effects:
   - type_effect: 1

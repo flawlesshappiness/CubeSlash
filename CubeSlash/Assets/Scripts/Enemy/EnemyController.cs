@@ -91,7 +91,7 @@ public class EnemyController : Singleton
             freq_game = settings.enemy_freq_endless.Evaluate(t_endless_duration);
         }
 
-        return freq_game + freq_area - freq_difficulty;
+        return Mathf.Max(0.1f, freq_game + freq_area + freq_difficulty);
     }
 
     private float time_spawn;

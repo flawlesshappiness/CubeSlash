@@ -886,8 +886,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+    rgba: 4281027622
+  m_fontColor: {r: 0.14901961, g: 0.29803923, b: 0.16862746, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -962,9 +962,9 @@ MonoBehaviour:
     editor_update: 0
     palette_index: 0
     palette_name: Main
-    map_index: 2
-    map_name: Highlight
-    color: {r: 1, g: 1, b: 1, a: 1}
+    map_index: 1
+    map_name: Main
+    color: {r: 0.14901961, g: 0.29803923, b: 0.16862746, a: 1}
   graphic: {fileID: 1048669988587208741}
 --- !u!1 &1703760275373460497
 GameObject:
@@ -4638,8 +4638,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+    rgba: 4281027622
+  m_fontColor: {r: 0.14901961, g: 0.29803923, b: 0.16862746, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -4714,9 +4714,9 @@ MonoBehaviour:
     editor_update: 0
     palette_index: 0
     palette_name: Main
-    map_index: 2
-    map_name: Highlight
-    color: {r: 1, g: 1, b: 1, a: 1}
+    map_index: 1
+    map_name: Main
+    color: {r: 0.14901961, g: 0.29803923, b: 0.16862746, a: 1}
   graphic: {fileID: 569493385222138307}
 --- !u!1 &6217112962398350499
 GameObject:

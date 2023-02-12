@@ -100,7 +100,7 @@ public class AI_BossHost : EnemyAI
             yield return new WaitForSeconds(2f);
 
             sfx_charge.Stop();
-            sfx_shoot.Play();
+            FMODController.Instance.PlayWithDelay(sfx_shoot, 0.1f);
 
             dir = dud.transform.up;
             Physics2D.CircleCastAll(dud.transform.position, width * 0.25f, dir, length)

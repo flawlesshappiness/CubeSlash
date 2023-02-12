@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: dash_area_002
   name: Area 2
-  icon: {fileID: 21300000, guid: 5eea672436aba514eb7869206f660ee2, type: 3}
+  icon: {fileID: 21300000, guid: 015c6df6a680d794989451cb35c4fe93, type: 3}
   id_stats: dash
   effects:
   - type_effect: 0

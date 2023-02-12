@@ -14,13 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: dash_ripple_size_002
   name: Bigger wave
-  icon: {fileID: 21300000, guid: 6df22128a224dd7479815d31a22ac44c, type: 3}
+  icon: {fileID: 21300000, guid: 129da6b696ca58444ad54f91fbcbc24a, type: 3}
   id_stats: dash
   effects:
   - type_effect: 0
     variable:
       name: RippleSize
-      text_display: $ ripple size
+      text_display: $ shockwave size
       type_value: 1
       type_display: 2
       higher_is_positive: 0

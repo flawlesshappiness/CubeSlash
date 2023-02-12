@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: dash_mod_split
   name: Dash modified by Split
-  icon: {fileID: 21300000, guid: 083237d4baf78d143b4251ca612f18dd, type: 3}
+  icon: {fileID: 21300000, guid: aa601896f349e9c47acfcaef8d6bc4c6, type: 3}
   id_stats: dash
   effects:
   - type_effect: 1
@@ -32,7 +32,7 @@ MonoBehaviour:
   - type_effect: 0
     variable:
       name: RippleCount
-      text_display: $ ripples on impact
+      text_display: $ shockwaves on impact
       type_value: 0
       type_display: 0
       higher_is_positive: 0

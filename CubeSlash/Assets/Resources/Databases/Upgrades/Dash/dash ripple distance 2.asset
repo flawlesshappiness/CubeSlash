@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: dash_ripple_distance_002
   name: Longer wave
-  icon: {fileID: 21300000, guid: 6df22128a224dd7479815d31a22ac44c, type: 3}
+  icon: {fileID: 21300000, guid: d22674bec7f036f49b327e395df26735, type: 3}
   id_stats: dash
   effects:
   - type_effect: 0

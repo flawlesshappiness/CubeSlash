@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: dash_ripple_size_001
   name: Big wave
-  icon: {fileID: 21300000, guid: 6df22128a224dd7479815d31a22ac44c, type: 3}
+  icon: {fileID: 21300000, guid: 80bd8af5618bc274da1e41205e110361, type: 3}
   id_stats: dash
   effects:
   - type_effect: 0

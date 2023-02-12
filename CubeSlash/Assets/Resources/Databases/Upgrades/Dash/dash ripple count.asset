@@ -14,13 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: dash_ripple_count_001
   name: Impact Wave
-  icon: {fileID: 21300000, guid: 6df22128a224dd7479815d31a22ac44c, type: 3}
+  icon: {fileID: 21300000, guid: 496fb4acc1a8b924982618f294128211, type: 3}
   id_stats: dash
   effects:
   - type_effect: 0
     variable:
       name: RippleCount
-      text_display: $ ripples on impact
+      text_display: $ shockwaves on impact
       type_value: 0
       type_display: 0
       higher_is_positive: 0
