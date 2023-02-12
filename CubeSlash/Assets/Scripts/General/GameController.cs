@@ -33,7 +33,6 @@ public class GameController : MonoBehaviour
         Instance = this;
         Singleton.CreateAllSingletons();
         InitializePlayer();
-        InitializeData();
         ViewController.Instance.ShowView<StartView>(0);
 
         PauseLock.OnLockChanged += OnPauseChanged;
@@ -48,11 +47,6 @@ public class GameController : MonoBehaviour
         Player.Instance.onLevelUp += OnPlayerLevelUp;
         CameraController.Instance.Target = Player.Instance.transform;
         Player.Instance.gameObject.SetActive(false);
-    }
-
-    private void InitializeData()
-    {
-        Data.SaveGameData();
     }
 
     public void OpenPauseView()
