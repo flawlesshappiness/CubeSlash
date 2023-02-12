@@ -254,7 +254,6 @@ public class AbilityView : View
     #region BUTTONS
     private void ClickContinue()
     {
-        FMODButtonEvent.PreviousSelected = null;
         UpdatePlayer();
         Close(0);
         OnContinue?.Invoke();

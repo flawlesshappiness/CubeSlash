@@ -2,12 +2,14 @@ using Flawliz.Lerp;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 public class OptionsView : View
 {
     [SerializeField] private UISlider slider_master, slider_music, slider_sfx;
+    [SerializeField] private SelectableMenuItem btn_delete_save;
     [SerializeField] private UIInputLayout input;
 
     public System.Action onClickBack;
@@ -23,6 +25,8 @@ public class OptionsView : View
         slider_master.onValueChanged += AdjustMasterVolume;
         slider_music.onValueChanged += AdjustMusicVolume;
         slider_sfx.onValueChanged += AdjustSFXVolume;
+
+        btn_delete_save.onSubmit += ClickDeleteSave;
 
         StartCoroutine(TransitionShowCr(true));
 
@@ -91,5 +95,26 @@ public class OptionsView : View
         AudioController.Instance.SetSFXVolume(value);
         AudioController.Instance.SetUIVolume(value);
         Save.Game.volume_sfx = value;
+    }
+
+    private void ClickDeleteSave()
+    {
+        var prev_selected = EventSystem.current.currentSelectedGameObject;
+        Interactable = false;
+        var view = ConfirmView.Show("Are you sure?\nThis will delete all saved progress.", Confirm, Back);
+        view.SetWrongPanel();
+
+        void Confirm()
+        {
+            SaveDataController.Instance.ClearSaveData();
+            Back();
+            PressBack(new InputAction.CallbackContext());
+        }
+
+        void Back()
+        {
+            Interactable = true;
+            EventSystem.current.SetSelectedGameObject(prev_selected);
+        }
     }
 }

@@ -37,6 +37,7 @@ public class AbilityDash : Ability
     [SerializeField] private FMODEventReference event_dash_impact;
 
     private Coroutine cr_dash;
+    private Vector3 dir_dash;
 
     private const float DISTANCE = 3;
     private const float SPEED = 30;
@@ -113,6 +114,7 @@ public class AbilityDash : Ability
         IKillable victim = null;
         var velocity = direction * Speed;
         var pos_origin = transform.position;
+        dir_dash = direction;
 
         event_dash_start.Play();
 
@@ -162,7 +164,7 @@ public class AbilityDash : Ability
             KnockbackSelf();
             event_dash_impact.PlayWithTimeLimit(0.1f);
             Player.PushEnemiesInArea(Player.transform.position, RadiusKnockback, ForceKnockback, ac_push_enemies);
-            ShootShockwaves(Player.MoveDirection);
+            ShootShockwaves(dir_dash);
         }
 
         Dashing = false;
@@ -219,7 +221,7 @@ public class AbilityDash : Ability
         }
         else
         {
-            Player.Knockback(-Player.MoveDirection.normalized * SelfKnockback, true, true);
+            Player.Knockback(-dir_dash.normalized * SelfKnockback, true, true);
         }
 
         IEnumerator TeleportBackCr()

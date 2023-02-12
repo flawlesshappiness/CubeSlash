@@ -5,8 +5,9 @@ public class UISlider : MonoBehaviour
 {
     [SerializeField] private LeftRightMenuItem menu;
     [SerializeField] private UISliderNotch template_notch;
+    [SerializeField] private FMODEventReference sfx_move;
+
     public int max_notches;
-    [SerializeField] private FMODEventReference sfx_click_notch;
 
     public System.Action onValueChanged;
 
@@ -28,7 +29,7 @@ public class UISlider : MonoBehaviour
 
         if(selected_index != prev_index)
         {
-            sfx_click_notch.Play();
+            sfx_move.Play();
         }
     }
 
@@ -89,15 +90,6 @@ public class UISlider : MonoBehaviour
             notch.gameObject.SetActive(true);
             notch.SetSelected(false);
             notches.Add(notch);
-
-            notch.onClicked += () => ClickNotch(notch);
-        }
-
-        void ClickNotch(UISliderNotch notch)
-        {
-            sfx_click_notch.Play();
-            SetSelectedNotch(notch);
-            menu.Select();
         }
     }
 

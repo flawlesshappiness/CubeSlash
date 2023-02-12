@@ -44,7 +44,6 @@ public class UnlockAbilityView : View
 
         void Click(UIIconButton btn, Ability ability)
         {
-            FMODButtonEvent.PreviousSelected = null;
             AbilityController.Instance.GainAbility(ability.Info.type);
             sfx_unlock_ability.Play();
             OnAbilitySelected?.Invoke();

@@ -47,7 +47,6 @@ public class PauseView : View
         lerp.UseUnscaledTime = true;
         yield return lerp;
 
-        FMODButtonEvent.PreviousSelected = null;
         var view = ViewController.Instance.ShowView<OptionsView>(0, nameof(OptionsView));
         view.onClickBack += () => ViewController.Instance.ShowView<PauseView>(0.5f, nameof(PauseView));
 

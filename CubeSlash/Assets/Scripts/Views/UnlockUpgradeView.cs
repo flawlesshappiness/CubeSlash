@@ -129,7 +129,6 @@ public class UnlockUpgradeView : View
 
         void OnClick(UIIconButton btn, Upgrade upgrade)
         {
-            FMODButtonEvent.PreviousSelected = null;
             CanvasGroup.interactable = false;
             CanvasGroup.blocksRaycasts = false;
             UpgradeController.Instance.UnlockUpgrade(upgrade.id);
@@ -158,6 +157,8 @@ public class UnlockUpgradeView : View
         return StartCoroutine(AnimateButtonsCr());
         IEnumerator AnimateButtonsCr()
         {
+            Lerp.Alpha(cvg_background, 0.5f, 1).UnscaledTime();
+
             var crs = new List<Lerp>();
             btns_upgrade.ForEach(btn => btn.AnimationPivot.localScale = Vector3.zero);
             foreach (var btn in btns_upgrade)
@@ -169,7 +170,6 @@ public class UnlockUpgradeView : View
                 yield return new WaitForSecondsRealtime(0.1f);
             }
 
-            yield return LerpEnumerator.Alpha(cvg_background, 0.5f, 1).UnscaledTime();
             yield return StartCoroutine(WaitForCoroutinesCr(crs));
         }
 
