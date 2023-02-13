@@ -15,7 +15,6 @@ public class UIBodyPartPanel : MonoBehaviour
         // Ability
         var ability = Database.Load<AbilityDatabase>().GetAbility(settings.ability_type);
         img_part.sprite = ability.Info.sprite_icon;
-        img_part.enabled = !is_locked;
         tmp_name.text = ability.Info.name_ability;
         tmp_desc.text = ability.Info.desc_ability;
 

@@ -93,7 +93,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 38.2
+  m_fontSize: 72
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -397,6 +397,7 @@ GameObject:
   m_Component:
   - component: {fileID: 282353913190712527}
   - component: {fileID: 2721534667560336490}
+  - component: {fileID: 1738213012196625099}
   m_Layer: 5
   m_Name: Lock
   m_TagString: Untagged
@@ -439,6 +440,19 @@ MonoBehaviour:
   pivot_anim_lock: {fileID: 6702967547672066895}
   img_lock: {fileID: 7294788974170830795}
   tmp_price: {fileID: 7986845546931081367}
+  cvg: {fileID: 1738213012196625099}
+--- !u!225 &1738213012196625099
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8640609053945291078}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 0
+  m_BlocksRaycasts: 0
+  m_IgnoreParentGroups: 0
 --- !u!1 &8971124525908083112
 GameObject:
   m_ObjectHideFlags: 0

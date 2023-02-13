@@ -1,3 +1,4 @@
+using Flawliz.Lerp;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -8,7 +9,7 @@ public class UIAbilityPanel : MonoBehaviour
     [SerializeField] private UIBodyPanel body_panel;
     [SerializeField] private UIBodyPartPanel part_panel;
     [SerializeField] private UILock uilock;
-    [SerializeField] private GameObject icon_body, icon_ability;
+    [SerializeField] private CanvasGroup cvg_icon_body, cvg_icon_ability;
     [SerializeField] private FMODEventReference sfx_move;
 
     private int idx_settings;
@@ -50,15 +51,19 @@ public class UIAbilityPanel : MonoBehaviour
         CurrentSettings = settings;
 
         var is_locked = !settings.IsUnlocked();
-        uilock.gameObject.SetActive(is_locked);
-        icon_ability.SetActive(!is_locked);
-        icon_body.SetActive(!is_locked);
+        cvg_icon_ability.alpha = is_locked ? 0 : 1;
+        cvg_icon_body.alpha = is_locked ? 0 : 1;
 
         menu.submittable = is_locked;
 
         if (is_locked)
         {
+            uilock.SetLocked();
             uilock.Price = settings.shop_product.price.amount;
+        }
+        else
+        {
+            uilock.SetUnlocked();
         }
 
         onSettingsChanged?.Invoke();
@@ -91,6 +96,9 @@ public class UIAbilityPanel : MonoBehaviour
     {
         if(InternalShopController.Instance.TryPurchaseProduct(settings.shop_product))
         {
+            uilock.AnimateUnlock();
+            Lerp.Alpha(cvg_icon_body, 0.5f, 1f);
+            Lerp.Alpha(cvg_icon_ability, 0.5f, 1f);
             SetSettings(idx_settings);
         }
     }

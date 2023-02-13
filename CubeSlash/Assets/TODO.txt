@@ -24,5 +24,3 @@ less health on angler boss
 debug menu showing game values, such as enemy frequency
 make bosses not scale with speed
 gain health upgrade sound
-
-uilock animation

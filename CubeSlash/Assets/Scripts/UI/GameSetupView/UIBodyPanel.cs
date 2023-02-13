@@ -22,12 +22,8 @@ public class UIBodyPanel : MonoBehaviour
 
     public void SetSettings(PlayerBodySettings settings)
     {
-        // Lock
-        var is_locked = !settings.IsUnlocked();
-
         // Sprite
         img_body.sprite = settings.body_sprite;
-        img_body.enabled = !is_locked;
 
         // Stats
         ClearHealthPoints();
