@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: player_collect_speed
   name: Caffeinated Food
-  icon: {fileID: 21300000, guid: e6cb1a66600f59a42be6a2ce0b23befc, type: 3}
+  icon: {fileID: 21300000, guid: 10ca526c7f4db5a47aa5890c86b40c74, type: 3}
   id_stats: player
   effects:
   - type_effect: 0

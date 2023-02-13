@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: split count 3
   m_EditorClassIdentifier: 
   id: projectile_count_003
-  name: Projectile count 3
-  icon: {fileID: 21300000, guid: 84f667a0eed51a340b7b37327afb72ea, type: 3}
+  name: Projectile count+++
+  icon: {fileID: 21300000, guid: 5ba993c58d1a20b48ad8b0a0b8d37be5, type: 3}
   id_stats: split
   effects:
   - type_effect: 0

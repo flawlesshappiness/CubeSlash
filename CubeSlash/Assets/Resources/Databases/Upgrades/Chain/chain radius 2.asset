@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: chain_radius_002
   name: Radius 2
-  icon: {fileID: 21300000, guid: 7b7de2430deee964da27ba2590989b37, type: 3}
+  icon: {fileID: 21300000, guid: 5c6eaf979a9842041a5e8d941d24612b, type: 3}
   id_stats: chain
   effects:
   - type_effect: 0

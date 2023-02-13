@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: player_infinite_drag
   name: Total Control
-  icon: {fileID: 21300000, guid: 033336c308c8eb048a200b88b4c9012f, type: 3}
+  icon: {fileID: 21300000, guid: 837ecb50a6e0c6c47b1d7e464cfa6a3c, type: 3}
   id_stats: player
   effects:
   - type_effect: 0

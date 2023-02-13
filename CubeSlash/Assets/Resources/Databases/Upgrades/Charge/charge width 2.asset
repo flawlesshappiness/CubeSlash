@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: charge_width_002
   name: Charge width 2
-  icon: {fileID: 21300000, guid: 5e15ac1f91a3248428bfeb5aacfea078, type: 3}
+  icon: {fileID: 21300000, guid: a40428727b584d84c9dd693f0847cc30, type: 3}
   id_stats: charge
   effects:
   - type_effect: 0

@@ -14,13 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: explode_mod_explode
   name: Explode modified by Explode
-  icon: {fileID: 21300000, guid: 08899c7b95056de458c07a171209ec23, type: 3}
+  icon: {fileID: 21300000, guid: 9fcc1744a317b8e4ab0aa3072a0a3ed5, type: 3}
   id_stats: explode
   effects:
   - type_effect: 0
     variable:
       name: Rings
-      text_display: $ rings
+      text_display: $ explosions
       type_value: 0
       type_display: 0
       higher_is_positive: 0

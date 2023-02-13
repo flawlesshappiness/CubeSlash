@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: charge_time_on_kill
   name: Charge Time On Kill
-  icon: {fileID: 21300000, guid: 5e15ac1f91a3248428bfeb5aacfea078, type: 3}
+  icon: {fileID: 21300000, guid: e778aa00716d4f642917f61cffc34840, type: 3}
   id_stats: charge
   effects:
   - type_effect: 0

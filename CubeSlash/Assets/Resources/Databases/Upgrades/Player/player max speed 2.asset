@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: player_max_speed_002
   name: Max speed 2
-  icon: {fileID: 21300000, guid: e6cb1a66600f59a42be6a2ce0b23befc, type: 3}
+  icon: {fileID: 21300000, guid: 72bbd47e879fb2c4f8e8b1b157687e22, type: 3}
   id_stats: player
   effects:
   - type_effect: 0

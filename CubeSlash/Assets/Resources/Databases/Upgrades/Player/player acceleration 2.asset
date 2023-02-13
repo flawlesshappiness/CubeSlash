@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: player_acceleration_002
   name: Acceleration 2
-  icon: {fileID: 21300000, guid: 083237d4baf78d143b4251ca612f18dd, type: 3}
+  icon: {fileID: 21300000, guid: e30858dd36d8a7941b3b6a0da66161a3, type: 3}
   id_stats: player
   effects:
   - type_effect: 0

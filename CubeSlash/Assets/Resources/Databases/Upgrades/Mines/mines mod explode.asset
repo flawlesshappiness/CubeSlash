@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: mines_mod_explode
   name: Mines modified by explode
-  icon: {fileID: 21300000, guid: 4431157a7f2973844abd7415c32e8731, type: 3}
+  icon: {fileID: 21300000, guid: 9fcc1744a317b8e4ab0aa3072a0a3ed5, type: 3}
   id_stats: mines
   effects:
   - type_effect: 0

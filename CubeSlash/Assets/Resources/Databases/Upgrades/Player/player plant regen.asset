@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: player_plant_regen
   name: Vegetarian
-  icon: {fileID: 21300000, guid: 8e035503cd4dd5a44913f53cecf2f905, type: 3}
+  icon: {fileID: 21300000, guid: 7424c9178dba5834791ddfcce9d5d815, type: 3}
   id_stats: player
   effects:
   - type_effect: 0

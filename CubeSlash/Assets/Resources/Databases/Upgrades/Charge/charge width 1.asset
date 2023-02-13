@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: charge_width_001
   name: Charge width 1
-  icon: {fileID: 21300000, guid: 5e15ac1f91a3248428bfeb5aacfea078, type: 3}
+  icon: {fileID: 21300000, guid: a66e7c24cced53b458b1ceb96029101d, type: 3}
   id_stats: charge
   effects:
   - type_effect: 0
@@ -22,7 +22,8 @@ MonoBehaviour:
       name: Width
       text_display: $ beam width
       type_value: 1
-      type_display: 1
+      type_display: 2
+      higher_is_positive: 0
       value_int: 0
       value_float: 1
       value_bool: 0

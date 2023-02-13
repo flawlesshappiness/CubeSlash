@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: player_collect_radius_001
   name: Collect Radius 1
-  icon: {fileID: 21300000, guid: 01eead9d665b57646bca62095606183a, type: 3}
+  icon: {fileID: 21300000, guid: e751970311b38b848bba7da414fad000, type: 3}
   id_stats: player
   effects:
   - type_effect: 0

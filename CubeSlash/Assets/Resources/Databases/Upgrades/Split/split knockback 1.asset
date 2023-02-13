@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: split knockback 1
   m_EditorClassIdentifier: 
   id: projectile_knockback_001
-  name: Projectile knockback 1
-  icon: {fileID: 21300000, guid: 84f667a0eed51a340b7b37327afb72ea, type: 3}
+  name: Projectile knockback
+  icon: {fileID: 21300000, guid: 1bb9af9559be5ab4d9f8c38d171b7954, type: 3}
   id_stats: split
   effects:
   - type_effect: 0

@@ -14,13 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: charge_mod_explode
   name: Charge modified by Explode
-  icon: {fileID: 21300000, guid: 5e15ac1f91a3248428bfeb5aacfea078, type: 3}
+  icon: {fileID: 21300000, guid: 704c46460f2ea97478c57508c8014614, type: 3}
   id_stats: charge
   effects:
   - type_effect: 0
     variable:
       name: ChargeTime
-      text_display: $s charge time
+      text_display: $ charge time
       type_value: 1
       type_display: 2
       higher_is_positive: 0

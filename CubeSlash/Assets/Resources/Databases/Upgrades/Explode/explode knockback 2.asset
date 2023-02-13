@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: explode_knockback_002
   name: Explode Knockback 2
-  icon: {fileID: 21300000, guid: abccf8751e994124bb259458fbbf08c3, type: 3}
+  icon: {fileID: 21300000, guid: d36d7c87da28ae2479d7656b815a8d5e, type: 3}
   id_stats: explode
   effects:
   - type_effect: 0

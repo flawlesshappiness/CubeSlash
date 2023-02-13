@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: explode_rings_002
   name: Explode rings 2
-  icon: {fileID: 21300000, guid: 4ce0634a6bcefab4c8b2dd9468b7a46a, type: 3}
+  icon: {fileID: 21300000, guid: c958cb6accbb0944aa2480e4d2a1e75c, type: 3}
   id_stats: explode
   effects:
   - type_effect: 0

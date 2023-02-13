@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: charge_knock_self_002
   name: Charge knock self 2
-  icon: {fileID: 21300000, guid: 5e15ac1f91a3248428bfeb5aacfea078, type: 3}
+  icon: {fileID: 21300000, guid: 4d2ff04c78af3e249986ecd1ca3aa23c, type: 3}
   id_stats: charge
   effects:
   - type_effect: 0
@@ -32,7 +32,7 @@ MonoBehaviour:
   - type_effect: 1
     variable:
       name: ChargeTime
-      text_display: $s charge time
+      text_display: $ charge time
       type_value: 1
       type_display: 2
       higher_is_positive: 0

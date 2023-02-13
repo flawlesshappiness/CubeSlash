@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: projectile_speed_002
   name: Projectile speed 2
-  icon: {fileID: 21300000, guid: 84f667a0eed51a340b7b37327afb72ea, type: 3}
+  icon: {fileID: 21300000, guid: 177ad901d1ca5904d9a655d005dc6fe3, type: 3}
   id_stats: split
   effects:
   - type_effect: 0

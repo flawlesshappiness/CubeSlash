@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: player_avoid_damage_chance
   name: Avoid damage
-  icon: {fileID: 21300000, guid: 6645b327088c4f6408d9561791c57b84, type: 3}
+  icon: {fileID: 21300000, guid: 52772c82022ad75488b198e8fc84b524, type: 3}
   id_stats: player
   effects:
   - type_effect: 0

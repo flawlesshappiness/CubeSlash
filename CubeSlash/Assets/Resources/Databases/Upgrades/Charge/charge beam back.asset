@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: charge beam back
   m_EditorClassIdentifier: 
   id: charge_beam_back
-  name: Charge beam back
-  icon: {fileID: 21300000, guid: 5e15ac1f91a3248428bfeb5aacfea078, type: 3}
+  name: Mirror beam
+  icon: {fileID: 21300000, guid: 3734a811dddc4534eac5d35ec3d07fe7, type: 3}
   id_stats: charge
   effects:
   - type_effect: 0
@@ -23,6 +23,7 @@ MonoBehaviour:
       text_display: Shoot another beam backwards
       type_value: 2
       type_display: 3
+      higher_is_positive: 0
       value_int: 0
       value_float: 400
       value_bool: 1

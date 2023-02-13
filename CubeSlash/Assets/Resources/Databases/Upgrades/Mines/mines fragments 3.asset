@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: mines_fragments_003
   name: Fragments+++
-  icon: {fileID: 21300000, guid: 4431157a7f2973844abd7415c32e8731, type: 3}
+  icon: {fileID: 21300000, guid: 9d59874aeaedb9e40ae3796ea4472b4b, type: 3}
   id_stats: mines
   effects:
   - type_effect: 0

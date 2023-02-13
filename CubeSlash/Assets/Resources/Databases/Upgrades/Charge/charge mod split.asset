@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: charge_mod_split
   name: Charge modified by Split
-  icon: {fileID: 21300000, guid: 5e15ac1f91a3248428bfeb5aacfea078, type: 3}
+  icon: {fileID: 21300000, guid: aa601896f349e9c47acfcaef8d6bc4c6, type: 3}
   id_stats: charge
   effects:
   - type_effect: 0

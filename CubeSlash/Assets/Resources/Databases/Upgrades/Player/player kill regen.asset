@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: player_kill_regen
   name: Bloodthirst
-  icon: {fileID: 21300000, guid: 41c6f94d80f9e034a9c63dcf97d30f5c, type: 3}
+  icon: {fileID: 21300000, guid: 2f52692567e00724bbf7bef0357d5add, type: 3}
   id_stats: player
   effects:
   - type_effect: 0

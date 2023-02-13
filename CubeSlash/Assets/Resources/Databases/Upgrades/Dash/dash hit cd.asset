@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: dash hit cd
   m_EditorClassIdentifier: 
   id: dash_cooldown_on_hit
-  name: CooldownOnHit
+  name: Impact refresh
   icon: {fileID: 21300000, guid: 532d8d7cfb74bd541b75de9ebbc94735, type: 3}
   id_stats: dash
   effects:

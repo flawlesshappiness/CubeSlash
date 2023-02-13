@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: player_convert_health
   name: Armored Core
-  icon: {fileID: 21300000, guid: 8c013fbd1dde7bc4db457cfd3b7b7ffa, type: 3}
+  icon: {fileID: 21300000, guid: 7b441d2081c082843bb4dde92e10036a, type: 3}
   id_stats: player
   effects:
   - type_effect: 0

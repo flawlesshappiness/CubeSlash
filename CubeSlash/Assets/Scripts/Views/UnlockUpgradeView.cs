@@ -203,7 +203,7 @@ public class UnlockUpgradeView : View
         var db_color = ColorDatabase.Load();
 
         ClearUpgradeTexts();
-        CreateUpgradeText(upgrade.name, db_color.text_normal.GetColor());
+        //CreateUpgradeText(upgrade.name, db_color.text_normal.GetColor());
         foreach(var effect in upgrade.effects)
         {
             var color = effect.type_effect == Upgrade.Effect.TypeEffect.POSITIVE ? db_color.text_normal.GetColor() : db_color.text_wrong.GetColor();

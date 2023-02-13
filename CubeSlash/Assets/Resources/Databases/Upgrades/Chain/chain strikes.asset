@@ -14,13 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: chain_strikes
   name: Double Strike
-  icon: {fileID: 21300000, guid: 7b7de2430deee964da27ba2590989b37, type: 3}
+  icon: {fileID: 21300000, guid: ea58ec32a8486064f82400e6be4fa7c2, type: 3}
   id_stats: chain
   effects:
   - type_effect: 0
     variable:
       name: Strikes
-      text_display: $ strikes
+      text_display: $ zaps
       type_value: 0
       type_display: 0
       higher_is_positive: 0

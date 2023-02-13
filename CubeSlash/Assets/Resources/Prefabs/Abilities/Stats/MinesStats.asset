@@ -85,7 +85,7 @@ MonoBehaviour:
     can_edit_name: 1
     _editor_toggle_preview: 1
   - name: SeekingMines
-    text_display: Mines move towards enemies
+    text_display: Shells move towards enemies
     type_value: 2
     type_display: 3
     higher_is_positive: 1
@@ -93,7 +93,7 @@ MonoBehaviour:
     value_float: 0
     value_bool: 0
     can_edit_name: 1
-    _editor_toggle_preview: 0
+    _editor_toggle_preview: 1
   - name: MineTurnSpeed
     text_display: $ shell seeking
     type_value: 1
@@ -123,7 +123,7 @@ MonoBehaviour:
     value_float: 0
     value_bool: 0
     can_edit_name: 1
-    _editor_toggle_preview: 0
+    _editor_toggle_preview: 1
   - name: OnlyFragments
     text_display: Shoot all fragments instantly
     type_value: 2
@@ -133,7 +133,7 @@ MonoBehaviour:
     value_float: 0
     value_bool: 0
     can_edit_name: 1
-    _editor_toggle_preview: 0
+    _editor_toggle_preview: 1
   - name: DoubleShells
     text_display: Double shells
     type_value: 2

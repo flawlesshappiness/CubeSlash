@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: chain_delay_001
   name: Frequency 1
-  icon: {fileID: 21300000, guid: 7b7de2430deee964da27ba2590989b37, type: 3}
+  icon: {fileID: 21300000, guid: 1a8611809c8759c4396ce0f9e447d2fa, type: 3}
   id_stats: chain
   effects:
   - type_effect: 0

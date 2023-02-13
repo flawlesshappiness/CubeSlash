@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: explode_delay_003
   name: Explode delay 3
-  icon: {fileID: 21300000, guid: 08899c7b95056de458c07a171209ec23, type: 3}
+  icon: {fileID: 21300000, guid: 121b2ac6f9cb24c418b45a31699a06b0, type: 3}
   id_stats: explode
   effects:
   - type_effect: 0

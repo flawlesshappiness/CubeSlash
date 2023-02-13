@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: player_health_temp_002
   name: Armor 2
-  icon: {fileID: 21300000, guid: 2b128a5e4d59a054e9193a83052697e3, type: 3}
+  icon: {fileID: 21300000, guid: 739b16dc33613a64390be4deba46bdef, type: 3}
   id_stats: player
   effects:
   - type_effect: 0

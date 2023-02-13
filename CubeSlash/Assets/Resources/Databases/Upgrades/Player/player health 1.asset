@@ -14,13 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: player_health_001
   name: Health 1
-  icon: {fileID: 21300000, guid: 4217838d18d06c04fbb38361be7b975f, type: 3}
+  icon: {fileID: 21300000, guid: 6a41350a2df219b44abf6862f99c1b7e, type: 3}
   id_stats: player
   effects:
   - type_effect: 0
     variable:
       name: Health
-      text_display: When you health reaches 0, you die
+      text_display: $ health
       type_value: 0
       type_display: 0
       higher_is_positive: 0

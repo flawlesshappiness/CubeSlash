@@ -14,15 +14,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: charge_suck_exp
   name: Charge Suck
-  icon: {fileID: 21300000, guid: 5e15ac1f91a3248428bfeb5aacfea078, type: 3}
+  icon: {fileID: 21300000, guid: 0117b7abdcd13644eacc66a5fbe937ff, type: 3}
   id_stats: charge
   effects:
   - type_effect: 0
     variable:
       name: ChargeSucksExp
-      text_display: Charging pulls exp closer
+      text_display: Pull exp closer while charging
       type_value: 2
       type_display: 3
+      higher_is_positive: 0
       value_int: 0
       value_float: 1.5
       value_bool: 1

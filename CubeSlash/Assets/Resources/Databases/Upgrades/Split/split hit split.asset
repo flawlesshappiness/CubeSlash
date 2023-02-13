@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: split hit split
   m_EditorClassIdentifier: 
   id: projectile_hit_split
-  name: Projectile hit split
-  icon: {fileID: 21300000, guid: 84f667a0eed51a340b7b37327afb72ea, type: 3}
+  name: Splitting projectiles
+  icon: {fileID: 21300000, guid: c4f428acbf8d34341af577202997967e, type: 3}
   id_stats: split
   effects:
   - type_effect: 0
@@ -23,6 +23,7 @@ MonoBehaviour:
       text_display: Projectiles split into smaller projectiles on impact
       type_value: 2
       type_display: 3
+      higher_is_positive: 0
       value_int: 2
       value_float: 1
       value_bool: 1

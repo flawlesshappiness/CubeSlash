@@ -146,7 +146,7 @@ public class UpgradeTreeView : View
     private void DisplayUpgrade(Upgrade upgrade)
     {
         var db_color = ColorDatabase.Load();
-        var text = upgrade.name.Color(db_color.text_normal.GetColor());
+        var text = ""; //upgrade.name.Color(db_color.text_normal.GetColor());
 
         for (int i = 0; i < upgrade.effects.Count; i++)
         {

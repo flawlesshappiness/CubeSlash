@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: mines_size_001
   name: Bigger shells
-  icon: {fileID: 21300000, guid: 4431157a7f2973844abd7415c32e8731, type: 3}
+  icon: {fileID: 21300000, guid: f410f8998b2419a48aa7b96acc63a02d, type: 3}
   id_stats: mines
   effects:
   - type_effect: 0

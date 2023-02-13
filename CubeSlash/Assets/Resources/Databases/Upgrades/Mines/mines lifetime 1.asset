@@ -13,11 +13,11 @@ MonoBehaviour:
   m_Name: mines lifetime 1
   m_EditorClassIdentifier: 
   id: mines_lifetime_001
-  name: Longer fuse
-  icon: {fileID: 21300000, guid: 4431157a7f2973844abd7415c32e8731, type: 3}
+  name: Fragile shell
+  icon: {fileID: 21300000, guid: 848685a3ea1314e4e827c9e30b6c859a, type: 3}
   id_stats: mines
   effects:
-  - type_effect: 0
+  - type_effect: 1
     variable:
       name: MineLifetime
       text_display: $ shell lifetime
@@ -25,7 +25,7 @@ MonoBehaviour:
       type_display: 2
       higher_is_positive: 0
       value_int: 3
-      value_float: 0.25
+      value_float: -0.25
       value_bool: 1
       can_edit_name: 1
       _editor_toggle_preview: 0

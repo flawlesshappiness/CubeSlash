@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: explode_mod_dash
   name: Explode modified by Dash
-  icon: {fileID: 21300000, guid: 08899c7b95056de458c07a171209ec23, type: 3}
+  icon: {fileID: 21300000, guid: 6df22128a224dd7479815d31a22ac44c, type: 3}
   id_stats: explode
   effects:
   - type_effect: 0

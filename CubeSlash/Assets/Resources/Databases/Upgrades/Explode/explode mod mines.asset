@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: explode_mod_mines
   name: Shrapnel
-  icon: {fileID: 21300000, guid: 08899c7b95056de458c07a171209ec23, type: 3}
+  icon: {fileID: 21300000, guid: 665d236bf40dab74b8856500b22623e3, type: 3}
   id_stats: explode
   effects:
   - type_effect: 0

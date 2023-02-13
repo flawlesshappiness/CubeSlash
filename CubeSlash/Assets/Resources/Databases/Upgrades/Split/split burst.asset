@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: split burst
   m_EditorClassIdentifier: 
   id: burst
-  name: Burst
-  icon: {fileID: 21300000, guid: 84f667a0eed51a340b7b37327afb72ea, type: 3}
+  name: Projectile bursts
+  icon: {fileID: 21300000, guid: 067af07d0db36d54b960d0fcf90e12d2, type: 3}
   id_stats: split
   effects:
   - type_effect: 0

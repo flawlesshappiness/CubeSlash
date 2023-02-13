@@ -17,46 +17,46 @@ MonoBehaviour:
   nodes:
   - id: 0
     id_name: mines_count_001
-    _editorPosition: {x: 703, y: 85}
+    _editorPosition: {x: 728, y: 192}
     children: 01000000030000000700000009000000
   - id: 1
     id_name: mines_count_002
-    _editorPosition: {x: 686, y: 272}
+    _editorPosition: {x: 711, y: 379}
     children: 02000000
   - id: 2
     id_name: mines_count_003
-    _editorPosition: {x: 682, y: 424}
+    _editorPosition: {x: 707, y: 531}
     children: 06000000
   - id: 3
     id_name: mines_fragments_001
-    _editorPosition: {x: 298, y: 263}
+    _editorPosition: {x: 323, y: 370}
     children: 04000000
   - id: 4
     id_name: mines_fragments_002
-    _editorPosition: {x: 297, y: 411}
+    _editorPosition: {x: 322, y: 518}
     children: 05000000
   - id: 5
     id_name: mines_fragments_003
-    _editorPosition: {x: 292, y: 573}
+    _editorPosition: {x: 317, y: 680}
     children: 
   - id: 6
     id_name: mines_seeking
-    _editorPosition: {x: 679, y: 559}
+    _editorPosition: {x: 704, y: 666}
     children: 
   - id: 7
     id_name: mines_size_001
-    _editorPosition: {x: 1008, y: 277}
+    _editorPosition: {x: 1033, y: 384}
     children: 08000000
   - id: 8
     id_name: mines_size_002
-    _editorPosition: {x: 1017, y: 434}
+    _editorPosition: {x: 1042, y: 541}
     children: 
   - id: 9
     id_name: mines_lifetime_001
-    _editorPosition: {x: 1354, y: 264}
+    _editorPosition: {x: 1379, y: 371}
     children: 0a000000
   - id: 10
     id_name: mines_lifetime_002
-    _editorPosition: {x: 1385, y: 461}
+    _editorPosition: {x: 1410, y: 568}
     children: 
   id_node: 11

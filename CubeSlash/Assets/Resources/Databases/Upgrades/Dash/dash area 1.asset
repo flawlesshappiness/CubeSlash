@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: dash area 1
   m_EditorClassIdentifier: 
   id: dash_area_001
-  name: Area 1
+  name: Impact area+
   icon: {fileID: 21300000, guid: 6ec6a558501692b44999226e8b7cc0db, type: 3}
   id_stats: dash
   effects:

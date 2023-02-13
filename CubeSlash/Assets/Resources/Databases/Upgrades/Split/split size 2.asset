@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: split size 2
   m_EditorClassIdentifier: 
   id: projectile_size_002
-  name: Projectile size 2
-  icon: {fileID: 21300000, guid: 84f667a0eed51a340b7b37327afb72ea, type: 3}
+  name: Even bigger projectiles
+  icon: {fileID: 21300000, guid: 0aba2c311cbcf4b49a93fc5c835d599e, type: 3}
   id_stats: split
   effects:
   - type_effect: 0
