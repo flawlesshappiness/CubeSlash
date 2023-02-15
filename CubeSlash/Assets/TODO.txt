@@ -23,4 +23,3 @@ chain should be cooldown instead of frequency
 enemies might not be spawning as fast when restarting a run
 sfx when gain armor from upgrade
 differentiate between enemy and projectile (looks like you can kill it)
-fix angler boss movement not being reset

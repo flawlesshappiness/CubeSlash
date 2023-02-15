@@ -88,6 +88,7 @@ public class AI_BossAngler : EnemyAI
         Self.LinearAcceleration = 10f;
         Self.transform.position = start_position;
         Self.transform.rotation = start_rotation;
+        Self.Rigidbody.velocity = Vector3.zero;
         lamp.ResetPosition();
 
         var start_dist_to_player = DistanceToPlayer();
