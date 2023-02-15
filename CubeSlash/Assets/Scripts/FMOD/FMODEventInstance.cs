@@ -99,7 +99,7 @@ public class FMODEventInstance
 
 	private void UpdateTimestamp()
 	{
-        timestamp = Time.time;
+        timestamp = Time.unscaledTime;
 
 		var key = reference.Info.path;
 		if (global_timestamp.ContainsKey(key))

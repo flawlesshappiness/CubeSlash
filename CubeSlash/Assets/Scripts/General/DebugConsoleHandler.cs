@@ -1,5 +1,9 @@
 using Flawliz.VisualConsole;
+using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
+using TMPro;
 using UnityEngine;
 
 public class DebugConsoleHandler : Singleton
@@ -52,12 +56,13 @@ public class DebugConsoleHandler : Singleton
             window.CreateButton("Next Area", ClickNextArea);
             window.CreateButton("Suicide", ClickSuicide);
             window.CreateButton("Win", ClickWin);
-            window.CreateButton("SpawnBoss", ClickSpawnBoss);
-            window.CreateButton("KillEnemies", ClickKillEnemies);
+            window.CreateButton("Spawn Boss", ClickSpawnBoss);
+            window.CreateButton("Kill Enemies", ClickKillEnemies);
         }
 
         window.CreateButton("Give money", ClickGiveCurrency);
         window.CreateButton("Log", ClickLog);
+        window.CreateButton("Game Values", ClickGameValues);
     }
 
     private void ClickUnlockUpgrade()
@@ -189,5 +194,59 @@ public class DebugConsoleHandler : Singleton
     {
         EnemyController.Instance.KillActiveEnemies();
         CloseView();
+    }
+
+    private void ClickGameValues()
+    {
+        var window = view.ShowList();
+        window.Clear();
+
+        // Create texts
+        var texts = new List<GameValueText>();
+
+        if (GameController.Instance.IsGameStarted)
+        {
+            CreateText(() => $"Spawn frequency: {EnemyController.Instance.GetSpawnFrequency()}");
+            CreateText(() => $"Spawn frequency (Difficulty): {EnemyController.Instance.GetSpawnFrequencyDifficulty()}");
+            CreateText(() => $"Spawn frequency (Area): {EnemyController.Instance.GetSpawnFrequencyArea()}");
+            CreateText(() => $"Spawn frequency (Game): {EnemyController.Instance.GetSpawnFrequencyGame()}");
+            CreateText(() => $"Spawn frequency (Endless): {EnemyController.Instance.GetSpawnFrequencyEndless()}");
+        }
+
+        // Start
+        var cr = StartCoroutine(Cr());
+        view.ShowBackButton(Back);
+        
+        void Back()
+        {
+            StopCoroutine(cr);
+            ShowFunctionsWindow();
+        }
+
+        void CreateText(System.Func<string> getString)
+        {
+            var text = new GameValueText
+            {
+                tmp = window.CreateText(""),
+                getString = getString,
+            };
+            texts.Add(text);
+        }
+        
+        IEnumerator Cr()
+        {
+            while (true)
+            {
+                texts.ForEach(t => t.UpdateText());
+                yield return null;
+            }
+        }
+    }
+
+    private class GameValueText
+    {
+        public TMP_Text tmp;
+        public System.Func<string> getString;
+        public void UpdateText() => tmp.text = getString();
     }
 }

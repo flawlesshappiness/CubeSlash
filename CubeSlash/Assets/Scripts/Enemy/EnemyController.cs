@@ -62,35 +62,48 @@ public class EnemyController : Singleton
     }
 
     #region SPAWNING
-    private float GetSpawnFrequency()
+    public float GetSpawnFrequencyDifficulty()
     {
         var settings = GameSettings.Instance;
-
-        // Difficulty
         var difficulty = DifficultyController.Instance.DifficultyValue;
-        var freq_difficulty = settings.enemy_freq_difficulty.Evaluate(difficulty);
+        return settings.enemy_freq_difficulty.Evaluate(difficulty);
+    }
 
-        // Game
+    public float GetSpawnFrequencyGame()
+    {
+        var settings = GameSettings.Instance;
         var max_game_duration = settings.areas_to_win * settings.area_duration;
         var current_game_duration = Time.time - SessionController.Instance.CurrentData.time_start;
         var t_game_duration = current_game_duration / max_game_duration;
         var freq_game = settings.enemy_freq_game.Evaluate(t_game_duration);
+        return freq_game;
+    }
 
-        // Area
+    public float GetSpawnFrequencyArea()
+    {
+        var settings = GameSettings.Instance;
         var max_area_duration = settings.area_duration;
         var current_area_duration = Time.time - AreaController.Instance.TimeAreaStart;
         var t_area_duration = current_area_duration / max_area_duration;
         var freq_area = settings.enemy_freq_area.Evaluate(t_area_duration);
+        return freq_area;
+    }
 
-        // Endless
-        if (AreaController.Instance.IsEndless)
-        {
-            var max_endless_duration = settings.endless_duration;
-            var current_endless_duration = Time.time - AreaController.Instance.TimeEndlessStart;
-            var t_endless_duration = Mathf.Clamp01(current_endless_duration / max_endless_duration);
-            freq_game = settings.enemy_freq_endless.Evaluate(t_endless_duration);
-        }
+    public float GetSpawnFrequencyEndless()
+    {
+        var settings = GameSettings.Instance;
+        var max_endless_duration = settings.endless_duration;
+        var current_endless_duration = Time.time - AreaController.Instance.TimeEndlessStart;
+        var t_endless_duration = Mathf.Clamp01(current_endless_duration / max_endless_duration);
+        var freq_endless = settings.enemy_freq_endless.Evaluate(t_endless_duration);
+        return freq_endless;
+    }
 
+    public float GetSpawnFrequency()
+    {
+        var freq_difficulty = GetSpawnFrequencyDifficulty();
+        var freq_game = AreaController.Instance.IsEndless ? GetSpawnFrequencyEndless() : GetSpawnFrequencyGame();
+        var freq_area = GetSpawnFrequencyArea();
         return Mathf.Max(0.1f, freq_game + freq_area + freq_difficulty);
     }
 

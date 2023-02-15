@@ -340,14 +340,8 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  sfx:
-    reference:
-      Guid:
-        Data1: -146147025
-        Data2: 1149436455
-        Data3: -1782469699
-        Data4: 1146720271
-      Path: event:/Game/Misc/Wooshing_003
+  type_sfx:
+    id: sfx_dash_projectile
 --- !u!1 &8460288830054248733
 GameObject:
   m_ObjectHideFlags: 0

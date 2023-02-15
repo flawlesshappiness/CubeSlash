@@ -75,6 +75,7 @@ public class SoundEffectType : FakeEnum
     // Dash
     public static readonly SoundEffectType sfx_dash_start = new SoundEffectType(nameof(sfx_dash_start));
     public static readonly SoundEffectType sfx_dash_impact = new SoundEffectType(nameof(sfx_dash_impact));
+    public static readonly SoundEffectType sfx_dash_projectile = new SoundEffectType(nameof(sfx_dash_projectile));
 
     // Mines
     public static readonly SoundEffectType sfx_mines_spawn = new SoundEffectType(nameof(sfx_mines_spawn));

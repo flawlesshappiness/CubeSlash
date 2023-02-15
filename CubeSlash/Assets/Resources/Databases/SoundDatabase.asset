@@ -151,22 +151,22 @@ MonoBehaviour:
     sfx:
       reference:
         Guid:
-          Data1: 509437859
-          Data2: 1219689541
-          Data3: -627641936
-          Data4: 577167897
-        Path: event:/UI/ui_refund_hold
+          Data1: 339058058
+          Data2: 1331076267
+          Data3: 732588959
+          Data4: 857208906
+        Path: event:/UI/ui_refund
   - name: sfx_ui_refund_hold
     type:
       id: sfx_ui_refund_hold
     sfx:
       reference:
         Guid:
-          Data1: 339058058
-          Data2: 1331076267
-          Data3: 732588959
-          Data4: 857208906
-        Path: event:/UI/ui_refund
+          Data1: 509437859
+          Data2: 1219689541
+          Data3: -627641936
+          Data4: 577167897
+        Path: event:/UI/ui_refund_hold
   - name: sfx_ui_tally
     type:
       id: sfx_ui_tally
@@ -508,3 +508,14 @@ MonoBehaviour:
           Data3: 975733157
           Data4: -2109526787
         Path: event:/Game/Enemy/enemy_death_001
+  - name: sfx_dash_projectile
+    type:
+      id: sfx_dash_projectile
+    sfx:
+      reference:
+        Guid:
+          Data1: -146147025
+          Data2: 1149436455
+          Data3: -1782469699
+          Data4: 1146720271
+        Path: event:/Game/Misc/Wooshing_003
