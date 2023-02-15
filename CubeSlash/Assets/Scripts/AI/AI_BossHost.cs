@@ -9,14 +9,11 @@ public class AI_BossHost : EnemyAI
 
     private Vector3 destination;
 
-    private FMODEventInstance sfx_charge_start;
-
     public override void Initialize(Enemy enemy)
     {
         base.Initialize(enemy);
         this.StartCoroutineWithID(BeamCooldownCr(), "BeamCooldown_" + GetInstanceID());
         Self.EnemyBody.OnDudKilled += dud => HideAndShowDuds(4);
-        Self.OnDeath += OnDeath;
     }
 
     private void FixedUpdate()
@@ -27,11 +24,6 @@ public class AI_BossHost : EnemyAI
     private void LateUpdate()
     {
         RotateBodyUpdate();
-    }
-
-    private void OnDeath()
-    {
-        sfx_charge_start?.Stop();
     }
 
     private void MoveTowardsPlayer()
@@ -96,11 +88,13 @@ public class AI_BossHost : EnemyAI
             beam.UpdateVisual();
             beam.AnimateShowPreview(true);
 
-            sfx_charge_start = SoundController.Instance.Play(SoundEffectType.sfx_charge_start).SetPitch(-1);
+            var sfx_charge_start = SoundController.Instance.Play(SoundEffectType.sfx_charge_start)
+                .SetPitch(-1)
+                .StopWith(dud.gameObject);
 
             yield return new WaitForSeconds(2f);
 
-            sfx_charge_start?.Stop();
+            sfx_charge_start.Stop();
             SoundController.Instance.Play(SoundEffectType.sfx_charge_shoot);
 
             dir = dud.transform.up;

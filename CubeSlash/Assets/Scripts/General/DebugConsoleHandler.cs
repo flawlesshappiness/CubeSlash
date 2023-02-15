@@ -52,6 +52,8 @@ public class DebugConsoleHandler : Singleton
             window.CreateButton("Next Area", ClickNextArea);
             window.CreateButton("Suicide", ClickSuicide);
             window.CreateButton("Win", ClickWin);
+            window.CreateButton("SpawnBoss", ClickSpawnBoss);
+            window.CreateButton("KillEnemies", ClickKillEnemies);
         }
 
         window.CreateButton("Give money", ClickGiveCurrency);
@@ -172,6 +174,20 @@ public class DebugConsoleHandler : Singleton
     private void ClickGiveCurrency()
     {
         CurrencyController.Instance.Gain(CurrencyType.DNA, 100000);
+        CloseView();
+    }
+
+    private void ClickSpawnBoss()
+    {
+        var area = AreaController.Instance.CurrentArea;
+        var boss = area.boss;
+        EnemyController.Instance.SpawnEnemy(boss, Player.Instance.transform.position + new Vector3(20, 0));
+        CloseView();
+    }
+
+    private void ClickKillEnemies()
+    {
+        EnemyController.Instance.KillActiveEnemies();
         CloseView();
     }
 }

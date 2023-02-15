@@ -291,7 +291,6 @@ public class AbilityExplode : Ability
             .Play();
 
         // Sfx
-        var sfx_explode = SoundDatabase.GetEntry(SoundEffectType.sfx_explode_release).sfx;
-        SoundController.Instance.PlayGroup(sfx_explode);
+        SoundController.Instance.PlayGroup(SoundEffectType.sfx_explode_release);
     }
 }

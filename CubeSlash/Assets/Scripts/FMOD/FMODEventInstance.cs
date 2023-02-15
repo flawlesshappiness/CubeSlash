@@ -1,6 +1,8 @@
 using FMOD.Studio;
 using FMODUnity;
+using System.Collections;
 using System.Collections.Generic;
+using System.Data.Common;
 using UnityEngine;
 
 public class FMODEventInstance
@@ -13,6 +15,8 @@ public class FMODEventInstance
 	private float timestamp;
 
 	private static Dictionary<string, float> global_timestamp = new Dictionary<string, float>();
+
+	private List<CustomCoroutine> crs_stopwith = new List<CustomCoroutine>();
 
 	public FMODEventInstance(FMODEventReference reference)
 	{
@@ -32,7 +36,7 @@ public class FMODEventInstance
 			if (WasPlayedThisFrame()) return this;
 
             instance.start();
-			timestamp = Time.time;
+			UpdateTimestamp();
 			count_played++;
         }
 		return this;
@@ -44,6 +48,9 @@ public class FMODEventInstance
 		{
             instance.stop(mode);
         }
+
+		crs_stopwith.ForEach(cr => cr.Kill());
+		crs_stopwith.Clear();
 	}
 
     public FMODEventInstance SetVolume(float f)
@@ -89,4 +96,35 @@ public class FMODEventInstance
 		timestamp = 0;
 		return false;
     }
+
+	private void UpdateTimestamp()
+	{
+        timestamp = Time.time;
+
+		var key = reference.Info.path;
+		if (global_timestamp.ContainsKey(key))
+		{
+			global_timestamp[key] = timestamp;
+		}
+		else
+		{
+			global_timestamp.Add(key, timestamp);
+		}
+    }
+
+	public FMODEventInstance StopWith(GameObject g)
+	{
+		var cr = CoroutineController.Instance.StartCoroutineWithID(Cr(), $"{reference.Info.path}_{g.GetInstanceID()}");
+		crs_stopwith.Add(cr);
+		return this;
+		IEnumerator Cr()
+		{
+			while (g != null && g.activeInHierarchy)
+			{
+				yield return null;
+			}
+
+			Stop();
+		}
+	}
 }

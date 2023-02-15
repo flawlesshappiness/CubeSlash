@@ -104,6 +104,7 @@ MonoBehaviour:
   Collider: {fileID: 5235407313936057418}
   Trigger: {fileID: 8281130317401904414}
   ps_death: {fileID: 0}
+  scale_by_velocity: 1
   skeleton: {fileID: 2311925212759914655}
 --- !u!1 &1431979091135737793
 GameObject:

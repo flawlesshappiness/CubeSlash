@@ -152,7 +152,7 @@ public class EndView : View
                 if(v > i_last)
                 {
                     i_last = v;
-                    SoundController.Instance.Play(SoundEffectType.sfx_ui_tally);
+                    SoundController.Instance.PlayGroup(SoundEffectType.sfx_ui_tally);
                 }
             }).UnscaledTime().Curve(EasingCurves.EaseOutQuad);
         }

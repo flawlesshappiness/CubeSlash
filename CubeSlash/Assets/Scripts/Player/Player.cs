@@ -547,8 +547,7 @@ public class Player : Character
         }
 
         // Sound
-        var sfx_collect = SoundDatabase.GetEntry(SoundEffectType.sfx_collect_experience).sfx;
-        SoundController.Instance.PlayGroup(sfx_collect);
+        SoundController.Instance.PlayGroup(SoundEffectType.sfx_collect_experience);
     }
 
     private void DecrementPlantExperienceUntilHealthRegen()

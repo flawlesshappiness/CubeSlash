@@ -37,6 +37,13 @@ public class SoundController : Singleton
         }
     }
 
+    public void PlayGroup(SoundEffectType type)
+    {
+        var entry = SoundDatabase.GetEntry(type);
+        if (entry == null) return;
+        PlayGroup(entry.sfx);
+    }
+
     public void PlayGroup(FMODEventReference reference)
     {
         if (!reference.Exists) return;
