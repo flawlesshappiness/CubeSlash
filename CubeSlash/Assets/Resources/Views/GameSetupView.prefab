@@ -2106,22 +2106,8 @@ MonoBehaviour:
   select_on_start: 0
   cvg: {fileID: 0}
   select_animation: {fileID: 5877465012473983813}
-  sfx_select:
-    reference:
-      Guid:
-        Data1: -488556006
-        Data2: 1262379110
-        Data3: -1992291445
-        Data4: -574275927
-      Path: event:/UI/ui_move_ability_001
-  sfx_submit:
-    reference:
-      Guid:
-        Data1: 0
-        Data2: 0
-        Data3: 0
-        Data4: 0
-      Path: 
+  type_sfx_select:
+    id: sfx_ui_move
   left_right_animation: {fileID: 7235228284042636301}
 --- !u!114 &3385606559092247016
 MonoBehaviour:
@@ -2141,14 +2127,6 @@ MonoBehaviour:
   tmp_unlock: {fileID: 569493385222138307}
   pivot_selected: {fileID: 4780752813125865551}
   content: {fileID: 870076669522253863}
-  sfx_move:
-    reference:
-      Guid:
-        Data1: -488556006
-        Data2: 1262379110
-        Data3: -1992291445
-        Data4: -574275927
-      Path: event:/UI/ui_move_ability_001
 --- !u!1 &3713078576700563091
 GameObject:
   m_ObjectHideFlags: 0
@@ -3256,14 +3234,6 @@ MonoBehaviour:
   difficulty_panel: {fileID: 3385606559092247016}
   btn_play: {fileID: 4543132649633031882}
   input: {fileID: 9186276791609958055}
-  sfx_back:
-    reference:
-      Guid:
-        Data1: 1813566338
-        Data2: 1276579812
-        Data3: 1129842584
-        Data4: 940544334
-      Path: event:/UI/ui_insert_001
 --- !u!1 &4762855577254740572
 GameObject:
   m_ObjectHideFlags: 0
@@ -5213,22 +5183,8 @@ MonoBehaviour:
   select_on_start: 0
   cvg: {fileID: 8498363898554704639}
   select_animation: {fileID: 1412932529138050217}
-  sfx_select:
-    reference:
-      Guid:
-        Data1: -488556006
-        Data2: 1262379110
-        Data3: -1992291445
-        Data4: -574275927
-      Path: event:/UI/ui_move_ability_001
-  sfx_submit:
-    reference:
-      Guid:
-        Data1: 1813566338
-        Data2: 1276579812
-        Data3: 1129842584
-        Data4: 940544334
-      Path: event:/UI/ui_insert_001
+  type_sfx_select:
+    id: sfx_ui_move
   left_right_animation: {fileID: 2766331834155023329}
 --- !u!114 &8252431273138445841
 MonoBehaviour:
@@ -5249,14 +5205,6 @@ MonoBehaviour:
   template_charm: {fileID: 7615137153579371053}
   pivot_select: {fileID: 5083755501694929599}
   content: {fileID: 8486759325315353310}
-  sfx_move:
-    reference:
-      Guid:
-        Data1: -488556006
-        Data2: 1262379110
-        Data3: -1992291445
-        Data4: -574275927
-      Path: event:/UI/ui_move_ability_001
 --- !u!1 &6984559899770393166
 GameObject:
   m_ObjectHideFlags: 0
@@ -6656,22 +6604,8 @@ MonoBehaviour:
   select_on_start: 1
   cvg: {fileID: 3005975107024824993}
   select_animation: {fileID: 1772071043515473468}
-  sfx_select:
-    reference:
-      Guid:
-        Data1: -488556006
-        Data2: 1262379110
-        Data3: -1992291445
-        Data4: -574275927
-      Path: event:/UI/ui_move_ability_001
-  sfx_submit:
-    reference:
-      Guid:
-        Data1: 1813566338
-        Data2: 1276579812
-        Data3: 1129842584
-        Data4: 940544334
-      Path: event:/UI/ui_insert_001
+  type_sfx_select:
+    id: sfx_ui_move
   left_right_animation: {fileID: 3274094638654996852}
 --- !u!114 &6284791938177379522
 MonoBehaviour:
@@ -6692,14 +6626,6 @@ MonoBehaviour:
   uilock: {fileID: 1735833028932072974}
   cvg_icon_body: {fileID: 2771606954220599026}
   cvg_icon_ability: {fileID: 212419965113553859}
-  sfx_move:
-    reference:
-      Guid:
-        Data1: -488556006
-        Data2: 1262379110
-        Data3: -1992291445
-        Data4: -574275927
-      Path: event:/UI/ui_move_ability_001
 --- !u!1001 &104890547117701405
 PrefabInstance:
   m_ObjectHideFlags: 0

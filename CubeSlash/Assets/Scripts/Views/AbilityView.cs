@@ -13,10 +13,6 @@ public class AbilityView : View
     [SerializeField] private UIAbilitySlot template_slot_unlocked;
     [SerializeField] private UIAbilitySlotMove slot_move;
 
-    [Header("AUDIO")]
-    [SerializeField] private FMODEventReference event_move_slot;
-    [SerializeField] private FMODEventReference event_insert_slot;
-
     private List<UIAbilitySlot> slots_unlocked = new List<UIAbilitySlot>();
     private List<UIAbilitySlot> slots = new List<UIAbilitySlot>();
     public List<UIAbilityEquipment> equipments = new List<UIAbilityEquipment>();
@@ -180,7 +176,7 @@ public class AbilityView : View
 
         UpdateEquipment();
 
-        event_insert_slot.Play();
+        SoundController.Instance.Play(SoundEffectType.sfx_ui_submit);
     }
 
     private void SelectSlot(UIAbilitySlot slot, bool is_modifier)
@@ -201,7 +197,7 @@ public class AbilityView : View
         }
         else if(IsMovingAbility())
         {
-            event_move_slot.Play();
+            SoundController.Instance.Play(SoundEffectType.sfx_ui_move);
             if (is_modifier)
             {
                 var parent_slot = slot.GetComponentInParent<UIAbilityEquipment>();

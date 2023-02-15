@@ -19,9 +19,8 @@ public class CameraController : Singleton
         AreaController.Instance.onNextArea += OnNextArea;
         GameController.Instance.onMainMenu += OnMainMenu;
 
-        var area = AreaDatabase.LoadAsset().areas[0];
-        Camera.orthographicSize = area.camera_size;
-        TargetSize = area.camera_size;
+        Camera.orthographicSize = 15;
+        TargetSize = Camera.orthographicSize;
     }
 
     private void LateUpdate()
@@ -70,12 +69,11 @@ public class CameraController : Singleton
 
     private void OnNextArea(Area area)
     {
-        AnimateSize(5f, area.camera_size, EasingCurves.EaseInOutQuad);
+        //AnimateSize(5f, area.camera_size, EasingCurves.EaseInOutQuad);
     }
 
     private void OnMainMenu()
     {
-        var area = Area.First;
-        AnimateSize(5f, area.camera_size, EasingCurves.EaseInOutQuad);
+        //AnimateSize(5f, 15f, EasingCurves.EaseInOutQuad);
     }
 }

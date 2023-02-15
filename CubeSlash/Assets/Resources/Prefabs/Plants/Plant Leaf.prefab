@@ -5031,14 +5031,8 @@ MonoBehaviour:
   type_health: 0
   Rigidbody: {fileID: 846135433586441108}
   ps_death: {fileID: 6440868705710943848}
-  sfx_death:
-    reference:
-      Guid:
-        Data1: 236413035
-        Data2: 1336558619
-        Data3: 975733157
-        Data4: -2109526787
-      Path: event:/Game/Enemy/enemy_death_001
+  type_sfx_death:
+    id: sfx_enemy_death
 --- !u!1 &846135435091995519
 GameObject:
   m_ObjectHideFlags: 0

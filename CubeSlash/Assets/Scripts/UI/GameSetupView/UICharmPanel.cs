@@ -12,7 +12,6 @@ public class UICharmPanel : MonoBehaviour
     [SerializeField] private TMP_Text tmp_name, tmp_desc, tmp_unlock;
     [SerializeField] private UICharm template_charm;
     [SerializeField] private RectTransform pivot_select, content;
-    [SerializeField] private FMODEventReference sfx_move;
 
     private View parent_view;
 
@@ -138,7 +137,7 @@ public class UICharmPanel : MonoBehaviour
 
         if(idx_selected != idx_prev)
         {
-            sfx_move.Play();
+            SoundController.Instance.Play(SoundEffectType.sfx_ui_move);
         }
     }
 

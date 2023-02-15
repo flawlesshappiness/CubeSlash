@@ -167,14 +167,8 @@ MonoBehaviour:
   type_health: 0
   Rigidbody: {fileID: 846135433586441108}
   ps_death: {fileID: 6440868705710943848}
-  sfx_death:
-    reference:
-      Guid:
-        Data1: 774247800
-        Data2: 1229503722
-        Data3: -497733754
-        Data4: 1594072794
-      Path: event:/Game/Impact/bubble_pop_001
+  type_sfx_death:
+    id: sfx_enemy_death
 --- !u!1 &846135435091995519
 GameObject:
   m_ObjectHideFlags: 0

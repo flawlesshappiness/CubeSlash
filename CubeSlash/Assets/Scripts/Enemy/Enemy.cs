@@ -5,7 +5,6 @@ using UnityEngine;
 
 public class Enemy : Character, IKillable, IHurt
 {
-    [SerializeField] private FMODEventReference event_death;
     private EnemyAI AI { get; set; }
     public EnemySettings Settings { get; private set; }
     public Vector3 MoveDirection { get { return Body.transform.up; } }
@@ -104,7 +103,8 @@ public class Enemy : Character, IKillable, IHurt
                     .Play();
             }
 
-            FMODController.Instance.PlayWithLimitDelay(event_death);
+            var sfx = SoundDatabase.GetEntry(SoundEffectType.sfx_enemy_death).sfx;
+            SoundController.Instance.PlayGroup(sfx);
 
             // Event
             OnDeath?.Invoke();

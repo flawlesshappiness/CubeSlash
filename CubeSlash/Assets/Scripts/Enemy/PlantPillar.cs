@@ -7,7 +7,6 @@ public class PlantPillar : Obstacle
     [SerializeField] private Transform pivot_animation;
     [SerializeField] private Collider2D collider, trigger;
     [SerializeField] private ParticleSystem ps_warn, ps_appear, ps_death;
-    [SerializeField] private FMODEventReference sfx_warn, sfx_appear;
 
     private bool is_hidden;
 
@@ -25,12 +24,12 @@ public class PlantPillar : Obstacle
 
         IEnumerator Cr()
         {
-            sfx_warn.Play();
+            SoundController.Instance.Play(SoundEffectType.sfx_enemy_plant_warn);
             ps_warn.SetEmissionEnabled(true);
             yield return new WaitForSeconds(delay_appear);
             ps_warn.SetEmissionEnabled(false);
             ps_appear.Play();
-            sfx_appear.Play();
+            SoundController.Instance.Play(SoundEffectType.sfx_enemy_plant_spawn);
 
             is_hidden = false;
 

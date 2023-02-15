@@ -13,8 +13,6 @@ public class GameSetupView : View
     [SerializeField] private SelectableMenuItem btn_play;
     [SerializeField] private UIInputLayout input;
 
-    [SerializeField] private FMODEventReference sfx_back;
-
     private bool transitioning;
 
     private void Start()
@@ -53,7 +51,7 @@ public class GameSetupView : View
         StartCoroutine(Cr());
         IEnumerator Cr()
         {
-            sfx_back.Play();
+            SoundController.Instance.Play(SoundEffectType.sfx_ui_submit);
             yield return LerpEnumerator.Alpha(CanvasGroup, 0.5f, 0f).UnscaledTime();
             ViewController.Instance.ShowView<StartView>(0.5f);
             Close(0);

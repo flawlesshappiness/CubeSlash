@@ -1,20 +1,25 @@
 using System.Collections;
-using System.Linq;
 using UnityEngine;
 
 public class MusicController : Singleton
 {
     public static MusicController Instance { get { return Instance<MusicController>(); } }
-    private MusicDatabase Database { get { return MusicDatabase.Load<MusicDatabase>(); } }
 
-    private FMODEventReference current_bgm;
+    private FMODEventInstance current_bgm;
 
     private Coroutine cr_bgm_delay;
 
     private void Start()
     {
         GameController.Instance.onMainMenu += OnMainMenu;
+        GameController.Instance.onGameStart += OnGameStart;
+        GameController.Instance.onPlayerDeath += OnPlayerDeath;
         AreaController.Instance.onNextArea += OnNextArea;
+    }
+
+    private void OnGameStart()
+    {
+        PlayBGM(SoundEffectType.bgm_start_game);
     }
 
     private void OnMainMenu()
@@ -28,32 +33,31 @@ public class MusicController : Singleton
         StopBGM();
     }
 
+    private void OnPlayerDeath()
+    {
+        PlayBGM(SoundEffectType.bgm_lose_game);
+    }
+
     private void OnNextArea(Area area)
     {
         var delay = GameSettings.Instance.area_duration * GameSettings.Instance.time_bgm_play;
-        PlayBGM(area.bgm, delay);
+        PlayBGM(area.bgm_type, delay);
     }
 
-    public void PlayStartMusic()
-    {
-        PlayBGM(Database.bgm_start_game);
-    }
-
-    private void PlayBGM(FMODEventReference bgm, float delay)
+    public void PlayBGM(SoundEffectType type, float delay)
     {
         cr_bgm_delay = StartCoroutine(Cr());
         IEnumerator Cr()
         {
             yield return new WaitForSeconds(delay);
-            PlayBGM(bgm);
+            PlayBGM(type);
         }
     }
 
-    private void PlayBGM(FMODEventReference bgm)
+    public void PlayBGM(SoundEffectType type)
     {
         StopBGM();
-        current_bgm = bgm;
-        bgm.Play();
+        current_bgm = SoundController.Instance.Play(type);
     }
 
     public void StopBGM(FMOD.Studio.STOP_MODE stop_mode = FMOD.Studio.STOP_MODE.IMMEDIATE)

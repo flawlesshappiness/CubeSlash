@@ -7,7 +7,6 @@ public class AbilitySplit : Ability
 {
     [Header("SPLIT")]
     [SerializeField] private Projectile prefab_projectile;
-    [SerializeField] private FMODEventReference sfx_shoot_projectiles;
 
     // Values
     private int Bursts { get; set; }
@@ -103,7 +102,7 @@ public class AbilitySplit : Ability
         // Play sound
         if(projectiles.Count > 0)
         {
-            sfx_shoot_projectiles.Play();
+            SoundController.Instance.Play(SoundEffectType.sfx_split_shoot);
         }
 
         // Cooldown

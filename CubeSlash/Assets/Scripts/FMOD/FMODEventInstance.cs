@@ -1,0 +1,92 @@
+using FMOD.Studio;
+using FMODUnity;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class FMODEventInstance
+{
+	private bool has_instance;
+	private EventInstance instance;
+    private FMODEventReference reference;
+
+	private int count_played;
+	private float timestamp;
+
+	private static Dictionary<string, float> global_timestamp = new Dictionary<string, float>();
+
+	public FMODEventInstance(FMODEventReference reference)
+	{
+		this.reference = reference;
+
+		if (reference != null && reference.Exists)
+		{
+			instance = RuntimeManager.CreateInstance(reference.reference);
+			has_instance = true;
+        }
+	}
+
+	public FMODEventInstance Play()
+	{
+		if (has_instance)
+		{
+			if (WasPlayedThisFrame()) return this;
+
+            instance.start();
+			timestamp = Time.time;
+			count_played++;
+        }
+		return this;
+    }
+
+	public void Stop(FMOD.Studio.STOP_MODE mode = FMOD.Studio.STOP_MODE.ALLOWFADEOUT)
+	{
+		if (has_instance)
+		{
+            instance.stop(mode);
+        }
+	}
+
+    public FMODEventInstance SetVolume(float f)
+    {
+		if (has_instance)
+		{
+            instance.setVolume(f);
+        }
+        return this;
+    }
+
+	public FMODEventInstance SetPitch(int half_note)
+	{
+		if (has_instance)
+		{
+            var delta_note = 1 / 12f;
+            var pitch = 1f + delta_note * half_note;
+            instance.setPitch(pitch);
+        }
+		return this;
+    }
+
+    private bool WasPlayedThisFrame()
+    {
+		if (has_instance)
+		{
+            var has_timestamp = GetTimestamp(out var timestamp);
+            return has_timestamp && timestamp == Time.time;
+        }
+		return false;
+    }
+
+    private bool GetTimestamp(out float timestamp)
+    {
+		if (has_instance)
+		{
+            var key = reference.Info.path;
+            var contains = global_timestamp.ContainsKey(key);
+            timestamp = contains ? global_timestamp[key] : 0;
+            return contains;
+        }
+
+		timestamp = 0;
+		return false;
+    }
+}

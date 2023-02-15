@@ -1,8 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Unity.VisualScripting;
-using UnityEditor;
 using UnityEngine;
 
 public class Player : Character
@@ -12,13 +10,6 @@ public class Player : Character
     [SerializeField] private StatCollection stats;
     [SerializeField] private GameObject g_invincible;
     [SerializeField] private ParticleSystem ps_collect_meat, ps_collect_plant, ps_collect_health, ps_level_up;
-    [SerializeField] private FMODEventReference event_ability_on_cooldown;
-    [SerializeField] private FMODEventReference event_levelup_slide;
-    [SerializeField] private FMODEventReference event_levelup;
-    [SerializeField] private FMODEventReference event_damage;
-    [SerializeField] private FMODEventReference sfx_collect_experience;
-    [SerializeField] private FMODEventReference sfx_collect_health;
-    [SerializeField] private FMODEventReference sfx_level_up;
     public PlayerBody PlayerBody { get { return Body as PlayerBody; } }
     public MinMaxFloat Experience { get; private set; } = new MinMaxFloat();
     public Health Health { get; private set; } = new Health();
@@ -211,7 +202,7 @@ public class Player : Character
         }
         else
         {
-            event_ability_on_cooldown.Play();
+            SoundController.Instance.Play(SoundEffectType.sfx_ability_cooldown);
             AbilityQueued = ability;
         }
     }
@@ -363,6 +354,8 @@ public class Player : Character
         enemy_kills_until_shield_regen--;
         if(enemy_kills_until_shield_regen <= 0)
         {
+            SoundController.Instance.Play(SoundEffectType.sfx_gain_health);
+
             ResetKillsUntilShieldRegen();
             Health.AddHealth(HealthPoint.Type.TEMPORARY);
         }
@@ -421,7 +414,7 @@ public class Player : Character
             if(ChanceToAvoidDamage == 0 || Random.Range(0f, 1f) > ChanceToAvoidDamage)
             {
                 Health.Damage();
-                event_damage.Play();
+                SoundController.Instance.Play(SoundEffectType.sfx_player_damage);
             }
             else
             {
@@ -460,7 +453,7 @@ public class Player : Character
         ps_collect_health.Play();
 
         // Sound
-        FMODController.Instance.PlayWithLimitDelay(sfx_collect_health);
+        SoundController.Instance.Play(SoundEffectType.sfx_gain_health);
     }
 
     private IEnumerator PlayerDamageInvincibilityCr(float time)
@@ -530,15 +523,6 @@ public class Player : Character
             LevelsUntilAbility--;
             onLevelUp?.Invoke();
         }
-
-        IEnumerator PushCr(float delay)
-        {
-            event_levelup_slide.Play();
-            yield return new WaitForSeconds(delay);
-            event_levelup_slide.Stop();
-            event_levelup.Play();
-            PushEnemiesInArea(transform.position, 12, 500);
-        }
     }
 
     public void CollectExperience(ExperienceType type)
@@ -563,7 +547,8 @@ public class Player : Character
         }
 
         // Sound
-        FMODController.Instance.PlayWithLimitDelay(sfx_collect_experience);
+        var sfx_collect = SoundDatabase.GetEntry(SoundEffectType.sfx_collect_experience).sfx;
+        SoundController.Instance.PlayGroup(sfx_collect);
     }
 
     private void DecrementPlantExperienceUntilHealthRegen()
@@ -573,6 +558,11 @@ public class Player : Character
 
         if (plant_exp_until_health_regen <= 0)
         {
+            if (Health.HasHealth(HealthPoint.Type.EMPTY))
+            {
+                SoundController.Instance.Play(SoundEffectType.sfx_gain_health);
+            }
+
             Health.Heal();
             ResetPlantExperienceUntilHealthRegen();
         }
@@ -624,7 +614,7 @@ public class Player : Character
     public void PlayLevelUpFX()
     {
         ps_level_up.Play();
-        sfx_level_up.Play();
+        SoundController.Instance.Play(SoundEffectType.sfx_ui_level_up);
     }
     #endregion
 }

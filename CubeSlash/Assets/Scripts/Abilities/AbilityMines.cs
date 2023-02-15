@@ -6,8 +6,6 @@ public class AbilityMines : Ability
 {
     [SerializeField] private Projectile prefab_mine;
     [SerializeField] private Projectile prefab_fragment;
-    [SerializeField] private FMODEventReference sfx_mine_spawn;
-    [SerializeField] private FMODEventReference sfx_mine_explode;
 
     private int MineCount { get; set; }
     private int FragmentCount { get; set; }
@@ -114,7 +112,7 @@ public class AbilityMines : Ability
 
     private void ShootMine(Vector3 direction)
     {
-        sfx_mine_spawn.Play();
+        SoundController.Instance.Play(SoundEffectType.sfx_mines_spawn);
 
         var speed = SeekingMines ? MINE_SPEED_SEEKING : MINE_SPEED;
 
@@ -137,7 +135,7 @@ public class AbilityMines : Ability
 
     private void OnMineExplode(Projectile projectile, IKillable k = null)
     {
-        sfx_mine_explode.Play();
+        SoundController.Instance.Play(SoundEffectType.sfx_mines_explode);
 
         if (ExplodingFragments)
         {

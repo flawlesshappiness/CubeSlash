@@ -4,6 +4,9 @@ enemy that pulls the player
 waves that push things in a direction
 endless mode
 
+CHARM: Orbiting damage
+CHARM: Gain x when y
+
 dash impact effect
 boom sound too loud?
 dash always have ripple?
@@ -12,6 +15,7 @@ build particle effect dont always appear (plant wall)
 increase shooter boss attack range
 shooter boss projectiles are not from projectile manager
 it's not obvious that enemies are based on time
+it's not obvious that you're supposed to kill enemies and gain experience
 make shooter enemy a little more random, and not always when just in range
 explode delay affect charge time
 upgrade trees feel hidden
@@ -23,4 +27,4 @@ fix angler boss movement not being reset
 less health on angler boss
 debug menu showing game values, such as enemy frequency
 make bosses not scale with speed
-gain health upgrade sound
+FMODEventReference should make instances instead

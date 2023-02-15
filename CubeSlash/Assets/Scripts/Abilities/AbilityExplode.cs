@@ -172,12 +172,12 @@ public class AbilityExplode : Ability
 
         CreateChargeEffect(parent, getPosition(), radius, delay);
 
-        var sfx = FMODEventReferenceDatabase.Load().sfx_explode_charge;
-        if (info.play_charge_sfx) sfx.Play();
+        var sfx_charge = SoundController.Instance.CreateInstance(SoundEffectType.sfx_explode_charge);
+        if (info.play_charge_sfx) sfx_charge.Play();
 
         yield return WaitForDelay(delay, radius, getPosition(), pull);
 
-        sfx.Stop();
+        sfx_charge.Stop();
 
         var position = getPosition();
         Explode(position, radius, force, onHit);
@@ -291,7 +291,7 @@ public class AbilityExplode : Ability
             .Play();
 
         // Sfx
-        var sfx_explode = FMODEventReferenceDatabase.Load().sfx_explode_explode;
-        FMODController.Instance.PlayWithLimitDelay(sfx_explode);
+        var sfx_explode = SoundDatabase.GetEntry(SoundEffectType.sfx_explode_release).sfx;
+        SoundController.Instance.PlayGroup(sfx_explode);
     }
 }

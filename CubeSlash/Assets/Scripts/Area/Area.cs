@@ -16,9 +16,6 @@ public class Area : ScriptableObject
     public Color color_bg = Color.white;
     public AnimationCurve ac_alpha_fog;
 
-    [Header("CAMERA")]
-    public float camera_size;
-
     [Header("PARALLAX")]
     [Range(0, 1)] public float parallax_min;
     [Range(0, 1)] public float parallax_max;
@@ -31,7 +28,7 @@ public class Area : ScriptableObject
     public List<SpawnObjectInfo> spawn_objects = new List<SpawnObjectInfo>();
 
     [Header("MUSIC")]
-    public FMODEventReference bgm;
+    public SoundEffectType bgm_type;
 
     public static Area Current;
     public static Area First { get { return AreaDatabase.LoadAsset().areas[0]; } }

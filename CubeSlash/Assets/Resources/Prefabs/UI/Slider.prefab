@@ -512,22 +512,8 @@ MonoBehaviour:
   select_on_start: 0
   cvg: {fileID: 2157348557305752863}
   select_animation: {fileID: 3054460589379173853}
-  sfx_select:
-    reference:
-      Guid:
-        Data1: -488556006
-        Data2: 1262379110
-        Data3: -1992291445
-        Data4: -574275927
-      Path: event:/UI/ui_move_ability_001
-  sfx_submit:
-    reference:
-      Guid:
-        Data1: 0
-        Data2: 0
-        Data3: 0
-        Data4: 0
-      Path: 
+  type_sfx_select:
+    id: sfx_ui_move
   left_right_animation: {fileID: 2277657280848863893}
 --- !u!225 &2157348557305752863
 CanvasGroup:

@@ -16,8 +16,6 @@ public class EndView : View
     [SerializeField] private Image img_title_gradient;
     [SerializeField] private CanvasGroup cvg_title, cvg_stats, cvg_background;
     [SerializeField] private UICurrencyBar currencybar;
-    [SerializeField] private FMODEventReference sfx_stats_row;
-    [SerializeField] private FMODEventReference sfx_tally;
 
     private Coroutine cr_animate_stats;
     private bool starting;
@@ -137,7 +135,7 @@ public class EndView : View
 
         IEnumerator RowCr(CanvasGroup cvg_text, TMP_Text tmp_value, int value)
         {
-            sfx_stats_row.Play();
+            SoundController.Instance.Play(SoundEffectType.sfx_ui_stats_appear);
             cvg_text.alpha = 1;
             tmp_value.SetAlpha(1);
             yield return TallyPointsCr(0.5f, tmp_value, value);
@@ -154,7 +152,7 @@ public class EndView : View
                 if(v > i_last)
                 {
                     i_last = v;
-                    FMODController.Instance.PlayWithLimitDelay(sfx_tally);
+                    SoundController.Instance.Play(SoundEffectType.sfx_ui_tally);
                 }
             }).UnscaledTime().Curve(EasingCurves.EaseOutQuad);
         }
@@ -248,7 +246,7 @@ public class EndView : View
         else if (!InputDisabled)
         {
             ReturnToMainMenu();
-            sfx_stats_row.Play();
+            SoundController.Instance.Play(SoundEffectType.sfx_ui_stats_appear);
         }
     }
 
@@ -261,7 +259,7 @@ public class EndView : View
         else if (!InputDisabled)
         {
             PlayEndless();
-            sfx_stats_row.Play();
+            SoundController.Instance.Play(SoundEffectType.sfx_ui_stats_appear);
         }
     }
 }

@@ -15,10 +15,6 @@ public class AbilityCharge : Ability
     [SerializeField] private ParticleSystem ps_beam_dust;
     [SerializeField] private AnimationCurve ac_charge_emission;
     [SerializeField] private AnimationCurve ac_charge_suck_falloff;
-    [SerializeField] private FMODEventReference sfx_charge;
-    [SerializeField] private FMODEventReference sfx_charge_idle;
-    [SerializeField] private FMODEventReference sfx_shoot;
-    [SerializeField] private FMODEventReference sfx_shoot_premature;
 
     private class BeamInfo
     {
@@ -58,6 +54,9 @@ public class AbilityCharge : Ability
     private bool ChainLightning { get; set; }
     private bool EnemyFragments { get; set; }
 
+    private FMODEventInstance sfx_charge_start;
+    private FMODEventInstance sfx_charge_idle;
+
     private void Start()
     {
         ps_charge.Play();
@@ -74,8 +73,8 @@ public class AbilityCharge : Ability
 
     private void OnDisable()
     {
-        sfx_charge.Stop();
-        sfx_charge_idle.Stop();
+        sfx_charge_idle?.Stop();
+        sfx_charge_start?.Stop();
     }
 
     public override void InitializeFirstTime()
@@ -123,7 +122,7 @@ public class AbilityCharge : Ability
         }
         else
         {
-            sfx_shoot_premature.Play();
+            SoundController.Instance.Play(SoundEffectType.sfx_ability_cooldown);
             HideBeamPreviews();
         }
     }
@@ -143,7 +142,7 @@ public class AbilityCharge : Ability
         Charging = true;
         ChargeEnded = false;
 
-        sfx_charge.Play();
+        sfx_charge_start = SoundController.Instance.Play(SoundEffectType.sfx_charge_start);
 
         if (_cr_charge != null) StopCoroutine(_cr_charge);
         _cr_charge = StartCoroutine(ChargeCr());
@@ -162,8 +161,8 @@ public class AbilityCharge : Ability
         Charging = false;
         ChargeEnded = false;
 
-        sfx_charge.Stop();
-        sfx_charge_idle.Stop();
+        sfx_charge_start?.Stop();
+        sfx_charge_idle?.Stop();
 
         Player.Instance.AbilityLock.RemoveLock(nameof(AbilityCharge));
         return IsFullyCharged();
@@ -194,8 +193,8 @@ public class AbilityCharge : Ability
         {
             ChargeEnded = true;
             ps_charge_end.Play();
-            sfx_charge.Stop();
-            sfx_charge_idle.Play();
+            sfx_charge_start?.Stop();
+            sfx_charge_idle = SoundController.Instance.Play(SoundEffectType.sfx_charge_idle);
         }
     }
 
@@ -303,7 +302,7 @@ public class AbilityCharge : Ability
                 }
 
                 // Sound
-                sfx_shoot.Play();
+                SoundController.Instance.Play(SoundEffectType.sfx_charge_shoot);
 
                 // Delay
                 if(info.delay > 0)

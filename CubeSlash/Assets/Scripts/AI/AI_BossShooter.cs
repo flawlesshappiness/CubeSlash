@@ -1,12 +1,9 @@
 using System.Collections;
-using System.Linq;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class AI_BossShooter : EnemyAI
 {
     [SerializeField] private Projectile prefab_projectile;
-    [SerializeField] private FMODEventReference sfx_shoot;
 
     private enum MoveState { WATCH, MOVE_TO_PLAYER }
     private MoveState state = MoveState.WATCH;
@@ -255,7 +252,7 @@ public class AI_BossShooter : EnemyAI
             Shoot(angle, radius);
         }
 
-        sfx_shoot.PlayWithPitch(-2);
+        SoundController.Instance.Play(SoundEffectType.sfx_split_shoot).SetPitch(-2);
     }
 
     private void ShootCircle()
@@ -266,7 +263,7 @@ public class AI_BossShooter : EnemyAI
             Shoot(t.position, t.up);
         }
 
-        sfx_shoot.PlayWithPitch(-2);
+        SoundController.Instance.Play(SoundEffectType.sfx_split_shoot).SetPitch(-2);
     }
 
     private void TelegraphShortMany(int count, float arc)

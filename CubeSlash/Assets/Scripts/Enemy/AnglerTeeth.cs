@@ -7,17 +7,17 @@ public class AnglerTeeth : MonoBehaviour
     [SerializeField] private Transform pivot_animation;
     [SerializeField] private SpriteRenderer teeth_upper, teeth_lower, eye_left, eye_right;
     [SerializeField] private ParticleSystem ps_bite;
-    [SerializeField] private FMODEventReference sfx_bite;
-    [SerializeField] private FMODEventReference sfx_bite_charge_long;
-    [SerializeField] private FMODEventReference sfx_bite_charge_short;
+
+    private FMODEventInstance sfx_bite_charge_long;
+    private FMODEventInstance sfx_bite_charge_short;
 
     private const float Y_MOUTH_CLOSED = 0.05f;
     private const float Y_MOUTH_OPEN = 0.2f;
 
     private void OnDisable()
     {
-        sfx_bite_charge_long.Stop();
-        sfx_bite_charge_short.Stop();
+        sfx_bite_charge_long?.Stop();
+        sfx_bite_charge_short?.Stop();
     }
 
     public void SetHidden()
@@ -80,7 +80,7 @@ public class AnglerTeeth : MonoBehaviour
         {
             pivot_animation.eulerAngles = new Vector3(0, 0, Random.Range(-30f, 30f));
 
-            sfx_bite_charge_short.Play();
+            sfx_bite_charge_short = SoundController.Instance.Play(SoundEffectType.sfx_enemy_angler_charge_short);
 
             var teeth_closed = new Vector3(0, Y_MOUTH_CLOSED);
             var teeth_open = new Vector3(0, Y_MOUTH_OPEN);
@@ -99,8 +99,8 @@ public class AnglerTeeth : MonoBehaviour
             });
 
             ps_bite.Play();
-            sfx_bite.Play();
-            sfx_bite_charge_short.Stop();
+            SoundController.Instance.Play(SoundEffectType.sfx_enemy_angler_bite);
+            sfx_bite_charge_short?.Stop();
         }
     }
 
@@ -111,7 +111,7 @@ public class AnglerTeeth : MonoBehaviour
         {
             pivot_animation.eulerAngles = new Vector3(0, 0, Random.Range(-30f, 30f));
 
-            sfx_bite_charge_long.Play();
+            sfx_bite_charge_long = SoundController.Instance.Play(SoundEffectType.sfx_enemy_angler_charge_long);
 
             var teeth_closed = new Vector3(0, Y_MOUTH_CLOSED);
             var teeth_open = new Vector3(0, Y_MOUTH_OPEN);
@@ -134,8 +134,8 @@ public class AnglerTeeth : MonoBehaviour
             });
 
             ps_bite.Play();
-            sfx_bite.Play();
-            sfx_bite_charge_long.Stop();
+            SoundController.Instance.Play(SoundEffectType.sfx_enemy_angler_bite);
+            sfx_bite_charge_long?.Stop();
         }
     }
 }

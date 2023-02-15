@@ -33,8 +33,6 @@ public class AbilityDash : Ability
     [SerializeField] private Projectile prefab_shockwave;
     [SerializeField] private ParticleSystem ps_bubbles, ps_trail, ps_starpower;
     [SerializeField] private AnimationCurve ac_push_enemies;
-    [SerializeField] private FMODEventReference event_dash_start;
-    [SerializeField] private FMODEventReference event_dash_impact;
 
     private Coroutine cr_dash;
     private Vector3 dir_dash;
@@ -116,7 +114,7 @@ public class AbilityDash : Ability
         var pos_origin = transform.position;
         dir_dash = direction;
 
-        event_dash_start.Play();
+        SoundController.Instance.Play(SoundEffectType.sfx_dash_start);
 
         ps_trail.SetEmissionEnabled(true);
 
@@ -162,7 +160,7 @@ public class AbilityDash : Ability
         if (hit_anything)
         {
             KnockbackSelf();
-            event_dash_impact.PlayWithTimeLimit(0.1f);
+            SoundController.Instance.Play(SoundEffectType.sfx_dash_impact);
             Player.PushEnemiesInArea(Player.transform.position, RadiusKnockback, ForceKnockback, ac_push_enemies);
             ShootShockwaves(dir_dash);
         }
@@ -230,7 +228,7 @@ public class AbilityDash : Ability
             AbilityChain.CreateZapPS(start, PositionOrigin);
             AbilityChain.CreateImpactPS(start);
             yield return new WaitForSeconds(0.1f);
-            FMODEventReferenceDatabase.Load().sfx_chain_zap.Play();
+            SoundController.Instance.Play(SoundEffectType.sfx_chain_zap);
             Player.Instance.transform.position = PositionOrigin;
         }
     }

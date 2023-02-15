@@ -10,7 +10,7 @@ public class SpawnPlant : SpawnObject, IKillable
 
     [SerializeField] private Rigidbody2D Rigidbody;
     [SerializeField] private ParticleSystem ps_death;
-    [SerializeField] private FMODEventReference sfx_death;
+    [SerializeField] private SoundEffectType type_sfx_death;
 
     public bool IsDead { get; private set; }
 
@@ -31,7 +31,7 @@ public class SpawnPlant : SpawnObject, IKillable
             .Play()
             .Destroy(ps_death.main.startLifetime.constant * 2f);
 
-        sfx_death.Play();
+        SoundController.Instance.Play(type_sfx_death);
 
         DestroySpawnObject();
 

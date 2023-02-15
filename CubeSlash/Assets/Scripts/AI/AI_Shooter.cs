@@ -10,9 +10,6 @@ public class AI_Shooter : EnemyAI
     [SerializeField] private Projectile prefab_projectile;
     [SerializeField] private float velocity_projectile;
 
-    [Header("AUDIO")]
-    [SerializeField] private FMODEventReference sfx_shoot;
-
     private Transform t_eye;
 
     private Vector3 pos_player_prev;
@@ -78,7 +75,7 @@ public class AI_Shooter : EnemyAI
 
         Self.Rigidbody.AddForce(-dir * 50 * Self.Rigidbody.mass);
 
-        sfx_shoot.PlayWithPitch(5);
+        SoundController.Instance.Play(SoundEffectType.sfx_enemy_shoot).SetPitch(5);
     }
 
     private void TelegraphShootShort(float angle)

@@ -2249,22 +2249,6 @@ MonoBehaviour:
   layout_input: {fileID: 3077928169689141228}
   template_slot_unlocked: {fileID: 318491759084984260}
   slot_move: {fileID: 6870788441091377530}
-  event_move_slot:
-    reference:
-      Guid:
-        Data1: -488556006
-        Data2: 1262379110
-        Data3: -1992291445
-        Data4: -574275927
-      Path: event:/UI/ui_move_ability_001
-  event_insert_slot:
-    reference:
-      Guid:
-        Data1: 1813566338
-        Data2: 1276579812
-        Data3: 1129842584
-        Data4: 940544334
-      Path: event:/UI/ui_insert_001
   equipments:
   - {fileID: 4618427874495703458}
   - {fileID: 7519893642565021047}
@@ -2434,22 +2418,8 @@ MonoBehaviour:
   select_on_start: 0
   cvg: {fileID: 0}
   select_animation: {fileID: 865381539669273385}
-  sfx_select:
-    reference:
-      Guid:
-        Data1: -488556006
-        Data2: 1262379110
-        Data3: -1992291445
-        Data4: -574275927
-      Path: event:/UI/ui_move_ability_001
-  sfx_submit:
-    reference:
-      Guid:
-        Data1: -780082958
-        Data2: 1163232061
-        Data3: 1613986490
-        Data4: 1563063974
-      Path: event:/UI/ui_boom_001
+  type_sfx_select:
+    id: sfx_ui_move
 --- !u!114 &865381539669273385
 MonoBehaviour:
   m_ObjectHideFlags: 0

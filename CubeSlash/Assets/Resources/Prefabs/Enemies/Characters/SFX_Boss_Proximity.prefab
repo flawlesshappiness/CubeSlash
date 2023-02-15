@@ -69,11 +69,5 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  sfx:
-    reference:
-      Guid:
-        Data1: 587128435
-        Data2: 1295019151
-        Data3: 2122816644
-        Data4: -1594795463
-      Path: event:/Game/Enemy/boss_proximity_001
+  type_sfx:
+    id: sfx_enemy_boss_proximity

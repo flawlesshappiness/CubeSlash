@@ -14,7 +14,6 @@ public class UnlockAbilityView : View
     [SerializeField] private RectTransform pivot_ability_bar;
     [SerializeField] private CanvasGroup cvg_background, cvg_abilities, cvg_description;
     [SerializeField] private UIUnlockAbilityBar ability_bar;
-    [SerializeField] private FMODEventReference sfx_unlock_ability;
 
     public event System.Action OnAbilitySelected;
 
@@ -45,7 +44,7 @@ public class UnlockAbilityView : View
         void Click(UIIconButton btn, Ability ability)
         {
             AbilityController.Instance.GainAbility(ability.Info.type);
-            sfx_unlock_ability.Play();
+            SoundController.Instance.Play(SoundEffectType.sfx_ui_unlock_ability);
             OnAbilitySelected?.Invoke();
             Close(0);
         }

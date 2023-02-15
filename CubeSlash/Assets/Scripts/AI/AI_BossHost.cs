@@ -6,9 +6,10 @@ public class AI_BossHost : EnemyAI
 {
     [SerializeField] private Color color_beam;
     [SerializeField] private Vector2 speed_rotate_min_max;
-    [SerializeField] private FMODEventReference sfx_charge, sfx_shoot;
 
     private Vector3 destination;
+
+    private FMODEventInstance sfx_charge_start;
 
     public override void Initialize(Enemy enemy)
     {
@@ -30,7 +31,7 @@ public class AI_BossHost : EnemyAI
 
     private void OnDeath()
     {
-        sfx_charge.Stop();
+        sfx_charge_start?.Stop();
     }
 
     private void MoveTowardsPlayer()
@@ -95,12 +96,12 @@ public class AI_BossHost : EnemyAI
             beam.UpdateVisual();
             beam.AnimateShowPreview(true);
 
-            sfx_charge.PlayWithTimeLimit(0.2f);
+            sfx_charge_start = SoundController.Instance.Play(SoundEffectType.sfx_charge_start).SetPitch(-1);
 
             yield return new WaitForSeconds(2f);
 
-            sfx_charge.Stop();
-            FMODController.Instance.PlayWithDelay(sfx_shoot, 0.1f);
+            sfx_charge_start?.Stop();
+            SoundController.Instance.Play(SoundEffectType.sfx_charge_shoot);
 
             dir = dud.transform.up;
             Physics2D.CircleCastAll(dud.transform.position, width * 0.25f, dir, length)

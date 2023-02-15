@@ -23,6 +23,7 @@ public class GameController : MonoBehaviour
     public System.Action onGameEnd { get; set; }
     public System.Action onMainMenu { get; set; }
     public System.Action onPlayerLevelUp { get; set; }
+    public System.Action onPlayerDeath { get; set; }
 
     public const string TAG_ABILITY_VIEW = "Ability";
 
@@ -96,7 +97,6 @@ public class GameController : MonoBehaviour
 
         GameStateController.Instance.SetGameState(GameStateType.MENU);
         AreaController.Instance.StartAreaCoroutine();
-        MusicController.Instance.PlayStartMusic();
         ViewController.Instance.ShowView<GameView>(1);
 
         onGameStart?.Invoke();
@@ -197,9 +197,8 @@ public class GameController : MonoBehaviour
     {
         EndGame();
         SessionController.Instance.CurrentData.won = false;
-        MusicController.Instance.StopBGM();
-        FMODEventReferenceDatabase.Load().lose_game.Play();
         StartCoroutine(EndGameCr());
+        onPlayerDeath?.Invoke();
     }
 
     public void Win()

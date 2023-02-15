@@ -4,7 +4,6 @@ using UnityEngine;
 public class AI_Volatile : EnemyAI
 {
     public Color color_explosion;
-    public FMODEventReference sfx_charge;
 
     private Vector3 pos_player_prev;
 
@@ -53,7 +52,7 @@ public class AI_Volatile : EnemyAI
             var delay = 0.25f;
             for (int i = 0; i < 3; i++)
             {
-                sfx_charge.Play();
+                SoundController.Instance.Play(SoundEffectType.sfx_enemy_volatile_warning);
                 volatile_body.PlayChargePS(RADIUS_EXPLODE);
                 yield return new WaitForSeconds(delay);
             }

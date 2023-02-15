@@ -1,0 +1,510 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 018962eb2745c6244a6b0458115a615e, type: 3}
+  m_Name: SoundDatabase
+  m_EditorClassIdentifier: 
+  collection:
+  - name: bgm_lose_game
+    type:
+      id: bgm_lose_game
+    sfx:
+      reference:
+        Guid:
+          Data1: -771218821
+          Data2: 1128927549
+          Data3: 189750964
+          Data4: -1995803853
+        Path: event:/Music/lose_game
+  - name: sfx_collect_experience
+    type:
+      id: sfx_collect_experience
+    sfx:
+      reference:
+        Guid:
+          Data1: -176759565
+          Data2: 1273025704
+          Data3: -854633795
+          Data4: -1846097945
+        Path: event:/Game/Experience/experience_collect_002
+  - name: sfx_gain_health
+    type:
+      id: sfx_gain_health
+    sfx:
+      reference:
+        Guid:
+          Data1: 1151691213
+          Data2: 1309329977
+          Data3: -474928482
+          Data4: -88472251
+        Path: event:/Game/Health/health_collect_001
+  - name: sfx_explode_charge
+    type:
+      id: sfx_explode_charge
+    sfx:
+      reference:
+        Guid:
+          Data1: 767572272
+          Data2: 1239142846
+          Data3: 1606252960
+          Data4: 1039353130
+        Path: event:/Game/Abilities/explode_charge
+  - name: sfx_explode_release
+    type:
+      id: sfx_explode_release
+    sfx:
+      reference:
+        Guid:
+          Data1: 1694411132
+          Data2: 1126925785
+          Data3: -850677329
+          Data4: 1342194502
+        Path: event:/Game/Abilities/explode_explode
+  - name: sfx_player_damage
+    type:
+      id: sfx_player_damage
+    sfx:
+      reference:
+        Guid:
+          Data1: -812085309
+          Data2: 1251255407
+          Data3: -1776841837
+          Data4: 1130830504
+        Path: event:/Game/Player/player_hit_001
+  - name: sfx_ability_cooldown
+    type:
+      id: sfx_ability_cooldown
+    sfx:
+      reference:
+        Guid:
+          Data1: -474823519
+          Data2: 1232703166
+          Data3: 1700276925
+          Data4: 450463273
+        Path: event:/Game/Abilities/on_cooldown_001
+  - name: sfx_ui_level_up
+    type:
+      id: sfx_ui_level_up
+    sfx:
+      reference:
+        Guid:
+          Data1: 1765159720
+          Data2: 1082416773
+          Data3: -2115771212
+          Data4: 706033010
+        Path: event:/UI/ui_gain_upgrade_001
+  - name: sfx_ui_move
+    type:
+      id: sfx_ui_move
+    sfx:
+      reference:
+        Guid:
+          Data1: -488556006
+          Data2: 1262379110
+          Data3: -1992291445
+          Data4: -574275927
+        Path: event:/UI/ui_move_ability_001
+  - name: sfx_ui_submit
+    type:
+      id: sfx_ui_submit
+    sfx:
+      reference:
+        Guid:
+          Data1: 1813566338
+          Data2: 1276579812
+          Data3: 1129842584
+          Data4: 940544334
+        Path: event:/UI/ui_insert_001
+  - name: sfx_ui_unlock_upgrade
+    type:
+      id: sfx_ui_unlock_upgrade
+    sfx:
+      reference:
+        Guid:
+          Data1: 295234077
+          Data2: 1232971657
+          Data3: -157440861
+          Data4: -1506351820
+        Path: event:/UI/ui_unlock_upgrade_001
+  - name: sfx_ui_unlock_ability
+    type:
+      id: sfx_ui_unlock_ability
+    sfx:
+      reference:
+        Guid:
+          Data1: 175011373
+          Data2: 1097586406
+          Data3: 343695514
+          Data4: 1588041429
+        Path: event:/UI/ui_unlock_ability_001
+  - name: sfx_ui_refund
+    type:
+      id: sfx_ui_refund
+    sfx:
+      reference:
+        Guid:
+          Data1: 509437859
+          Data2: 1219689541
+          Data3: -627641936
+          Data4: 577167897
+        Path: event:/UI/ui_refund_hold
+  - name: sfx_ui_refund_hold
+    type:
+      id: sfx_ui_refund_hold
+    sfx:
+      reference:
+        Guid:
+          Data1: 339058058
+          Data2: 1331076267
+          Data3: 732588959
+          Data4: 857208906
+        Path: event:/UI/ui_refund
+  - name: sfx_ui_tally
+    type:
+      id: sfx_ui_tally
+    sfx:
+      reference:
+        Guid:
+          Data1: -441240914
+          Data2: 1232832515
+          Data3: 954617766
+          Data4: 77190578
+        Path: event:/UI/ui_tally_001
+  - name: sfx_ui_stats_appear
+    type:
+      id: sfx_ui_stats_appear
+    sfx:
+      reference:
+        Guid:
+          Data1: 551728765
+          Data2: 1228176803
+          Data3: -1119487074
+          Data4: 843589799
+        Path: event:/UI/ui_boom_002
+  - name: sfx_chain_zap
+    type:
+      id: sfx_chain_zap
+    sfx:
+      reference:
+        Guid:
+          Data1: 836378376
+          Data2: 1265313106
+          Data3: 1833363865
+          Data4: -753924053
+        Path: event:/Game/Abilities/chain_zap_001
+  - name: sfx_charge_start
+    type:
+      id: sfx_charge_start
+    sfx:
+      reference:
+        Guid:
+          Data1: 630917250
+          Data2: 1214473809
+          Data3: 1052052410
+          Data4: -297316490
+        Path: event:/Game/Abilities/charge_start_002
+  - name: sfx_charge_idle
+    type:
+      id: sfx_charge_idle
+    sfx:
+      reference:
+        Guid:
+          Data1: 1625743898
+          Data2: 1281816307
+          Data3: -1112447579
+          Data4: 96023982
+        Path: event:/Game/Abilities/charge_idle_002
+  - name: sfx_charge_shoot
+    type:
+      id: sfx_charge_shoot
+    sfx:
+      reference:
+        Guid:
+          Data1: 927798703
+          Data2: 1119834803
+          Data3: 447513531
+          Data4: 1199017499
+        Path: event:/Game/Abilities/charge_end_001
+  - name: sfx_dash_start
+    type:
+      id: sfx_dash_start
+    sfx:
+      reference:
+        Guid:
+          Data1: 880579045
+          Data2: 1244781696
+          Data3: 1956077727
+          Data4: 1565322739
+        Path: event:/Game/Abilities/dash_start_002
+  - name: sfx_dash_impact
+    type:
+      id: sfx_dash_impact
+    sfx:
+      reference:
+        Guid:
+          Data1: 2122546176
+          Data2: 1222344975
+          Data3: 1022156475
+          Data4: -48099975
+        Path: event:/Game/Impact/impact_003
+  - name: sfx_mines_spawn
+    type:
+      id: sfx_mines_spawn
+    sfx:
+      reference:
+        Guid:
+          Data1: 771590777
+          Data2: 1117013070
+          Data3: 729043125
+          Data4: 1166786284
+        Path: event:/Game/Abilities/split_projectile_death_001
+  - name: sfx_mines_explode
+    type:
+      id: sfx_mines_explode
+    sfx:
+      reference:
+        Guid:
+          Data1: 1686672197
+          Data2: 1124373891
+          Data3: -730342474
+          Data4: -1847069713
+        Path: event:/Game/Abilities/mines_explode_001
+  - name: sfx_split_shoot
+    type:
+      id: sfx_split_shoot
+    sfx:
+      reference:
+        Guid:
+          Data1: 1458345307
+          Data2: 1074797131
+          Data3: -1075839820
+          Data4: -1202161205
+        Path: event:/Game/Abilities/split_shoot_001
+  - name: sfx_enemy_bone_teleport_appear
+    type:
+      id: sfx_enemy_bone_teleport_appear
+    sfx:
+      reference:
+        Guid:
+          Data1: 1947975579
+          Data2: 1296592411
+          Data3: -1272963709
+          Data4: 1499383659
+        Path: event:/Game/Enemy/teleport_appear_001
+  - name: sfx_enemy_bone_teleport_disappear
+    type:
+      id: sfx_enemy_bone_teleport_disappear
+    sfx:
+      reference:
+        Guid:
+          Data1: 383281688
+          Data2: 1219068295
+          Data3: -1976303974
+          Data4: -1468765451
+        Path: event:/Game/Enemy/teleport_disappear_001
+  - name: sfx_enemy_bone_wall_appear
+    type:
+      id: sfx_enemy_bone_wall_appear
+    sfx:
+      reference:
+        Guid:
+          Data1: 2044575349
+          Data2: 1176920756
+          Data3: 1092076455
+          Data4: -1930710316
+        Path: event:/Game/Enemy/bone_wall_appear_001
+  - name: sfx_enemy_bone_wall_disappear
+    type:
+      id: sfx_enemy_bone_wall_disappear
+    sfx:
+      reference:
+        Guid:
+          Data1: -322562786
+          Data2: 1333945573
+          Data3: 564514446
+          Data4: 814939433
+        Path: event:/Game/Enemy/bone_wall_destroy_001
+  - name: sfx_enemy_shoot
+    type:
+      id: sfx_enemy_shoot
+    sfx:
+      reference:
+        Guid:
+          Data1: 1114069357
+          Data2: 1247990756
+          Data3: 950227899
+          Data4: -766912295
+        Path: event:/Game/Abilities/split_shoot_002
+  - name: sfx_enemy_volatile_warning
+    type:
+      id: sfx_enemy_volatile_warning
+    sfx:
+      reference:
+        Guid:
+          Data1: 590598242
+          Data2: 1146419174
+          Data3: -1522191444
+          Data4: -1542859453
+        Path: event:/Game/Enemy/volatile_charge_002
+  - name: sfx_enemy_angler_charge_short
+    type:
+      id: sfx_enemy_angler_charge_short
+    sfx:
+      reference:
+        Guid:
+          Data1: -1977224309
+          Data2: 1160767717
+          Data3: 2110978438
+          Data4: -217061805
+        Path: event:/Game/Enemy/angler_bite_charge_002
+  - name: sfx_enemy_angler_charge_long
+    type:
+      id: sfx_enemy_angler_charge_long
+    sfx:
+      reference:
+        Guid:
+          Data1: 533502403
+          Data2: 1229625458
+          Data3: 688848527
+          Data4: 1131564244
+        Path: event:/Game/Enemy/angler_bite_charge_001
+  - name: sfx_enemy_angler_bite
+    type:
+      id: sfx_enemy_angler_bite
+    sfx:
+      reference:
+        Guid:
+          Data1: 1612470231
+          Data2: 1339224492
+          Data3: -1177575517
+          Data4: 1571691375
+        Path: event:/Game/Enemy/angler_bite_001
+  - name: sfx_enemy_plant_warn
+    type:
+      id: sfx_enemy_plant_warn
+    sfx:
+      reference:
+        Guid:
+          Data1: -1904204150
+          Data2: 1087882346
+          Data3: -217691242
+          Data4: 873599701
+        Path: event:/Game/Enemy/plant_pillar_warn_001
+  - name: sfx_enemy_plant_spawn
+    type:
+      id: sfx_enemy_plant_spawn
+    sfx:
+      reference:
+        Guid:
+          Data1: 1492486598
+          Data2: 1273588589
+          Data3: -1187495024
+          Data4: 2048756952
+        Path: event:/Game/Enemy/plant_pillar_spawn_001
+  - name: sfx_enemy_boss_proximity
+    type:
+      id: sfx_enemy_boss_proximity
+    sfx:
+      reference:
+        Guid:
+          Data1: 587128435
+          Data2: 1295019151
+          Data3: 2122816644
+          Data4: -1594795463
+        Path: event:/Game/Enemy/boss_proximity_001
+  - name: bgm_start_game
+    type:
+      id: bgm_start_game
+    sfx:
+      reference:
+        Guid:
+          Data1: 399466152
+          Data2: 1224058666
+          Data3: 1777809578
+          Data4: -281874303
+        Path: event:/Music/start_001
+  - name: bgm_ocean
+    type:
+      id: bgm_ocean
+    sfx:
+      reference:
+        Guid:
+          Data1: -1820905848
+          Data2: 1333989044
+          Data3: -787764304
+          Data4: 642457650
+        Path: event:/Music/game_001
+  - name: bgm_leaves
+    type:
+      id: bgm_leaves
+    sfx:
+      reference:
+        Guid:
+          Data1: -1916634330
+          Data2: 1167983941
+          Data3: 1833073581
+          Data4: 1918650056
+        Path: event:/Music/game_002
+  - name: bgm_kelp
+    type:
+      id: bgm_kelp
+    sfx:
+      reference:
+        Guid:
+          Data1: -1820905848
+          Data2: 1333989044
+          Data3: -787764304
+          Data4: 642457650
+        Path: event:/Music/game_001
+  - name: bgm_roots
+    type:
+      id: bgm_roots
+    sfx:
+      reference:
+        Guid:
+          Data1: -1916634330
+          Data2: 1167983941
+          Data3: 1833073581
+          Data4: 1918650056
+        Path: event:/Music/game_002
+  - name: bgm_abyss
+    type:
+      id: bgm_abyss
+    sfx:
+      reference:
+        Guid:
+          Data1: -2099893669
+          Data2: 1184289244
+          Data3: -1133450321
+          Data4: 326138994
+        Path: event:/Music/abyss_001
+  - name: sfx_dud_death
+    type:
+      id: sfx_dud_death
+    sfx:
+      reference:
+        Guid:
+          Data1: 1670559046
+          Data2: 1203043853
+          Data3: -1995059786
+          Data4: -2040260450
+        Path: event:/Game/Enemy/healthdud_death_001
+  - name: sfx_enemy_death
+    type:
+      id: sfx_enemy_death
+    sfx:
+      reference:
+        Guid:
+          Data1: 236413035
+          Data2: 1336558619
+          Data3: 975733157
+          Data4: -2109526787
+        Path: event:/Game/Enemy/enemy_death_001

@@ -5,10 +5,13 @@ public class PlayerProximitySound : MonoBehaviour
     public Vector2 volume_range;
     public Vector2 distance_range;
     public AnimationCurve curve_volume;
-    public FMODEventReference sfx;
+    public SoundEffectType type_sfx;
+
+    private FMODEventInstance sfx;
 
     private void OnEnable()
     {
+        sfx = SoundController.Instance.CreateInstance(type_sfx);
         sfx.Play();
     }
 

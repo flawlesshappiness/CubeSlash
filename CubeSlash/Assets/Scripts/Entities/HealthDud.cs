@@ -8,7 +8,6 @@ public class HealthDud : MonoBehaviour, IKillable
     [SerializeField] private ParticleSystem ps_kill, ps_ooze, ps_glow;
     [SerializeField] private AnimationCurve ac_armor_active;
     [SerializeField] private AnimationCurve ac_armor_inactive;
-    [SerializeField] private FMODEventReference sfx_death;
     public bool Dead { get; private set; }
     public bool ArmorActive { get; private set; }
     public bool DudActive { get; private set; }
@@ -69,7 +68,7 @@ public class HealthDud : MonoBehaviour, IKillable
         pivot.SetActive(false);
         ps_kill.Play();
         ps_ooze.Play();
-        sfx_death.Play();
+        SoundController.Instance.Play(SoundEffectType.sfx_dud_death);
         OnKilled?.Invoke();
         Dead = true;
     }

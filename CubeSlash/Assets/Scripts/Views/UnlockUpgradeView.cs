@@ -1,5 +1,4 @@
 using Flawliz.Lerp;
-using PathCreation;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -7,7 +6,6 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
-using UnityEngine.UI.Extensions;
 
 public class UnlockUpgradeView : View
 {
@@ -19,7 +17,6 @@ public class UnlockUpgradeView : View
     [SerializeField] private UIUnlockAbilityBar ability_bar;
     [SerializeField] private Image img_fg_refund;
     [SerializeField] private CanvasGroup cvg_upgrades, cvg_background, cvg_description, cvg_past_upgrades;
-    [SerializeField] private FMODEventReference sfx_unlock_upgrade, sfx_hold_refund, sfx_refund, sfx_level_up;
 
     public event System.Action<Upgrade> OnUpgradeSelected;
 
@@ -30,6 +27,8 @@ public class UnlockUpgradeView : View
     private Upgrade upgrade_selected;
 
     private Coroutine cr_refund;
+
+    private FMODEventInstance sfx_refund_hold;
 
     private void Start()
     {
@@ -132,7 +131,7 @@ public class UnlockUpgradeView : View
             CanvasGroup.interactable = false;
             CanvasGroup.blocksRaycasts = false;
             UpgradeController.Instance.UnlockUpgrade(upgrade.id);
-            sfx_unlock_upgrade.Play();
+            SoundController.Instance.Play(SoundEffectType.sfx_ui_unlock_upgrade);
             OnUpgradeSelected?.Invoke(upgrade);
             Close(0);
         }
@@ -272,19 +271,19 @@ public class UnlockUpgradeView : View
             StopCoroutine(cr_refund);
             cr_refund = null;
             img_fg_refund.SetAlpha(0);
-            sfx_hold_refund.Stop();
+            sfx_refund_hold?.Stop();
         }
 
         IEnumerator RefundCr()
         {
-            sfx_hold_refund.Play();
+            sfx_refund_hold = SoundController.Instance.Play(SoundEffectType.sfx_ui_refund_hold);
 
             var anim = LerpEnumerator.Alpha(img_fg_refund, 2f, 0f, 0.25f);
             anim.AnimationCurve = EasingCurves.EaseInQuad;
             anim.UseUnscaledTime = true;
             yield return anim;
 
-            sfx_hold_refund.Stop();
+            sfx_refund_hold?.Stop();
 
             Refund();
         }
@@ -292,7 +291,7 @@ public class UnlockUpgradeView : View
 
     private void Refund()
     {
-        sfx_refund.Play();
+        SoundController.Instance.Play(SoundEffectType.sfx_ui_refund);
 
         Player.Instance.Experience.Value += Player.Instance.Experience.Max * 0.25f;
 

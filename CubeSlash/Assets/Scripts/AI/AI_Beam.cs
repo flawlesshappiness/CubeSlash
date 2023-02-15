@@ -8,13 +8,13 @@ public class AI_Beam : EnemyAI
     [SerializeField] private float beam_width;
     [SerializeField] private Color beam_color;
     [SerializeField] private ChargeBeam template_beam;
-    [SerializeField] private FMODEventReference sfx_charge;
-    [SerializeField] private FMODEventReference sfx_shoot;
 
     private Vector3 pos_player_prev;
     private float cd_shoot;
 
     private ChargeBeam beam;
+
+    private FMODEventInstance sfx_charge;
 
     public override void Initialize(Enemy enemy)
     {
@@ -36,7 +36,7 @@ public class AI_Beam : EnemyAI
 
     private void OnDisable()
     {
-        sfx_charge.Stop();
+        sfx_charge?.Stop();
     }
 
     private void BeamUpdate()
@@ -82,7 +82,7 @@ public class AI_Beam : EnemyAI
             var time_start = Time.time;
             var time_end = time_start + duration;
             beam.AnimateShowPreview(true, duration);
-            sfx_charge.PlayWithPitch(5);
+            sfx_charge = SoundController.Instance.Play(SoundEffectType.sfx_charge_start).SetPitch(5);
 
             while(Time.time < time_end)
             {
@@ -94,8 +94,9 @@ public class AI_Beam : EnemyAI
             }
 
             beam.AnimateFire();
-            sfx_charge.Stop();
-            sfx_shoot.PlayWithPitch(5);
+            sfx_charge?.Stop();
+            SoundController.Instance.Play(SoundEffectType.sfx_charge_shoot).SetPitch(5);
+
 
             Shoot();
             cd_shoot = Time.time + cooldown_shoot;

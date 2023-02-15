@@ -10,7 +10,6 @@ public class UIAbilityPanel : MonoBehaviour
     [SerializeField] private UIBodyPartPanel part_panel;
     [SerializeField] private UILock uilock;
     [SerializeField] private CanvasGroup cvg_icon_body, cvg_icon_ability;
-    [SerializeField] private FMODEventReference sfx_move;
 
     private int idx_settings;
     private View parent_view;
@@ -37,7 +36,7 @@ public class UIAbilityPanel : MonoBehaviour
 
         if(idx_settings != idx_prev)
         {
-            sfx_move.Play();
+            SoundController.Instance.Play(SoundEffectType.sfx_ui_move);
         }
     }
 

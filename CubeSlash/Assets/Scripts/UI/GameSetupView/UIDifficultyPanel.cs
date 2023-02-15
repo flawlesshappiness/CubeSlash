@@ -11,7 +11,6 @@ public class UIDifficultyPanel : MonoBehaviour
     [SerializeField] private GameObject template_divider;
     [SerializeField] private TMP_Text tmp_unlock;
     [SerializeField] private RectTransform pivot_selected, content;
-    [SerializeField] private FMODEventReference sfx_move;
 
     private List<UIDifficulty> difficulties = new List<UIDifficulty>();
 
@@ -80,7 +79,7 @@ public class UIDifficultyPanel : MonoBehaviour
 
         if(idx_selected != idx_prev)
         {
-            sfx_move.Play();
+            SoundController.Instance.Play(SoundEffectType.sfx_ui_move);
         }
     }
 
