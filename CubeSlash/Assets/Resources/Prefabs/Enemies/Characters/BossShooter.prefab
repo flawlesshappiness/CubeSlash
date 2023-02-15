@@ -1,35 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &332960083316329654
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 8442236977359108107}
-  m_Layer: 0
-  m_Name: Parasite (1)
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &8442236977359108107
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 332960083316329654}
-  m_LocalRotation: {x: -0, y: -0, z: 0.70710677, w: 0.7071068}
-  m_LocalPosition: {x: -0.5, y: 0, z: 0}
-  m_LocalScale: {x: 1.25, y: 1.25, z: 1}
-  m_Children: []
-  m_Father: {fileID: 2516284629752723671}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
 --- !u!1 &509724303943375344
 GameObject:
   m_ObjectHideFlags: 0
@@ -121,36 +91,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ab436bd546c92b428731e7672de8289, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &1058658424747724887
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 8013712051060977519}
-  m_Layer: 0
-  m_Name: Parasite (2)
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &8013712051060977519
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1058658424747724887}
-  m_LocalRotation: {x: -0, y: -0, z: -0.70710695, w: 0.7071066}
-  m_LocalPosition: {x: 0.5, y: 0, z: 0}
-  m_LocalScale: {x: 1.25, y: 1.25, z: 1}
-  m_Children: []
-  m_Father: {fileID: 2516284629752723671}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -90}
 --- !u!1 &1287213411121352282
 GameObject:
   m_ObjectHideFlags: 0
@@ -178,8 +118,6 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 8442236977359108107}
-  - {fileID: 8013712051060977519}
   - {fileID: 3092082747316351761}
   - {fileID: 5184653908330754520}
   - {fileID: 3550395010488328158}
@@ -215,7 +153,7 @@ Transform:
   m_LocalScale: {x: 1.5, y: 1.5, z: 1}
   m_Children: []
   m_Father: {fileID: 2516284629752723671}
-  m_RootOrder: 2
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -240}
 --- !u!1 &2973982606120359821
 GameObject:
@@ -265,6 +203,7 @@ MonoBehaviour:
   Collider: {fileID: 1421184977900173726}
   Trigger: {fileID: 5938915428007740160}
   ps_death: {fileID: 1272193720796475515, guid: fd5afc43bece25445bb6d64a73e7328b, type: 3}
+  scale_by_velocity: 0
   parent_health_duds: {fileID: 2516284629752723671}
   template_dud: {fileID: 3405480637174817150, guid: 23ec884aeae69e74c9efdd36a40fc296, type: 3}
   eyes_single: {fileID: 2586805978023571279}
@@ -396,7 +335,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2516284629752723671}
-  m_RootOrder: 4
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -60}
 --- !u!1 &4302659232433181156
 GameObject:
@@ -426,7 +365,7 @@ Transform:
   m_LocalScale: {x: 1.5, y: 1.5, z: 1}
   m_Children: []
   m_Father: {fileID: 2516284629752723671}
-  m_RootOrder: 3
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -120}
 --- !u!1 &5568460163949206672
 GameObject:
@@ -674,7 +613,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2516284629752723671}
-  m_RootOrder: 5
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 60}
 --- !u!1001 &377715596538954839
 PrefabInstance:

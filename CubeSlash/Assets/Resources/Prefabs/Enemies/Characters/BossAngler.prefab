@@ -168,8 +168,6 @@ Transform:
   - {fileID: 8013712051060977519}
   - {fileID: 3092082747316351761}
   - {fileID: 5184653908330754520}
-  - {fileID: 3550395010488328158}
-  - {fileID: 3670648810988901248}
   m_Father: {fileID: 2641101720243033873}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -221,39 +219,10 @@ MonoBehaviour:
   Collider: {fileID: 1421184977900173726}
   Trigger: {fileID: 5938915428007740160}
   ps_death: {fileID: 1272193720796475515, guid: c175c3e1d1e096e439fba1f3b12eb259, type: 3}
+  scale_by_velocity: 0
   parent_health_duds: {fileID: 2512613168863538346}
   template_dud: {fileID: 3405480637174817150, guid: d9db459bb2823f84e9f39f091c9ddaf6, type: 3}
   lamp_target: {fileID: 2932489231505430045}
---- !u!1 &4008918390735960948
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 3550395010488328158}
-  m_Layer: 0
-  m_Name: Parasite (7)
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &3550395010488328158
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4008918390735960948}
-  m_LocalRotation: {x: -0, y: -0, z: -0.96592575, w: 0.2588196}
-  m_LocalPosition: {x: 0.208, y: -0.454, z: 0}
-  m_LocalScale: {x: 1.25, y: 1.25, z: 1}
-  m_Children: []
-  m_Father: {fileID: 2512613168863538346}
-  m_RootOrder: 4
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -150}
 --- !u!1 &4302659232433181156
 GameObject:
   m_ObjectHideFlags: 0
@@ -479,36 +448,6 @@ Transform:
   m_Father: {fileID: 2641101720243033873}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &9062361790975916947
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 3670648810988901248}
-  m_Layer: 0
-  m_Name: Parasite (8)
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &3670648810988901248
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9062361790975916947}
-  m_LocalRotation: {x: -0, y: -0, z: 0.96592575, w: 0.25881946}
-  m_LocalPosition: {x: -0.215, y: -0.465, z: 0}
-  m_LocalScale: {x: 1.25, y: 1.25, z: 1}
-  m_Children: []
-  m_Father: {fileID: 2512613168863538346}
-  m_RootOrder: 5
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 150}
 --- !u!1001 &9093085849214513331
 PrefabInstance:
   m_ObjectHideFlags: 0
