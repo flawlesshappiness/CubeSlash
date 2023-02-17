@@ -19,8 +19,8 @@ MonoBehaviour:
   effects:
   - type_effect: 0
     variable:
-      name: Frequency
-      text_display: $s frequency
+      name: Cooldown
+      text_display: $s cooldown
       type_value: 1
       type_display: 1
       higher_is_positive: 0
