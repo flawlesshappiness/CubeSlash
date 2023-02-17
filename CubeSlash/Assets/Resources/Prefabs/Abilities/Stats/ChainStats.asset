@@ -20,7 +20,7 @@ MonoBehaviour:
     type_display: 1
     higher_is_positive: 0
     value_int: 0
-    value_float: 0
+    value_float: 1.5
     value_bool: 0
     can_edit_name: 0
     _editor_toggle_preview: 1

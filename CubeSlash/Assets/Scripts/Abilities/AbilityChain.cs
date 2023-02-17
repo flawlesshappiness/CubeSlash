@@ -45,22 +45,25 @@ public class AbilityChain : Ability
         spr_preview.SetAlpha(0);
     }
 
+    public override bool CanPressWhileOnCooldown()
+    {
+        return true;
+    }
+
     public override void Pressed()
     {
         base.Pressed();
-        if (HasModifier(Type.CHARGE)) return;
+        AnimateShowPreview(true);
         InUse = true;
         Player.Instance.AbilityLock.AddLock(nameof(AbilityChain));
-        AnimateShowPreview(true);
     }
 
     public override void Released()
     {
         base.Released();
-        if (HasModifier(Type.CHARGE)) return;
+        AnimateShowPreview(false);
         InUse = false;
         Player.Instance.AbilityLock.RemoveLock(nameof(AbilityChain));
-        AnimateShowPreview(false);
     }
 
     public override void Trigger()
@@ -70,7 +73,7 @@ public class AbilityChain : Ability
         {
             var center = Player.Instance.transform.position;
             TryChainToTarget(center, Radius, Chains, Strikes, ChainStrikes, HitTarget);
-            StartCooldown(Cooldown + Frequency * FrequencyPerc);
+            StartCooldown();
             CreateImpactPS(Player.transform.position);
         }
     }
@@ -83,7 +86,7 @@ public class AbilityChain : Ability
         var center = Player.Instance.transform.position;
         var success = TryChainToTarget(center, Radius, Chains, Strikes, ChainStrikes, HitTarget);
 
-        var time_success = Time.time + Frequency * FrequencyPerc;
+        var time_success = Time.time + Cooldown * Player.Instance.GlobalCooldownMultiplier;
         var time_fail = Time.time + 0.1f;
 
         if (success)
@@ -91,6 +94,7 @@ public class AbilityChain : Ability
             stored_zaps = Mathf.Max(0, stored_zaps - 1);
             time_attack = stored_zaps > 0 ? time_fail : time_success;
             time_store = time_success;
+            StartCooldown();
         }
         else
         {
@@ -140,6 +144,7 @@ public class AbilityChain : Ability
 
             ChainToTarget(hit, center, radius, chains_left, chain_strikes, onHit);
         }
+
         return true;
     }
 

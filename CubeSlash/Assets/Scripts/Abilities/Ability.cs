@@ -24,9 +24,9 @@ public abstract class Ability : MonoBehaviourExtended
     public float TimeCooldownStart { get; private set; }
     public float TimeCooldownEnd { get; protected set; }
     public float TimeCooldownLeft { get { return IsOnCooldown ? TimeCooldownEnd - Time.time : 0f; } }
+    public float CooldownPercentage { get { return (Time.time - TimeCooldownStart) / (TimeCooldownEnd - TimeCooldownStart); } }
     public bool IsOnCooldown { get { return Time.time < TimeCooldownEnd; } }
     public bool InUse { get; set; }
-    public float CooldownPercentage { get { return (Time.time - TimeCooldownStart) / (TimeCooldownEnd - TimeCooldownStart); } }
     public StatValueCollection Values { get; private set; }
 
     // Values
@@ -190,7 +190,7 @@ public abstract class Ability : MonoBehaviourExtended
 
     public void StartCooldown(float time)
     {
-        InUse = false;
+        InUse = false || CanPressWhileOnCooldown();
         TimeCooldownStart = Time.time;
         TimeCooldownEnd = TimeCooldownStart + time * Player.Instance.GlobalCooldownMultiplier;
         StartCoroutine(WaitForCooldownCr());
@@ -213,6 +213,8 @@ public abstract class Ability : MonoBehaviourExtended
     {
         TimeCooldownEnd += seconds;
     }
+
+    public virtual bool CanPressWhileOnCooldown() => false;
     #endregion
     #region MODIFIER
     public void SetModifier(Ability ability, int idx)

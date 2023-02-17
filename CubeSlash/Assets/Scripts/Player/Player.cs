@@ -179,11 +179,11 @@ public class Player : Character
         }
     }
 
-    private bool CanUseAbility(Ability ability)
+    private bool CanPressAbility(Ability ability)
     {
         var not_paused = !GameController.Instance.IsPaused;
         var not_blocking = AbilityLock.IsFree;
-        var not_cooldown = !ability.IsOnCooldown;
+        var not_cooldown = !(ability.IsOnCooldown && !ability.CanPressWhileOnCooldown());
         var game_started = GameController.Instance.IsGameStarted;
         return not_blocking && not_cooldown && not_paused && game_started;
     }
@@ -195,7 +195,7 @@ public class Player : Character
         if (ability == null) return;
         if (GameStateController.Instance.GameState != GameStateType.PLAYING) return;
 
-        if (CanUseAbility(ability))
+        if (CanPressAbility(ability))
         {
             ability.Pressed();
             AbilityQueued = null;
@@ -229,7 +229,7 @@ public class Player : Character
     {
         if (AbilityQueued)
         {
-            if (CanUseAbility(AbilityQueued))
+            if (CanPressAbility(AbilityQueued))
             {
                 AbilityQueued.Pressed();
                 AbilityQueued = null;

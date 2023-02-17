@@ -7,6 +7,7 @@ endless mode
 CHARM: Orbiting damage
 CHARM: Gain x when y
 
+enemies might not be spawning as fast when restarting a run
 dash impact effect
 boom sound too loud?
 dash always have ripple?
@@ -20,4 +21,3 @@ make shooter enemy a little more random, and not always when just in range
 explode delay affect charge time
 upgrade trees feel hidden
 chain should be cooldown instead of frequency
-enemies might not be spawning as fast when restarting a run
