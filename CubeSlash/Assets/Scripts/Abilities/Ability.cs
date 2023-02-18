@@ -37,6 +37,7 @@ public abstract class Ability : MonoBehaviourExtended
     private void OnValidate()
     {
         // Add variables
+        /*
         if(Stats != null)
         {
             if (!Stats.stats.Any(v => v.name == "Cooldown"))
@@ -52,6 +53,7 @@ public abstract class Ability : MonoBehaviourExtended
                 });
             }
         }
+        */
     }
 
     public virtual void InitializeFirstTime() 

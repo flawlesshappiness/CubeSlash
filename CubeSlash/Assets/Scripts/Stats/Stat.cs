@@ -1,0 +1,23 @@
+using UnityEngine;
+
+[CreateAssetMenu(fileName = nameof(Stat), menuName = "Game/" + nameof(Stat), order = 1)]
+public class Stat : ScriptableObject
+{
+    public StatID id;
+    public string description;
+    public StatValue value;
+    public bool high_is_positive = true;
+
+    public string GetDisplayString()
+    {
+        if(value.type_display == StatValue.DisplayType.TEXT)
+        {
+            return description;
+        }
+        else
+        {
+            var s_value = value.GetValueString();
+            return description.Replace("$", s_value);
+        }
+    }
+}

@@ -30,7 +30,7 @@ public class AbilityStatView : View
 
         CreateSpace();
 
-        var display_stats = ability.Stats.stats.Where(stat => stat.type_display != StatParameter.DisplayType.TEXT);
+        var display_stats = ability.Stats.stats.Where(stat => stat.type_display != StatValue.DisplayType.TEXT);
         foreach (var stat in display_stats)
         {
             var stat_current = ability.GetValue(stat.name);

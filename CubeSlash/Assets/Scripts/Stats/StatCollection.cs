@@ -13,7 +13,7 @@ public class StatCollection : ScriptableObject
     public static StatCollection Load(string id)
     {
 #if UNITY_EDITOR
-        var db = StatDatabase.Load();
+        var db = OldStatDatabase.Load();
         return db.collections.FirstOrDefault(c => c.id == id);
 #endif
         return null;

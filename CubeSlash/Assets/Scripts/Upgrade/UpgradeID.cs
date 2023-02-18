@@ -1,3 +1,4 @@
+[System.Serializable]
 public class UpgradeID : FakeEnum
 {
     public UpgradeID(string id) : base(id) { }

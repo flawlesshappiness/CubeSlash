@@ -8,14 +8,14 @@ public class UpgradeEditor : Editor
     private Upgrade upgrade;
     private UpgradeDatabase db_upgrade;
     private AbilityDatabase db_ability;
-    private StatDatabase db_stat;
+    private OldStatDatabase db_stat;
 
     private void OnEnable()
     {
         upgrade = target as Upgrade;
         db_upgrade = AssetDatabase.LoadAssetAtPath<UpgradeDatabase>($"Assets/Resources/Databases/{nameof(UpgradeDatabase)}.asset");
         db_ability = AssetDatabase.LoadAssetAtPath<AbilityDatabase>($"Assets/Resources/Databases/{nameof(AbilityDatabase)}.asset");
-        db_stat = StatDatabase.Load();
+        db_stat = OldStatDatabase.Load();
     }
 
     public override void OnInspectorGUI()
@@ -189,15 +189,15 @@ public class UpgradeEditor : Editor
             effect.variable.type_value = variable.type_value;
 
             // Value
-            if (effect.variable.type_value == StatParameter.ValueType.INT)
+            if (effect.variable.type_value == StatValue.ValueType.INT)
             {
                 effect.variable.value_int = EditorGUILayout.IntField(effect.variable.value_int);
             }
-            else if (effect.variable.type_value == StatParameter.ValueType.FLOAT)
+            else if (effect.variable.type_value == StatValue.ValueType.FLOAT)
             {
                 effect.variable.value_float = EditorGUILayout.FloatField(effect.variable.value_float);
             }
-            else if(effect.variable.type_value == StatParameter.ValueType.BOOL)
+            else if(effect.variable.type_value == StatValue.ValueType.BOOL)
             {
                 effect.variable.value_bool = EditorGUILayout.Toggle(effect.variable.value_bool);
             }

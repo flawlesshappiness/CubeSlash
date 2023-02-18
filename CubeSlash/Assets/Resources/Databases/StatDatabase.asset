@@ -9,14 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 982e2d35c284998469e0eaafb433668f, type: 3}
+  m_Script: {fileID: 11500000, guid: 030acbafaec229845ac23f64b3dfd7b1, type: 3}
   m_Name: StatDatabase
   m_EditorClassIdentifier: 
-  collections:
-  - {fileID: 11400000, guid: dea22f17ad735a5429748d23a588c898, type: 2}
-  - {fileID: 11400000, guid: 734a4049d8fce3b48a8e34c0596e5989, type: 2}
-  - {fileID: 11400000, guid: b1472cec798a0414c92ae1a95abab146, type: 2}
-  - {fileID: 11400000, guid: 29f0fba11b5e8354bba485134153f9b7, type: 2}
-  - {fileID: 11400000, guid: 0755b411f2c9abc43898ccef029bc0a1, type: 2}
-  - {fileID: 11400000, guid: 4f7ae242bddecbe4799a98c018a25630, type: 2}
-  - {fileID: 11400000, guid: b500760c88b102b4d9deb35a2bccce30, type: 2}
+  collection:
+  - {fileID: 11400000, guid: ed671b4e9714c3c4a8b00fd64be14d2f, type: 2}
+  - {fileID: 11400000, guid: 6630a49fcd0dc9a419be23983ded893b, type: 2}
+  - {fileID: 11400000, guid: 1d551589e77d73742ad4d47258a70b6d, type: 2}

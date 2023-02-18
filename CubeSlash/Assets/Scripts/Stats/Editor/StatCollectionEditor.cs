@@ -85,17 +85,17 @@ public class StatCollectionEditor : Editor
         // Value
         GUILayout.BeginHorizontal();
 
-        stat.type_value = (StatParameter.ValueType)EditorGUILayout.EnumPopup(stat.type_value, GUILayout.Width(100));
+        stat.type_value = (StatValue.ValueType)EditorGUILayout.EnumPopup(stat.type_value, GUILayout.Width(100));
 
-        if (stat.type_value == StatParameter.ValueType.INT)
+        if (stat.type_value == StatValue.ValueType.INT)
         {
             stat.value_int = EditorGUILayout.IntField(stat.value_int);
         }
-        else if (stat.type_value == StatParameter.ValueType.FLOAT)
+        else if (stat.type_value == StatValue.ValueType.FLOAT)
         {
             stat.value_float = EditorGUILayout.FloatField(stat.value_float);
         }
-        else if (stat.type_value == StatParameter.ValueType.BOOL)
+        else if (stat.type_value == StatValue.ValueType.BOOL)
         {
             stat.value_bool = EditorGUILayout.Toggle(stat.value_bool);
         }
@@ -104,7 +104,7 @@ public class StatCollectionEditor : Editor
             GUILayout.FlexibleSpace();
         }
 
-        stat.type_display = (StatParameter.DisplayType)EditorGUILayout.EnumPopup(stat.type_display, GUILayout.Width(100));
+        stat.type_display = (StatValue.DisplayType)EditorGUILayout.EnumPopup(stat.type_display, GUILayout.Width(100));
 
         GUILayout.EndHorizontal();
 
