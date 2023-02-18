@@ -4,8 +4,8 @@ using UnityEngine;
 public class Stat : ScriptableObject
 {
     public StatID id;
-    public string description;
-    public StatValue value;
+    public string description = "";
+    public StatValue value = new StatValue();
     public bool high_is_positive = true;
 
     public string GetDisplayString()

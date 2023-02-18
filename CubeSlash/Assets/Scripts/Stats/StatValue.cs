@@ -18,6 +18,11 @@ public class StatValue
         AddValue(variable);
     }
 
+    public StatValue()
+    {
+
+    }
+
     public void AddValue(StatParameter variable)
     {
         type_value = variable.type_value;

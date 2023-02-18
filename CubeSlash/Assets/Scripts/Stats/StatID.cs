@@ -8,6 +8,7 @@ public class StatID : FakeEnum
     public static readonly StatID player_armor = new StatID(nameof(player_armor));
     public static readonly StatID player_body_size_perc = new StatID(nameof(player_body_size_perc));
     public static readonly StatID player_avoid_damage_chance = new StatID(nameof(player_avoid_damage_chance));
+    public static readonly StatID player_regen_kill = new StatID(nameof(player_regen_kill));
     public static readonly StatID player_regen_plant = new StatID(nameof(player_regen_plant));
     public static readonly StatID player_convert_health = new StatID(nameof(player_convert_health));
     public static readonly StatID player_velocity_flat = new StatID(nameof(player_velocity_flat));
@@ -84,6 +85,7 @@ public class StatID : FakeEnum
     public static readonly StatID mines_shell_count = new StatID(nameof(mines_shell_count));
     public static readonly StatID mines_fragment_count = new StatID(nameof(mines_fragment_count));
     public static readonly StatID mines_size_perc = new StatID(nameof(mines_size_perc));
+    public static readonly StatID mines_fragment_size_perc = new StatID(nameof(mines_fragment_size_perc));
     public static readonly StatID mines_shell_lifetime_perc = new StatID(nameof(mines_shell_lifetime_perc));
     public static readonly StatID mines_fragment_lifetime_perc = new StatID(nameof(mines_fragment_lifetime_perc));
     public static readonly StatID mines_seeking = new StatID(nameof(mines_seeking));

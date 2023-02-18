@@ -8,6 +8,8 @@ public static class CreateStats
     {
         ExtraEditorUtility.EnsureDirectoryExists(EditorPaths.STATS);
 
+        var db = Database.Load<StatDatabase>();
+
         var types = FakeEnum.GetAll(typeof(StatID));
         foreach(var type in types)
         {
@@ -18,9 +20,14 @@ public static class CreateStats
             stat.id = (StatID)type;
 
             ExtraEditorUtility.EnsureDirectoryExists(dir);
+            var existing = AssetDatabase.LoadAssetAtPath<Stat>(path);
+            if (existing) continue;
+
+            db.collection.Add(stat);
             AssetDatabase.CreateAsset(stat, path);
         }
 
         AssetDatabase.SaveAssets();
+        AssetDatabase.Refresh();
     }
 }

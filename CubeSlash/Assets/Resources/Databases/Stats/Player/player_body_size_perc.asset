@@ -21,4 +21,4 @@ MonoBehaviour:
     value_int: 0
     value_float: 1
     value_bool: 0
-  high_is_positive: 0
+  high_is_positive: 1

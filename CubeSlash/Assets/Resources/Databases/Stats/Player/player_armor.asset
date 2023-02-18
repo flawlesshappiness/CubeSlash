@@ -14,12 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id:
     id: player_armor
-  name: Armor
   description: $ armor
   value:
     type_value: 0
     type_display: 0
     value_int: 0
-    value_float: 0.25
+    value_float: 0
     value_bool: 0
   high_is_positive: 1
