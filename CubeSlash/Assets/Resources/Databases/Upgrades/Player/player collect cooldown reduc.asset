@@ -29,3 +29,12 @@ MonoBehaviour:
       value_bool: 1
       can_edit_name: 1
       _editor_toggle_preview: 0
+  stats:
+  - id:
+      id: player_cooldown_reduc_perc
+    value:
+      type_value: 3
+      type_display: 0
+      value_int: 0
+      value_float: -0.1
+      value_bool: 0

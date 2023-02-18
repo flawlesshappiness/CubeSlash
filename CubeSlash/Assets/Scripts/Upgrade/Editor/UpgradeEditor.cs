@@ -2,7 +2,7 @@ using System.Linq;
 using UnityEditor;
 using UnityEngine;
 
-[CustomEditor(typeof(Upgrade))]
+//[CustomEditor(typeof(Upgrade))]
 public class UpgradeEditor : Editor
 {
     private Upgrade upgrade;

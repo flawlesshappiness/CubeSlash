@@ -16,9 +16,9 @@ MonoBehaviour:
     id: charge_cooldown_flat
   description: $s cooldown
   value:
-    type_value: 0
+    type_value: 1
     type_display: 0
     value_int: 1
-    value_float: 0
+    value_float: 1
     value_bool: 0
   high_is_positive: 0

@@ -9,6 +9,7 @@ public class Upgrade : ScriptableObject
     public Sprite icon;
     public string id_stats = "";
     public List<Effect> effects = new List<Effect>();
+    public List<UpgradeStat> stats = new List<UpgradeStat>();
     
     [System.Serializable]
     public class Effect

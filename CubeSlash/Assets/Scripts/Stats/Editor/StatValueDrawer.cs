@@ -26,7 +26,6 @@ public class StatValueDrawer : PropertyDrawer
 
         var rect_indended = EditorGUI.IndentedRect(position);
         var indent = rect_indended.x - position.x;
-
         var rect_popup_value = new Rect(rect_indended.x, position.y, EditorGUIUtility.labelWidth, ELEMENT_HEIGHT);
         var rect_value = new Rect(position.x + EditorGUIUtility.labelWidth, position.y, position.width - rect_popup_value.width, ELEMENT_HEIGHT);
 

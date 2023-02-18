@@ -28,6 +28,7 @@ public class StatID : FakeEnum
     public static readonly StatID chain_radius_perc = new StatID(nameof(chain_radius_perc));
     public static readonly StatID chain_chains = new StatID(nameof(chain_chains));
     public static readonly StatID chain_strikes = new StatID(nameof(chain_strikes));
+    public static readonly StatID chain_chain_strikes = new StatID(nameof(chain_chain_strikes));
     public static readonly StatID chain_hits_explode = new StatID(nameof(chain_hits_explode));
     public static readonly StatID chain_store_zaps = new StatID(nameof(chain_store_zaps));
 
