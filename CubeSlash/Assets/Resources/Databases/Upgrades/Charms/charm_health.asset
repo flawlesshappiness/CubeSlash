@@ -29,3 +29,12 @@ MonoBehaviour:
       value_bool: 0
       can_edit_name: 1
       _editor_toggle_preview: 0
+  stats:
+  - id:
+      id: 
+    value:
+      type_value: 0
+      type_display: 0
+      value_int: 2
+      value_float: 0
+      value_bool: 0
