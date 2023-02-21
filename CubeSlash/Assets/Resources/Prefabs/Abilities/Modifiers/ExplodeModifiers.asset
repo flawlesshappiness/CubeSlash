@@ -13,27 +13,18 @@ MonoBehaviour:
   m_Name: ExplodeModifiers
   m_EditorClassIdentifier: 
   modifiers:
-  - name: EXPLODE
-    description: 
-    type: 3
-    upgrade: {fileID: 0}
-  - name: CHARGE
-    description: Explosion appears in front of you instead of around you
-    type: 2
-    upgrade: {fileID: 11400000, guid: 689573ccc4ee79b419e9c2a902dad8ca, type: 2}
-  - name: SPLIT
-    description: Fire a projectile that explodes on impact
-    type: 1
-    upgrade: {fileID: 11400000, guid: 35b077ac2e674a046a0132ced97cff53, type: 2}
-  - name: DASH
-    description: Remove explosion delay and increase radius
-    type: 0
-    upgrade: {fileID: 11400000, guid: ac3a84d7a5eb61444bde33b5c631ab7c, type: 2}
-  - name: CHAIN
-    description: Enemies explode when hit
-    type: 4
-    upgrade: {fileID: 11400000, guid: 623baa5d4f9813044940b4741b6ee52c, type: 2}
-  - name: MINES
-    description: 
-    type: 5
-    upgrade: {fileID: 11400000, guid: 6a17f7364d61c7d4b8af32772556b77b, type: 2}
+  - type: 2
+    id:
+      id: explode_mod_charge
+  - type: 1
+    id:
+      id: explode_mod_split
+  - type: 0
+    id:
+      id: explode_mod_dash
+  - type: 4
+    id:
+      id: explode_mod_chain
+  - type: 5
+    id:
+      id: explode_mod_mines

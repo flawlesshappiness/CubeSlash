@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using UnityEngine;
 
 public class StatValueCollection
 {
@@ -26,6 +27,7 @@ public class StatValueCollection
         {
             return value;
         }
+        LogController.Instance.LogMessage($"StatValueCollection.GetValue({id}): Value does not exist");
         return null;
     }
 
@@ -50,9 +52,9 @@ public class StatValueCollection
     public float GetFloatValue(StatID id)
     {
         var value = GetValue(id);
-        if (value.type_value != StatValue.ValueType.FLOAT)
+        if (!(value.type_value == StatValue.ValueType.FLOAT || value.type_value == StatValue.ValueType.PERCENT))
         {
-            LogController.Instance.LogMessage($"StatValueCollection.GetIntValue({id}): Incorrect type. Value type is actually {value.type_value}");
+            LogController.Instance.LogMessage($"StatValueCollection.GetFloatValue({id}): Incorrect type. Value type is actually {value.type_value}");
         }
         return value.GetFloatValue();
     }
@@ -61,7 +63,7 @@ public class StatValueCollection
         var value = GetValue(id);
         if (value.type_value != StatValue.ValueType.BOOL)
         {
-            LogController.Instance.LogMessage($"StatValueCollection.GetIntValue({id}): Incorrect type. Value type is actually {value.type_value}");
+            LogController.Instance.LogMessage($"StatValueCollection.GetBoolValue({id}): Incorrect type. Value type is actually {value.type_value}");
         }
         return value.GetBoolValue();
     }

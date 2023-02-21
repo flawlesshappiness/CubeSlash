@@ -13,27 +13,23 @@ MonoBehaviour:
   m_Name: ChainModifiers
   m_EditorClassIdentifier: 
   modifiers:
-  - name: EXPLODE
-    description: Zapped enemies explode harming nearby enemies
-    type: 3
-    upgrade: {fileID: 11400000, guid: b2365a88168cc3048b356f08a087539a, type: 2}
-  - name: CHARGE
-    description: Charge and release to zap with multiple strikes
-    type: 2
-    upgrade: {fileID: 11400000, guid: ac4355303d2a23d4397b547121d7de50, type: 2}
-  - name: SPLIT
-    description: Zaps split when chaining
-    type: 1
-    upgrade: {fileID: 11400000, guid: 8845efc7cb026e64c869887b0d546050, type: 2}
-  - name: DASH
-    description: Zaps have increased frequency, but decreased chaining
-    type: 0
-    upgrade: {fileID: 11400000, guid: ff0868db98172454397ee57bb775eef6, type: 2}
-  - name: CHAIN
-    description: 
-    type: 4
-    upgrade: {fileID: 0}
-  - name: MINES
-    description: 
-    type: 5
-    upgrade: {fileID: 11400000, guid: c3829cdc39dddbf4786cbaaa49542218, type: 2}
+  - type: 0
+    id:
+      id: chain_mod_dash
+    name: DASH
+  - type: 1
+    id:
+      id: chain_mod_split
+    name: SPLIT
+  - type: 5
+    id:
+      id: chain_mod_mines
+    name: MINES
+  - type: 3
+    id:
+      id: chain_mod_explode
+    name: EXPLODE
+  - type: 2
+    id:
+      id: chain_mod_charge
+    name: CHARGE

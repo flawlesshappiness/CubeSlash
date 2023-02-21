@@ -9,6 +9,12 @@ public class PlayerValueController : Singleton
 
     public event System.Action onValuesUpdated;
 
+    protected override void Initialize()
+    {
+        base.Initialize();
+        ResetValues();
+    }
+
     public void ResetValues()
     {
         stats.ResetValues();

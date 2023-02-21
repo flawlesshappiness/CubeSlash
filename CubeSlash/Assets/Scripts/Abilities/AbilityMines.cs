@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class AbilityMines : Ability
 {
+    [Header("MINES")]
     [SerializeField] private Projectile prefab_mine;
     [SerializeField] private Projectile prefab_fragment;
 

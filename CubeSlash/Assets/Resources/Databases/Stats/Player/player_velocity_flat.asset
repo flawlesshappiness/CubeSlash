@@ -17,7 +17,6 @@ MonoBehaviour:
   description: $ max speed
   value:
     type_value: 1
-    type_display: 0
     value_int: 0
     value_float: 0
     value_bool: 0

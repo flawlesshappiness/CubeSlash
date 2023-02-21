@@ -10,7 +10,7 @@ public class Stat : ScriptableObject
 
     public string GetDisplayString()
     {
-        if(value.type_display == StatValue.DisplayType.TEXT)
+        if(value.type_value == StatValue.ValueType.BOOL)
         {
             return description;
         }

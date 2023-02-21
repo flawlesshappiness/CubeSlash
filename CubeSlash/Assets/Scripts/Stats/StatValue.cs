@@ -4,10 +4,8 @@ using UnityEngine;
 public class StatValue
 {
     public enum ValueType { INT, FLOAT, BOOL, PERCENT }
-    public enum DisplayType { INT, FLOAT, PERCENT, TEXT }
 
     public ValueType type_value;
-    public DisplayType type_display;
 
     public int value_int;
     public float value_float;
@@ -15,7 +13,10 @@ public class StatValue
 
     public StatValue(StatValue value)
     {
-        AddValue(value);
+        value_int = value.value_int;
+        value_float = value.value_float;
+        value_bool = value.value_bool;
+        type_value = value.type_value;
     }
 
     public StatValue()

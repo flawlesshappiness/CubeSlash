@@ -309,7 +309,7 @@ public class AbilityView : View
         {
             var modifier = equipment_slot.Ability.Info.modifiers.GetModifier(modifier_ability.Info.type);
             string s = $"{modifier_ability.Info.name_ability} (Modifier)";
-            s += "\n" + modifier.description;
+            // TODO: Make better description
             tmp_desc.text = s;
             DisplayInputAbility();
         }

@@ -13,27 +13,18 @@ MonoBehaviour:
   m_Name: ChargeModifiers
   m_EditorClassIdentifier: 
   modifiers:
-  - name: EXPLODE
-    description: Enemies explode upon death
-    type: 3
-    upgrade: {fileID: 11400000, guid: a9fca8aab8c45df4bb5d3adbc3a3f01e, type: 2}
-  - name: CHARGE
-    description: 
-    type: 2
-    upgrade: {fileID: 0}
-  - name: SPLIT
-    description: Fire multiple beams in sequence
-    type: 1
-    upgrade: {fileID: 11400000, guid: 4b19ac5a079d3e24d968f0882dabcda2, type: 2}
-  - name: DASH
-    description: Beam leaves a damaging trail
-    type: 0
-    upgrade: {fileID: 11400000, guid: b4481d4b67fd67d468d585e8ee1b15da, type: 2}
-  - name: CHAIN
-    description: Enemies hit zap nearby enemies
-    type: 4
-    upgrade: {fileID: 11400000, guid: 7a6afca77c2efac4aa9a3a38ad9c097f, type: 2}
-  - name: MINES
-    description: 
-    type: 5
-    upgrade: {fileID: 11400000, guid: 78c41f73b28eb57438cd14b28bd9ebaa, type: 2}
+  - type: 3
+    id:
+      id: charge_mod_explode
+  - type: 1
+    id:
+      id: charge_mod_split
+  - type: 0
+    id:
+      id: charge_mod_dash
+  - type: 4
+    id:
+      id: charge_mod_chain
+  - type: 5
+    id:
+      id: charge_mod_mines

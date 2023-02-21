@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class AbilityChain : Ability
 {
+    [Header("CHAIN")]
     [SerializeField] private Transform pivot_preview;
     [SerializeField] private SpriteRenderer spr_preview;
 

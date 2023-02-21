@@ -16,3 +16,5 @@ MonoBehaviour:
   name_ability: Explode
   desc_ability: After a brief delay, damage enemies around you
   sprite_icon: {fileID: 21300000, guid: 9fcc1744a317b8e4ab0aa3072a0a3ed5, type: 3}
+  modifiers: {fileID: 11400000, guid: 161417befd49f914f8a016a009f566af, type: 2}
+  prefab_bodypart: {fileID: -2917802339203646303, guid: a598b6e1237c46d4aaa610523957efa6, type: 3}

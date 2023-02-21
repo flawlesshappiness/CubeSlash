@@ -8,7 +8,7 @@ public class AbilityModifierCollection : ScriptableObject
     public List<AbilityModifier> modifiers = new List<AbilityModifier>();
     public AbilityModifier GetModifier(Ability.Type type) => modifiers.FirstOrDefault(m => m.type == type);
 
-    private void OnValidate()
+    private void Reset()
     {
         // Add modifiers
         var types = System.Enum.GetValues(typeof(Ability.Type)).Cast<Ability.Type>().ToList();
@@ -23,18 +23,12 @@ public class AbilityModifierCollection : ScriptableObject
             {
                 for (int i = 0; i < ms.Count; i++)
                 {
-                    if(i > 0)
+                    if (i > 0)
                     {
                         modifiers.Remove(ms[i]);
                     }
                 }
             }
-        }
-
-        // Name modifiers
-        foreach(var modifier in modifiers)
-        {
-            modifier.name = modifier.type.ToString();
         }
     }
 }
