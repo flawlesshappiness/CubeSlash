@@ -76,17 +76,17 @@ public class DebugConsoleHandler : Singleton
         {
             var name = $"{info.upgrade.id}";
             var btn = window.CreateButton(name, () => UnlockUpgrade(info));
-            btn.TextRight = info.isUnlocked ? "Unlocked" : "";
+            btn.TextRight = info.is_unlocked ? "Unlocked" : "";
 
-            if (info.require_ability)
+            if (info.upgrade.require_ability)
             {
-                btn.TextLeft = info.type_ability_required.ToString();
+                btn.TextLeft = info.upgrade.ability_required.ToString();
             }
         }
 
         void UnlockUpgrade(UpgradeInfo info)
         {
-            if (!info.isUnlocked)
+            if (!info.is_unlocked)
             {
                 UpgradeController.Instance.CheatUnlockUpgrade(info);
                 ShowFunctionsWindow();
@@ -105,7 +105,7 @@ public class DebugConsoleHandler : Singleton
         {
             var ability = AbilityController.Instance.GetAbility(type);
             var btn = window.CreateButton(type.ToString(), () => UnlockAbility(ability));
-            var is_unlocked = AbilityController.Instance.HasAbility(type);
+            var is_unlocked = AbilityController.Instance.HasGainedAbility(type);
 
             btn.TextRight = is_unlocked ? "Unlocked" : "";
         }

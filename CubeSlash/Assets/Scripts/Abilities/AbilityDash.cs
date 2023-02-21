@@ -7,25 +7,23 @@ using UnityEngine;
 public class AbilityDash : Ability
 {
     private bool Dashing { get; set; }
-    private Vector3 PositionOrigin { get; set; }
-    private Vector3 Direction { get; set; }
 
     // Values
+    public float Cooldown { get; private set; }
     public float Distance { get; private set; }
     public float Speed { get; private set; }
     public float RadiusDamage { get; private set; }
     public float RadiusKnockback { get; private set; }
-    public float ForceKnockback { get; private set; }
-    public float SelfKnockback { get; private set; }
-    public float CooldownOnHit { get; private set; }
+    public float KnockbackForceEnemy { get; private set; }
+    public float KnockbackForceSelf { get; private set; }
+    public float CooldownPercReducOnHit { get; private set; }
     public bool TrailEnabled { get; private set; }
-    public bool TeleportBack { get; private set; }
-    public int RippleCount { get; private set; }
-    public float RippleSpeed { get; private set; }
-    public float RippleSize { get; private set; }
-    public float RippleDistance { get; private set; }
-    public bool RippleBounce { get; private set; }
-    public bool OnlyRipple { get; private set; }
+    public int ShockwaveCount { get; private set; }
+    public float ShockwaveSpeed { get; private set; }
+    public float ShockwaveSize { get; private set; }
+    public float ShockwaveDistance { get; private set; }
+    public bool ShockwaveBounce { get; private set; }
+    public bool OnlyShockwave { get; private set; }
     public bool ExplodeOnImpact { get; private set; }
     public bool ShockwaveLinger { get; private set; }
 
@@ -60,28 +58,30 @@ public class AbilityDash : Ability
         Player.onTriggerEnter -= OnImpact;
     }
 
-    public override void OnValuesApplied()
+    public override void OnValuesUpdated()
     {
-        base.OnValuesApplied();
+        base.OnValuesUpdated();
 
-        Distance = DISTANCE * GetFloatValue("Distance");
-        Speed = SPEED * GetFloatValue("Speed");
-        RadiusDamage = RADIUS_DAMAGE * GetFloatValue("RadiusDamage");
-        RadiusKnockback = RADIUS_FORCE * GetFloatValue("RadiusKnockback");
-        ForceKnockback = FORCE * GetFloatValue("ForceKnockback");
-        SelfKnockback = FORCE_SELF * GetFloatValue("SelfKnockback");
-        CooldownOnHit = GetFloatValue("CooldownOnHit");
-        TrailEnabled = GetBoolValue("TrailEnabled");
-        TeleportBack = GetBoolValue("TeleportBack");
-        RippleCount = GetIntValue("RippleCount");
-        RippleSpeed = RIPPLE_SPEED * GetFloatValue("RippleSpeed");
-        RippleSize = RIPPLE_SIZE * GetFloatValue("RippleSize");
-        RippleDistance = RIPPLE_DISTANCE * GetFloatValue("RippleDistance");
-        RippleBounce = GetBoolValue("RippleBounce");
-        OnlyRipple = GetBoolValue("OnlyRipple");
-        ExplodeOnImpact = GetBoolValue("ExplodeOnImpact");
-        ShockwaveLinger = GetBoolValue("ShockwaveLinger");
+        Cooldown = GetFloatValue(StatID.dash_cooldown_flat) * GetFloatValue(StatID.dash_cooldown_perc);
+        Distance = DISTANCE * GetFloatValue(StatID.dash_distance_perc);
+        Speed = SPEED * GetFloatValue(StatID.dash_speed_perc);
+        RadiusDamage = RADIUS_DAMAGE * GetFloatValue(StatID.dash_radius_impact_perc);
+        RadiusKnockback = RADIUS_FORCE * GetFloatValue(StatID.dash_radius_knock_enemy_perc);
+        KnockbackForceEnemy = FORCE * GetFloatValue(StatID.dash_force_knock_enemy_perc);
+        KnockbackForceSelf = FORCE_SELF * GetFloatValue(StatID.dash_force_knock_self_perc);
+        CooldownPercReducOnHit = GetFloatValue(StatID.dash_hit_cooldown_reduc);
+        TrailEnabled = GetBoolValue(StatID.dash_trail);
+        ShockwaveCount = GetIntValue(StatID.dash_shockwave_count);
+        ShockwaveSpeed = RIPPLE_SPEED * GetFloatValue(StatID.dash_shockwave_speed_perc);
+        ShockwaveSize = RIPPLE_SIZE * GetFloatValue(StatID.dash_shockwave_size_perc);
+        ShockwaveDistance = RIPPLE_DISTANCE * GetFloatValue(StatID.dash_shockwave_distance_perc);
+        ShockwaveBounce = GetBoolValue(StatID.dash_shockwave_bounce);
+        OnlyShockwave = GetBoolValue(StatID.dash_shockwave_only);
+        ExplodeOnImpact = GetBoolValue(StatID.dash_impact_explode);
+        ShockwaveLinger = GetBoolValue(StatID.dash_shockwave_linger);
     }
+
+    public override float GetBaseCooldown() => Cooldown;
 
     public override void Trigger()
     {
@@ -92,7 +92,7 @@ public class AbilityDash : Ability
 
     private void StartDashing()
     {
-        if (OnlyRipple)
+        if (OnlyShockwave)
         {
             ShootShockwaves(Player.MoveDirection);
         }
@@ -102,7 +102,6 @@ public class AbilityDash : Ability
             Player.MovementLock.AddLock(nameof(AbilityDash));
             Player.DragLock.AddLock(nameof(AbilityDash));
             Player.InvincibilityLock.AddLock(nameof(AbilityDash));
-            PositionOrigin = Player.Instance.transform.position;
             cr_dash = StartCoroutine(DashCr(Player.MoveDirection));
         }
     }
@@ -161,7 +160,7 @@ public class AbilityDash : Ability
         {
             KnockbackSelf();
             SoundController.Instance.Play(SoundEffectType.sfx_dash_impact);
-            Player.PushEnemiesInArea(Player.transform.position, RadiusKnockback, ForceKnockback, ac_push_enemies);
+            Player.PushEnemiesInArea(Player.transform.position, RadiusKnockback, KnockbackForceEnemy, ac_push_enemies);
             ShootShockwaves(dir_dash);
         }
 
@@ -169,7 +168,7 @@ public class AbilityDash : Ability
         Player.MovementLock.RemoveLock(nameof(AbilityDash));
         Player.DragLock.RemoveLock(nameof(AbilityDash));
 
-        var cd = hit_anything ? Cooldown * CooldownOnHit : Cooldown;
+        var cd = hit_anything ? Cooldown * CooldownPercReducOnHit : Cooldown;
         StartCooldown(cd);
 
         StartCoroutine(InvincibleCr());
@@ -213,29 +212,12 @@ public class AbilityDash : Ability
 
     private void KnockbackSelf()
     {
-        if (TeleportBack)
-        {
-            StartCoroutine(TeleportBackCr());
-        }
-        else
-        {
-            Player.Knockback(-dir_dash.normalized * SelfKnockback, true, true);
-        }
-
-        IEnumerator TeleportBackCr()
-        {
-            var start = Player.Instance.transform.position;
-            AbilityChain.CreateZapPS(start, PositionOrigin);
-            AbilityChain.CreateImpactPS(start);
-            yield return new WaitForSeconds(0.1f);
-            SoundController.Instance.Play(SoundEffectType.sfx_chain_zap);
-            Player.Instance.transform.position = PositionOrigin;
-        }
+        Player.Knockback(-dir_dash.normalized * KnockbackForceSelf, true, true);
     }
 
     private void ShootShockwaves(Vector3 direction)
     {
-        if(RippleCount > 1)
+        if(ShockwaveCount > 1)
         {
             var directions = AbilitySplit.GetSplitDirections(3, 45, direction);
             foreach(var dir in directions)
@@ -243,7 +225,7 @@ public class AbilityDash : Ability
                 ShootShockwave(dir);
             }
         }
-        else if(RippleCount == 1 || OnlyRipple || ShockwaveLinger)
+        else
         {
             ShootShockwave(direction);
         }
@@ -251,8 +233,8 @@ public class AbilityDash : Ability
 
     private void ShootShockwave(Vector3 direction)
     {
-        var speed = RippleSpeed;
-        var distance = RippleDistance;
+        var speed = ShockwaveSpeed;
+        var distance = ShockwaveDistance;
 
         var p = ProjectileController.Instance.ShootPlayerProjectile(new ProjectileController.PlayerShootInfo
         {
@@ -265,10 +247,10 @@ public class AbilityDash : Ability
         var lifetime = Calculator.DST_Time(distance, speed);
         p.Lifetime = Mathf.Clamp(lifetime, 0.1f, 5);
 
-        var size = RippleSize;
+        var size = ShockwaveSize;
         p.transform.localScale = Vector3.one * size;
 
-        if (RippleBounce && !OnlyRipple)
+        if (ShockwaveBounce && !OnlyShockwave)
         {
             SetRippleDirectionToClosest(p);
         }
@@ -281,7 +263,7 @@ public class AbilityDash : Ability
 
         void OnHit(Projectile p, IKillable k)
         {
-            if (RippleBounce)
+            if (ShockwaveBounce)
             {
                 SetRippleDirectionToClosest(p);
                 var lifetime = Calculator.DST_Time(5f, speed);
@@ -311,7 +293,7 @@ public class AbilityDash : Ability
 
         if (closest == Vector3.zero) return;
         var dir = closest - p.transform.position;
-        var vel = dir.normalized * RippleSpeed;
+        var vel = dir.normalized * ShockwaveSpeed;
         p.SetDirection(vel);
         p.Rigidbody.velocity = vel;
     }

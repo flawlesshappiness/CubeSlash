@@ -19,10 +19,11 @@ public class UpgradeTreeView : View
     private class ButtonMap
     {
         public UIUpgradeTreeButton button;
-        public UpgradeNodeData node;
+        //public UpgradeNodeData node;
         public Upgrade upgrade;
     }
 
+    /*
     public void SetTree(UpgradeNodeTree tree)
     {
         template_btn_upgrade.gameObject.SetActive(false);
@@ -157,4 +158,5 @@ public class UpgradeTreeView : View
 
         tmp_desc.text = text;
     }
+    */
 }

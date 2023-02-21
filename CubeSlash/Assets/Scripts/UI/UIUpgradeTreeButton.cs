@@ -10,7 +10,7 @@ public class UIUpgradeTreeButton : MonoBehaviour
 
     public void SetUpgrade(UpgradeInfo info)
     {
-        img_unlocked.enabled = info.isUnlocked;
+        img_unlocked.enabled = info.is_unlocked;
         btn_icon.Icon = info.upgrade.icon;
     }
 }

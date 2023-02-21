@@ -181,12 +181,11 @@ public class UnlockUpgradeView : View
         }
     }
 
-    private TMP_Text CreateUpgradeText(string text, Color color)
+    private TMP_Text CreateUpgradeText(string text)
     {
         var tmp = Instantiate(tmp_upgrade, tmp_upgrade.transform.parent);
         tmp.gameObject.SetActive(true);
         tmp.text = text;
-        tmp.color = color;
         tmps_upgrade.Add(tmp);
         return tmp;
     }
@@ -203,10 +202,10 @@ public class UnlockUpgradeView : View
 
         ClearUpgradeTexts();
         //CreateUpgradeText(upgrade.name, db_color.text_normal.GetColor());
-        foreach(var effect in upgrade.effects)
+        foreach(var stat in upgrade.stats)
         {
-            var color = effect.type_effect == Upgrade.Effect.TypeEffect.POSITIVE ? db_color.text_normal.GetColor() : db_color.text_wrong.GetColor();
-            var tmp = CreateUpgradeText(effect.variable.GetDisplayString(true), color);
+            var text = stat.GetDisplayString();
+            CreateUpgradeText(text);
         }
     }
 
@@ -220,10 +219,12 @@ public class UnlockUpgradeView : View
         rt_upgrades.gameObject.SetActive(false);
         rt_desc.gameObject.SetActive(false);
 
+        /*
         var view = ViewController.Instance.ShowView<UpgradeTreeView>(0, "UpgradeTree");
         var tree = UpgradeController.Instance.GetUpgradeTree(upgrade_selected.id);
         view.SetTree(tree);
         view.SetSelectedUpgrade(upgrade_selected);
+        */
     }
 
     private void HideUpgradeTree()

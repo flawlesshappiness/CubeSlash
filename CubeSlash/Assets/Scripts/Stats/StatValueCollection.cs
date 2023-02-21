@@ -1,29 +1,26 @@
-using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
-using Unity.VisualScripting.Antlr3.Runtime.Misc;
-using UnityEngine;
 
 public class StatValueCollection
 {
-    private Dictionary<string, StatValue> values = new Dictionary<string, StatValue>();
-	private StatCollection stats;
+    private Dictionary<StatID, StatValue> values = new Dictionary<StatID, StatValue>();
+    private StatDatabase database;
 
-	public StatValueCollection(StatCollection stats)
+	public StatValueCollection()
 	{
-		this.stats = stats;
+        database = Database.Load<StatDatabase>();
 	}
 
     public void ResetValues()
     {
         values.Clear();
-        foreach (var v in stats.stats)
+        foreach(var stat in database.collection)
         {
-            var value = new StatValue(v);
-            values.Add(v.name, value);
+            var value = new StatValue(stat.value);
+            values.Add(stat.id, value);
         }
     }
 
-    public StatValue GetValue(string id)
+    public StatValue GetValue(StatID id)
     {
         if(values.TryGetValue(id, out var value))
         {
@@ -32,19 +29,40 @@ public class StatValueCollection
         return null;
     }
 
-    public void ApplyEffects(List<Upgrade.Effect> effects)
+    public void ApplyUpgrade(Upgrade upgrade)
     {
-        foreach (var effect in effects)
+        foreach (var stat in upgrade.stats)
         {
-            var value = GetValue(effect.variable.name);
-            value.AddValue(effect.variable);
+            var value = GetValue(stat.id);
+            value.AddValue(stat.value);
         }
     }
 
-    public int GetIntValue(string name) => GetValue(name).GetIntValue();
-    public float GetFloatValue(string name) => GetValue(name).GetFloatValue();
-    public bool GetBoolValue(string name) => GetValue(name).GetBoolValue();
-    public void AddValue(string name, int value) => GetValue(name).AddValue(value);
-    public void AddValue(string name, float value) => GetValue(name).AddValue(value);
-    public void AddValue(string name, bool value) => GetValue(name).AddValue(value);
+    public int GetIntValue(StatID id)
+    {
+        var value = GetValue(id);
+        if(value.type_value != StatValue.ValueType.INT)
+        {
+            LogController.Instance.LogMessage($"StatValueCollection.GetIntValue({id}): Incorrect type. Value type is actually {value.type_value}");
+        }
+        return value.GetIntValue();
+    }
+    public float GetFloatValue(StatID id)
+    {
+        var value = GetValue(id);
+        if (value.type_value != StatValue.ValueType.FLOAT)
+        {
+            LogController.Instance.LogMessage($"StatValueCollection.GetIntValue({id}): Incorrect type. Value type is actually {value.type_value}");
+        }
+        return value.GetFloatValue();
+    }
+    public bool GetBoolValue(StatID id)
+    {
+        var value = GetValue(id);
+        if (value.type_value != StatValue.ValueType.BOOL)
+        {
+            LogController.Instance.LogMessage($"StatValueCollection.GetIntValue({id}): Incorrect type. Value type is actually {value.type_value}");
+        }
+        return value.GetBoolValue();
+    }
 }

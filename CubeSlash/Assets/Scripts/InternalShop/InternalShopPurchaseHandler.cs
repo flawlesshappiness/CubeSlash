@@ -12,7 +12,7 @@ public class InternalShopPurchaseHandler : Singleton
 
     private void OnPurchase(InternalShopPurchase purchase)
     {
-        Debug.Log($"Product purchased: {purchase.id}");
+        LogController.Instance.LogMessage($"InternalShopPurchaseHandler.OnPurchase(): Purchased {purchase.id}");
 
         if(purchase.id == InternalShopProductID.Default)
         {

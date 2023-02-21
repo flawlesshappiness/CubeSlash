@@ -4,18 +4,12 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Upgrade", menuName = "Game/Upgrade", order = 1)]
 public class Upgrade : ScriptableObject
 {
-    public string id;
+    public UpgradeID id;
     public string name;
     public Sprite icon;
     public string id_stats = "";
-    public List<Effect> effects = new List<Effect>();
+    public bool require_ability;
+    public Ability.Type ability_required;
+    public List<UpgradeID> upgrades_required;
     public List<UpgradeStat> stats = new List<UpgradeStat>();
-    
-    [System.Serializable]
-    public class Effect
-    {
-        public enum TypeEffect { POSITIVE, NEGATIVE }
-        public TypeEffect type_effect;
-        public StatParameter variable = new StatParameter();
-    }
 }

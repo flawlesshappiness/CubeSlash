@@ -2,22 +2,24 @@ using System.Linq;
 using UnityEditor;
 using UnityEngine;
 
-//[CustomEditor(typeof(Upgrade))]
+[CustomEditor(typeof(Upgrade))]
 public class UpgradeEditor : Editor
 {
     private Upgrade upgrade;
-    private UpgradeDatabase db_upgrade;
-    private AbilityDatabase db_ability;
-    private OldStatDatabase db_stat;
 
     private void OnEnable()
     {
         upgrade = target as Upgrade;
-        db_upgrade = AssetDatabase.LoadAssetAtPath<UpgradeDatabase>($"Assets/Resources/Databases/{nameof(UpgradeDatabase)}.asset");
-        db_ability = AssetDatabase.LoadAssetAtPath<AbilityDatabase>($"Assets/Resources/Databases/{nameof(AbilityDatabase)}.asset");
-        db_stat = OldStatDatabase.Load();
     }
 
+    public override void OnInspectorGUI()
+    {
+        GUIHelper.DrawAssetSaveButton(upgrade);
+        GUIHelper.DrawDatabaseButtons<UpgradeDatabase, Upgrade>(upgrade);
+        base.OnInspectorGUI();
+    }
+
+    /*
     public override void OnInspectorGUI()
     {
         GUIHelper.DrawAssetSaveButton(upgrade);
@@ -112,7 +114,8 @@ public class UpgradeEditor : Editor
             GUILayout.EndHorizontal();
         }
     }
-
+    */
+    /*
     private void DrawEffects()
     {
         GUILayout.BeginHorizontal();
@@ -210,4 +213,5 @@ public class UpgradeEditor : Editor
             GUILayout.EndHorizontal();
         }
     }
+    */
 }

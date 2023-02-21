@@ -42,10 +42,10 @@ public class AbilityCharge : Ability
     public int Kills { get; private set; }
 
     // Values
+    private float Cooldown { get; set; }
     private int BeamCount { get; set; }
     private float BeamArc { get; set; }
     private float Width { get; set; }
-    public float ChargeTime { get; set; }
     private float Knockback { get; set; }
     private float KnockbackSelf { get; set; }
     private float ChargeTimeOnKill { get; set; }
@@ -53,6 +53,8 @@ public class AbilityCharge : Ability
     private bool BeamBack { get; set; }
     private bool ChainLightning { get; set; }
     private bool EnemyFragments { get; set; }
+    private bool EnemyExplodes { get; set; }
+    private bool BeamTrail { get; set; }
 
     private FMODEventInstance sfx_charge_start;
     private FMODEventInstance sfx_charge_idle;
@@ -84,20 +86,22 @@ public class AbilityCharge : Ability
         template_trail.gameObject.SetActive(false);
     }
 
-    public override void OnValuesApplied()
+    public override void OnValuesUpdated()
     {
-        base.OnValuesApplied();
-        Width = WIDTH * GetFloatValue("Width");
-        ChargeTime = CHARGE_TIME * GetFloatValue("ChargeTime");
-        KnockbackSelf = FORCE_SELF * GetFloatValue("KnockbackSelf");
-        Knockback = FORCE * GetFloatValue("Knockback");
-        BeamCount = GetIntValue("BeamCount");
-        BeamArc = GetFloatValue("BeamArc");
-        BeamBack = GetBoolValue("BeamBack");
-        ChargeSucksExp = GetBoolValue("ChargeSucksExp");
-        ChargeTimeOnKill = GetFloatValue("ChargeTimeOnKill");
-        ChainLightning = GetBoolValue("ChainLightning");
-        EnemyFragments = GetBoolValue("EnemyFragments");
+        base.OnValuesUpdated();
+        Cooldown = GetFloatValue(StatID.charge_cooldown_flat) * GetFloatValue(StatID.charge_cooldown_perc);
+        Width = WIDTH * GetFloatValue(StatID.charge_width_perc);
+        KnockbackSelf = FORCE_SELF * GetFloatValue(StatID.charge_knock_self_perc);
+        Knockback = FORCE * GetFloatValue(StatID.charge_knock_enemy_perc);
+        BeamCount = GetIntValue(StatID.charge_beam_count);
+        BeamArc = GetFloatValue(StatID.charge_beam_arc_perc);
+        BeamBack = GetBoolValue(StatID.charge_beam_back);
+        ChargeSucksExp = GetBoolValue(StatID.charge_suck_exp);
+        ChargeTimeOnKill = GetFloatValue(StatID.charge_cooldown_kill_reduc_perc);
+        ChainLightning = GetBoolValue(StatID.charge_kill_zap);
+        EnemyFragments = GetBoolValue(StatID.charge_enemy_fragment);
+        EnemyExplodes = GetBoolValue(StatID.charge_kill_explode);
+        BeamTrail = GetBoolValue(StatID.charge_trail);
 
         Charging = false;
         ChargeEnded = false;
@@ -106,17 +110,19 @@ public class AbilityCharge : Ability
         InitializeBeams();
     }
 
+    public override float GetBaseCooldown() => Cooldown;
+
     public override void Pressed()
     {
         base.Pressed();
-        BeginCharge();
+        BeginCharge(GetChargeTime());
         ShowBeamPreviews();
     }
 
     public override void Released()
     {
         base.Released();
-        if (EndCharge() && IsActive)
+        if (EndCharge())
         {
             Trigger();
         }
@@ -134,7 +140,7 @@ public class AbilityCharge : Ability
     }
 
     private Coroutine _cr_charge;
-    public void BeginCharge()
+    public void BeginCharge(float duration)
     {
         Player.Instance.AbilityLock.AddLock(nameof(AbilityCharge));
 
@@ -148,10 +154,9 @@ public class AbilityCharge : Ability
         _cr_charge = StartCoroutine(ChargeCr());
         IEnumerator ChargeCr()
         {
-            var time = GetChargeTime();
             time_charge_start = Time.time;
-            time_charge_end = time_charge_start + time;
-            yield return new WaitForSeconds(time);
+            time_charge_end = time_charge_start + duration;
+            yield return new WaitForSeconds(duration);
         }
     }
 
@@ -258,7 +263,7 @@ public class AbilityCharge : Ability
                                 StartCoroutine(ChainLightningCr(position));
                             }
 
-                            if (HasModifier(Type.EXPLODE))
+                            if (EnemyExplodes)
                             {
                                 StartCoroutine(ExplodeCr(position));
                             }
@@ -291,7 +296,7 @@ public class AbilityCharge : Ability
                 info.graphic.AnimateFire();
 
                 // Trail
-                if (HasModifier(Type.DASH))
+                if (BeamTrail)
                 {
                     var trail = Instantiate(template_trail, template_trail.transform.parent);
                     trail.gameObject.SetActive(true);
@@ -341,21 +346,9 @@ public class AbilityCharge : Ability
 
     private float GetChargeTime()
     {
-        if (IsActive)
-        {
-            var time_per_kill = Mathf.Clamp(ChargeTime * Kills * ChargeTimeOnKill, -ChargeTime, 0);
-            return ChargeTime + time_per_kill;
-        }
-        else if(ModifierParent != null)
-        {
-            return ModifierParent.Info.type switch
-            {
-                Type.CHARGE => ((AbilityCharge)ModifierParent).GetChargeTime(),
-                _ => 1f,
-            };
-        }
-
-        return 0;
+        var time_kill_reduc = Mathf.Clamp01(1f - (Kills * ChargeTimeOnKill));
+        var charge_time = Cooldown * time_kill_reduc;
+        return charge_time;
     }
 
     private void InitializeBeams()
@@ -407,7 +400,7 @@ public class AbilityCharge : Ability
 
     private void ShowBeamPreviews()
     {
-        beam_infos.ForEach(beam => beam.graphic.AnimateShowPreview(true, ChargeTime));
+        beam_infos.ForEach(beam => beam.graphic.AnimateShowPreview(true, GetChargeTime()));
     }
 
     private void HideBeamPreviews()

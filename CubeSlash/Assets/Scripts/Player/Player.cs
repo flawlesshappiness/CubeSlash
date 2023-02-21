@@ -7,7 +7,6 @@ public class Player : Character
 {
     public static Player Instance;
     [SerializeField] private PlayerSettings settings;
-    [SerializeField] private StatCollection stats;
     [SerializeField] private GameObject g_invincible;
     [SerializeField] private ParticleSystem ps_collect_meat, ps_collect_plant, ps_collect_health, ps_level_up;
     public PlayerBody PlayerBody { get { return Body as PlayerBody; } }
@@ -22,7 +21,6 @@ public class Player : Character
     public MultiLock AbilityLock { get; set; } = new MultiLock();
     public Vector3 MoveDirection { get; set; }
     public Ability AbilityQueued { get; private set; }
-    public StatValueCollection Values { get; private set; }
 
     // UPGRADE VALUES
     public float ChanceToAvoidDamage { get; private set; }
@@ -39,6 +37,7 @@ public class Player : Character
     public event System.Action onLevelUp;
     public event System.Action onDeath;
     public event System.Action<Collider2D> onTriggerEnter;
+    public event System.Action onValuesUpdated;
 
     private float timestamp_collect_last;
     private int enemy_kills_until_shield_regen;
@@ -46,11 +45,11 @@ public class Player : Character
 
     public void Initialize()
     {
-        // Values
-        Values = new StatValueCollection(stats);
-
         // Experience
         Experience.onMax += OnLevelUp;
+
+        // Upgrades
+        UpgradeController.Instance.onUpgradeUnlocked += OnUpgradeUnlocked;
 
         // Setup
         MoveDirection = transform.up;
@@ -78,8 +77,8 @@ public class Player : Character
         AbilityController.Instance.EquipAbility(ability, PlayerInput.ButtonType.WEST);
 
         ResetValues();
-        ReapplyUpgrades();
-        ReapplyAbilities();
+        UpdateUpgradeValues();
+        UpdateBodyparts();
     }
 
     public void ResetValues()
@@ -121,6 +120,8 @@ public class Player : Character
     private void ResetLocks()
     {
         AbilityLock.ClearLock();
+        InvincibilityLock.ClearLock();
+        DragLock.ClearLock();
     }
 
     private void MoveUpdate()
@@ -128,10 +129,10 @@ public class Player : Character
         if (!GameController.Instance.IsGameStarted) return;
 
         // Update move values
-        var flat_velocity = Values.GetFloatValue("FlatVelocity");
-        var flat_acceleration = Values.GetFloatValue("FlatAcceleration");
-        var perc_velocity = Values.GetFloatValue("PercVelocity");
-        var perc_acceleration = Values.GetFloatValue("PercAcceleration");
+        var flat_velocity = PlayerValueController.Instance.GetFloatValue(StatID.player_velocity_flat);
+        var flat_acceleration = PlayerValueController.Instance.GetFloatValue(StatID.player_acceleration_flat);
+        var perc_velocity = PlayerValueController.Instance.GetFloatValue(StatID.player_velocity_perc);
+        var perc_acceleration = PlayerValueController.Instance.GetFloatValue(StatID.player_acceleration_perc);
 
         var t_collect_boost = (Time.time - timestamp_collect_last) / 0.5f;
         var collect_boost_acceleration = CollectSpeedBoost ? Mathf.Lerp(10, 0, t_collect_boost) : 0;
@@ -163,22 +164,6 @@ public class Player : Character
     }
 
     #region ABILITIES
-    public void AttachAbility(Ability ability)
-    {
-        ability.transform.parent = transform;
-        ability.transform.position = transform.position;
-        ability.transform.rotation = transform.rotation;
-        ability.Player = this;
-    }
-
-    public void ReapplyAbilities()
-    {
-        foreach (var ability in AbilityController.Instance.GetEquippedAbilities())
-        {
-            ability.ApplyActive();
-        }
-    }
-
     private bool CanPressAbility(Ability ability)
     {
         var not_paused = !GameController.Instance.IsPaused;
@@ -236,76 +221,62 @@ public class Player : Character
             }
         }
     }
+
+    private void UpdateBodyparts()
+    {
+        PlayerBody.ClearBodyparts();
+
+        foreach (var ability in AbilityController.Instance.GetEquippedAbilities())
+        {
+            var prefab = ability.Info.prefab_bodypart;
+            if (prefab == null) continue;
+
+            var bps = PlayerBody.CreateBodyparts(prefab);
+
+            foreach (var bp in bps)
+            {
+                bp.Initialize(ability);
+            }
+        }
+    }
     #endregion
     #region UPGRADES
-    public void ReapplyUpgrades()
+    private void UpdateUpgradeValues()
     {
-        Values.ResetValues();
-        ApplyUpgrades();
-        ApplyUpgradeValues();
-        ApplyBodyparts();
+        ChanceToAvoidDamage = PlayerValueController.Instance.GetFloatValue(StatID.player_avoid_damage_chance);
+        GlobalCooldownMultiplier = PlayerValueController.Instance.GetFloatValue(StatID.player_cooldown_reduc_perc);
+        CollectRadius = PlayerValueController.Instance.GetFloatValue(StatID.player_collect_radius_perc);
+        ExperienceMultiplier = PlayerValueController.Instance.GetFloatValue(StatID.player_exp_bonus_perc);
+        CollectCooldownReduction = PlayerValueController.Instance.GetFloatValue(StatID.player_collect_cooldown_flat);
+        CollectSpeedBoost = PlayerValueController.Instance.GetBoolValue(StatID.player_collect_speed_perc);
+        ConvertHealthToArmor = PlayerValueController.Instance.GetBoolValue(StatID.player_convert_health);
+        Body.Size = PlayerBody.Settings.body_size + PlayerValueController.Instance.GetFloatValue(StatID.player_body_size_perc);
+        InfiniteDrag = PlayerValueController.Instance.GetBoolValue(StatID.player_infinite_drag);
+        KillEnemyShieldRegen = PlayerValueController.Instance.GetBoolValue(StatID.player_regen_kill);
+        PlantExpHealthRegen = PlayerValueController.Instance.GetBoolValue(StatID.player_regen_plant);
     }
 
-    private void ApplyUpgrades()
+    public void OnUpgradeUnlocked(UpgradeInfo info)
     {
-        UpgradeController.Instance.GetUnlockedUpgrades()
-            .Where(info => !info.require_ability)
-            .ToList().ForEach(info => Values.ApplyEffects(info.upgrade.effects));
-    }
-
-    private void ApplyUpgradeValues()
-    {
-        ChanceToAvoidDamage = Values.GetFloatValue("AvoidDamage");
-        GlobalCooldownMultiplier = 1f - Values.GetFloatValue("CooldownReduc");
-        CollectRadius = Values.GetFloatValue("CollectRadius");
-        ExperienceMultiplier = 1f + Values.GetFloatValue("ExpBonus");
-        CollectCooldownReduction = Values.GetFloatValue("CollectCooldownReduc");
-        CollectSpeedBoost = Values.GetBoolValue("CollectSpeedBoost");
-        ConvertHealthToArmor = Values.GetBoolValue("ConvertHealthToArmor");
-        Body.Size = PlayerBody.Settings.body_size + Values.GetFloatValue("BodySize");
-        InfiniteDrag = Values.GetBoolValue("InfiniteDrag");
-        KillEnemyShieldRegen = Values.GetBoolValue("KillEnemyShieldRegen");
-        PlantExpHealthRegen = Values.GetBoolValue("PlantExpHealthRegen");
-    }
-
-    public void OnUpgradeSelected(Upgrade upgrade)
-    {
-        foreach(var e in upgrade.effects)
+        foreach(var stat in info.upgrade.stats)
         {
-            if(e.variable.name == "Health")
+            if(stat.id == StatID.player_health)
             {
-                for (int i = 0; i < e.variable.value_int; i++)
+                for (int i = 0; i < stat.value.GetIntValue(); i++)
                 {
                     Health.AddHealth(HealthPoint.Type.FULL);
                 }
             }
-            else if (e.variable.name == "Armor")
+            else if (stat.id == StatID.player_armor)
             {
-                for (int i = 0; i < e.variable.value_int; i++)
+                for (int i = 0; i < stat.value.GetIntValue(); i++)
                 {
                     Health.AddHealth(HealthPoint.Type.TEMPORARY);
                 }
             }
-            else if(e.variable.name == "ConvertHealthToArmor")
+            else if(stat.id == StatID.player_convert_health)
             {
-                Health.SetConvertHealthToArmorEnabled(true);
-            }
-        }
-    }
-
-    private void ApplyBodyparts()
-    {
-        PlayerBody.ClearBodyparts();
-
-        foreach(var ability in AbilityController.Instance.GetEquippedAbilities())
-        {
-            if (ability.prefab_bodypart == null) continue;
-
-            var bps = PlayerBody.CreateBodyparts(ability.prefab_bodypart);
-
-            foreach(var bp in bps)
-            {
-                bp.Initialize(ability);
+                Health.ConvertHealthToArmor();
             }
         }
     }
@@ -378,10 +349,10 @@ public class Player : Character
         if (Health == null) Health = new Health();
         Health.Clear();
 
-        var init_health = PlayerBody.Settings.health + stats.GetStat("Health").value_int;
+        var init_health = PlayerBody.Settings.health + PlayerValueController.Instance.GetIntValue(StatID.player_health);
         for (int i = 0; i < init_health; i++) Health.AddHealth(HealthPoint.Type.FULL);
 
-        var init_temp = PlayerBody.Settings.armor + stats.GetStat("Armor").value_int;
+        var init_temp = PlayerBody.Settings.armor + PlayerValueController.Instance.GetIntValue(StatID.player_armor);
         for (int i = 0; i < init_temp; i++) Health.AddHealth(HealthPoint.Type.TEMPORARY);
     }
 

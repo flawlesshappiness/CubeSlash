@@ -30,7 +30,8 @@ public class AbilityStatView : View
 
         CreateSpace();
 
-        var display_stats = ability.Stats.stats.Where(stat => stat.type_display != StatValue.DisplayType.TEXT);
+        /*
+        var display_stats = PlayerValueController.Instance.stats.stats.Where(stat => stat.type_display != StatValue.DisplayType.TEXT);
         foreach (var stat in display_stats)
         {
             var stat_current = ability.GetValue(stat.name);
@@ -40,6 +41,7 @@ public class AbilityStatView : View
             var color = positive ? db_color.text_normal.GetColor() : db_color.text_wrong.GetColor();
             main.CreateVariable().SetFromToText(stat.GetValueString(false), stat_current.GetValueString().Color(color));
         }
+        */
 
         dividers[dividers.Count - 1].gameObject.SetActive(false);
 

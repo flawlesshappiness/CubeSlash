@@ -12,23 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 616189df85cb92d40806459b9c9111b7, type: 3}
   m_Name: chain delay 1
   m_EditorClassIdentifier: 
-  id: chain_delay_001
+  id:
+    id: 
   name: Frequency 1
   icon: {fileID: 21300000, guid: 1a8611809c8759c4396ce0f9e447d2fa, type: 3}
   id_stats: chain
-  effects:
-  - type_effect: 0
-    variable:
-      name: Cooldown
-      text_display: $s cooldown
-      type_value: 1
-      type_display: 1
-      higher_is_positive: 0
-      value_int: 1
-      value_float: -0.2
-      value_bool: 0
-      can_edit_name: 1
-      _editor_toggle_preview: 0
+  require_ability: 0
+  ability_required: 0
+  upgrades_required: []
   stats:
   - id:
       id: chain_cooldown_flat

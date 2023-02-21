@@ -13,9 +13,9 @@ public class StatValue
     public float value_float;
     public bool value_bool;
 
-    public StatValue(StatParameter variable)
+    public StatValue(StatValue value)
     {
-        AddValue(variable);
+        AddValue(value);
     }
 
     public StatValue()
@@ -23,23 +23,20 @@ public class StatValue
 
     }
 
-    public void AddValue(StatParameter variable)
+    public void AddValue(StatValue value)
     {
-        type_value = variable.type_value;
-        type_display = variable.type_display;
-
-        switch (variable.type_value)
+        switch (value.type_value)
         {
             case ValueType.INT:
-                value_int += variable.value_int;
+                AddValue(value.GetIntValue());
                 break;
 
             case ValueType.FLOAT:
-                value_float += variable.value_float;
+                AddValue(value.GetFloatValue());
                 break;
 
-            case ValueType.BOOL:
-                value_bool = variable.value_bool;
+            case ValueType.PERCENT:
+                AddValue(value.GetFloatValue());
                 break;
         }
     }
@@ -51,23 +48,6 @@ public class StatValue
     public int GetIntValue() => value_int;
     public float GetFloatValue() => value_float;
     public bool GetBoolValue() => value_bool;
-
-    public bool ComparePositiveTo(StatParameter parameter)
-    {
-        switch (parameter.type_value)
-        {
-            case ValueType.INT:
-                return parameter.higher_is_positive ? value_int >= parameter.value_int : value_int <= parameter.value_int;
-
-            case ValueType.FLOAT:
-                return parameter.higher_is_positive ? value_float >= parameter.value_float : value_float <= parameter.value_float;
-
-            case ValueType.BOOL:
-                return parameter.higher_is_positive == parameter.value_bool;
-
-            default: return false;
-        }
-    }
 
     public bool IsPositive()
     {

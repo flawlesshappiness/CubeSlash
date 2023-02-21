@@ -9,7 +9,7 @@ public class Charm : ScriptableObject
     public string charm_description;
 
     public Sprite sprite;
-    public Upgrade upgrade;
+    public UpgradeID upgrade_id;
     public InternalShopProduct shop_product;
 
     public bool IsUnlocked()

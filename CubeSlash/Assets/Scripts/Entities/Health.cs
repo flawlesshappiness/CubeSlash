@@ -7,7 +7,7 @@ public class Health
     private Dictionary<HealthPoint.Type, List<HealthPoint>> points = new Dictionary<HealthPoint.Type, List<HealthPoint>>();
 
     public bool ResetUI { get; private set; }
-    private bool ConvertHealthToArmor { get; set; }
+    private bool HealthConvertedToArmor { get; set; }
 
     public event System.Action<HealthPoint> onAddHealthPoint;
     public event System.Action onDeath;
@@ -20,7 +20,7 @@ public class Health
 
     public void AddHealth(HealthPoint.Type type)
     {
-        if(ConvertHealthToArmor && (type == HealthPoint.Type.FULL || type == HealthPoint.Type.EMPTY))
+        if(HealthConvertedToArmor && (type == HealthPoint.Type.FULL || type == HealthPoint.Type.EMPTY))
         {
             AddHealth(HealthPoint.Type.TEMPORARY);
             AddHealth(HealthPoint.Type.TEMPORARY);
@@ -33,24 +33,21 @@ public class Health
         onAddHealthPoint?.Invoke(hp);
     }
 
-    public void SetConvertHealthToArmorEnabled(bool enabled)
+    public void ConvertHealthToArmor()
     {
-        ConvertHealthToArmor = enabled;
+        HealthConvertedToArmor = true;
 
-        if (ConvertHealthToArmor)
+        var full_health = GetHealthList(HealthPoint.Type.FULL);
+        var empty_health = GetHealthList(HealthPoint.Type.EMPTY);
+        var count = full_health.Count + empty_health.Count;
+        full_health.ToList().ForEach(hp => full_health.Remove(hp));
+        empty_health.ToList().ForEach(hp => empty_health.Remove(hp));
+        for (int i = 0; i < count * 2; i++)
         {
-            var full_health = GetHealthList(HealthPoint.Type.FULL);
-            var empty_health = GetHealthList(HealthPoint.Type.EMPTY);
-            var count = full_health.Count + empty_health.Count;
-            full_health.ToList().ForEach(hp => full_health.Remove(hp));
-            empty_health.ToList().ForEach(hp => empty_health.Remove(hp));
-            for (int i = 0; i < count * 2; i++)
-            {
-                AddHealth(HealthPoint.Type.TEMPORARY);
-            }
-
-            ResetUI = true;
+            AddHealth(HealthPoint.Type.TEMPORARY);
         }
+
+        ResetUI = true;
     }
 
     public bool IsDead()

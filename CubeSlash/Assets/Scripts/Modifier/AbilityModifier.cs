@@ -4,8 +4,8 @@ using UnityEngine;
 [System.Serializable]
 public class AbilityModifier
 {
-    [HideInInspector] public string name;
-    public string description;
     public Ability.Type type;
-    public Upgrade upgrade;
+    public UpgradeID id;
+    [HideInInspector] public string name;
+    [TextArea]public string description;
 }

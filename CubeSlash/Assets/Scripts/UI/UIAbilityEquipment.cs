@@ -24,19 +24,29 @@ public class UIAbilityEquipment : MonoBehaviour
             ModifierSlots.Add(slot);
         }
 
-        SetAbility(ability);
+        InitializeAbility(ability);
         img_input.SetInputType(PlayerInput.ButtonToUI(type_button));
     }
 
-    public void SetAbility(Ability ability)
+    private void InitializeAbility(Ability ability)
     {
         slot.SetAbility(ability);
 
+        var modifiers = AbilityController.Instance.GetModifiers(ability.Info.type);
         for (int i = 0; i < ModifierSlots.Count; i++)
         {
             var slot = ModifierSlots[i];
-            var m = ability == null ? null : ability.Modifiers[i];
-            slot.SetAbility(m);
+
+            if (i < modifiers.Count - 1)
+            {
+                var modifier_type = modifiers[i];
+                var modifier = AbilityController.Instance.GetAbility(modifier_type);
+                slot.SetAbility(modifier);
+            }
+            else
+            {
+                slot.SetAbility(null);    
+            }
         }
     }
 }

@@ -116,10 +116,9 @@ public class GameController : MonoBehaviour
 
     public void ResumeLevel()
     {
+        PlayerValueController.Instance.UpdateValues();
         GameStateController.Instance.SetGameState(GameStateType.PLAYING);
         PauseLock.RemoveLock(nameof(GameController));
-        Player.Instance.ReapplyUpgrades();
-        Player.Instance.ReapplyAbilities();
         onResume?.Invoke();
     }
 
@@ -129,7 +128,7 @@ public class GameController : MonoBehaviour
         onPlayerLevelUp?.Invoke();
 
         var unlock_ability = Player.Instance.CanGainAbility() && AbilityController.Instance.CanGainAbility();
-        var unlock_upgrade = UpgradeController.Instance.CanUnlockUpgrade();
+        var unlock_upgrade = UpgradeController.Instance.HasUnlockableUpgrades();
 
         StartCoroutine(Cr());
         IEnumerator Cr()
@@ -159,7 +158,6 @@ public class GameController : MonoBehaviour
                 view.OnUpgradeSelected += u =>
                 {
                     ResumeLevel();
-                    Player.Instance.OnUpgradeSelected(u);
                 };
             }
         }

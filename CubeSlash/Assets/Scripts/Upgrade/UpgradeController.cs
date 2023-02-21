@@ -1,4 +1,3 @@
-using Flawliz.Console;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -7,153 +6,108 @@ public class UpgradeController : Singleton
 {
     public static UpgradeController Instance { get { return Instance<UpgradeController>(); } }
 
-    public UpgradeDatabase Database { get; set; }
-    private Dictionary<string, UpgradeInfo> upgrades = new Dictionary<string, UpgradeInfo>();
+    private UpgradeDatabase database;
+    private Dictionary<UpgradeID, UpgradeInfo> upgrades = new Dictionary<UpgradeID, UpgradeInfo>();
+
+    public System.Action<UpgradeInfo> onUpgradeUnlocked;
 
     protected override void Initialize()
     {
         base.Initialize();
-        Database = Resources.Load<UpgradeDatabase>("Databases/" + nameof(UpgradeDatabase));
+        database = Database.Load<UpgradeDatabase>();
         InitializeUpgrades();
-
-        ConsoleController.Instance.RegisterCommand("ShowUnlockedUpgrades", PrintUnlockedUpgrades);
-        ConsoleController.Instance.RegisterCommand("ShowUnlockableUpgrades", PrintUnlockableUpgrades);
-        ConsoleController.Instance.RegisterCommand("UnlockAllUpgrades", UnlockAllUpgrades);
-        ConsoleController.Instance.RegisterCommand("UnlockUpgrade", CheatUnlockUpgrade);
     }
 
     private void InitializeUpgrades()
     {
         upgrades.Clear();
-        foreach (var tree in Database.trees)
+        foreach (var upgrade in database.collection)
         {
-            TraverseRec(tree.GetRootNode(), null, tree);
-        }
-
-        void TraverseRec(UpgradeNodeData node, UpgradeInfo parent, UpgradeNodeTree tree)
-        {
-            UpgradeInfo info = null;
-
-            if (upgrades.ContainsKey(node.id_name))
+            if (upgrades.ContainsKey(upgrade.id))
             {
-                info = upgrades[node.id_name];
+                var info = upgrades[upgrade.id];
+                if (info.upgrade == null)
+                {
+                    info.upgrade = upgrade;
+                }
             }
             else
             {
-                var upgrade = Database.upgrades.FirstOrDefault(u => u.id == node.id_name);
-                info = new UpgradeInfo(upgrade);
-                info.require_ability = tree.require_ability;
-                info.type_ability_required = tree.ability_type_required;
-                upgrades.Add(node.id_name, info);
-            }
-
-            if (parent != null)
-            {
-                parent.children.Add(info);
-                info.parents.Add(parent);
-            }
-
-            foreach(var child in node.children)
-            {
-                TraverseRec(tree.GetNode(child), info, tree);
+                var info = new UpgradeInfo(upgrade);
+                upgrades.Add(upgrade.id, info);
             }
         }
     }
 
-    public void UnlockUpgrade(Upgrade upgrade)
+    public void UnlockUpgrade(UpgradeID id)
     {
-        var info = upgrades.ContainsKey(upgrade.id) ? GetUpgradeInfo(upgrade.id) : null;
-        if(info == null)
-        {
-            info = new UpgradeInfo(upgrade);
-            upgrades.Add(upgrade.id, info);
-        }
-        info.isUnlocked = true;
+        var info = GetUpgradeInfo(id);
+        info.is_unlocked = true;
+        onUpgradeUnlocked?.Invoke(info);
     }
-    public void UnlockUpgrade(string id) => GetUpgradeInfo(id).isUnlocked = true;
-    public bool IsUpgradeUnlocked(string id) => GetUpgradeInfo(id).isUnlocked;
-    public UpgradeInfo GetUpgradeInfo(string id) => upgrades[id];
+
+    public void LockUpgrade(UpgradeID id)
+    {
+        var info = GetUpgradeInfo(id);
+        info.is_unlocked = false;
+    }
+
+    public bool IsUpgradeUnlocked(UpgradeID id) => GetUpgradeInfo(id).is_unlocked;
+    public UpgradeInfo GetUpgradeInfo(UpgradeID id)
+    {
+        var info = upgrades.Values.FirstOrDefault(info => info.upgrade.id == id);
+        if (info == null)
+        {
+            LogController.Instance.LogMessage($"UpgradeController.GetUpgradeInfo({id}): No upgrade with that ID");
+        }
+        return info;
+    }
     public List<UpgradeInfo> GetUpgradeInfos() => upgrades.Values.ToList();
-    public UpgradeNodeTree GetUpgradeTree(string id) => Database.trees.FirstOrDefault(tree => tree.Contains(id));
 
     public List<UpgradeInfo> GetUnlockableUpgrades()
     {
         return upgrades.Values
-            .Where(info => 
-                (!info.require_ability || AbilityController.Instance.GetEquippedAbilities().Any(a => a.Info.type == info.type_ability_required)) &&
-                !info.isUnlocked && 
-                (info.parents.Count == 0 || info.parents.Any(p => p.isUnlocked))
-            )
+            .Where(info => IsValid(info))
             .ToList();
-    }
 
-    public List<UpgradeInfo> GetUnlockedUpgrades() => upgrades.Values.Where(info => info.isUnlocked).ToList();
-    public bool CanUnlockUpgrade() => GetUnlockableUpgrades().Count > 0;
-    public void ClearUpgrades() => upgrades.Values.ToList().ForEach(info => info.isUnlocked = false);
-
-    private void PrintUnlockedUpgrades()
-    {
-        PrintUpgrades(GetUnlockedUpgrades().Select(info => info.upgrade).ToList());
-    }
-
-    private void PrintUnlockableUpgrades()
-    {
-        PrintUpgrades(GetUnlockableUpgrades().Select(info => info.upgrade).ToList());
-    }
-
-    private void PrintUpgrades(List<Upgrade> upgrades)
-    {
-        var text = "";
-        var first = true;
-        foreach (var upgrade in upgrades)
+        bool IsValid(UpgradeInfo info)
         {
-            if (!first) text += "\n";
-            first = false;
-            text += $"{upgrade.id}: \"{upgrade.name}\"";
-        }
-
-        ConsoleController.Instance.LogOutput(text);
-    }
-
-    private void UnlockAllUpgrades()
-    {
-        upgrades.Values.ToList().ForEach(info => info.isUnlocked = true);
-    }
-
-    private void CheatUnlockUpgrade(string[] args)
-    {
-        if(args.Length > 1)
-        {
-            var id = args[1];
-            if (upgrades.ContainsKey(id))
-            {
-                var info = upgrades[id];
-                if (info.isUnlocked)
-                {
-                    ConsoleController.Instance.LogOutput("Already unlocked");
-                }
-                else
-                {
-                    CheatUnlockUpgrade(info);
-                    ConsoleController.Instance.LogOutput("Success!");
-                }
-            }
-            else
-            {
-                ConsoleController.Instance.LogOutput("Upgrade does not exist");
-            }
-        }
-        else
-        {
-            ConsoleController.Instance.LogOutput("ERROR: No argument");
+            var is_locked = !info.is_unlocked;
+            var has_required_upgrades = info.upgrade.upgrades_required.All(id => IsUpgradeUnlocked(id));
+            var has_required_ability = !info.upgrade.require_ability || AbilityController.Instance.GetEquippedAbilities().Any(a => a.Info.type == info.upgrade.ability_required);
+            return is_locked && has_required_upgrades && has_required_ability;
         }
     }
+
+    public List<UpgradeInfo> GetUnlockedUpgrades() => upgrades.Values.Where(info => info.is_unlocked).ToList();
+    public List<UpgradeInfo> GetUnlockedAbilityUpgrades(Ability.Type ability)
+    {
+        return upgrades.Values.Where(info => IsValid(info)).ToList();
+        bool IsValid(UpgradeInfo info)
+        {
+            var is_unlocked = info.is_unlocked;
+            var has_required_ability = info.upgrade.require_ability && info.upgrade.ability_required == ability;
+            return is_unlocked && has_required_ability;
+        }
+    }
+
+    public List<UpgradeInfo> GetUnlockedPlayerUpgrades()
+    {
+        return upgrades.Values.Where(info => IsValid(info)).ToList();
+        bool IsValid(UpgradeInfo info)
+        {
+            var is_unlocked = info.is_unlocked;
+            var no_required_ability = !info.upgrade.require_ability;
+            return is_unlocked && no_required_ability;
+        }
+    }
+
+    public bool HasUnlockableUpgrades() => GetUnlockableUpgrades().Count > 0;
+    public void ClearUpgrades() => upgrades.Values.ToList().ForEach(info => info.is_unlocked = false);
 
     public void CheatUnlockUpgrade(UpgradeInfo info)
     {
         UnlockUpgrade(info.upgrade.id);
-        Player.Instance.OnUpgradeSelected(info.upgrade);
-        Player.Instance.ReapplyUpgrades();
-        Player.Instance.ReapplyAbilities();
+        PlayerValueController.Instance.UpdateValues();
     }
 }

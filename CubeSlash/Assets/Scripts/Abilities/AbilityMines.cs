@@ -7,14 +7,15 @@ public class AbilityMines : Ability
     [SerializeField] private Projectile prefab_mine;
     [SerializeField] private Projectile prefab_fragment;
 
-    private int MineCount { get; set; }
+    private float Cooldown { get; set; }
+    private int ShellCount { get; set; }
     private int FragmentCount { get; set; }
-    private float MineSize { get; set; }
+    private float ShellSize { get; set; }
     private float FragmentSize { get; set; }
-    private float MineLifetime { get; set; }
+    private float ShellLifetime { get; set; }
     private float FragmentLifetime { get; set; }
-    private float MineTurnSpeed { get; set; }
-    private bool SeekingMines { get; set; }
+    private float TurnSpeed { get; set; }
+    private bool Seeking { get; set; }
     private bool ExplodingFragments { get; set; }
     private bool OnlyFragments { get; set; }
     private bool DoubleShells { get; set; }
@@ -37,23 +38,26 @@ public class AbilityMines : Ability
         base.InitializeFirstTime();
     }
 
-    public override void OnValuesApplied()
+    public override void OnValuesUpdated()
     {
-        base.OnValuesApplied();
+        base.OnValuesUpdated();
 
-        MineCount = GetIntValue("MineCount");
-        FragmentCount = GetIntValue("FragmentCount");
-        MineSize = MINE_SIZE * GetFloatValue("MineSize");
-        FragmentSize = FRAGMENT_SIZE * GetFloatValue("FragmentSize");
-        MineLifetime = MINE_LIFETIME * GetFloatValue("MineLifetime");
-        FragmentLifetime = FRAGMENT_LIFETIME * GetFloatValue("FragmentLifetime");
-        MineTurnSpeed = MINE_TURN_SEEKING * GetFloatValue("MineTurnSpeed");
-        SeekingMines = GetBoolValue("SeekingMines");
-        ExplodingFragments = GetBoolValue("ExplodingFragments");
-        OnlyFragments = GetBoolValue("OnlyFragments");
-        DoubleShells = GetBoolValue("DoubleShells");
-        FragmentChain = GetBoolValue("FragmentChain");
+        Cooldown = GetFloatValue(StatID.mines_cooldown_flat) * GetFloatValue(StatID.mines_cooldown_perc);
+        ShellCount = GetIntValue(StatID.mines_shell_count);
+        FragmentCount = GetIntValue(StatID.mines_fragment_count);
+        ShellSize = MINE_SIZE * GetFloatValue(StatID.mines_size_perc);
+        FragmentSize = FRAGMENT_SIZE * GetFloatValue(StatID.mines_fragment_size_perc);
+        ShellLifetime = MINE_LIFETIME * GetFloatValue(StatID.mines_shell_lifetime_perc);
+        FragmentLifetime = FRAGMENT_LIFETIME * GetFloatValue(StatID.mines_fragment_lifetime_perc);
+        TurnSpeed = MINE_TURN_SEEKING * GetFloatValue(StatID.mines_turn_speed_perc);
+        Seeking = GetBoolValue(StatID.mines_seeking);
+        ExplodingFragments = GetBoolValue(StatID.mines_fragment_explode);
+        OnlyFragments = GetBoolValue(StatID.mines_fragment_only);
+        DoubleShells = GetBoolValue(StatID.mines_double_shell);
+        FragmentChain = GetBoolValue(StatID.mines_fragment_chain);
     }
+
+    public override float GetBaseCooldown() => Cooldown;
 
     public override void Trigger()
     {
@@ -114,7 +118,7 @@ public class AbilityMines : Ability
     {
         SoundController.Instance.Play(SoundEffectType.sfx_mines_spawn);
 
-        var speed = SeekingMines ? MINE_SPEED_SEEKING : MINE_SPEED;
+        var speed = Seeking ? MINE_SPEED_SEEKING : MINE_SPEED;
 
         var p = ProjectileController.Instance.ShootPlayerProjectile(new ProjectileController.PlayerShootInfo
         {
@@ -124,12 +128,12 @@ public class AbilityMines : Ability
             onHit = OnMineExplode
         });
 
-        p.transform.localScale = Vector3.one * MineSize;
-        p.Drag = SeekingMines ? MINE_DRAG_SEEKING : MINE_DRAG;
-        p.Lifetime = MineLifetime;
-        p.Homing = SeekingMines;
+        p.transform.localScale = Vector3.one * ShellSize;
+        p.Drag = Seeking ? MINE_DRAG_SEEKING : MINE_DRAG;
+        p.Lifetime = ShellLifetime;
+        p.Homing = Seeking;
         p.SearchRadius = 100f;
-        p.TurnSpeed = SeekingMines ? MineTurnSpeed : 0;
+        p.TurnSpeed = Seeking ? TurnSpeed : 0;
         p.onDeath += () => OnMineExplode(p);
     }
 
@@ -139,7 +143,7 @@ public class AbilityMines : Ability
 
         if (ExplodingFragments)
         {
-            var radius = 3f * MineSize;
+            var radius = 3f * ShellSize;
             AbilityExplode.Explode(projectile.transform.position, radius, 0);
         }
 
@@ -232,6 +236,6 @@ public class AbilityMines : Ability
 
     private int GetMineCount()
     {
-        return DoubleShells ? MineCount * 2 : MineCount;
+        return DoubleShells ? ShellCount * 2 : ShellCount;
     }
 }

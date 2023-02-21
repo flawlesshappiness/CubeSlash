@@ -9,6 +9,7 @@ public class AbilitySplit : Ability
     [SerializeField] private Projectile prefab_projectile;
 
     // Values
+    private float Cooldown { get; set; }
     private int Bursts { get; set; }
     private int CountProjectiles { get; set; }
     private float SpeedProjectiles { get; set; }
@@ -16,10 +17,12 @@ public class AbilitySplit : Ability
     private float SizeProjectiles { get; set; }
     private float RadiusKnockback { get; set; }
     private float ForceKnockback { get; set; }
+    private float HitCooldownReduc { get; set; }
     private bool SplitProjectiles { get; set; }
     private bool ChainLightning { get; set; }
     private bool ProjectileLinger { get; set; }
-    private float HitCooldownReduc { get; set; }
+    private bool ProjectilePenetrate { get; set; }
+    private bool ProjectileExplode { get; set; }
 
     private const float PROJECTILE_SPEED = 20f;
     private const float PROJECTILE_ARC = 15f;
@@ -32,22 +35,27 @@ public class AbilitySplit : Ability
         base.InitializeFirstTime();
     }
 
-    public override void OnValuesApplied()
+    public override void OnValuesUpdated()
     {
-        base.OnValuesApplied();
+        base.OnValuesUpdated();
 
-        CountProjectiles = GetIntValue("CountProjectiles");
-        SpeedProjectiles = PROJECTILE_SPEED * GetFloatValue("SpeedProjectiles");
-        ArcProjectiles = PROJECTILE_ARC * GetFloatValue("ArcProjectiles");
-        SizeProjectiles = PROJECTILE_SIZE * GetFloatValue("SizeProjectiles");
-        RadiusKnockback = FORCE_RADIUS * GetFloatValue("RadiusKnockback");
-        ForceKnockback = FORCE * GetFloatValue("ForceKnockback");
-        Bursts = GetIntValue("Bursts");
-        SplitProjectiles = GetBoolValue("SplitProjectiles");
-        ChainLightning = GetBoolValue("ChainLightning");
-        ProjectileLinger = GetBoolValue("ProjectileLinger");
-        HitCooldownReduc = GetFloatValue("HitCooldownReduc");
+        Cooldown = GetFloatValue(StatID.split_cooldown_flat) * GetFloatValue(StatID.split_cooldown_perc);
+        CountProjectiles = GetIntValue(StatID.split_count);
+        SpeedProjectiles = PROJECTILE_SPEED * GetFloatValue(StatID.split_speed_perc);
+        ArcProjectiles = PROJECTILE_ARC * GetFloatValue(StatID.split_arc_perc);
+        SizeProjectiles = PROJECTILE_SIZE * GetFloatValue(StatID.split_size_perc);
+        RadiusKnockback = FORCE_RADIUS * GetFloatValue(StatID.split_radius_knock_enemy_perc);
+        ForceKnockback = FORCE * GetFloatValue(StatID.split_force_knock_enemy_perc);
+        Bursts = GetIntValue(StatID.split_count_bursts);
+        HitCooldownReduc = GetFloatValue(StatID.split_hit_cooldown_reduc);
+        SplitProjectiles = GetBoolValue(StatID.split_projectile_fragments);
+        ChainLightning = GetBoolValue(StatID.split_chain);
+        ProjectileLinger = GetBoolValue(StatID.split_projectile_linger);
+        ProjectilePenetrate = GetBoolValue(StatID.split_penetrate);
+        ProjectileExplode = GetBoolValue(StatID.split_explode);
     }
+
+    public override float GetBaseCooldown() => Cooldown;
 
     public override void Trigger()
     {
@@ -82,7 +90,7 @@ public class AbilitySplit : Ability
             });
 
             p.transform.localScale = Vector3.one * SizeProjectiles;
-            p.Piercing = HasModifier(Type.CHARGE);
+            p.Piercing = ProjectilePenetrate;
             p.Lifetime = 0.75f;
 
             if (ProjectileLinger)
@@ -152,7 +160,7 @@ public class AbilitySplit : Ability
                 TimeCooldownEnd -= Mathf.Abs(HitCooldownReduc);
             }
 
-            if (HasModifier(Type.EXPLODE))
+            if (ProjectileExplode)
             {
                 AbilityExplode.Explode(p.transform.position, 3f, 50);
             }

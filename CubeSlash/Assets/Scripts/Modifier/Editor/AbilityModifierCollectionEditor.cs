@@ -15,23 +15,11 @@ public class AbilityModifierCollectionEditor : Editor
         GUIHelper.DrawAssetSaveButton(collection);
 
         EditorGUI.BeginChangeCheck();
-        foreach(var modifier in collection.modifiers)
-        {
-            DrawModifier(modifier);
-        }
+        base.OnInspectorGUI();
 
         if (EditorGUI.EndChangeCheck())
         {
             EditorUtility.SetDirty(collection);
         }
-    }
-
-    private void DrawModifier(AbilityModifier modifier)
-    {
-        GUILayout.BeginHorizontal();
-        GUILayout.Label(modifier.type.ToString(), GUILayout.Width(150));
-        modifier.upgrade = EditorGUILayout.ObjectField(modifier.upgrade, typeof(Upgrade), false) as Upgrade;
-        GUILayout.EndHorizontal();
-        modifier.description = EditorGUILayout.TextArea(modifier.description, GUILayout.Height(60));
     }
 }

@@ -78,11 +78,9 @@ public class GameSetupView : View
         Player.Instance.Clear();
 
         var charms = charm_panel.GetActivatedCharms();
-        charms.ForEach(c => UpgradeController.Instance.UnlockUpgrade(c.upgrade));
+        charms.ForEach(c => UpgradeController.Instance.UnlockUpgrade(c.upgrade_id));
 
         Player.Instance.SetPlayerBody(ability_panel.CurrentSettings);
-
-        charms.ForEach(c => Player.Instance.OnUpgradeSelected(c.upgrade));
 
         // Start
         GameController.Instance.StartGame();

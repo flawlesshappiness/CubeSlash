@@ -9,13 +9,15 @@ public class AbilityExplode : Ability
     [SerializeField] private Projectile projectile_fragment;
 
     // Values
+    public float Cooldown { get; private set; }
     public float Delay { get; private set; }
     public float Radius { get; private set; }
     public float Knockback { get; private set; }
-    public int Rings { get; private set; }
     public bool DelayPull { get; private set; }
     public bool ChainExplode { get; private set; }
     public bool HasFragments { get; private set; }
+    public bool HasProjectile { get; private set; }
+    public bool IsFront { get; private set; }
 
     private const float DELAY = 0.5f;
     private const float RADIUS = 4f;
@@ -26,22 +28,21 @@ public class AbilityExplode : Ability
         base.InitializeFirstTime();
     }
 
-    public override void OnValuesApplied()
+    public override void OnValuesUpdated()
     {
-        base.OnValuesApplied();
-        Delay = DELAY * GetFloatValue("Delay");
-        Radius = RADIUS * GetFloatValue("Radius");
-        Knockback = FORCE * GetFloatValue("Knockback");
-        Rings = GetIntValue("Rings");
-        DelayPull = GetBoolValue("DelayPull");
-        ChainExplode = GetBoolValue("ChainExplode");
-        HasFragments = GetBoolValue("HasFragments");
-
-        if (HasModifier(Type.DASH))
-        {
-            Delay = 0;
-        }
+        base.OnValuesUpdated();
+        Cooldown = GetFloatValue(StatID.explode_cooldown_flat) * GetFloatValue(StatID.explode_cooldown_perc);
+        Delay = DELAY * GetFloatValue(StatID.explode_delay_perc);
+        Radius = RADIUS * GetFloatValue(StatID.explode_radius_perc);
+        Knockback = FORCE * GetFloatValue(StatID.explode_force_knock_enemy_perc);
+        DelayPull = GetBoolValue(StatID.explode_delay_pull);
+        ChainExplode = GetBoolValue(StatID.explode_chain);
+        HasFragments = GetBoolValue(StatID.explode_fragments);
+        HasProjectile = GetBoolValue(StatID.explode_projectile);
+        IsFront = GetBoolValue(StatID.explode_front);
     }
+
+    public override float GetBaseCooldown() => Cooldown;
 
     public override void Trigger()
     {
@@ -50,7 +51,7 @@ public class AbilityExplode : Ability
         InUse = true;
         Player.AbilityLock.AddLock(nameof(AbilityExplode));
 
-        if (HasModifier(Type.SPLIT))
+        if (HasProjectile)
         {
             // Shoot bullet that explodes
             var p = projectile_split_modifier;
@@ -83,16 +84,11 @@ public class AbilityExplode : Ability
 
     private void TriggerExplode(Transform parent, System.Func<Vector3> getPosition, Vector3 direction)
     {
-        if (HasModifier(Type.CHARGE))
+        if (IsFront)
         {
-            Vector3 pos = getPosition();
-            for (int i = 0; i < Rings; i++)
-            {
-                var r = Radius * (1 + 0.15f * i);
-                pos = pos + direction.normalized * r;
-                Explode(pos, r * (1 + 0.15f * i), Knockback);
-                OnExplode(pos);
-            }
+            Vector3 pos = getPosition() + direction.normalized * Radius;
+            Explode(pos, Radius, Knockback);
+            OnExplode(pos);
 
             InUse = false;
             Player.AbilityLock.RemoveLock(nameof(AbilityExplode));
@@ -100,34 +96,26 @@ public class AbilityExplode : Ability
         }
         else
         {
-            StartCoroutine(ExplodeDelayCr());
+            ExplodeWithDelay();
         }
 
-        IEnumerator ExplodeDelayCr()
+        void ExplodeWithDelay()
         {
             InUse = true;
             Player.Instance.AbilityLock.AddLock(nameof(AbilityExplode));
 
-            var ring_delay = Delay * 0.5f;
-            for (int i = 0; i < Rings; i++)
+            StartCoroutine(ExplodeCr(new ChargeInfo
             {
-                var r = Radius * (1 + 0.5f * i);
-
-                StartCoroutine(ExplodeCr(new ChargeInfo
-                {
-                    parent = parent,
-                    radius = r,
-                    delay = Delay,
-                    force = Knockback,
-                    pull_enemies = DelayPull,
-                    getPosition = getPosition,
-                    play_charge_sfx = i == 0,
-                    onHit = OnHit,
-                    onExplode = OnExplode,
-                }));
-
-                yield return new WaitForSeconds(ring_delay);
-            }
+                parent = parent,
+                radius = Radius,
+                delay = Delay,
+                force = Knockback,
+                pull_enemies = DelayPull,
+                getPosition = getPosition,
+                play_charge_sfx = true,
+                onHit = OnHit,
+                onExplode = OnExplode,
+            }));
 
             InUse = false;
             StartCooldown();

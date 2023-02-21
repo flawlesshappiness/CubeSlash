@@ -83,9 +83,10 @@ public class AbilityView : View
 
     private void InitializeAbilitySlot(Ability ability)
     {
+        var equipped = AbilityController.Instance.IsAbilityEquipped(ability.Info.type);
         var slot = Instantiate(template_slot_unlocked, template_slot_unlocked.transform.parent);
         slot.gameObject.SetActive(true);
-        slot.SetAbility(ability.Equipped ? null : ability);
+        slot.SetAbility(equipped ? null : ability);
         slot.SetWrong(false);
 
         slots.Add(slot);
@@ -236,13 +237,14 @@ public class AbilityView : View
         {
             if (equipment.Slot.Ability == null) continue;
 
-            AbilityController.Instance.EquipAbility(equipment.Slot.Ability, equipment.type_button);
+            var ability = equipment.Slot.Ability;
+            AbilityController.Instance.EquipAbility(ability, equipment.type_button);
 
             for (int i = 0; i < equipment.ModifierSlots.Count; i++)
             {
                 var slot = equipment.ModifierSlots[i];
                 if (slot.Ability == null) continue;
-                equipment.Slot.Ability.SetModifier(slot.Ability, i);
+                AbilityController.Instance.AddModifier(ability.Info.type, slot.Ability.Info.type);
             }
         }
     }
@@ -297,7 +299,6 @@ public class AbilityView : View
             DisplayNoAbility();
         }
     }
-
     private void DisplayModifier(UIAbilitySlot equipment_slot, Ability modifier_ability)
     {
         if(modifier_ability == null)
@@ -306,7 +307,7 @@ public class AbilityView : View
         }
         else if(equipment_slot.Ability != null)
         {
-            var modifier = equipment_slot.Ability.ModifierUpgrades.GetModifier(modifier_ability.Info.type);
+            var modifier = equipment_slot.Ability.Info.modifiers.GetModifier(modifier_ability.Info.type);
             string s = $"{modifier_ability.Info.name_ability} (Modifier)";
             s += "\n" + modifier.description;
             tmp_desc.text = s;
@@ -348,8 +349,7 @@ public class AbilityView : View
             SelectableMenuItem.RemoveSelection();
 
             UpdatePlayer();
-            Player.Instance.ReapplyUpgrades();
-            Player.Instance.ReapplyAbilities();
+            PlayerValueController.Instance.UpdateValues();
 
             view_stats = ViewController.Instance.ShowView<AbilityStatView>(0, "AbilityStatView");
             view_stats.SetAbility(selected_slot.Ability);

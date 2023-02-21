@@ -1,6 +1,5 @@
 using Flawliz.Lerp;
 using System.Collections;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class BodypartGuns : Bodypart
@@ -20,7 +19,7 @@ public class BodypartGuns : Bodypart
         return this.StartCoroutineWithID(Cr(), $"animate_{GetInstanceID()}");
         IEnumerator Cr()
         {
-            var half_cd = Ability.GetBaseCooldownTime() * 0.5f;
+            var half_cd = Ability.GetBaseCooldown() * 0.5f;
             var time = Mathf.Min(half_cd, 0.15f);
             yield return Lerp.LocalScale(pivot_animation, time, scale_in).Curve(EasingCurves.EaseOutQuad);
             yield return Lerp.LocalScale(pivot_animation, time, Vector3.one).Curve(EasingCurves.EaseInOutQuad);

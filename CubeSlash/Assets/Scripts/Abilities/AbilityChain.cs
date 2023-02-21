@@ -8,18 +8,18 @@ public class AbilityChain : Ability
     [SerializeField] private Transform pivot_preview;
     [SerializeField] private SpriteRenderer spr_preview;
 
+    public float Cooldown { get; private set; }
     public float Radius { get; private set; }
-    public float Frequency { get; private set; }
-    public float FrequencyPerc { get; private set; }
     public int Chains { get; private set; }
     public int Strikes { get; private set; }
-    public int ChainStrikes { get; private set; }
+    public int ChainSplits { get; private set; }
     public bool HitsExplode { get; private set; }
     public bool StoreZaps { get; private set; }
 
     private float time_attack;
     private float time_store;
     private int stored_zaps;
+    private bool charged;
 
     private const float RADIUS = 6;
 
@@ -28,27 +28,27 @@ public class AbilityChain : Ability
         base.InitializeFirstTime();
     }
 
-    public override void OnValuesApplied()
+    public override void OnValuesUpdated()
     {
-        base.OnValuesApplied();
+        base.OnValuesUpdated();
 
-        Radius = RADIUS * GetFloatValue("Radius");
-        Frequency = GetFloatValue("Frequency");
-        FrequencyPerc = GetFloatValue("FrequencyPerc");
-        Chains = GetIntValue("Chains");
-        Strikes = GetIntValue("Strikes");
-        ChainStrikes = GetIntValue("ChainStrikes");
-        HitsExplode = GetBoolValue("HitsExplode");
-        StoreZaps = GetBoolValue("StoreZaps");
+        Cooldown = GetFloatValue(StatID.chain_cooldown_flat) * GetFloatValue(StatID.chain_cooldown_perc);
+        Radius = RADIUS * GetFloatValue(StatID.chain_radius_perc);
+        Chains = GetIntValue(StatID.chain_chains);
+        Strikes = GetIntValue(StatID.chain_strikes);
+        ChainSplits = GetIntValue(StatID.chain_chain_strikes);
+        HitsExplode = GetBoolValue(StatID.chain_hits_explode);
+        StoreZaps = GetBoolValue(StatID.chain_store_zaps);
+
+        charged = AbilityController.Instance.HasModifier(Info.type, Type.CHARGE);
 
         pivot_preview.localScale = Vector3.one * Radius * 2;
         spr_preview.SetAlpha(0);
     }
 
-    public override bool CanPressWhileOnCooldown()
-    {
-        return true;
-    }
+
+    public override float GetBaseCooldown() => Cooldown;
+    public override bool CanPressWhileOnCooldown() => true;
 
     public override void Pressed()
     {
@@ -69,10 +69,10 @@ public class AbilityChain : Ability
     public override void Trigger()
     {
         base.Trigger();
-        if (HasModifier(Type.CHARGE))
+        if (charged)
         {
             var center = Player.Instance.transform.position;
-            TryChainToTarget(center, Radius, Chains, Strikes, ChainStrikes, HitTarget);
+            TryChainToTarget(center, Radius, Chains, Strikes, ChainSplits, HitTarget);
             StartCooldown();
             CreateImpactPS(Player.transform.position);
         }
@@ -84,7 +84,7 @@ public class AbilityChain : Ability
         if (Time.time < time_attack) return;
 
         var center = Player.Instance.transform.position;
-        var success = TryChainToTarget(center, Radius, Chains, Strikes, ChainStrikes, HitTarget);
+        var success = TryChainToTarget(center, Radius, Chains, Strikes, ChainSplits, HitTarget);
 
         var time_success = Time.time + Cooldown * Player.Instance.GlobalCooldownMultiplier;
         var time_fail = Time.time + 0.1f;
