@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 public class Player : Character
@@ -33,6 +32,8 @@ public class Player : Character
     public bool InfiniteDrag { get; private set; }
     public bool KillEnemyShieldRegen { get; private set; }
     public bool PlantExpHealthRegen { get; private set; }
+
+    private const float COLLECT_RADIUS = 3;
 
     public event System.Action onLevelUp;
     public event System.Action onDeath;
@@ -244,16 +245,16 @@ public class Player : Character
     private void UpdateUpgradeValues()
     {
         ChanceToAvoidDamage = PlayerValueController.Instance.GetFloatValue(StatID.player_avoid_damage_chance);
-        GlobalCooldownMultiplier = PlayerValueController.Instance.GetFloatValue(StatID.player_cooldown_reduc_perc);
-        CollectRadius = PlayerValueController.Instance.GetFloatValue(StatID.player_collect_radius_perc);
-        ExperienceMultiplier = PlayerValueController.Instance.GetFloatValue(StatID.player_exp_bonus_perc);
+        CollectRadius = COLLECT_RADIUS * PlayerValueController.Instance.GetFloatValue(StatID.player_collect_radius_perc);
         CollectCooldownReduction = PlayerValueController.Instance.GetFloatValue(StatID.player_collect_cooldown_flat);
         CollectSpeedBoost = PlayerValueController.Instance.GetBoolValue(StatID.player_collect_speed_perc);
         ConvertHealthToArmor = PlayerValueController.Instance.GetBoolValue(StatID.player_convert_health);
-        Body.Size = PlayerBody.Settings.body_size + PlayerValueController.Instance.GetFloatValue(StatID.player_body_size_perc);
+        Body.Size = PlayerBody.Settings.body_size * PlayerValueController.Instance.GetFloatValue(StatID.player_body_size_perc);
         InfiniteDrag = PlayerValueController.Instance.GetBoolValue(StatID.player_infinite_drag);
         KillEnemyShieldRegen = PlayerValueController.Instance.GetBoolValue(StatID.player_regen_kill);
         PlantExpHealthRegen = PlayerValueController.Instance.GetBoolValue(StatID.player_regen_plant);
+        GlobalCooldownMultiplier = PlayerValueController.Instance.GetFloatValue(StatID.player_cooldown_multiplier);
+        ExperienceMultiplier = PlayerValueController.Instance.GetFloatValue(StatID.player_exp_multiplier);
     }
 
     public void OnUpgradeUnlocked(UpgradeInfo info)

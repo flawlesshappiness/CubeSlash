@@ -12,41 +12,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 616189df85cb92d40806459b9c9111b7, type: 3}
   m_Name: explode delay 2
   m_EditorClassIdentifier: 
-  id: explode_delay_002
+  id:
+    id: explode_delay_2
   name: Explode delay 2
   icon: {fileID: 21300000, guid: f2c178cfe2d29bc438eea153aa41e6b8, type: 3}
-  id_stats: explode
-  effects:
-  - type_effect: 0
-    variable:
-      name: Delay
-      text_display: $ explosion delay
-      type_value: 1
-      type_display: 2
-      higher_is_positive: 0
-      value_int: 0
-      value_float: -0.2
-      value_bool: 0
-      can_edit_name: 1
-      _editor_toggle_preview: 0
-  - type_effect: 1
-    variable:
-      name: Cooldown
-      text_display: $s cooldown
-      type_value: 1
-      type_display: 1
-      higher_is_positive: 0
-      value_int: 0
-      value_float: 0.25
-      value_bool: 0
-      can_edit_name: 1
-      _editor_toggle_preview: 0
+  hidden: 0
+  require_ability: 1
+  ability_required: 3
+  upgrades_required:
+  - id: explode_delay_1
   stats:
   - id:
       id: explode_delay_perc
     value:
       type_value: 3
-      type_display: 0
       value_int: 0
       value_float: -0.2
       value_bool: 0

@@ -12,41 +12,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 616189df85cb92d40806459b9c9111b7, type: 3}
   m_Name: split knockback 1
   m_EditorClassIdentifier: 
-  id: projectile_knockback_001
+  id:
+    id: split_knock_enemy_1
   name: Projectile knockback
   icon: {fileID: 21300000, guid: 1bb9af9559be5ab4d9f8c38d171b7954, type: 3}
-  id_stats: split
-  effects:
-  - type_effect: 0
-    variable:
-      name: RadiusKnockback
-      text_display: $ knockback area
-      type_value: 1
-      type_display: 2
-      higher_is_positive: 0
-      value_int: 2
-      value_float: 1
-      value_bool: 0
-      can_edit_name: 1
-      _editor_toggle_preview: 0
-  - type_effect: 0
-    variable:
-      name: ForceKnockback
-      text_display: $ knockback force
-      type_value: 1
-      type_display: 2
-      higher_is_positive: 0
-      value_int: 0
-      value_float: 1
-      value_bool: 0
-      can_edit_name: 1
-      _editor_toggle_preview: 0
+  hidden: 0
+  require_ability: 1
+  ability_required: 1
+  upgrades_required: []
   stats:
   - id:
       id: split_radius_knock_enemy_perc
     value:
       type_value: 3
-      type_display: 0
       value_int: 0
       value_float: 1
       value_bool: 0
@@ -54,7 +32,6 @@ MonoBehaviour:
       id: split_force_knock_enemy_perc
     value:
       type_value: 3
-      type_display: 0
       value_int: 0
       value_float: 1
       value_bool: 0

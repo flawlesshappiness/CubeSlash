@@ -12,29 +12,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 616189df85cb92d40806459b9c9111b7, type: 3}
   m_Name: dash hit cd
   m_EditorClassIdentifier: 
-  id: dash_cooldown_on_hit
+  id:
+    id: dash_cooldown_reduc_hit
   name: Impact refresh
   icon: {fileID: 21300000, guid: 532d8d7cfb74bd541b75de9ebbc94735, type: 3}
-  id_stats: dash
-  effects:
-  - type_effect: 0
-    variable:
-      name: CooldownOnHit
-      text_display: $ cooldown on hit
-      type_value: 1
-      type_display: 2
-      higher_is_positive: 0
-      value_int: 0
-      value_float: -0.5
-      value_bool: 1
-      can_edit_name: 1
-      _editor_toggle_preview: 0
+  require_ability: 1
+  ability_required: 0
+  upgrades_required:
+  - id: dash_area_2
   stats:
   - id:
       id: dash_hit_cooldown_reduc
     value:
       type_value: 3
-      type_display: 0
       value_int: 0
       value_float: -0.5
       value_bool: 0

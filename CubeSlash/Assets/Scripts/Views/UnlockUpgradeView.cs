@@ -105,7 +105,7 @@ public class UnlockUpgradeView : View
     private void CreateUpgrades()
     {
         // Fetch upgrades
-        var count_upgrades = Mathf.Min(4, AbilityController.Instance.GetEquippedAbilities().Count + 1);
+        var count_upgrades = Mathf.Min(4, AbilityController.Instance.GetEquippedAbilities().Count + 2);
         var upgrades = UpgradeController.Instance.GetUnlockableUpgrades()
             .TakeRandom(count_upgrades);
 

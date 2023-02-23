@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UpgradeController : Singleton
 {
@@ -55,12 +56,12 @@ public class UpgradeController : Singleton
     public bool IsUpgradeUnlocked(UpgradeID id) => GetUpgradeInfo(id).is_unlocked;
     public UpgradeInfo GetUpgradeInfo(UpgradeID id)
     {
-        var info = upgrades.Values.FirstOrDefault(info => info.upgrade.id == id);
-        if (info == null)
+        if(upgrades.TryGetValue(id, out var info))
         {
-            LogController.Instance.LogMessage($"UpgradeController.GetUpgradeInfo({id}): No upgrade with that ID");
+            return info;
         }
-        return info;
+        LogController.Instance.LogMessage($"UpgradeController.GetUpgradeInfo({id}): No upgrade with that ID");
+        return null;
     }
     public List<UpgradeInfo> GetUpgradeInfos() => upgrades.Values.ToList();
 
@@ -73,9 +74,10 @@ public class UpgradeController : Singleton
         bool IsValid(UpgradeInfo info)
         {
             var is_locked = !info.is_unlocked;
+            var is_not_hidden = !info.upgrade.hidden;
             var has_required_upgrades = info.upgrade.upgrades_required.All(id => IsUpgradeUnlocked(id));
             var has_required_ability = !info.upgrade.require_ability || AbilityController.Instance.GetEquippedAbilities().Any(a => a.Info.type == info.upgrade.ability_required);
-            return is_locked && has_required_upgrades && has_required_ability;
+            return is_locked && is_not_hidden && has_required_upgrades && has_required_ability;
         }
     }
 

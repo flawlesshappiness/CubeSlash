@@ -12,29 +12,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 616189df85cb92d40806459b9c9111b7, type: 3}
   m_Name: split hit split
   m_EditorClassIdentifier: 
-  id: projectile_hit_split
+  id:
+    id: split_hit_split
   name: Splitting projectiles
   icon: {fileID: 21300000, guid: c4f428acbf8d34341af577202997967e, type: 3}
-  id_stats: split
-  effects:
-  - type_effect: 0
-    variable:
-      name: SplitProjectiles
-      text_display: Projectiles split into smaller projectiles on impact
-      type_value: 2
-      type_display: 3
-      higher_is_positive: 0
-      value_int: 2
-      value_float: 1
-      value_bool: 1
-      can_edit_name: 1
-      _editor_toggle_preview: 0
+  hidden: 0
+  require_ability: 1
+  ability_required: 1
+  upgrades_required:
+  - id: split_size_2
   stats:
   - id:
       id: split_projectile_fragments
     value:
       type_value: 0
-      type_display: 0
       value_int: 3
       value_float: 0
       value_bool: 0

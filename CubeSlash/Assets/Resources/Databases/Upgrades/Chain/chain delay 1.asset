@@ -13,19 +13,18 @@ MonoBehaviour:
   m_Name: chain delay 1
   m_EditorClassIdentifier: 
   id:
-    id: 
+    id: chain_delay_1
   name: Frequency 1
   icon: {fileID: 21300000, guid: 1a8611809c8759c4396ce0f9e447d2fa, type: 3}
-  id_stats: chain
-  require_ability: 0
-  ability_required: 0
+  hidden: 0
+  require_ability: 1
+  ability_required: 4
   upgrades_required: []
   stats:
   - id:
       id: chain_cooldown_flat
     value:
       type_value: 1
-      type_display: 0
       value_int: 0
       value_float: -0.2
       value_bool: 0

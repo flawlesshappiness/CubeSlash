@@ -12,29 +12,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 616189df85cb92d40806459b9c9111b7, type: 3}
   m_Name: dash distance 2
   m_EditorClassIdentifier: 
-  id: dash_distance_002
+  id:
+    id: dash_distance_2
   name: Dash distance++
   icon: {fileID: 21300000, guid: 5b1ff4a4f261d314ba0652f5863b70cb, type: 3}
-  id_stats: dash
-  effects:
-  - type_effect: 0
-    variable:
-      name: Distance
-      text_display: $ distance
-      type_value: 1
-      type_display: 2
-      higher_is_positive: 0
-      value_int: 0
-      value_float: 1
-      value_bool: 1
-      can_edit_name: 1
-      _editor_toggle_preview: 0
+  require_ability: 1
+  ability_required: 0
+  upgrades_required:
+  - id: dash_distance_1
   stats:
   - id:
       id: dash_distance_perc
     value:
       type_value: 3
-      type_display: 0
       value_int: 0
       value_float: 1
       value_bool: 0

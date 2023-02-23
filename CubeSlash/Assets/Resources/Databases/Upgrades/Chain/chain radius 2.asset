@@ -12,29 +12,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 616189df85cb92d40806459b9c9111b7, type: 3}
   m_Name: chain radius 2
   m_EditorClassIdentifier: 
-  id: chain_radius_002
+  id:
+    id: chain_radius_2
   name: Radius 2
   icon: {fileID: 21300000, guid: 5c6eaf979a9842041a5e8d941d24612b, type: 3}
-  id_stats: chain
-  effects:
-  - type_effect: 0
-    variable:
-      name: Radius
-      text_display: $ radius
-      type_value: 1
-      type_display: 2
-      higher_is_positive: 0
-      value_int: 1
-      value_float: 0.15
-      value_bool: 0
-      can_edit_name: 1
-      _editor_toggle_preview: 0
+  hidden: 0
+  require_ability: 1
+  ability_required: 4
+  upgrades_required:
+  - id: chain_radius_1
   stats:
   - id:
       id: chain_radius_perc
     value:
       type_value: 3
-      type_display: 0
       value_int: 0
       value_float: 0.25
       value_bool: 0

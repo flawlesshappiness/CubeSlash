@@ -12,29 +12,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 616189df85cb92d40806459b9c9111b7, type: 3}
   m_Name: player collect cooldown reduc
   m_EditorClassIdentifier: 
-  id: player_collect_cooldown_reduc
+  id:
+    id: player_collect_cooldown_reduc
   name: Vitamins
   icon: {fileID: 21300000, guid: be7b9676b323dbf4fb02a4695376e6c9, type: 3}
   id_stats: player
-  effects:
-  - type_effect: 0
-    variable:
-      name: CollectCooldownReduc
-      text_display: $s cooldown reduction when collecting exp
-      type_value: 1
-      type_display: 1
-      higher_is_positive: 0
-      value_int: 1
-      value_float: -0.1
-      value_bool: 1
-      can_edit_name: 1
-      _editor_toggle_preview: 0
+  require_ability: 0
+  ability_required: 0
+  upgrades_required: []
   stats:
   - id:
       id: player_cooldown_reduc_perc
     value:
-      type_value: 3
-      type_display: 0
+      type_value: 0
       value_int: 0
       value_float: -0.1
       value_bool: 0

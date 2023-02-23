@@ -12,41 +12,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 616189df85cb92d40806459b9c9111b7, type: 3}
   m_Name: split size 2
   m_EditorClassIdentifier: 
-  id: projectile_size_002
+  id:
+    id: split_size_2
   name: Even bigger projectiles
   icon: {fileID: 21300000, guid: 0aba2c311cbcf4b49a93fc5c835d599e, type: 3}
-  id_stats: split
-  effects:
-  - type_effect: 0
-    variable:
-      name: SizeProjectiles
-      text_display: $ projectile size
-      type_value: 1
-      type_display: 2
-      higher_is_positive: 0
-      value_int: 2
-      value_float: 1
-      value_bool: 0
-      can_edit_name: 1
-      _editor_toggle_preview: 0
-  - type_effect: 1
-    variable:
-      name: SpeedProjectiles
-      text_display: $ projectile speed
-      type_value: 1
-      type_display: 2
-      higher_is_positive: 0
-      value_int: 0
-      value_float: -0.25
-      value_bool: 0
-      can_edit_name: 1
-      _editor_toggle_preview: 0
+  hidden: 0
+  require_ability: 1
+  ability_required: 1
+  upgrades_required:
+  - id: split_size_1
   stats:
   - id:
       id: split_size_perc
     value:
       type_value: 3
-      type_display: 0
       value_int: 0
       value_float: 0.5
       value_bool: 0

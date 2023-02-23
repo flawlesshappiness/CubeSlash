@@ -12,29 +12,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 616189df85cb92d40806459b9c9111b7, type: 3}
   m_Name: split burst
   m_EditorClassIdentifier: 
-  id: burst
+  id:
+    id: split_burst_1
   name: Projectile bursts
   icon: {fileID: 21300000, guid: 067af07d0db36d54b960d0fcf90e12d2, type: 3}
-  id_stats: split
-  effects:
-  - type_effect: 0
-    variable:
-      name: Bursts
-      text_display: $ bursts
-      type_value: 0
-      type_display: 0
-      higher_is_positive: 0
-      value_int: 1
-      value_float: 0
-      value_bool: 0
-      can_edit_name: 1
-      _editor_toggle_preview: 0
+  hidden: 0
+  require_ability: 1
+  ability_required: 1
+  upgrades_required:
+  - id: split_count_3
   stats:
   - id:
       id: split_count_bursts
     value:
       type_value: 0
-      type_display: 0
       value_int: 1
       value_float: 0
       value_bool: 0

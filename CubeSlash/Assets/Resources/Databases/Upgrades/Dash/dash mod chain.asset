@@ -12,65 +12,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 616189df85cb92d40806459b9c9111b7, type: 3}
   m_Name: dash mod chain
   m_EditorClassIdentifier: 
-  id: dash_mod_chain
+  id:
+    id: dash_mod_chain
   name: Dash modified by Chain
   icon: {fileID: 21300000, guid: 704c46460f2ea97478c57508c8014614, type: 3}
-  id_stats: dash
-  effects:
-  - type_effect: 1
-    variable:
-      name: Cooldown
-      text_display: $s cooldown
-      type_value: 1
-      type_display: 1
-      higher_is_positive: 0
-      value_int: 0
-      value_float: 0.5
-      value_bool: 0
-      can_edit_name: 1
-      _editor_toggle_preview: 0
-  - type_effect: 0
-    variable:
-      name: Speed
-      text_display: $ speed
-      type_value: 1
-      type_display: 2
-      higher_is_positive: 0
-      value_int: 0
-      value_float: 0.66
-      value_bool: 0
-      can_edit_name: 1
-      _editor_toggle_preview: 0
-  - type_effect: 0
-    variable:
-      name: Distance
-      text_display: $ distance
-      type_value: 1
-      type_display: 2
-      higher_is_positive: 0
-      value_int: 0
-      value_float: 1
-      value_bool: 0
-      can_edit_name: 1
-      _editor_toggle_preview: 0
-  - type_effect: 0
-    variable:
-      name: RippleBounce
-      text_display: Shockwave bounces between enemies
-      type_value: 2
-      type_display: 3
-      higher_is_positive: 0
-      value_int: 0
-      value_float: 0
-      value_bool: 1
-      can_edit_name: 1
-      _editor_toggle_preview: 0
+  hidden: 1
+  require_ability: 1
+  ability_required: 0
+  upgrades_required: []
   stats:
   - id:
       id: dash_cooldown_flat
     value:
       type_value: 1
-      type_display: 0
       value_int: 0
       value_float: 0.5
       value_bool: 0
@@ -78,7 +32,6 @@ MonoBehaviour:
       id: dash_speed_perc
     value:
       type_value: 3
-      type_display: 0
       value_int: 0
       value_float: 0.66
       value_bool: 0
@@ -86,7 +39,6 @@ MonoBehaviour:
       id: dash_distance_perc
     value:
       type_value: 3
-      type_display: 0
       value_int: 0
       value_float: 1
       value_bool: 0
@@ -94,7 +46,6 @@ MonoBehaviour:
       id: dash_shockwave_bounce
     value:
       type_value: 2
-      type_display: 0
       value_int: 0
       value_float: 1
       value_bool: 1

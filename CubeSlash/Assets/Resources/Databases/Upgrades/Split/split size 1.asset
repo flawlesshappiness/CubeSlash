@@ -12,29 +12,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 616189df85cb92d40806459b9c9111b7, type: 3}
   m_Name: split size 1
   m_EditorClassIdentifier: 
-  id: projectile_size_001
+  id:
+    id: split_size_1
   name: Bigger projectiles
   icon: {fileID: 21300000, guid: f438bb2c8a252d04a956206fff79f721, type: 3}
-  id_stats: split
-  effects:
-  - type_effect: 0
-    variable:
-      name: SizeProjectiles
-      text_display: $ projectile size
-      type_value: 1
-      type_display: 2
-      higher_is_positive: 0
-      value_int: 2
-      value_float: 0.5
-      value_bool: 0
-      can_edit_name: 1
-      _editor_toggle_preview: 0
+  hidden: 0
+  require_ability: 1
+  ability_required: 1
+  upgrades_required: []
   stats:
   - id:
       id: split_size_perc
     value:
       type_value: 3
-      type_display: 0
       value_int: 0
       value_float: 0.5
       value_bool: 0

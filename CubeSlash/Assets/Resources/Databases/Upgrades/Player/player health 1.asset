@@ -12,29 +12,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 616189df85cb92d40806459b9c9111b7, type: 3}
   m_Name: player health 1
   m_EditorClassIdentifier: 
-  id: player_health_001
+  id:
+    id: player_health_1
   name: Health 1
   icon: {fileID: 21300000, guid: 6a41350a2df219b44abf6862f99c1b7e, type: 3}
   id_stats: player
-  effects:
-  - type_effect: 0
-    variable:
-      name: Health
-      text_display: $ health
-      type_value: 0
-      type_display: 0
-      higher_is_positive: 0
-      value_int: 1
-      value_float: 0
-      value_bool: 0
-      can_edit_name: 1
-      _editor_toggle_preview: 0
+  require_ability: 0
+  ability_required: 0
+  upgrades_required: []
   stats:
   - id:
       id: 
     value:
       type_value: 0
-      type_display: 0
       value_int: 1
       value_float: 0
       value_bool: 0

@@ -12,41 +12,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 616189df85cb92d40806459b9c9111b7, type: 3}
   m_Name: charm_speed
   m_EditorClassIdentifier: 
-  id: charm_speed
+  id:
+    id: charm_speed
   name: Speed
   icon: {fileID: 21300000, guid: 910b47dfb9816cc42a4db6eb35d95a78, type: 3}
-  id_stats: player
-  effects:
-  - type_effect: 0
-    variable:
-      name: PercVelocity
-      text_display: $ velocity
-      type_value: 1
-      type_display: 2
-      higher_is_positive: 0
-      value_int: 3
-      value_float: 0.2
-      value_bool: 0
-      can_edit_name: 1
-      _editor_toggle_preview: 0
-  - type_effect: 0
-    variable:
-      name: PercAcceleration
-      text_display: $ acceleration
-      type_value: 1
-      type_display: 2
-      higher_is_positive: 0
-      value_int: 0
-      value_float: 0.2
-      value_bool: 0
-      can_edit_name: 1
-      _editor_toggle_preview: 0
+  hidden: 1
+  require_ability: 0
+  ability_required: 0
+  upgrades_required: []
   stats:
   - id:
       id: player_acceleration_perc
     value:
       type_value: 3
-      type_display: 0
       value_int: 0
       value_float: 0.2
       value_bool: 0
@@ -54,7 +32,6 @@ MonoBehaviour:
       id: player_velocity_perc
     value:
       type_value: 3
-      type_display: 0
       value_int: 0
       value_float: 0.2
       value_bool: 0

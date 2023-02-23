@@ -12,41 +12,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 616189df85cb92d40806459b9c9111b7, type: 3}
   m_Name: chain mod mines
   m_EditorClassIdentifier: 
-  id: chain_mod_mines
+  id:
+    id: chain_mod_mines
   name: Chain modified by Mines
   icon: {fileID: 21300000, guid: 665d236bf40dab74b8856500b22623e3, type: 3}
-  id_stats: chain
-  effects:
-  - type_effect: 1
-    variable:
-      name: FrequencyPerc
-      text_display: $ frequency
-      type_value: 1
-      type_display: 2
-      higher_is_positive: 0
-      value_int: 0
-      value_float: -0.1
-      value_bool: 0
-      can_edit_name: 1
-      _editor_toggle_preview: 0
-  - type_effect: 0
-    variable:
-      name: StoreZaps
-      text_display: Store unused zaps to release them later
-      type_value: 2
-      type_display: 3
-      higher_is_positive: 0
-      value_int: 0
-      value_float: 0
-      value_bool: 1
-      can_edit_name: 1
-      _editor_toggle_preview: 0
+  hidden: 1
+  require_ability: 1
+  ability_required: 4
+  upgrades_required: []
   stats:
   - id:
       id: chain_store_zaps
     value:
       type_value: 2
-      type_display: 0
       value_int: 0
       value_float: 0
       value_bool: 1
@@ -54,7 +32,6 @@ MonoBehaviour:
       id: chain_cooldown_flat
     value:
       type_value: 1
-      type_display: 0
       value_int: 0
       value_float: 0.5
       value_bool: 1

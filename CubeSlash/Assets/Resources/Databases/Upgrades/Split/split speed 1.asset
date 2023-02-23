@@ -12,29 +12,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 616189df85cb92d40806459b9c9111b7, type: 3}
   m_Name: split speed 1
   m_EditorClassIdentifier: 
-  id: projectile_speed_001
+  id:
+    id: split_speed_1
   name: Projectile speed 1
   icon: {fileID: 21300000, guid: 28439ce8f8454e043b0f296a779d75b0, type: 3}
-  id_stats: split
-  effects:
-  - type_effect: 0
-    variable:
-      name: SpeedProjectiles
-      text_display: $ projectile speed
-      type_value: 1
-      type_display: 2
-      higher_is_positive: 0
-      value_int: 1
-      value_float: 0.25
-      value_bool: 0
-      can_edit_name: 1
-      _editor_toggle_preview: 0
+  hidden: 0
+  require_ability: 1
+  ability_required: 1
+  upgrades_required: []
   stats:
   - id:
       id: split_speed_perc
     value:
       type_value: 3
-      type_display: 0
       value_int: 0
       value_float: 0.25
       value_bool: 0

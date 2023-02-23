@@ -12,29 +12,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 616189df85cb92d40806459b9c9111b7, type: 3}
   m_Name: mines seeking
   m_EditorClassIdentifier: 
-  id: mines_seeking
+  id:
+    id: mines_seeking
   name: Seeking Shells
   icon: {fileID: 21300000, guid: 6b2ec46d5d6b8c749b567d468c8c4c92, type: 3}
-  id_stats: mines
-  effects:
-  - type_effect: 0
-    variable:
-      name: SeekingMines
-      text_display: Mines move towards enemies
-      type_value: 2
-      type_display: 3
-      higher_is_positive: 0
-      value_int: 2
-      value_float: 0
-      value_bool: 1
-      can_edit_name: 1
-      _editor_toggle_preview: 0
+  hidden: 0
+  require_ability: 1
+  ability_required: 5
+  upgrades_required:
+  - id: mines_count_3
   stats:
   - id:
       id: mines_seeking
     value:
       type_value: 2
-      type_display: 0
       value_int: 0
       value_float: 0
       value_bool: 1

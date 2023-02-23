@@ -12,29 +12,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 616189df85cb92d40806459b9c9111b7, type: 3}
   m_Name: player kill regen
   m_EditorClassIdentifier: 
-  id: player_kill_regen
+  id:
+    id: player_regen_kill
   name: Bloodthirst
   icon: {fileID: 21300000, guid: 2f52692567e00724bbf7bef0357d5add, type: 3}
   id_stats: player
-  effects:
-  - type_effect: 0
-    variable:
-      name: KillEnemyShieldRegen
-      text_display: Kill enemies to gain armor
-      type_value: 2
-      type_display: 3
-      higher_is_positive: 0
-      value_int: 1
-      value_float: 0.1
-      value_bool: 1
-      can_edit_name: 1
-      _editor_toggle_preview: 0
+  require_ability: 0
+  ability_required: 0
+  upgrades_required:
+  - id: player_armor_3
   stats:
   - id:
       id: player_regen_kill
     value:
       type_value: 2
-      type_display: 0
       value_int: 0
       value_float: 0
       value_bool: 1

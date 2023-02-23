@@ -7,7 +7,7 @@ public class Upgrade : ScriptableObject
     public UpgradeID id;
     public string name;
     public Sprite icon;
-    public string id_stats = "";
+    public bool hidden;
     public bool require_ability;
     public Ability.Type ability_required;
     public List<UpgradeID> upgrades_required;

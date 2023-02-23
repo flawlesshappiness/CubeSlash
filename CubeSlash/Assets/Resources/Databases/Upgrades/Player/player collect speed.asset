@@ -12,29 +12,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 616189df85cb92d40806459b9c9111b7, type: 3}
   m_Name: player collect speed
   m_EditorClassIdentifier: 
-  id: player_collect_speed
+  id:
+    id: player_collect_speed
   name: Caffeinated Food
   icon: {fileID: 21300000, guid: 10ca526c7f4db5a47aa5890c86b40c74, type: 3}
   id_stats: player
-  effects:
-  - type_effect: 0
-    variable:
-      name: CollectSpeedBoost
-      text_display: Gain temporary speed when collecting exp
-      type_value: 2
-      type_display: 3
-      higher_is_positive: 0
-      value_int: 1
-      value_float: 1
-      value_bool: 1
-      can_edit_name: 1
-      _editor_toggle_preview: 0
+  require_ability: 0
+  ability_required: 0
+  upgrades_required: []
   stats:
   - id:
       id: player_collect_speed_perc
     value:
       type_value: 2
-      type_display: 0
       value_int: 0
       value_float: 0
       value_bool: 1

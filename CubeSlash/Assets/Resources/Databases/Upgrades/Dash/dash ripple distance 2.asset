@@ -12,29 +12,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 616189df85cb92d40806459b9c9111b7, type: 3}
   m_Name: dash ripple distance 2
   m_EditorClassIdentifier: 
-  id: dash_ripple_distance_002
+  id:
+    id: dash_shockwave_distance_2
   name: Longer wave
   icon: {fileID: 21300000, guid: d22674bec7f036f49b327e395df26735, type: 3}
-  id_stats: dash
-  effects:
-  - type_effect: 0
-    variable:
-      name: RippleDistance
-      text_display: $ shockwave distance
-      type_value: 1
-      type_display: 2
-      higher_is_positive: 0
-      value_int: 1
-      value_float: 0.2
-      value_bool: 1
-      can_edit_name: 1
-      _editor_toggle_preview: 0
+  hidden: 0
+  require_ability: 1
+  ability_required: 0
+  upgrades_required:
+  - id: dash_shockwave_distance_1
   stats:
   - id:
       id: dash_shockwave_distance_perc
     value:
       type_value: 3
-      type_display: 0
       value_int: 0
       value_float: 0.2
       value_bool: 0

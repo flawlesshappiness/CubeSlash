@@ -12,41 +12,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 616189df85cb92d40806459b9c9111b7, type: 3}
   m_Name: charge knock enemy 1
   m_EditorClassIdentifier: 
-  id: charge_knock_enemy_001
+  id:
+    id: charge_knock_enemy_1
   name: Charge knock enemy 1
   icon: {fileID: 21300000, guid: bdd1b980a5b3aad49a263d9566c6bccc, type: 3}
-  id_stats: charge
-  effects:
-  - type_effect: 0
-    variable:
-      name: Knockback
-      text_display: $ enemy knockback
-      type_value: 1
-      type_display: 2
-      higher_is_positive: 0
-      value_int: 0
-      value_float: 1
-      value_bool: 0
-      can_edit_name: 1
-      _editor_toggle_preview: 0
-  - type_effect: 1
-    variable:
-      name: ChargeTime
-      text_display: $ charge time
-      type_value: 1
-      type_display: 2
-      higher_is_positive: 0
-      value_int: 0
-      value_float: 0.25
-      value_bool: 0
-      can_edit_name: 1
-      _editor_toggle_preview: 0
+  hidden: 0
+  require_ability: 1
+  ability_required: 2
+  upgrades_required: []
   stats:
   - id:
       id: charge_knock_enemy_perc
     value:
       type_value: 3
-      type_display: 0
       value_int: 0
       value_float: 0.5
       value_bool: 0

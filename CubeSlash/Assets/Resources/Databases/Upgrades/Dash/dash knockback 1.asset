@@ -12,41 +12,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 616189df85cb92d40806459b9c9111b7, type: 3}
   m_Name: dash knockback 1
   m_EditorClassIdentifier: 
-  id: dash_knockback_001
+  id:
+    id: dash_knock_enemy_1
   name: Knockback+
   icon: {fileID: 21300000, guid: a0d087d1039e3f144b110c199ac5c028, type: 3}
-  id_stats: dash
-  effects:
-  - type_effect: 0
-    variable:
-      name: RadiusKnockback
-      text_display: $ knockback radius
-      type_value: 1
-      type_display: 2
-      higher_is_positive: 0
-      value_int: 0
-      value_float: 0.25
-      value_bool: 0
-      can_edit_name: 1
-      _editor_toggle_preview: 0
-  - type_effect: 0
-    variable:
-      name: ForceKnockback
-      text_display: $ knockback force
-      type_value: 1
-      type_display: 2
-      higher_is_positive: 0
-      value_int: 0
-      value_float: 1
-      value_bool: 0
-      can_edit_name: 1
-      _editor_toggle_preview: 0
+  require_ability: 1
+  ability_required: 0
+  upgrades_required: []
   stats:
   - id:
       id: dash_radius_knock_enemy_perc
     value:
       type_value: 3
-      type_display: 0
       value_int: 0
       value_float: 0.25
       value_bool: 0
@@ -54,7 +31,6 @@ MonoBehaviour:
       id: dash_force_knock_enemy_perc
     value:
       type_value: 3
-      type_display: 0
       value_int: 0
       value_float: 1
       value_bool: 0

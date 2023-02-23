@@ -12,41 +12,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 616189df85cb92d40806459b9c9111b7, type: 3}
   m_Name: explode knockback 2
   m_EditorClassIdentifier: 
-  id: explode_knockback_002
+  id:
+    id: explode_knock_enemy_2
   name: Explode Knockback 2
   icon: {fileID: 21300000, guid: d36d7c87da28ae2479d7656b815a8d5e, type: 3}
-  id_stats: explode
-  effects:
-  - type_effect: 0
-    variable:
-      name: Knockback
-      text_display: $ knockback force
-      type_value: 1
-      type_display: 2
-      higher_is_positive: 0
-      value_int: 0
-      value_float: 1
-      value_bool: 1
-      can_edit_name: 1
-      _editor_toggle_preview: 0
-  - type_effect: 0
-    variable:
-      name: Delay
-      text_display: $ explosion delay
-      type_value: 1
-      type_display: 2
-      higher_is_positive: 0
-      value_int: 0
-      value_float: 1
-      value_bool: 0
-      can_edit_name: 1
-      _editor_toggle_preview: 0
+  hidden: 0
+  require_ability: 1
+  ability_required: 3
+  upgrades_required:
+  - id: explode_knock_enemy_1
   stats:
   - id:
       id: explode_force_knock_enemy_perc
     value:
       type_value: 3
-      type_display: 0
       value_int: 0
       value_float: 1
       value_bool: 0

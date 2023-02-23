@@ -15,12 +15,12 @@ public class StatID : FakeEnum
     public static readonly StatID player_velocity_perc = new StatID(nameof(player_velocity_perc));
     public static readonly StatID player_acceleration_flat = new StatID(nameof(player_acceleration_flat));
     public static readonly StatID player_acceleration_perc = new StatID(nameof(player_acceleration_perc));
-    public static readonly StatID player_cooldown_reduc_perc = new StatID(nameof(player_cooldown_reduc_perc));
     public static readonly StatID player_infinite_drag = new StatID(nameof(player_infinite_drag));
     public static readonly StatID player_collect_radius_perc = new StatID(nameof(player_collect_radius_perc));
     public static readonly StatID player_collect_speed_perc = new StatID(nameof(player_collect_speed_perc));
     public static readonly StatID player_collect_cooldown_flat = new StatID(nameof(player_collect_cooldown_flat));
-    public static readonly StatID player_exp_bonus_perc = new StatID(nameof(player_exp_bonus_perc));
+    public static readonly StatID player_cooldown_multiplier = new StatID(nameof(player_cooldown_multiplier));
+    public static readonly StatID player_exp_multiplier = new StatID(nameof(player_exp_multiplier));
 
     // Chain
     public static readonly StatID chain_cooldown_flat = new StatID(nameof(chain_cooldown_flat));

@@ -10,21 +10,29 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 616189df85cb92d40806459b9c9111b7, type: 3}
-  m_Name: explode delay 1
+  m_Name: player acceleration 3
   m_EditorClassIdentifier: 
   id:
-    id: explode_delay_1
-  name: Explode delay 1
-  icon: {fileID: 21300000, guid: 5ceb479493af4284794c93da202e35ea, type: 3}
-  hidden: 0
-  require_ability: 1
-  ability_required: 3
-  upgrades_required: []
+    id: player_acceleration_3
+  name: Acceleration 3
+  icon: {fileID: 21300000, guid: 9b15c0bbf1b82dd428d9c3d82efd84ea, type: 3}
+  id_stats: player
+  require_ability: 0
+  ability_required: 0
+  upgrades_required:
+  - id: player_acceleration_2
   stats:
   - id:
-      id: explode_delay_perc
+      id: player_acceleration_perc
     value:
       type_value: 3
       value_int: 0
-      value_float: -0.1
+      value_float: 10
+      value_bool: 0
+  - id:
+      id: player_velocity_perc
+    value:
+      type_value: 3
+      value_int: 0
+      value_float: -0.5
       value_bool: 0

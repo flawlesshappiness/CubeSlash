@@ -12,29 +12,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 616189df85cb92d40806459b9c9111b7, type: 3}
   m_Name: chain strikes
   m_EditorClassIdentifier: 
-  id: chain_strikes
+  id:
+    id: chain_strikes
   name: Double Strike
   icon: {fileID: 21300000, guid: ea58ec32a8486064f82400e6be4fa7c2, type: 3}
-  id_stats: chain
-  effects:
-  - type_effect: 0
-    variable:
-      name: Strikes
-      text_display: $ zaps
-      type_value: 0
-      type_display: 0
-      higher_is_positive: 0
-      value_int: 1
-      value_float: 0
-      value_bool: 0
-      can_edit_name: 1
-      _editor_toggle_preview: 0
+  hidden: 0
+  require_ability: 1
+  ability_required: 4
+  upgrades_required:
+  - id: chain_targets_3
   stats:
   - id:
       id: chain_strikes
     value:
       type_value: 0
-      type_display: 0
       value_int: 1
       value_float: 0
       value_bool: 0

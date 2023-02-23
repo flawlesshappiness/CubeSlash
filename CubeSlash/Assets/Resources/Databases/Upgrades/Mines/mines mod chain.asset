@@ -12,53 +12,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 616189df85cb92d40806459b9c9111b7, type: 3}
   m_Name: mines mod chain
   m_EditorClassIdentifier: 
-  id: mines_mod_chain
+  id:
+    id: mines_mod_chain
   name: Mines modified by chain
   icon: {fileID: 21300000, guid: 704c46460f2ea97478c57508c8014614, type: 3}
-  id_stats: mines
-  effects:
-  - type_effect: 0
-    variable:
-      name: FragmentChain
-      text_display: Shells zap nearby enemies when exploding
-      type_value: 2
-      type_display: 3
-      higher_is_positive: 0
-      value_int: 3
-      value_float: 0.25
-      value_bool: 1
-      can_edit_name: 1
-      _editor_toggle_preview: 0
-  - type_effect: 1
-    variable:
-      name: Cooldown
-      text_display: $s cooldown
-      type_value: 1
-      type_display: 1
-      higher_is_positive: 0
-      value_int: 0
-      value_float: 1
-      value_bool: 0
-      can_edit_name: 1
-      _editor_toggle_preview: 0
-  - type_effect: 0
-    variable:
-      name: FragmentCount
-      text_display: $ fragments
-      type_value: 0
-      type_display: 0
-      higher_is_positive: 0
-      value_int: -1
-      value_float: 0
-      value_bool: 0
-      can_edit_name: 1
-      _editor_toggle_preview: 0
+  hidden: 1
+  require_ability: 1
+  ability_required: 5
+  upgrades_required: []
   stats:
   - id:
       id: mines_cooldown_flat
     value:
       type_value: 1
-      type_display: 0
       value_int: 0
       value_float: 1
       value_bool: 0
@@ -66,7 +32,6 @@ MonoBehaviour:
       id: mines_fragment_chain
     value:
       type_value: 2
-      type_display: 0
       value_int: 0
       value_float: 0
       value_bool: 1

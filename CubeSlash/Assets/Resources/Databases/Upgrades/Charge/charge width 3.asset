@@ -12,41 +12,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 616189df85cb92d40806459b9c9111b7, type: 3}
   m_Name: charge width 3
   m_EditorClassIdentifier: 
-  id: charge_width_003
+  id:
+    id: charge_width_3
   name: Charge width 3
   icon: {fileID: 21300000, guid: 54fa6050c6785c343ab9f7ce93d97f3e, type: 3}
-  id_stats: charge
-  effects:
-  - type_effect: 0
-    variable:
-      name: Width
-      text_display: $ beam width
-      type_value: 1
-      type_display: 2
-      higher_is_positive: 0
-      value_int: 0
-      value_float: 2
-      value_bool: 0
-      can_edit_name: 1
-      _editor_toggle_preview: 0
-  - type_effect: 1
-    variable:
-      name: ChargeTime
-      text_display: $ charge time
-      type_value: 1
-      type_display: 2
-      higher_is_positive: 0
-      value_int: 0
-      value_float: 0.125
-      value_bool: 0
-      can_edit_name: 1
-      _editor_toggle_preview: 0
+  hidden: 0
+  require_ability: 1
+  ability_required: 2
+  upgrades_required:
+  - id: charge_width_2
   stats:
   - id:
       id: charge_width_perc
     value:
       type_value: 3
-      type_display: 0
       value_int: 0
       value_float: 1.5
       value_bool: 0

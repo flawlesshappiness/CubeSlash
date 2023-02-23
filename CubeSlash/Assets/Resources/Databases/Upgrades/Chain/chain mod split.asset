@@ -12,41 +12,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 616189df85cb92d40806459b9c9111b7, type: 3}
   m_Name: chain mod split
   m_EditorClassIdentifier: 
-  id: chain_mod_split
+  id:
+    id: chain_mod_split
   name: Double Chain
   icon: {fileID: 21300000, guid: aa601896f349e9c47acfcaef8d6bc4c6, type: 3}
-  id_stats: chain
-  effects:
-  - type_effect: 0
-    variable:
-      name: ChainStrikes
-      text_display: $ chain zaps
-      type_value: 0
-      type_display: 0
-      higher_is_positive: 0
-      value_int: 1
-      value_float: 0
-      value_bool: 0
-      can_edit_name: 1
-      _editor_toggle_preview: 0
-  - type_effect: 1
-    variable:
-      name: Frequency
-      text_display: $s frequency
-      type_value: 1
-      type_display: 1
-      higher_is_positive: 0
-      value_int: 0
-      value_float: 0.5
-      value_bool: 0
-      can_edit_name: 1
-      _editor_toggle_preview: 0
+  hidden: 1
+  require_ability: 1
+  ability_required: 4
+  upgrades_required: []
   stats:
   - id:
       id: chain_strikes
     value:
       type_value: 0
-      type_display: 0
       value_int: 1
       value_float: 0
       value_bool: 0
@@ -54,7 +32,6 @@ MonoBehaviour:
       id: chain_cooldown_flat
     value:
       type_value: 1
-      type_display: 0
       value_int: 1
       value_float: 0.5
       value_bool: 0

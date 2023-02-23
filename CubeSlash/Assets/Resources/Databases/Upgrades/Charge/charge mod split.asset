@@ -12,77 +12,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 616189df85cb92d40806459b9c9111b7, type: 3}
   m_Name: charge mod split
   m_EditorClassIdentifier: 
-  id: charge_mod_split
+  id:
+    id: charge_mod_split
   name: Charge modified by Split
   icon: {fileID: 21300000, guid: aa601896f349e9c47acfcaef8d6bc4c6, type: 3}
-  id_stats: charge
-  effects:
-  - type_effect: 0
-    variable:
-      name: ChargeTime
-      text_display: $ charge time
-      type_value: 1
-      type_display: 2
-      higher_is_positive: 0
-      value_int: 0
-      value_float: 0.66
-      value_bool: 0
-      can_edit_name: 1
-      _editor_toggle_preview: 0
-  - type_effect: 1
-    variable:
-      name: Width
-      text_display: $ beam width
-      type_value: 1
-      type_display: 2
-      higher_is_positive: 0
-      value_int: 0
-      value_float: -0.5
-      value_bool: 0
-      can_edit_name: 1
-      _editor_toggle_preview: 0
-  - type_effect: 0
-    variable:
-      name: KnockbackSelf
-      text_display: $ self knockback
-      type_value: 1
-      type_display: 2
-      higher_is_positive: 0
-      value_int: 0
-      value_float: -0.1
-      value_bool: 0
-      can_edit_name: 1
-      _editor_toggle_preview: 0
-  - type_effect: 0
-    variable:
-      name: BeamCount
-      text_display: $ beams
-      type_value: 0
-      type_display: 0
-      higher_is_positive: 0
-      value_int: 2
-      value_float: 0
-      value_bool: 0
-      can_edit_name: 1
-      _editor_toggle_preview: 0
-  - type_effect: 0
-    variable:
-      name: BeamArc
-      text_display: $ degree arc per beam
-      type_value: 1
-      type_display: 1
-      higher_is_positive: 0
-      value_int: 0
-      value_float: 15
-      value_bool: 0
-      can_edit_name: 1
-      _editor_toggle_preview: 0
+  hidden: 1
+  require_ability: 1
+  ability_required: 2
+  upgrades_required: []
   stats:
   - id:
       id: charge_beam_count
     value:
       type_value: 0
-      type_display: 0
       value_int: 2
       value_float: 0
       value_bool: 0
@@ -90,7 +32,6 @@ MonoBehaviour:
       id: charge_beam_arc_perc
     value:
       type_value: 3
-      type_display: 0
       value_int: 2
       value_float: 1
       value_bool: 0
@@ -98,7 +39,6 @@ MonoBehaviour:
       id: charge_width_perc
     value:
       type_value: 3
-      type_display: 0
       value_int: 2
       value_float: -0.5
       value_bool: 0
@@ -106,7 +46,6 @@ MonoBehaviour:
       id: charge_knock_self_perc
     value:
       type_value: 3
-      type_display: 0
       value_int: 2
       value_float: -0.5
       value_bool: 0
@@ -114,7 +53,6 @@ MonoBehaviour:
       id: charge_cooldown_perc
     value:
       type_value: 3
-      type_display: 0
       value_int: 2
       value_float: 0.66
       value_bool: 0

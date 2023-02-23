@@ -12,29 +12,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 616189df85cb92d40806459b9c9111b7, type: 3}
   m_Name: chain targets 2
   m_EditorClassIdentifier: 
-  id: chain_targets_002
+  id:
+    id: chain_targets_2
   name: Chain Lightning 2
   icon: {fileID: 21300000, guid: 05a00b2c82727d84588469573e150ba2, type: 3}
-  id_stats: chain
-  effects:
-  - type_effect: 0
-    variable:
-      name: Chains
-      text_display: $ chains
-      type_value: 0
-      type_display: 0
-      higher_is_positive: 0
-      value_int: 1
-      value_float: 0
-      value_bool: 0
-      can_edit_name: 1
-      _editor_toggle_preview: 0
+  hidden: 0
+  require_ability: 1
+  ability_required: 4
+  upgrades_required:
+  - id: chain_targets_1
   stats:
   - id:
       id: chain_chains
     value:
       type_value: 0
-      type_display: 0
       value_int: 1
       value_float: 0
       value_bool: 0

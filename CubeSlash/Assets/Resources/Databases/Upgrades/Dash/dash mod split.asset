@@ -12,41 +12,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 616189df85cb92d40806459b9c9111b7, type: 3}
   m_Name: dash mod split
   m_EditorClassIdentifier: 
-  id: dash_mod_split
+  id:
+    id: dash_mod_split
   name: Dash modified by Split
   icon: {fileID: 21300000, guid: aa601896f349e9c47acfcaef8d6bc4c6, type: 3}
-  id_stats: dash
-  effects:
-  - type_effect: 1
-    variable:
-      name: Cooldown
-      text_display: $s cooldown
-      type_value: 1
-      type_display: 1
-      higher_is_positive: 0
-      value_int: 0
-      value_float: 1
-      value_bool: 0
-      can_edit_name: 1
-      _editor_toggle_preview: 0
-  - type_effect: 0
-    variable:
-      name: RippleCount
-      text_display: $ shockwaves on impact
-      type_value: 0
-      type_display: 0
-      higher_is_positive: 0
-      value_int: 2
-      value_float: 0
-      value_bool: 1
-      can_edit_name: 1
-      _editor_toggle_preview: 0
+  hidden: 1
+  require_ability: 1
+  ability_required: 0
+  upgrades_required: []
   stats:
   - id:
       id: dash_cooldown_flat
     value:
       type_value: 1
-      type_display: 0
       value_int: 0
       value_float: 1
       value_bool: 0
@@ -54,7 +32,6 @@ MonoBehaviour:
       id: dash_shockwave_count
     value:
       type_value: 0
-      type_display: 0
       value_int: 2
       value_float: 1
       value_bool: 0
