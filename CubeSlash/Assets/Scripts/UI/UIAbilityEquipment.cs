@@ -32,20 +32,30 @@ public class UIAbilityEquipment : MonoBehaviour
     {
         slot.SetAbility(ability);
 
-        var modifiers = AbilityController.Instance.GetModifiers(ability.Info.type);
-        for (int i = 0; i < ModifierSlots.Count; i++)
+        if(ability == null)
         {
-            var slot = ModifierSlots[i];
-
-            if (i < modifiers.Count - 1)
+            foreach(var slot in ModifierSlots)
             {
-                var modifier_type = modifiers[i];
-                var modifier = AbilityController.Instance.GetAbility(modifier_type);
-                slot.SetAbility(modifier);
+                slot.SetAbility(null);
             }
-            else
+        }
+        else
+        {
+            var modifiers = AbilityController.Instance.GetModifiers(ability.Info.type);
+            for (int i = 0; i < ModifierSlots.Count; i++)
             {
-                slot.SetAbility(null);    
+                var slot = ModifierSlots[i];
+
+                if (i < modifiers.Count)
+                {
+                    var modifier_type = modifiers[i];
+                    var modifier = AbilityController.Instance.GetAbility(modifier_type);
+                    slot.SetAbility(modifier);
+                }
+                else
+                {
+                    slot.SetAbility(null);
+                }
             }
         }
     }

@@ -28,8 +28,8 @@ public class AbilityView : View
         btn_continue.onSubmit += ClickContinue;
         btn_continue.onSelect += OnSelectContinue;
 
-        // Cards
-        InitializeAbilitySlots();
+        // Slots
+        InitializeSlots();
 
         // Selection
         EventSystem.current.SetSelectedGameObject(slots_unlocked[0].Button.gameObject);
@@ -60,7 +60,7 @@ public class AbilityView : View
     }
 
     #region SLOTS
-    private void InitializeAbilitySlots()
+    private void InitializeSlots()
     {
         // Move
         slot_move.SetAbility(null);
@@ -84,9 +84,10 @@ public class AbilityView : View
     private void InitializeAbilitySlot(Ability ability)
     {
         var equipped = AbilityController.Instance.IsAbilityEquipped(ability.Info.type);
+        var modifier = AbilityController.Instance.IsModifier(ability.Info.type);
         var slot = Instantiate(template_slot_unlocked, template_slot_unlocked.transform.parent);
         slot.gameObject.SetActive(true);
-        slot.SetAbility(equipped ? null : ability);
+        slot.SetAbility((equipped || modifier) ? null : ability);
         slot.SetWrong(false);
 
         slots.Add(slot);

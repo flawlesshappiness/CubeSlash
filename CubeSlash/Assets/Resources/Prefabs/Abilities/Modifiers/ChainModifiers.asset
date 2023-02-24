@@ -16,20 +16,15 @@ MonoBehaviour:
   - type: 0
     id:
       id: chain_mod_dash
-    name: DASH
   - type: 1
     id:
       id: chain_mod_split
-    name: SPLIT
   - type: 5
     id:
       id: chain_mod_mines
-    name: MINES
   - type: 3
     id:
       id: chain_mod_explode
-    name: EXPLODE
   - type: 2
     id:
       id: chain_mod_charge
-    name: CHARGE

@@ -95,7 +95,7 @@ public class AbilityController : Singleton
 
     public Ability GetEquippedAbility(PlayerInput.ButtonType type) => equipment[type];
     public List<Ability> GetEquippedAbilities() => equipment.Values.Where(a => a != null).ToList();
-    public bool IsAbilityEquipped(Ability.Type type) => equipment.Values.Any(ability => ability.Info.type == type);
+    public bool IsAbilityEquipped(Ability.Type type) => equipment.Values.Any(ability => ability != null && ability.Info.type == type);
     #endregion
     #region UNEQUIP
     public void UnequipAbility(PlayerInput.ButtonType button)
@@ -151,6 +151,11 @@ public class AbilityController : Singleton
     public bool HasModifier(Ability.Type ability, Ability.Type modifier)
     {
         return modifiers[ability].Contains(modifier);
+    }
+
+    public bool IsModifier(Ability.Type modifier)
+    {
+        return modifiers.Keys.Any(ability => HasModifier(ability, modifier));
     }
 
     public Ability GetModifier(Ability.Type ability, Ability.Type modifier)
