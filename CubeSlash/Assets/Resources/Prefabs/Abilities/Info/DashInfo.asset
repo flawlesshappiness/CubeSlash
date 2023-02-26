@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: 0
   name_ability: Dash
-  desc_ability: Dash forwards to impact with enemies and send out a penetrating shockwave
+  desc_ability: Dash forward to impact with enemies and send out a penetrating shockwave
   sprite_icon: {fileID: 21300000, guid: 6df22128a224dd7479815d31a22ac44c, type: 3}
   modifiers: {fileID: 11400000, guid: 1c73c92639b2fad469983727b62a8d8a, type: 2}
   prefab_bodypart: {fileID: 2978501342247537998, guid: 288f60ef87b57c940999b752cc67d168, type: 3}

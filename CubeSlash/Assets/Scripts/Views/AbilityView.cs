@@ -42,8 +42,6 @@ public class AbilityView : View
 
         var input = PlayerInput.Controls.Player;
         input.Menu.performed += PressStart;
-        input.North.started += OnNorthPressed;
-        input.North.canceled += OnNorthReleased;
 
         PlayerInput.OnDeviceChanged += UpdateEquipmentOrder;
     }
@@ -54,8 +52,6 @@ public class AbilityView : View
 
         var input = PlayerInput.Controls.Player;
         input.Menu.performed -= PressStart;
-        input.North.started -= OnNorthPressed;
-        input.North.canceled -= OnNorthReleased;
 
         PlayerInput.OnDeviceChanged -= UpdateEquipmentOrder;
     }
@@ -326,7 +322,6 @@ public class AbilityView : View
     {
         ClearInputDisplay();
         layout_input.AddInput(PlayerInput.UIButtonType.SOUTH, "Grab/Place");
-        layout_input.AddInput(PlayerInput.UIButtonType.NAV_ALL, "Move");
     }
 
     private void DisplayInputNoAbility()
