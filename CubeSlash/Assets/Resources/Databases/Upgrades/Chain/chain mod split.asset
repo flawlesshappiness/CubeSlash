@@ -22,7 +22,7 @@ MonoBehaviour:
   upgrades_required: []
   stats:
   - id:
-      id: chain_strikes
+      id: chain_chain_strikes
     value:
       type_value: 0
       value_int: 1

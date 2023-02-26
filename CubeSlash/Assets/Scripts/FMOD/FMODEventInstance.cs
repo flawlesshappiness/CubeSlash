@@ -78,7 +78,7 @@ public class FMODEventInstance
 		if (has_instance)
 		{
             var has_timestamp = GetTimestamp(out var timestamp);
-            return has_timestamp && timestamp == Time.time;
+            return has_timestamp && timestamp == Time.unscaledTime;
         }
 		return false;
     }

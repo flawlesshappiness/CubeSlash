@@ -7,6 +7,9 @@ endless mode
 CHARM: Orbiting damage
 CHARM: Gain x when y
 
+Destroy background particle systems on returning to menu
+Volume doesn't update correctly on startup
+Fix UI sound on SelectableMenuItem
 UnlockUpgradeView appear animation?
 player dash trail upgrade missing sprite
 enemies might not be spawning as fast when restarting a run

@@ -39,6 +39,10 @@ public class StatValue
             case ValueType.PERCENT:
                 AddValue(value.GetFloatValue());
                 break;
+
+            case ValueType.BOOL:
+                AddValue(value.GetBoolValue());
+                break;
         }
     }
 

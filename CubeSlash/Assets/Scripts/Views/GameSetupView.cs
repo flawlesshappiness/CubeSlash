@@ -68,6 +68,7 @@ public class GameSetupView : View
 
     IEnumerator TransitionToGameCr()
     {
+        transitioning = true;
         yield return LerpEnumerator.Alpha(CanvasGroup, 1f, 0f).UnscaledTime();
 
         // Set difficulty
