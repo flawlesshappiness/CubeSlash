@@ -103,7 +103,7 @@ public class DebugConsoleHandler : Singleton
         var types = System.Enum.GetValues(typeof(Ability.Type)).Cast<Ability.Type>().ToList();
         foreach(var type in types)
         {
-            var ability = AbilityController.Instance.GetAbility(type);
+            var ability = AbilityController.Instance.GetAbilityPrefab(type);
             var btn = window.CreateButton(type.ToString(), () => UnlockAbility(ability));
             var is_unlocked = AbilityController.Instance.HasGainedAbility(type);
 

@@ -61,7 +61,8 @@ public class AbilityController : Singleton
         }
     }
 
-    public Ability GetAbility(Ability.Type type) => DB.GetAbility(type);
+    public Ability GetAbilityPrefab(Ability.Type type) => DB.GetAbility(type);
+    public Ability GetAbility(Ability.Type type) => abilities.FirstOrDefault(a => a.Info.type == type);
     public List<Ability> GetGainedAbilities() => abilities.ToList();
     public bool HasGainedAbility(Ability.Type type) => abilities.Any(a => a.Info.type == type);
     public Ability GainAbility(Ability.Type type)
@@ -129,7 +130,7 @@ public class AbilityController : Singleton
         modifiers[ability].Add(modifier);
 
         // Upgrade
-        var modified_ability = GetAbility(ability);
+        var modified_ability = GetAbilityPrefab(ability);
         var upgrade = modified_ability.Info.modifiers.GetModifier(modifier);
         UpgradeController.Instance.UnlockUpgrade(upgrade.id);
     }
@@ -137,7 +138,7 @@ public class AbilityController : Singleton
     public void RemoveModifiers(Ability.Type ability)
     {
         // Upgrade
-        var modified_ability = GetAbility(ability);
+        var modified_ability = GetAbilityPrefab(ability);
         foreach(var modifier in modifiers[ability])
         {
             var upgrade = modified_ability.Info.modifiers.GetModifier(modifier);
@@ -162,7 +163,7 @@ public class AbilityController : Singleton
     {
         if(HasModifier(ability, modifier))
         {
-            return GetAbility(modifier);
+            return GetAbilityPrefab(modifier);
         }
         return null;
     }

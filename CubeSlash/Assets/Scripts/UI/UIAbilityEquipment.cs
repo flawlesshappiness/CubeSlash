@@ -49,7 +49,7 @@ public class UIAbilityEquipment : MonoBehaviour
                 if (i < modifiers.Count)
                 {
                     var modifier_type = modifiers[i];
-                    var modifier = AbilityController.Instance.GetAbility(modifier_type);
+                    var modifier = AbilityController.Instance.GetAbilityPrefab(modifier_type);
                     slot.SetAbility(modifier);
                 }
                 else

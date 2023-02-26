@@ -287,9 +287,7 @@ public class AbilityView : View
     {
         if(a != null)
         {
-            string s = a.Info.name_ability;
-            s += "\n" + a.Info.desc_ability;
-            tmp_desc.text = s;
+            tmp_desc.text = a.Info.desc_ability;
             DisplayInputAbility();
         }
         else
@@ -306,11 +304,13 @@ public class AbilityView : View
         else if(equipment_slot.Ability != null)
         {
             var modifier = equipment_slot.Ability.Info.modifiers.GetModifier(modifier_ability.Info.type);
-            string s = $"{modifier_ability.Info.name_ability} (Modifier)";
             var info = UpgradeController.Instance.GetUpgradeInfo(modifier.id);
-            foreach(var stat in info.upgrade.stats)
+            string s = "";
+            for (int i = 0; i < info.upgrade.stats.Count; i++)
             {
-                s += "\n" + stat.GetDisplayString();
+                var stat = info.upgrade.stats[i];
+                s += i == 0 ? "" : "\n";
+                s += stat.GetDisplayString();
             }
             tmp_desc.text = s;
             DisplayInputAbility();

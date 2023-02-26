@@ -199,9 +199,9 @@ public class AbilityDash : Ability
                 StartCoroutine(AbilityExplode.ExplodeCr(new AbilityExplode.ChargeInfo
                 {
                     parent = GameController.Instance.world,
-                    delay = 0.5f,
+                    delay = 2f,
                     getPosition = () => hitPosition,
-                    radius = 3f,
+                    radius = 4f,
                     play_charge_sfx = count == 1,
                 }));
             }

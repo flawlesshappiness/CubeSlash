@@ -23,5 +23,3 @@ shooter boss projectiles are not from projectile manager
 it's not obvious that enemies are based on time
 it's not obvious that you're supposed to kill enemies and gain experience
 make shooter enemy a little more random, and not always when just in range
-explode delay affect charge time
-chain should be cooldown instead of frequency
