@@ -43,15 +43,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 53de92fa2c3f5eb409601a39bae9eb01, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dist_max_mul_shoot: 0.25
-  cooldown_shoot: 5
+  dist_max_mul_shoot: 0.35
+  cooldown_shoot_min: 5
+  cooldown_shoot_max: 8
   prefab_projectile: {fileID: 7462172402094969671, guid: 71203e8c07f4e5e45872096491b16f9a, type: 3}
   velocity_projectile: 5
-  sfx_shoot:
-    reference:
-      Guid:
-        Data1: 1114069357
-        Data2: 1247990756
-        Data3: 950227899
-        Data4: -766912295
-      Path: event:/Game/Abilities/split_shoot_002

@@ -4,7 +4,8 @@ using UnityEngine;
 public class AI_Shooter : EnemyAI
 {
     [SerializeField] private float dist_max_mul_shoot;
-    [SerializeField] private float cooldown_shoot;
+    [SerializeField] private float cooldown_shoot_min;
+    [SerializeField] private float cooldown_shoot_max;
 
     [Header("PROJECTILE")]
     [SerializeField] private Projectile prefab_projectile;
@@ -57,10 +58,11 @@ public class AI_Shooter : EnemyAI
         IEnumerator Cr()
         {
             cd_shoot = Time.time + 999;
+            yield return new WaitForSeconds(Random.Range(0f, 1f)); // Wait for a brief random amount of time
             TelegraphShootShort(0);
             yield return new WaitForSeconds(0.5f);
             Shoot();
-            cd_shoot = Time.time + cooldown_shoot;
+            cd_shoot = Time.time + Random.Range(cooldown_shoot_min, cooldown_shoot_max);
         }
     }
 
