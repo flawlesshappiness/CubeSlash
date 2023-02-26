@@ -17,11 +17,15 @@ public class UnlockUpgradeView : View
     [SerializeField] private UIUnlockAbilityBar ability_bar;
     [SerializeField] private Image img_fg_refund;
     [SerializeField] private CanvasGroup cvg_upgrades, cvg_background, cvg_description, cvg_past_upgrades;
+    [SerializeField] private UIScrollableUpgradeTree template_upgrade_tree;
 
     public event System.Action<Upgrade> OnUpgradeSelected;
 
     private List<UIIconButton> btns_upgrade = new List<UIIconButton>();
     private List<TMP_Text> tmps_upgrade = new List<TMP_Text>();
+    private List<UIScrollableUpgradeTree> trees = new List<UIScrollableUpgradeTree>();
+
+    private UIScrollableUpgradeTree selected_tree;
 
     private UIIconButton button_selected;
     private Upgrade upgrade_selected;
@@ -35,32 +39,28 @@ public class UnlockUpgradeView : View
         // Initialize
         temp_btn_upgrade.gameObject.SetActive(false);
         tmp_upgrade.gameObject.SetActive(false);
+        template_upgrade_tree.gameObject.SetActive(false);
 
         layout_unlocked_upgrades.OnUpgradeLevelSelected += level => DisplayUpgradeText(level);
 
         // Upgrades
-        CreateUpgrades();
+        //CreateUpgrades();
+        CreateUpgradeTrees();
 
         // Input
         DisplayInput();
 
-        StartCoroutine(AnimateStartCr());
+        //StartCoroutine(AnimateStartCr());
     }
 
     private void OnEnable()
     {
-        PlayerInput.Controls.Player.North.started += OnNorthPressed;
-        PlayerInput.Controls.Player.North.canceled += OnNorthReleased;
-
         PlayerInput.Controls.Player.West.started += RefundPressed;
         PlayerInput.Controls.Player.West.canceled += RefundReleased;
     }
 
     private void OnDisable()
     {
-        PlayerInput.Controls.Player.North.started -= OnNorthPressed;
-        PlayerInput.Controls.Player.North.canceled -= OnNorthReleased;
-
         PlayerInput.Controls.Player.West.started -= RefundPressed;
         PlayerInput.Controls.Player.West.canceled -= RefundReleased;
     }
@@ -89,25 +89,18 @@ public class UnlockUpgradeView : View
         ability_bar.AnimateLevelsUntilAbility(1f, EasingCurves.EaseOutQuad);
     }
 
-    private void OnNorthPressed(InputAction.CallbackContext context)
+    private List<UpgradeInfo> GetRandomUpgrades()
     {
-        if(upgrade_selected != null)
-        {
-            ShowUpgradeTree();
-        }
-    }
-
-    private void OnNorthReleased(InputAction.CallbackContext context)
-    {
-        HideUpgradeTree();
+        var count_upgrades = Mathf.Min(4, AbilityController.Instance.GetEquippedAbilities().Count + 2);
+        var upgrades = UpgradeController.Instance.GetUnlockableUpgrades()
+            .TakeRandom(count_upgrades);
+        return upgrades;
     }
 
     private void CreateUpgrades()
     {
         // Fetch upgrades
-        var count_upgrades = Mathf.Min(4, AbilityController.Instance.GetEquippedAbilities().Count + 2);
-        var upgrades = UpgradeController.Instance.GetUnlockableUpgrades()
-            .TakeRandom(count_upgrades);
+        var upgrades = GetRandomUpgrades();
 
         // Create upgrade buttons
         ClearUpgradeButtons();
@@ -116,7 +109,7 @@ public class UnlockUpgradeView : View
             var btn = CreateUpgradeButton();
             btn.Icon = info.upgrade.icon;
             btn.Button.onSelect += () => OnSelect(btn, info.upgrade);
-            btn.Button.onSubmit += () => OnClick(btn, info.upgrade);
+            btn.Button.onSubmit += () => ClickUpgradeButton(info.upgrade);
         }
 
         void OnSelect(UIIconButton button, Upgrade upgrade)
@@ -125,15 +118,54 @@ public class UnlockUpgradeView : View
             upgrade_selected = upgrade;
             DisplayUpgradeText(upgrade);
         }
+    }
 
-        void OnClick(UIIconButton btn, Upgrade upgrade)
+    private void ClickUpgradeButton(Upgrade upgrade)
+    {
+        CanvasGroup.interactable = false;
+        CanvasGroup.blocksRaycasts = false;
+        UpgradeController.Instance.UnlockUpgrade(upgrade.id);
+        SoundController.Instance.Play(SoundEffectType.sfx_ui_unlock_upgrade);
+        OnUpgradeSelected?.Invoke(upgrade);
+        Close(0);
+    }
+
+    private void CreateUpgradeTrees()
+    {
+        var upgrades = GetRandomUpgrades();
+        foreach(var info in upgrades)
         {
-            CanvasGroup.interactable = false;
-            CanvasGroup.blocksRaycasts = false;
-            UpgradeController.Instance.UnlockUpgrade(upgrade.id);
-            SoundController.Instance.Play(SoundEffectType.sfx_ui_unlock_upgrade);
-            OnUpgradeSelected?.Invoke(upgrade);
-            Close(0);
+            var tree = Instantiate(template_upgrade_tree, template_upgrade_tree.transform.parent);
+            tree.gameObject.SetActive(true);
+            tree.Initialize(info);
+            tree.SetChildUpgradesVisible(false, 0);
+            trees.Add(tree);
+
+            tree.onMainButtonSelected += () => OnMainButtonSelected(tree);
+            tree.onUpgradeSelected += u => DisplayUpgradeText(u.upgrade);
+            tree.MainButton.Button.onSubmit += () => ClickUpgradeButton(info.upgrade);
+        }
+
+        var first_tree = trees[0];
+        var first_upgrade = upgrades[0];
+        EventSystem.current.SetSelectedGameObject(first_tree.MainButton.gameObject);
+        first_tree.SetChildUpgradesVisible(true);
+        DisplayUpgradeText(first_upgrade.upgrade);
+
+        void OnMainButtonSelected(UIScrollableUpgradeTree tree)
+        {
+            if(selected_tree != null)
+            {
+                selected_tree.ScrollToPosition(selected_tree.MainButton.transform.position);
+                selected_tree.SetChildUpgradesVisible(false);
+            }
+
+            selected_tree = tree;
+
+            if(selected_tree != null)
+            {
+                selected_tree.SetChildUpgradesVisible(true);
+            }
         }
     }
 
@@ -198,10 +230,7 @@ public class UnlockUpgradeView : View
 
     private void DisplayUpgradeText(Upgrade upgrade)
     {
-        var db_color = ColorDatabase.Load();
-
         ClearUpgradeTexts();
-        //CreateUpgradeText(upgrade.name, db_color.text_normal.GetColor());
         foreach(var stat in upgrade.stats)
         {
             var text = stat.GetDisplayString();
@@ -209,43 +238,10 @@ public class UnlockUpgradeView : View
         }
     }
 
-    private void ShowUpgradeTree()
-    {
-        if (upgrade_selected == null) return;
-        if (button_selected == null) return;
-
-        Interactable = false;
-
-        rt_upgrades.gameObject.SetActive(false);
-        rt_desc.gameObject.SetActive(false);
-
-        /*
-        var view = ViewController.Instance.ShowView<UpgradeTreeView>(0, "UpgradeTree");
-        var tree = UpgradeController.Instance.GetUpgradeTree(upgrade_selected.id);
-        view.SetTree(tree);
-        view.SetSelectedUpgrade(upgrade_selected);
-        */
-    }
-
-    private void HideUpgradeTree()
-    {
-        if (upgrade_selected == null) return;
-        if (button_selected == null) return;
-
-        ViewController.Instance.CloseView(0, "UpgradeTree");
-
-        rt_upgrades.gameObject.SetActive(true);
-        rt_desc.gameObject.SetActive(true);
-
-        Interactable = true;
-        EventSystem.current.SetSelectedGameObject(button_selected.Button.gameObject);
-    }
-
     private void DisplayInput()
     {
         input_layout.Clear();
         input_layout.AddInput(PlayerInput.UIButtonType.SOUTH, "Select");
-        input_layout.AddInput(PlayerInput.UIButtonType.NORTH, "Upgrade tree");
         input_layout.AddInput(PlayerInput.UIButtonType.WEST, "(HOLD) Refund 25% exp");
     }
 

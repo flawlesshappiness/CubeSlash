@@ -4,6 +4,7 @@ using System.Linq;
 using TMPro;
 using UnityEngine.InputSystem;
 using UnityEngine.EventSystems;
+using Unity.VisualScripting.Antlr3.Runtime.Misc;
 
 public class AbilityView : View
 {
@@ -310,7 +311,11 @@ public class AbilityView : View
         {
             var modifier = equipment_slot.Ability.Info.modifiers.GetModifier(modifier_ability.Info.type);
             string s = $"{modifier_ability.Info.name_ability} (Modifier)";
-            // TODO: Make better description
+            var info = UpgradeController.Instance.GetUpgradeInfo(modifier.id);
+            foreach(var stat in info.upgrade.stats)
+            {
+                s += "\n" + stat.GetDisplayString();
+            }
             tmp_desc.text = s;
             DisplayInputAbility();
         }

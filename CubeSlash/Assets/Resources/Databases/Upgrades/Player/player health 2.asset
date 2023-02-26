@@ -16,14 +16,14 @@ MonoBehaviour:
     id: player_health_2
   name: Health 2
   icon: {fileID: 21300000, guid: 1f3bedfe0b16b6545bb1f6e44a3a47dc, type: 3}
-  id_stats: player
+  hidden: 0
   require_ability: 0
   ability_required: 0
   upgrades_required:
   - id: player_health_1
   stats:
   - id:
-      id: 
+      id: player_health
     value:
       type_value: 0
       value_int: 1

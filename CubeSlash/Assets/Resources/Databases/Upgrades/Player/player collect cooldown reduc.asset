@@ -16,15 +16,15 @@ MonoBehaviour:
     id: player_collect_cooldown_reduc
   name: Vitamins
   icon: {fileID: 21300000, guid: be7b9676b323dbf4fb02a4695376e6c9, type: 3}
-  id_stats: player
+  hidden: 0
   require_ability: 0
   ability_required: 0
   upgrades_required: []
   stats:
   - id:
-      id: player_cooldown_reduc_perc
+      id: player_collect_cooldown_flat
     value:
-      type_value: 0
+      type_value: 1
       value_int: 0
       value_float: -0.1
       value_bool: 0

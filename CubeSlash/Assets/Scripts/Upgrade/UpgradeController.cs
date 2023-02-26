@@ -104,6 +104,12 @@ public class UpgradeController : Singleton
         }
     }
 
+    public List<UpgradeInfo> GetChildUpgrades(UpgradeInfo info)
+    {
+        var id = info.upgrade.id;
+        return upgrades.Values.Where(i => i.upgrade.upgrades_required.Contains(id)).ToList();
+    }
+
     public bool HasUnlockableUpgrades() => GetUnlockableUpgrades().Count > 0;
     public void ClearUpgrades() => upgrades.Values.ToList().ForEach(info => info.is_unlocked = false);
 

@@ -164,7 +164,7 @@ PrefabInstance:
     - target: {fileID: 426851428645587794, guid: 10a7ef8d1fd0e1846bcb118e37b2f092, type: 3}
       propertyPath: animations.Array.data[0]
       value: 
-      objectReference: {fileID: 4791004645271610402}
+      objectReference: {fileID: 8108663653273467187}
     - target: {fileID: 4199395762272161313, guid: 10a7ef8d1fd0e1846bcb118e37b2f092, type: 3}
       propertyPath: m_Name
       value: IconButton
@@ -279,9 +279,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9cb37bed630c580488287c628253c5f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &4791004645271610402 stripped
+--- !u!114 &8108663653273467187 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2072987470871135702, guid: 10a7ef8d1fd0e1846bcb118e37b2f092, type: 3}
+  m_CorrespondingSourceObject: {fileID: 3332216128528799943, guid: 10a7ef8d1fd0e1846bcb118e37b2f092, type: 3}
   m_PrefabInstance: {fileID: 6825673938345206260}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
