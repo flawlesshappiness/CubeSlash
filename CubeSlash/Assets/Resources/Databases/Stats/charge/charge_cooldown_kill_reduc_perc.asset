@@ -14,10 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id:
     id: charge_cooldown_kill_reduc_perc
-  description: $s cooldown reduction on kill
+  description: $ sec cooldown reduction on kill
   value:
     type_value: 1
-    type_display: 0
     value_int: 0
     value_float: 0
     value_bool: 0

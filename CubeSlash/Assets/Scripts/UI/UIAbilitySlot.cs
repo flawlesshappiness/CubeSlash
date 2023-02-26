@@ -4,14 +4,14 @@ using UnityEngine.UI;
 public class UIAbilitySlot : MonoBehaviour
 {
     [SerializeField] public RectTransform rectTransform;
-    [SerializeField] private Image img_icon;
-    [SerializeField] private Image img_wrong;
     [SerializeField] private SelectableMenuItem button;
+    [SerializeField] private UIIconButton btn_icon;
 
     public bool IsWrong { get; private set; }
 
     public Ability Ability { get; private set; }
     public SelectableMenuItem Button { get { return button; } }
+    public UIIconButton IconButton { get { return btn_icon; } }
 
     private void OnValidate()
     {
@@ -21,13 +21,13 @@ public class UIAbilitySlot : MonoBehaviour
     public void SetAbility(Ability ability)
     {
         this.Ability = ability;
-        img_icon.sprite = ability == null ? null : ability.Info.sprite_icon;
-        img_icon.enabled = ability != null;
+        btn_icon.Icon = ability == null ? null : ability.Info.sprite_icon;
+        btn_icon.IconEnabled = ability != null;
     }
 
     public void SetWrong(bool wrong)
     {
-        img_wrong.enabled = wrong;
         IsWrong = wrong;
+        btn_icon.IsWrong = wrong;
     }
 }

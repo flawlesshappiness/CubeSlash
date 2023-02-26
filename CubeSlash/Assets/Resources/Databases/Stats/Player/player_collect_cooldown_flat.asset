@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id:
     id: player_collect_cooldown_flat
-  description: $s global cooldown when collecting food
+  description: $ sec global cooldown when collecting food
   value:
     type_value: 1
     value_int: 0

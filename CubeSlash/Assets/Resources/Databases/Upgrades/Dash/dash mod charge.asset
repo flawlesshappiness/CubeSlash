@@ -22,13 +22,6 @@ MonoBehaviour:
   upgrades_required: []
   stats:
   - id:
-      id: dash_cooldown_flat
-    value:
-      type_value: 1
-      value_int: 0
-      value_float: 1
-      value_bool: 0
-  - id:
       id: dash_shockwave_only
     value:
       type_value: 2
@@ -56,3 +49,10 @@ MonoBehaviour:
       value_int: 0
       value_float: 1
       value_bool: 1
+  - id:
+      id: dash_cooldown_flat
+    value:
+      type_value: 1
+      value_int: 0
+      value_float: 1
+      value_bool: 0

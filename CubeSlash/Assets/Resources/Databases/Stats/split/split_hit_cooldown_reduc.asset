@@ -14,10 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id:
     id: split_hit_cooldown_reduc
-  description: $s cooldown on impact
+  description: $ sec cooldown on impact
   value:
     type_value: 1
-    type_display: 0
     value_int: 0
     value_float: 0
     value_bool: 0

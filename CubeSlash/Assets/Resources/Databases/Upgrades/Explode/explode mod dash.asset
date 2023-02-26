@@ -22,18 +22,11 @@ MonoBehaviour:
   upgrades_required: []
   stats:
   - id:
-      id: explode_cooldown_flat
-    value:
-      type_value: 1
-      value_int: 0
-      value_float: 0.5
-      value_bool: 0
-  - id:
       id: explode_delay_perc
     value:
       type_value: 3
       value_int: 0
-      value_float: -100
+      value_float: -1
       value_bool: 0
   - id:
       id: explode_radius_perc
@@ -41,4 +34,11 @@ MonoBehaviour:
       type_value: 3
       value_int: 0
       value_float: 0.25
+      value_bool: 0
+  - id:
+      id: explode_cooldown_flat
+    value:
+      type_value: 1
+      value_int: 0
+      value_float: 0.5
       value_bool: 0

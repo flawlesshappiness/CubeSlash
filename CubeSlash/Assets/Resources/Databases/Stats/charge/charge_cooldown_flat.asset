@@ -14,10 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id:
     id: charge_cooldown_flat
-  description: $s cooldown
+  description: $ sec cooldown
   value:
     type_value: 1
-    type_display: 0
     value_int: 1
     value_float: 1
     value_bool: 0
