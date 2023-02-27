@@ -519,3 +519,14 @@ MonoBehaviour:
           Data3: -1782469699
           Data4: 1146720271
         Path: event:/Game/Misc/Wooshing_003
+  - name: sfx_avoid_damage
+    type:
+      id: sfx_avoid_damage
+    sfx:
+      reference:
+        Guid:
+          Data1: -1932634453
+          Data2: 1079178019
+          Data3: -234678621
+          Data4: -302166859
+        Path: event:/Game/Player/player_avoid_damage_001

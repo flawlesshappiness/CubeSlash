@@ -606,6 +606,7 @@ public class Player : Character
     public void PlayAvoidDamageFX()
     {
         ps_avoid_damage.Play();
+        SoundController.Instance.Play(SoundEffectType.sfx_avoid_damage);
     }
     #endregion
 }

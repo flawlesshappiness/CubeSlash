@@ -7,4 +7,4 @@ endless mode
 CHARM: Orbiting damage
 CHARM: Gain x when y
 
-chance to avoid damage sound/effect
+chance to avoid damage sound
