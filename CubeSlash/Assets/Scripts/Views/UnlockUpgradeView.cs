@@ -195,6 +195,7 @@ public class UnlockUpgradeView : View
 
             foreach(var tree in trees)
             {
+                tree.AnimateShowParentButtons();
                 tree.AnimateShowChildButtons();
                 yield return new WaitForSecondsRealtime(0.1f);
             }

@@ -35,16 +35,10 @@ public class UIScrollableUpgradeTree : MonoBehaviour
         CreateButtons();
 
         MainButton.AnimationPivot.localScale = Vector3.zero;
-
-        foreach(var btn in btns_children)
-        {
-            btn.AnimationPivot.localScale = Vector3.zero;
-        }
-
-        foreach(var line in lines_children)
-        {
-            line.transform.localScale = Vector3.zero;
-        }
+        btns_children.ForEach(btn => btn.AnimationPivot.localScale = Vector3.zero);
+        btns_parents.ForEach(btn => btn.AnimationPivot.localScale = Vector3.zero);
+        lines_children.ForEach(line => line.transform.localScale = Vector3.zero);
+        lines_parents.ForEach(line => line.transform.localScale = Vector3.zero);
     }
 
     private void CreateButtons()
@@ -188,14 +182,24 @@ public class UIScrollableUpgradeTree : MonoBehaviour
 
     public Coroutine AnimateShowChildButtons()
     {
+        return AnimateShowTreeButtons(btns_children, lines_children);
+    }
+
+    public Coroutine AnimateShowParentButtons()
+    {
+        return AnimateShowTreeButtons(btns_parents, lines_parents);
+    }
+
+    private Coroutine AnimateShowTreeButtons(List<UIIconButton> btns, List<GameObject> lines)
+    {
         return StartCoroutine(AnimateChildrenCr());
         IEnumerator AnimateChildrenCr()
         {
             Coroutine last = null;
-            for (int i = 0; i < btns_children.Count; i++)
+            for (int i = 0; i < btns.Count; i++)
             {
-                var btn = btns_children[i];
-                var line = lines_children[i];
+                var btn = btns[i];
+                var line = lines[i];
                 last = StartCoroutine(AnimateChildCr(btn, line));
                 yield return new WaitForSecondsRealtime(0.1f);
             }
