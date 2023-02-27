@@ -72,7 +72,7 @@ public class AI_BossShooter : EnemyAI
         }
         else if(state == MoveState.MOVE_TO_PLAYER)
         {
-            if (Vector3.Distance(Position, PlayerPosition) > CameraController.Instance.Width * 0.25f)
+            if (Vector3.Distance(Position, PlayerPosition) > CameraController.Instance.Width * 0.4f)
             {
                 destination = IsPlayerAlive() ? PlayerPosition : Position;
                 MoveTowards(destination);
@@ -225,7 +225,7 @@ public class AI_BossShooter : EnemyAI
     private void Shoot(Vector3 position, Vector3 direction)
     {
         var velocity_projectile = 10;
-        var p = Instantiate(prefab_projectile.gameObject).GetComponent<Projectile>();
+        var p = ProjectileController.Instance.CreateProjectile(prefab_projectile);
         p.transform.position = position;
         p.Rigidbody.velocity = direction.normalized * velocity_projectile;
         p.SetDirection(direction);

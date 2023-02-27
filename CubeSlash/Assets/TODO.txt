@@ -18,5 +18,6 @@ boom sound too loud?
 dash always have ripple?
 first ability upgrade higher chance (guaranteed?)
 build particle effect dont always appear (plant wall)
+
 increase shooter boss attack range
 shooter boss projectiles are not from projectile manager
