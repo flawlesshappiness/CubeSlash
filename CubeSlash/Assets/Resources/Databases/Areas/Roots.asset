@@ -10,33 +10,33 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2a24aa1140318f84bb86c4b408b90009, type: 3}
-  m_Name: Abyss
+  m_Name: Roots
   m_EditorClassIdentifier: 
-  index_level_min: 4
-  boss: {fileID: 11400000, guid: 4fbbd0666cfd0cb4c8967515c2fd4eeb, type: 2}
+  index_level_min: 2
+  boss: {fileID: 11400000, guid: c27a6b5c0fe4b3f4a9dcc2af39fb178f, type: 2}
   enemies:
-  - enemy: {fileID: 11400000, guid: 446594942849cc545a50a1af0a528adc, type: 2}
-    chance: 0.4
-    max: 5
-  color_fog: {r: 0, g: 0, b: 0, a: 1}
-  color_bg: {r: 0.023529412, g: 0.02745098, b: 0.101960786, a: 1}
+  - enemy: {fileID: 11400000, guid: e3fdf9a9032f5a547809171c6941ee82, type: 2}
+    chance: 0.2
+    max: 10
+  color_fog: {r: 0.07273173, g: 0.044158533, b: 0.213, a: 1}
+  color_bg: {r: 0.036655035, g: 0.02352941, b: 0.101960786, a: 1}
   ac_alpha_fog:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0.5
-      inSlope: 0
-      outSlope: 0
+      value: 0.6
+      inSlope: -0.0022974142
+      outSlope: -0.0022974142
       tangentMode: 0
       weightedMode: 3
       inWeight: 0
-      outWeight: 0.60024154
+      outWeight: 0.615942
     - serializedVersion: 3
       time: 1
       value: 0
-      inSlope: -0.5
-      outSlope: -0.5
+      inSlope: -0.6
+      outSlope: -0.6
       tangentMode: 34
       weightedMode: 0
       inWeight: 0.33333334
@@ -44,45 +44,52 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  camera_size: 16
   parallax_min: 0.5
   parallax_max: 0.8
   background_layers:
   - name: 0
     is_foreground: 0
     size_sprite_min: 10
-    size_sprite_max: 20
-    count_sprite: 0
-    sprites: []
+    size_sprite_max: 15
+    count_sprite: 5
+    sprites:
+    - {fileID: 21300000, guid: 6c4384cdf3c8f7148abbbd5fbb6b8c75, type: 3}
+    - {fileID: 21300000, guid: 6c4384cdf3c8f7148abbbd5fbb6b8c75, type: 3}
     particles: []
   - name: 1
     is_foreground: 0
     size_sprite_min: 10
     size_sprite_max: 20
-    count_sprite: 0
-    sprites: []
+    count_sprite: 10
+    sprites:
+    - {fileID: 21300000, guid: 6c4384cdf3c8f7148abbbd5fbb6b8c75, type: 3}
+    - {fileID: 21300000, guid: 6c4384cdf3c8f7148abbbd5fbb6b8c75, type: 3}
     particles:
     - {fileID: 6471937910845384915, guid: 4227469584206424696bac83a7f5da41, type: 3}
   - name: 2
     is_foreground: 0
     size_sprite_min: 10
     size_sprite_max: 20
-    count_sprite: 0
-    sprites: []
+    count_sprite: 20
+    sprites:
+    - {fileID: 21300000, guid: 6c4384cdf3c8f7148abbbd5fbb6b8c75, type: 3}
+    - {fileID: 21300000, guid: 6c4384cdf3c8f7148abbbd5fbb6b8c75, type: 3}
     particles:
     - {fileID: 6471937910845384915, guid: 4227469584206424696bac83a7f5da41, type: 3}
   - name: 3
     is_foreground: 0
     size_sprite_min: 10
     size_sprite_max: 20
-    count_sprite: 0
-    sprites: []
+    count_sprite: 20
+    sprites:
+    - {fileID: 21300000, guid: 6c4384cdf3c8f7148abbbd5fbb6b8c75, type: 3}
+    - {fileID: 21300000, guid: 6c4384cdf3c8f7148abbbd5fbb6b8c75, type: 3}
     particles:
     - {fileID: 6471937910845384915, guid: 4227469584206424696bac83a7f5da41, type: 3}
   vignette_gradient:
     serializedVersion: 2
-    key0: {r: 0, g: 0, b: 0, a: 1}
-    key1: {r: 0.05, g: 0.05, b: 0.05, a: 1}
+    key0: {r: 0.046153862, g: 0.023076922, b: 0.1, a: 1}
+    key1: {r: 0.10600501, g: 0.08715, b: 0.15, a: 1}
     key2: {r: 0, g: 0, b: 0, a: 0}
     key3: {r: 0, g: 0, b: 0, a: 0}
     key4: {r: 0, g: 0, b: 0, a: 0}
@@ -108,12 +115,9 @@ MonoBehaviour:
     m_Mode: 0
     m_NumColorKeys: 2
     m_NumAlphaKeys: 2
-  spawn_objects: []
-  bgm:
-    reference:
-      Guid:
-        Data1: -2099893669
-        Data2: 1184289244
-        Data3: -1133450321
-        Data4: 326138994
-      Path: event:/Music/abyss_001
+  spawn_objects:
+  - prefab: {fileID: 3561371122137596645, guid: 097c2ad46ae883642b9c6d1dc05c5ebd, type: 3}
+    delay: 10
+    count: 7
+  bgm_type:
+    id: bgm_roots

@@ -78,9 +78,8 @@ public class AreaController : Singleton
             onNextArea?.Invoke(current_area);
 
             var time_next = Time.time + GameSettings.Instance.area_duration;
-            var has_time_left = Time.time < time_next;
             var is_locked = NextAreaLock.IsLocked;
-            while((is_locked || has_time_left) && !force_next_area)
+            while((is_locked || Time.time < time_next) && !force_next_area)
             {
                 yield return null;
             }

@@ -8,5 +8,3 @@ CHARM: Orbiting damage
 CHARM: Gain x when y
 
 enemies might not be spawning as fast when restarting a run?
-
-stay on final boss until completed

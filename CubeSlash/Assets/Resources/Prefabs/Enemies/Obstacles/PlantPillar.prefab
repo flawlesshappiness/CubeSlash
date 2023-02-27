@@ -5156,6 +5156,7 @@ MonoBehaviour:
   hurts: 1
   pivot_animation: {fileID: 3960380912000343170}
   pivot_dud: {fileID: 2736827158614871292}
+  spr: {fileID: 4672642889497616806}
   ps_death: {fileID: 0}
 --- !u!114 &2881529307739850907
 MonoBehaviour:
@@ -5176,22 +5177,6 @@ MonoBehaviour:
   ps_warn: {fileID: 8916142701159117590}
   ps_appear: {fileID: 6853799902630787205}
   ps_death: {fileID: 8578589250908723961}
-  sfx_warn:
-    reference:
-      Guid:
-        Data1: -1904204150
-        Data2: 1087882346
-        Data3: -217691242
-        Data4: 873599701
-      Path: event:/Game/Enemy/plant_pillar_warn_001
-  sfx_appear:
-    reference:
-      Guid:
-        Data1: 1492486598
-        Data2: 1273588589
-        Data3: -1187495024
-        Data4: 2048756952
-      Path: event:/Game/Enemy/plant_pillar_spawn_001
 --- !u!1 &5428626688043705792
 GameObject:
   m_ObjectHideFlags: 0

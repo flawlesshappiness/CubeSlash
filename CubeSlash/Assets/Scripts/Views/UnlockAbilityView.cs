@@ -22,13 +22,13 @@ public class UnlockAbilityView : View
     private void Start()
     {
         temp_btn_ability.gameObject.SetActive(false);
-        DisplayAbility(null);
 
         var is_first = AbilityController.Instance.GetGainedAbilities().Count == 0;
         var abilities = is_first ?
             AbilityController.Instance.GetAvailableAbilities()
             : AbilityController.Instance.GetAvailableAbilities().TakeRandom(2);
 
+        DisplayAbility(abilities[0]);
         ClearButtons();
         foreach(var ability in abilities)
         {

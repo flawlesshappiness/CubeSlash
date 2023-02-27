@@ -14706,6 +14706,7 @@ MonoBehaviour:
   hurts: 1
   pivot_animation: {fileID: 4167122703002835658}
   pivot_dud: {fileID: 3087684549981113012}
+  spr: {fileID: 5762934625793288174}
   ps_death: {fileID: 7855418852872228052}
 --- !u!1 &5762934625793288172
 GameObject:
