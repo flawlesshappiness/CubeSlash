@@ -33,6 +33,11 @@ public class BackgroundSprite : BackgroundObject
         AnimateDestroy(BackgroundController.OBJECT_FADE_TIME);
     }
 
+    public override void DestroyImmediate()
+    {
+        Destroy(gameObject);
+    }
+
     public Coroutine AnimateAppear(float time)
     {
         return StartCoroutine(Cr());

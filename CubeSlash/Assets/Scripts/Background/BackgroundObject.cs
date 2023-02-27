@@ -13,6 +13,7 @@ public abstract class BackgroundObject : MonoBehaviour
     private Area area;
 
     public abstract void Destroy();
+    public abstract void DestroyImmediate();
 
     public virtual void Initialize(Area area)
     {

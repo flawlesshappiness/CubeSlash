@@ -18,11 +18,17 @@ public class BackgroundController : Singleton
     {
         base.Initialize();
         AreaController.Instance.onNextArea += OnNextArea;
+        GameController.Instance.onMainMenu += OnMainMenu;
     }
 
     private void Update()
     {
         ParallaxUpdate();
+    }
+
+    private void OnMainMenu()
+    {
+        ClearObjectsImmediate();
     }
 
     private void OnNextArea(Area area)
@@ -58,6 +64,15 @@ public class BackgroundController : Singleton
         foreach(var o in objects)
         {
             o.Destroy();
+        }
+        objects.Clear();
+    }
+
+    private void ClearObjectsImmediate()
+    {
+        foreach(var o in objects)
+        {
+            o.DestroyImmediate();
         }
         objects.Clear();
     }

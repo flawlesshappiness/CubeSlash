@@ -45,6 +45,12 @@ public class BackgroundParticleSystem : BackgroundObject
         }
     }
 
+    public override void DestroyImmediate()
+    {
+        Destroy(ParticleSystem.gameObject);
+        Destroy(gameObject);
+    }
+
     private CustomCoroutine DestroyPS(ParticleSystem ps)
     {
         return this.StartCoroutineWithID(StopAndDestroyCr(), "destroy_" + ps.GetInstanceID());
