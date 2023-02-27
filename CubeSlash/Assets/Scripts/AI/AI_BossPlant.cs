@@ -44,6 +44,7 @@ public class AI_BossPlant : EnemyAI
         var path = new VertexPath(bezier, GameController.Instance.world);
         var offset = Player.Instance.transform.position;
 
+        var i_wall = 0;
         var wall_length = SIZE_WALL * 0.95f;
         var wall_length_half = wall_length * 0.5f;
         var distance = 0f;
@@ -56,12 +57,14 @@ public class AI_BossPlant : EnemyAI
             var rotation = Quaternion.AngleAxis(angle, Vector3.forward);
 
             var wall = Instantiate(template_wall, GameController.Instance.world);
+            wall.SetSortingOrder(i_wall);
             wall.transform.position = point + offset;
             wall.transform.rotation = rotation;
             walls.Add(wall);
             wall.AnimateAppear();
 
             distance += wall_length;
+            i_wall++;
         }
     }
 

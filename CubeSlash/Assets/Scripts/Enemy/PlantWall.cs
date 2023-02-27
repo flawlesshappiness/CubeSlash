@@ -6,6 +6,7 @@ public class PlantWall : Obstacle
 {
     [SerializeField] private Transform pivot_animation;
     [SerializeField] private Transform pivot_dud;
+    [SerializeField] private SpriteRenderer spr;
     [SerializeField] private ParticleSystem ps_death;
 
     public Transform GetDudTransform() => pivot_dud;
@@ -31,6 +32,11 @@ public class PlantWall : Obstacle
         {
             yield return LerpEnumerator.LocalScale(pivot_animation, 1f, Vector3.zero);
         }
+    }
+
+    public void SetSortingOrder(int order)
+    {
+        spr.sortingOrder = order;
     }
 
     public override void Kill()

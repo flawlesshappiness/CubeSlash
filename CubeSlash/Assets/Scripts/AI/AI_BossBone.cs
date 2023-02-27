@@ -140,6 +140,7 @@ public class AI_BossBone : EnemyAI
                 var wall = Instantiate(template_wall, pivot);
                 wall.transform.localScale = new Vector3(0.5f, 0.5f);
                 wall.transform.localRotation = Quaternion.identity;
+                wall.SetSortingOrder(i);
 
                 var size = wall.transform.localScale.x * 0.8f;
                 var dir = Vector3.up * size;
@@ -189,6 +190,7 @@ public class AI_BossBone : EnemyAI
             wall.transform.rotation = rotation;
             wall.SetHidden();
             wall.StartCoroutine(AnimateAppearWallCr(wall, 0.02f * i));
+            wall.SetSortingOrder(i);
             walls.Add(wall);
             dist += size;
             i++;

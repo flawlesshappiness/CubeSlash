@@ -14,4 +14,3 @@ UnlockUpgradeView appear animation?
 player dash trail upgrade missing sprite
 enemies might not be spawning as fast when restarting a run
 dash impact effect
-Some objects are z-fighting (plant wall / bone wall)
