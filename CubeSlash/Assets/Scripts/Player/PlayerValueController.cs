@@ -13,6 +13,7 @@ public class PlayerValueController : Singleton
     {
         base.Initialize();
         ResetValues();
+        GameController.Instance.onMainMenu += ResetValues;
     }
 
     public void ResetValues()

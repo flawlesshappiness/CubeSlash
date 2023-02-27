@@ -8,7 +8,7 @@ public class Player : Character
     [SerializeField] private PlayerSettings settings;
     [SerializeField] private GameObject g_invincible;
     [SerializeField] private ParticleSystem ps_collect_meat, ps_collect_plant, ps_collect_health, ps_level_up, ps_upgrade;
-    [SerializeField] private ParticleSystem ps_ability_off_cooldown;
+    [SerializeField] private ParticleSystem ps_ability_off_cooldown, ps_avoid_damage;
     public PlayerBody PlayerBody { get { return Body as PlayerBody; } }
     public MinMaxFloat Experience { get; private set; } = new MinMaxFloat();
     public Health Health { get; private set; } = new Health();
@@ -400,7 +400,7 @@ public class Player : Character
             }
             else
             {
-                // Avoided damage
+                PlayAvoidDamageFX();
             }
         }
 
@@ -601,6 +601,11 @@ public class Player : Character
     public void PlayCooldownCompleteFX()
     {
         ps_ability_off_cooldown.Play();
+    }
+
+    public void PlayAvoidDamageFX()
+    {
+        ps_avoid_damage.Play();
     }
     #endregion
 }
