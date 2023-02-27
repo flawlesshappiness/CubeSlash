@@ -8,5 +8,3 @@ CHARM: Orbiting damage
 CHARM: Gain x when y
 
 chance to avoid damage sound/effect
-effect when ability is off cooldown
-too many special enemies?

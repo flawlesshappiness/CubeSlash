@@ -121,6 +121,7 @@ public class AbilityController : Singleton
         ability.transform.rotation = Player.Instance.transform.rotation;
         ability.transform.localScale = Vector3.one;
         ability.transform.parent = Player.Instance.transform;
+        ability.onCooldownComplete += Player.Instance.PlayCooldownCompleteFX;
     }
     #endregion
     #region MODIFIER

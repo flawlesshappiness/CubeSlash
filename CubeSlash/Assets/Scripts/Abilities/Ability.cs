@@ -6,7 +6,8 @@ public abstract class Ability : MonoBehaviourExtended
     [Header("ABILITY")]
     public AbilityInfo Info;
 
-    public System.Action onTrigger;
+    public event System.Action onTrigger;
+    public event System.Action onCooldownComplete;
 
     public enum Type { DASH, SPLIT, CHARGE, EXPLODE, CHAIN, MINES }
     public Player Player { get { return Player.Instance; } }
@@ -133,6 +134,8 @@ public abstract class Ability : MonoBehaviourExtended
             {
                 yield return null;
             }
+
+            onCooldownComplete?.Invoke();
         }
     }
 

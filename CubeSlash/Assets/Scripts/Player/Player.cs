@@ -8,6 +8,7 @@ public class Player : Character
     [SerializeField] private PlayerSettings settings;
     [SerializeField] private GameObject g_invincible;
     [SerializeField] private ParticleSystem ps_collect_meat, ps_collect_plant, ps_collect_health, ps_level_up, ps_upgrade;
+    [SerializeField] private ParticleSystem ps_ability_off_cooldown;
     public PlayerBody PlayerBody { get { return Body as PlayerBody; } }
     public MinMaxFloat Experience { get; private set; } = new MinMaxFloat();
     public Health Health { get; private set; } = new Health();
@@ -595,6 +596,11 @@ public class Player : Character
     {
         ps_level_up.Play();
         SoundController.Instance.Play(SoundEffectType.sfx_ui_level_up);
+    }
+
+    public void PlayCooldownCompleteFX()
+    {
+        ps_ability_off_cooldown.Play();
     }
     #endregion
 }
