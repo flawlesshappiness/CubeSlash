@@ -12,4 +12,3 @@ too many special enemies?
 bug with purchase confirm 
 chance to avoid damage sound/effect
 explode has no cooldown
-charge modifier still has cooldown

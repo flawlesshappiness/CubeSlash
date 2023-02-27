@@ -22,7 +22,7 @@ MonoBehaviour:
   upgrades_required: []
   stats:
   - id:
-      id: 
+      id: player_health
     value:
       type_value: 0
       value_int: 2
