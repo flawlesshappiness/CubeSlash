@@ -7,4 +7,9 @@ endless mode
 CHARM: Orbiting damage
 CHARM: Gain x when y
 
-enemies might not be spawning as fast when restarting a run?
+effect when ability is off cooldown
+too many special enemies?
+bug with purchase confirm 
+chance to avoid damage sound/effect
+explode has no cooldown
+charge modifier still has cooldown

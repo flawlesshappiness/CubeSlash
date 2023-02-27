@@ -33,6 +33,8 @@ public abstract class Ability : MonoBehaviourExtended
     protected float GetFloatValue(StatID id) => PlayerValueController.Instance.GetFloatValue(id);
     protected bool GetBoolValue(StatID id) => PlayerValueController.Instance.GetBoolValue(id);
 
+    public bool HasModifier(Type modifier) => AbilityController.Instance.HasModifier(Info.type, modifier);
+
     #region INPUT
     public void ResetInput()
     {
@@ -117,8 +119,12 @@ public abstract class Ability : MonoBehaviourExtended
     public void StartCooldown(float duration)
     {
         InUse = false || CanPressWhileOnCooldown();
+
+        var mul_charge = HasModifier(Type.CHARGE) ? 0 : 1;
+        var mul_global = Player.Instance.GlobalCooldownMultiplier;
+
         TimeCooldownStart = Time.time;
-        TimeCooldownEnd = TimeCooldownStart + duration * Player.Instance.GlobalCooldownMultiplier;
+        TimeCooldownEnd = TimeCooldownStart + duration * mul_global * mul_charge;
         StartCoroutine(WaitForCooldownCr());
 
         IEnumerator WaitForCooldownCr()

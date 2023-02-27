@@ -14,8 +14,6 @@ public class OptionsView : View
 
     public System.Action onClickBack;
 
-    private bool transitioning;
-
     private void Start()
     {
         slider_master.SetValue(Save.Game.volume_master);
@@ -35,16 +33,18 @@ public class OptionsView : View
 
     private IEnumerator TransitionShowCr(bool show)
     {
+        Interactable = false;
+
         var start = show ? 0f : 1f;
         var end = show ? 1f : 0f;
         CanvasGroup.alpha = start;
 
-        var lerp = LerpEnumerator.Value(0.5f, f =>
+        yield return LerpEnumerator.Value(0.5f, f =>
         {
             CanvasGroup.alpha = Mathf.Lerp(start, end, f);
-        });
-        lerp.UseUnscaledTime = true;
-        yield return lerp;
+        }).UnscaledTime();
+
+        Interactable = show;
     }
 
     private IEnumerator TransitionBackCr()
@@ -70,8 +70,7 @@ public class OptionsView : View
 
     private void PressBack(InputAction.CallbackContext context)
     {
-        if (transitioning) return;
-        transitioning = true;
+        if (!Interactable) return;
         StartCoroutine(TransitionBackCr());
     }
 

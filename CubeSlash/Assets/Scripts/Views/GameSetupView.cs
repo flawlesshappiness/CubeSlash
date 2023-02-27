@@ -13,8 +13,6 @@ public class GameSetupView : View
     [SerializeField] private SelectableMenuItem btn_play;
     [SerializeField] private UIInputLayout input;
 
-    private bool transitioning;
-
     private void Start()
     {
         btn_play.onSubmit += ClickPlay;
@@ -35,7 +33,6 @@ public class GameSetupView : View
 
     private void ClickPlay()
     {
-        transitioning = false;
         Interactable = false;
         SelectableMenuItem.RemoveSelection();
         StartCoroutine(TransitionToGameCr());
@@ -43,8 +40,7 @@ public class GameSetupView : View
 
     private void PressBack(InputAction.CallbackContext context)
     {
-        if (transitioning) return;
-        transitioning = true;
+        if (!Interactable) return;
 
         Interactable = false;
         SelectableMenuItem.RemoveSelection();
@@ -68,8 +64,6 @@ public class GameSetupView : View
 
     IEnumerator TransitionToGameCr()
     {
-        transitioning = true;
-
         // Show intro
         Interactable = false;
         var view_intro = ViewController.Instance.ShowView<GameIntroView>(0.5f, nameof(GameIntroView));
