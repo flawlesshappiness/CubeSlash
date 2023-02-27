@@ -15,5 +15,6 @@ MonoBehaviour:
   charm_name: Speed
   charm_description: Increased speed
   sprite: {fileID: 21300000, guid: e6cb1a66600f59a42be6a2ce0b23befc, type: 3}
-  upgrade: {fileID: 11400000, guid: bf04d8e6456a3bb46a776bd9ce055d27, type: 2}
+  upgrade_id:
+    id: charm_speed
   shop_product: {fileID: 11400000, guid: 437593a7c02dc4845b31625900ad32c7, type: 2}

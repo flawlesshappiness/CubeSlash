@@ -15,5 +15,6 @@ MonoBehaviour:
   charm_name: Health
   charm_description: More health
   sprite: {fileID: 21300000, guid: 910b47dfb9816cc42a4db6eb35d95a78, type: 3}
-  upgrade: {fileID: 11400000, guid: 6c0473b5cd9bacd4597af4a820bbbe60, type: 2}
+  upgrade_id:
+    id: charm_health
   shop_product: {fileID: 11400000, guid: 423bca073dbc0f847be9905500acbb4e, type: 2}
