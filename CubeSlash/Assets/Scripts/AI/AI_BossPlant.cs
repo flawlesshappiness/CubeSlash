@@ -2,7 +2,6 @@ using UnityEngine;
 using PathCreation;
 using System.Collections.Generic;
 using System.Linq;
-using System.Collections;
 
 public class AI_BossPlant : EnemyAI
 {
@@ -36,11 +35,6 @@ public class AI_BossPlant : EnemyAI
 
         CreateArena();
         CreateDud();
-    }
-
-    private void OnDisable()
-    {
-        Cleanup();
     }
 
     private void CreateArena()
@@ -143,21 +137,6 @@ public class AI_BossPlant : EnemyAI
             {
                 pillar.Kill();
             }
-        }
-        pillars.Clear();
-    }
-
-    private void Cleanup()
-    {
-        foreach(var wall in walls)
-        {
-            Destroy(wall.gameObject);
-        }
-        walls.Clear();
-
-        foreach(var pillar in pillars)
-        {
-            Destroy(pillar.gameObject);
         }
         pillars.Clear();
     }

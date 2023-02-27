@@ -33,10 +33,12 @@ public class PlantWall : Obstacle
         }
     }
 
-    public void Kill()
+    public override void Kill()
     {
+        base.Kill();
+
         ps_death.Duplicate()
-            .Position(transform.position)
+            .Parent(GameController.Instance.world)
             .Play()
             .Destroy(10);
 

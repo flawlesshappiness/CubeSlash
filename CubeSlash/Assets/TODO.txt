@@ -14,10 +14,4 @@ UnlockUpgradeView appear animation?
 player dash trail upgrade missing sprite
 enemies might not be spawning as fast when restarting a run
 dash impact effect
-boom sound too loud?
-dash always have ripple?
-first ability upgrade higher chance (guaranteed?)
-build particle effect dont always appear (plant wall)
-
-increase shooter boss attack range
-shooter boss projectiles are not from projectile manager
+Some objects are z-fighting (plant wall / bone wall)

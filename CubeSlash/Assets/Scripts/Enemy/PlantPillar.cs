@@ -77,7 +77,7 @@ public class PlantPillar : Obstacle
         if (is_hidden) return;
 
         ps_death.Duplicate()
-            .Position(transform.position)
+            .Parent(GameController.Instance.world)
             .Play()
             .Destroy(10);
 

@@ -8,10 +8,16 @@ public class Obstacle : MonoBehaviour, IKillable, IHurt
 
     public Vector3 GetPosition() => transform.position;
 
-    public void Kill()
+    public virtual void Kill() { }
+    public bool CanHurt() => hurts;
+
+    protected virtual void OnEnable()
     {
-        // No
+        ObjectController.Instance.Add(gameObject);
     }
 
-    public bool CanHurt() => hurts;
+    protected virtual void OnDestroy()
+    {
+        ObjectController.Instance.Remove(gameObject);
+    }
 }

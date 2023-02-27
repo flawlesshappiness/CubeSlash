@@ -30,11 +30,6 @@ public class AI_BossBone : EnemyAI
         Self.EnemyBody.OnDudKilled += dud => OnDudKilled();
     }
 
-    private void OnDisable()
-    {
-        DestroyWalls();
-    }
-
     private void FixedUpdate()
     {
         MoveTowardsPlayer();
@@ -122,7 +117,7 @@ public class AI_BossBone : EnemyAI
     private void PlayTeleportPS()
     {
         body_bone.ps_teleport.Duplicate()
-            .Position(transform.position)
+            .Parent(GameController.Instance.world)
             .Scale(body_bone.ps_teleport.transform.lossyScale)
             .Play()
             .Destroy(5f);
