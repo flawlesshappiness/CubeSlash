@@ -127,12 +127,18 @@ public class EnemyController : Singleton
     {
         var is_game_winning = (AreaController.Instance.AreaIndex + 1) == GameSettings.Instance.areas_to_win;
 
+        if (is_game_winning)
+        {
+            AreaController.Instance.NextAreaLock.AddLock(nameof(EnemyController));
+        }
+
         var enemy = SpawnEnemy(boss, CameraController.Instance.GetPositionOutsideCamera());
         enemy.OnDeath += () =>
         {
             // Win
             if (is_game_winning)
             {
+                AreaController.Instance.NextAreaLock.RemoveLock(nameof(EnemyController));
                 GameController.Instance.Win();
             }
 

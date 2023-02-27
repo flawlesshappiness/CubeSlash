@@ -24,6 +24,8 @@ public class AreaController : Singleton
     public Area CurrentArea { get { return current_area; } }
     public bool IsEndless { get { return area_refills > 0; } }
 
+    public MultiLock NextAreaLock { get; private set; } = new MultiLock();
+
     private bool force_next_area;
 
     protected override void Initialize()
@@ -76,7 +78,9 @@ public class AreaController : Singleton
             onNextArea?.Invoke(current_area);
 
             var time_next = Time.time + GameSettings.Instance.area_duration;
-            while(Time.time < time_next && !force_next_area)
+            var has_time_left = Time.time < time_next;
+            var is_locked = NextAreaLock.IsLocked;
+            while((is_locked || has_time_left) && !force_next_area)
             {
                 yield return null;
             }
