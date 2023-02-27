@@ -7,6 +7,7 @@ public class SoundDatabase : Database<SoundEffectEntry>
 {
     private static SoundDatabase Load() => Load<SoundDatabase>();
 
+#if UNITY_EDITOR
     private void OnValidate()
     {
         var types = FakeEnum.GetAll(typeof(SoundEffectType));
@@ -35,6 +36,7 @@ public class SoundDatabase : Database<SoundEffectEntry>
             }
         }
     }
+#endif
 
     public static SoundEffectEntry GetEntry(SoundEffectType type)
     {
