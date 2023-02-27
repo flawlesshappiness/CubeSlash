@@ -166,6 +166,7 @@ GameObject:
   - component: {fileID: 6739507350967738137}
   - component: {fileID: 7937242585966034816}
   - component: {fileID: 3978526929232673917}
+  - component: {fileID: 4792784573450322516}
   m_Layer: 5
   m_Name: MenuButton
   m_TagString: Untagged
@@ -251,8 +252,23 @@ MonoBehaviour:
   select_on_start: 0
   cvg: {fileID: 7937242585966034816}
   select_animation: {fileID: 891978240445441199}
-  type_sfx_select:
+--- !u!114 &4792784573450322516
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5281460540265361662}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6b474dea99e982d4c8579e11499145cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  item: {fileID: 3978526929232673917}
+  sfx_select:
     id: sfx_ui_move
+  sfx_submit:
+    id: sfx_ui_submit
 --- !u!1001 &5295591983158374564
 PrefabInstance:
   m_ObjectHideFlags: 0

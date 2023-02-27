@@ -416,6 +416,7 @@ GameObject:
   - component: {fileID: 7425019110060822681}
   - component: {fileID: 6447278104132740145}
   - component: {fileID: 2157348557305752863}
+  - component: {fileID: 8761778666513110837}
   m_Layer: 5
   m_Name: Slider
   m_TagString: Untagged
@@ -458,14 +459,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   menu: {fileID: 6447278104132740145}
   template_notch: {fileID: 1903179565100907201}
-  sfx_move:
-    reference:
-      Guid:
-        Data1: -488556006
-        Data2: 1262379110
-        Data3: -1992291445
-        Data4: -574275927
-      Path: event:/UI/ui_move_ability_001
   max_notches: 10
 --- !u!114 &6447278104132740145
 MonoBehaviour:
@@ -512,8 +505,6 @@ MonoBehaviour:
   select_on_start: 0
   cvg: {fileID: 2157348557305752863}
   select_animation: {fileID: 3054460589379173853}
-  type_sfx_select:
-    id: sfx_ui_move
   left_right_animation: {fileID: 2277657280848863893}
 --- !u!225 &2157348557305752863
 CanvasGroup:
@@ -527,6 +518,23 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
+--- !u!114 &8761778666513110837
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7244321924290149444}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6b474dea99e982d4c8579e11499145cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  item: {fileID: 6447278104132740145}
+  sfx_select:
+    id: sfx_ui_move
+  sfx_submit:
+    id: sfx_ui_submit
 --- !u!1 &7287455531170774902
 GameObject:
   m_ObjectHideFlags: 0
