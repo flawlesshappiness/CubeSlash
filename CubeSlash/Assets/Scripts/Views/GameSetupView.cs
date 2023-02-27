@@ -69,7 +69,13 @@ public class GameSetupView : View
     IEnumerator TransitionToGameCr()
     {
         transitioning = true;
-        yield return LerpEnumerator.Alpha(CanvasGroup, 1f, 0f).UnscaledTime();
+
+        // Show intro
+        Interactable = false;
+        var view_intro = ViewController.Instance.ShowView<GameIntroView>(0.5f, nameof(GameIntroView));
+        yield return new WaitForSecondsRealtime(1f);
+        yield return view_intro.AnimateIntro();
+        view_intro.Close(1f);
 
         // Set difficulty
         DifficultyController.Instance.SetDifficulty(difficulty_panel.SelectedIndex);

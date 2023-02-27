@@ -51,6 +51,7 @@ public class Player : Character
 
         // Upgrades
         UpgradeController.Instance.onUpgradeUnlocked += OnUpgradeUnlocked;
+        PlayerValueController.Instance.onValuesUpdated += OnValuesUpdated;
 
         // Setup
         MoveDirection = transform.up;
@@ -242,6 +243,12 @@ public class Player : Character
     }
     #endregion
     #region UPGRADES
+    private void OnValuesUpdated()
+    {
+        UpdateUpgradeValues();
+        UpdateBodyparts();
+    }
+
     private void UpdateUpgradeValues()
     {
         ChanceToAvoidDamage = PlayerValueController.Instance.GetFloatValue(StatID.player_avoid_damage_chance);

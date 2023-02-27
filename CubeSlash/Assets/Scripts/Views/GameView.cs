@@ -14,6 +14,7 @@ public class GameView : View
     private void Start()
     {
         UpdateExperience(false);
+        cvg_tutorial.alpha = 0;
         ShowIntroTutorial();
     }
 
@@ -65,6 +66,8 @@ public class GameView : View
         StartCoroutine(Cr());
         IEnumerator Cr()
         {
+            yield return new WaitForSeconds(1.0f);
+
             yield return LerpEnumerator.Value(1f, f =>
             {
                 cvg_tutorial.alpha = Mathf.Lerp(0f, 1f, f);

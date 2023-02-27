@@ -20,6 +20,3 @@ first ability upgrade higher chance (guaranteed?)
 build particle effect dont always appear (plant wall)
 increase shooter boss attack range
 shooter boss projectiles are not from projectile manager
-it's not obvious that enemies are based on time
-it's not obvious that you're supposed to kill enemies and gain experience
-make shooter enemy a little more random, and not always when just in range

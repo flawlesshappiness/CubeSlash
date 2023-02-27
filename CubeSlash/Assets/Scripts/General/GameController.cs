@@ -97,7 +97,7 @@ public class GameController : MonoBehaviour
 
         GameStateController.Instance.SetGameState(GameStateType.MENU);
         AreaController.Instance.StartAreaCoroutine();
-        ViewController.Instance.ShowView<GameView>(1);
+        ViewController.Instance.ShowView<GameView>(0);
 
         onGameStart?.Invoke();
         ResumeLevel();
