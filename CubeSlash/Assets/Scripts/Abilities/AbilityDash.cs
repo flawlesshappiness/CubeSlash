@@ -29,7 +29,7 @@ public class AbilityDash : Ability
 
     [Header("DASH")]
     [SerializeField] private Projectile prefab_shockwave;
-    [SerializeField] private ParticleSystem ps_bubbles, ps_trail, ps_starpower;
+    [SerializeField] private ParticleSystem ps_bubbles, ps_trail, ps_impact;
     [SerializeField] private AnimationCurve ac_push_enemies;
 
     private Coroutine cr_dash;
@@ -140,6 +140,17 @@ public class AbilityDash : Ability
         if (k == null) return;
         HitEnemiesArea(k.GetPosition(), RadiusDamage);
         EndDash(k);
+
+        // Particle System
+        var player_size = Player.Body.Size;
+        var angle = Vector3.SignedAngle(Vector3.up, Player.Body.transform.up, Vector3.forward);
+        var rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+        ps_impact.Duplicate()
+            .Parent(GameController.Instance.world)
+            .Position(ps_impact.transform.position + Player.Body.transform.up * player_size * 0.5f)
+            .Rotation(rotation)
+            .Play()
+            .Destroy(1);
     }
 
     private void EndDash(IKillable victim)
