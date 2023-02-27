@@ -17,6 +17,7 @@ public class AudioController : Singleton
         base.Initialize();
         InitializeBusses();
         InitializeSnapshots();
+        InitializeVolume();
 
         GameStateController.Instance.onGameStateChanged += OnGameStateChanged;
     }
@@ -34,6 +35,14 @@ public class AudioController : Singleton
         snapshot_menu = FMODController.Instance.CreateSnapshotInstance("Menu");
         snapshot_menu.start();
         snapshot_menu.setParameterByName("Intensity", 0f);
+    }
+
+    private void InitializeVolume()
+    {
+        SetMasterVolume(Save.Game.volume_master);
+        SetMusicVolume(Save.Game.volume_music);
+        SetSFXVolume(Save.Game.volume_sfx);
+        SetUIVolume(Save.Game.volume_sfx);
     }
 
     public void SetMusicVolume(float volume) => Music.setVolume(volume);

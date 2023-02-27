@@ -9,5 +9,3 @@ CHARM: Gain x when y
 
 enemies might not be spawning as fast when restarting a run
 Destroy background particle systems on returning to menu
-Volume doesn't update correctly on startup
-Fix UI sound on SelectableMenuItem
