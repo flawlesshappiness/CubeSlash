@@ -15,7 +15,8 @@ MonoBehaviour:
   id:
     id: dash_trail
   name: Trail
-  icon: {fileID: 21300000, guid: f51b17a952adb4347bc557fb893f7416, type: 3}
+  icon: {fileID: 21300000, guid: b03961decc533a54496bf03788c44c3a, type: 3}
+  hidden: 0
   require_ability: 1
   ability_required: 0
   upgrades_required:
