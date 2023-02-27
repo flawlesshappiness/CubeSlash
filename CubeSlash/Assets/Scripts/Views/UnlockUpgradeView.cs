@@ -50,7 +50,7 @@ public class UnlockUpgradeView : View
         // Input
         DisplayInput();
 
-        //StartCoroutine(AnimateStartCr());
+        StartCoroutine(AnimateStartCr());
     }
 
     private void OnEnable()
@@ -75,11 +75,14 @@ public class UnlockUpgradeView : View
         cvg_upgrades.alpha = 1;
         Interactable = false;
 
-        yield return AnimateShowUpgrade();
+        //yield return AnimateShowUpgrade();
+        yield return AnimateShowUpgradeTree();
 
         // Show other elements
         Interactable = true;
-        EventSystem.current.SetSelectedGameObject(btns_upgrade[0].gameObject);
+        var first_tree = trees[0];
+        first_tree.SetChildUpgradesVisible(true);
+        first_tree.Select();
 
         cvg_description.alpha = 1;
         cvg_past_upgrades.alpha = 1;
@@ -146,12 +149,6 @@ public class UnlockUpgradeView : View
             tree.MainButton.Button.onSubmit += () => ClickUpgradeButton(info.upgrade);
         }
 
-        var first_tree = trees[0];
-        var first_upgrade = upgrades[0];
-        EventSystem.current.SetSelectedGameObject(first_tree.MainButton.gameObject);
-        first_tree.SetChildUpgradesVisible(true);
-        DisplayUpgradeText(first_upgrade.upgrade);
-
         void OnMainButtonSelected(UIScrollableUpgradeTree tree)
         {
             if(selected_tree != null)
@@ -181,6 +178,27 @@ public class UnlockUpgradeView : View
     {
         btns_upgrade.ForEach(b => Destroy(b.gameObject));
         btns_upgrade.Clear();
+    }
+
+    private Coroutine AnimateShowUpgradeTree()
+    {
+        return StartCoroutine(Cr());
+        IEnumerator Cr()
+        {
+            Lerp.Alpha(cvg_background, 0.5f, 1).UnscaledTime();
+
+            foreach(var tree in trees)
+            {
+                tree.AnimateShowMainButton();
+                yield return new WaitForSecondsRealtime(0.1f);
+            }
+
+            foreach(var tree in trees)
+            {
+                tree.AnimateShowChildButtons();
+                yield return new WaitForSecondsRealtime(0.1f);
+            }
+        }
     }
 
     private Coroutine AnimateShowUpgrade()

@@ -7,7 +7,7 @@ public class Player : Character
     public static Player Instance;
     [SerializeField] private PlayerSettings settings;
     [SerializeField] private GameObject g_invincible;
-    [SerializeField] private ParticleSystem ps_collect_meat, ps_collect_plant, ps_collect_health, ps_level_up;
+    [SerializeField] private ParticleSystem ps_collect_meat, ps_collect_plant, ps_collect_health, ps_level_up, ps_upgrade;
     public PlayerBody PlayerBody { get { return Body as PlayerBody; } }
     public MinMaxFloat Experience { get; private set; } = new MinMaxFloat();
     public Health Health { get; private set; } = new Health();
@@ -266,6 +266,8 @@ public class Player : Character
 
     public void OnUpgradeUnlocked(UpgradeInfo info)
     {
+        ps_upgrade.Play();
+
         foreach(var stat in info.upgrade.stats)
         {
             if(stat.id == StatID.player_health)

@@ -1,6 +1,8 @@
 using Flawliz.Lerp;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class UIScrollableUpgradeTree : MonoBehaviour
@@ -16,6 +18,11 @@ public class UIScrollableUpgradeTree : MonoBehaviour
     public event System.Action onMainButtonSelected;
     public event System.Action<UpgradeInfo> onUpgradeSelected;
 
+    private List<UIIconButton> btns_children = new List<UIIconButton>();
+    private List<GameObject> lines_children = new List<GameObject>();
+    private List<UIIconButton> btns_parents = new List<UIIconButton>();
+    private List<GameObject> lines_parents = new List<GameObject>();
+
     public void Initialize(UpgradeInfo info)
     {
         btn_upgrade_main.Icon = info.upgrade.icon;
@@ -26,6 +33,18 @@ public class UIScrollableUpgradeTree : MonoBehaviour
         MainInfo = info;
 
         CreateButtons();
+
+        MainButton.AnimationPivot.localScale = Vector3.zero;
+
+        foreach(var btn in btns_children)
+        {
+            btn.AnimationPivot.localScale = Vector3.zero;
+        }
+
+        foreach(var line in lines_children)
+        {
+            line.transform.localScale = Vector3.zero;
+        }
     }
 
     private void CreateButtons()
@@ -43,8 +62,12 @@ public class UIScrollableUpgradeTree : MonoBehaviour
             var i_max = children.Count - 1;
             var btn = CreateTreeButton(child, i, i_max, layer, current_position, -1);
             var position = btn.transform.localPosition;
+            var line = CreateLine(current_position, position);
+
+            btns_children.Add(btn);
+            lines_children.Add(line);
+
             CreateChildButtonsRec(child, position, layer + 1);
-            CreateLine(current_position, position);
         }
     }
 
@@ -57,8 +80,12 @@ public class UIScrollableUpgradeTree : MonoBehaviour
             var i_max = parent_types.Count - 1;
             var btn = CreateTreeButton(parent, i, i_max, layer, current_position, 1);
             var position = btn.transform.localPosition;
+            var line = CreateLine(current_position, position);
+
+            btns_parents.Add(btn);
+            lines_parents.Add(line);
+
             CreateParentButtonsRec(parent, position, layer + 1);
-            CreateLine(current_position, position);
         }
     }
 
@@ -141,5 +168,50 @@ public class UIScrollableUpgradeTree : MonoBehaviour
         OnButtonSelected(MainButton);
         OnUpgradeSelected(MainInfo);
         onMainButtonSelected?.Invoke();
+    }
+
+    public void Select()
+    {
+        MainButton.Button.Select();
+    }
+
+    public Coroutine AnimateShowMainButton()
+    {
+        return StartCoroutine(Cr());
+        IEnumerator Cr()
+        {
+            yield return LerpEnumerator.LocalScale(btn_upgrade_main.AnimationPivot, 0.25f, Vector3.zero, Vector3.one)
+                .UnscaledTime()
+                .Curve(EasingCurves.EaseOutBack);
+        }
+    }
+
+    public Coroutine AnimateShowChildButtons()
+    {
+        return StartCoroutine(AnimateChildrenCr());
+        IEnumerator AnimateChildrenCr()
+        {
+            Coroutine last = null;
+            for (int i = 0; i < btns_children.Count; i++)
+            {
+                var btn = btns_children[i];
+                var line = lines_children[i];
+                last = StartCoroutine(AnimateChildCr(btn, line));
+                yield return new WaitForSecondsRealtime(0.1f);
+            }
+
+            yield return last;
+        }
+
+        IEnumerator AnimateChildCr(UIIconButton btn, GameObject line)
+        {
+            yield return LerpEnumerator.LocalScale(line.transform, 0.25f, Vector3.zero, Vector3.one)
+                .UnscaledTime()
+                .Curve(EasingCurves.EaseOutQuad);
+
+            yield return LerpEnumerator.LocalScale(btn.AnimationPivot, 0.25f, Vector3.zero, Vector3.one)
+                .UnscaledTime()
+                .Curve(EasingCurves.EaseOutBack);
+        }
     }
 }
