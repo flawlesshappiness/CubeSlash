@@ -45,11 +45,12 @@ public abstract class Ability : MonoBehaviourExtended
         IsPressed = true;
 
         var charge = AbilityController.Instance.GetAbility(Type.CHARGE) as AbilityCharge;
+        var has_charge = AbilityController.Instance.HasModifier(Info.type, Type.CHARGE);
         if (Info.type == Type.CHARGE)
         {
             // Do nothing
         }
-        else if (charge != null)
+        else if (has_charge && charge != null)
         {
             charge.BeginCharge(GetBaseCooldown() * Player.Instance.GlobalCooldownMultiplier * 0.5f);
         }
@@ -64,11 +65,12 @@ public abstract class Ability : MonoBehaviourExtended
         IsPressed = false;
 
         var charge = AbilityController.Instance.GetAbility(Type.CHARGE) as AbilityCharge;
+        var has_charge = AbilityController.Instance.HasModifier(Info.type, Type.CHARGE);
         if (Info.type == Type.CHARGE)
         {
             // Do nothing
         }
-        else if (charge != null)
+        else if (has_charge && charge != null)
         {
             if (charge.EndCharge())
             {
