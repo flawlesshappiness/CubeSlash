@@ -18,7 +18,7 @@ public class AbilitySplit : Ability
     private float RadiusKnockback { get; set; }
     private float ForceKnockback { get; set; }
     private float HitCooldownReduc { get; set; }
-    private bool SplitProjectiles { get; set; }
+    private int ProjectileFragments { get; set; }
     private bool ChainLightning { get; set; }
     private bool ProjectileLinger { get; set; }
     private bool ProjectilePenetrate { get; set; }
@@ -48,7 +48,7 @@ public class AbilitySplit : Ability
         ForceKnockback = FORCE * GetFloatValue(StatID.split_force_knock_enemy_perc);
         Bursts = GetIntValue(StatID.split_count_bursts);
         HitCooldownReduc = GetFloatValue(StatID.split_hit_cooldown_reduc);
-        SplitProjectiles = GetBoolValue(StatID.split_projectile_fragments);
+        ProjectileFragments = GetIntValue(StatID.split_projectile_fragments);
         ChainLightning = GetBoolValue(StatID.split_chain);
         ProjectileLinger = GetBoolValue(StatID.split_projectile_linger);
         ProjectilePenetrate = GetBoolValue(StatID.split_penetrate);
@@ -137,9 +137,9 @@ public class AbilitySplit : Ability
         {
             Player.PushEnemiesInArea(p.transform.position, RadiusKnockback, ForceKnockback);
 
-            if (SplitProjectiles)
+            if (ProjectileFragments > 0)
             {
-                var count = 3;
+                var count = ProjectileFragments;
                 var angle_delta = 360f / count;
                 for (int i = 0; i < count; i++)
                 {

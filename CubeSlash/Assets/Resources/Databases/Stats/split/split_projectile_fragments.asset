@@ -17,7 +17,6 @@ MonoBehaviour:
   description: $ projectile fragments
   value:
     type_value: 0
-    type_display: 0
     value_int: 0
     value_float: 0
     value_bool: 0
