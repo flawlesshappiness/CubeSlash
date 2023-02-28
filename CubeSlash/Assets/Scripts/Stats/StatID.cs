@@ -79,6 +79,7 @@ public class StatID : FakeEnum
     public static readonly StatID explode_front = new StatID(nameof(explode_front));
     public static readonly StatID explode_chain = new StatID(nameof(explode_chain));
     public static readonly StatID explode_fragments = new StatID(nameof(explode_fragments));
+    public static readonly StatID explode_invulnerable = new StatID(nameof(explode_invulnerable));
 
     // Mines
     public static readonly StatID mines_cooldown_flat = new StatID(nameof(mines_cooldown_flat));

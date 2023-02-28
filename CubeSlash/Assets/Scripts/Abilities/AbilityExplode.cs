@@ -18,6 +18,7 @@ public class AbilityExplode : Ability
     public bool HasFragments { get; private set; }
     public bool HasProjectile { get; private set; }
     public bool IsFront { get; private set; }
+    public bool DelayInvulnerable { get; private set; }
 
     private const float DELAY = 1.5f;
     private const float RADIUS = 4f;
@@ -40,6 +41,7 @@ public class AbilityExplode : Ability
         HasFragments = GetBoolValue(StatID.explode_fragments);
         HasProjectile = GetBoolValue(StatID.explode_projectile);
         IsFront = GetBoolValue(StatID.explode_front);
+        DelayInvulnerable = GetBoolValue(StatID.explode_invulnerable);
     }
 
     public override float GetBaseCooldown() => Cooldown;
@@ -104,6 +106,11 @@ public class AbilityExplode : Ability
             InUse = true;
             Player.Instance.AbilityLock.AddLock(nameof(AbilityExplode));
 
+            if (DelayInvulnerable)
+            {
+                Player.Instance.InvincibilityLock.AddLock(nameof(AbilityExplode));
+            }
+
             StartCoroutine(ExplodeCr(new ChargeInfo
             {
                 parent = parent,
@@ -131,6 +138,11 @@ public class AbilityExplode : Ability
                 {
                     fragment.Lifetime = Random.Range(0.5f, 1f);
                 }
+            }
+
+            if (DelayInvulnerable)
+            {
+                Player.Instance.InvincibilityLock.RemoveLock(nameof(AbilityExplode));
             }
         }
     }

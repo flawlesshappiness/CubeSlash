@@ -21,5 +21,3 @@ kill boss when last dud is killed
 multi-enemies are invincible for too long
 too many green to heal in regen upgrade
 explode pull change to invulnerable while exploding
-change explode charge sprite
-explode bigger delay?

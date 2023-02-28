@@ -96,6 +96,7 @@ public class UpgradeID : FakeEnum
     public static readonly UpgradeID explode_knock_enemy_2 = new UpgradeID(nameof(explode_knock_enemy_2));
     public static readonly UpgradeID explode_radius_1 = new UpgradeID(nameof(explode_radius_1));
     public static readonly UpgradeID explode_radius_2 = new UpgradeID(nameof(explode_radius_2));
+    public static readonly UpgradeID explode_invulnerable_1 = new UpgradeID(nameof(explode_invulnerable_1));
 
     public static readonly UpgradeID explode_mod_chain = new UpgradeID(nameof(explode_mod_chain));
     public static readonly UpgradeID explode_mod_charge = new UpgradeID(nameof(explode_mod_charge));
