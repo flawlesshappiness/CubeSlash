@@ -11,6 +11,7 @@ public class ItemController : Singleton
 
     private List<ExperienceItem> experience_active = new List<ExperienceItem>();
     private List<ExperienceItem> experience_inactive = new List<ExperienceItem>();
+    private List<Item> other_items = new List<Item>();
 
     private ExperienceItem prefab_experience;
     private HealthItem prefab_health;
@@ -122,6 +123,7 @@ public class ItemController : Singleton
         var inst = Instantiate(prefab_health, GameController.Instance.world);
         inst.transform.position = position;
         inst.Initialize();
+        other_items.Add(inst);
     }
 
     public void SpawnArmor(Vector3 position)
@@ -129,6 +131,7 @@ public class ItemController : Singleton
         var inst = Instantiate(prefab_armor, GameController.Instance.world);
         inst.transform.position = position;
         inst.Initialize();
+        other_items.Add(inst);
     }
     #endregion
 
@@ -138,6 +141,12 @@ public class ItemController : Singleton
         {
             item.Despawn();
         }
+
+        foreach(var item in other_items.ToList())
+        {
+            item.Despawn();
+        }
+        other_items.Clear();
     }
 
     public List<ExperienceItem> GetActiveExperiences() => experience_active.ToList();
