@@ -75,6 +75,8 @@ public class Player : Character
         Body.transform.localEulerAngles = Vector3.one * settings.body_size;
         MoveDirection = transform.up;
 
+        g_invincible.SetActive(false);
+
         // Add ability
         var ability = AbilityController.Instance.GainAbility(settings.ability_type);
         AbilityController.Instance.EquipAbility(ability, PlayerInput.ButtonType.WEST);
