@@ -26,6 +26,11 @@ public abstract class Ability : MonoBehaviourExtended
         PlayerValueController.Instance.onValuesUpdated += OnValuesUpdated;
     }
 
+    private void OnDestroy()
+    {
+        PlayerValueController.Instance.onValuesUpdated -= OnValuesUpdated;
+    }
+
     public virtual void OnValuesUpdated() 
     {
     }
