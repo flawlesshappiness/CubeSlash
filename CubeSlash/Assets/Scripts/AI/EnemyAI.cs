@@ -12,6 +12,19 @@ public abstract class EnemyAI : MonoBehaviour
     public virtual void Initialize(Enemy enemy)
     {
         Self = enemy;
+
+        if (Self.EnemyBody.HasDuds)
+        {
+            Self.EnemyBody.OnDudKilled += OnDudKilled;
+        }
+    }
+
+    private void OnDudKilled(HealthDud dud)
+    {
+        if (!Self.EnemyBody.HasActiveHealthDuds())
+        {
+            Self.Kill();
+        }
     }
 
     public void Kill()

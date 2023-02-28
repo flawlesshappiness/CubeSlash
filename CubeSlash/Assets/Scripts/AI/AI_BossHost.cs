@@ -13,7 +13,6 @@ public class AI_BossHost : EnemyAI
     {
         base.Initialize(enemy);
         this.StartCoroutineWithID(BeamCooldownCr(), "BeamCooldown_" + GetInstanceID());
-        Self.EnemyBody.OnDudKilled += dud => HideAndShowDuds(4);
     }
 
     private void FixedUpdate()

@@ -15,7 +15,7 @@ charge knockback too big on bosses (based on mass)
 confirm purchase button sprite
 upgrade display text not visible first time
 upgrades without trees should have trees. Feel better and upgrades are better
-first boss is too difficult. Duds should not disappear.
 split speed should explicitly say distance as well
+
+first boss is too difficult. Duds should not disappear.
 kill boss when last dud is killed
-multi-enemies are invincible for too long

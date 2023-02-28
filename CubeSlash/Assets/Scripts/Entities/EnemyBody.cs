@@ -1,4 +1,3 @@
-using EasingCurve;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -14,6 +13,8 @@ public class EnemyBody : Body
     private List<HealthDud> health_duds = new List<HealthDud>();
 
     public System.Action<HealthDud> OnDudKilled;
+
+    public bool HasDuds { get; private set; }
 
     private void OnDrawGizmos()
     {
@@ -54,6 +55,8 @@ public class EnemyBody : Body
                     health_duds.Add(dud);
                 }
             }
+
+            HasDuds = health_duds.Count > 0;
         }
     }
 

@@ -144,6 +144,7 @@ public class ItemController : Singleton
 
         foreach(var item in other_items.ToList())
         {
+            if (item == null) continue;
             item.Despawn();
         }
         other_items.Clear();
