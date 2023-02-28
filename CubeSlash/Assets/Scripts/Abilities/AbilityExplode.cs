@@ -19,7 +19,7 @@ public class AbilityExplode : Ability
     public bool HasProjectile { get; private set; }
     public bool IsFront { get; private set; }
 
-    private const float DELAY = 0.5f;
+    private const float DELAY = 1.5f;
     private const float RADIUS = 4f;
     private const float FORCE = 200f;
 
