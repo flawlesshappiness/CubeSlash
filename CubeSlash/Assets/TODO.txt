@@ -26,4 +26,3 @@ refund more? 50%?
 health items are not destroyed on main menu
 damage bubble sprite is not properly reset
 background particles are not properly initialized when restarting
-error when equipping an ability as modifier, then changing it to active ability

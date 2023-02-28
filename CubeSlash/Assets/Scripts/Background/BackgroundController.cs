@@ -29,6 +29,8 @@ public class BackgroundController : Singleton
     private void OnMainMenu()
     {
         ClearObjectsImmediate();
+        current_area = null;
+        FadeToArea(GameSettings.Instance.main_menu_area);
     }
 
     private void OnNextArea(Area area)
