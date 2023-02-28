@@ -22,6 +22,7 @@ public class StartView : View
         btn_options.onSubmit += ClickOptions;
         btn_quit.onSubmit += ClickQuit;
 
+        BackgroundController.Instance.FadeToArea(GameSettings.Instance.main_menu_area);
         VignetteController.Instance.SetArea(GameSettings.Instance.main_menu_area);
         CameraController.Instance.AnimateSize(2f, 15f, EasingCurves.EaseInOutQuad);
     }

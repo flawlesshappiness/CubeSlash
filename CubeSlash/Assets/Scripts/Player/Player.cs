@@ -31,8 +31,8 @@ public class Player : Character
     public bool CollectSpeedBoost { get; private set; }
     public bool ConvertHealthToArmor { get; private set; }
     public bool InfiniteDrag { get; private set; }
-    public bool KillEnemyShieldRegen { get; private set; }
-    public bool PlantExpHealthRegen { get; private set; }
+    public int KillEnemyShieldRegen { get; private set; }
+    public int PlantExpHealthRegen { get; private set; }
 
     private const float COLLECT_RADIUS = 3;
 
@@ -261,8 +261,8 @@ public class Player : Character
         ConvertHealthToArmor = PlayerValueController.Instance.GetBoolValue(StatID.player_convert_health);
         Body.Size = PlayerBody.Settings.body_size * PlayerValueController.Instance.GetFloatValue(StatID.player_body_size_perc);
         InfiniteDrag = PlayerValueController.Instance.GetBoolValue(StatID.player_infinite_drag);
-        KillEnemyShieldRegen = PlayerValueController.Instance.GetBoolValue(StatID.player_regen_kill);
-        PlantExpHealthRegen = PlayerValueController.Instance.GetBoolValue(StatID.player_regen_plant);
+        KillEnemyShieldRegen = PlayerValueController.Instance.GetIntValue(StatID.player_regen_kill);
+        PlantExpHealthRegen = PlayerValueController.Instance.GetIntValue(StatID.player_regen_plant);
         GlobalCooldownMultiplier = PlayerValueController.Instance.GetFloatValue(StatID.player_cooldown_multiplier);
         ExperienceMultiplier = PlayerValueController.Instance.GetFloatValue(StatID.player_exp_multiplier);
     }
@@ -333,7 +333,7 @@ public class Player : Character
 
     private void DecrementKillsUntilShieldRegen()
     {
-        if (!KillEnemyShieldRegen) return;
+        if (KillEnemyShieldRegen <= 0) return;
 
         enemy_kills_until_shield_regen--;
         if(enemy_kills_until_shield_regen <= 0)
@@ -347,7 +347,7 @@ public class Player : Character
 
     private void ResetKillsUntilShieldRegen()
     {
-        enemy_kills_until_shield_regen += 100;
+        enemy_kills_until_shield_regen += KillEnemyShieldRegen;
     }
     #endregion
     #region HEALTH
@@ -536,7 +536,7 @@ public class Player : Character
 
     private void DecrementPlantExperienceUntilHealthRegen()
     {
-        if (!PlantExpHealthRegen) return;
+        if (PlantExpHealthRegen <= 0) return;
         plant_exp_until_health_regen--;
 
         if (plant_exp_until_health_regen <= 0)
@@ -553,7 +553,7 @@ public class Player : Character
 
     private void ResetPlantExperienceUntilHealthRegen()
     {
-        plant_exp_until_health_regen += 50;
+        plant_exp_until_health_regen += PlantExpHealthRegen;
     }
 
     public void ResetExperience()

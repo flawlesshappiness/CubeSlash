@@ -16,7 +16,7 @@ MonoBehaviour:
     id: player_regen_kill
   name: Bloodthirst
   icon: {fileID: 21300000, guid: 2f52692567e00724bbf7bef0357d5add, type: 3}
-  id_stats: player
+  hidden: 0
   require_ability: 0
   ability_required: 0
   upgrades_required:
@@ -25,7 +25,7 @@ MonoBehaviour:
   - id:
       id: player_regen_kill
     value:
-      type_value: 2
-      value_int: 0
+      type_value: 0
+      value_int: 100
       value_float: 0
       value_bool: 1

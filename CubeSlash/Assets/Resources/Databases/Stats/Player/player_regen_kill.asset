@@ -14,10 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id:
     id: player_regen_kill
-  description: Kill 100 enemies to gain armor
+  description: Kill $ enemies to gain armor
   value:
-    type_value: 2
-    type_display: 0
+    type_value: 0
     value_int: 0
     value_float: 0
     value_bool: 0
