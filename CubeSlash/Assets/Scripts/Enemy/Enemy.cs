@@ -36,7 +36,7 @@ public class Enemy : Character, IKillable, IHurt
         IEnumerator InvincibleCr()
         {
             InvincibleLock.AddLock("Spawn");
-            yield return new WaitForSeconds(0.5f);
+            yield return null;
             InvincibleLock.RemoveLock("Spawn");
         }
     }

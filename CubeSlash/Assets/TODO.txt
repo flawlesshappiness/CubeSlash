@@ -19,4 +19,3 @@ first boss is too difficult. Duds should not disappear.
 split speed should explicitly say distance as well
 kill boss when last dud is killed
 multi-enemies are invincible for too long
-too many green to heal in regen upgrade
