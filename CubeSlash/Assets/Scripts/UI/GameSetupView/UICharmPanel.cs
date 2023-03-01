@@ -185,8 +185,8 @@ public class UICharmPanel : MonoBehaviour
         }
         else
         {
-            tmp_name.text = "";
-            tmp_desc.text = "";
+            tmp_name.text = "Charms";
+            tmp_desc.text = "None selected";
         }
     }
 }

@@ -16,8 +16,8 @@ difficulties increase max area?
 physics objects in the world are fun. Hazards? Affect both player and enemy?
 
 knockback upgrades are boring
-gamesetupview highlight frame 
 change DPAD icon
 grace period just after picking upgrade
 fix endless area no progress
 change refund to a button with more text
+gamesetupview highlight frame 
