@@ -13,7 +13,9 @@ MonoBehaviour:
   m_Name: Normal
   m_EditorClassIdentifier: 
   difficulty_name: reef
-  difficulty_description: 'more enemies
+  difficulty_description: 'decreased evolving
 
-    decreased evolving'
+    more enemies
+
+    stronger bosses'
   difficulty_value: 0.5

@@ -13,7 +13,10 @@ MonoBehaviour:
   m_Name: Hard
   m_EditorClassIdentifier: 
   difficulty_name: abyss
-  difficulty_description: 'even more enemies
+  difficulty_description: 'slow evolving
 
-    slow evolving'
+    even more enemies
+
+    even stronger
+    bosses'
   difficulty_value: 1
