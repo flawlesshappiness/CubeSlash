@@ -18,7 +18,7 @@ public class UpgradeStat
         var is_value_positive = value.IsPositive();
         var is_effect_positive = !(stat.high_is_positive ^ is_value_positive);
         var color = is_effect_positive ? db_color.text_normal.GetColor() : db_color.text_wrong.GetColor();
-        var sign = is_value_positive ? "+" : "";
+        var sign = (is_value_positive && stat.display_has_plus) ? "+" : "";
         return stat.description.Replace("$", $"{sign}{s_value}").Color(color);
     }
 }

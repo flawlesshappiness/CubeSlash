@@ -7,6 +7,7 @@ public class Stat : ScriptableObject
     public string description = "";
     public StatValue value = new StatValue();
     public bool high_is_positive = true;
+    public bool display_has_plus = true;
 
     public string GetDisplayString()
     {

@@ -22,5 +22,3 @@ fix endless area no progress
 change refund to a button with more text
 first boss too hard, less duds? maybe based on difficulty?
 physics objects in the world are fun. Hazards? Affect both player and enemy?
-regen upgrade displayed wrong
-last dud doesn't kill boss
