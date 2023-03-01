@@ -14,4 +14,3 @@ dash trail is not working
 dash too long
 test cooldown reduce upgrades
 charge knockback too big on bosses (based on mass)
-confirm purchase button sprite

@@ -227,11 +227,6 @@ public class AbilityCharge : Ability
         }
     }
 
-    private void StartShoot()
-    {
-
-    }
-
     private void Shoot(float distance)
     {
         Kills = 0;
@@ -286,7 +281,7 @@ public class AbilityCharge : Ability
                     .Where(e => e != null)
                     .ToList().ForEach(e =>
                     {
-                        e.Knockback(Player.MoveDirection * Knockback, true, false);
+                        e.Knockback(Player.MoveDirection * Knockback, false, false);
                     });
 
                 // Self knockback
