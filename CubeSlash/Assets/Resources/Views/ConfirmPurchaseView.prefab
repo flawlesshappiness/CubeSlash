@@ -1287,6 +1287,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 3129649281376336040}
     m_Modifications:
+    - target: {fileID: 438937858540631276, guid: f1eb4b7acc478a54b91879fe6b8e5451, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 438937858540631276, guid: f1eb4b7acc478a54b91879fe6b8e5451, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 50
+      objectReference: {fileID: 0}
     - target: {fileID: 1082461466369086601, guid: f1eb4b7acc478a54b91879fe6b8e5451, type: 3}
       propertyPath: m_text
       value: Cancel
@@ -1303,6 +1311,10 @@ PrefabInstance:
       propertyPath: m_enableAutoSizing
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2173353427760946992, guid: f1eb4b7acc478a54b91879fe6b8e5451, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 43faa8729d7e28745966103df103fb19, type: 3}
     - target: {fileID: 3978526929232673917, guid: f1eb4b7acc478a54b91879fe6b8e5451, type: 3}
       propertyPath: select_on_start
       value: 1
@@ -1310,6 +1322,18 @@ PrefabInstance:
     - target: {fileID: 5281460540265361662, guid: f1eb4b7acc478a54b91879fe6b8e5451, type: 3}
       propertyPath: m_Name
       value: CancelButton
+      objectReference: {fileID: 0}
+    - target: {fileID: 5666105070877077030, guid: f1eb4b7acc478a54b91879fe6b8e5451, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 43faa8729d7e28745966103df103fb19, type: 3}
+    - target: {fileID: 6105823949533452557, guid: f1eb4b7acc478a54b91879fe6b8e5451, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 6105823949533452557, guid: f1eb4b7acc478a54b91879fe6b8e5451, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 6739507350967738137, guid: f1eb4b7acc478a54b91879fe6b8e5451, type: 3}
       propertyPath: m_Pivot.x
@@ -1581,6 +1605,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 3129649281376336040}
     m_Modifications:
+    - target: {fileID: 438937858540631276, guid: f1eb4b7acc478a54b91879fe6b8e5451, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 438937858540631276, guid: f1eb4b7acc478a54b91879fe6b8e5451, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 50
+      objectReference: {fileID: 0}
     - target: {fileID: 1082461466369086601, guid: f1eb4b7acc478a54b91879fe6b8e5451, type: 3}
       propertyPath: m_text
       value: Buy
@@ -1597,9 +1629,25 @@ PrefabInstance:
       propertyPath: m_enableAutoSizing
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2173353427760946992, guid: f1eb4b7acc478a54b91879fe6b8e5451, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 43faa8729d7e28745966103df103fb19, type: 3}
     - target: {fileID: 5281460540265361662, guid: f1eb4b7acc478a54b91879fe6b8e5451, type: 3}
       propertyPath: m_Name
       value: ConfirmButton
+      objectReference: {fileID: 0}
+    - target: {fileID: 5666105070877077030, guid: f1eb4b7acc478a54b91879fe6b8e5451, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 43faa8729d7e28745966103df103fb19, type: 3}
+    - target: {fileID: 6105823949533452557, guid: f1eb4b7acc478a54b91879fe6b8e5451, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 6105823949533452557, guid: f1eb4b7acc478a54b91879fe6b8e5451, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 6739507350967738137, guid: f1eb4b7acc478a54b91879fe6b8e5451, type: 3}
       propertyPath: m_Pivot.x
