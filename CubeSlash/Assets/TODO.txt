@@ -20,4 +20,3 @@ change DPAD icon
 grace period just after picking upgrade
 fix endless area no progress
 change refund to a button with more text
-gamesetupview highlight frame 

@@ -44,6 +44,8 @@ public class UICharmPanel : MonoBehaviour
         content.gameObject.SetActive(!first_run);
         menu.interactable = !first_run;
 
+        UpdateDisplayText();
+
         StartCoroutine(Cr());
         IEnumerator Cr()
         {
@@ -176,9 +178,13 @@ public class UICharmPanel : MonoBehaviour
     private void OnDeselect()
     {
         Lerp.LocalScale(pivot_select, 0.15f, Vector3.zero);
+        UpdateDisplayText();
+    }
 
+    private void UpdateDisplayText()
+    {
         var charm = charms.FirstOrDefault(c => c.Activated);
-        if(charm != null)
+        if (charm != null)
         {
             var i = charms.IndexOf(charm);
             SetSelectedCharm(i);
