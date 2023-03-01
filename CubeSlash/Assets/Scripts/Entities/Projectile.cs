@@ -43,14 +43,11 @@ public class Projectile : MonoBehaviourExtended
         StartCoroutine(AnimateRotationCr());
     }
 
-    private void Update()
+    public virtual void Update()
     {
         LifetimeUpdate();
         DistanceUpdate();
-        OnUpdate();
     }
-
-    protected virtual void OnUpdate() { }
 
     private void FixedUpdate()
     {

@@ -83,6 +83,7 @@ public class UnlockUpgradeView : View
         var first_tree = trees[0];
         first_tree.SetChildUpgradesVisible(true);
         first_tree.Select();
+        DisplayUpgradeText(first_tree.MainInfo.upgrade);
 
         cvg_description.alpha = 1;
         cvg_past_upgrades.alpha = 1;

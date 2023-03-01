@@ -7,15 +7,11 @@ endless mode
 CHARM: Orbiting damage
 CHARM: Gain x when y
 
+split speed should explicitly say distance as well
 refund more? 50%?
+upgrades without trees should have trees. Feel better and upgrades are better
 dash trail is not working
 dash too long
 test cooldown reduce upgrades
 charge knockback too big on bosses (based on mass)
 confirm purchase button sprite
-upgrade display text not visible first time
-upgrades without trees should have trees. Feel better and upgrades are better
-split speed should explicitly say distance as well
-
-first boss is too difficult. Duds should not disappear.
-kill boss when last dud is killed

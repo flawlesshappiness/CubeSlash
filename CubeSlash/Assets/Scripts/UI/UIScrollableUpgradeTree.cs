@@ -12,7 +12,7 @@ public class UIScrollableUpgradeTree : MonoBehaviour
     [SerializeField] private Image template_img_line;
     [SerializeField] private CanvasGroup cvg_children;
 
-    private UpgradeInfo MainInfo { get; set; }
+    public UpgradeInfo MainInfo { get; set; }
     public UIIconButton MainButton { get { return btn_upgrade_main; } }
 
     public event System.Action onMainButtonSelected;
