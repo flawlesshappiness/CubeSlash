@@ -69,8 +69,8 @@ public class HealthDud : MonoBehaviour, IKillable
         ps_kill.Play();
         ps_ooze.Play();
         SoundController.Instance.Play(SoundEffectType.sfx_dud_death);
-        OnKilled?.Invoke();
         Dead = true;
+        OnKilled?.Invoke();
     }
 
     public bool CanKill() => IsActive() && !ArmorActive && DudActive;

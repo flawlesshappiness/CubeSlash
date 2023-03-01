@@ -21,7 +21,8 @@ public abstract class EnemyAI : MonoBehaviour
 
     private void OnDudKilled(HealthDud dud)
     {
-        if (!Self.EnemyBody.HasActiveHealthDuds())
+        var count_alive = Self.EnemyBody.Duds.Count(dud => !dud.Dead);
+        if (count_alive == 0)
         {
             Self.Kill();
         }
