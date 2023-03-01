@@ -126,7 +126,7 @@ public abstract class Ability : MonoBehaviourExtended
     {
         InUse = false || CanPressWhileOnCooldown();
 
-        var mul_charge = HasModifier(Type.CHARGE) ? 0 : 1;
+        var mul_charge = (HasModifier(Type.CHARGE) || Info.type == Type.CHARGE) ? 0 : 1;
         var mul_global = Player.Instance.GlobalCooldownMultiplier;
 
         TimeCooldownStart = Time.time;
