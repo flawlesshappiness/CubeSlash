@@ -61,7 +61,7 @@ public class HealthDud : MonoBehaviour, IKillable
         ps_glow.SetEmissionEnabled(enabled);
     }
 
-    public bool IsActive() => !Dead;
+    public bool IsAlive() => !Dead;
 
     public void Kill()
     {
@@ -73,6 +73,6 @@ public class HealthDud : MonoBehaviour, IKillable
         OnKilled?.Invoke();
     }
 
-    public bool CanKill() => IsActive() && !ArmorActive && DudActive;
+    public bool CanKill() => IsAlive() && !ArmorActive && DudActive;
     public Vector3 GetPosition() => transform.position;
 }

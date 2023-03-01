@@ -1,5 +1,35 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &132998279334562604
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1598258516610747527}
+  m_Layer: 0
+  m_Name: Parasite (7)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1598258516610747527
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 132998279334562604}
+  m_LocalRotation: {x: -0, y: -0, z: -0.9659257, w: 0.25881967}
+  m_LocalPosition: {x: 0.2181, y: -0.463, z: 0}
+  m_LocalScale: {x: 1.25, y: 1.25, z: 1}
+  m_Children: []
+  m_Father: {fileID: 2512613168863538346}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -150}
 --- !u!1 &332960083316329654
 GameObject:
   m_ObjectHideFlags: 0
@@ -30,6 +60,36 @@ Transform:
   m_Father: {fileID: 2512613168863538346}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
+--- !u!1 &399940673362662539
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5343182110476032739}
+  m_Layer: 0
+  m_Name: Parasite (8)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5343182110476032739
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 399940673362662539}
+  m_LocalRotation: {x: -0, y: -0, z: -0.9659261, w: -0.25881794}
+  m_LocalPosition: {x: -0.2181, y: -0.463, z: 0}
+  m_LocalScale: {x: 1.25, y: 1.25, z: 1}
+  m_Children: []
+  m_Father: {fileID: 2512613168863538346}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -210}
 --- !u!1 &509724303943375344
 GameObject:
   m_ObjectHideFlags: 0
@@ -168,6 +228,8 @@ Transform:
   - {fileID: 8013712051060977519}
   - {fileID: 3092082747316351761}
   - {fileID: 5184653908330754520}
+  - {fileID: 1598258516610747527}
+  - {fileID: 5343182110476032739}
   m_Father: {fileID: 2641101720243033873}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -220,8 +282,17 @@ MonoBehaviour:
   Trigger: {fileID: 5938915428007740160}
   ps_death: {fileID: 1272193720796475515, guid: c175c3e1d1e096e439fba1f3b12eb259, type: 3}
   scale_by_velocity: 0
-  parent_health_duds: {fileID: 2512613168863538346}
   template_dud: {fileID: 3405480637174817150, guid: d9db459bb2823f84e9f39f091c9ddaf6, type: 3}
+  duds_map:
+  - duds:
+    - {fileID: 8442236977359108107}
+    - {fileID: 8013712051060977519}
+  - duds:
+    - {fileID: 3092082747316351761}
+    - {fileID: 5184653908330754520}
+  - duds:
+    - {fileID: 1598258516610747527}
+    - {fileID: 5343182110476032739}
   lamp_target: {fileID: 2932489231505430045}
 --- !u!1 &4302659232433181156
 GameObject:

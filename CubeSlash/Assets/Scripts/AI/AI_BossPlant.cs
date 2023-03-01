@@ -13,7 +13,7 @@ public class AI_BossPlant : EnemyAI
     private List<PlantPillar> pillars = new List<PlantPillar>();
 
     private const int EXP_PER_WALL = 3;
-    private const int HITPOINTS = 5;
+    private static readonly int[] HITPOINTS = new int[] { 4, 5, 6 };
     private const float SIZE_WALL = 5;
     private const float RADIUS = 25;
     private const float COOLDOWN_PILLAR_MAX = 8f;
@@ -23,13 +23,16 @@ public class AI_BossPlant : EnemyAI
     private const float PILLAR_LIFETIME_MIN = 5f;
     private const float PILLAR_LIFETIME_MAX = 10f;
 
+    private int duds_max;
     private int duds_to_kill;
     private float time_until_pillar;
 
     public override void Initialize(Enemy enemy)
     {
         base.Initialize(enemy);
-        duds_to_kill = HITPOINTS;
+        var i_diff = DifficultyController.Instance.DifficultyIndex;
+        duds_max = HITPOINTS[Mathf.Clamp(i_diff, 0, HITPOINTS.Length - 1)];
+        duds_to_kill = duds_max;
         Self.Body.gameObject.SetActive(false);
         Self.transform.position = Player.Instance.transform.position;
 
@@ -146,7 +149,7 @@ public class AI_BossPlant : EnemyAI
 
     private float GetHealthPercentage()
     {
-        return 1f - ((float)duds_to_kill / HITPOINTS);
+        return 1f - ((float)duds_to_kill / duds_max);
     }
 
     private void Update()

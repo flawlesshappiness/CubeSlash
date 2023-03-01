@@ -223,8 +223,21 @@ MonoBehaviour:
   Collider: {fileID: 1421184977900173726}
   Trigger: {fileID: 5938915428007740160}
   ps_death: {fileID: 1272193720796475515, guid: fd5afc43bece25445bb6d64a73e7328b, type: 3}
+  scale_by_velocity: 0
   parent_health_duds: {fileID: 2512613168863538346}
   template_dud: {fileID: 3405480637174817150, guid: 23ec884aeae69e74c9efdd36a40fc296, type: 3}
+  duds_map:
+  - duds:
+    - {fileID: 8442236977359108107}
+    - {fileID: 8013712051060977519}
+    - {fileID: 990756735804445228}
+    - {fileID: 9027192402083819212}
+  - duds:
+    - {fileID: 3092082747316351761}
+    - {fileID: 3550395010488328158}
+  - duds:
+    - {fileID: 5184653908330754520}
+    - {fileID: 3670648810988901248}
 --- !u!1 &4008918390735960948
 GameObject:
   m_ObjectHideFlags: 0

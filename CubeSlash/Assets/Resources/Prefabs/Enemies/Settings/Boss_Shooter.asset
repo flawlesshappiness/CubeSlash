@@ -16,8 +16,8 @@ MonoBehaviour:
   linear_acceleration: 5
   linear_velocity: 3
   linear_drag: 20
-  angular_acceleration: 2.5
-  angular_velocity: 45
+  angular_acceleration: 2
+  angular_velocity: 25
   size: 10
   mass: 100
   ai: {fileID: -4310067352924480310, guid: 58b68234838ebb3488f554bf0e889c71, type: 3}

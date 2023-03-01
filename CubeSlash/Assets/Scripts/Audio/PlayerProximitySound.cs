@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class PlayerProximitySound : MonoBehaviour
@@ -11,13 +12,22 @@ public class PlayerProximitySound : MonoBehaviour
 
     private void OnEnable()
     {
+        StartCoroutine(StartSoundCr());
+    }
+
+    IEnumerator StartSoundCr()
+    {
+        yield return new WaitForSeconds(0.5f);
         sfx = SoundController.Instance.CreateInstance(type_sfx);
         sfx.Play();
     }
 
     private void OnDisable()
     {
-        sfx.Stop();
+        if(sfx != null)
+        {
+            sfx.Stop();
+        }
     }
 
     private void Update()

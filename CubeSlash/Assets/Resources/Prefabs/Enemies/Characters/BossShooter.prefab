@@ -1,5 +1,35 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &16270234739882326
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 162524482437317504}
+  m_Layer: 0
+  m_Name: Parasite (6)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &162524482437317504
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 16270234739882326}
+  m_LocalRotation: {x: -0, y: -0, z: -0.9238794, w: 0.38268375}
+  m_LocalPosition: {x: 0.35, y: -0.35, z: 0}
+  m_LocalScale: {x: 1.2499999, y: 1.2499999, z: 1}
+  m_Children: []
+  m_Father: {fileID: 2516284629752723671}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -135}
 --- !u!1 &509724303943375344
 GameObject:
   m_ObjectHideFlags: 0
@@ -91,6 +121,36 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ab436bd546c92b428731e7672de8289, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &1192881332681096884
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1207238097633561061}
+  m_Layer: 0
+  m_Name: Parasite (8)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1207238097633561061
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1192881332681096884}
+  m_LocalRotation: {x: -0, y: -0, z: 0.38268322, w: 0.9238797}
+  m_LocalPosition: {x: -0.35, y: 0.35, z: 0}
+  m_LocalScale: {x: 1.25, y: 1.25, z: 1}
+  m_Children: []
+  m_Father: {fileID: 2516284629752723671}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 45}
 --- !u!1 &1287213411121352282
 GameObject:
   m_ObjectHideFlags: 0
@@ -118,14 +178,17 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 3092082747316351761}
-  - {fileID: 5184653908330754520}
-  - {fileID: 3550395010488328158}
-  - {fileID: 3670648810988901248}
+  - {fileID: 2933085472476444716}
+  - {fileID: 3566647659686271357}
+  - {fileID: 5303984260622308244}
+  - {fileID: 1748528080568536809}
+  - {fileID: 162524482437317504}
+  - {fileID: 1034819548529401773}
+  - {fileID: 1207238097633561061}
   m_Father: {fileID: 2641101720243033873}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1697079816382186817
+--- !u!1 &1468465036055633272
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -133,28 +196,28 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 3092082747316351761}
+  - component: {fileID: 1034819548529401773}
   m_Layer: 0
-  m_Name: Parasite (5)
+  m_Name: Parasite (7)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &3092082747316351761
+--- !u!4 &1034819548529401773
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1697079816382186817}
-  m_LocalRotation: {x: -0, y: -0, z: -0.8660253, w: -0.50000024}
-  m_LocalPosition: {x: -0.44, y: -0.235, z: 0}
-  m_LocalScale: {x: 1.5, y: 1.5, z: 1}
+  m_GameObject: {fileID: 1468465036055633272}
+  m_LocalRotation: {x: -0, y: -0, z: -0.3826832, w: 0.9238797}
+  m_LocalPosition: {x: 0.35, y: 0.35, z: 0}
+  m_LocalScale: {x: 1.2500001, y: 1.2500001, z: 1}
   m_Children: []
   m_Father: {fileID: 2516284629752723671}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -240}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -45}
 --- !u!1 &2973982606120359821
 GameObject:
   m_ObjectHideFlags: 0
@@ -204,8 +267,18 @@ MonoBehaviour:
   Trigger: {fileID: 5938915428007740160}
   ps_death: {fileID: 1272193720796475515, guid: fd5afc43bece25445bb6d64a73e7328b, type: 3}
   scale_by_velocity: 0
-  parent_health_duds: {fileID: 2516284629752723671}
   template_dud: {fileID: 3405480637174817150, guid: 23ec884aeae69e74c9efdd36a40fc296, type: 3}
+  duds_map:
+  - duds:
+    - {fileID: 2933085472476444716}
+    - {fileID: 3566647659686271357}
+    - {fileID: 5303984260622308244}
+  - duds:
+    - {fileID: 1034819548529401773}
+    - {fileID: 1207238097633561061}
+  - duds:
+    - {fileID: 1748528080568536809}
+    - {fileID: 162524482437317504}
   eyes_single: {fileID: 2586805978023571279}
   eyes_arc: {fileID: 3850427046600612112}
   eyes_circle: {fileID: 1181599930941443813}
@@ -307,7 +380,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ab436bd546c92b428731e7672de8289, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &4008918390735960948
+--- !u!1 &4781661985111363644
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -315,58 +388,28 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 3550395010488328158}
+  - component: {fileID: 3566647659686271357}
   m_Layer: 0
-  m_Name: Parasite (7)
+  m_Name: Parasite (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &3550395010488328158
+--- !u!4 &3566647659686271357
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4008918390735960948}
-  m_LocalRotation: {x: -0, y: -0, z: -0.4999996, w: 0.8660257}
-  m_LocalPosition: {x: 0.44, y: 0.235, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 2516284629752723671}
-  m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -60}
---- !u!1 &4302659232433181156
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 5184653908330754520}
-  m_Layer: 0
-  m_Name: Parasite (6)
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &5184653908330754520
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4302659232433181156}
-  m_LocalRotation: {x: -0, y: -0, z: -0.8660258, w: 0.4999993}
-  m_LocalPosition: {x: 0.44, y: -0.235, z: 0}
-  m_LocalScale: {x: 1.5, y: 1.5, z: 1}
+  m_GameObject: {fileID: 4781661985111363644}
+  m_LocalRotation: {x: -0, y: -0, z: -0.70710677, w: 0.7071068}
+  m_LocalPosition: {x: 0.5, y: 0, z: 0}
+  m_LocalScale: {x: 1.25, y: 1.25, z: 1}
   m_Children: []
   m_Father: {fileID: 2516284629752723671}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -120}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -90}
 --- !u!1 &5568460163949206672
 GameObject:
   m_ObjectHideFlags: 0
@@ -397,6 +440,36 @@ Transform:
   m_Father: {fileID: 2641101720243033873}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &5665480672590718540
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2933085472476444716}
+  m_Layer: 0
+  m_Name: Parasite (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2933085472476444716
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5665480672590718540}
+  m_LocalRotation: {x: -0, y: -0, z: 0.70710677, w: 0.7071068}
+  m_LocalPosition: {x: -0.5, y: 0, z: 0}
+  m_LocalScale: {x: 1.25, y: 1.25, z: 1}
+  m_Children: []
+  m_Father: {fileID: 2516284629752723671}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
 --- !u!1 &6918236059815919680
 GameObject:
   m_ObjectHideFlags: 0
@@ -585,7 +658,7 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!1 &9062361790975916947
+--- !u!1 &7762296516108947969
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -593,28 +666,58 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 3670648810988901248}
+  - component: {fileID: 5303984260622308244}
   m_Layer: 0
-  m_Name: Parasite (8)
+  m_Name: Parasite (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &3670648810988901248
+--- !u!4 &5303984260622308244
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9062361790975916947}
-  m_LocalRotation: {x: -0, y: -0, z: 0.4999996, w: 0.8660257}
-  m_LocalPosition: {x: -0.45, y: 0.235, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_GameObject: {fileID: 7762296516108947969}
+  m_LocalRotation: {x: -0, y: -0, z: -1, w: -0.00000035762784}
+  m_LocalPosition: {x: 0, y: -0.5, z: 0}
+  m_LocalScale: {x: 1.25, y: 1.25, z: 1}
+  m_Children: []
+  m_Father: {fileID: 2516284629752723671}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -180}
+--- !u!1 &8538996181312139778
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1748528080568536809}
+  m_Layer: 0
+  m_Name: Parasite (5)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1748528080568536809
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8538996181312139778}
+  m_LocalRotation: {x: -0, y: -0, z: 0.92387956, w: 0.38268328}
+  m_LocalPosition: {x: -0.35, y: -0.35, z: 0}
+  m_LocalScale: {x: 1.25, y: 1.25, z: 1}
   m_Children: []
   m_Father: {fileID: 2516284629752723671}
   m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 60}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 135}
 --- !u!1001 &377715596538954839
 PrefabInstance:
   m_ObjectHideFlags: 0

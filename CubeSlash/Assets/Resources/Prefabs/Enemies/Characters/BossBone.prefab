@@ -284,8 +284,15 @@ MonoBehaviour:
   Collider: {fileID: 1421184977900173726}
   Trigger: {fileID: 5938915428007740160}
   ps_death: {fileID: 1272193720796475515, guid: 9d70ac3a94366b14cb402524b2942eb6, type: 3}
-  parent_health_duds: {fileID: 2512613168863538346}
+  scale_by_velocity: 0
   template_dud: {fileID: 3405480637174817150, guid: 39a9d67b895ab3f49ade5a710765fefe, type: 3}
+  duds_map:
+  - duds:
+    - {fileID: 3711193817422183700}
+    - {fileID: 5143692768239656062}
+  - duds:
+    - {fileID: 6819325036550328250}
+    - {fileID: 1111911926062511685}
   ps_teleport: {fileID: 4222508567880366377}
   pivots_wall:
   - {fileID: 3711193817422183700}

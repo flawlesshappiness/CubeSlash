@@ -85,7 +85,7 @@ public class Enemy : Character, IKillable, IHurt
         Rigidbody.AddTorque(angle * AngularAcceleration * Rigidbody.mass);
     }
     #region HEALTH
-    public bool CanKill() => !EnemyBody.HasActiveHealthDuds() && !IsDead && InvincibleLock.IsFree;
+    public bool CanKill() => !EnemyBody.HasLivingDuds() && !IsDead && InvincibleLock.IsFree;
 
     public void Kill()
     {

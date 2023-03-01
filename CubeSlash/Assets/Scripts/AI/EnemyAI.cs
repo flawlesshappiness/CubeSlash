@@ -96,9 +96,9 @@ public abstract class EnemyAI : MonoBehaviour
         StartCoroutine(Cr());
         IEnumerator Cr()
         {
-            Self.EnemyBody.Duds.Where(d => d.IsActive()).ToList().ForEach(d => d.SetArmorActive(true));
+            Self.EnemyBody.Duds.Where(d => d.IsAlive()).ToList().ForEach(d => d.SetArmorActive(true));
             yield return new WaitForSeconds(duration);
-            Self.EnemyBody.Duds.Where(d => d.IsActive()).ToList().ForEach(d => d.SetArmorActive(false));
+            Self.EnemyBody.Duds.Where(d => d.IsAlive()).ToList().ForEach(d => d.SetArmorActive(false));
         }
     }
 
@@ -115,11 +115,11 @@ public abstract class EnemyAI : MonoBehaviour
 
     protected void HideDuds()
     {
-        Self.EnemyBody.Duds.Where(d => d.IsActive()).ToList().ForEach(d => d.SetDudActive(false));
+        Self.EnemyBody.Duds.Where(d => d.IsAlive()).ToList().ForEach(d => d.SetDudActive(false));
     }
 
     protected void ShowDuds()
     {
-        Self.EnemyBody.Duds.Where(d => d.IsActive()).ToList().ForEach(d => d.SetDudActive(true));
+        Self.EnemyBody.Duds.Where(d => d.IsAlive()).ToList().ForEach(d => d.SetDudActive(true));
     }
 }
