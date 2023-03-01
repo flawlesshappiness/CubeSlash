@@ -2,6 +2,7 @@ using Flawliz.Lerp;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class AbilityDash : Ability
@@ -29,6 +30,7 @@ public class AbilityDash : Ability
 
     [Header("DASH")]
     [SerializeField] private Projectile prefab_shockwave;
+    [SerializeField] private DamageTrail damage_trail;
     [SerializeField] private ParticleSystem ps_bubbles, ps_trail, ps_impact;
     [SerializeField] private AnimationCurve ac_push_enemies;
 
@@ -51,6 +53,8 @@ public class AbilityDash : Ability
         Player.onTriggerEnter += OnImpact;
 
         ps_trail.SetEmissionEnabled(false);
+
+        damage_trail.gameObject.SetActive(false);
     }
 
     private void OnDestroy()
@@ -124,9 +128,20 @@ public class AbilityDash : Ability
             .Play()
             .Destroy(5);
 
+        if (TrailEnabled)
+        {
+            damage_trail.ResetTrail();
+        }
+
         while (victim == null && Vector3.Distance(Player.transform.position, pos_origin) < Distance)
         {
             Player.Rigidbody.velocity = velocity;
+
+            if (TrailEnabled)
+            {
+                damage_trail.UpdateTrail();
+            }
+
             yield return new WaitForFixedUpdate();
         }
 

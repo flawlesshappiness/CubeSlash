@@ -7,9 +7,8 @@ endless mode
 CHARM: Orbiting damage
 CHARM: Gain x when y
 
+test cooldown reduce upgrades
 split speed should explicitly say distance as well
 refund more? 50%?
 upgrades without trees should have trees. Feel better and upgrades are better
 dash trail is not working
-dash too long
-test cooldown reduce upgrades
