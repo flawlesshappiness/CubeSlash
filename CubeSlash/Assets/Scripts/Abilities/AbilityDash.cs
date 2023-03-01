@@ -35,7 +35,7 @@ public class AbilityDash : Ability
     private Coroutine cr_dash;
     private Vector3 dir_dash;
 
-    private const float DISTANCE = 3;
+    private const float DISTANCE = 4;
     private const float SPEED = 30;
     private const float RADIUS_DAMAGE = 1.5f;
     private const float RADIUS_FORCE = 12f;

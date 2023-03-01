@@ -16,6 +16,7 @@ MonoBehaviour:
     id: dash_distance_3
   name: Dash distance+++
   icon: {fileID: 21300000, guid: f8a2550e36efe5b498479c9c71db6fa7, type: 3}
+  hidden: 0
   require_ability: 1
   ability_required: 0
   upgrades_required:
@@ -26,5 +27,5 @@ MonoBehaviour:
     value:
       type_value: 3
       value_int: 0
-      value_float: 1.33
+      value_float: 0.66
       value_bool: 0

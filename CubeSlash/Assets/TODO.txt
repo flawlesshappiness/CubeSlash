@@ -13,4 +13,3 @@ upgrades without trees should have trees. Feel better and upgrades are better
 dash trail is not working
 dash too long
 test cooldown reduce upgrades
-charge still has cooldown
