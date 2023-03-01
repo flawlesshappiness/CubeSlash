@@ -281,7 +281,7 @@ public class AbilityCharge : Ability
                     .Where(e => e != null)
                     .ToList().ForEach(e =>
                     {
-                        e.Knockback(Player.MoveDirection * Knockback, false, false);
+                        e.Knockback(dir * Knockback, false, false);
                     });
 
                 // Self knockback

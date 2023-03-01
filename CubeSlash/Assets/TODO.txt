@@ -23,3 +23,4 @@ first boss too hard, less duds? maybe based on difficulty?
 physics objects in the world are fun. Hazards? Affect both player and enemy?
 regen upgrade displayed wrong
 charge beam back knocks enemies closer?
+last dud doesn't kill boss
