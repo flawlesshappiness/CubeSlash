@@ -19,6 +19,7 @@ public class AbilityExplode : Ability
     public bool HasProjectile { get; private set; }
     public bool IsFront { get; private set; }
     public bool DelayInvulnerable { get; private set; }
+    public int MiniExplosions { get; private set; }
 
     private const float DELAY = 1.5f;
     private const float RADIUS = 4f;
@@ -42,6 +43,7 @@ public class AbilityExplode : Ability
         HasProjectile = GetBoolValue(StatID.explode_projectile);
         IsFront = GetBoolValue(StatID.explode_front);
         DelayInvulnerable = GetBoolValue(StatID.explode_invulnerable);
+        MiniExplosions = GetIntValue(StatID.explode_minis);
     }
 
     public override float GetBaseCooldown() => Cooldown;
@@ -143,6 +145,24 @@ public class AbilityExplode : Ability
             if (DelayInvulnerable)
             {
                 Player.Instance.InvincibilityLock.RemoveLock(nameof(AbilityExplode));
+            }
+
+            for (int i = 0; i < MiniExplosions; i++)
+            {
+                var radius = Radius * Random.Range(0.1f, 0.5f);
+                var dir = Random.insideUnitCircle.ToVector3().normalized;
+                var pos = position + dir * (Radius + radius);
+                var delay = Delay * Random.Range(0.25f, 0.75f);
+
+                StartCoroutine(ExplodeCr(new ChargeInfo
+                {
+                    parent = GameController.Instance.world,
+                    radius = radius,
+                    delay = delay,
+                    getPosition = () => pos,
+                    play_charge_sfx = i == 0,
+                    onHit = OnHit,
+                }));
             }
         }
     }
