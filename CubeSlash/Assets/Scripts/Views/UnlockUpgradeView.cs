@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
@@ -13,7 +12,7 @@ public class UnlockUpgradeView : View
     [SerializeField] private UIIconButton temp_btn_upgrade;
     [SerializeField] private TMP_Text tmp_upgrade;
     [SerializeField] private RectTransform rt_upgrades, rt_desc;
-    [SerializeField] private UIInputLayout input_layout;
+    [SerializeField] private UIInputLayout input_layout_main, input_layout_refund;
     [SerializeField] private UIUnlockAbilityBar ability_bar;
     [SerializeField] private Image img_fg_refund;
     [SerializeField] private CanvasGroup cvg_upgrades, cvg_background, cvg_description, cvg_past_upgrades;
@@ -26,9 +25,6 @@ public class UnlockUpgradeView : View
     private List<UIScrollableUpgradeTree> trees = new List<UIScrollableUpgradeTree>();
 
     private UIScrollableUpgradeTree selected_tree;
-
-    private UIIconButton button_selected;
-    private Upgrade upgrade_selected;
 
     private Coroutine cr_refund;
 
@@ -70,7 +66,8 @@ public class UnlockUpgradeView : View
         cvg_background.alpha = 0;
         cvg_description.alpha = 0;
         cvg_past_upgrades.alpha = 0;
-        input_layout.CanvasGroup.alpha = 0;
+        input_layout_main.CanvasGroup.alpha = 0;
+        input_layout_refund.CanvasGroup.alpha = 0;
         ability_bar.CanvasGroup.alpha = 0;
         cvg_upgrades.alpha = 1;
         Interactable = false;
@@ -87,7 +84,8 @@ public class UnlockUpgradeView : View
 
         cvg_description.alpha = 1;
         cvg_past_upgrades.alpha = 1;
-        input_layout.CanvasGroup.alpha = 1;
+        input_layout_main.CanvasGroup.alpha = 1;
+        input_layout_refund.CanvasGroup.alpha = 1;
         ability_bar.CanvasGroup.alpha = 1;
 
         ability_bar.AnimateLevelsUntilAbility(1f, EasingCurves.EaseOutQuad);
@@ -118,8 +116,6 @@ public class UnlockUpgradeView : View
 
         void OnSelect(UIIconButton button, Upgrade upgrade)
         {
-            button_selected = button;
-            upgrade_selected = upgrade;
             DisplayUpgradeText(upgrade);
         }
     }
@@ -260,9 +256,10 @@ public class UnlockUpgradeView : View
 
     private void DisplayInput()
     {
-        input_layout.Clear();
-        input_layout.AddInput(PlayerInput.UIButtonType.SOUTH, "Select");
-        input_layout.AddInput(PlayerInput.UIButtonType.WEST, "(HOLD) Refund 25% exp");
+        input_layout_main.Clear();
+        input_layout_main.AddInput(PlayerInput.UIButtonType.SOUTH, "Select");
+        input_layout_refund.Clear();
+        input_layout_refund.AddInput(PlayerInput.UIButtonType.WEST, "(HOLD)");
     }
 
     private void RefundPressed(InputAction.CallbackContext context)
