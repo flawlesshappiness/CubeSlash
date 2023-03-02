@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id:
     id: explode_minis
-  description: $ mini explosions
+  description: $ lesser explosions
   value:
     type_value: 0
     value_int: 0
