@@ -75,7 +75,8 @@ public class DebugConsoleHandler : Singleton
         foreach(var info in infos)
         {
             var name = $"{info.upgrade.id}";
-            var btn = window.CreateButton(name, () => UnlockUpgrade(info));
+            var btn = window.CreateButton(name);
+            btn.onClick.AddListener(() => UnlockUpgrade(btn, info));
             btn.TextRight = info.is_unlocked ? "Unlocked" : "";
 
             if (info.upgrade.require_ability)
@@ -84,12 +85,12 @@ public class DebugConsoleHandler : Singleton
             }
         }
 
-        void UnlockUpgrade(UpgradeInfo info)
+        void UnlockUpgrade(ListButton btn, UpgradeInfo info)
         {
             if (!info.is_unlocked)
             {
+                btn.TextRight = "Unlocked";
                 UpgradeController.Instance.CheatUnlockUpgrade(info);
-                ShowFunctionsWindow();
             }
         }
     }
@@ -104,16 +105,20 @@ public class DebugConsoleHandler : Singleton
         foreach(var type in types)
         {
             var ability = AbilityController.Instance.GetAbilityPrefab(type);
-            var btn = window.CreateButton(type.ToString(), () => UnlockAbility(ability));
+            var btn = window.CreateButton(type.ToString());
+            btn.onClick.AddListener(() => UnlockAbility(btn, type));
             var is_unlocked = AbilityController.Instance.HasGainedAbility(type);
 
             btn.TextRight = is_unlocked ? "Unlocked" : "";
         }
 
-        void UnlockAbility(Ability ability)
+        void UnlockAbility(ListButton btn, Ability.Type type)
         {
-            AbilityController.Instance.GainAbility(ability.Info.type);
-            ShowFunctionsWindow();
+            if (!AbilityController.Instance.HasGainedAbility(type))
+            {
+                AbilityController.Instance.GainAbility(type);
+                btn.TextRight = "Unlocked";
+            }
         }
     }
 
