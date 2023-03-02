@@ -4,7 +4,7 @@ using System.Linq;
 using TMPro;
 using UnityEngine.InputSystem;
 using UnityEngine.EventSystems;
-using Unity.VisualScripting.Antlr3.Runtime.Misc;
+using System.Collections;
 
 public class AbilityView : View
 {
@@ -169,6 +169,7 @@ public class AbilityView : View
 
     private void ClickSlot(UIAbilitySlot slot)
     {
+        if (!Interactable) return;
         var temp = slot.Ability;
         slot.SetAbility(slot_move.Ability);
         slot_move.SetAbility(temp);
@@ -251,8 +252,18 @@ public class AbilityView : View
     private void ClickContinue()
     {
         UpdatePlayer();
-        Close(0);
         OnContinue?.Invoke();
+
+        StartCoroutine(Cr());
+        IEnumerator Cr()
+        {
+            CanvasGroup.alpha = 0;
+            GameController.Instance.SetTimeScale(0f);
+            yield return new WaitForSecondsRealtime(0.25f);
+            GameController.Instance.LerpTimeScale(0.5f, 1);
+            yield return new WaitForSecondsRealtime(0.5f);
+            Close(0);
+        }
     }
 
     private void OnSelectContinue()
