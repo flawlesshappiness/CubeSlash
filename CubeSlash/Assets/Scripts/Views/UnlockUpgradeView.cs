@@ -40,7 +40,6 @@ public class UnlockUpgradeView : View
         layout_unlocked_upgrades.OnUpgradeLevelSelected += level => DisplayUpgradeText(level);
 
         // Upgrades
-        //CreateUpgrades();
         CreateUpgradeTrees();
 
         // Input
@@ -72,7 +71,6 @@ public class UnlockUpgradeView : View
         cvg_upgrades.alpha = 1;
         Interactable = false;
 
-        //yield return AnimateShowUpgrade();
         yield return AnimateShowUpgradeTree();
 
         // Show other elements
@@ -99,35 +97,25 @@ public class UnlockUpgradeView : View
         return upgrades;
     }
 
-    private void CreateUpgrades()
-    {
-        // Fetch upgrades
-        var upgrades = GetRandomUpgrades();
-
-        // Create upgrade buttons
-        ClearUpgradeButtons();
-        foreach (var info in upgrades)
-        {
-            var btn = CreateUpgradeButton();
-            btn.Icon = info.upgrade.icon;
-            btn.Button.onSelect += () => OnSelect(btn, info.upgrade);
-            btn.Button.onSubmit += () => ClickUpgradeButton(info.upgrade);
-        }
-
-        void OnSelect(UIIconButton button, Upgrade upgrade)
-        {
-            DisplayUpgradeText(upgrade);
-        }
-    }
-
     private void ClickUpgradeButton(Upgrade upgrade)
     {
+        if (!Interactable) return;
+        Interactable = false;
         CanvasGroup.interactable = false;
         CanvasGroup.blocksRaycasts = false;
         UpgradeController.Instance.UnlockUpgrade(upgrade.id);
         SoundController.Instance.Play(SoundEffectType.sfx_ui_unlock_upgrade);
-        OnUpgradeSelected?.Invoke(upgrade);
-        Close(0);
+
+        StartCoroutine(Cr());
+        IEnumerator Cr()
+        {
+            CanvasGroup.alpha = 0;
+            yield return new WaitForSecondsRealtime(0.25f);
+            GameController.Instance.LerpTimeScale(0.5f, 1);
+            OnUpgradeSelected?.Invoke(upgrade);
+            yield return new WaitForSecondsRealtime(0.5f);
+            Close(0);
+        }
     }
 
     private void CreateUpgradeTrees()
@@ -163,20 +151,6 @@ public class UnlockUpgradeView : View
         }
     }
 
-    private UIIconButton CreateUpgradeButton()
-    {
-        var btn = Instantiate(temp_btn_upgrade, temp_btn_upgrade.transform.parent);
-        btn.gameObject.SetActive(true);
-        btns_upgrade.Add(btn);
-        return btn;
-    }
-
-    private void ClearUpgradeButtons()
-    {
-        btns_upgrade.ForEach(b => Destroy(b.gameObject));
-        btns_upgrade.Clear();
-    }
-
     private Coroutine AnimateShowUpgradeTree()
     {
         return StartCoroutine(Cr());
@@ -195,36 +169,6 @@ public class UnlockUpgradeView : View
                 tree.AnimateShowParentButtons();
                 tree.AnimateShowChildButtons();
                 yield return new WaitForSecondsRealtime(0.1f);
-            }
-        }
-    }
-
-    private Coroutine AnimateShowUpgrade()
-    {
-        return StartCoroutine(AnimateButtonsCr());
-        IEnumerator AnimateButtonsCr()
-        {
-            Lerp.Alpha(cvg_background, 0.5f, 1).UnscaledTime();
-
-            var crs = new List<Lerp>();
-            btns_upgrade.ForEach(btn => btn.AnimationPivot.localScale = Vector3.zero);
-            foreach (var btn in btns_upgrade)
-            {
-                var pivot = btn.AnimationPivot;
-                pivot.transform.position = btn.transform.position;
-                var lerp = Lerp.LocalScale(pivot, 0.25f, Vector3.zero, Vector3.one).Curve(EasingCurves.EaseOutQuad).UnscaledTime();
-                crs.Add(lerp);
-                yield return new WaitForSecondsRealtime(0.1f);
-            }
-
-            yield return StartCoroutine(WaitForCoroutinesCr(crs));
-        }
-
-        IEnumerator WaitForCoroutinesCr(List<Lerp> crs)
-        {
-            foreach(var cr in crs)
-            {
-                yield return cr;
             }
         }
     }
@@ -264,11 +208,14 @@ public class UnlockUpgradeView : View
 
     private void RefundPressed(InputAction.CallbackContext context)
     {
+        if (!Interactable) return;
+        Interactable = false;
         HoldRefund(true);
     }
 
     private void RefundReleased(InputAction.CallbackContext context)
     {
+        Interactable = true;
         HoldRefund(false);
     }
 
