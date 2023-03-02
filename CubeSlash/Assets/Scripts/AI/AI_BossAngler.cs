@@ -75,7 +75,7 @@ public class AI_BossAngler : EnemyAI
     {
         var start_dir = Random.insideUnitCircle.normalized.ToVector3();
         var player_position = Player.Instance.transform.position;
-        var level_size = (GameSettings.Instance.area_size * 0.5f) - 15;
+        var level_size = (GameSettings.Instance.area_size * 0.5f) - Self.Settings.size;
         var start_position = player_position - start_dir * level_size;
 
         var angle = Vector3.SignedAngle(Vector3.up, start_dir, Vector3.forward);

@@ -8,12 +8,10 @@ CHARM: Orbiting damage
 CHARM: Gain x when y
 
 test cooldown reduce upgrades
-split speed should explicitly say distance as well
 refund more? 50%?
 upgrades without trees should have trees. Feel better and upgrades are better
-Angler boss spawns a bit too close
 difficulties increase max area?
 physics objects in the world are fun. Hazards? Affect both player and enemy?
-
 knockback upgrades are boring
-change DPAD icon
+split speed should explicitly say distance as well
+Angler boss spawns a bit too close
