@@ -43,7 +43,7 @@ public class AbilitySplit : Ability
         base.OnValuesUpdated();
 
         Cooldown = GetFloatValue(StatID.split_cooldown_flat) * GetFloatValue(StatID.split_cooldown_perc);
-        CountProjectiles = GetIntValue(StatID.split_count);
+        CountProjectiles = Mathf.Max(1, GetIntValue(StatID.split_count));
         SpeedProjectiles = PROJECTILE_SPEED * GetFloatValue(StatID.split_speed_perc);
         ArcProjectiles = PROJECTILE_ARC * GetFloatValue(StatID.split_arc_perc);
         SizeProjectiles = PROJECTILE_SIZE * GetFloatValue(StatID.split_size_perc);
