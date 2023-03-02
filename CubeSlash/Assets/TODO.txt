@@ -17,4 +17,3 @@ physics objects in the world are fun. Hazards? Affect both player and enemy?
 
 knockback upgrades are boring
 change DPAD icon
-grace period just after picking upgrade

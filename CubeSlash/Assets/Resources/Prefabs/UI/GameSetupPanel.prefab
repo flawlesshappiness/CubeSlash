@@ -229,7 +229,7 @@ MonoBehaviour:
   m_Interactable: 1
   m_TargetGraphic: {fileID: 0}
   submittable: 1
-  select_on_start: 1
+  select_on_start: 0
   cvg: {fileID: 2069718129723690104}
   select_animation: {fileID: 3285915766964271333}
   left_right_animation: {fileID: 1756870565965506477}
