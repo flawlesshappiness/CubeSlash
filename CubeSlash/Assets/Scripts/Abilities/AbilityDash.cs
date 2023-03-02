@@ -296,6 +296,7 @@ public class AbilityDash : Ability
             if (ShockwaveBounce)
             {
                 AbilityChain.CreateImpactPS(p.transform.position);
+                p.Lifetime *= 0.9f;
             }
         }
 
