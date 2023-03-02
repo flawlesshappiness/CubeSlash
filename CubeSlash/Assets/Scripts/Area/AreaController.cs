@@ -26,7 +26,7 @@ public class AreaController : Singleton
 
     public MultiLock NextAreaLock { get; private set; } = new MultiLock();
 
-    private bool force_next_area;
+    private float time_next_area;
 
     protected override void Initialize()
     {
@@ -45,7 +45,6 @@ public class AreaController : Singleton
     {
         visited_areas.Clear();
         available_areas.Clear();
-        force_next_area = false;
     }
 
     public void StartAreaCoroutine()
@@ -77,19 +76,18 @@ public class AreaController : Singleton
 
             onNextArea?.Invoke(current_area);
 
-            var time_next = Time.time + GameSettings.Instance.area_duration;
+            time_next_area = Time.time + GameSettings.Instance.area_duration;
             var is_locked = NextAreaLock.IsLocked;
-            while((is_locked || Time.time < time_next) && !force_next_area)
+            while(is_locked || Time.time < time_next_area)
             {
                 yield return null;
             }
-            force_next_area = false;
         }
     }
 
     public void ForceNextArea()
     {
-        force_next_area = true;
+        time_next_area = Time.time;
     }
 
     private Area GetNextArea()

@@ -32,6 +32,7 @@ public class PlayerProximitySound : MonoBehaviour
 
     private void Update()
     {
+        if (sfx == null) return;
         var dist = Vector3.Distance(transform.position, Player.Instance.transform.position);
         var d_min = distance_range.x;
         var d_max = distance_range.y;
