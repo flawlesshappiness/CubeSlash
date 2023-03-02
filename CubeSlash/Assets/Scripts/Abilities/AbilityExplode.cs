@@ -66,7 +66,7 @@ public class AbilityExplode : Ability
                 prefab = p,
                 position_start = start,
                 velocity = velocity,
-                onHit = ProjectileExplode
+                onKill = ProjectileExplode
             });
 
             p_instance.Lifetime = Calculator.DST_Time(7f, speed);

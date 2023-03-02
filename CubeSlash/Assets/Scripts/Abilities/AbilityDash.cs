@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.InputSystem.HID;
 
 public class AbilityDash : Ability
 {
@@ -151,6 +152,7 @@ public class AbilityDash : Ability
     private void OnImpact(Collider2D c)
     {
         if (!Dashing) return;
+
         var k = c.GetComponentInParent<IKillable>();
         if (k == null) return;
         HitEnemiesArea(k.GetPosition(), RadiusDamage);
@@ -219,16 +221,16 @@ public class AbilityDash : Ability
             Player.KillEnemy(hit);
             count++;
 
-            if (ExplodeOnImpact)
+            if (ExplodeOnImpact &&  count == 1)
             {
-                var hitPosition = hit.GetPosition();
+                var hitPosition = Vector3.Lerp(hit.GetPosition(), Player.transform.position, 0.5f);
                 StartCoroutine(AbilityExplode.ExplodeCr(new AbilityExplode.ChargeInfo
                 {
                     parent = GameController.Instance.world,
                     delay = 2f,
                     getPosition = () => hitPosition,
                     radius = 4f,
-                    play_charge_sfx = count == 1,
+                    play_charge_sfx = true,
                 }));
             }
         }
@@ -267,7 +269,7 @@ public class AbilityDash : Ability
             prefab = prefab_shockwave,
             position_start = Player.transform.position,
             velocity = direction * speed,
-            onHit = OnHit,
+            onKill = OnHit,
         });
         p.Piercing = true;
         var lifetime = Calculator.DST_Time(distance, speed);
@@ -276,9 +278,11 @@ public class AbilityDash : Ability
         var size = ShockwaveSize;
         p.transform.localScale = Vector3.one * size;
 
-        if (ShockwaveBounce && !OnlyShockwave)
+        if (ShockwaveBounce)
         {
-            SetRippleDirectionToClosest(p);
+            p.Bounces = 999;
+            p.BounceBack = false;
+            p.BounceAngleMax = 360f;
         }
 
         if (ShockwaveLinger)
@@ -291,9 +295,6 @@ public class AbilityDash : Ability
         {
             if (ShockwaveBounce)
             {
-                SetRippleDirectionToClosest(p);
-                var lifetime = Calculator.DST_Time(5f, speed);
-                p.Lifetime += Mathf.Clamp(lifetime, 0.1f, 5);
                 AbilityChain.CreateImpactPS(p.transform.position);
             }
         }
@@ -304,23 +305,5 @@ public class AbilityDash : Ability
             var end = p.transform.localScale * 1.5f;
             yield return LerpEnumerator.LocalScale(p.transform, p.Lifetime, start, end);
         }
-    }
-
-    private void SetRippleDirectionToClosest(Projectile p)
-    {
-        var radius = 15f;
-        var start_position = p.transform.position;
-        var closest = Physics2D.OverlapCircleAll(p.transform.position, radius)
-            .Select(hit => hit.GetComponentInParent<IKillable>())
-            .Where(hit => hit != null)
-            .Select(hit => hit.GetPosition())
-            .OrderBy(position => Vector3.Distance(position, start_position))
-            .FirstOrDefault();
-
-        if (closest == Vector3.zero) return;
-        var dir = closest - p.transform.position;
-        var vel = dir.normalized * ShockwaveSpeed;
-        p.SetDirection(vel);
-        p.Rigidbody.velocity = vel;
     }
 }

@@ -126,13 +126,14 @@ public class AbilityMines : Ability
             prefab = prefab_mine,
             position_start = Player.transform.position,
             velocity = direction.normalized * speed,
-            onHit = OnMineExplode
+            onKill = OnMineExplode
         });
 
         p.transform.localScale = Vector3.one * ShellSize;
         p.Drag = Seeking ? MINE_DRAG_SEEKING : MINE_DRAG;
         p.Lifetime = ShellLifetime;
         p.Homing = Seeking;
+        p.AutoTarget = Seeking;
         p.SearchRadius = 100f;
         p.TurnSpeed = Seeking ? TurnSpeed : 0;
         p.onDeath += () => OnMineExplode(p);
@@ -174,17 +175,8 @@ public class AbilityMines : Ability
         p.Rigidbody.velocity = p.Rigidbody.velocity.normalized * p.Rigidbody.velocity.magnitude * Random.Range(0.8f, 1f);
         p.Drag = FRAGMENT_DRAG;
 
-        p.onHit += c => OnCollide(p, c);
+        p.onKill += k => OnFragment(p);
         p.onDeath += () => OnFragment(p);
-
-        void OnCollide(Projectile p, Collider2D c)
-        {
-            var k = c.GetComponentInParent<IKillable>();
-            if(k != null)
-            {
-                OnFragment(p);
-            }
-        }
 
         void OnFragment(Projectile p)
         {

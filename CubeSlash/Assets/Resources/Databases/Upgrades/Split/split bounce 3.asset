@@ -10,21 +10,22 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 616189df85cb92d40806459b9c9111b7, type: 3}
-  m_Name: player avoid damage chance
+  m_Name: split bounce 3
   m_EditorClassIdentifier: 
   id:
-    id: player_avoid_damage
-  name: Avoid damage
-  icon: {fileID: 21300000, guid: 52772c82022ad75488b198e8fc84b524, type: 3}
-  id_stats: player
-  require_ability: 0
-  ability_required: 0
-  upgrades_required: []
+    id: split_bounce_3
+  name: Projectile count+
+  icon: {fileID: 21300000, guid: 4808370c1e05ecb4e9dbc28343c84d3d, type: 3}
+  hidden: 0
+  require_ability: 1
+  ability_required: 1
+  upgrades_required:
+  - id: split_bounce_2
   stats:
   - id:
-      id: player_avoid_damage_chance
+      id: split_bounce
     value:
-      type_value: 3
-      value_int: 0
-      value_float: 0.1
+      type_value: 0
+      value_int: 1
+      value_float: 0
       value_bool: 0

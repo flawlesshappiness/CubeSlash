@@ -1,5 +1,4 @@
 using Flawliz.Lerp;
-using PathCreation;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -70,8 +69,8 @@ public class UnlockAbilityView : View
 
         if(ability != null)
         {
-            text += ability.Info.name_ability;
-            text += "\n";
+            //text += ability.Info.name_ability;
+            //text += "\n";
             text += ability.Info.desc_ability;
         }
 

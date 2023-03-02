@@ -47,7 +47,7 @@ public class ProjectileController : Singleton
         public Projectile prefab;
         public Vector3 position_start;
         public Vector3 velocity;
-        public System.Action<Projectile, IKillable> onHit;
+        public System.Action<Projectile, IKillable> onKill;
     }
 
     public Projectile ShootPlayerProjectile(PlayerShootInfo info)
@@ -57,18 +57,9 @@ public class ProjectileController : Singleton
         p.Rigidbody.velocity = info.velocity;
         p.SetDirection(info.velocity);
 
-        p.onHit += c =>
+        p.onKill += k =>
         {
-            var k = c.GetComponentInParent<IKillable>();
-            if (k != null)
-            {
-                info.onHit?.Invoke(p, k);
-                if (k.CanKill())
-                {
-                    Player.Instance.KillEnemy(k);
-                }
-                if (!p.Piercing) p.Kill();
-            }
+            info.onKill?.Invoke(p, k);
         };
 
         return p;

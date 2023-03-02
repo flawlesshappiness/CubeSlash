@@ -7,27 +7,37 @@ public class UpgradeID : FakeEnum
     public static readonly UpgradeID player_acceleration_1 = new UpgradeID(nameof(player_acceleration_1));
     public static readonly UpgradeID player_acceleration_2 = new UpgradeID(nameof(player_acceleration_2));
     public static readonly UpgradeID player_acceleration_3 = new UpgradeID(nameof(player_acceleration_3));
-    public static readonly UpgradeID player_avoid_damage = new UpgradeID(nameof(player_avoid_damage));
-    public static readonly UpgradeID player_collect_cooldown_reduc = new UpgradeID(nameof(player_collect_cooldown_reduc));
+
+    public static readonly UpgradeID player_avoid_damage_1 = new UpgradeID(nameof(player_avoid_damage_1));
+    public static readonly UpgradeID player_avoid_damage_2 = new UpgradeID(nameof(player_avoid_damage_2));
+    public static readonly UpgradeID player_avoid_damage_3 = new UpgradeID(nameof(player_avoid_damage_3));
+
     public static readonly UpgradeID player_collect_radius_1 = new UpgradeID(nameof(player_collect_radius_1));
     public static readonly UpgradeID player_collect_radius_2 = new UpgradeID(nameof(player_collect_radius_2));
     public static readonly UpgradeID player_collect_radius_3 = new UpgradeID(nameof(player_collect_radius_3));
+
     public static readonly UpgradeID player_collect_speed = new UpgradeID(nameof(player_collect_speed));
     public static readonly UpgradeID player_convert_health = new UpgradeID(nameof(player_convert_health));
-    public static readonly UpgradeID player_cooldown_reduc = new UpgradeID(nameof(player_cooldown_reduc));
-    public static readonly UpgradeID player_exp_bonus = new UpgradeID(nameof(player_exp_bonus));
+
     public static readonly UpgradeID player_health_1 = new UpgradeID(nameof(player_health_1));
     public static readonly UpgradeID player_health_2 = new UpgradeID(nameof(player_health_2));
     public static readonly UpgradeID player_health_3 = new UpgradeID(nameof(player_health_3));
+
     public static readonly UpgradeID player_armor_1 = new UpgradeID(nameof(player_armor_1));
     public static readonly UpgradeID player_armor_2 = new UpgradeID(nameof(player_armor_2));
     public static readonly UpgradeID player_armor_3 = new UpgradeID(nameof(player_armor_3));
-    public static readonly UpgradeID player_infinite_drag = new UpgradeID(nameof(player_infinite_drag));
+
     public static readonly UpgradeID player_regen_kill = new UpgradeID(nameof(player_regen_kill));
     public static readonly UpgradeID player_regen_plant = new UpgradeID(nameof(player_regen_plant));
+
     public static readonly UpgradeID player_max_speed_1 = new UpgradeID(nameof(player_max_speed_1));
     public static readonly UpgradeID player_max_speed_2 = new UpgradeID(nameof(player_max_speed_2));
     public static readonly UpgradeID player_max_speed_3 = new UpgradeID(nameof(player_max_speed_3));
+    
+    public static readonly UpgradeID player_collect_cooldown_reduc = new UpgradeID(nameof(player_collect_cooldown_reduc));
+    public static readonly UpgradeID player_infinite_drag = new UpgradeID(nameof(player_infinite_drag));
+    public static readonly UpgradeID player_exp_bonus = new UpgradeID(nameof(player_exp_bonus));
+    public static readonly UpgradeID player_cooldown_reduc = new UpgradeID(nameof(player_cooldown_reduc));
 
     // Charm
     public static readonly UpgradeID charm_armor = new UpgradeID(nameof(charm_armor));
@@ -97,6 +107,9 @@ public class UpgradeID : FakeEnum
     public static readonly UpgradeID explode_radius_1 = new UpgradeID(nameof(explode_radius_1));
     public static readonly UpgradeID explode_radius_2 = new UpgradeID(nameof(explode_radius_2));
     public static readonly UpgradeID explode_invulnerable_1 = new UpgradeID(nameof(explode_invulnerable_1));
+    public static readonly UpgradeID explode_minis_1 = new UpgradeID(nameof(explode_minis_1));
+    public static readonly UpgradeID explode_minis_2 = new UpgradeID(nameof(explode_minis_2));
+    public static readonly UpgradeID explode_minis_3 = new UpgradeID(nameof(explode_minis_3));
 
     public static readonly UpgradeID explode_mod_chain = new UpgradeID(nameof(explode_mod_chain));
     public static readonly UpgradeID explode_mod_charge = new UpgradeID(nameof(explode_mod_charge));
@@ -134,6 +147,9 @@ public class UpgradeID : FakeEnum
     public static readonly UpgradeID split_speed_1 = new UpgradeID(nameof(split_speed_1));
     public static readonly UpgradeID split_speed_2 = new UpgradeID(nameof(split_speed_2));
     public static readonly UpgradeID split_burst_1 = new UpgradeID(nameof(split_burst_1));
+    public static readonly UpgradeID split_bounce_1 = new UpgradeID(nameof(split_bounce_1));
+    public static readonly UpgradeID split_bounce_2 = new UpgradeID(nameof(split_bounce_2));
+    public static readonly UpgradeID split_bounce_3 = new UpgradeID(nameof(split_bounce_3));
 
     public static readonly UpgradeID split_mod_chain = new UpgradeID(nameof(split_mod_chain));
     public static readonly UpgradeID split_mod_charge = new UpgradeID(nameof(split_mod_charge));

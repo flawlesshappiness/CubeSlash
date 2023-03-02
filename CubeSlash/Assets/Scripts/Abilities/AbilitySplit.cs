@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -23,10 +24,12 @@ public class AbilitySplit : Ability
     private bool ProjectileLinger { get; set; }
     private bool ProjectilePenetrate { get; set; }
     private bool ProjectileExplode { get; set; }
+    private int ProjectileBounces { get; set; }
 
     private const float PROJECTILE_SPEED = 20f;
     private const float PROJECTILE_ARC = 15f;
     private const float PROJECTILE_SIZE = 1f;
+    private const float PROJECTILE_LIFETIME = 0.75f;
     private const float FORCE_RADIUS = 5f;
     private const float FORCE = 100f;
 
@@ -53,6 +56,7 @@ public class AbilitySplit : Ability
         ProjectileLinger = GetBoolValue(StatID.split_projectile_linger);
         ProjectilePenetrate = GetBoolValue(StatID.split_penetrate);
         ProjectileExplode = GetBoolValue(StatID.split_explode);
+        ProjectileBounces = GetIntValue(StatID.split_bounce);
     }
 
     public override float GetBaseCooldown() => Cooldown;
@@ -86,12 +90,15 @@ public class AbilitySplit : Ability
                 prefab = prefab_projectile,
                 position_start = Player.transform.position,
                 velocity = direction * SpeedProjectiles,
-                onHit = OnHit
+                onKill = OnKill
             });
 
             p.transform.localScale = Vector3.one * SizeProjectiles;
-            p.Piercing = ProjectilePenetrate;
-            p.Lifetime = 0.75f;
+            p.Piercing = ProjectilePenetrate || ProjectileBounces > 0;
+            p.Lifetime = PROJECTILE_LIFETIME;
+            p.Bounces = ProjectileBounces;
+            p.BounceBack = true;
+            p.BounceAngleMax = 180f;
 
             if (ProjectileLinger)
             {
@@ -133,26 +140,11 @@ public class AbilitySplit : Ability
             }
         }
 
-        void OnHit(Projectile p, IKillable k)
+        void OnKill(Projectile p, IKillable k)
         {
-            Player.PushEnemiesInArea(p.transform.position, RadiusKnockback, ForceKnockback);
-
             if (ProjectileFragments > 0)
             {
-                var count = ProjectileFragments;
-                var angle_delta = 360f / count;
-                for (int i = 0; i < count; i++)
-                {
-                    var d = Quaternion.AngleAxis(angle_delta * i, Vector3.forward) * p.transform.up;
-                    var _p = ProjectileController.Instance.ShootPlayerProjectile(new ProjectileController.PlayerShootInfo
-                    {
-                        prefab = prefab_projectile,
-                        position_start = p.transform.position,
-                        velocity = d * SpeedProjectiles,
-                    });
-
-                    _p.transform.localScale = 0.5f * SizeProjectiles * Vector3.one;
-                }
+                SpawnFragments(p);
             }
 
             if (HitCooldownReduc < 0)
@@ -163,6 +155,24 @@ public class AbilitySplit : Ability
             if (ProjectileExplode)
             {
                 AbilityExplode.Explode(p.transform.position, 3f, 50);
+            }
+        }
+
+        void SpawnFragments(Projectile p)
+        {
+            var count = ProjectileFragments;
+            var angle_delta = 360f / count;
+            for (int i = 0; i < count; i++)
+            {
+                var d = Quaternion.AngleAxis(angle_delta * i, Vector3.forward) * p.transform.up;
+                var _p = ProjectileController.Instance.ShootPlayerProjectile(new ProjectileController.PlayerShootInfo
+                {
+                    prefab = prefab_projectile,
+                    position_start = p.transform.position,
+                    velocity = d * SpeedProjectiles,
+                });
+
+                _p.transform.localScale = 0.5f * SizeProjectiles * Vector3.one;
             }
         }
     }

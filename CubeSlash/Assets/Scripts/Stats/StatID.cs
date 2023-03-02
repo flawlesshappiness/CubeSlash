@@ -80,6 +80,7 @@ public class StatID : FakeEnum
     public static readonly StatID explode_chain = new StatID(nameof(explode_chain));
     public static readonly StatID explode_fragments = new StatID(nameof(explode_fragments));
     public static readonly StatID explode_invulnerable = new StatID(nameof(explode_invulnerable));
+    public static readonly StatID explode_minis = new StatID(nameof(explode_minis));
 
     // Mines
     public static readonly StatID mines_cooldown_flat = new StatID(nameof(mines_cooldown_flat));
@@ -113,4 +114,5 @@ public class StatID : FakeEnum
     public static readonly StatID split_chain = new StatID(nameof(split_chain));
     public static readonly StatID split_hit_cooldown_reduc = new StatID(nameof(split_hit_cooldown_reduc));
     public static readonly StatID split_projectile_linger = new StatID(nameof(split_projectile_linger));
+    public static readonly StatID split_bounce = new StatID(nameof(split_bounce));
 }

@@ -18,23 +18,38 @@ public class Projectile : MonoBehaviourExtended
     public float Lifetime { get; set; } = 1f;
     public bool Piercing { get; set; }
     public bool Homing { get; set; }
-    public bool SearchForTarget { get; set; } = true;
+    public bool AutoTarget { get; set; } = false;
+    public int Bounces { get; set; }
+    public bool BounceBack { get; set; }
+    public float BounceAngleMax { get; set; }
     public Rigidbody2D Rigidbody { get { return GetComponentOnce<Rigidbody2D>(ComponentSearchType.THIS); } }
-    public System.Action<Collider2D> onHit;
+    public System.Action<Player> onHitPlayer;
+    public System.Action<IKillable> onKill;
     public System.Action onDeath;
     public System.Action onDestroy;
-    public Enemy Target { get; set; }
+    public IKillable Target { get; set; }
 
     private const float ANGLE_MAX = 90;
 
-    private float time_birth;
+    public float BirthTime { get; private set; }
+    public float DeathTime { get; private set; }
     private bool searching;
 
     private void Start()
     {
-        time_birth = Time.time;
+        BirthTime = Time.time;
+        DeathTime = BirthTime + Lifetime;
         StartFindTarget();
         OnStart();
+    }
+
+    private void OnDrawGizmos()
+    {
+        if(Target != null)
+        {
+            Gizmos.color = Color.red;
+            Gizmos.DrawLine(transform.position, Target.GetPosition());
+        }
     }
 
     protected virtual void OnStart() 
@@ -62,7 +77,7 @@ public class Projectile : MonoBehaviourExtended
 
     private void LifetimeUpdate()
     {
-        var t = (Time.time - time_birth) / Lifetime;
+        var t = (Time.time - BirthTime) / (DeathTime - BirthTime);
         if(t >= 1)
         {
             onDeath?.Invoke();
@@ -84,7 +99,13 @@ public class Projectile : MonoBehaviourExtended
         if (!Homing) return;
         if (Target == null) return;
 
-        var dir = Target.transform.position - transform.position;
+        if (!Target.CanKill())
+        {
+            Target = null;
+            return;
+        }
+
+        var dir = Target.GetPosition() - transform.position;
         var angle = Vector3.SignedAngle(transform.up, dir, Vector3.back);
         var sign = -1 * Mathf.Sign(angle);
 
@@ -150,7 +171,40 @@ public class Projectile : MonoBehaviourExtended
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        onHit?.Invoke(collision);
+        var success = false;
+        if (hits_player)
+        {
+            var player = collision.GetComponentInParent<Player>();
+            if(player != null)
+            {
+                player.Damage(transform.position);
+                onHitPlayer?.Invoke(player);
+                success = true;
+            }
+        }
+        else if (hits_enemy)
+        {
+            var k = collision.GetComponentInParent<IKillable>();
+            if (k != null && k.CanKill())
+            {
+                Player.Instance.KillEnemy(k);
+                onKill?.Invoke(k);
+                success = true;
+            }
+        }
+
+        if (success)
+        {
+            var can_bounce = Bounces > 0;
+            if (can_bounce)
+            {
+                Bounce();
+            }
+            else if(!Piercing)
+            {
+                Kill();
+            }
+        }
     }
 
     private class FindTargetMap
@@ -161,7 +215,7 @@ public class Projectile : MonoBehaviourExtended
 
     private void StartFindTarget()
     {
-        if (!SearchForTarget) return;
+        if (!AutoTarget) return;
         if (searching) return;
         CoroutineController.Instance.Run(FindTargetCr(), this, "find_target_" + GetInstanceID());
     }
@@ -226,6 +280,61 @@ public class Projectile : MonoBehaviourExtended
             var z = (pivot_animation.eulerAngles.z + angle * Time.deltaTime) % 360f;
             pivot_animation.eulerAngles = pivot_animation.eulerAngles.SetZ(z);
             yield return null;
+        }
+    }
+
+    private void Bounce()
+    {
+        Bounces--;
+
+        BirthTime = Time.time;
+        DeathTime = BirthTime + Lifetime;
+
+        var dist_max = 10;
+        var angle_max = BounceAngleMax;
+
+        var position = transform.position;
+        var dir = -Rigidbody.velocity.normalized;
+        var hits = Physics2D.OverlapCircleAll(position, dist_max)
+            .Select(hit => hit.GetComponentInParent<IKillable>())
+            .Where(k => k != null && k.CanKill())
+            .Distinct();
+
+        var d_value = 0f;
+        IKillable closest = null;
+        foreach (var k in hits)
+        {
+            var k_position = k.GetPosition();
+            var k_dir = k_position - position;
+            var dist = Vector3.Distance(position, k_position);
+            var angle = Vector3.SignedAngle(dir, k_dir, Vector3.forward).Abs();
+
+            var v_dist = 1f - dist / dist_max;
+            var v_angle = 1f - angle / angle_max;
+            var v = v_dist * 2 + v_angle;
+
+            if (v > d_value)
+            {
+                d_value = v;
+                closest = k;
+            }
+        }
+
+        if (closest != null)
+        {
+            Target = closest;
+            Homing = true;
+            TurnSpeed = 2f;
+
+            var dir_closest = closest.GetPosition() - position;
+            Rigidbody.velocity = dir_closest.normalized * Rigidbody.velocity.magnitude;
+            SetDirection(Rigidbody.velocity);
+        }
+        else if(BounceBack)
+        {
+            Homing = false;
+            Rigidbody.velocity *= -1;
+            SetDirection(Rigidbody.velocity);
         }
     }
 }

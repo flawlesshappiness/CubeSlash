@@ -14,4 +14,7 @@ difficulties increase max area?
 physics objects in the world are fun. Hazards? Affect both player and enemy?
 knockback upgrades are boring
 split speed should explicitly say distance as well
-Angler boss spawns a bit too close
+cooldown reduc should affect charge
+
+split bounce upgrade sprite
+explode minis upgrade sprite

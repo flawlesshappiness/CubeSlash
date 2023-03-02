@@ -10,22 +10,22 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 616189df85cb92d40806459b9c9111b7, type: 3}
-  m_Name: player health 3
+  m_Name: player avoid damage 2
   m_EditorClassIdentifier: 
   id:
-    id: player_health_3
-  name: Health 3
-  icon: {fileID: 21300000, guid: 7b86249cccd827148ba22f219d1da5f9, type: 3}
+    id: player_avoid_damage_2
+  name: Avoid damage
+  icon: {fileID: 21300000, guid: 52772c82022ad75488b198e8fc84b524, type: 3}
   hidden: 0
   require_ability: 0
   ability_required: 0
   upgrades_required:
-  - id: player_health_2
+  - id: player_avoid_damage_1
   stats:
   - id:
-      id: player_health
+      id: player_avoid_damage_chance
     value:
-      type_value: 0
-      value_int: 1
-      value_float: 0
+      type_value: 3
+      value_int: 0
+      value_float: 0.05
       value_bool: 0
