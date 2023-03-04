@@ -38,6 +38,13 @@ public class AI_BossPlant : EnemyAI
 
         CreateArena();
         CreateDud();
+
+        Self.OnDeath += OnDeath;
+    }
+
+    private void OnDeath()
+    {
+        SoundController.Instance.Play(SoundEffectType.sfx_enemy_boss_scream);
     }
 
     private void CreateArena()

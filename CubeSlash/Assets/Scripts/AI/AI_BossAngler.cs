@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Drawing;
 using UnityEngine;
 
 public class AI_BossAngler : EnemyAI
@@ -53,6 +52,8 @@ public class AI_BossAngler : EnemyAI
         {
             Destroy(lamp.gameObject);
         }
+
+        SoundController.Instance.Play(SoundEffectType.sfx_enemy_boss_scream);
     }
 
     private IEnumerator AttacksCr()

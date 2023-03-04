@@ -25,6 +25,12 @@ public class AI_BossShooter : EnemyAI
         body_shooter = enemy.Body.GetComponent<BossShooterBody>();
 
         Self.EnemyBody.OnDudKilled += OnDudKilled;
+        Self.OnDeath += OnDeath;
+    }
+    
+    private void OnDeath()
+    {
+        SoundController.Instance.Play(SoundEffectType.sfx_enemy_boss_scream);
     }
 
     private void OnDudKilled(HealthDud dud)

@@ -13,6 +13,13 @@ public class AI_BossHost : EnemyAI
     {
         base.Initialize(enemy);
         this.StartCoroutineWithID(BeamCooldownCr(), "BeamCooldown_" + GetInstanceID());
+
+        Self.OnDeath += OnDeath;
+    }
+
+    private void OnDeath()
+    {
+        SoundController.Instance.Play(SoundEffectType.sfx_enemy_boss_scream);
     }
 
     private void FixedUpdate()
