@@ -19,11 +19,13 @@ public class EnemyController : Singleton
     private const int COUNT_ENEMY_POOL_EXTEND = 20;
 
     private Coroutine cr_spawn_boss;
+    private float time_next_spawn_enemy;
 
     protected override void Initialize()
     {
         prefab_enemy = Resources.Load<Enemy>("Prefabs/Entities/Enemy");
         AreaController.Instance.onNextArea += OnNextArea;
+        GameController.Instance.onGameStart += OnGameStart;
         GameController.Instance.onGameEnd += OnGameEnd;
         GameController.Instance.onMainMenu += OnMainMenu;
     }
@@ -41,6 +43,11 @@ public class EnemyController : Singleton
 
         var boss_spawn_delay = GameSettings.Instance.area_duration * GameSettings.Instance.time_boss_spawn;
         cr_spawn_boss = StartCoroutine(SpawnBossCr(area.boss, boss_spawn_delay));
+    }
+
+    private void OnGameStart()
+    {
+        time_next_spawn_enemy = Time.time;
     }
 
     private void OnGameEnd()
@@ -107,13 +114,11 @@ public class EnemyController : Singleton
         return Mathf.Max(0.1f, freq_game + freq_area + freq_difficulty);
     }
 
-    private float time_spawn;
     private void SpawnUpdate()
     {
-        if (Time.time < time_spawn) return;
+        if (Time.time < time_next_spawn_enemy) return;
         if (enemies_unlocked.Count == 0) return;
-        //if (enemies_active.Count >= Level.Current.count_enemy_active) return;
-        time_spawn = Time.time + GetSpawnFrequency();
+        time_next_spawn_enemy += GetSpawnFrequency();
         SpawnRandomEnemy(CameraController.Instance.GetPositionOutsideCamera());
     }
 

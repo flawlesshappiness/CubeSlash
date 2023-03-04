@@ -162,7 +162,7 @@ public class AI_BossAngler : EnemyAI
         var anim_bite = teeth.AnimateBigBite(4f);
         teeth.transform.position = Player.Instance.transform.position;
 
-        var time_end = Time.time + 3f;
+        var time_end = Time.time + 2.5f;
         while(Time.time < time_end)
         {
             teeth.transform.position = Player.Instance.transform.position;
