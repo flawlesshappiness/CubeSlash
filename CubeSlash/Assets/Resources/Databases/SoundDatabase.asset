@@ -13,17 +13,6 @@ MonoBehaviour:
   m_Name: SoundDatabase
   m_EditorClassIdentifier: 
   collection:
-  - name: bgm_lose_game
-    type:
-      id: bgm_lose_game
-    sfx:
-      reference:
-        Guid:
-          Data1: -771218821
-          Data2: 1128927549
-          Data3: 189750964
-          Data4: -1995803853
-        Path: event:/Music/lose_game
   - name: sfx_collect_experience
     type:
       id: sfx_collect_experience
@@ -52,11 +41,11 @@ MonoBehaviour:
     sfx:
       reference:
         Guid:
-          Data1: 767572272
-          Data2: 1239142846
-          Data3: 1606252960
-          Data4: 1039353130
-        Path: event:/Game/Abilities/explode_charge
+          Data1: -1606689935
+          Data2: 1248855069
+          Data3: -2061241667
+          Data4: -1398195708
+        Path: event:/Game/Abilities/explode_charge_002
   - name: sfx_explode_release
     type:
       id: sfx_explode_release
@@ -206,22 +195,22 @@ MonoBehaviour:
     sfx:
       reference:
         Guid:
-          Data1: 630917250
-          Data2: 1214473809
-          Data3: 1052052410
-          Data4: -297316490
-        Path: event:/Game/Abilities/charge_start_002
+          Data1: -1259794550
+          Data2: 1145293807
+          Data3: -309387352
+          Data4: -1549028928
+        Path: event:/Game/Abilities/charge_start_003
   - name: sfx_charge_idle
     type:
       id: sfx_charge_idle
     sfx:
       reference:
         Guid:
-          Data1: 1625743898
-          Data2: 1281816307
-          Data3: -1112447579
-          Data4: 96023982
-        Path: event:/Game/Abilities/charge_idle_002
+          Data1: -511142556
+          Data2: 1228214906
+          Data3: 472235154
+          Data4: -1140673701
+        Path: event:/Game/Abilities/charge_idle_003
   - name: sfx_charge_shoot
     type:
       id: sfx_charge_shoot
@@ -430,18 +419,18 @@ MonoBehaviour:
           Data2: 1224058666
           Data3: 1777809578
           Data4: -281874303
-        Path: event:/Music/start_001
-  - name: bgm_ocean
+        Path: event:/Music/bgm_start_game_001
+  - name: bgm_ocean [EMPTY]
     type:
       id: bgm_ocean
     sfx:
       reference:
         Guid:
-          Data1: -1820905848
-          Data2: 1333989044
-          Data3: -787764304
-          Data4: 642457650
-        Path: event:/Music/game_001
+          Data1: 0
+          Data2: 0
+          Data3: 0
+          Data4: 0
+        Path: 
   - name: bgm_leaves
     type:
       id: bgm_leaves
@@ -452,7 +441,7 @@ MonoBehaviour:
           Data2: 1167983941
           Data3: 1833073581
           Data4: 1918650056
-        Path: event:/Music/game_002
+        Path: event:/Music/bgm_leaves_001
   - name: bgm_kelp
     type:
       id: bgm_kelp
@@ -463,7 +452,7 @@ MonoBehaviour:
           Data2: 1333989044
           Data3: -787764304
           Data4: 642457650
-        Path: event:/Music/game_001
+        Path: event:/Music/bgm_kelp_001
   - name: bgm_roots
     type:
       id: bgm_roots
@@ -474,7 +463,7 @@ MonoBehaviour:
           Data2: 1167983941
           Data3: 1833073581
           Data4: 1918650056
-        Path: event:/Music/game_002
+        Path: event:/Music/bgm_leaves_001
   - name: bgm_abyss
     type:
       id: bgm_abyss
@@ -485,7 +474,18 @@ MonoBehaviour:
           Data2: 1184289244
           Data3: -1133450321
           Data4: 326138994
-        Path: event:/Music/abyss_001
+        Path: event:/Music/bgm_abyss_001
+  - name: bgm_lose_game
+    type:
+      id: bgm_lose_game
+    sfx:
+      reference:
+        Guid:
+          Data1: -771218821
+          Data2: 1128927549
+          Data3: 189750964
+          Data4: -1995803853
+        Path: event:/Music/bgm_lose_game_001
   - name: sfx_dud_death
     type:
       id: sfx_dud_death

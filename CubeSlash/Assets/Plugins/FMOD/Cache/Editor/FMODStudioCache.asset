@@ -97,9 +97,36 @@ MonoBehaviour:
   Path: Assets/FMOD/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 638131409741765407
+  lastModified: 638135471034037544
   FileSizes: []
   Exists: 1
+--- !u!114 &-7872426760261806101
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Music/bgm_leaves_001
+  m_EditorClassIdentifier: 
+  Path: event:/Music/bgm_leaves_001
+  Guid:
+    Data1: -1916634330
+    Data2: 1167983941
+    Data3: 1833073581
+    Data4: 1918650056
+  Banks:
+  - {fileID: -8060980804293988741}
+  IsStream: 1
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 102857
 --- !u!114 &-7809730102017663126
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -154,6 +181,33 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 0
+--- !u!114 &-7021863690132376355
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Game/Abilities/charge_start_003
+  m_EditorClassIdentifier: 
+  Path: event:/Game/Abilities/charge_start_003
+  Guid:
+    Data1: -1259794550
+    Data2: 1145293807
+    Data3: -309387352
+    Data4: -1549028928
+  Banks:
+  - {fileID: -8060980804293988741}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 1000
 --- !u!114 &-6860863777937447673
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -451,33 +505,6 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 0
---- !u!114 &-5059305671119162150
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
-  m_Name: event:/Music/lose_game
-  m_EditorClassIdentifier: 
-  Path: event:/Music/lose_game
-  Guid:
-    Data1: -771218821
-    Data2: 1128927549
-    Data3: 189750964
-    Data4: -1995803853
-  Banks:
-  - {fileID: -8060980804293988741}
-  IsStream: 0
-  Is3D: 0
-  IsOneShot: 1
-  Parameters: []
-  MinDistance: 1
-  MaxDistance: 20
-  Length: 0
 --- !u!114 &-4653878745155567962
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -523,6 +550,33 @@ MonoBehaviour:
     Data2: 1337390988
     Data3: 222887101
     Data4: -1658983842
+  Banks:
+  - {fileID: -8060980804293988741}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
+--- !u!114 &-4383693625517875851
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Music/bgm_lose_game_001
+  m_EditorClassIdentifier: 
+  Path: event:/Music/bgm_lose_game_001
+  Guid:
+    Data1: -771218821
+    Data2: 1128927549
+    Data3: 189750964
+    Data4: -1995803853
   Banks:
   - {fileID: -8060980804293988741}
   IsStream: 0
@@ -694,6 +748,33 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 0
+--- !u!114 &-2727583872698662857
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Music/bgm_kelp_001
+  m_EditorClassIdentifier: 
+  Path: event:/Music/bgm_kelp_001
+  Guid:
+    Data1: -1820905848
+    Data2: 1333989044
+    Data3: -787764304
+    Data4: 642457650
+  Banks:
+  - {fileID: -8060980804293988741}
+  IsStream: 1
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 122181
 --- !u!114 &-2396034613374441782
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -829,6 +910,33 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 0
+--- !u!114 &-1890298180908331478
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Music/bgm_abyss_001
+  m_EditorClassIdentifier: 
+  Path: event:/Music/bgm_abyss_001
+  Guid:
+    Data1: -2099893669
+    Data2: 1184289244
+    Data3: -1133450321
+    Data4: 326138994
+  Banks:
+  - {fileID: -8060980804293988741}
+  IsStream: 1
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 98666
 --- !u!114 &-1490901177813782816
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1081,11 +1189,9 @@ MonoBehaviour:
   - {fileID: 2267956152613183766}
   - {fileID: -2045402373136644028}
   - {fileID: 4030382554514392126}
-  - {fileID: 3677917369912790837}
   - {fileID: -4356645826321953852}
   - {fileID: -534392046617968838}
   - {fileID: 6642678424488806187}
-  - {fileID: 3533031449618742868}
   - {fileID: 7863103116885566477}
   - {fileID: -5770864616696661268}
   - {fileID: 3917951965893975697}
@@ -1096,14 +1202,12 @@ MonoBehaviour:
   - {fileID: 6039242139335841192}
   - {fileID: 2638402112156830713}
   - {fileID: -7809730102017663126}
-  - {fileID: 159336944855883450}
   - {fileID: 5904259344797910633}
   - {fileID: -137239678405330116}
   - {fileID: 6252992250626954748}
   - {fileID: -6354703245554512797}
   - {fileID: -3379141545452202479}
   - {fileID: -9075606872324565979}
-  - {fileID: 1399565695188976922}
   - {fileID: -2396034613374441782}
   - {fileID: -2297037270938223247}
   - {fileID: 1510993300958059848}
@@ -1121,73 +1225,26 @@ MonoBehaviour:
   - {fileID: -7670678753385872427}
   - {fileID: -6344884087125308512}
   - {fileID: -3822667265114807796}
-  - {fileID: -5059305671119162150}
   - {fileID: -6860863777937447673}
   - {fileID: -4466014634672810618}
   - {fileID: 4337013461181109370}
   - {fileID: -4297644755705953820}
   - {fileID: -5070011521608426472}
+  - {fileID: -7872426760261806101}
+  - {fileID: -1890298180908331478}
+  - {fileID: -4383693625517875851}
+  - {fileID: -2727583872698662857}
+  - {fileID: 6370070335002646916}
+  - {fileID: -7021863690132376355}
+  - {fileID: 5787270293951152080}
+  - {fileID: 5007586681927520725}
   EditorParameters: []
   MasterBanks:
   - {fileID: -8060980804293988741}
   StringsBanks:
   - {fileID: 5917708036578608240}
-  cacheTime: 638131409741795406
+  cacheTime: 638135471034077551
   cacheVersion: 131593
---- !u!114 &159336944855883450
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
-  m_Name: event:/Music/game_002
-  m_EditorClassIdentifier: 
-  Path: event:/Music/game_002
-  Guid:
-    Data1: -1916634330
-    Data2: 1167983941
-    Data3: 1833073581
-    Data4: 1918650056
-  Banks:
-  - {fileID: -8060980804293988741}
-  IsStream: 1
-  Is3D: 0
-  IsOneShot: 1
-  Parameters: []
-  MinDistance: 1
-  MaxDistance: 20
-  Length: 102857
---- !u!114 &1399565695188976922
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
-  m_Name: event:/Music/abyss_001
-  m_EditorClassIdentifier: 
-  Path: event:/Music/abyss_001
-  Guid:
-    Data1: -2099893669
-    Data2: 1184289244
-    Data3: -1133450321
-    Data4: 326138994
-  Banks:
-  - {fileID: -8060980804293988741}
-  IsStream: 1
-  Is3D: 0
-  IsOneShot: 1
-  Parameters: []
-  MinDistance: 1
-  MaxDistance: 20
-  Length: 98666
 --- !u!114 &1453305857757199432
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1401,33 +1458,6 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 0
---- !u!114 &3533031449618742868
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
-  m_Name: event:/Music/start_001
-  m_EditorClassIdentifier: 
-  Path: event:/Music/start_001
-  Guid:
-    Data1: 399466152
-    Data2: 1224058666
-    Data3: 1777809578
-    Data4: -281874303
-  Banks:
-  - {fileID: -8060980804293988741}
-  IsStream: 1
-  Is3D: 0
-  IsOneShot: 1
-  Parameters: []
-  MinDistance: 1
-  MaxDistance: 20
-  Length: 26727
 --- !u!114 &3583782921577775159
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1455,33 +1485,6 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 0
---- !u!114 &3677917369912790837
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
-  m_Name: event:/Music/game_001
-  m_EditorClassIdentifier: 
-  Path: event:/Music/game_001
-  Guid:
-    Data1: -1820905848
-    Data2: 1333989044
-    Data3: -787764304
-    Data4: 642457650
-  Banks:
-  - {fileID: -8060980804293988741}
-  IsStream: 1
-  Is3D: 0
-  IsOneShot: 1
-  Parameters: []
-  MinDistance: 1
-  MaxDistance: 20
-  Length: 122181
 --- !u!114 &3917951965893975697
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1590,6 +1593,60 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 0
+--- !u!114 &5007586681927520725
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Game/Abilities/explode_charge_002
+  m_EditorClassIdentifier: 
+  Path: event:/Game/Abilities/explode_charge_002
+  Guid:
+    Data1: -1606689935
+    Data2: 1248855069
+    Data3: -2061241667
+    Data4: -1398195708
+  Banks:
+  - {fileID: -8060980804293988741}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 650
+--- !u!114 &5787270293951152080
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Game/Abilities/charge_idle_003
+  m_EditorClassIdentifier: 
+  Path: event:/Game/Abilities/charge_idle_003
+  Guid:
+    Data1: -511142556
+    Data2: 1228214906
+    Data3: 472235154
+    Data4: -1140673701
+  Banks:
+  - {fileID: -8060980804293988741}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 2000
 --- !u!114 &5904259344797910633
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1632,10 +1689,10 @@ MonoBehaviour:
   Path: Assets/FMOD/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 638131409741795406
+  lastModified: 638135471034077551
   FileSizes:
   - Name: 
-    Value: 4084
+    Value: 4214
   Exists: 1
 --- !u!114 &5992827859230917708
 MonoBehaviour:
@@ -1718,6 +1775,33 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 0
+--- !u!114 &6370070335002646916
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Music/bgm_start_game_001
+  m_EditorClassIdentifier: 
+  Path: event:/Music/bgm_start_game_001
+  Guid:
+    Data1: 399466152
+    Data2: 1224058666
+    Data3: 1777809578
+    Data4: -281874303
+  Banks:
+  - {fileID: -8060980804293988741}
+  IsStream: 1
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 26727
 --- !u!114 &6642678424488806187
 MonoBehaviour:
   m_ObjectHideFlags: 0

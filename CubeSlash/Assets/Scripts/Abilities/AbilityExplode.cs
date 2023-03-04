@@ -216,8 +216,10 @@ public class AbilityExplode : Ability
 
         IEnumerator ExplodeCr(Vector3 position)
         {
-            yield return new WaitForSeconds(0.25f);
-            Explode(position, Radius * 0.75f, Knockback * 0.1f);
+            var delay = Random.Range(Delay * 0.1f, Delay * 0.5f);
+            var radius = Random.Range(Radius * 0.25f, Radius * 0.5f);
+            yield return new WaitForSeconds(delay);
+            Explode(position, radius, 0);
         }
     }
 

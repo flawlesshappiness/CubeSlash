@@ -31,4 +31,3 @@ chain charge doesn't make it a charge ability
 gamesetupview remember choices
 difficulties may give too much exp mul
 looping sounds are annoying
-start explode cooldown after charge
