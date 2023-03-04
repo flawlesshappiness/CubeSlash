@@ -26,6 +26,5 @@ bone boss spawns without duds
 beam back is boring
 charge beam arc doesnt work
 attract neaby food too big radius (exponential instead?)
-unlock animation interrupt when switching
 chain charge doesn't make it a charge ability
 gamesetupview remember choices

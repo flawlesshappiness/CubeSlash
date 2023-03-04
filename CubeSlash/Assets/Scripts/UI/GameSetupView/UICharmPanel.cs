@@ -50,7 +50,13 @@ public class UICharmPanel : MonoBehaviour
         IEnumerator Cr()
         {
             yield return null;
-            SetSelectedCharm(0);
+            if(Save.Game.idx_gamesetup_charm > 0)
+            {
+                ToggleCharm(Save.Game.idx_gamesetup_charm);
+            }
+            else {
+                SetSelectedCharm(0);
+            }
             OnDeselect();
         }
     }
@@ -82,23 +88,9 @@ public class UICharmPanel : MonoBehaviour
         {
             TryPurchaseCharm(charm);
         }
-        else if (charm.Activated)
+        else
         {
-            charms_to_activate++;
-            charm.Deactivate();
-            SetSelectedCharm(idx_selected);
-        }
-        else if(charms_to_activate > 0 || MAX_CHARMS == 1)
-        {
-            if (MAX_CHARMS == 1)
-            {
-                charms.ForEach(c => c.Deactivate());
-                charms_to_activate = MAX_CHARMS;
-            }
-
-            charms_to_activate--;
-            charm.Activate();
-            SetSelectedCharm(idx_selected);
+            ToggleCharm(idx_selected);
         }
     }
 
@@ -127,15 +119,14 @@ public class UICharmPanel : MonoBehaviour
         if (InternalShopController.Instance.TryPurchaseProduct(charm.Info.shop_product))
         {
             charm.Initialize(charm.Info);
-            SetSelectedCharm(idx_selected);
+            ToggleCharm(idx_selected);
         }
     }
 
     private void OnMove(int dir)
     {
         var idx_prev = idx_selected;
-        idx_selected = Mathf.Clamp(idx_selected + dir, 0, charms.Count - 1);
-        SetSelectedCharm(idx_selected);
+        SetSelectedCharm(idx_selected + dir);
 
         if(idx_selected != idx_prev)
         {
@@ -145,8 +136,8 @@ public class UICharmPanel : MonoBehaviour
 
     private void SetSelectedCharm(int i)
     {
-        idx_selected = i;
-        var charm = charms[i];
+        idx_selected = Mathf.Clamp(i, 0, charms.Count - 1);
+        var charm = charms[idx_selected];
         var unlocked = charm.Info.IsUnlocked();
         tmp_name.text = charm.Info.charm_name;
         tmp_desc.text = charm.Info.charm_description;
@@ -161,6 +152,32 @@ public class UICharmPanel : MonoBehaviour
         else if (charm.Activated)
         {
             tmp_name.text += " (Activated)";
+        }
+    }
+
+    private void ToggleCharm(int i)
+    {
+        i = Mathf.Clamp(i, 0, charms.Count - 1);
+        var charm = charms[i];
+
+        if (charm.Activated)
+        {
+            charms_to_activate++;
+            charm.Deactivate();
+            SetSelectedCharm(i);
+        }
+        else if (charms_to_activate > 0 || MAX_CHARMS == 1)
+        {
+            if (MAX_CHARMS == 1)
+            {
+                charms.ForEach(c => c.Deactivate());
+                charms_to_activate = MAX_CHARMS;
+                Save.Game.idx_gamesetup_charm = i;
+            }
+
+            charms_to_activate--;
+            charm.Activate();
+            SetSelectedCharm(i);
         }
     }
 

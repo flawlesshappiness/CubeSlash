@@ -25,14 +25,13 @@ public class UIAbilityPanel : MonoBehaviour
 
         parent_view = GetComponentInParent<View>();
 
-        SetSettings(0);
+        SetSettings(Save.Game.idx_gamesetup_ability);
     }
 
     private void OnMove(int dir)
     {
         var idx_prev = idx_settings;
-        idx_settings = Mathf.Clamp(idx_settings + dir, 0, db_player_body_settings.collection.Count - 1);
-        SetSettings(idx_settings);
+        SetSettings(idx_settings + dir);
 
         if(idx_settings != idx_prev)
         {
@@ -42,9 +41,11 @@ public class UIAbilityPanel : MonoBehaviour
 
     private void SetSettings(int i)
     {
-        idx_settings = i;
+        var collection = db_player_body_settings.collection;
+        idx_settings = Mathf.Clamp(i, 0, collection.Count - 1);
+        Save.Game.idx_gamesetup_ability = idx_settings;
 
-        var settings = db_player_body_settings.collection[i];
+        var settings = collection[idx_settings];
         body_panel.SetSettings(settings);
         part_panel.SetSettings(settings);
         CurrentSettings = settings;

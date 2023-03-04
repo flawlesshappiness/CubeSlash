@@ -36,7 +36,7 @@ public class UIDifficultyPanel : MonoBehaviour
             var d = difficulties[idx_selected];
             pivot_selected.anchoredPosition = d.RectTransform.anchoredPosition;
             pivot_selected.sizeDelta = d.RectTransform.sizeDelta;
-            SetDifficulty(0);
+            SetDifficulty(Save.Game.idx_gamesetup_difficulty);
         }
     }
 
@@ -73,9 +73,7 @@ public class UIDifficultyPanel : MonoBehaviour
     private void OnMove(int dir)
     {
         var idx_prev = idx_selected;
-        idx_selected = Mathf.Clamp(idx_selected + dir, 0, difficulties.Count - 1);
-
-        SetDifficulty(idx_selected);
+        SetDifficulty(idx_selected + dir);
 
         if(idx_selected != idx_prev)
         {
@@ -85,11 +83,14 @@ public class UIDifficultyPanel : MonoBehaviour
 
     private void SetDifficulty(int i)
     {
-        idx_selected = i;
-        var d = difficulties[i];
+        idx_selected = Mathf.Clamp(i, 0, difficulties.Count - 1);
+        var d = difficulties[idx_selected];
         Selected = d.Difficulty;
+
+        Save.Game.idx_gamesetup_difficulty = idx_selected;
 
         Lerp.AnchoredPosition(pivot_selected, 0.15f, d.RectTransform.anchoredPosition);
         Lerp.SizeDelta(pivot_selected, 0.15f, d.RectTransform.sizeDelta);
+
     }
 }

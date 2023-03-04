@@ -11,4 +11,8 @@ public class GameSaveData : SaveDataObject
 
     public int runs_completed = 0;
     public int idx_difficulty_completed = -1;
+
+    public int idx_gamesetup_ability = -1;
+    public int idx_gamesetup_charm = -1;
+    public int idx_gamesetup_difficulty = -1;
 }

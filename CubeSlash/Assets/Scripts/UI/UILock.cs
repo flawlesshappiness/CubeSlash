@@ -14,8 +14,11 @@ public class UILock : MonoBehaviour
     public int Price { set { tmp_price.text = CurrencyController.FormatCurrencyString(value); ; } }
     public string Text { set { tmp_price.text = value; } }
 
+    private Coroutine cr_animate;
+
     public void SetLocked()
     {
+        StopAnimation();
         cvg.alpha = 1;
         tmp_price.enabled = true;
         pivot_anim_lock.localScale = Vector3.one;
@@ -23,13 +26,16 @@ public class UILock : MonoBehaviour
 
     public void SetUnlocked()
     {
+        StopAnimation();
         cvg.alpha = 0;
         tmp_price.enabled = false;
     }
 
     public Coroutine AnimateUnlock()
     {
-        return StartCoroutine(Cr());
+        StopAnimation();
+        cr_animate = StartCoroutine(Cr());
+        return cr_animate;
         IEnumerator Cr()
         {
             tmp_price.enabled = false;
@@ -43,10 +49,20 @@ public class UILock : MonoBehaviour
 
     public Coroutine AnimateLocked()
     {
-        return StartCoroutine(Cr());
+        StopAnimation();
+        cr_animate = StartCoroutine(Cr());
+        return cr_animate;
         IEnumerator Cr()
         {
             yield return null;
+        }
+    }
+
+    private void StopAnimation()
+    {
+        if(cr_animate != null)
+        {
+            StopCoroutine(cr_animate);
         }
     }
 }

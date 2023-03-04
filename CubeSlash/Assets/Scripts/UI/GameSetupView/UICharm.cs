@@ -60,4 +60,10 @@ public class UICharm : MonoBehaviour
             img_charm.transform.localScale = Vector3.Lerp(s_start, s_end, f);
         }).UnscaledTime().Curve(EasingCurves.EaseOutQuad);
     }
+
+    public void AnimateUnlock()
+    {
+        uilock.AnimateUnlock();
+        Lerp.Alpha(img_charm, 0.5f, 1);
+    }
 }
