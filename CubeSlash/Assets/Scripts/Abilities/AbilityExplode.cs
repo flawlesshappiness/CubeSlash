@@ -73,6 +73,8 @@ public class AbilityExplode : Ability
 
             p_instance.Lifetime = Calculator.DST_Time(7f, speed);
             p_instance.onDeath += () => ProjectileExplode(p_instance);
+
+            SoundController.Instance.Play(SoundEffectType.sfx_enemy_shoot);
         }
         else
         {
@@ -160,7 +162,7 @@ public class AbilityExplode : Ability
                     radius = radius,
                     delay = delay,
                     getPosition = () => pos,
-                    play_charge_sfx = i == 0,
+                    play_charge_sfx = false,
                     onHit = OnHit,
                 }));
             }
