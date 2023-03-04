@@ -43,7 +43,7 @@ public class AbilityDash : Ability
     private const float RADIUS_DAMAGE = 1.5f;
     private const float RADIUS_FORCE = 12f;
     private const float FORCE = 200;
-    private const float FORCE_SELF = 750;
+    private const float FORCE_SELF = 500;
     private const float RIPPLE_SPEED = 25f;
     private const float RIPPLE_SIZE = 2f;
     private const float RIPPLE_DISTANCE = 7f;

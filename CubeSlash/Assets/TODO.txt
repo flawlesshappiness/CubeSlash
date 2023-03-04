@@ -34,5 +34,5 @@ looping sounds are annoying
 start explode cooldown after charge
 enemy projectile destroyed on player
 explode mod split sound effect
+nerf chain mod coolodnw
 less knockback on dash?
-add beam cooldown upgrade
