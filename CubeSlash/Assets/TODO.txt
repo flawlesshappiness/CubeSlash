@@ -29,5 +29,3 @@ attract neaby food too big radius (exponential instead?)
 unlock animation interrupt when switching
 chain charge doesn't make it a charge ability
 gamesetupview remember choices
-difficulties may give too much exp mul
-looping sounds are annoying

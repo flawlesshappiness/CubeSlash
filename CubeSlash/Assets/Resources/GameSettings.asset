@@ -19,39 +19,6 @@ MonoBehaviour:
   time_bgm_play: 0.3
   time_boss_spawn: 0.6
   endless_duration: 1200
-  enemy_freq_area:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 3
-      inWeight: 0
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 0.5
-      value: 0.1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 3
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 1
-      value: 0
-      inSlope: -0.2
-      outSlope: -0.2
-      tangentMode: 34
-      weightedMode: 3
-      inWeight: 0.33333334
-      outWeight: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
   enemy_freq_game:
     serializedVersion: 2
     m_Curve:
@@ -181,26 +148,26 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 0
       value: 1
-      inSlope: 2
-      outSlope: 2
+      inSlope: 0.5
+      outSlope: 0.5
       tangentMode: 34
       weightedMode: 3
       inWeight: 0
       outWeight: 0.33333334
     - serializedVersion: 3
       time: 0.5
-      value: 2
-      inSlope: 2
-      outSlope: 4
+      value: 1.25
+      inSlope: 0.5
+      outSlope: 1
       tangentMode: 69
       weightedMode: 3
       inWeight: 0.33333334
       outWeight: 0.33333334
     - serializedVersion: 3
       time: 1
-      value: 4
-      inSlope: 4
-      outSlope: 4
+      value: 1.75
+      inSlope: 1
+      outSlope: 1
       tangentMode: 34
       weightedMode: 3
       inWeight: 0.33333334
