@@ -1,4 +1,5 @@
 using Flawliz.Lerp;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -13,6 +14,7 @@ public class UIAbilityPanel : MonoBehaviour
 
     private int idx_settings;
     private View parent_view;
+    private Coroutine cr_unlock;
 
     public PlayerBodySettings CurrentSettings { get; private set; }
 
@@ -41,6 +43,8 @@ public class UIAbilityPanel : MonoBehaviour
 
     private void SetSettings(int i)
     {
+        StopAnimateUnlock();
+
         var collection = db_player_body_settings.collection;
         idx_settings = Mathf.Clamp(i, 0, collection.Count - 1);
         Save.Game.idx_gamesetup_ability = idx_settings;
@@ -96,10 +100,33 @@ public class UIAbilityPanel : MonoBehaviour
     {
         if(InternalShopController.Instance.TryPurchaseProduct(settings.shop_product))
         {
-            uilock.AnimateUnlock();
-            Lerp.Alpha(cvg_icon_body, 0.5f, 1f);
-            Lerp.Alpha(cvg_icon_ability, 0.5f, 1f);
             SetSettings(idx_settings);
+            AnimateUnlock();
+        }
+    }
+
+    private Coroutine AnimateUnlock()
+    {
+        StopAnimateUnlock();
+        cr_unlock = StartCoroutine(Cr());
+        return cr_unlock;
+        IEnumerator Cr()
+        {
+            uilock.AnimateUnlock();
+            yield return LerpEnumerator.Value(0.5f, f =>
+            {
+                var a = Mathf.Lerp(0f, 1f, f);
+                cvg_icon_body.alpha = a;
+                cvg_icon_ability.alpha = a;
+            });
+        }
+    }
+
+    private void StopAnimateUnlock()
+    {
+        if(cr_unlock != null)
+        {
+            StopCoroutine(cr_unlock);
         }
     }
 }
