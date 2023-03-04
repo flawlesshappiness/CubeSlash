@@ -70,6 +70,8 @@ public class AI_BossBone : EnemyAI
 
     private void OnDudKilled()
     {
+        if (Self.IsDead) return;
+
         wall_arm_count = Mathf.Min(wall_arm_count + 1, COUNT_ARM_MAX);
         StartCoroutine(Cr());
         IEnumerator Cr()

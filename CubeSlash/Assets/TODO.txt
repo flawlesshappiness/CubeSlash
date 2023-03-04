@@ -23,4 +23,3 @@ split bounce too strong?
 split lower cooldown, less bullets
 boss death sound effect
 bone boss spawns without duds
-charge beam arc doesnt work
