@@ -265,10 +265,10 @@ public class AbilityCharge : Ability
 
                             if (EnemyFragments)
                             {
-                                var fragments = AbilityMines.ShootFragments(position, template_fragment_projectile, 3, 20, 1.0f);
+                                var fragments = AbilityMines.ShootFragments(position, template_fragment_projectile, 3, 20, 0.25f);
                                 foreach(var fragment in fragments)
                                 {
-                                    fragment.Lifetime = 0.25f;
+                                    fragment.Lifetime = 0.3f;
                                 }
                             }
                         }

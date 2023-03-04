@@ -35,5 +35,4 @@ explode mod split sound effect
 shielded enemy with a dud on its back
 less knockback on dash?
 progress bar on lose game (see how far you got)
-too few enemies are spawning
-change enemy spawning to count how many enemies need to be spawned
+charge mod mines enemy fragment on death too big
