@@ -70,6 +70,9 @@ public class UpgradeID : FakeEnum
     public static readonly UpgradeID charge_width_1 = new UpgradeID(nameof(charge_width_1));
     public static readonly UpgradeID charge_width_2 = new UpgradeID(nameof(charge_width_2));
     public static readonly UpgradeID charge_width_3 = new UpgradeID(nameof(charge_width_3));
+    public static readonly UpgradeID charge_cooldown_1 = new UpgradeID(nameof(charge_cooldown_1));
+    public static readonly UpgradeID charge_cooldown_2 = new UpgradeID(nameof(charge_cooldown_2));
+    public static readonly UpgradeID charge_cooldown_3 = new UpgradeID(nameof(charge_cooldown_3));
 
     public static readonly UpgradeID charge_mod_chain = new UpgradeID(nameof(charge_mod_chain));
     public static readonly UpgradeID charge_mod_dash = new UpgradeID(nameof(charge_mod_dash));
