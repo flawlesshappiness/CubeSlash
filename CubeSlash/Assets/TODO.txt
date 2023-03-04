@@ -14,6 +14,7 @@ difficulties increase max area?
 physics objects in the world are fun. Hazards? Affect both player and enemy?
 cooldown reduc should affect charge
 
+controller recommended message
 increase boss size on difficulty
 not obvious that you can scroll in GameSetupView
 progress bar on lose game (see how far you got)
@@ -21,4 +22,3 @@ lifetime at end screen might not be recorded correctly
 first boss too easy?
 split bounce too strong?
 split lower cooldown, less bullets
-boss death sound effect

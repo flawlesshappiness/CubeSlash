@@ -17,8 +17,8 @@ MonoBehaviour:
   description: $ projectile size
   value:
     type_value: 3
-    type_display: 0
     value_int: 0
     value_float: 1
     value_bool: 0
   high_is_positive: 1
+  display_has_plus: 1

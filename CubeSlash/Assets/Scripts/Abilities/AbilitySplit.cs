@@ -94,7 +94,7 @@ public class AbilitySplit : Ability
             });
 
             p.transform.localScale = Vector3.one * SizeProjectiles;
-            p.Piercing = ProjectilePenetrate || ProjectileBounces > 0;
+            p.Piercing = ProjectilePenetrate;
             p.Lifetime = PROJECTILE_LIFETIME;
             p.Bounces = ProjectileBounces;
             p.BounceBack = true;
@@ -179,24 +179,21 @@ public class AbilitySplit : Ability
 
     public static List<Vector3> GetSplitDirections(int count, float angle_max, Vector3 forward)
     {
-        var odd_count = count % 2 == 1;
-        var directions = new List<Vector3>();
-        var count_arc = ((count - 1) / 2);
-        var angle_per = angle_max == 0 ? 0 : angle_max / count_arc;
-        var i_start = odd_count ? 0 : 1;
-        var i_end = count_arc + (odd_count ? 1 : 2);
-        for (int i_arc = i_start; i_arc < i_end; i_arc++)
+        if(count == 1)
         {
-            var angle = (angle_per * i_arc) - (odd_count ? 0 : angle_per * 0.5f);
-            var count_sides = i_arc == 0 && odd_count ? 1 : 2;
-            for (int i_side = 0; i_side < count_sides; i_side++)
-            {
-                var sign = i_side == 0 ? 1 : -1;
-                var angle_signed = angle * sign;
-                var direction = Quaternion.AngleAxis(angle_signed, Vector3.back) * forward;
-                directions.Add(direction);
-            }
+            return new List<Vector3> { forward };
         }
+
+        var directions = new List<Vector3>();
+        var angle_start = -angle_max * 0.5f;
+        var angle_per = angle_max / (count - 1);
+        for (int i = 0; i < count; i++)
+        {
+            var angle = angle_start + angle_per * i;
+            var dir = Quaternion.AngleAxis(angle, Vector3.back) * forward;
+            directions.Add(dir);
+        }
+
         return directions;
     }
 }

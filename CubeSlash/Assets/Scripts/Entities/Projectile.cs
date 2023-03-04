@@ -152,7 +152,7 @@ public class Projectile : MonoBehaviourExtended
         if(ps_death != null)
         {
             ps_death.Duplicate()
-                .Position(transform.position)
+                .Parent(GameController.Instance.world)
                 .Play()
                 .Destroy(1);
         }
