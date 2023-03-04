@@ -127,14 +127,14 @@ public class AbilityExplode : Ability
                 onHit = OnHit,
                 onExplode = OnExplode,
             }));
-
-            InUse = false;
-            StartCooldown();
-            Player.Instance.AbilityLock.RemoveLock(nameof(AbilityExplode));
         }
 
         void OnExplode(Vector3 position)
         {
+            InUse = false;
+            StartCooldown();
+            Player.Instance.AbilityLock.RemoveLock(nameof(AbilityExplode));
+
             if (HasFragments)
             {
                 var fragments = AbilityMines.ShootFragments(position, projectile_fragment, 10, 20, 0.75f);
