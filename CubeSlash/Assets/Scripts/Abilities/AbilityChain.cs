@@ -41,7 +41,7 @@ public class AbilityChain : Ability
         HitsExplode = GetBoolValue(StatID.chain_hits_explode);
         StoreZaps = GetBoolValue(StatID.chain_store_zaps);
 
-        charged = AbilityController.Instance.HasModifier(Info.type, Type.CHARGE);
+        charged = HasModifier(Type.CHARGE);
 
         pivot_preview.localScale = Vector3.one * Radius * 2;
         spr_preview.SetAlpha(0);
@@ -82,6 +82,7 @@ public class AbilityChain : Ability
     private void Update()
     {
         if (!InUse) return;
+        if (charged) return;
         if (Time.time < time_attack) return;
 
         var center = Player.Instance.transform.position;

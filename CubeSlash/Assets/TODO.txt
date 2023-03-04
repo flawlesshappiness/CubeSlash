@@ -27,4 +27,3 @@ beam back is boring
 charge beam arc doesnt work
 attract neaby food too big radius (exponential instead?)
 chain charge doesn't make it a charge ability
-gamesetupview remember choices
