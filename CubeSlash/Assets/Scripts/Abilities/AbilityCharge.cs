@@ -212,8 +212,8 @@ public class AbilityCharge : Ability
     {
         if(Charging && !ChargeEnded && ChargeSucksExp)
         {
-            var speed_max = 8f;
-            var dist_max = CameraController.Instance.Width;
+            var speed_max = 20f;
+            var dist_max = 35;
             var items = ItemController.Instance.GetActiveExperiences();
             foreach(var item in items)
             {

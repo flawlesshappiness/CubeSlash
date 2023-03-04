@@ -19322,9 +19322,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Info: {fileID: 11400000, guid: a77c9a9f9d872354fbd91946993903d8, type: 2}
-  Stats: {fileID: 11400000, guid: dea22f17ad735a5429748d23a588c898, type: 2}
-  ModifierUpgrades: {fileID: 11400000, guid: e5813a8d4b232a04ebec93b0b67e7015, type: 2}
-  prefab_bodypart: {fileID: 5244421003229509873, guid: 9ee26c5f6b007e64e96421732fcf5a9f, type: 3}
   template_beam: {fileID: 4577559274492983157, guid: 7890aea33356ee846b6b9000844b46ee, type: 3}
   template_trail: {fileID: 7448746127257476779}
   template_fragment_projectile: {fileID: 2903384162585443173, guid: 35cef0c126fc33849af54dc196d327f6, type: 3}
@@ -19362,53 +19359,21 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 0
       value: 0
-      inSlope: 0
-      outSlope: 2.000003
+      inSlope: 0.26199463
+      outSlope: 0.26199463
       tangentMode: 0
       weightedMode: 3
       inWeight: 0
-      outWeight: 0.333333
+      outWeight: 0.9722222
     - serializedVersion: 3
       time: 1
       value: 1
-      inSlope: 0
-      outSlope: 0
+      inSlope: 0.03698551
+      outSlope: 0.03698551
       tangentMode: 0
       weightedMode: 3
-      inWeight: 0.33333302
+      inWeight: 0.31884056
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  sfx_charge:
-    reference:
-      Guid:
-        Data1: 630917250
-        Data2: 1214473809
-        Data3: 1052052410
-        Data4: -297316490
-      Path: event:/Game/Abilities/charge_start_002
-  sfx_charge_idle:
-    reference:
-      Guid:
-        Data1: 1625743898
-        Data2: 1281816307
-        Data3: -1112447579
-        Data4: 96023982
-      Path: event:/Game/Abilities/charge_idle_002
-  sfx_shoot:
-    reference:
-      Guid:
-        Data1: 927798703
-        Data2: 1119834803
-        Data3: 447513531
-        Data4: 1199017499
-      Path: event:/Game/Abilities/charge_end_001
-  sfx_shoot_premature:
-    reference:
-      Guid:
-        Data1: -474823519
-        Data2: 1232703166
-        Data3: 1700276925
-        Data4: 450463273
-      Path: event:/Game/Abilities/on_cooldown_001
