@@ -3,6 +3,7 @@ enemy that pushes the player
 enemy that pulls the player
 waves that push things in a direction
 endless mode
+shielded enemy with a dud on its back
 
 CHARM: Orbiting damage
 CHARM: Gain x when y
@@ -13,7 +14,9 @@ difficulties increase max area?
 physics objects in the world are fun. Hazards? Affect both player and enemy?
 cooldown reduc should affect charge
 
+increase boss size on difficulty
 not obvious that you can scroll in GameSetupView
+progress bar on lose game (see how far you got)
 lifetime at end screen might not be recorded correctly
 first boss too easy?
 split bounce too strong?
@@ -28,11 +31,8 @@ chain charge doesn't make it a charge ability
 gamesetupview remember choices
 difficulties may give too much exp mul
 looping sounds are annoying
-increase boss size on difficulty
 start explode cooldown after charge
 enemy projectile destroyed on player
 explode mod split sound effect
-shielded enemy with a dud on its back
 less knockback on dash?
-progress bar on lose game (see how far you got)
-charge mod mines enemy fragment on death too big
+add beam cooldown upgrade
