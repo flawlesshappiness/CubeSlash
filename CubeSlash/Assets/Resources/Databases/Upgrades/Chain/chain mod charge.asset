@@ -33,5 +33,12 @@ MonoBehaviour:
     value:
       type_value: 1
       value_int: 3
-      value_float: 1
+      value_float: 0.5
+      value_bool: 0
+  - id:
+      id: chain_cooldown_perc
+    value:
+      type_value: 3
+      value_int: 3
+      value_float: 0.05
       value_bool: 0
