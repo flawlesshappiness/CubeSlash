@@ -23,6 +23,4 @@ split bounce too strong?
 split lower cooldown, less bullets
 boss death sound effect
 bone boss spawns without duds
-beam back is boring
 charge beam arc doesnt work
-attract neaby food too big radius (exponential instead?)

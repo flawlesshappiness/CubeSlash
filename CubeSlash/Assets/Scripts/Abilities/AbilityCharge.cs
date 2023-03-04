@@ -31,6 +31,7 @@ public class AbilityCharge : Ability
     private const float CHARGE_TIME = 1.5f;
     private const float FORCE = 200f;
     private const float FORCE_SELF = 500f;
+    private const float ARC = 30f;
 
     private float time_charge_start;
     private float time_charge_end;
@@ -94,7 +95,7 @@ public class AbilityCharge : Ability
         KnockbackSelf = FORCE_SELF * GetFloatValue(StatID.charge_knock_self_perc);
         Knockback = FORCE * GetFloatValue(StatID.charge_knock_enemy_perc);
         BeamCount = GetIntValue(StatID.charge_beam_count);
-        BeamArc = GetFloatValue(StatID.charge_beam_arc_perc);
+        BeamArc = ARC * GetFloatValue(StatID.charge_beam_arc_perc);
         BeamBack = GetBoolValue(StatID.charge_beam_back);
         ChargeSucksExp = GetBoolValue(StatID.charge_suck_exp);
         ChargeTimeOnKill = GetFloatValue(StatID.charge_cooldown_kill_reduc_perc);
@@ -213,7 +214,7 @@ public class AbilityCharge : Ability
         if(Charging && !ChargeEnded && ChargeSucksExp)
         {
             var speed_max = 20f;
-            var dist_max = 35;
+            var dist_max = 25;
             var items = ItemController.Instance.GetActiveExperiences();
             foreach(var item in items)
             {
