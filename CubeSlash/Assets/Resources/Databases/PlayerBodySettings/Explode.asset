@@ -16,7 +16,7 @@ MonoBehaviour:
   armor: 0
   body_size: 1.35
   mass: 1
-  linear_velocity: 5
+  linear_velocity: 6
   linear_acceleration: 16
   linear_drag: 20
   body: {fileID: 1353097371446324401, guid: d032e7b40d7f19b4b91ddc9dc4d8e0c3, type: 3}

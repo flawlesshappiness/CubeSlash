@@ -86,16 +86,6 @@ public class EnemyController : Singleton
         return freq_game;
     }
 
-    public float GetSpawnFrequencyArea()
-    {
-        var settings = GameSettings.Instance;
-        var max_area_duration = settings.area_duration;
-        var current_area_duration = Time.time - AreaController.Instance.TimeAreaStart;
-        var t_area_duration = current_area_duration / max_area_duration;
-        var freq_area = settings.enemy_freq_area.Evaluate(t_area_duration);
-        return freq_area;
-    }
-
     public float GetSpawnFrequencyEndless()
     {
         var settings = GameSettings.Instance;
@@ -110,8 +100,17 @@ public class EnemyController : Singleton
     {
         var freq_difficulty = GetSpawnFrequencyDifficulty();
         var freq_game = AreaController.Instance.IsEndless ? GetSpawnFrequencyEndless() : GetSpawnFrequencyGame();
-        var freq_area = GetSpawnFrequencyArea();
-        return Mathf.Max(0.1f, freq_game + freq_area + freq_difficulty);
+        return Mathf.Max(0.1f, freq_game + freq_difficulty);
+    }
+
+    public int GetSpawnCount()
+    {
+        var settings = GameSettings.Instance;
+        var max_game_duration = settings.areas_to_win * settings.area_duration;
+        var current_game_duration = Time.time - SessionController.Instance.CurrentData.time_start;
+        var t_game_duration = current_game_duration / max_game_duration;
+        var count = (int)settings.enemy_count_game.Evaluate(t_game_duration);
+        return count;
     }
 
     private void SpawnUpdate()
@@ -119,7 +118,11 @@ public class EnemyController : Singleton
         if (Time.time < time_next_spawn_enemy) return;
         if (enemies_unlocked.Count == 0) return;
         time_next_spawn_enemy += GetSpawnFrequency();
-        SpawnRandomEnemy(CameraController.Instance.GetPositionOutsideCamera());
+        var count = GetSpawnCount();
+        for (int i = 0; i < count; i++)
+        {
+            SpawnRandomEnemy(CameraController.Instance.GetPositionOutsideCamera());
+        }
     }
 
     private IEnumerator SpawnBossCr(EnemySettings boss, float delay)

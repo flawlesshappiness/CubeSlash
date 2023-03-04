@@ -57,30 +57,21 @@ MonoBehaviour:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 1.4
-      inSlope: -5.2301874
-      outSlope: -5.2301874
+      value: 1.402121
+      inSlope: -0.110549085
+      outSlope: -0.110549085
       tangentMode: 0
       weightedMode: 3
       inWeight: 0
-      outWeight: 0.27777776
-    - serializedVersion: 3
-      time: 0.15
-      value: 1
-      inSlope: -0.36184672
-      outSlope: -0.36184672
-      tangentMode: 0
-      weightedMode: 3
-      inWeight: 0.33333334
-      outWeight: 0.40554917
+      outWeight: 0.5652174
     - serializedVersion: 3
       time: 1
-      value: 0.5
-      inSlope: -0.8925781
-      outSlope: -0.8925781
+      value: 0.8
+      inSlope: -1.4084927
+      outSlope: -1.4084927
       tangentMode: 0
       weightedMode: 3
-      inWeight: 0.29706708
+      inWeight: 0.2258454
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
@@ -126,6 +117,30 @@ MonoBehaviour:
       value: -0.2
       inSlope: -0.2
       outSlope: -0.2
+      tangentMode: 34
+      weightedMode: 3
+      inWeight: 0.33333334
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  enemy_count_game:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 2
+      inSlope: 5
+      outSlope: 5
+      tangentMode: 34
+      weightedMode: 3
+      inWeight: 0
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 7
+      inSlope: 5
+      outSlope: 5
       tangentMode: 34
       weightedMode: 3
       inWeight: 0.33333334

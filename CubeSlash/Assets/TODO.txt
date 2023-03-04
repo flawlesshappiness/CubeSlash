@@ -13,7 +13,7 @@ difficulties increase max area?
 physics objects in the world are fun. Hazards? Affect both player and enemy?
 cooldown reduc should affect charge
 
-not obvious that you can scroll
+not obvious that you can scroll in GameSetupView
 lifetime at end screen might not be recorded correctly
 first boss too easy?
 split bounce too strong?
@@ -28,13 +28,12 @@ chain charge doesn't make it a charge ability
 gamesetupview remember choices
 difficulties may give too much exp mul
 looping sounds are annoying
-too few enemies are spawning
 increase boss size on difficulty
 start explode cooldown after charge
 enemy projectile destroyed on player
-change enemy spawning to count how many enemies need to be spawned
 explode mod split sound effect
 shielded enemy with a dud on its back
 less knockback on dash?
 progress bar on lose game (see how far you got)
-angler boss not enough speed on bite attack
+too few enemies are spawning
+change enemy spawning to count how many enemies need to be spawned
