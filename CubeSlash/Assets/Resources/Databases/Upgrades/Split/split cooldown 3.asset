@@ -10,21 +10,22 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 616189df85cb92d40806459b9c9111b7, type: 3}
-  m_Name: split size 1
+  m_Name: split cooldown 3
   m_EditorClassIdentifier: 
   id:
-    id: split_size_1
-  name: Bigger projectiles
-  icon: {fileID: 21300000, guid: f438bb2c8a252d04a956206fff79f721, type: 3}
+    id: split_cooldown_3
+  name: Projectile speed 2
+  icon: {fileID: 21300000, guid: 9fb67756d30302d4f9bbe94cf0f381e3, type: 3}
   hidden: 0
   require_ability: 1
   ability_required: 1
-  upgrades_required: []
+  upgrades_required:
+  - id: split_cooldown_2
   stats:
   - id:
-      id: split_size_perc
+      id: split_cooldown_perc
     value:
       type_value: 3
       value_int: 0
-      value_float: 0.25
+      value_float: -0.2
       value_bool: 0

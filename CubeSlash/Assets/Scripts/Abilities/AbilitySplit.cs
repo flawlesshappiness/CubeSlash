@@ -26,9 +26,9 @@ public class AbilitySplit : Ability
     private bool ProjectileExplode { get; set; }
     private int ProjectileBounces { get; set; }
 
-    private const float PROJECTILE_SPEED = 20f;
+    private const float PROJECTILE_SPEED = 15f;
     private const float PROJECTILE_ARC = 15f;
-    private const float PROJECTILE_SIZE = 1f;
+    private const float PROJECTILE_SIZE = 0.5f;
     private const float PROJECTILE_LIFETIME = 0.75f;
     private const float FORCE_RADIUS = 5f;
     private const float FORCE = 100f;

@@ -153,6 +153,9 @@ public class UpgradeID : FakeEnum
     public static readonly UpgradeID split_bounce_1 = new UpgradeID(nameof(split_bounce_1));
     public static readonly UpgradeID split_bounce_2 = new UpgradeID(nameof(split_bounce_2));
     public static readonly UpgradeID split_bounce_3 = new UpgradeID(nameof(split_bounce_3));
+    public static readonly UpgradeID split_cooldown_1 = new UpgradeID(nameof(split_cooldown_1));
+    public static readonly UpgradeID split_cooldown_2 = new UpgradeID(nameof(split_cooldown_2));
+    public static readonly UpgradeID split_cooldown_3 = new UpgradeID(nameof(split_cooldown_3));
 
     public static readonly UpgradeID split_mod_chain = new UpgradeID(nameof(split_mod_chain));
     public static readonly UpgradeID split_mod_charge = new UpgradeID(nameof(split_mod_charge));

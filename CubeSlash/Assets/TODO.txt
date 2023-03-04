@@ -22,3 +22,4 @@ lifetime at end screen might not be recorded correctly
 first boss too easy?
 split bounce too strong?
 split lower cooldown, less bullets
+uihealth not ordered correctly?
