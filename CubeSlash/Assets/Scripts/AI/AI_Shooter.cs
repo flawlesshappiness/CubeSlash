@@ -74,6 +74,7 @@ public class AI_Shooter : EnemyAI
         p.Rigidbody.velocity = dir.normalized * velocity_projectile;
         p.SetDirection(dir);
         p.Lifetime = 999f;
+        p.Piercing = true;
 
         Self.Rigidbody.AddForce(-dir * 50 * Self.Rigidbody.mass);
 
