@@ -20,4 +20,3 @@ not obvious that you can scroll in GameSetupView
 progress bar on lose game (see how far you got)
 lifetime at end screen might not be recorded correctly
 first boss too easy?
-split mod charge change

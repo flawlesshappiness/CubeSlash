@@ -14,12 +14,21 @@ public class AI_BossHost : EnemyAI
         base.Initialize(enemy);
         this.StartCoroutineWithID(BeamCooldownCr(), "BeamCooldown_" + GetInstanceID());
 
+        Self.EnemyBody.OnDudKilled += OnDudKilled;
         Self.OnDeath += OnDeath;
     }
 
     private void OnDeath()
     {
         SoundController.Instance.Play(SoundEffectType.sfx_enemy_boss_scream);
+    }
+
+    private void OnDudKilled(HealthDud dud)
+    {
+        if(DifficultyController.Instance.DifficultyIndex > 0)
+        {
+            HideAndShowDuds(3);
+        }
     }
 
     private void FixedUpdate()
