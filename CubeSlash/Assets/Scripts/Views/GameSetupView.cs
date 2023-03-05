@@ -19,6 +19,8 @@ public class GameSetupView : View
         ability_panel.onSettingsChanged += OnAbilitySettingsChanged;
 
         input.AddInput(PlayerInput.UIButtonType.EAST, "Back");
+
+        StartCoroutine(TransitionShowCr(true));
     }
 
     private void OnEnable()
@@ -48,7 +50,7 @@ public class GameSetupView : View
         IEnumerator Cr()
         {
             SoundController.Instance.Play(SoundEffectType.sfx_ui_submit);
-            yield return LerpEnumerator.Alpha(CanvasGroup, 0.5f, 0f).UnscaledTime();
+            yield return TransitionShowCr(false);
             ViewController.Instance.ShowView<StartView>(0.5f);
             Close(0);
         }
@@ -60,6 +62,16 @@ public class GameSetupView : View
         var a = unlocked ? 1 : 0.25f;
         Lerp.Alpha(btn_play.CanvasGroup, 0.25f, a);
         btn_play.interactable = unlocked;
+    }
+
+    private IEnumerator TransitionShowCr(bool show)
+    {
+        Interactable = false;
+        var start = show ? 0f : 1f;
+        var end = show ? 1f : 0f;
+        CanvasGroup.alpha = start;
+        yield return LerpEnumerator.Alpha(CanvasGroup, 0.5f, end).UnscaledTime();
+        Interactable = show;
     }
 
     IEnumerator TransitionToGameCr()

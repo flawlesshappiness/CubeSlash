@@ -1,7 +1,6 @@
 using Flawliz.Lerp;
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -25,11 +24,13 @@ public class StartView : View
         BackgroundController.Instance.FadeToArea(GameSettings.Instance.main_menu_area);
         VignetteController.Instance.SetArea(GameSettings.Instance.main_menu_area);
         CameraController.Instance.AnimateSize(2f, 15f, EasingCurves.EaseInOutQuad);
+
+        StartCoroutine(TransitionShowCr(true));
     }
 
     private void ClickPlay()
     {
-        StartCoroutine(TransitionToBodySelectCr());
+        StartCoroutine(TransitionToGameSetupCr());
     }
 
     private void ClickOptions()
@@ -42,32 +43,31 @@ public class StartView : View
         GameController.Instance.Quit();
     }
 
-    IEnumerator TransitionToBodySelectCr()
+    IEnumerator TransitionToGameSetupCr()
     {
-        Interactable = false;
         SelectableMenuItem.RemoveSelection();
-
-        yield return LerpEnumerator.Value(0.5f, f =>
-        {
-            CanvasGroup.alpha = Mathf.Lerp(1f, 0f, f);
-        });
-
-        ViewController.Instance.ShowView<GameSetupView>(0.5f);
+        yield return TransitionShowCr(false);
+        ViewController.Instance.ShowView<GameSetupView>(0);
     }
 
     IEnumerator TransitionToOptions()
     {
-        Interactable = false;
         SelectableMenuItem.RemoveSelection();
-
-        yield return LerpEnumerator.Value(0.5f, f =>
-        {
-            CanvasGroup.alpha = Mathf.Lerp(1f, 0f, f);
-        });
+        yield return TransitionShowCr(false);
 
         var view = ViewController.Instance.ShowView<OptionsView>(0);
-        view.onClickBack += () => ViewController.Instance.ShowView<StartView>(0.5f);
+        view.onClickBack += () => ViewController.Instance.ShowView<StartView>(0);
 
         Close(0);
+    }
+
+    private IEnumerator TransitionShowCr(bool show)
+    {
+        Interactable = false;
+        var start = show ? 0f : 1f;
+        var end = show ? 1f : 0f;
+        CanvasGroup.alpha = start;
+        yield return LerpEnumerator.Alpha(CanvasGroup, 0.5f, end).UnscaledTime();
+        Interactable = show;
     }
 }

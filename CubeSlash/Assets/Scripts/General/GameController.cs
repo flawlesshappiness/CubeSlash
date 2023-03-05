@@ -34,7 +34,8 @@ public class GameController : MonoBehaviour
         Instance = this;
         Singleton.CreateAllSingletons();
         InitializePlayer();
-        ViewController.Instance.ShowView<StartView>(0);
+        //ViewController.Instance.ShowView<StartView>(0);
+        MainMenu();
 
         PauseLock.OnLockChanged += OnPauseChanged;
     }

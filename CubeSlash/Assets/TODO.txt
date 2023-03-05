@@ -1,4 +1,4 @@
-TODO:
+IDEAS:
 enemy that pushes the player
 enemy that pulls the player
 waves that push things in a direction
@@ -10,13 +10,16 @@ CHARM: Gain x when y
 
 test cooldown reduce upgrades
 refund more? 50%?
-difficulties increase max area?
+difficulties increase max area count?
 physics objects in the world are fun. Hazards? Affect both player and enemy?
 cooldown reduc should affect charge
 
+TODO:
 controller recommended message
 increase boss size on difficulty
-not obvious that you can scroll in GameSetupView
 progress bar on lose game (see how far you got)
 lifetime at end screen might not be recorded correctly
-first boss too easy?
+not obvious that you can scroll in GameSetupView
+
+split mod dash is boring
+split mod fragment > change to beams from death?

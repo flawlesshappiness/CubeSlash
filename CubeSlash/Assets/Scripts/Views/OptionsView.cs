@@ -34,16 +34,10 @@ public class OptionsView : View
     private IEnumerator TransitionShowCr(bool show)
     {
         Interactable = false;
-
         var start = show ? 0f : 1f;
         var end = show ? 1f : 0f;
         CanvasGroup.alpha = start;
-
-        yield return LerpEnumerator.Value(0.5f, f =>
-        {
-            CanvasGroup.alpha = Mathf.Lerp(start, end, f);
-        }).UnscaledTime();
-
+        yield return LerpEnumerator.Alpha(CanvasGroup, 0.5f, end).UnscaledTime();
         Interactable = show;
     }
 
@@ -71,6 +65,7 @@ public class OptionsView : View
     private void PressBack(InputAction.CallbackContext context)
     {
         if (!Interactable) return;
+        SoundController.Instance.Play(SoundEffectType.sfx_ui_submit);
         StartCoroutine(TransitionBackCr());
     }
 

@@ -9,8 +9,9 @@ public class MusicController : Singleton
 
     private Coroutine cr_bgm_delay;
 
-    private void Start()
+    protected override void Initialize()
     {
+        base.Initialize();
         GameController.Instance.onMainMenu += OnMainMenu;
         GameController.Instance.onGameStart += OnGameStart;
         GameController.Instance.onPlayerDeath += OnPlayerDeath;
@@ -30,7 +31,7 @@ public class MusicController : Singleton
             cr_bgm_delay = null;
         }
 
-        StopBGM();
+        PlayBGM(SoundEffectType.bgm_menu);
     }
 
     private void OnPlayerDeath()

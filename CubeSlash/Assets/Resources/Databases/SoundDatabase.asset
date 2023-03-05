@@ -409,6 +409,17 @@ MonoBehaviour:
           Data3: 2122816644
           Data4: -1594795463
         Path: event:/Game/Enemy/boss_proximity_001
+  - name: bgm_menu
+    type:
+      id: bgm_menu
+    sfx:
+      reference:
+        Guid:
+          Data1: -1619433351
+          Data2: 1170336603
+          Data3: -178635854
+          Data4: 716836875
+        Path: event:/Music/bgm_menu_001
   - name: bgm_start_game
     type:
       id: bgm_start_game
