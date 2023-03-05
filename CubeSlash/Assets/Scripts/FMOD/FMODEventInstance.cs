@@ -53,6 +53,16 @@ public class FMODEventInstance
 		crs_stopwith.Clear();
 	}
 
+	public float GetVolume()
+	{
+		if (has_instance)
+		{
+			instance.getVolume(out var volume);
+			return volume;
+		}
+		return 1f;
+	}
+
     public FMODEventInstance SetVolume(float f)
     {
 		if (has_instance)

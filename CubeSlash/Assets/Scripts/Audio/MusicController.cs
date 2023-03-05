@@ -1,3 +1,4 @@
+using Flawliz.Lerp;
 using System.Collections;
 using UnityEngine;
 
@@ -66,6 +67,24 @@ public class MusicController : Singleton
         if(current_bgm != null)
         {
             current_bgm.Stop(stop_mode);
+        }
+    }
+
+    public void FadeOutBGM(float duration)
+    {
+        if (current_bgm == null) return;
+        StartCoroutine(Cr());
+        IEnumerator Cr()
+        {
+            var instance = current_bgm;
+            current_bgm = null;
+
+            var start = instance.GetVolume();
+            var end = 0f;
+            yield return LerpEnumerator.Value(duration, f =>
+            {
+                instance.SetVolume(Mathf.Lerp(start, end, f));
+            }).UnscaledTime();
         }
     }
 }

@@ -173,6 +173,7 @@ public class GameController : MonoBehaviour
             PauseLock.AddLock("MainMenu");
             GameStateController.Instance.SetGameState(GameStateType.MENU);
             var bg_view = ViewController.Instance.ShowView<BackgroundView>(0.5f, "Foreground");
+            MusicController.Instance.FadeOutBGM(0.5f);
             yield return new WaitForSecondsRealtime(0.5f);
             bg_view.Close(0.5f);
             PauseLock.RemoveLock("MainMenu");

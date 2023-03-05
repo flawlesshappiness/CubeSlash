@@ -79,6 +79,7 @@ public class GameSetupView : View
         // Show intro
         Interactable = false;
         var view_intro = ViewController.Instance.ShowView<GameIntroView>(0.5f, nameof(GameIntroView));
+        MusicController.Instance.FadeOutBGM(2f);
         yield return new WaitForSecondsRealtime(1f);
         yield return view_intro.AnimateIntro();
         view_intro.Close(1f);
