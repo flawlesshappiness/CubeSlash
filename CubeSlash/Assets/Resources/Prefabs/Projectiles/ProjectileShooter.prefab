@@ -28,7 +28,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.9777798, y: 0.9777798, z: 0}
   m_Children: []
-  m_Father: {fileID: 6615583078385207745}
+  m_Father: {fileID: 2903384162585443171}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!58 &2903384162233653038
@@ -76,6 +76,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 2}
   m_Children:
+  - {fileID: 2903384162233653037}
   - {fileID: 6615583078385207745}
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -97,6 +98,7 @@ MonoBehaviour:
   pivot_animation: {fileID: 6615583078385207745}
   ps_death: {fileID: 0}
   ps_trail: {fileID: 8668644923440870605}
+  scale_from_zero: 1
   anim_scale_duration: 0.4
   anim_rotation: 150
   curve_scale:
@@ -193,7 +195,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 0.5}
   m_Children: []
   m_Father: {fileID: 6615583078385207745}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
 --- !u!198 &8668644923440870605
 ParticleSystem:
@@ -4996,11 +4998,10 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 2903384162233653037}
   - {fileID: 7812598256091121645}
   - {fileID: 3566403833423768398}
   m_Father: {fileID: 2903384162585443171}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6584319938417466310
 GameObject:
@@ -5031,7 +5032,7 @@ Transform:
   m_LocalScale: {x: 8.626776, y: 8.626776, z: 0}
   m_Children: []
   m_Father: {fileID: 6615583078385207745}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &5278193939061731494
 SpriteRenderer:

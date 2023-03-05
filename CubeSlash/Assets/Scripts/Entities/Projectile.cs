@@ -9,6 +9,7 @@ public class Projectile : MonoBehaviourExtended
     [SerializeField] private bool hits_player, hits_enemy;
     [SerializeField] private Transform pivot_animation;
     [SerializeField] private ParticleSystem ps_death, ps_trail;
+    [SerializeField] private bool scale_from_zero;
     [SerializeField] private float anim_scale_duration;
     [SerializeField] private float anim_rotation;
     [SerializeField] private AnimationCurve curve_scale;
@@ -35,12 +36,21 @@ public class Projectile : MonoBehaviourExtended
     public float DeathTime { get; private set; }
     private bool searching;
 
-    private void Start()
+    protected virtual void Start()
     {
         BirthTime = Time.time;
         DeathTime = BirthTime + Lifetime;
         StartFindTarget();
-        OnStart();
+        StartCoroutine(AnimateRotationCr());
+
+        if (scale_from_zero)
+        {
+            StartCoroutine(AnimateScaleBeginCr());
+        }
+        else
+        {
+            StartCoroutine(AnimateScaleCr());
+        }
     }
 
     private void OnDrawGizmos()
@@ -50,12 +60,6 @@ public class Projectile : MonoBehaviourExtended
             Gizmos.color = Color.red;
             Gizmos.DrawLine(transform.position, Target.GetPosition());
         }
-    }
-
-    protected virtual void OnStart() 
-    {
-        StartCoroutine(AnimateScaleCr());
-        StartCoroutine(AnimateRotationCr());
     }
 
     public virtual void Update()
@@ -258,6 +262,13 @@ public class Projectile : MonoBehaviourExtended
 
         targets = targets.OrderByDescending(target => target.Value).ToList();
         Target = targets.Count == 0 ? null : targets[0].Enemy;
+    }
+
+    private IEnumerator AnimateScaleBeginCr()
+    {
+        var end = Vector3.one * curve_scale.Evaluate(0);
+        yield return LerpEnumerator.LocalScale(pivot_animation, 0.2f, Vector3.zero, end);
+        StartCoroutine(AnimateScaleCr());
     }
 
     private IEnumerator AnimateScaleCr()

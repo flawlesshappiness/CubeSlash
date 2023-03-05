@@ -5,8 +5,4 @@ using Flawliz.Lerp;
 public class EnemyProjectile : Projectile
 {
     [SerializeField] private SpriteRenderer spr;
-    protected override void OnStart()
-    {
-        base.OnStart();
-    }
 }

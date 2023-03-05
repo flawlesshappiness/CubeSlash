@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class AbilitySplit : Ability
@@ -24,6 +23,7 @@ public class AbilitySplit : Ability
     private bool ProjectileLinger { get; set; }
     private bool ProjectilePenetrate { get; set; }
     private bool ProjectileExplode { get; set; }
+    private bool ProjectileMerge { get; set; }
     private int ProjectileBounces { get; set; }
 
     private const float PROJECTILE_SPEED = 15f;
@@ -32,6 +32,7 @@ public class AbilitySplit : Ability
     private const float PROJECTILE_LIFETIME = 0.75f;
     private const float FORCE_RADIUS = 5f;
     private const float FORCE = 100f;
+    private const float FORCE_SELF = 100f;
 
     public override void InitializeFirstTime()
     {
@@ -57,6 +58,12 @@ public class AbilitySplit : Ability
         ProjectilePenetrate = GetBoolValue(StatID.split_penetrate);
         ProjectileExplode = GetBoolValue(StatID.split_explode);
         ProjectileBounces = GetIntValue(StatID.split_bounce);
+        ProjectileMerge = GetBoolValue(StatID.split_size_merge);
+
+        if (ProjectileMerge)
+        {
+            CountProjectiles = 1;
+        }
     }
 
     public override float GetBaseCooldown() => Cooldown;
@@ -71,7 +78,7 @@ public class AbilitySplit : Ability
             for (int i = 0; i < count; i++)
             {
                 ShootProjectiles();
-                yield return new WaitForSeconds(0.1f);
+                yield return new WaitForSeconds(0.2f);
             }
         }
     }
@@ -100,6 +107,8 @@ public class AbilitySplit : Ability
             p.BounceBack = true;
             p.BounceAngleMax = 180f;
 
+            var force = FORCE_SELF;
+
             if (ProjectileLinger)
             {
                 p.Drag = 0.95f;
@@ -110,6 +119,16 @@ public class AbilitySplit : Ability
             {
                 p.StartCoroutine(ChainLightningCr(p));
             }
+
+            if (ProjectileMerge)
+            {
+                var count = GetIntValue(StatID.split_count);
+                var size = GetFloatValue(StatID.split_size_perc);
+                p.transform.localScale = Vector3.one * PROJECTILE_SIZE * count * size;
+                force = FORCE_SELF * count * size;
+            }
+
+            Player.Knockback(-direction * force, false, false);
 
             projectiles.Add(p);
         }

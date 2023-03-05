@@ -105,6 +105,7 @@ public class StatID : FakeEnum
     public static readonly StatID split_speed_perc = new StatID(nameof(split_speed_perc));
     public static readonly StatID split_arc_perc = new StatID(nameof(split_arc_perc));
     public static readonly StatID split_size_perc = new StatID(nameof(split_size_perc));
+    public static readonly StatID split_size_merge = new StatID(nameof(split_size_merge));
     public static readonly StatID split_count_bursts = new StatID(nameof(split_count_bursts));
     public static readonly StatID split_projectile_fragments = new StatID(nameof(split_projectile_fragments));
     public static readonly StatID split_radius_knock_enemy_perc = new StatID(nameof(split_radius_knock_enemy_perc));
