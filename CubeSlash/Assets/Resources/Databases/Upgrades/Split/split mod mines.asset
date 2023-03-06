@@ -35,3 +35,10 @@ MonoBehaviour:
       value_int: 0
       value_float: 0.5
       value_bool: 0
+  - id:
+      id: split_projectile_fragments
+    value:
+      type_value: 0
+      value_int: 5
+      value_float: 0.5
+      value_bool: 0

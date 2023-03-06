@@ -7,6 +7,7 @@ public class AbilitySplit : Ability
 {
     [Header("SPLIT")]
     [SerializeField] private Projectile prefab_projectile;
+    [SerializeField] private Projectile prefab_fragment;
 
     // Values
     private float Cooldown { get; set; }
@@ -179,20 +180,7 @@ public class AbilitySplit : Ability
 
         void SpawnFragments(Projectile p)
         {
-            var count = ProjectileFragments;
-            var angle_delta = 360f / count;
-            for (int i = 0; i < count; i++)
-            {
-                var d = Quaternion.AngleAxis(angle_delta * i, Vector3.forward) * p.transform.up;
-                var _p = ProjectileController.Instance.ShootPlayerProjectile(new ProjectileController.PlayerShootInfo
-                {
-                    prefab = prefab_projectile,
-                    position_start = p.transform.position,
-                    velocity = d * SpeedProjectiles,
-                });
-
-                _p.transform.localScale = 0.5f * SizeProjectiles * Vector3.one;
-            }
+            AbilityMines.ShootFragments(p.transform.position, prefab_fragment, ProjectileFragments, SpeedProjectiles, SizeProjectiles * 0.5f);
         }
     }
 

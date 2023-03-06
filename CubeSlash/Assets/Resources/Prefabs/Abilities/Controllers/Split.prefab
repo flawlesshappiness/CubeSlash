@@ -44,15 +44,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Info: {fileID: 11400000, guid: 28808eab66fcede409e2647c406f8bab, type: 2}
-  Stats: {fileID: 11400000, guid: 0755b411f2c9abc43898ccef029bc0a1, type: 2}
-  ModifierUpgrades: {fileID: 11400000, guid: 057deef5701e54e4fa96b588847eeb3f, type: 2}
-  prefab_bodypart: {fileID: 3618248057893856623, guid: cbbf2664f4a8754449b1880e881ed7e3, type: 3}
   prefab_projectile: {fileID: 2903384162585443173, guid: 078517c61f1a4504e9d7107a57670364, type: 3}
-  sfx_shoot_projectiles:
-    reference:
-      Guid:
-        Data1: 1458345307
-        Data2: 1074797131
-        Data3: -1075839820
-        Data4: -1202161205
-      Path: event:/Game/Abilities/split_shoot_001
+  prefab_fragment: {fileID: 2903384162585443173, guid: ddcb15fa1e981794fb20b9ac54b20037, type: 3}

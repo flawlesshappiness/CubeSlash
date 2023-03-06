@@ -17,5 +17,4 @@ cooldown reduc should affect charge
 
 TODO:
 split mod dash is boring
-split mod mines > add fragments?
 charge mod split > change to beams from death?
