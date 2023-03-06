@@ -20,7 +20,6 @@ controller recommended message
 increase boss size on difficulty
 progress bar on lose game (see how far you got)
 lifetime at end screen might not be recorded correctly
-not obvious that you can scroll in GameSetupView
 
 split mod dash is boring
 charge mod split > change to beams from death?

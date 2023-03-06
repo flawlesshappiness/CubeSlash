@@ -65,6 +65,7 @@ public class OptionsView : View
     private void PressBack(InputAction.CallbackContext context)
     {
         if (!Interactable) return;
+        SelectableMenuItem.RemoveSelection();
         SoundController.Instance.Play(SoundEffectType.sfx_ui_submit);
         StartCoroutine(TransitionBackCr());
     }
