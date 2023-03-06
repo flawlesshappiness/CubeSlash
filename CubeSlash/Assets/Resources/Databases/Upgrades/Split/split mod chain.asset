@@ -22,10 +22,10 @@ MonoBehaviour:
   upgrades_required: []
   stats:
   - id:
-      id: split_chain
+      id: split_bounce
     value:
-      type_value: 2
-      value_int: 0
+      type_value: 0
+      value_int: 1
       value_float: 1
       value_bool: 1
   - id:
