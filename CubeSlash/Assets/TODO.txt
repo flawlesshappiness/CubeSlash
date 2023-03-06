@@ -17,7 +17,6 @@ cooldown reduc should affect charge
 
 TODO:
 currency bar tally sound
-controller recommended message
 
 split mod dash is boring
 split mod chain > add bounce?

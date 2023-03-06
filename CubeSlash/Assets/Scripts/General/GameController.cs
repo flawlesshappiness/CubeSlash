@@ -33,11 +33,23 @@ public class GameController : MonoBehaviour
     {
         Instance = this;
         Singleton.CreateAllSingletons();
-        InitializePlayer();
-        //ViewController.Instance.ShowView<StartView>(0);
-        MainMenu();
-
         PauseLock.OnLockChanged += OnPauseChanged;
+    }
+
+    private void Start()
+    {
+        StartCoroutine(StartupCr());
+    }
+
+    private IEnumerator StartupCr()
+    {
+        InitializePlayer();
+        BackgroundController.Instance.FadeToArea(GameSettings.Instance.main_menu_area);
+
+        var view = ViewController.Instance.ShowView<SplashView>(0, "Splash");
+        yield return view.ShowSplashes();
+        view.Close(2f);
+        MainMenu();
     }
 
     public void InitializePlayer()
@@ -187,7 +199,7 @@ public class GameController : MonoBehaviour
         IsGameEnded = false;
         GameStateController.Instance.SetGameState(GameStateType.MENU);
         Player.Instance.gameObject.SetActive(false);
-        ViewController.Instance.ShowView<StartView>(0.25f);
+        ViewController.Instance.ShowView<StartView>(0f);
         CameraController.Instance.SetSize(15f);
 
         onMainMenu?.Invoke();

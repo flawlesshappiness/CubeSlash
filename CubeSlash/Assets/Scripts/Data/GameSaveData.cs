@@ -5,7 +5,7 @@ using UnityEngine;
 [System.Serializable]
 public class GameSaveData : SaveDataObject
 {
-    public float volume_master = 1;
+    public float volume_master = 0.5f;
     public float volume_music = 1;
     public float volume_sfx = 1;
 
