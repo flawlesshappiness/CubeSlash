@@ -85,6 +85,7 @@ public class MusicController : Singleton
             {
                 instance.SetVolume(Mathf.Lerp(start, end, f));
             }).UnscaledTime();
+            instance.Stop();
         }
     }
 }

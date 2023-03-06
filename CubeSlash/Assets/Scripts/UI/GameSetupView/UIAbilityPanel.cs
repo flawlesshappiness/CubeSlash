@@ -11,6 +11,7 @@ public class UIAbilityPanel : MonoBehaviour
     [SerializeField] private UIBodyPartPanel part_panel;
     [SerializeField] private UILock uilock;
     [SerializeField] private CanvasGroup cvg_icon_body, cvg_icon_ability;
+    [SerializeField] private UIPageProgress page_progress;
 
     private int idx_settings;
     private View parent_view;
@@ -26,6 +27,8 @@ public class UIAbilityPanel : MonoBehaviour
         menu.onSubmit += OnClick;
 
         parent_view = GetComponentInParent<View>();
+
+        page_progress.CreateItems(db_player_body_settings.collection.Count);
 
         SetSettings(Save.Game.idx_gamesetup_ability);
     }
@@ -48,6 +51,7 @@ public class UIAbilityPanel : MonoBehaviour
         var collection = db_player_body_settings.collection;
         idx_settings = Mathf.Clamp(i, 0, collection.Count - 1);
         Save.Game.idx_gamesetup_ability = idx_settings;
+        page_progress.SetIndex(idx_settings);
 
         var settings = collection[idx_settings];
         body_panel.SetSettings(settings);

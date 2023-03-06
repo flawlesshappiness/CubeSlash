@@ -15,6 +15,7 @@ physics objects in the world are fun. Hazards? Affect both player and enemy?
 cooldown reduc should affect charge
 
 TODO:
+currency bar tally sound
 controller recommended message
 increase boss size on difficulty
 progress bar on lose game (see how far you got)
@@ -22,4 +23,4 @@ lifetime at end screen might not be recorded correctly
 not obvious that you can scroll in GameSetupView
 
 split mod dash is boring
-split mod fragment > change to beams from death?
+charge mod split > change to beams from death?
