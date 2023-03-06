@@ -8,6 +8,7 @@ shielded enemy with a dud on its back
 CHARM: Orbiting damage
 CHARM: Gain x when y
 
+progress bar on lose game (see how far you got) (might be good to keep the mystery?)
 test cooldown reduce upgrades
 refund more? 50%?
 difficulties increase max area count?
@@ -17,9 +18,8 @@ cooldown reduc should affect charge
 TODO:
 currency bar tally sound
 controller recommended message
-increase boss size on difficulty
-progress bar on lose game (see how far you got)
-lifetime at end screen might not be recorded correctly
 
 split mod dash is boring
+split mod chain > add bounce?
+split mod mines > add fragments?
 charge mod split > change to beams from death?

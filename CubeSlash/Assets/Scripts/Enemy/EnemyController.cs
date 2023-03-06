@@ -128,10 +128,26 @@ public class EnemyController : Singleton
     private IEnumerator SpawnBossCr(EnemySettings boss, float delay)
     {
         yield return new WaitForSeconds(delay);
-        SpawnBoss(boss);
+        SpawnAreaBoss(boss);
+    }
+
+    public void DebugSpawnBoss()
+    {
+        var area = AreaController.Instance.CurrentArea;
+        var boss = area.boss;
+        var enemy = SpawnBoss(boss);
+        enemy.transform.position = Player.Instance.transform.position + new Vector3(20, 0);
     }
 
     private Enemy SpawnBoss(EnemySettings boss)
+    {
+        var enemy = SpawnEnemy(boss, CameraController.Instance.GetPositionOutsideCamera());
+        var size_mul = GameSettings.Instance.boss_size_difficulty.Evaluate(DifficultyController.Instance.DifficultyValue);
+        enemy.transform.localScale *= size_mul;
+        return enemy;
+    }
+
+    private Enemy SpawnAreaBoss(EnemySettings boss)
     {
         var is_game_winning = (AreaController.Instance.AreaIndex + 1) == GameSettings.Instance.areas_to_win;
 
@@ -140,7 +156,7 @@ public class EnemyController : Singleton
             AreaController.Instance.NextAreaLock.AddLock(nameof(EnemyController));
         }
 
-        var enemy = SpawnEnemy(boss, CameraController.Instance.GetPositionOutsideCamera());
+        var enemy = SpawnBoss(boss);
         enemy.OnDeath += () =>
         {
             // Win

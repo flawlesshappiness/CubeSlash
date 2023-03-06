@@ -2,7 +2,6 @@ using Flawliz.VisualConsole;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using TMPro;
 using UnityEngine;
 
@@ -189,9 +188,7 @@ public class DebugConsoleHandler : Singleton
 
     private void ClickSpawnBoss()
     {
-        var area = AreaController.Instance.CurrentArea;
-        var boss = area.boss;
-        EnemyController.Instance.SpawnEnemy(boss, Player.Instance.transform.position + new Vector3(20, 0));
+        EnemyController.Instance.DebugSpawnBoss();
         CloseView();
     }
 

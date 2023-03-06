@@ -14,15 +14,14 @@ public class GameSettings : ScriptableObject
     [Header("MUSIC")]
     [Range(0f, 1f)] public float time_bgm_play;
 
-    [Header("ENEMY FREQUENCY")]
+    [Header("ENEMY")]
     [Range(0f, 1f)] public float time_boss_spawn;
     public float endless_duration;
     public AnimationCurve enemy_freq_game;
     public AnimationCurve enemy_freq_endless;
     public AnimationCurve enemy_freq_difficulty;
-
-    [Header("ENEMY COUNT")]
     public AnimationCurve enemy_count_game;
+    public AnimationCurve boss_size_difficulty;
 
     [Header("EXPERIENCE")]
     public float frequency_spawn_experience;
