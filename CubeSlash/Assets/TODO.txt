@@ -16,5 +16,6 @@ physics objects in the world are fun. Hazards? Affect both player and enemy?
 cooldown reduc should affect charge
 
 TODO:
-split mod dash is boring
+split mod dash > ???
 charge mod split > change to beams from death?
+Game version on StartView
