@@ -140,7 +140,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: It is your primary directive to kill and survive
+  m_text: It is your primary directive to kill, eat and survive
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 4893b383388547447a83f908b19f18bb, type: 2}
   m_sharedMaterial: {fileID: 7385595105255331096, guid: 4893b383388547447a83f908b19f18bb, type: 2}

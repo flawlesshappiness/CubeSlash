@@ -18,4 +18,18 @@ cooldown reduc should affect charge
 TODO:
 split mod dash > ???
 charge mod split > change to beams from death?
-Game version on StartView
+chain mod mines > ???
+
+more health on easy?
+ability off cooldown sound
+update exp bar
+players dont understand how exp works
+split early game very weak
+back dud on shooter boss is very hard to hit
+plant boss very rough when late (area based on how late it is?)
+duds bigger on easier difficulties
+enemy speed based on difficulty
+max enemies based on difficulty
+if split is dependent on a single upgrade, then that upgrade is not enough
+split collect exp
+dash hit multi cell damage
