@@ -200,7 +200,6 @@ public class AbilityExplode : Ability
         public float radius;
         public float delay;
         public float force;
-        public bool pull_enemies;
         public bool play_charge_sfx;
         public System.Func<Vector3> getPosition;
         public System.Action<IKillable> onHit;
@@ -213,7 +212,6 @@ public class AbilityExplode : Ability
         var radius = info.radius;
         var delay = info.delay;
         var force = info.force;
-        var pull = info.pull_enemies;
         var onHit = info.onHit;
         var getPosition = info.getPosition;
 
@@ -222,7 +220,7 @@ public class AbilityExplode : Ability
         var sfx_charge = SoundController.Instance.CreateInstance(SoundEffectType.sfx_explode_charge);
         if (info.play_charge_sfx) sfx_charge.Play();
 
-        yield return WaitForDelay(delay, radius, getPosition(), pull);
+        yield return new WaitForSeconds(delay);
 
         sfx_charge.Stop();
 
@@ -254,40 +252,6 @@ public class AbilityExplode : Ability
 
         // Fx
         CreateExplodeEffect(position, radius);
-    }
-
-    private static IEnumerator WaitForDelay(float duration, float radius, Vector3 position, bool pull_enemies)
-    {
-        if (pull_enemies)
-        {
-            var r_max = radius * 3;
-            var r_min = radius * 0.75f;
-            var force_min = 5f;
-            var force_max = 25f;
-            var time_end = Time.time + duration;
-            while(Time.time < time_end)
-            {
-                var enemies = Physics2D.OverlapCircleAll(position, r_max)
-                    .Select(hit => hit.GetComponentInParent<Enemy>())
-                    .Where(hit => hit != null)
-                    .Distinct();
-
-                foreach(var e in enemies)
-                {
-                    var dir = position - e.GetPosition();
-                    var t = (dir.magnitude - r_min) / (r_max - r_min);
-                    var force = Mathf.LerpUnclamped(force_min, force_max, t);
-                    var velocity = dir.normalized * force;
-                    e.Rigidbody.AddForce(velocity);
-                }
-
-                yield return null;
-            }
-        }
-        else
-        {
-            yield return new WaitForSeconds(duration);
-        }
     }
 
     public static void CreateChargeEffect(Transform parent, Vector3 position, float radius, float duration)
