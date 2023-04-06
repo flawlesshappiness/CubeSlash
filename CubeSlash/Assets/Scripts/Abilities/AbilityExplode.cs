@@ -23,7 +23,7 @@ public class AbilityExplode : Ability
     public int MiniExplosions { get; private set; }
 
     private const float RADIUS = 4f;
-    private const float RADIUS_MUL_START = 0.25f;
+    private const float RADIUS_MUL_START = 0f;
     private const float CHARGE_TIME = 1f;
     private const float FORCE = 200f;
 
