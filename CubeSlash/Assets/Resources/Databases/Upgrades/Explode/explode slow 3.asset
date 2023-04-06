@@ -29,10 +29,3 @@ MonoBehaviour:
       value_int: 0
       value_float: 0.15
       value_bool: 0
-  - id:
-      id: explode_slow_area_perc
-    value:
-      type_value: 3
-      value_int: 0
-      value_float: 0.4
-      value_bool: 0

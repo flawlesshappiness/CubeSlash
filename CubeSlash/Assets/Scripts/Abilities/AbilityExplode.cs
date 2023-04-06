@@ -171,6 +171,29 @@ public class AbilityExplode : Ability
         onExplode?.Invoke();
     }
 
+    private void OnHit(IKillable k)
+    {
+        var position = k.GetPosition();
+
+        if (ChainExplode)
+        {
+            AbilityChain.CreateImpactPS(position);
+        }
+
+        if (ChainExplode)
+        {
+            StartCoroutine(ExplodeCr(new ChargeInfo
+            {
+                parent = GameController.Instance.world,
+                radius = Random.Range(Radius * 0.25f, Radius * 0.5f),
+                delay = Random.Range(0.3f, 0.6f),
+                getPosition = () => position,
+                play_charge_sfx = false,
+                onHit = OnHit,
+            }));
+        }
+    }
+
     public class ChargeInfo
     {
         public Transform parent;
@@ -206,23 +229,6 @@ public class AbilityExplode : Ability
         var position = getPosition();
         Explode(position, radius, force, onHit);
         info.onExplode?.Invoke(position);
-    }
-
-    private void OnHit(IKillable k)
-    {
-        var position = k.GetPosition();
-        if (ChainExplode)
-        {
-            StartCoroutine(ExplodeCr(position));
-        }
-
-        IEnumerator ExplodeCr(Vector3 position)
-        {
-            var delay = Random.Range(0.3f, 0.6f);
-            var radius = Random.Range(Radius * 0.25f, Radius * 0.5f);
-            yield return new WaitForSeconds(delay);
-            Explode(position, radius, 0);
-        }
     }
 
     public static void Explode(Vector3 position, float radius, float force, System.Action<IKillable> onHit = null)
