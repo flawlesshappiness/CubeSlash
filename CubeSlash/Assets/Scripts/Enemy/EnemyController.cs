@@ -172,8 +172,8 @@ public class EnemyController : Singleton
                 var experience = ItemController.Instance.SpawnExperience(enemy.transform.position);
                 experience.Initialize();
                 experience.SetMeat();
-
                 experience.transform.position = enemy.transform.position + Random.insideUnitCircle.ToVector3() * enemy.Settings.size * 0.5f;
+                experience.AnimateCollect();
             }
         };
 
@@ -228,6 +228,7 @@ public class EnemyController : Singleton
         var experience = ItemController.Instance.SpawnExperience(enemy.transform.position);
         experience.Initialize();
         experience.SetMeat();
+        experience.AnimateCollect();
     }
     #endregion
     #region POOL

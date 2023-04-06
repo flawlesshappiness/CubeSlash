@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id:
     id: split_size_1
-  name: Bigger projectiles
+  name: Projectile Size 1
   icon: {fileID: 21300000, guid: f438bb2c8a252d04a956206fff79f721, type: 3}
   hidden: 0
   require_ability: 1

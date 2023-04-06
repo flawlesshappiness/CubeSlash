@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id:
     id: dash_distance_1
-  name: Dash distance+
+  name: Dash distance 1
   icon: {fileID: 21300000, guid: b7370995de6e1b446b16259265c69a37, type: 3}
   hidden: 0
   require_ability: 1

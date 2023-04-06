@@ -1,6 +1,7 @@
 IDEAS:
 enemy that pushes the player
 enemy that pulls the player
+enemy that shoots aoe of bullets
 waves that push things in a direction
 endless mode
 shielded enemy with a dud on its back
@@ -20,6 +21,7 @@ split mod dash > ???
 charge mod split > change to beams from death?
 chain mod mines > ???
 
+split collect exp (?)
 more health on easy?
 ability off cooldown sound
 update exp bar
@@ -30,6 +32,57 @@ plant boss very rough when late (area based on how late it is?)
 duds bigger on easier difficulties
 enemy speed based on difficulty
 max enemies based on difficulty
-if split is dependent on a single upgrade, then that upgrade is not enough
-split collect exp
 dash hit multi cell damage
+mix explode and charge
+
+## SIMPLIFY MECHANICS
+Exp automatically moves to player on kill
+Abilities are unlocked quicker
+
+## SIMPLIFY ABILITIES ##
+
+dash
+slower and longer, leaves behind a trail
+impact does a small aoe
+upgrades: speed, distance, trail time
+modifier: trail
+
+split
+projectiles with piercing ability
+upgrades: count, size, piercing
+modifier: count
+
+explode
+charge to increase area, release to explode
+upgrades: charge time, size, slow field
+modifier: explosion/area/slow
+
+chain
+hold to zap nearby enemies, zaps chain continuously
+upgrades: area, chain, cooldown
+modifier: ability chaining
+
+mines
+release shells behind that explode into fragment on impact or lifetime
+upgrades: fragment count, mine count, size
+modifier: fragments
+
+## OBJECTS ##
+
+Large rock (medium / big, static)
+
+  variation: moss, spiky crystal
+
+floating rock (small)
+
+  variation: moss, spiky crystal
+
+bubble (small, pop on damage)
+
+bubble cluster (medium, pop on damage into smaller bubbles)
+
+wave (pushes anything in a direction)
+
+bomb (explode on damage, hurt both player and enemy)
+
+  variation: mushroom, crystal

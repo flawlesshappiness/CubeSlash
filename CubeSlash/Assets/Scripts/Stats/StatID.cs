@@ -58,6 +58,7 @@ public class StatID : FakeEnum
     public static readonly StatID dash_force_knock_enemy_perc = new StatID(nameof(dash_force_knock_enemy_perc));
     public static readonly StatID dash_force_knock_self_perc = new StatID(nameof(dash_force_knock_self_perc));
     public static readonly StatID dash_trail = new StatID(nameof(dash_trail));
+    public static readonly StatID dash_trail_time_perc = new StatID(nameof(dash_trail_time_perc));
     public static readonly StatID dash_hit_cooldown_reduc = new StatID(nameof(dash_hit_cooldown_reduc));
     public static readonly StatID dash_shockwave_count = new StatID(nameof(dash_shockwave_count));
     public static readonly StatID dash_shockwave_speed_perc = new StatID(nameof(dash_shockwave_speed_perc));
@@ -71,16 +72,14 @@ public class StatID : FakeEnum
     // Explode
     public static readonly StatID explode_cooldown_flat = new StatID(nameof(explode_cooldown_flat));
     public static readonly StatID explode_cooldown_perc = new StatID(nameof(explode_cooldown_perc));
-    public static readonly StatID explode_delay_perc = new StatID(nameof(explode_delay_perc));
     public static readonly StatID explode_radius_perc = new StatID(nameof(explode_radius_perc));
-    public static readonly StatID explode_force_knock_enemy_perc = new StatID(nameof(explode_force_knock_enemy_perc));
-    public static readonly StatID explode_delay_pull = new StatID(nameof(explode_delay_pull));
-    public static readonly StatID explode_projectile = new StatID(nameof(explode_projectile));
-    public static readonly StatID explode_front = new StatID(nameof(explode_front));
     public static readonly StatID explode_chain = new StatID(nameof(explode_chain));
     public static readonly StatID explode_fragments = new StatID(nameof(explode_fragments));
-    public static readonly StatID explode_invulnerable = new StatID(nameof(explode_invulnerable));
     public static readonly StatID explode_minis = new StatID(nameof(explode_minis));
+    public static readonly StatID explode_slow_linger = new StatID(nameof(explode_slow_linger));
+    public static readonly StatID explode_charge_time = new StatID(nameof(explode_charge_time));
+    public static readonly StatID explode_slow_area_perc = new StatID(nameof(explode_slow_area_perc));
+    public static readonly StatID explode_slow_perc = new StatID(nameof(explode_slow_perc));
 
     // Mines
     public static readonly StatID mines_cooldown_flat = new StatID(nameof(mines_cooldown_flat));
@@ -116,4 +115,5 @@ public class StatID : FakeEnum
     public static readonly StatID split_hit_cooldown_reduc = new StatID(nameof(split_hit_cooldown_reduc));
     public static readonly StatID split_projectile_linger = new StatID(nameof(split_projectile_linger));
     public static readonly StatID split_bounce = new StatID(nameof(split_bounce));
+    public static readonly StatID split_piercing_count = new StatID(nameof(split_piercing_count));
 }

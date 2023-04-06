@@ -1,4 +1,3 @@
-using EasingCurve;
 using Flawliz.Lerp;
 using System.Collections;
 using UnityEngine;
@@ -7,10 +6,11 @@ public class Item : MonoBehaviour
 {
     [Header("ITEM")]
     [SerializeField] private AnimationCurve ac_collect;
-    public float duration_collect = 0.25f;
     public float mul_dist_collect = 1f;
     public bool IsBeingCollected { get; set; }
     public bool IsDespawning { get; set; }
+
+    private const float DURATION_PER_UNIT = 0.1f;
 
     public virtual void Initialize()
     {
@@ -44,22 +44,30 @@ public class Item : MonoBehaviour
         if (can_collect)
         {
             IsBeingCollected = true;
-            this.StartCoroutineWithID(Cr(), "Collect_" + GetInstanceID());
+            AnimateCollect();
         }
+    }
 
-        IEnumerator Cr()
+    public CustomCoroutine AnimateCollect()
+    {
+        IsBeingCollected = true;
+        return this.StartCoroutineWithID(CollectCr(), "Collect_" + GetInstanceID());
+    }
+
+    private IEnumerator CollectCr()
+    {
+        var start = transform.position;
+        var curve = ac_collect;
+        var distance = Vector3.Distance(transform.position, Player.Instance.transform.position);
+        var duration = DURATION_PER_UNIT * distance;
+        yield return LerpEnumerator.Value(duration, f =>
         {
-            var start = transform.position;
-            var curve = ac_collect;
-            yield return LerpEnumerator.Value(duration_collect, f =>
-            {
-                var t = curve.Evaluate(f);
-                transform.position = Vector3.LerpUnclamped(start, Player.Instance.transform.position, t);
-            }).Connect(gameObject);
+            var t = curve.Evaluate(f);
+            transform.position = Vector3.LerpUnclamped(start, Player.Instance.transform.position, t);
+        }).Connect(gameObject);
 
-            Collect();
-            Despawn();
-        }
+        Collect();
+        Despawn();
     }
 
     private void DespawnUpdate()

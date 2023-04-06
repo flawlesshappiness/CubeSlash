@@ -97,7 +97,7 @@ MonoBehaviour:
   Path: Assets/FMOD/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 638136469758909172
+  lastModified: 638139268145926652
   FileSizes: []
   Exists: 1
 --- !u!114 &-7872426760261806101
@@ -1267,12 +1267,13 @@ MonoBehaviour:
   - {fileID: 5007586681927520725}
   - {fileID: 7873440793602500186}
   - {fileID: -3849707120075743259}
+  - {fileID: 8415450989838431725}
   EditorParameters: []
   MasterBanks:
   - {fileID: -8060980804293988741}
   StringsBanks:
   - {fileID: 5917708036578608240}
-  cacheTime: 638136469758949154
+  cacheTime: 638139268145956656
   cacheVersion: 131593
 --- !u!114 &1453305857757199432
 MonoBehaviour:
@@ -1718,10 +1719,10 @@ MonoBehaviour:
   Path: Assets/FMOD/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 638136469758949154
+  lastModified: 638139268145956656
   FileSizes:
   - Name: 
-    Value: 4306
+    Value: 4346
   Exists: 1
 --- !u!114 &5992827859230917708
 MonoBehaviour:
@@ -1966,6 +1967,33 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 0
+--- !u!114 &8415450989838431725
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Music/bgm_roots_001
+  m_EditorClassIdentifier: 
+  Path: event:/Music/bgm_roots_001
+  Guid:
+    Data1: -38482353
+    Data2: 1334729337
+    Data3: 959909280
+    Data4: 1829695969
+  Banks:
+  - {fileID: -8060980804293988741}
+  IsStream: 1
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 88800
 --- !u!114 &8573418566942188164
 MonoBehaviour:
   m_ObjectHideFlags: 0

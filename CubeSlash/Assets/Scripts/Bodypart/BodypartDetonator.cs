@@ -14,21 +14,33 @@ public class BodypartDetonator : Bodypart
     {
         base.Initialize(ability);
         explode = ability as AbilityExplode;
+        explode.onChargeStart += OnChargeStart;
+        explode.onExplode += OnExplode;
     }
 
-    protected override void OnAbilityTrigger()
+    private void OnDisable()
     {
-        base.OnAbilityTrigger();
-        Animate();
+        explode.onChargeStart -= OnChargeStart;
+        explode.onExplode -= OnExplode;
     }
 
-    private CustomCoroutine Animate()
+    private void OnChargeStart()
     {
-        return this.StartCoroutineWithID(Cr(), $"animate_{GetInstanceID()}");
+        this.StartCoroutineWithID(Cr(), GetID());
         IEnumerator Cr()
         {
-            yield return Lerp.LocalScale(pivot_animation, explode.Delay, scale_in).Curve(EasingCurves.EaseOutQuad);
+            yield return Lerp.LocalScale(pivot_animation, explode.ChargeTime, scale_in).Curve(EasingCurves.EaseOutQuad);
+        }
+    }
+
+    private void OnExplode()
+    {
+        this.StartCoroutineWithID(Cr(), GetID());
+        IEnumerator Cr()
+        {
             yield return Lerp.LocalScale(pivot_animation, 0.05f, Vector3.one);
         }
     }
+
+    private string GetID() => $"animate_{GetInstanceID()}";
 }

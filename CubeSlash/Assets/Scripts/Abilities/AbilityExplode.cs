@@ -5,25 +5,31 @@ using UnityEngine;
 public class AbilityExplode : Ability
 {
     [Header("EXPLODE")]
-    [SerializeField] private Projectile projectile_split_modifier;
     [SerializeField] private Projectile projectile_fragment;
+    [SerializeField] private ExplodeChargeEffect fx_charge;
+
+    public event System.Action onChargeStart, onChargeEnd, onExplode;
 
     // Values
     public float Cooldown { get; private set; }
-    public float Delay { get; private set; }
     public float Radius { get; private set; }
+    public float ChargeTime { get; private set; }
     public float Knockback { get; private set; }
-    public bool DelayPull { get; private set; }
+    public float SlowRadius { get; private set; }
+    public float SlowPerc { get; private set; }
     public bool ChainExplode { get; private set; }
     public bool HasFragments { get; private set; }
-    public bool HasProjectile { get; private set; }
-    public bool IsFront { get; private set; }
-    public bool DelayInvulnerable { get; private set; }
+    public bool SlowLinger { get; private set; }
     public int MiniExplosions { get; private set; }
 
-    private const float DELAY = 1.5f;
     private const float RADIUS = 4f;
+    private const float RADIUS_MUL_START = 0.25f;
+    private const float CHARGE_TIME = 1f;
     private const float FORCE = 200f;
+
+    private float time_charge_start;
+
+    private SlowArea _slow_area;
 
     public override void InitializeFirstTime()
     {
@@ -34,139 +40,135 @@ public class AbilityExplode : Ability
     {
         base.OnValuesUpdated();
         Cooldown = GetFloatValue(StatID.explode_cooldown_flat) * GetFloatValue(StatID.explode_cooldown_perc);
-        Delay = DELAY * GetFloatValue(StatID.explode_delay_perc);
         Radius = RADIUS * GetFloatValue(StatID.explode_radius_perc);
-        Knockback = FORCE * GetFloatValue(StatID.explode_force_knock_enemy_perc);
-        DelayPull = GetBoolValue(StatID.explode_delay_pull);
+        Knockback = FORCE;
+        ChargeTime = CHARGE_TIME * GetFloatValue(StatID.explode_charge_time);
+        SlowPerc = 1f - GetFloatValue(StatID.explode_slow_perc);
+        SlowRadius = RADIUS * GetFloatValue(StatID.explode_slow_area_perc);
         ChainExplode = GetBoolValue(StatID.explode_chain);
         HasFragments = GetBoolValue(StatID.explode_fragments);
-        HasProjectile = GetBoolValue(StatID.explode_projectile);
-        IsFront = GetBoolValue(StatID.explode_front);
-        DelayInvulnerable = GetBoolValue(StatID.explode_invulnerable);
+        SlowLinger = GetBoolValue(StatID.explode_slow_linger);
         MiniExplosions = GetIntValue(StatID.explode_minis);
     }
 
     public override float GetBaseCooldown() => Cooldown;
 
+    public override void Pressed()
+    {
+        InUse = true;
+        base.Pressed();
+        time_charge_start = Time.time;
+
+        onChargeStart?.Invoke();
+
+        fx_charge.Animate(Vector3.one * Radius * RADIUS_MUL_START, Vector3.one * Radius, ChargeTime);
+
+        _slow_area = SlowArea.Create();
+        _slow_area.transform.parent = transform;
+        _slow_area.transform.position = transform.position;
+        _slow_area.SetSlowPercentage(SlowPerc);
+    }
+
+    public override void Released()
+    {
+        base.Released();
+        if (!InUse) return;
+
+        InUse = false;
+        onChargeEnd?.Invoke();
+
+        fx_charge.StopAnimating();
+
+        if (SlowLinger)
+        {
+            _slow_area.transform.parent = GameController.Instance.world;
+            _slow_area.Destroy(4f);
+        }
+        else
+        {
+            Destroy(_slow_area.gameObject);
+        }
+
+        Trigger();
+    }
+
+    private void ReleaseOverTime()
+    {
+        if (!InUse) return;
+        
+        var t = (time_charge_start + ChargeTime + 1);
+        if (Time.time < t) return;
+        
+        Released();
+    }
+
+    private void Update()
+    {
+        ReleaseOverTime();
+        SlowEnemiesInArea();
+    }
+
+    private float GetChargeValue() => (Time.time - time_charge_start) / ChargeTime;
+
+    private void SlowEnemiesInArea()
+    {
+        if (!InUse) return;
+        if (_slow_area == null) return;
+
+        var t = Mathf.Clamp01(GetChargeValue());
+        var r_end = (Radius + SlowRadius);
+        var r_start = r_end * RADIUS_MUL_START;
+        var r = Mathf.Lerp(r_start, r_end, t);
+        _slow_area.SetRadius(r);
+    }
+
     public override void Trigger()
     {
         if (InUse) return;
         base.Trigger();
-        InUse = true;
-        Player.AbilityLock.AddLock(nameof(AbilityExplode));
-
-        if (HasProjectile)
-        {
-            // Shoot bullet that explodes
-            var p = projectile_split_modifier;
-            var start = Player.transform.position;
-            var dir = Player.MoveDirection;
-            var speed = 15;
-            var velocity = dir * speed;
-            var p_instance = ProjectileController.Instance.ShootPlayerProjectile(new ProjectileController.PlayerShootInfo
-            {
-                prefab = p,
-                position_start = start,
-                velocity = velocity,
-                onKill = ProjectileExplode
-            });
-
-            p_instance.Lifetime = Calculator.DST_Time(7f, speed);
-            p_instance.onDeath += () => ProjectileExplode(p_instance);
-
-            SoundController.Instance.Play(SoundEffectType.sfx_enemy_shoot);
-        }
-        else
-        {
-            TriggerExplode(Player.transform, () => Player.transform.position, Player.Instance.MoveDirection);
-        }
-
-        void ProjectileExplode(Projectile p, IKillable k = null)
-        {
-            var position = p.transform.position;
-            TriggerExplode(p.transform.parent, () => position, p.transform.up);
-        }
+        var t = Mathf.Clamp01(GetChargeValue());
+        var r = Radius * t;
+        var f = Knockback * t;
+        var c = (Cooldown * 0.5f) + (Cooldown * 0.5f * t);
+        Explode(Player.transform.position, r, f, OnHit);
+        OnExplode(Player.transform.position, t);
+        StartCooldown(c);
     }
 
-    private void TriggerExplode(Transform parent, System.Func<Vector3> getPosition, Vector3 direction)
+    private void OnExplode(Vector3 position, float t = 1)
     {
-        if (IsFront)
-        {
-            Vector3 pos = getPosition() + direction.normalized * Radius;
-            Explode(pos, Radius, Knockback);
-            OnExplode(pos);
+        InUse = false;
+        StartCooldown();
+        Player.Instance.AbilityLock.RemoveLock(nameof(AbilityExplode));
 
-            InUse = false;
-            Player.AbilityLock.RemoveLock(nameof(AbilityExplode));
-            StartCooldown();
-        }
-        else
+        if (HasFragments)
         {
-            ExplodeWithDelay();
-        }
-
-        void ExplodeWithDelay()
-        {
-            InUse = true;
-            Player.Instance.AbilityLock.AddLock(nameof(AbilityExplode));
-
-            if (DelayInvulnerable)
+            var fragments = AbilityMines.ShootFragments(position, projectile_fragment, 10, 20, 0.75f);
+            foreach (var fragment in fragments)
             {
-                Player.Instance.InvincibilityLock.AddLock(nameof(AbilityExplode));
+                fragment.Lifetime = Random.Range(0.5f, 1f);
             }
+        }
+
+        for (int i = 0; i < MiniExplosions; i++)
+        {
+            var radius = Radius * Random.Range(0.1f, 0.5f);
+            var dir = Random.insideUnitCircle.ToVector3().normalized;
+            var pos = position + dir * (Radius + radius);
+            var delay = Random.Range(0.3f, 0.6f);
 
             StartCoroutine(ExplodeCr(new ChargeInfo
             {
-                parent = parent,
-                radius = Radius,
-                delay = Delay,
-                force = Knockback,
-                pull_enemies = DelayPull,
-                getPosition = getPosition,
-                play_charge_sfx = true,
+                parent = GameController.Instance.world,
+                radius = radius,
+                delay = delay,
+                getPosition = () => pos,
+                play_charge_sfx = false,
                 onHit = OnHit,
-                onExplode = OnExplode,
             }));
         }
 
-        void OnExplode(Vector3 position)
-        {
-            InUse = false;
-            StartCooldown();
-            Player.Instance.AbilityLock.RemoveLock(nameof(AbilityExplode));
-
-            if (HasFragments)
-            {
-                var fragments = AbilityMines.ShootFragments(position, projectile_fragment, 10, 20, 0.75f);
-                foreach(var fragment in fragments)
-                {
-                    fragment.Lifetime = Random.Range(0.5f, 1f);
-                }
-            }
-
-            if (DelayInvulnerable)
-            {
-                Player.Instance.InvincibilityLock.RemoveLock(nameof(AbilityExplode));
-            }
-
-            for (int i = 0; i < MiniExplosions; i++)
-            {
-                var radius = Radius * Random.Range(0.1f, 0.5f);
-                var dir = Random.insideUnitCircle.ToVector3().normalized;
-                var pos = position + dir * (Radius + radius);
-                var delay = Delay * Random.Range(0.25f, 0.75f);
-
-                StartCoroutine(ExplodeCr(new ChargeInfo
-                {
-                    parent = GameController.Instance.world,
-                    radius = radius,
-                    delay = delay,
-                    getPosition = () => pos,
-                    play_charge_sfx = false,
-                    onHit = OnHit,
-                }));
-            }
-        }
+        onExplode?.Invoke();
     }
 
     public class ChargeInfo
@@ -216,7 +218,7 @@ public class AbilityExplode : Ability
 
         IEnumerator ExplodeCr(Vector3 position)
         {
-            var delay = Random.Range(Delay * 0.1f, Delay * 0.5f);
+            var delay = Random.Range(0.3f, 0.6f);
             var radius = Random.Range(Radius * 0.25f, Radius * 0.5f);
             yield return new WaitForSeconds(delay);
             Explode(position, radius, 0);

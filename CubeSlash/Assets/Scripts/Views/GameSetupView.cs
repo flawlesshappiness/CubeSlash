@@ -51,7 +51,7 @@ public class GameSetupView : View
         {
             SoundController.Instance.Play(SoundEffectType.sfx_ui_submit);
             yield return TransitionShowCr(false);
-            ViewController.Instance.ShowView<StartView>(0.5f);
+            ViewController.Instance.ShowView<StartView>(0);
             Close(0);
         }
     }
@@ -70,7 +70,7 @@ public class GameSetupView : View
         var start = show ? 0f : 1f;
         var end = show ? 1f : 0f;
         CanvasGroup.alpha = start;
-        yield return LerpEnumerator.Alpha(CanvasGroup, 0.5f, end).UnscaledTime();
+        yield return LerpEnumerator.Alpha(CanvasGroup, 0.2f, end).UnscaledTime();
         Interactable = show;
     }
 

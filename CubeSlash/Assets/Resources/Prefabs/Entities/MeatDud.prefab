@@ -9826,14 +9826,6 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  sfx_death:
-    reference:
-      Guid:
-        Data1: 1670559046
-        Data2: 1203043853
-        Data3: -1995059786
-        Data4: -2040260450
-      Path: event:/Game/Enemy/healthdud_death_001
 --- !u!1 &4723074693683760720
 GameObject:
   m_ObjectHideFlags: 0

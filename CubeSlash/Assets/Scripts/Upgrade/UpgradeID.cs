@@ -45,11 +45,12 @@ public class UpgradeID : FakeEnum
     public static readonly UpgradeID charm_speed = new UpgradeID(nameof(charm_speed));
 
     // Chain
-    public static readonly UpgradeID chain_delay_1 = new UpgradeID(nameof(chain_delay_1));
-    public static readonly UpgradeID chain_delay_2 = new UpgradeID(nameof(chain_delay_2));
+    public static readonly UpgradeID chain_cooldown_1 = new UpgradeID(nameof(chain_cooldown_1));
+    public static readonly UpgradeID chain_cooldown_2 = new UpgradeID(nameof(chain_cooldown_2));
+    public static readonly UpgradeID chain_cooldown_3 = new UpgradeID(nameof(chain_cooldown_3));
     public static readonly UpgradeID chain_radius_1 = new UpgradeID(nameof(chain_radius_1));
     public static readonly UpgradeID chain_radius_2 = new UpgradeID(nameof(chain_radius_2));
-    public static readonly UpgradeID chain_strikes = new UpgradeID(nameof(chain_strikes));
+    public static readonly UpgradeID chain_radius_3 = new UpgradeID(nameof(chain_radius_3));
     public static readonly UpgradeID chain_targets_1 = new UpgradeID(nameof(chain_targets_1));
     public static readonly UpgradeID chain_targets_2 = new UpgradeID(nameof(chain_targets_2));
     public static readonly UpgradeID chain_targets_3 = new UpgradeID(nameof(chain_targets_3));
@@ -81,18 +82,15 @@ public class UpgradeID : FakeEnum
     public static readonly UpgradeID charge_mod_split = new UpgradeID(nameof(charge_mod_split));
 
     // Dash
-    public static readonly UpgradeID dash_area_1 = new UpgradeID(nameof(dash_area_1));
-    public static readonly UpgradeID dash_area_2 = new UpgradeID(nameof(dash_area_2));
     public static readonly UpgradeID dash_distance_1 = new UpgradeID(nameof(dash_distance_1));
     public static readonly UpgradeID dash_distance_2 = new UpgradeID(nameof(dash_distance_2));
     public static readonly UpgradeID dash_distance_3 = new UpgradeID(nameof(dash_distance_3));
-    public static readonly UpgradeID dash_cooldown_reduc_hit = new UpgradeID(nameof(dash_cooldown_reduc_hit));
-    public static readonly UpgradeID dash_knock_enemy_1 = new UpgradeID(nameof(dash_knock_enemy_1));
-    public static readonly UpgradeID dash_shockwave_distance_1 = new UpgradeID(nameof(dash_shockwave_distance_1));
-    public static readonly UpgradeID dash_shockwave_distance_2 = new UpgradeID(nameof(dash_shockwave_distance_2));
-    public static readonly UpgradeID dash_shockwave_size_1 = new UpgradeID(nameof(dash_shockwave_size_1));
-    public static readonly UpgradeID dash_shockwave_size_2 = new UpgradeID(nameof(dash_shockwave_size_2));
-    public static readonly UpgradeID dash_trail = new UpgradeID(nameof(dash_trail));
+    public static readonly UpgradeID dash_speed_1 = new UpgradeID(nameof(dash_speed_1));
+    public static readonly UpgradeID dash_speed_2 = new UpgradeID(nameof(dash_speed_2));
+    public static readonly UpgradeID dash_speed_3 = new UpgradeID(nameof(dash_speed_3));
+    public static readonly UpgradeID dash_trail_time_1 = new UpgradeID(nameof(dash_trail_time_1));
+    public static readonly UpgradeID dash_trail_time_2 = new UpgradeID(nameof(dash_trail_time_2));
+    public static readonly UpgradeID dash_trail_time_3 = new UpgradeID(nameof(dash_trail_time_3));
 
     public static readonly UpgradeID dash_mod_chain = new UpgradeID(nameof(dash_mod_chain));
     public static readonly UpgradeID dash_mod_charge = new UpgradeID(nameof(dash_mod_charge));
@@ -101,18 +99,15 @@ public class UpgradeID : FakeEnum
     public static readonly UpgradeID dash_mod_split = new UpgradeID(nameof(dash_mod_split));
 
     // Explode
-    public static readonly UpgradeID explode_delay_1 = new UpgradeID(nameof(explode_delay_1));
-    public static readonly UpgradeID explode_delay_2 = new UpgradeID(nameof(explode_delay_2));
-    public static readonly UpgradeID explode_delay_3 = new UpgradeID(nameof(explode_delay_3));
-    public static readonly UpgradeID explode_delay_pull = new UpgradeID(nameof(explode_delay_pull));
-    public static readonly UpgradeID explode_knock_enemy_1 = new UpgradeID(nameof(explode_knock_enemy_1));
-    public static readonly UpgradeID explode_knock_enemy_2 = new UpgradeID(nameof(explode_knock_enemy_2));
+    public static readonly UpgradeID explode_charge_time_1 = new UpgradeID(nameof(explode_charge_time_1));
+    public static readonly UpgradeID explode_charge_time_2 = new UpgradeID(nameof(explode_charge_time_2));
+    public static readonly UpgradeID explode_charge_time_3 = new UpgradeID(nameof(explode_charge_time_3));
     public static readonly UpgradeID explode_radius_1 = new UpgradeID(nameof(explode_radius_1));
     public static readonly UpgradeID explode_radius_2 = new UpgradeID(nameof(explode_radius_2));
-    public static readonly UpgradeID explode_invulnerable_1 = new UpgradeID(nameof(explode_invulnerable_1));
-    public static readonly UpgradeID explode_minis_1 = new UpgradeID(nameof(explode_minis_1));
-    public static readonly UpgradeID explode_minis_2 = new UpgradeID(nameof(explode_minis_2));
-    public static readonly UpgradeID explode_minis_3 = new UpgradeID(nameof(explode_minis_3));
+    public static readonly UpgradeID explode_radius_3 = new UpgradeID(nameof(explode_radius_3));
+    public static readonly UpgradeID explode_slow_1 = new UpgradeID(nameof(explode_slow_1));
+    public static readonly UpgradeID explode_slow_2 = new UpgradeID(nameof(explode_slow_2));
+    public static readonly UpgradeID explode_slow_3 = new UpgradeID(nameof(explode_slow_3));
 
     public static readonly UpgradeID explode_mod_chain = new UpgradeID(nameof(explode_mod_chain));
     public static readonly UpgradeID explode_mod_charge = new UpgradeID(nameof(explode_mod_charge));
@@ -127,11 +122,9 @@ public class UpgradeID : FakeEnum
     public static readonly UpgradeID mines_fragments_1 = new UpgradeID(nameof(mines_fragments_1));
     public static readonly UpgradeID mines_fragments_2 = new UpgradeID(nameof(mines_fragments_2));
     public static readonly UpgradeID mines_fragments_3 = new UpgradeID(nameof(mines_fragments_3));
-    public static readonly UpgradeID mines_lifetime_1 = new UpgradeID(nameof(mines_lifetime_1));
-    public static readonly UpgradeID mines_lifetime_2 = new UpgradeID(nameof(mines_lifetime_2));
-    public static readonly UpgradeID mines_seeking = new UpgradeID(nameof(mines_seeking));
     public static readonly UpgradeID mines_size_1 = new UpgradeID(nameof(mines_size_1));
     public static readonly UpgradeID mines_size_2 = new UpgradeID(nameof(mines_size_2));
+    public static readonly UpgradeID mines_size_3 = new UpgradeID(nameof(mines_size_3));
 
     public static readonly UpgradeID mines_mod_chain = new UpgradeID(nameof(mines_mod_chain));
     public static readonly UpgradeID mines_mod_charge = new UpgradeID(nameof(mines_mod_charge));
@@ -143,19 +136,12 @@ public class UpgradeID : FakeEnum
     public static readonly UpgradeID split_count_1 = new UpgradeID(nameof(split_count_1));
     public static readonly UpgradeID split_count_2 = new UpgradeID(nameof(split_count_2));
     public static readonly UpgradeID split_count_3 = new UpgradeID(nameof(split_count_3));
-    public static readonly UpgradeID split_hit_split = new UpgradeID(nameof(split_hit_split));
-    public static readonly UpgradeID split_knock_enemy_1 = new UpgradeID(nameof(split_knock_enemy_1));
     public static readonly UpgradeID split_size_1 = new UpgradeID(nameof(split_size_1));
     public static readonly UpgradeID split_size_2 = new UpgradeID(nameof(split_size_2));
-    public static readonly UpgradeID split_speed_1 = new UpgradeID(nameof(split_speed_1));
-    public static readonly UpgradeID split_speed_2 = new UpgradeID(nameof(split_speed_2));
-    public static readonly UpgradeID split_burst_1 = new UpgradeID(nameof(split_burst_1));
-    public static readonly UpgradeID split_bounce_1 = new UpgradeID(nameof(split_bounce_1));
-    public static readonly UpgradeID split_bounce_2 = new UpgradeID(nameof(split_bounce_2));
-    public static readonly UpgradeID split_bounce_3 = new UpgradeID(nameof(split_bounce_3));
-    public static readonly UpgradeID split_cooldown_1 = new UpgradeID(nameof(split_cooldown_1));
-    public static readonly UpgradeID split_cooldown_2 = new UpgradeID(nameof(split_cooldown_2));
-    public static readonly UpgradeID split_cooldown_3 = new UpgradeID(nameof(split_cooldown_3));
+    public static readonly UpgradeID split_size_3 = new UpgradeID(nameof(split_size_3));
+    public static readonly UpgradeID split_pierce_1 = new UpgradeID(nameof(split_pierce_1));
+    public static readonly UpgradeID split_pierce_2 = new UpgradeID(nameof(split_pierce_2));
+    public static readonly UpgradeID split_pierce_3 = new UpgradeID(nameof(split_pierce_3));
 
     public static readonly UpgradeID split_mod_chain = new UpgradeID(nameof(split_mod_chain));
     public static readonly UpgradeID split_mod_charge = new UpgradeID(nameof(split_mod_charge));
