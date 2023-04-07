@@ -71,6 +71,7 @@ public class AbilityDash : Ability
         Player.InputLock.AddLock(nameof(AbilityDash));
         Player.DragLock.AddLock(nameof(AbilityDash));
         Player.InvincibilityLock.AddLock(nameof(AbilityDash));
+        Player.AbilityLock.AddLock(nameof(AbilityDash));
 
         SoundController.Instance.Play(SoundEffectType.sfx_dash_start);
         ps_trail.SetEmissionEnabled(true);
@@ -148,6 +149,7 @@ public class AbilityDash : Ability
         InUse = false;
         Player.InputLock.RemoveLock(nameof(AbilityDash));
         Player.DragLock.RemoveLock(nameof(AbilityDash));
+        Player.AbilityLock.RemoveLock(nameof(AbilityDash));
 
         ps_trail.SetEmissionEnabled(false);
 
