@@ -236,7 +236,7 @@ public class AI_BossShooter : EnemyAI
         p.Rigidbody.velocity = direction.normalized * velocity_projectile;
         p.SetDirection(direction);
         p.Lifetime = 999f;
-        p.Piercing = true;
+        p.Piercing = -1;
         //Self.Rigidbody.AddForce(-direction * 50 * Self.Rigidbody.mass);
     }
 

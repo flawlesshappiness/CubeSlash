@@ -28,3 +28,10 @@ MonoBehaviour:
       value_int: 1
       value_float: 0
       value_bool: 0
+  - id:
+      id: split_arc_perc
+    value:
+      type_value: 3
+      value_int: 1
+      value_float: 0.5
+      value_bool: 0

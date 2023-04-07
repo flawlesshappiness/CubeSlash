@@ -31,7 +31,7 @@ MonoBehaviour:
   - id:
       id: split_size_merge
     value:
-      type_value: 2
+      type_value: 0
       value_int: -999
       value_float: 1.5
       value_bool: 1

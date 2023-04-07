@@ -219,7 +219,7 @@ public class AI_BossBone : EnemyAI
         p.transform.position = start;
         p.Lifetime = 10f;
         p.Rigidbody.velocity = dir;
-        p.Piercing = true;
+        p.Piercing = -1;
     }
 
     IEnumerator GetAttackCr()

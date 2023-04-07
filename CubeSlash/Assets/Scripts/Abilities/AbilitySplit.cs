@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 public class AbilitySplit : Ability
@@ -11,28 +10,18 @@ public class AbilitySplit : Ability
 
     // Values
     private float Cooldown { get; set; }
-    private int Bursts { get; set; }
     private int CountProjectiles { get; set; }
-    private float SpeedProjectiles { get; set; }
     private float ArcProjectiles { get; set; }
     private float SizeProjectiles { get; set; }
-    private float RadiusKnockback { get; set; }
-    private float ForceKnockback { get; set; }
-    private float HitCooldownReduc { get; set; }
     private int ProjectileFragments { get; set; }
+    private int Piercing { get; set; }
     private bool ChainLightning { get; set; }
-    private bool ProjectileLinger { get; set; }
-    private bool ProjectilePenetrate { get; set; }
     private bool ProjectileExplode { get; set; }
-    private bool ProjectileMerge { get; set; }
-    private int ProjectileBounces { get; set; }
 
     private const float PROJECTILE_SPEED = 15f;
-    private const float PROJECTILE_ARC = 15f;
+    private const float PROJECTILE_ARC = 30f;
     private const float PROJECTILE_SIZE = 0.5f;
     private const float PROJECTILE_LIFETIME = 0.75f;
-    private const float FORCE_RADIUS = 5f;
-    private const float FORCE = 100f;
     private const float FORCE_SELF = 100f;
 
     public override void InitializeFirstTime()
@@ -46,25 +35,12 @@ public class AbilitySplit : Ability
 
         Cooldown = GetFloatValue(StatID.split_cooldown_flat) * GetFloatValue(StatID.split_cooldown_perc);
         CountProjectiles = Mathf.Max(1, GetIntValue(StatID.split_count));
-        SpeedProjectiles = PROJECTILE_SPEED * GetFloatValue(StatID.split_speed_perc);
         ArcProjectiles = PROJECTILE_ARC * GetFloatValue(StatID.split_arc_perc);
         SizeProjectiles = PROJECTILE_SIZE * GetFloatValue(StatID.split_size_perc);
-        RadiusKnockback = FORCE_RADIUS * GetFloatValue(StatID.split_radius_knock_enemy_perc);
-        ForceKnockback = FORCE * GetFloatValue(StatID.split_force_knock_enemy_perc);
-        Bursts = GetIntValue(StatID.split_count_bursts);
-        HitCooldownReduc = GetFloatValue(StatID.split_hit_cooldown_reduc);
         ProjectileFragments = GetIntValue(StatID.split_projectile_fragments);
         ChainLightning = GetBoolValue(StatID.split_chain);
-        ProjectileLinger = GetBoolValue(StatID.split_projectile_linger);
-        ProjectilePenetrate = GetBoolValue(StatID.split_penetrate);
         ProjectileExplode = GetBoolValue(StatID.split_explode);
-        ProjectileBounces = GetIntValue(StatID.split_bounce);
-        ProjectileMerge = GetBoolValue(StatID.split_size_merge);
-
-        if (ProjectileMerge)
-        {
-            CountProjectiles = 1;
-        }
+        Piercing = GetIntValue(StatID.split_piercing_count);
     }
 
     public override float GetBaseCooldown() => Cooldown;
@@ -72,16 +48,7 @@ public class AbilitySplit : Ability
     public override void Trigger()
     {
         base.Trigger();
-        StartCoroutine(BurstFireCr(Bursts));
-
-        IEnumerator BurstFireCr(int count)
-        {
-            for (int i = 0; i < count; i++)
-            {
-                ShootProjectiles();
-                yield return new WaitForSeconds(0.2f);
-            }
-        }
+        ShootProjectiles();
     }
 
     private void ShootProjectiles()
@@ -97,36 +64,21 @@ public class AbilitySplit : Ability
             {
                 prefab = prefab_projectile,
                 position_start = Player.transform.position,
-                velocity = direction * SpeedProjectiles,
+                velocity = direction * PROJECTILE_SPEED,
                 onKill = OnKill
             });
 
             p.transform.localScale = Vector3.one * SizeProjectiles;
-            p.Piercing = ProjectilePenetrate;
+            p.Piercing = Piercing;
             p.Lifetime = PROJECTILE_LIFETIME;
-            p.Bounces = ProjectileBounces;
             p.BounceBack = true;
             p.BounceAngleMax = 180f;
 
             var force = FORCE_SELF;
 
-            if (ProjectileLinger)
-            {
-                p.Drag = 0.95f;
-                p.Lifetime *= 5f;
-            }
-
             if (ChainLightning)
             {
                 p.StartCoroutine(ChainLightningCr(p));
-            }
-
-            if (ProjectileMerge)
-            {
-                var count = GetIntValue(StatID.split_count);
-                var size = GetFloatValue(StatID.split_size_perc);
-                p.transform.localScale = Vector3.one * PROJECTILE_SIZE * count * size;
-                force = FORCE_SELF * count * size;
             }
 
             Player.Knockback(-direction * force, false, false);
@@ -167,11 +119,6 @@ public class AbilitySplit : Ability
                 SpawnFragments(p);
             }
 
-            if (HitCooldownReduc < 0)
-            {
-                TimeCooldownEnd -= Mathf.Abs(HitCooldownReduc);
-            }
-
             if (ProjectileExplode)
             {
                 AbilityExplode.Explode(p.transform.position, 3f, 50);
@@ -180,7 +127,7 @@ public class AbilitySplit : Ability
 
         void SpawnFragments(Projectile p)
         {
-            AbilityMines.ShootFragments(p.transform.position, prefab_fragment, ProjectileFragments, SpeedProjectiles, SizeProjectiles * 0.5f);
+            AbilityMines.ShootFragments(p.transform.position, prefab_fragment, ProjectileFragments, PROJECTILE_SPEED, SizeProjectiles * 0.5f);
         }
     }
 

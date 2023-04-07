@@ -91,19 +91,10 @@ public class StatID : FakeEnum
     public static readonly StatID split_cooldown_flat = new StatID(nameof(split_cooldown_flat));
     public static readonly StatID split_cooldown_perc = new StatID(nameof(split_cooldown_perc));
     public static readonly StatID split_count = new StatID(nameof(split_count));
-    public static readonly StatID split_speed_perc = new StatID(nameof(split_speed_perc));
     public static readonly StatID split_arc_perc = new StatID(nameof(split_arc_perc));
     public static readonly StatID split_size_perc = new StatID(nameof(split_size_perc));
-    public static readonly StatID split_size_merge = new StatID(nameof(split_size_merge));
-    public static readonly StatID split_count_bursts = new StatID(nameof(split_count_bursts));
     public static readonly StatID split_projectile_fragments = new StatID(nameof(split_projectile_fragments));
-    public static readonly StatID split_radius_knock_enemy_perc = new StatID(nameof(split_radius_knock_enemy_perc));
-    public static readonly StatID split_force_knock_enemy_perc = new StatID(nameof(split_force_knock_enemy_perc));
-    public static readonly StatID split_penetrate = new StatID(nameof(split_penetrate));
     public static readonly StatID split_explode = new StatID(nameof(split_explode));
     public static readonly StatID split_chain = new StatID(nameof(split_chain));
-    public static readonly StatID split_hit_cooldown_reduc = new StatID(nameof(split_hit_cooldown_reduc));
-    public static readonly StatID split_projectile_linger = new StatID(nameof(split_projectile_linger));
-    public static readonly StatID split_bounce = new StatID(nameof(split_bounce));
     public static readonly StatID split_piercing_count = new StatID(nameof(split_piercing_count));
 }

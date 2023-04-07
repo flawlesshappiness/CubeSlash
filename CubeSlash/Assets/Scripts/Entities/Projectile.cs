@@ -17,7 +17,7 @@ public class Projectile : MonoBehaviourExtended
     public float Drag { get; set; } = 1f;
     public float SearchRadius { get; set; } = 20f;
     public float Lifetime { get; set; } = 1f;
-    public bool Piercing { get; set; }
+    public int Piercing { get; set; }
     public bool Homing { get; set; }
     public bool AutoTarget { get; set; } = false;
     public int Bounces { get; set; }
@@ -200,11 +200,16 @@ public class Projectile : MonoBehaviourExtended
         if (success)
         {
             var can_bounce = Bounces > 0;
+            var can_pierce = Piercing != 0;
             if (can_bounce)
             {
                 Bounce();
             }
-            else if(!Piercing)
+            else if(can_pierce)
+            {
+                Piercing = Mathf.Clamp(Piercing - 1, -1, int.MaxValue);
+            }
+            else
             {
                 Kill();
             }
