@@ -15,11 +15,8 @@ public class AbilityChain : Ability
     public int Strikes { get; private set; }
     public int ChainSplits { get; private set; }
     public bool HitsExplode { get; private set; }
-    public bool StoreZaps { get; private set; }
 
     private float time_attack;
-    private float time_store;
-    private int stored_zaps;
     private bool charged;
 
     private const float RADIUS = 6;
@@ -39,7 +36,6 @@ public class AbilityChain : Ability
         Strikes = GetIntValue(StatID.chain_strikes);
         ChainSplits = GetIntValue(StatID.chain_chain_strikes);
         HitsExplode = GetBoolValue(StatID.chain_hits_explode);
-        StoreZaps = GetBoolValue(StatID.chain_store_zaps);
 
         charged = HasModifier(Type.CHARGE);
 
@@ -93,21 +89,12 @@ public class AbilityChain : Ability
 
         if (success)
         {
-            stored_zaps = Mathf.Max(0, stored_zaps - 1);
-            time_attack = stored_zaps > 0 ? time_fail : time_success;
-            time_store = time_success;
+            time_attack = time_success;
             StartCooldown();
         }
         else
         {
-            if(StoreZaps && Time.time > time_store)
-            {
-                time_store = time_success;
-                stored_zaps++;
-                CreateImpactPS(Player.transform.position);
-            }
-
-            time_attack = Time.time + 0.1f;
+            time_attack = time_fail;
         }
     }
 
