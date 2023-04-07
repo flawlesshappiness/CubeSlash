@@ -24,21 +24,21 @@ MonoBehaviour:
   - id:
       id: dash_shockwave_linger
     value:
-      type_value: 2
+      type_value: 0
       value_int: 0
       value_float: 0.25
       value_bool: 1
   - id:
       id: dash_shockwave_speed_perc
     value:
-      type_value: 3
+      type_value: 0
       value_int: 0
       value_float: -0.66
       value_bool: 1
   - id:
       id: dash_shockwave_distance_perc
     value:
-      type_value: 3
+      type_value: 0
       value_int: 0
       value_float: 0.5
       value_bool: 1

@@ -26,5 +26,5 @@ MonoBehaviour:
     value:
       type_value: 3
       value_int: 0
-      value_float: 0.33
+      value_float: 0.1
       value_bool: 0

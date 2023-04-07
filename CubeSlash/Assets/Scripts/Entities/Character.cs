@@ -1,6 +1,4 @@
-using Unity.IO.LowLevel.Unsafe;
 using UnityEngine;
-using UnityEngine.EventSystems;
 
 public abstract class Character : MonoBehaviourExtended
 {

@@ -23,7 +23,7 @@ MonoBehaviour:
   - id: dash_trail_time_1
   stats:
   - id:
-      id: dash_distance_perc
+      id: dash_trail_time_perc
     value:
       type_value: 3
       value_int: 0

@@ -53,21 +53,11 @@ public class StatID : FakeEnum
     public static readonly StatID dash_cooldown_perc = new StatID(nameof(dash_cooldown_perc));
     public static readonly StatID dash_distance_perc = new StatID(nameof(dash_distance_perc));
     public static readonly StatID dash_speed_perc = new StatID(nameof(dash_speed_perc));
-    public static readonly StatID dash_radius_impact_perc = new StatID(nameof(dash_radius_impact_perc));
-    public static readonly StatID dash_radius_knock_enemy_perc = new StatID(nameof(dash_radius_knock_enemy_perc));
-    public static readonly StatID dash_force_knock_enemy_perc = new StatID(nameof(dash_force_knock_enemy_perc));
-    public static readonly StatID dash_force_knock_self_perc = new StatID(nameof(dash_force_knock_self_perc));
-    public static readonly StatID dash_trail = new StatID(nameof(dash_trail));
     public static readonly StatID dash_trail_time_perc = new StatID(nameof(dash_trail_time_perc));
-    public static readonly StatID dash_hit_cooldown_reduc = new StatID(nameof(dash_hit_cooldown_reduc));
-    public static readonly StatID dash_shockwave_count = new StatID(nameof(dash_shockwave_count));
-    public static readonly StatID dash_shockwave_speed_perc = new StatID(nameof(dash_shockwave_speed_perc));
-    public static readonly StatID dash_shockwave_size_perc = new StatID(nameof(dash_shockwave_size_perc));
-    public static readonly StatID dash_shockwave_distance_perc = new StatID(nameof(dash_shockwave_distance_perc));
-    public static readonly StatID dash_shockwave_bounce = new StatID(nameof(dash_shockwave_bounce));
-    public static readonly StatID dash_shockwave_only = new StatID(nameof(dash_shockwave_only));
-    public static readonly StatID dash_impact_explode = new StatID(nameof(dash_impact_explode));
-    public static readonly StatID dash_shockwave_linger = new StatID(nameof(dash_shockwave_linger));
+    public static readonly StatID dash_trail_explode = new StatID(nameof(dash_trail_explode));
+    public static readonly StatID dash_trail_fragment = new StatID(nameof(dash_trail_fragment));
+    public static readonly StatID dash_trail_split = new StatID(nameof(dash_trail_split));
+    public static readonly StatID dash_trail_chain = new StatID(nameof(dash_trail_chain));
 
     // Explode
     public static readonly StatID explode_cooldown_flat = new StatID(nameof(explode_cooldown_flat));

@@ -1,3 +1,5 @@
+using Flawliz.Lerp;
+using System.Collections;
 using UnityEngine;
 
 public class DamageTrail : MonoBehaviour
@@ -7,7 +9,6 @@ public class DamageTrail : MonoBehaviour
 
     [SerializeField] private AnimationCurve ac_size;
 
-    private float time_start;
     private Vector3 pos_prev;
 
     private void OnDrawGizmos()
@@ -16,27 +17,9 @@ public class DamageTrail : MonoBehaviour
         Gizmos.DrawWireSphere(transform.position, radius);
     }
 
-    private void OnEnable()
-    {
-        time_start = Time.time;
-    }
-
     private void Update()
     {
         HitTargets();
-        LifetimeUpdate();
-    }
-
-    private void LifetimeUpdate()
-    {
-        var t = (Time.time - time_start) / lifetime;
-        var ts = ac_size.Evaluate(t);
-        transform.localScale = Vector3.Lerp(Vector3.zero, Vector3.one, ts);
-
-        if(Time.time >= time_start + lifetime)
-        {
-            Destroy(gameObject);
-        }
     }
 
     private void HitTargets()
@@ -57,7 +40,7 @@ public class DamageTrail : MonoBehaviour
         pos_prev = transform.position;
     }
 
-    public void UpdateTrail()
+    public void CreateTrailsFromPreviousPosition()
     {
         var dir = (transform.position - pos_prev).normalized * radius;
         var create_more = true;
@@ -80,7 +63,28 @@ public class DamageTrail : MonoBehaviour
     private void CreateTrail(Vector3 position)
     {
         var trail = Instantiate(gameObject, GameController.Instance.world).GetComponent<DamageTrail>();
-        trail.gameObject.SetActive(true);
+        trail.lifetime = lifetime;
+        trail.radius = radius;
         trail.transform.position = position;
+        trail.gameObject.SetActive(true);
+        trail.StopParticleSystems();
+        Lerp.LocalScale(trail.transform, lifetime, Vector3.zero, Vector3.one).Curve(ac_size);
+        Destroy(trail.gameObject, lifetime);
+    }
+
+    public void StopParticleSystems()
+    {
+        foreach(var ps in GetComponentsInChildren<ParticleSystem>())
+        {
+            this.StartCoroutineWithID(StopParticleSystemCr(ps), "stop_" + ps.GetInstanceID());
+        }
+    }
+
+    private IEnumerator StopParticleSystemCr(ParticleSystem ps)
+    {
+        var delay = Mathf.Clamp(lifetime - ps.main.startLifetime.constant, 0.5f, lifetime);
+        yield return new WaitForSeconds(delay);
+        ps.transform.parent = GameController.Instance.world;
+        ps.SetEmissionEnabled(false);
     }
 }

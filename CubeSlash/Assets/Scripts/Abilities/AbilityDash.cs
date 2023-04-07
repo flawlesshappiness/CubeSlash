@@ -1,10 +1,7 @@
 using Flawliz.Lerp;
 using System.Collections;
-using System.Collections.Generic;
 using System.Linq;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.InputSystem.HID;
 
 public class AbilityDash : Ability
 {
@@ -14,23 +11,9 @@ public class AbilityDash : Ability
     public float Cooldown { get; private set; }
     public float Distance { get; private set; }
     public float Speed { get; private set; }
-    public float RadiusDamage { get; private set; }
-    public float RadiusKnockback { get; private set; }
-    public float KnockbackForceEnemy { get; private set; }
-    public float KnockbackForceSelf { get; private set; }
-    public float CooldownPercReducOnHit { get; private set; }
-    public bool TrailEnabled { get; private set; }
-    public int ShockwaveCount { get; private set; }
-    public float ShockwaveSpeed { get; private set; }
-    public float ShockwaveSize { get; private set; }
-    public float ShockwaveDistance { get; private set; }
-    public bool ShockwaveBounce { get; private set; }
-    public bool OnlyShockwave { get; private set; }
-    public bool ExplodeOnImpact { get; private set; }
-    public bool ShockwaveLinger { get; private set; }
+    public float TrailDecayTime { get; private set; }
 
     [Header("DASH")]
-    [SerializeField] private Projectile prefab_shockwave;
     [SerializeField] private DamageTrail damage_trail;
     [SerializeField] private ParticleSystem ps_bubbles, ps_trail, ps_impact;
     [SerializeField] private AnimationCurve ac_push_enemies;
@@ -38,15 +21,13 @@ public class AbilityDash : Ability
     private Coroutine cr_dash;
     private Vector3 dir_dash;
 
-    private const float DISTANCE = 4;
-    private const float SPEED = 30;
+    private const float DISTANCE = 15;
+    private const float SPEED = 12;
     private const float RADIUS_DAMAGE = 1.5f;
     private const float RADIUS_FORCE = 12f;
     private const float FORCE = 200;
-    private const float FORCE_SELF = 500;
-    private const float RIPPLE_SPEED = 25f;
-    private const float RIPPLE_SIZE = 2f;
-    private const float RIPPLE_DISTANCE = 7f;
+    private const float FORCE_SELF = 600;
+    private const float TRAIL_DECAY_TIME = 2f;
 
     public override void InitializeFirstTime()
     {
@@ -70,20 +51,7 @@ public class AbilityDash : Ability
         Cooldown = GetFloatValue(StatID.dash_cooldown_flat) * GetFloatValue(StatID.dash_cooldown_perc);
         Distance = DISTANCE * GetFloatValue(StatID.dash_distance_perc);
         Speed = SPEED * GetFloatValue(StatID.dash_speed_perc);
-        RadiusDamage = RADIUS_DAMAGE * GetFloatValue(StatID.dash_radius_impact_perc);
-        RadiusKnockback = RADIUS_FORCE * GetFloatValue(StatID.dash_radius_knock_enemy_perc);
-        KnockbackForceEnemy = FORCE * GetFloatValue(StatID.dash_force_knock_enemy_perc);
-        KnockbackForceSelf = FORCE_SELF * GetFloatValue(StatID.dash_force_knock_self_perc);
-        CooldownPercReducOnHit = GetFloatValue(StatID.dash_hit_cooldown_reduc);
-        TrailEnabled = GetBoolValue(StatID.dash_trail);
-        ShockwaveCount = GetIntValue(StatID.dash_shockwave_count);
-        ShockwaveSpeed = RIPPLE_SPEED * GetFloatValue(StatID.dash_shockwave_speed_perc);
-        ShockwaveSize = RIPPLE_SIZE * GetFloatValue(StatID.dash_shockwave_size_perc);
-        ShockwaveDistance = RIPPLE_DISTANCE * GetFloatValue(StatID.dash_shockwave_distance_perc);
-        ShockwaveBounce = GetBoolValue(StatID.dash_shockwave_bounce);
-        OnlyShockwave = GetBoolValue(StatID.dash_shockwave_only);
-        ExplodeOnImpact = GetBoolValue(StatID.dash_impact_explode);
-        ShockwaveLinger = GetBoolValue(StatID.dash_shockwave_linger);
+        TrailDecayTime = TRAIL_DECAY_TIME * GetFloatValue(StatID.dash_trail_time_perc);
     }
 
     public override float GetBaseCooldown() => Cooldown;
@@ -97,51 +65,52 @@ public class AbilityDash : Ability
 
     private void StartDashing()
     {
-        if (OnlyShockwave)
-        {
-            ShootShockwaves(Player.MoveDirection);
-        }
-        else
-        {
-            Dashing = true;
-            Player.MovementLock.AddLock(nameof(AbilityDash));
-            Player.DragLock.AddLock(nameof(AbilityDash));
-            Player.InvincibilityLock.AddLock(nameof(AbilityDash));
-            cr_dash = StartCoroutine(DashCr(Player.MoveDirection));
-        }
+        InUse = true;
+        Dashing = true;
+
+        Player.InputLock.AddLock(nameof(AbilityDash));
+        Player.DragLock.AddLock(nameof(AbilityDash));
+        Player.InvincibilityLock.AddLock(nameof(AbilityDash));
+
+        SoundController.Instance.Play(SoundEffectType.sfx_dash_start);
+        ps_trail.SetEmissionEnabled(true);
+
+        damage_trail.ResetTrail();
+        damage_trail.lifetime = TrailDecayTime;
+
+        cr_dash = StartCoroutine(DashCr(Player.MoveDirection));
     }
 
     private IEnumerator DashCr(Vector3 direction)
     {
         IKillable victim = null;
         var velocity = direction * Speed;
-        var pos_origin = transform.position;
+        var pos_prev = Player.transform.position;
+        var distance = 0f;
         dir_dash = direction;
-
-        SoundController.Instance.Play(SoundEffectType.sfx_dash_start);
-
-        ps_trail.SetEmissionEnabled(true);
-
-        ps_bubbles.Duplicate()
-            .Parent(GameController.Instance.world)
-            .Position(Player.transform.position)
-            .Rotation(Player.Body.transform.rotation)
-            .Play()
-            .Destroy(5);
-
-        if (TrailEnabled)
+        while (victim == null && distance < Distance)
         {
-            damage_trail.ResetTrail();
-        }
+            // Update distance
+            var pos_cur = Player.transform.position;
+            distance += Vector3.Distance(pos_prev, pos_cur);
+            pos_prev = pos_cur;
 
-        while (victim == null && Vector3.Distance(Player.transform.position, pos_origin) < Distance)
-        {
-            Player.Rigidbody.velocity = velocity;
-
-            if (TrailEnabled)
+            // Update direction
+            var input = PlayerInput.MoveDirection;
+            if(input.magnitude > 0.5f)
             {
-                damage_trail.UpdateTrail();
+                var right = Vector3.Cross(direction, Vector3.forward);
+                var dot = Vector3.Dot(right, input);
+                var sign = Mathf.Sign(dot);
+                var angle = -2 * sign;
+                direction = Quaternion.AngleAxis(angle, Vector3.forward) * direction;
+                velocity = direction * Speed;
             }
+
+            Player.Rigidbody.velocity = velocity;
+            Player.Body.SetLookDirection(direction);
+
+            damage_trail.CreateTrailsFromPreviousPosition();
 
             yield return new WaitForFixedUpdate();
         }
@@ -155,7 +124,7 @@ public class AbilityDash : Ability
 
         var k = c.GetComponentInParent<IKillable>();
         if (k == null) return;
-        HitEnemiesArea(k.GetPosition(), RadiusDamage);
+        HitEnemiesArea(k.GetPosition(), RADIUS_DAMAGE);
         EndDash(k);
 
         // Particle System
@@ -175,7 +144,14 @@ public class AbilityDash : Ability
         StopCoroutine(cr_dash);
         cr_dash = null;
 
+        Dashing = false;
+        InUse = false;
+        Player.InputLock.RemoveLock(nameof(AbilityDash));
+        Player.DragLock.RemoveLock(nameof(AbilityDash));
+
         ps_trail.SetEmissionEnabled(false);
+
+        StartCooldown();
 
         var hit_anything = victim != null;
         if (!hit_anything)
@@ -188,21 +164,13 @@ public class AbilityDash : Ability
         {
             KnockbackSelf();
             SoundController.Instance.Play(SoundEffectType.sfx_dash_impact);
-            Player.PushEnemiesInArea(Player.transform.position, RadiusKnockback, KnockbackForceEnemy, ac_push_enemies);
-            ShootShockwaves(dir_dash);
+            Player.PushEnemiesInArea(Player.transform.position, RADIUS_FORCE, FORCE, ac_push_enemies);
         }
-
-        Dashing = false;
-        Player.MovementLock.RemoveLock(nameof(AbilityDash));
-        Player.DragLock.RemoveLock(nameof(AbilityDash));
-
-        var cd = hit_anything ? Cooldown * CooldownPercReducOnHit : Cooldown;
-        StartCooldown(cd);
 
         StartCoroutine(InvincibleCr());
         IEnumerator InvincibleCr()
         {
-            yield return null;
+            yield return new WaitForSeconds(0.1f);
             Player.InvincibilityLock.RemoveLock(nameof(AbilityDash));
         }
     }
@@ -220,19 +188,6 @@ public class AbilityDash : Ability
             if (!hit.CanKill()) continue;
             Player.KillEnemy(hit);
             count++;
-
-            if (ExplodeOnImpact &&  count == 1)
-            {
-                var hitPosition = Vector3.Lerp(hit.GetPosition(), Player.transform.position, 0.5f);
-                StartCoroutine(AbilityExplode.ExplodeCr(new AbilityExplode.ChargeInfo
-                {
-                    parent = GameController.Instance.world,
-                    delay = 2f,
-                    getPosition = () => hitPosition,
-                    radius = 4f,
-                    play_charge_sfx = true,
-                }));
-            }
         }
 
         return count;
@@ -240,71 +195,6 @@ public class AbilityDash : Ability
 
     private void KnockbackSelf()
     {
-        Player.Knockback(-dir_dash.normalized * KnockbackForceSelf, true, true);
-    }
-
-    private void ShootShockwaves(Vector3 direction)
-    {
-        if(ShockwaveCount > 1)
-        {
-            var directions = AbilitySplit.GetSplitDirections(3, 45, direction);
-            foreach(var dir in directions)
-            {
-                ShootShockwave(dir);
-            }
-        }
-        else
-        {
-            ShootShockwave(direction);
-        }
-    }
-
-    private void ShootShockwave(Vector3 direction)
-    {
-        var speed = ShockwaveSpeed;
-        var distance = ShockwaveDistance;
-
-        var p = ProjectileController.Instance.ShootPlayerProjectile(new ProjectileController.PlayerShootInfo
-        {
-            prefab = prefab_shockwave,
-            position_start = Player.transform.position,
-            velocity = direction * speed,
-            onKill = OnHit,
-        });
-        p.Piercing = true;
-        var lifetime = Calculator.DST_Time(distance, speed);
-        p.Lifetime = Mathf.Clamp(lifetime, 0.1f, 5);
-
-        var size = ShockwaveSize;
-        p.transform.localScale = Vector3.one * size;
-
-        if (ShockwaveBounce)
-        {
-            p.Bounces = 999;
-            p.BounceBack = false;
-            p.BounceAngleMax = 360f;
-        }
-
-        if (ShockwaveLinger)
-        {
-            p.Drag = 0.95f;
-            p.StartCoroutine(AnimateSizeCr(p));
-        }
-
-        void OnHit(Projectile p, IKillable k)
-        {
-            if (ShockwaveBounce)
-            {
-                AbilityChain.CreateImpactPS(p.transform.position);
-                p.Lifetime *= 0.9f;
-            }
-        }
-
-        IEnumerator AnimateSizeCr(Projectile p)
-        {
-            var start = p.transform.localScale;
-            var end = p.transform.localScale * 1.5f;
-            yield return LerpEnumerator.LocalScale(p.transform, p.Lifetime, start, end);
-        }
+        Player.Knockback(-dir_dash.normalized * FORCE_SELF, true, true);
     }
 }

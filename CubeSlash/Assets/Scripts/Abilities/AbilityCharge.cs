@@ -299,7 +299,7 @@ public class AbilityCharge : Ability
                     trail.transform.localPosition = Vector3.zero;
                     trail.ResetTrail();
                     trail.transform.position = Player.transform.position + dir * distance;
-                    trail.UpdateTrail();
+                    trail.CreateTrailsFromPreviousPosition();
                 }
 
                 // Sound

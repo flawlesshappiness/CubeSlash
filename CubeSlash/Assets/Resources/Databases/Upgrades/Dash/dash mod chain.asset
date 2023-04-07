@@ -24,7 +24,7 @@ MonoBehaviour:
   - id:
       id: dash_shockwave_bounce
     value:
-      type_value: 2
+      type_value: 0
       value_int: 0
       value_float: 1
       value_bool: 1
