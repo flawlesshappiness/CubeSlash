@@ -22,13 +22,6 @@ MonoBehaviour:
   upgrades_required: []
   stats:
   - id:
-      id: split_bounce
-    value:
-      type_value: 0
-      value_int: 1
-      value_float: 1
-      value_bool: 1
-  - id:
       id: split_cooldown_flat
     value:
       type_value: 1

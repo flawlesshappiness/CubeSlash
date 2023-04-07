@@ -10,7 +10,7 @@ public class Item : MonoBehaviour
     public bool IsBeingCollected { get; set; }
     public bool IsDespawning { get; set; }
 
-    private const float DURATION_PER_UNIT = 0.1f;
+    private const float DURATION_PER_UNIT = 0.03f;
 
     public virtual void Initialize()
     {
@@ -57,13 +57,22 @@ public class Item : MonoBehaviour
     private IEnumerator CollectCr()
     {
         var start = transform.position;
-        var curve = ac_collect;
-        var distance = Vector3.Distance(transform.position, Player.Instance.transform.position);
+        yield return LerpEnumerator.Value(0.1f, f =>
+        {
+            var t = EasingCurves.EaseOutQuad.Evaluate(f);
+            var dir = (start - Player.Instance.transform.position).normalized;
+            var end = start + dir * 2f;
+            transform.position = Vector3.Lerp(start, end, t);
+        }).Connect(gameObject);
+
+        start = transform.position;
+        var distance = Vector3.Distance(start, Player.Instance.transform.position);
         var duration = DURATION_PER_UNIT * distance;
         yield return LerpEnumerator.Value(duration, f =>
         {
-            var t = curve.Evaluate(f);
-            transform.position = Vector3.LerpUnclamped(start, Player.Instance.transform.position, t);
+            var t = EasingCurves.EaseInQuad.Evaluate(f);
+            var end = Player.Instance.transform.position;
+            transform.position = Vector3.Lerp(start, end, t);
         }).Connect(gameObject);
 
         Collect();
