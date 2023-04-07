@@ -24,7 +24,7 @@ MonoBehaviour:
   - id:
       id: mines_fragment_only
     value:
-      type_value: 2
+      type_value: 0
       value_int: 0
       value_float: 0
       value_bool: 1

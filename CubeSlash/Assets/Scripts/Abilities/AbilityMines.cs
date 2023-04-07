@@ -15,18 +15,12 @@ public class AbilityMines : Ability
     private float FragmentSize { get; set; }
     private float ShellLifetime { get; set; }
     private float FragmentLifetime { get; set; }
-    private float TurnSpeed { get; set; }
-    private bool Seeking { get; set; }
     private bool ExplodingFragments { get; set; }
-    private bool OnlyFragments { get; set; }
     private bool DoubleShells { get; set; }
     private bool FragmentChain { get; set; }
 
     private const float MINE_SPEED = 10f;
-    private const float MINE_SPEED_SEEKING = 4f;
     private const float MINE_DRAG = 0.95f;
-    private const float MINE_DRAG_SEEKING = 0.99f;
-    private const float MINE_TURN_SEEKING = 1.5f;
     private const float MINE_SIZE = 0.8f;
     private const float MINE_LIFETIME = 2f;
     private const float FRAGMENT_SIZE = 0.5f;
@@ -50,10 +44,7 @@ public class AbilityMines : Ability
         FragmentSize = FRAGMENT_SIZE * GetFloatValue(StatID.mines_fragment_size_perc);
         ShellLifetime = MINE_LIFETIME * GetFloatValue(StatID.mines_shell_lifetime_perc);
         FragmentLifetime = FRAGMENT_LIFETIME * GetFloatValue(StatID.mines_fragment_lifetime_perc);
-        TurnSpeed = MINE_TURN_SEEKING * GetFloatValue(StatID.mines_turn_speed_perc);
-        Seeking = GetBoolValue(StatID.mines_seeking);
         ExplodingFragments = GetBoolValue(StatID.mines_fragment_explode);
-        OnlyFragments = GetBoolValue(StatID.mines_fragment_only);
         DoubleShells = GetBoolValue(StatID.mines_double_shell);
         FragmentChain = GetBoolValue(StatID.mines_fragment_chain);
     }
@@ -63,31 +54,7 @@ public class AbilityMines : Ability
     public override void Trigger()
     {
         base.Trigger();
-
-        if (OnlyFragments)
-        {
-            var position = Player.transform.position;
-            var count = GetMineCount() * FragmentCount;
-
-            if (FragmentChain)
-            {
-                ChainFragments(position, count);
-            }
-            else
-            {
-                var ps = ShootFragments(position, prefab_fragment, count, FRAGMENT_SPEED, FragmentSize);
-                foreach (var p in ps)
-                {
-                    SetupMineFragment(p);
-                }
-            }
-
-            StartCooldown();
-        }
-        else
-        {
-            ShootMines(GetMineCount());
-        }
+        ShootMines(GetMineCount());
     }
 
     private void ShootMines(int count)
@@ -119,23 +86,18 @@ public class AbilityMines : Ability
     {
         SoundController.Instance.Play(SoundEffectType.sfx_mines_spawn);
 
-        var speed = Seeking ? MINE_SPEED_SEEKING : MINE_SPEED;
-
         var p = ProjectileController.Instance.ShootPlayerProjectile(new ProjectileController.PlayerShootInfo
         {
             prefab = prefab_mine,
             position_start = Player.transform.position,
-            velocity = direction.normalized * speed,
+            velocity = direction.normalized * MINE_SPEED,
             onKill = OnMineExplode
         });
 
         p.transform.localScale = Vector3.one * ShellSize;
-        p.Drag = Seeking ? MINE_DRAG_SEEKING : MINE_DRAG;
+        p.Drag = MINE_DRAG;
         p.Lifetime = ShellLifetime;
-        p.Homing = Seeking;
-        p.AutoTarget = Seeking;
         p.SearchRadius = 100f;
-        p.TurnSpeed = Seeking ? TurnSpeed : 0;
         p.onDeath += () => OnMineExplode(p);
     }
 

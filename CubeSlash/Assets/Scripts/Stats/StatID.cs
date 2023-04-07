@@ -79,11 +79,8 @@ public class StatID : FakeEnum
     public static readonly StatID mines_fragment_size_perc = new StatID(nameof(mines_fragment_size_perc));
     public static readonly StatID mines_shell_lifetime_perc = new StatID(nameof(mines_shell_lifetime_perc));
     public static readonly StatID mines_fragment_lifetime_perc = new StatID(nameof(mines_fragment_lifetime_perc));
-    public static readonly StatID mines_seeking = new StatID(nameof(mines_seeking));
-    public static readonly StatID mines_turn_speed_perc = new StatID(nameof(mines_turn_speed_perc));
     public static readonly StatID mines_fragment_chain = new StatID(nameof(mines_fragment_chain));
     public static readonly StatID mines_fragment_explode = new StatID(nameof(mines_fragment_explode));
-    public static readonly StatID mines_fragment_only = new StatID(nameof(mines_fragment_only));
     public static readonly StatID mines_double_shell = new StatID(nameof(mines_double_shell));
 
     // Split

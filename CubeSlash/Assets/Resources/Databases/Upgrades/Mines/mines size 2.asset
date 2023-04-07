@@ -27,12 +27,12 @@ MonoBehaviour:
     value:
       type_value: 3
       value_int: 0
-      value_float: 0.15
+      value_float: 0.2
       value_bool: 0
   - id:
       id: mines_fragment_size_perc
     value:
       type_value: 3
       value_int: 0
-      value_float: 0.15
+      value_float: 0.2
       value_bool: 0
