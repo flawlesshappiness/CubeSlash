@@ -5,7 +5,7 @@ using UnityEngine;
 public class AbilitySplit : Ability
 {
     [Header("SPLIT")]
-    [SerializeField] private Projectile prefab_projectile;
+    [SerializeField] private AbilityProjectile prefab_projectile;
     [SerializeField] private Projectile prefab_fragment;
 
     // Values
@@ -16,6 +16,7 @@ public class AbilitySplit : Ability
     private int ProjectileFragments { get; set; }
     private int Piercing { get; set; }
     private bool ChainLightning { get; set; }
+    private bool Trail { get; set; }
     private bool ProjectileExplode { get; set; }
 
     private const float PROJECTILE_SPEED = 15f;
@@ -39,6 +40,7 @@ public class AbilitySplit : Ability
         SizeProjectiles = PROJECTILE_SIZE * GetFloatValue(StatID.split_size_perc);
         ProjectileFragments = GetIntValue(StatID.split_projectile_fragments);
         ChainLightning = GetBoolValue(StatID.split_chain);
+        Trail = GetBoolValue(StatID.split_trail);
         ProjectileExplode = GetBoolValue(StatID.split_explode);
         Piercing = GetIntValue(StatID.split_piercing_count);
     }
@@ -66,21 +68,18 @@ public class AbilitySplit : Ability
                 position_start = Player.transform.position,
                 velocity = direction * PROJECTILE_SPEED,
                 onKill = OnKill
-            });
+            }) as AbilityProjectile;
 
             p.transform.localScale = Vector3.one * SizeProjectiles;
             p.Piercing = Piercing;
             p.Lifetime = PROJECTILE_LIFETIME;
-            p.BounceBack = true;
-            p.BounceAngleMax = 180f;
             p.onDeath += () => OnDeath(p);
 
-            var force = FORCE_SELF;
+            p.HasTrail = Trail;
+            p.HasChain = ChainLightning;
+            p.ChainRadius = 4f * GetFloatValue(StatID.split_size_perc);
 
-            if (ChainLightning)
-            {
-                p.StartCoroutine(ChainLightningCr(p));
-            }
+            var force = FORCE_SELF;
 
             Player.Knockback(-direction * force, false, false);
 
@@ -95,23 +94,6 @@ public class AbilitySplit : Ability
 
         // Cooldown
         StartCooldown();
-
-        IEnumerator ChainLightningCr(Projectile p)
-        {
-            var time_zap = Time.time + 0.25f;
-            while (true)
-            {
-                if(Time.time > time_zap)
-                {
-                    var success = AbilityChain.TryChainToTarget(p.transform.position, 6f, 1, 1, 1);
-                    if (success)
-                    {
-                        time_zap = Time.time + 0.5f;
-                    }
-                }
-                yield return null;
-            }
-        }
 
         void OnKill(Projectile p, IKillable k)
         {

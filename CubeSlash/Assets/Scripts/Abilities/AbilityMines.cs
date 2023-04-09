@@ -97,7 +97,6 @@ public class AbilityMines : Ability
         p.transform.localScale = Vector3.one * ShellSize;
         p.Drag = MINE_DRAG;
         p.Lifetime = ShellLifetime;
-        p.SearchRadius = 100f;
         p.onDeath += () => OnMineExplode(p);
     }
 
@@ -137,7 +136,7 @@ public class AbilityMines : Ability
         p.Rigidbody.velocity = p.Rigidbody.velocity.normalized * p.Rigidbody.velocity.magnitude * Random.Range(0.8f, 1f);
         p.Drag = FRAGMENT_DRAG;
 
-        p.onKill += k => OnFragment(p);
+        p.onHitEnemy += k => OnFragment(p);
         p.onDeath += () => OnFragment(p);
 
         void OnFragment(Projectile p)

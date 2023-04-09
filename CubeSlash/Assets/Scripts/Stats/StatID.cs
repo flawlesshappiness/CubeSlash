@@ -94,4 +94,5 @@ public class StatID : FakeEnum
     public static readonly StatID split_explode = new StatID(nameof(split_explode));
     public static readonly StatID split_chain = new StatID(nameof(split_chain));
     public static readonly StatID split_piercing_count = new StatID(nameof(split_piercing_count));
+    public static readonly StatID split_trail = new StatID(nameof(split_trail));
 }

@@ -57,7 +57,7 @@ public class ProjectileController : Singleton
         p.Rigidbody.velocity = info.velocity;
         p.SetDirection(info.velocity);
 
-        p.onKill += k =>
+        p.onHitEnemy += k =>
         {
             info.onKill?.Invoke(p, k);
         };
