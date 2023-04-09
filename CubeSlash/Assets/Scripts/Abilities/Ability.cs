@@ -9,7 +9,7 @@ public abstract class Ability : MonoBehaviourExtended
     public event System.Action onTrigger;
     public event System.Action onCooldownComplete;
 
-    public enum Type { DASH, SPLIT, CHARGE, EXPLODE, CHAIN, MINES }
+    public enum Type { DASH, SPLIT, EXPLODE, CHAIN, MINES }
     public Player Player { get { return Player.Instance; } }
     public bool IsPressed { get; set; }
     public float TimeCooldownStart { get; private set; }
@@ -51,44 +51,12 @@ public abstract class Ability : MonoBehaviourExtended
     public virtual void Pressed()
     {
         IsPressed = true;
-
-        var charge = AbilityController.Instance.GetAbility(Type.CHARGE) as AbilityCharge;
-        var has_charge = AbilityController.Instance.HasModifier(Info.type, Type.CHARGE);
-        if (Info.type == Type.CHARGE)
-        {
-            // Do nothing
-        }
-        else if (has_charge && charge != null)
-        {
-            charge.BeginCharge(GetBaseCooldown() * Player.Instance.GlobalCooldownMultiplier * 0.5f);
-        }
-        else
-        {
-            Trigger();
-        }
+        Trigger();
     }
 
     public virtual void Released()
     {
         IsPressed = false;
-
-        var charge = AbilityController.Instance.GetAbility(Type.CHARGE) as AbilityCharge;
-        var has_charge = AbilityController.Instance.HasModifier(Info.type, Type.CHARGE);
-        if (Info.type == Type.CHARGE)
-        {
-            // Do nothing
-        }
-        else if (has_charge && charge != null)
-        {
-            if (charge.EndCharge())
-            {
-                Trigger();
-            }
-            else
-            {
-                // Do nothing
-            }
-        }
     }
 
     public void TryRelease()
@@ -126,11 +94,10 @@ public abstract class Ability : MonoBehaviourExtended
     {
         InUse = false || CanPressWhileOnCooldown();
 
-        var mul_charge = (HasModifier(Type.CHARGE) || Info.type == Type.CHARGE) ? 0 : 1;
         var mul_global = Player.Instance.GlobalCooldownMultiplier;
 
         TimeCooldownStart = Time.time;
-        TimeCooldownEnd = TimeCooldownStart + duration * mul_global * mul_charge;
+        TimeCooldownEnd = TimeCooldownStart + duration * mul_global;
         StartCoroutine(WaitForCooldownCr());
 
         IEnumerator WaitForCooldownCr()

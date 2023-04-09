@@ -61,26 +61,6 @@ public class UpgradeID : FakeEnum
     public static readonly UpgradeID chain_mod_mines = new UpgradeID(nameof(chain_mod_mines));
     public static readonly UpgradeID chain_mod_split = new UpgradeID(nameof(chain_mod_split));
 
-    // Charge
-    public static readonly UpgradeID charge_beam_back = new UpgradeID(nameof(charge_beam_back));
-    public static readonly UpgradeID charge_knock_enemy_1 = new UpgradeID(nameof(charge_knock_enemy_1));
-    public static readonly UpgradeID charge_knock_self_1 = new UpgradeID(nameof(charge_knock_self_1));
-    public static readonly UpgradeID charge_knock_self_2 = new UpgradeID(nameof(charge_knock_self_2));
-    public static readonly UpgradeID charge_suck_exp = new UpgradeID(nameof(charge_suck_exp));
-    public static readonly UpgradeID charge_cooldown_reduc_kill = new UpgradeID(nameof(charge_cooldown_reduc_kill));
-    public static readonly UpgradeID charge_width_1 = new UpgradeID(nameof(charge_width_1));
-    public static readonly UpgradeID charge_width_2 = new UpgradeID(nameof(charge_width_2));
-    public static readonly UpgradeID charge_width_3 = new UpgradeID(nameof(charge_width_3));
-    public static readonly UpgradeID charge_cooldown_1 = new UpgradeID(nameof(charge_cooldown_1));
-    public static readonly UpgradeID charge_cooldown_2 = new UpgradeID(nameof(charge_cooldown_2));
-    public static readonly UpgradeID charge_cooldown_3 = new UpgradeID(nameof(charge_cooldown_3));
-
-    public static readonly UpgradeID charge_mod_chain = new UpgradeID(nameof(charge_mod_chain));
-    public static readonly UpgradeID charge_mod_dash = new UpgradeID(nameof(charge_mod_dash));
-    public static readonly UpgradeID charge_mod_explode = new UpgradeID(nameof(charge_mod_explode));
-    public static readonly UpgradeID charge_mod_mines = new UpgradeID(nameof(charge_mod_mines));
-    public static readonly UpgradeID charge_mod_split = new UpgradeID(nameof(charge_mod_split));
-
     // Dash
     public static readonly UpgradeID dash_distance_1 = new UpgradeID(nameof(dash_distance_1));
     public static readonly UpgradeID dash_distance_2 = new UpgradeID(nameof(dash_distance_2));

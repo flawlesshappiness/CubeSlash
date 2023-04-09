@@ -21,7 +21,6 @@ public class AbilityChain : Ability
     public bool Trail { get; private set; }
 
     private float time_attack;
-    private bool charged;
 
     private const float RADIUS = 6;
 
@@ -44,8 +43,6 @@ public class AbilityChain : Ability
         HitsExplode = GetBoolValue(StatID.chain_hits_explode);
         HitsFragment = GetBoolValue(StatID.chain_fragments);
         Trail = GetBoolValue(StatID.chain_trail);
-
-        charged = HasModifier(Type.CHARGE);
 
         pivot_preview.localScale = Vector3.one * Radius * 2;
         spr_preview.SetAlpha(0);
@@ -71,22 +68,9 @@ public class AbilityChain : Ability
         Player.Instance.AbilityLock.RemoveLock(nameof(AbilityChain));
     }
 
-    public override void Trigger()
-    {
-        base.Trigger();
-        if (charged)
-        {
-            var center = Player.Instance.transform.position;
-            TryChainToTarget(center, Radius, Chains, Strikes, ChainSplits, HitTarget);
-            StartCooldown();
-            CreateImpactPS(Player.transform.position);
-        }
-    }
-
     private void Update()
     {
         if (!InUse) return;
-        if (charged) return;
         if (Time.time < time_attack) return;
 
         var center = Player.Instance.transform.position;

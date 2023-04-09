@@ -57,8 +57,7 @@ public class AbilityController : Singleton
         {
             var not_gained = !gained_types.Contains(type);
             var unlocked = IsAbilityUnlocked(type);
-            var not_charge = type != Ability.Type.CHARGE;
-            return not_gained && unlocked && not_charge;
+            return not_gained && unlocked;
         }
     }
 

@@ -10,24 +10,16 @@ CHARM: Orbiting damage
 CHARM: Gain x when y
 
 progress bar on lose game (see how far you got) (might be good to keep the mystery?)
-test cooldown reduce upgrades
 refund more? 50%?
 difficulties increase max area count?
 physics objects in the world are fun. Hazards? Affect both player and enemy?
-cooldown reduc should affect charge
 
 TODO:
-split mod dash > ???
-charge mod split > change to beams from death?
-chain mod mines > ???
 
-split collect exp (?)
 more health on easy?
 ability off cooldown sound
 update exp bar
 players dont understand how exp works
-split early game very weak
-back dud on shooter boss is very hard to hit
 plant boss very rough when late (area based on how late it is?)
 duds bigger on easier difficulties
 enemy speed based on difficulty
@@ -35,12 +27,6 @@ max enemies based on difficulty
 
 ## SIMPLIFY MECHANICS
 Abilities are unlocked quicker
-
-## SIMPLIFY ABILITIES ##
-chain
-hold to zap nearby enemies, zaps chain continuously
-upgrades: area, chain, cooldown
-modifier: ability chaining
 
 ## OBJECTS ##
 

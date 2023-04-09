@@ -14,6 +14,14 @@ public class ChargeBeam : MonoBehaviour
     private float length;
     private float width;
 
+    public static ChargeBeam Create()
+    {
+        var template = Resources.Load<ChargeBeam>("Prefabs/Abilities/Objects/Beam");
+        var beam = Instantiate(template);
+        beam.gameObject.SetActive(true);
+        return beam;
+    }
+
     public void SetLength(float length)
     {
         this.length = length;

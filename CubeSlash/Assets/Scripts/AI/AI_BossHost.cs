@@ -90,7 +90,7 @@ public class AI_BossHost : EnemyAI
         {
             var dir_to_player = DirectionToPlayer();
             var dir = dud.transform.up;
-            var beam = AbilityCharge.CreateBeam();
+            var beam = ChargeBeam.Create();
             var width = 5f;
             var length = dir_to_player.magnitude + CameraController.Instance.Width;
 
