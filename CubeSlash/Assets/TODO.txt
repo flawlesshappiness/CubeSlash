@@ -32,40 +32,15 @@ plant boss very rough when late (area based on how late it is?)
 duds bigger on easier difficulties
 enemy speed based on difficulty
 max enemies based on difficulty
-dash hit multi cell damage
-mix explode and charge
 
 ## SIMPLIFY MECHANICS
-Exp automatically moves to player on kill
 Abilities are unlocked quicker
 
 ## SIMPLIFY ABILITIES ##
-
-dash
-slower and longer, leaves behind a trail
-impact does a small aoe
-upgrades: speed, distance, trail time
-modifier: trail
-
-split
-projectiles with piercing ability
-upgrades: count, size, piercing
-modifier: count
-
-explode
-charge to increase area, release to explode
-upgrades: charge time, size, slow field
-modifier: explosion/area/slow
-
 chain
 hold to zap nearby enemies, zaps chain continuously
 upgrades: area, chain, cooldown
 modifier: ability chaining
-
-mines
-release shells behind that explode into fragment on impact or lifetime
-upgrades: fragment count, mine count, size
-modifier: fragments
 
 ## OBJECTS ##
 

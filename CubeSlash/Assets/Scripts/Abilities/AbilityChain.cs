@@ -8,6 +8,8 @@ public class AbilityChain : Ability
     [Header("CHAIN")]
     [SerializeField] private Transform pivot_preview;
     [SerializeField] private SpriteRenderer spr_preview;
+    [SerializeField] private DamageTrail trail;
+    [SerializeField] private Projectile projectile_fragment;
 
     public float Cooldown { get; private set; }
     public float Radius { get; private set; }
@@ -15,6 +17,8 @@ public class AbilityChain : Ability
     public int Strikes { get; private set; }
     public int ChainSplits { get; private set; }
     public bool HitsExplode { get; private set; }
+    public bool HitsFragment { get; private set; }
+    public bool Trail { get; private set; }
 
     private float time_attack;
     private bool charged;
@@ -24,6 +28,8 @@ public class AbilityChain : Ability
     public override void InitializeFirstTime()
     {
         base.InitializeFirstTime();
+
+        trail.gameObject.SetActive(false);
     }
 
     public override void OnValuesUpdated()
@@ -36,6 +42,8 @@ public class AbilityChain : Ability
         Strikes = GetIntValue(StatID.chain_strikes);
         ChainSplits = GetIntValue(StatID.chain_chain_strikes);
         HitsExplode = GetBoolValue(StatID.chain_hits_explode);
+        HitsFragment = GetBoolValue(StatID.chain_fragments);
+        Trail = GetBoolValue(StatID.chain_trail);
 
         charged = HasModifier(Type.CHARGE);
 
@@ -105,6 +113,25 @@ public class AbilityChain : Ability
         if (HitsExplode)
         {
             StartCoroutine(ExplodeCr(position));
+        }
+
+        if (HitsFragment)
+        {
+            var distance = 6f;
+            var speed = 10f;
+            var size = 0.5f;
+            var lifetime = Calculator.DST_Time(distance, speed);
+            var fragments = AbilityMines.ShootFragments(position, projectile_fragment, 3, speed, size);
+            fragments.ForEach(f => f.Lifetime = lifetime);
+        }
+
+        if (Trail)
+        {
+            var radius = 1.5f;
+            var lifetime = 1f;
+            trail.radius = radius;
+            trail.lifetime = lifetime;
+            var t = trail.CreateTrail(position);
         }
 
         IEnumerator ExplodeCr(Vector3 position)

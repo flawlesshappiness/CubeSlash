@@ -22,16 +22,16 @@ MonoBehaviour:
   upgrades_required: []
   stats:
   - id:
-      id: chain_chains
+      id: chain_trail
     value:
-      type_value: 0
+      type_value: 2
       value_int: -2
       value_float: 0
-      value_bool: 0
+      value_bool: 1
   - id:
       id: chain_cooldown_perc
     value:
       type_value: 3
       value_int: -2
-      value_float: -0.5
+      value_float: 0.2
       value_bool: 0

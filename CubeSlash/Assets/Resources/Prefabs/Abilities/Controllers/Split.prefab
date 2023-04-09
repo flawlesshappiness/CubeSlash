@@ -45,4 +45,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Info: {fileID: 11400000, guid: 28808eab66fcede409e2647c406f8bab, type: 2}
   prefab_projectile: {fileID: 4471386192391630747, guid: 078517c61f1a4504e9d7107a57670364, type: 3}
-  prefab_fragment: {fileID: 2903384162585443173, guid: ddcb15fa1e981794fb20b9ac54b20037, type: 3}
+  prefab_fragment: {fileID: 2903384162585443173, guid: 35cef0c126fc33849af54dc196d327f6, type: 3}

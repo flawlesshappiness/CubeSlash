@@ -30,6 +30,8 @@ public class StatID : FakeEnum
     public static readonly StatID chain_strikes = new StatID(nameof(chain_strikes));
     public static readonly StatID chain_chain_strikes = new StatID(nameof(chain_chain_strikes));
     public static readonly StatID chain_hits_explode = new StatID(nameof(chain_hits_explode));
+    public static readonly StatID chain_fragments = new StatID(nameof(chain_fragments));
+    public static readonly StatID chain_trail = new StatID(nameof(chain_trail));
 
     // Charge
     public static readonly StatID charge_cooldown_flat = new StatID(nameof(charge_cooldown_flat));
