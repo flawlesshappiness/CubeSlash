@@ -1,5 +1,6 @@
 using Flawliz.Lerp;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class DamageTrail : MonoBehaviour
@@ -40,17 +41,20 @@ public class DamageTrail : MonoBehaviour
         pos_prev = transform.position;
     }
 
-    public void CreateTrailsFromPreviousPosition()
+    public List<DamageTrail> CreateTrailsFromPreviousPosition()
     {
-        var dir = (transform.position - pos_prev).normalized * radius;
+        var max_dist = radius;
+        var trails = new List<DamageTrail>();
+        var dir = (transform.position - pos_prev).normalized * max_dist;
         var create_more = true;
         while (create_more)
         {
             var pos_next = pos_prev + dir;
-            if(Vector3.Distance(pos_next, transform.position) > radius)
+            if(Vector3.Distance(pos_next, transform.position) > max_dist)
             {
                 create_more = true;
-                CreateTrail(pos_next);
+                var trail = CreateTrail(pos_next);
+                trails.Add(trail);
                 pos_prev = pos_next;
             }
             else
@@ -58,18 +62,23 @@ public class DamageTrail : MonoBehaviour
                 create_more = false;
             }
         }
+
+        return trails;
     }
 
-    private void CreateTrail(Vector3 position)
+    public DamageTrail CreateTrail(Vector3 position)
     {
         var trail = Instantiate(gameObject, GameController.Instance.world).GetComponent<DamageTrail>();
+        trail.transform.parent = GameController.Instance.world;
+        trail.transform.position = position;
+        trail.transform.localScale = Vector3.one * radius;
+        trail.gameObject.SetActive(true);
         trail.lifetime = lifetime;
         trail.radius = radius;
-        trail.transform.position = position;
-        trail.gameObject.SetActive(true);
         trail.StopParticleSystems();
-        Lerp.LocalScale(trail.transform, lifetime, Vector3.zero, Vector3.one).Curve(ac_size);
+        Lerp.LocalScale(trail.transform, lifetime, Vector3.zero, Vector3.one * radius).Curve(ac_size);
         Destroy(trail.gameObject, lifetime);
+        return trail;
     }
 
     public void StopParticleSystems()
@@ -86,5 +95,6 @@ public class DamageTrail : MonoBehaviour
         yield return new WaitForSeconds(delay);
         ps.transform.parent = GameController.Instance.world;
         ps.SetEmissionEnabled(false);
+        Destroy(ps.gameObject, ps.main.startLifetime.constant);
     }
 }

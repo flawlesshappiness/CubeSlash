@@ -12,6 +12,7 @@ public class AbilityDash : Ability
     public float Distance { get; private set; }
     public float Speed { get; private set; }
     public float TrailDecayTime { get; private set; }
+    public float TrailRadius { get; private set; }
 
     [Header("DASH")]
     [SerializeField] private DamageTrail damage_trail;
@@ -20,6 +21,7 @@ public class AbilityDash : Ability
 
     private Coroutine cr_dash;
     private Vector3 dir_dash;
+    private float distance_dashed;
 
     private const float DISTANCE = 15;
     private const float SPEED = 12;
@@ -28,6 +30,7 @@ public class AbilityDash : Ability
     private const float FORCE = 200;
     private const float FORCE_SELF = 600;
     private const float TRAIL_DECAY_TIME = 2f;
+    private const float TRAIL_RADIUS = 0.5f;
 
     public override void InitializeFirstTime()
     {
@@ -52,6 +55,7 @@ public class AbilityDash : Ability
         Distance = DISTANCE * GetFloatValue(StatID.dash_distance_perc);
         Speed = SPEED * GetFloatValue(StatID.dash_speed_perc);
         TrailDecayTime = TRAIL_DECAY_TIME * GetFloatValue(StatID.dash_trail_time_perc);
+        TrailRadius = TRAIL_RADIUS * GetFloatValue(StatID.dash_trail_radius_perc);
     }
 
     public override float GetBaseCooldown() => Cooldown;
@@ -78,6 +82,7 @@ public class AbilityDash : Ability
 
         damage_trail.ResetTrail();
         damage_trail.lifetime = TrailDecayTime;
+        damage_trail.radius = TrailRadius;
 
         cr_dash = StartCoroutine(DashCr(Player.MoveDirection));
     }
@@ -87,13 +92,13 @@ public class AbilityDash : Ability
         IKillable victim = null;
         var velocity = direction * Speed;
         var pos_prev = Player.transform.position;
-        var distance = 0f;
+        distance_dashed = 0f;
         dir_dash = direction;
-        while (victim == null && distance < Distance)
+        while (victim == null && distance_dashed < Distance)
         {
             // Update distance
             var pos_cur = Player.transform.position;
-            distance += Vector3.Distance(pos_prev, pos_cur);
+            distance_dashed += Vector3.Distance(pos_prev, pos_cur);
             pos_prev = pos_cur;
 
             // Update direction
@@ -111,7 +116,7 @@ public class AbilityDash : Ability
             Player.Rigidbody.velocity = velocity;
             Player.Body.SetLookDirection(direction);
 
-            damage_trail.CreateTrailsFromPreviousPosition();
+            UpdateTrail();
 
             yield return new WaitForFixedUpdate();
         }
@@ -198,5 +203,34 @@ public class AbilityDash : Ability
     private void KnockbackSelf()
     {
         Player.Knockback(-dir_dash.normalized * FORCE_SELF, true, true);
+    }
+
+    private void UpdateTrail()
+    {
+        var t = Mathf.Clamp01(distance_dashed / Distance);
+        var trails = damage_trail.CreateTrailsFromPreviousPosition();
+
+        // Split
+        if (true)
+        {
+            var count = trails.Count;
+            var radius = 3f;
+            for (int i = 0; i < count; i++)
+            {
+                var trail = trails[i];
+                var copy = trail.CreateTrail(trail.transform.position);
+                var position = trail.transform.position;
+                var next_position = i < trails.Count - 1 ? trails[i + 1].transform.position : Player.transform.position;
+                var forward = next_position - position;
+                var right = Vector3.Cross(forward, Vector3.forward).normalized;
+                var tsin = Mathf.Lerp(0f, Mathf.PI * 2, t);
+                var sine = Mathf.Sin(tsin);
+
+                trail.transform.position = position + right * sine * radius;
+                copy.transform.position = position - right * sine * radius;
+
+                trails.Add(copy);
+            }
+        }
     }
 }

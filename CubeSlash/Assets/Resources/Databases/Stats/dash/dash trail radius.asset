@@ -10,15 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 405915c50f739fc4e9851c803f703035, type: 3}
-  m_Name: player_cooldown_multiplier
+  m_Name: dash trail radius
   m_EditorClassIdentifier: 
   id:
-    id: player_cooldown_multiplier
-  description: $ cooldown multiplier
+    id: dash_trail_radius_perc
+  description: $ trail size
   value:
     type_value: 3
     value_int: 0
     value_float: 1
     value_bool: 0
-  high_is_positive: 0
+  high_is_positive: 1
   display_has_plus: 1

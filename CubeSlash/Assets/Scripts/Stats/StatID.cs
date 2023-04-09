@@ -53,6 +53,7 @@ public class StatID : FakeEnum
     public static readonly StatID dash_distance_perc = new StatID(nameof(dash_distance_perc));
     public static readonly StatID dash_speed_perc = new StatID(nameof(dash_speed_perc));
     public static readonly StatID dash_trail_time_perc = new StatID(nameof(dash_trail_time_perc));
+    public static readonly StatID dash_trail_radius_perc = new StatID(nameof(dash_trail_radius_perc));
     public static readonly StatID dash_trail_explode = new StatID(nameof(dash_trail_explode));
     public static readonly StatID dash_trail_fragment = new StatID(nameof(dash_trail_fragment));
     public static readonly StatID dash_trail_split = new StatID(nameof(dash_trail_split));
