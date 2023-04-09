@@ -5,7 +5,6 @@ using UnityEngine;
 public class AbilityExplode : Ability
 {
     [Header("EXPLODE")]
-    [SerializeField] private Projectile projectile_fragment;
     [SerializeField] private ExplodeChargeEffect fx_charge;
 
     public event System.Action onChargeStart, onChargeEnd, onExplode;
@@ -61,11 +60,16 @@ public class AbilityExplode : Ability
 
         onChargeStart?.Invoke();
 
+        var parent = HasFragments ? GameController.Instance.world : transform;
+        var position = transform.position;
+
+        fx_charge.transform.parent = parent;
+        fx_charge.transform.position = position;
         fx_charge.Animate(Vector3.one * Radius * RADIUS_MUL_START, Vector3.one * Radius, ChargeTime);
 
         _slow_area = SlowArea.Create();
-        _slow_area.transform.parent = transform;
-        _slow_area.transform.position = transform.position;
+        _slow_area.transform.parent = parent;
+        _slow_area.transform.position = position;
         _slow_area.SetSlowPercentage(SlowPerc);
     }
 
@@ -130,8 +134,8 @@ public class AbilityExplode : Ability
         var r = Radius * t;
         var f = Knockback * t;
         var c = (Cooldown * 0.5f) + (Cooldown * 0.5f * t);
-        Explode(Player.transform.position, r, f, OnHit);
-        OnExplode(Player.transform.position, t);
+        Explode(_slow_area.transform.position, r, f, OnHit);
+        OnExplode(_slow_area.transform.position, t);
         StartCooldown(c);
     }
 
@@ -141,18 +145,9 @@ public class AbilityExplode : Ability
         StartCooldown();
         Player.Instance.AbilityLock.RemoveLock(nameof(AbilityExplode));
 
-        if (HasFragments)
-        {
-            var fragments = AbilityMines.ShootFragments(position, projectile_fragment, 10, 20, 0.75f);
-            foreach (var fragment in fragments)
-            {
-                fragment.Lifetime = Random.Range(0.5f, 1f);
-            }
-        }
-
         for (int i = 0; i < MiniExplosions; i++)
         {
-            var radius = Radius * Random.Range(0.1f, 0.5f);
+            var radius = Radius * Random.Range(0.3f, 0.75f);
             var dir = Random.insideUnitCircle.ToVector3().normalized;
             var pos = position + dir * (Radius + radius);
             var delay = Random.Range(0.3f, 0.6f);

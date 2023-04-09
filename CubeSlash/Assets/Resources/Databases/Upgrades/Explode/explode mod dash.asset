@@ -29,9 +29,16 @@ MonoBehaviour:
       value_float: -0.75
       value_bool: 1
   - id:
-      id: explode_cooldown_perc
+      id: explode_slow_perc
     value:
       type_value: 3
       value_int: 0
       value_float: 0.1
+      value_bool: 0
+  - id:
+      id: explode_cooldown_perc
+    value:
+      type_value: 3
+      value_int: 0
+      value_float: 0.2
       value_bool: 0

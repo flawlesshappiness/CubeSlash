@@ -18,6 +18,7 @@ MonoBehaviour:
   value:
     type_value: 1
     value_int: 0
-    value_float: 2
+    value_float: 3
     value_bool: 0
   high_is_positive: 0
+  display_has_plus: 1

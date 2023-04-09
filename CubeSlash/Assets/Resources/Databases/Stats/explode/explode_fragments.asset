@@ -14,11 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id:
     id: explode_fragments
-  description: Emit fragments when exploding
+  description: Explosion remains behind while charging
   value:
     type_value: 2
-    type_display: 0
     value_int: 0
     value_float: 0
     value_bool: 0
   high_is_positive: 1
+  display_has_plus: 1

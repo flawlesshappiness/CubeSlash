@@ -22,16 +22,16 @@ MonoBehaviour:
   upgrades_required: []
   stats:
   - id:
-      id: dash_cooldown_perc
-    value:
-      type_value: 3
-      value_int: 0
-      value_float: 0.2
-      value_bool: 0
-  - id:
       id: dash_trail_fragment
     value:
       type_value: 2
       value_int: 0
       value_float: 0.2
       value_bool: 1
+  - id:
+      id: dash_cooldown_perc
+    value:
+      type_value: 3
+      value_int: 0
+      value_float: 0.2
+      value_bool: 0
