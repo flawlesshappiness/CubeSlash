@@ -14,10 +14,12 @@ public class AbilityDash : Ability
     public float TrailRadius { get; private set; }
     public bool TrailChain { get; private set; }
     public bool TrailSplit { get; private set; }
+    public bool TrailFragment { get; private set; }
 
     [Header("DASH")]
     [SerializeField] private DamageTrail trail_gas;
     [SerializeField] private DamageTrail trail_chain;
+    [SerializeField] private Projectile projectile_fragment;
     [SerializeField] private ParticleSystem ps_bubbles, ps_trail, ps_impact;
     [SerializeField] private AnimationCurve ac_push_enemies;
 
@@ -62,6 +64,7 @@ public class AbilityDash : Ability
         TrailRadius = TRAIL_RADIUS * GetFloatValue(StatID.dash_trail_radius_perc);
         TrailChain =  GetBoolValue(StatID.dash_trail_chain);
         TrailSplit =  GetBoolValue(StatID.dash_trail_split);
+        TrailFragment = GetBoolValue(StatID.dash_trail_fragment);
     }
 
     public override float GetBaseCooldown() => Cooldown;
@@ -237,6 +240,25 @@ public class AbilityDash : Ability
                 copy.transform.position = position - right * sine * radius;
 
                 trails.Add(copy);
+            }
+        }
+
+        if (TrailFragment)
+        {
+            var distance = 10f;
+            var speed = 10f;
+            var size = 0.5f;
+            var lifetime = Calculator.DST_Time(distance, speed);
+            foreach(var trail in trails)
+            {
+                trail.onHit += k =>
+                {
+                    var fragments = AbilityMines.ShootFragments(k.GetPosition(), projectile_fragment, 5, speed, size);
+                    foreach(var frag in fragments)
+                    {
+                        frag.Lifetime = lifetime;
+                    }
+                };
             }
         }
 

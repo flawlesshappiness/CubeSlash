@@ -9715,8 +9715,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee8ceff930fdc2048b3318f1251aee32, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  radius: 1
-  lifetime: 3
   ac_size:
     serializedVersion: 2
     m_Curve:
@@ -9750,6 +9748,8 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  radius: 1
+  lifetime: 3
 --- !u!1 &1139620221015190156
 GameObject:
   m_ObjectHideFlags: 0
@@ -14609,6 +14609,7 @@ MonoBehaviour:
   Info: {fileID: 11400000, guid: 94bf2c62d7d24574882c13e46e18a041, type: 2}
   trail_gas: {fileID: 2544458224790004948}
   trail_chain: {fileID: 377283983572043444}
+  projectile_fragment: {fileID: 2903384162585443173, guid: 35cef0c126fc33849af54dc196d327f6, type: 3}
   ps_bubbles: {fileID: 6628548698120089524}
   ps_trail: {fileID: 5451110289954627682}
   ps_impact: {fileID: 34505315607539445}
@@ -24316,8 +24317,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee8ceff930fdc2048b3318f1251aee32, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  radius: 1
-  lifetime: 3
   ac_size:
     serializedVersion: 2
     m_Curve:
@@ -24351,6 +24350,8 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  radius: 1
+  lifetime: 3
 --- !u!1 &5363449799312000128
 GameObject:
   m_ObjectHideFlags: 0
@@ -24537,7 +24538,7 @@ ParticleSystem:
       serializedVersion: 2
       minMaxState: 0
       minColor: {r: 1, g: 1, b: 1, a: 1}
-      maxColor: {r: 0.7529412, g: 0.79607844, b: 1, a: 1}
+      maxColor: {r: 1, g: 1, b: 1, a: 1}
       maxGradient:
         serializedVersion: 2
         key0: {r: 0.6627451, g: 0.85882354, b: 1, a: 1}
