@@ -75,7 +75,11 @@ public class Item : MonoBehaviour
             transform.position = Vector3.Lerp(start, end, t);
         }).Connect(gameObject);
 
-        Collect();
+        if (!Player.Instance.IsDead)
+        {
+            Collect();
+        }
+
         Despawn();
     }
 

@@ -73,6 +73,7 @@ public class AbilitySplit : Ability
             p.Lifetime = PROJECTILE_LIFETIME;
             p.BounceBack = true;
             p.BounceAngleMax = 180f;
+            p.onDeath += () => OnDeath(p);
 
             var force = FORCE_SELF;
 
@@ -119,6 +120,14 @@ public class AbilitySplit : Ability
                 SpawnFragments(p);
             }
 
+            if (ProjectileExplode)
+            {
+                AbilityExplode.Explode(p.transform.position, 3f, 50);
+            }
+        }
+
+        void OnDeath(Projectile p)
+        {
             if (ProjectileExplode)
             {
                 AbilityExplode.Explode(p.transform.position, 3f, 50);

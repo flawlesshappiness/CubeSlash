@@ -22,16 +22,16 @@ MonoBehaviour:
   upgrades_required: []
   stats:
   - id:
+      id: split_cooldown_perc
+    value:
+      type_value: 3
+      value_int: 0
+      value_float: 0.2
+      value_bool: 0
+  - id:
       id: split_explode
     value:
       type_value: 2
       value_int: 0
       value_float: 0.5
       value_bool: 1
-  - id:
-      id: split_cooldown_flat
-    value:
-      type_value: 1
-      value_int: 0
-      value_float: 0.5
-      value_bool: 0
