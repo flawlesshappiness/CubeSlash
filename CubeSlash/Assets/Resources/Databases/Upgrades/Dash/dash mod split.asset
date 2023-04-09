@@ -28,3 +28,10 @@ MonoBehaviour:
       value_int: 0
       value_float: 0.1
       value_bool: 0
+  - id:
+      id: dash_trail_split
+    value:
+      type_value: 2
+      value_int: 0
+      value_float: 0.1
+      value_bool: 1

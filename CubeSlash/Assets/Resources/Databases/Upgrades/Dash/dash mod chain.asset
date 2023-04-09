@@ -22,30 +22,16 @@ MonoBehaviour:
   upgrades_required: []
   stats:
   - id:
-      id: dash_shockwave_bounce
+      id: dash_cooldown_perc
     value:
-      type_value: 0
+      type_value: 3
       value_int: 0
-      value_float: 1
+      value_float: 0.1
+      value_bool: 0
+  - id:
+      id: dash_trail_chain
+    value:
+      type_value: 2
+      value_int: 0
+      value_float: 0.1
       value_bool: 1
-  - id:
-      id: dash_speed_perc
-    value:
-      type_value: 3
-      value_int: 0
-      value_float: 0.5
-      value_bool: 0
-  - id:
-      id: dash_distance_perc
-    value:
-      type_value: 3
-      value_int: 0
-      value_float: 0.5
-      value_bool: 0
-  - id:
-      id: dash_cooldown_flat
-    value:
-      type_value: 1
-      value_int: 0
-      value_float: 0.5
-      value_bool: 0

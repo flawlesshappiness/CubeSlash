@@ -1,4 +1,3 @@
-using Flawliz.Lerp;
 using System.Collections;
 using System.Linq;
 using UnityEngine;
@@ -13,12 +12,16 @@ public class AbilityDash : Ability
     public float Speed { get; private set; }
     public float TrailDecayTime { get; private set; }
     public float TrailRadius { get; private set; }
+    public bool TrailChain { get; private set; }
+    public bool TrailSplit { get; private set; }
 
     [Header("DASH")]
-    [SerializeField] private DamageTrail damage_trail;
+    [SerializeField] private DamageTrail trail_gas;
+    [SerializeField] private DamageTrail trail_chain;
     [SerializeField] private ParticleSystem ps_bubbles, ps_trail, ps_impact;
     [SerializeField] private AnimationCurve ac_push_enemies;
 
+    private DamageTrail current_trail;
     private Coroutine cr_dash;
     private Vector3 dir_dash;
     private float distance_dashed;
@@ -39,7 +42,8 @@ public class AbilityDash : Ability
 
         ps_trail.SetEmissionEnabled(false);
 
-        damage_trail.gameObject.SetActive(false);
+        trail_gas.gameObject.SetActive(false);
+        trail_chain.gameObject.SetActive(false);
     }
 
     private void OnDestroy()
@@ -56,6 +60,8 @@ public class AbilityDash : Ability
         Speed = SPEED * GetFloatValue(StatID.dash_speed_perc);
         TrailDecayTime = TRAIL_DECAY_TIME * GetFloatValue(StatID.dash_trail_time_perc);
         TrailRadius = TRAIL_RADIUS * GetFloatValue(StatID.dash_trail_radius_perc);
+        TrailChain =  GetBoolValue(StatID.dash_trail_chain);
+        TrailSplit =  GetBoolValue(StatID.dash_trail_split);
     }
 
     public override float GetBaseCooldown() => Cooldown;
@@ -80,9 +86,10 @@ public class AbilityDash : Ability
         SoundController.Instance.Play(SoundEffectType.sfx_dash_start);
         ps_trail.SetEmissionEnabled(true);
 
-        damage_trail.ResetTrail();
-        damage_trail.lifetime = TrailDecayTime;
-        damage_trail.radius = TrailRadius;
+        current_trail = TrailChain ? trail_chain : trail_gas;
+        current_trail.ResetTrail();
+        current_trail.lifetime = TrailDecayTime;
+        current_trail.radius = TrailRadius;
 
         cr_dash = StartCoroutine(DashCr(Player.MoveDirection));
     }
@@ -208,10 +215,10 @@ public class AbilityDash : Ability
     private void UpdateTrail()
     {
         var t = Mathf.Clamp01(distance_dashed / Distance);
-        var trails = damage_trail.CreateTrailsFromPreviousPosition();
+        var trails = current_trail.CreateTrailsFromPreviousPosition();
 
         // Split
-        if (true)
+        if (TrailSplit)
         {
             var count = trails.Count;
             var radius = 3f;
@@ -230,6 +237,19 @@ public class AbilityDash : Ability
                 copy.transform.position = position - right * sine * radius;
 
                 trails.Add(copy);
+            }
+        }
+
+        if (TrailChain)
+        {
+            foreach(var trail in trails)
+            {
+                AbilityChain.CreateImpactPS(trail.transform.position);
+
+                trail.onHit += k =>
+                {
+                    AbilityChain.TryChainToTarget(k.GetPosition(), 6f, 0, 1, 0);
+                };
             }
         }
     }

@@ -5,10 +5,12 @@ using UnityEngine;
 
 public class DamageTrail : MonoBehaviour
 {
+    [SerializeField] private AnimationCurve ac_size;
+    
     public float radius;
     public float lifetime;
 
-    [SerializeField] private AnimationCurve ac_size;
+    public System.Action<IKillable> onHit;
 
     private Vector3 pos_prev;
 
@@ -31,7 +33,8 @@ public class DamageTrail : MonoBehaviour
             var k = hit.GetComponentInParent<IKillable>();
             if(k != null && k.CanKill())
             {
-                k.Kill();
+                k.Kill(); 
+                onHit?.Invoke(k);
             }
         }
     }
