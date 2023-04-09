@@ -20,7 +20,7 @@ public class AbilitySplit : Ability
     private bool ProjectileExplode { get; set; }
 
     private const float PROJECTILE_SPEED = 15f;
-    private const float PROJECTILE_ARC = 30f;
+    private const float PROJECTILE_ARC = 40f;
     private const float PROJECTILE_SIZE = 0.5f;
     private const float PROJECTILE_LIFETIME = 0.75f;
     private const float FORCE_SELF = 100f;
@@ -118,7 +118,7 @@ public class AbilitySplit : Ability
 
         void SpawnFragments(Projectile p)
         {
-            AbilityMines.ShootFragments(p.transform.position, prefab_fragment, ProjectileFragments, PROJECTILE_SPEED, SizeProjectiles * 0.5f);
+            AbilityMines.ShootFragments(p.transform.position, prefab_fragment, ProjectileFragments, PROJECTILE_SPEED, SizeProjectiles);
         }
     }
 
