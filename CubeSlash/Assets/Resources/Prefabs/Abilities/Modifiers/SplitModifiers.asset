@@ -13,18 +13,15 @@ MonoBehaviour:
   m_Name: SplitModifiers
   m_EditorClassIdentifier: 
   modifiers:
-  - type: 3
-    id:
-      id: split_mod_explode
-  - type: 2
-    id:
-      id: split_mod_charge
   - type: 0
     id:
       id: split_mod_dash
-  - type: 4
+  - type: 2
+    id:
+      id: split_mod_explode
+  - type: 3
     id:
       id: split_mod_chain
-  - type: 5
+  - type: 4
     id:
       id: split_mod_mines

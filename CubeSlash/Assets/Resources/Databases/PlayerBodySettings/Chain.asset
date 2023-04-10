@@ -12,14 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 262b9172431af8d45a4367eaf424b899, type: 3}
   m_Name: Chain
   m_EditorClassIdentifier: 
-  health: 2
-  armor: 0
-  body_size: 1.1
+  health: 3
+  armor: 1
+  body_size: 1.25
   mass: 1
-  linear_velocity: 7
+  linear_velocity: 6
   linear_acceleration: 20
   linear_drag: 20
   body: {fileID: 1353097371446324401, guid: 0d0fa95c8dc7c34478522c4af9dfc8f6, type: 3}
   body_sprite: {fileID: 21300000, guid: 7d28e25108cbfb5479c03e32ef1e1ec8, type: 3}
-  ability_type: 4
+  ability_type: 3
   shop_product: {fileID: 11400000, guid: 13ec4b9b2d4a4ad4a9ee2c19bd16f35a, type: 2}

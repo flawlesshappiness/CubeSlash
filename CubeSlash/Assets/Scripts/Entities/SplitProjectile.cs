@@ -1,13 +1,13 @@
 using System.Collections;
 using UnityEngine;
 
-public class AbilityProjectile : Projectile
+public class SplitProjectile : Projectile
 {
     public bool HasTrail { get; set; } = false;
     public bool HasChain { get; set; } = false;
     public float ChainRadius { get; set; } = 5f;
 
-    [Header(nameof(AbilityProjectile))]
+    [Header(nameof(SplitProjectile))]
     [SerializeField] private DamageTrail trail;
     [SerializeField] private ParticleSystem ps_gas, ps_chain;
     [SerializeField] private SpriteRenderer spr;

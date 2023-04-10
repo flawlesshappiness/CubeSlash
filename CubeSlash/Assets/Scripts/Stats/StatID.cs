@@ -33,22 +33,6 @@ public class StatID : FakeEnum
     public static readonly StatID chain_fragments = new StatID(nameof(chain_fragments));
     public static readonly StatID chain_trail = new StatID(nameof(chain_trail));
 
-    // Charge
-    public static readonly StatID charge_cooldown_flat = new StatID(nameof(charge_cooldown_flat));
-    public static readonly StatID charge_cooldown_perc = new StatID(nameof(charge_cooldown_perc));
-    public static readonly StatID charge_width_perc = new StatID(nameof(charge_width_perc));
-    public static readonly StatID charge_knock_self_perc = new StatID(nameof(charge_knock_self_perc));
-    public static readonly StatID charge_knock_enemy_perc = new StatID(nameof(charge_knock_enemy_perc));
-    public static readonly StatID charge_cooldown_kill_reduc_perc = new StatID(nameof(charge_cooldown_kill_reduc_perc));
-    public static readonly StatID charge_beam_count = new StatID(nameof(charge_beam_count));
-    public static readonly StatID charge_beam_arc_perc = new StatID(nameof(charge_beam_arc_perc));
-    public static readonly StatID charge_suck_exp = new StatID(nameof(charge_suck_exp));
-    public static readonly StatID charge_beam_back = new StatID(nameof(charge_beam_back));
-    public static readonly StatID charge_trail = new StatID(nameof(charge_trail));
-    public static readonly StatID charge_kill_explode = new StatID(nameof(charge_kill_explode));
-    public static readonly StatID charge_kill_zap = new StatID(nameof(charge_kill_zap));
-    public static readonly StatID charge_enemy_fragment = new StatID(nameof(charge_enemy_fragment));
-
     // Dash
     public static readonly StatID dash_cooldown_flat = new StatID(nameof(dash_cooldown_flat));
     public static readonly StatID dash_cooldown_perc = new StatID(nameof(dash_cooldown_perc));
@@ -85,6 +69,7 @@ public class StatID : FakeEnum
     public static readonly StatID mines_fragment_chain = new StatID(nameof(mines_fragment_chain));
     public static readonly StatID mines_fragment_explode = new StatID(nameof(mines_fragment_explode));
     public static readonly StatID mines_double_shell = new StatID(nameof(mines_double_shell));
+    public static readonly StatID mines_trail = new StatID(nameof(mines_trail));
 
     // Split
     public static readonly StatID split_cooldown_flat = new StatID(nameof(split_cooldown_flat));

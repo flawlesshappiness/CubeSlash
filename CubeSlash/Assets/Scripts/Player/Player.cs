@@ -581,15 +581,19 @@ public class Player : Character
         var count = AbilityController.Instance.GetGainedAbilities().Count;
         if (count < 2)
         {
-            return 5;
+            return 3;
         }
         else if (count < 3)
         {
-            return 8;
+            return 4;
+        }
+        else if (count < 4)
+        {
+            return 6;
         }
         else
         {
-            return 10;
+            return 8;
         }
     }
     #endregion

@@ -18,13 +18,13 @@ MonoBehaviour:
   icon: {fileID: 21300000, guid: 6df22128a224dd7479815d31a22ac44c, type: 3}
   hidden: 1
   require_ability: 1
-  ability_required: 4
+  ability_required: 3
   upgrades_required: []
   stats:
   - id:
       id: chain_trail
     value:
-      type_value: 2
+      type_value: 0
       value_int: -2
       value_float: 0
       value_bool: 1

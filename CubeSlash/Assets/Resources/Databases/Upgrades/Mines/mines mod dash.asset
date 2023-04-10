@@ -18,34 +18,20 @@ MonoBehaviour:
   icon: {fileID: 21300000, guid: 6df22128a224dd7479815d31a22ac44c, type: 3}
   hidden: 1
   require_ability: 1
-  ability_required: 5
+  ability_required: 4
   upgrades_required: []
   stats:
   - id:
-      id: mines_seeking
+      id: mines_trail
     value:
-      type_value: 0
+      type_value: 2
       value_int: 0
-      value_float: 0
+      value_float: 0.2
       value_bool: 1
   - id:
-      id: mines_shell_lifetime_perc
+      id: mines_cooldown_perc
     value:
       type_value: 3
       value_int: 0
-      value_float: 0.5
-      value_bool: 0
-  - id:
-      id: mines_turn_speed_perc
-    value:
-      type_value: 0
-      value_int: 0
-      value_float: 0.25
-      value_bool: 0
-  - id:
-      id: mines_cooldown_flat
-    value:
-      type_value: 1
-      value_int: 0
-      value_float: 0.5
+      value_float: 0.2
       value_bool: 0

@@ -13,18 +13,15 @@ MonoBehaviour:
   m_Name: DashModifiers
   m_EditorClassIdentifier: 
   modifiers:
-  - type: 3
-    id:
-      id: dash_mod_explode
-  - type: 2
-    id:
-      id: dash_mod_charge
   - type: 1
     id:
       id: dash_mod_split
-  - type: 4
+  - type: 2
+    id:
+      id: dash_mod_explode
+  - type: 3
     id:
       id: dash_mod_chain
-  - type: 5
+  - type: 4
     id:
       id: dash_mod_mines

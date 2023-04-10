@@ -5,8 +5,9 @@ using UnityEngine;
 public class AbilityMines : Ability
 {
     [Header("MINES")]
-    [SerializeField] private Projectile prefab_mine;
+    [SerializeField] private MinesProjectile prefab_mine;
     [SerializeField] private Projectile prefab_fragment;
+    [SerializeField] private DamageTrail trail;
 
     private float Cooldown { get; set; }
     private int ShellCount { get; set; }
@@ -18,6 +19,7 @@ public class AbilityMines : Ability
     private bool ExplodingFragments { get; set; }
     private bool DoubleShells { get; set; }
     private bool FragmentChain { get; set; }
+    private bool Trail { get; set; }
 
     private const float MINE_SPEED = 10f;
     private const float MINE_DRAG = 0.95f;
@@ -31,6 +33,7 @@ public class AbilityMines : Ability
     public override void InitializeFirstTime()
     {
         base.InitializeFirstTime();
+        trail.gameObject.SetActive(false);
     }
 
     public override void OnValuesUpdated()
@@ -47,6 +50,7 @@ public class AbilityMines : Ability
         ExplodingFragments = GetBoolValue(StatID.mines_fragment_explode);
         DoubleShells = GetBoolValue(StatID.mines_double_shell);
         FragmentChain = GetBoolValue(StatID.mines_fragment_chain);
+        Trail = GetBoolValue(StatID.mines_trail);
     }
 
     public override float GetBaseCooldown() => Cooldown;
@@ -92,12 +96,16 @@ public class AbilityMines : Ability
             position_start = Player.transform.position,
             velocity = direction.normalized * MINE_SPEED,
             onKill = OnMineExplode
-        });
+        }) as MinesProjectile;
 
         p.transform.localScale = Vector3.one * ShellSize;
         p.Drag = MINE_DRAG;
         p.Lifetime = ShellLifetime;
         p.onDeath += () => OnMineExplode(p);
+
+        p.HasChain = FragmentChain;
+        p.HasTrail = Trail;
+        p.ChainHits = FragmentCount;
     }
 
     private void OnMineExplode(Projectile projectile, IKillable k = null)
@@ -108,6 +116,13 @@ public class AbilityMines : Ability
         {
             var radius = 3f * ShellSize;
             AbilityExplode.Explode(projectile.transform.position, radius, 0);
+        }
+
+        if (Trail)
+        {
+            trail.radius = 1f;
+            trail.lifetime = 2f;
+            var t = trail.CreateTrail(projectile.transform.position);
         }
 
         if (FragmentChain)

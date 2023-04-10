@@ -18,7 +18,7 @@ MonoBehaviour:
   icon: {fileID: 21300000, guid: 5ceb479493af4284794c93da202e35ea, type: 3}
   hidden: 0
   require_ability: 1
-  ability_required: 3
+  ability_required: 2
   upgrades_required: []
   stats:
   - id:

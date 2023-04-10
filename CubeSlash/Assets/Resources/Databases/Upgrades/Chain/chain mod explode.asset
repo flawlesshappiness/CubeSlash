@@ -18,13 +18,13 @@ MonoBehaviour:
   icon: {fileID: 21300000, guid: 9fcc1744a317b8e4ab0aa3072a0a3ed5, type: 3}
   hidden: 1
   require_ability: 1
-  ability_required: 4
+  ability_required: 3
   upgrades_required: []
   stats:
   - id:
       id: chain_hits_explode
     value:
-      type_value: 2
+      type_value: 0
       value_int: 0
       value_float: 0
       value_bool: 1

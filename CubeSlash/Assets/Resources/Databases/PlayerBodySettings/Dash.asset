@@ -14,10 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 3
   armor: 1
-  body_size: 1.3
+  body_size: 1.25
   mass: 1
   linear_velocity: 6
-  linear_acceleration: 16
+  linear_acceleration: 20
   linear_drag: 20
   body: {fileID: 1353097371446324401, guid: 3cb0a00439e95294fb1bca8c026fc5f4, type: 3}
   body_sprite: {fileID: 21300000, guid: 6d76dbb3140f41d4fa53817e4351aece, type: 3}

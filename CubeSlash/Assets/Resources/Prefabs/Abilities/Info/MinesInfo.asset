@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c6785d8516eeff458ef9261144a9b67, type: 3}
   m_Name: MinesInfo
   m_EditorClassIdentifier: 
-  type: 5
+  type: 4
   name_ability: Fragment Shells
   desc_ability: Release shells from behind, that explode into fragments
   sprite_icon: {fileID: 21300000, guid: 665d236bf40dab74b8856500b22623e3, type: 3}

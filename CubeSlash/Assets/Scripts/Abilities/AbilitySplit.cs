@@ -5,7 +5,7 @@ using UnityEngine;
 public class AbilitySplit : Ability
 {
     [Header("SPLIT")]
-    [SerializeField] private AbilityProjectile prefab_projectile;
+    [SerializeField] private SplitProjectile prefab_projectile;
     [SerializeField] private Projectile prefab_fragment;
 
     // Values
@@ -68,7 +68,7 @@ public class AbilitySplit : Ability
                 position_start = Player.transform.position,
                 velocity = direction * PROJECTILE_SPEED,
                 onKill = OnKill
-            }) as AbilityProjectile;
+            }) as SplitProjectile;
 
             p.transform.localScale = Vector3.one * SizeProjectiles;
             p.Piercing = Piercing;

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c6785d8516eeff458ef9261144a9b67, type: 3}
   m_Name: ChainInfo
   m_EditorClassIdentifier: 
-  type: 4
+  type: 3
   name_ability: Zapper
   desc_ability: Hold to zap nearby enemies
   sprite_icon: {fileID: 21300000, guid: 704c46460f2ea97478c57508c8014614, type: 3}

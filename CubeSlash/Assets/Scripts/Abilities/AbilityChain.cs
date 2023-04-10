@@ -111,10 +111,8 @@ public class AbilityChain : Ability
 
         if (Trail)
         {
-            var radius = 1.5f;
-            var lifetime = 1f;
-            trail.radius = radius;
-            trail.lifetime = lifetime;
+            trail.radius = 1.5f;
+            trail.lifetime = 1f;
             var t = trail.CreateTrail(position);
         }
 

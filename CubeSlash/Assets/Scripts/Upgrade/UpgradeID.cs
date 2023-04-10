@@ -55,7 +55,6 @@ public class UpgradeID : FakeEnum
     public static readonly UpgradeID chain_targets_2 = new UpgradeID(nameof(chain_targets_2));
     public static readonly UpgradeID chain_targets_3 = new UpgradeID(nameof(chain_targets_3));
 
-    public static readonly UpgradeID chain_mod_charge = new UpgradeID(nameof(chain_mod_charge));
     public static readonly UpgradeID chain_mod_dash = new UpgradeID(nameof(chain_mod_dash));
     public static readonly UpgradeID chain_mod_explode = new UpgradeID(nameof(chain_mod_explode));
     public static readonly UpgradeID chain_mod_mines = new UpgradeID(nameof(chain_mod_mines));
@@ -73,7 +72,6 @@ public class UpgradeID : FakeEnum
     public static readonly UpgradeID dash_trail_time_3 = new UpgradeID(nameof(dash_trail_time_3));
 
     public static readonly UpgradeID dash_mod_chain = new UpgradeID(nameof(dash_mod_chain));
-    public static readonly UpgradeID dash_mod_charge = new UpgradeID(nameof(dash_mod_charge));
     public static readonly UpgradeID dash_mod_explode = new UpgradeID(nameof(dash_mod_explode));
     public static readonly UpgradeID dash_mod_mines = new UpgradeID(nameof(dash_mod_mines));
     public static readonly UpgradeID dash_mod_split = new UpgradeID(nameof(dash_mod_split));
@@ -90,7 +88,6 @@ public class UpgradeID : FakeEnum
     public static readonly UpgradeID explode_slow_3 = new UpgradeID(nameof(explode_slow_3));
 
     public static readonly UpgradeID explode_mod_chain = new UpgradeID(nameof(explode_mod_chain));
-    public static readonly UpgradeID explode_mod_charge = new UpgradeID(nameof(explode_mod_charge));
     public static readonly UpgradeID explode_mod_dash = new UpgradeID(nameof(explode_mod_dash));
     public static readonly UpgradeID explode_mod_mines = new UpgradeID(nameof(explode_mod_mines));
     public static readonly UpgradeID explode_mod_split = new UpgradeID(nameof(explode_mod_split));
@@ -107,7 +104,6 @@ public class UpgradeID : FakeEnum
     public static readonly UpgradeID mines_size_3 = new UpgradeID(nameof(mines_size_3));
 
     public static readonly UpgradeID mines_mod_chain = new UpgradeID(nameof(mines_mod_chain));
-    public static readonly UpgradeID mines_mod_charge = new UpgradeID(nameof(mines_mod_charge));
     public static readonly UpgradeID mines_mod_dash = new UpgradeID(nameof(mines_mod_dash));
     public static readonly UpgradeID mines_mod_explode = new UpgradeID(nameof(mines_mod_explode));
     public static readonly UpgradeID mines_mod_split = new UpgradeID(nameof(mines_mod_split));
@@ -124,7 +120,6 @@ public class UpgradeID : FakeEnum
     public static readonly UpgradeID split_pierce_3 = new UpgradeID(nameof(split_pierce_3));
 
     public static readonly UpgradeID split_mod_chain = new UpgradeID(nameof(split_mod_chain));
-    public static readonly UpgradeID split_mod_charge = new UpgradeID(nameof(split_mod_charge));
     public static readonly UpgradeID split_mod_dash = new UpgradeID(nameof(split_mod_dash));
     public static readonly UpgradeID split_mod_explode = new UpgradeID(nameof(split_mod_explode));
     public static readonly UpgradeID split_mod_mines = new UpgradeID(nameof(split_mod_mines));

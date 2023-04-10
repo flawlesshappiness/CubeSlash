@@ -13,18 +13,15 @@ MonoBehaviour:
   m_Name: MinesModifier
   m_EditorClassIdentifier: 
   modifiers:
-  - type: 3
-    id:
-      id: mines_mod_explode
-  - type: 2
-    id:
-      id: mines_mod_charge
-  - type: 1
-    id:
-      id: mines_mod_split
   - type: 0
     id:
       id: mines_mod_dash
-  - type: 4
+  - type: 1
+    id:
+      id: mines_mod_split
+  - type: 2
+    id:
+      id: mines_mod_explode
+  - type: 3
     id:
       id: mines_mod_chain

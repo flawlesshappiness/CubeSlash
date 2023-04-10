@@ -19,12 +19,9 @@ MonoBehaviour:
   - type: 1
     id:
       id: chain_mod_split
-  - type: 5
-    id:
-      id: chain_mod_mines
-  - type: 3
-    id:
-      id: chain_mod_explode
   - type: 2
     id:
-      id: chain_mod_charge
+      id: chain_mod_explode
+  - type: 4
+    id:
+      id: chain_mod_mines
