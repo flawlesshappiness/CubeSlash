@@ -22,17 +22,16 @@ max enemies based on difficulty
 more health on easy?
 ability off cooldown sound
 update exp bar
-plant boss very rough when late (area based on how late it is?)
 
 ## OBJECTS ##
 
 Large rock (medium / big, static)
 
-  variation: moss, spiky crystal
+  variation: moss, spiky crystal, lily pad
 
 floating rock (small)
 
-  variation: moss, spiky crystal
+  variation: moss, spiky crystal, lily pad
 
 bubble (small, pop on damage)
 

@@ -301,7 +301,10 @@ public class Player : Character
 
         var hurt = collision.gameObject.GetComponentInParent<IHurt>();
         if (hurt == null) return;
-        Damage(hurt.GetPosition());
+        if (hurt.CanHurt())
+        {
+            Damage(hurt.GetPosition());
+        }
     }
 
     public static void PushEnemiesInArea(Vector3 position, float radius, float force, AnimationCurve curve_force = null)

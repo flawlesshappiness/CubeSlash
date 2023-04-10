@@ -273,13 +273,14 @@ public class AbilityExplode : Ability
         explosion.transform.position = position;
         explosion.transform.localScale = Vector3.one * radius * 2;
         explosion.SetColor(actual_color);
-        Destroy(explosion, 2f);
+        Destroy(explosion.gameObject, 2f);
 
         var ps_explode = Resources.Load<ParticleSystem>("Particles/ps_explode");
         ps_explode.Duplicate()
             .Scale(Vector3.one * radius * 2)
             .Position(position)
-            .Play();
+            .Play()
+            .Destroy(2);
 
         // Sfx
         SoundController.Instance.PlayGroup(SoundEffectType.sfx_explode_release);

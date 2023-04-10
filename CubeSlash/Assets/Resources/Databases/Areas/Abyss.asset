@@ -107,6 +107,12 @@ MonoBehaviour:
     m_Mode: 0
     m_NumColorKeys: 2
     m_NumAlphaKeys: 2
-  spawn_objects: []
+  spawn_objects:
+  - prefab: {fileID: 2201685024680150908, guid: 4bb76b2b6c2dad1409d7a2c285187db3, type: 3}
+    delay: 1
+    count: 5
+  - prefab: {fileID: 4973394195239199387, guid: 352b9871a3978c84d84fa4af71b959d0, type: 3}
+    delay: 1
+    count: 5
   bgm_type:
     id: bgm_abyss

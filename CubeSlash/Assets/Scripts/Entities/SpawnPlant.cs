@@ -59,6 +59,7 @@ public class SpawnPlant : SpawnObject, IKillable
         {
             var position = transform.position + Random.insideUnitCircle.ToVector3() * spawn_radius;
             var exp = ItemController.Instance.SpawnPlant(position);
+            exp.AnimateCollect();
         }
     }
 

@@ -108,5 +108,11 @@ MonoBehaviour:
   - prefab: {fileID: 3561371122137596645, guid: 43cf28e00c020e14fa42509606b0bd08, type: 3}
     delay: 10
     count: 5
+  - prefab: {fileID: 2201685024680150908, guid: a627e5c6ee80ad94bb3daa234125d528, type: 3}
+    delay: 1
+    count: 5
+  - prefab: {fileID: 4973394195239199387, guid: 022b2a1d1740d8649bf656f126f32c86, type: 3}
+    delay: 1
+    count: 6
   bgm_type:
     id: bgm_kelp
