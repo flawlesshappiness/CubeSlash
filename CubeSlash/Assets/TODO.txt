@@ -16,14 +16,13 @@ physics objects in the world are fun. Hazards? Affect both player and enemy?
 
 TODO:
 
+players dont understand how exp works
 enemy speed based on difficulty
 max enemies based on difficulty
 more health on easy?
 ability off cooldown sound
 update exp bar
-players dont understand how exp works
 plant boss very rough when late (area based on how late it is?)
-duds bigger on easier difficulties
 
 ## OBJECTS ##
 

@@ -15,7 +15,9 @@ public class AI_BossPlant : EnemyAI
     private const int EXP_PER_WALL = 3;
     private static readonly int[] HITPOINTS = new int[] { 4, 5, 6 };
     private const float SIZE_WALL = 5;
-    private const float RADIUS = 25;
+    private const float RADIUS = 20;
+    private const float RADIUS_PER_INDEX = 3;
+    private const float RADIUS_MAX = 35;
     private const float COOLDOWN_PILLAR_MAX = 8f;
     private const float COOLDOWN_PILLAR_MIN = 3f;
     private const float PILLAR_SIZE_MIN = 5;
@@ -49,7 +51,9 @@ public class AI_BossPlant : EnemyAI
 
     private void CreateArena()
     {
-        var points = CircleHelper.Points(RADIUS, 10);
+        var area_number = AreaController.Instance.AreaIndex + 1;
+        var radius = Mathf.Clamp(RADIUS + RADIUS_PER_INDEX * area_number, 0, RADIUS_MAX);
+        var points = CircleHelper.Points(radius, 10);
         var bezier = new BezierPath(points, true, PathSpace.xy);
         var path = new VertexPath(bezier, GameController.Instance.world);
         var offset = Player.Instance.transform.position;
