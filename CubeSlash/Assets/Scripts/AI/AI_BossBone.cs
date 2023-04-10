@@ -110,7 +110,7 @@ public class AI_BossBone : EnemyAI
     private void TeleportAppear()
     {
         var dir = Random.insideUnitCircle.normalized.ToVector3();
-        Self.transform.position = Player.Instance.transform.position + dir * 25f;
+        Self.transform.position = Player.Instance.transform.position + dir * 40f;
 
         SoundController.Instance.Play(SoundEffectType.sfx_enemy_bone_teleport_appear);
         PlayTeleportPS();
