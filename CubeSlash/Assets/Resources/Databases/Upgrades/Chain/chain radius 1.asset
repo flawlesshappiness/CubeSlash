@@ -24,7 +24,7 @@ MonoBehaviour:
   - id:
       id: chain_radius_perc
     value:
-      type_value: 0
+      type_value: 3
       value_int: 0
       value_float: 0.25
       value_bool: 0

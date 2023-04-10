@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using System.Linq;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class EnemyBody : Body
@@ -48,6 +47,7 @@ public class EnemyBody : Body
 
     private void InitializeHealthDuds()
     {
+        var difficulty = DifficultyController.Instance.DifficultyValue;
         for (int i_map = 0; i_map < duds_map.Count; i_map++)
         {
             if (i_map > DifficultyController.Instance.DifficultyIndex) continue;
@@ -56,7 +56,8 @@ public class EnemyBody : Body
             {
                 var t = map.duds[i_t];
                 var dud = Instantiate(template_dud, t);
-                dud.transform.SetGlobalScale(t.localScale);
+                var size_mul = Mathf.Lerp(1.5f, 1f, difficulty);
+                dud.transform.SetGlobalScale(t.localScale * size_mul);
                 dud.transform.localPosition = Vector3.zero;
                 dud.transform.localRotation = Quaternion.identity;
                 dud.Initialize();

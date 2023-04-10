@@ -12,33 +12,34 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0ac907e883f37b4984c284f642d7aea, type: 3}
   m_Name: PlayerSettings
   m_EditorClassIdentifier: 
-  body: {fileID: 1353097371446324401, guid: f5fbfb80795043b4ca6e62aab876e931, type: 3}
-  linear_acceleration: 20
-  linear_velocity: 5
-  linear_drag: 20
-  angular_acceleration: 0
-  angular_velocity: 0
-  size: 1.25
-  mass: 1
   curve_experience:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
       time: 0
       value: 15
-      inSlope: 3.9767063
-      outSlope: 3.9767063
-      tangentMode: 0
+      inSlope: 9
+      outSlope: 9
+      tangentMode: 34
       weightedMode: 3
       inWeight: 0
-      outWeight: 0.3015818
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 15
+      value: 150
+      inSlope: 9
+      outSlope: 17.142857
+      tangentMode: 69
+      weightedMode: 3
+      inWeight: 0.33333334
+      outWeight: 0.33333334
     - serializedVersion: 3
       time: 50
-      value: 500
-      inSlope: 9.7
-      outSlope: 9.7
+      value: 750
+      inSlope: 17.142857
+      outSlope: 17.142857
       tangentMode: 34
-      weightedMode: 0
+      weightedMode: 1
       inWeight: 0.33333334
       outWeight: 0
     m_PreInfinity: 2

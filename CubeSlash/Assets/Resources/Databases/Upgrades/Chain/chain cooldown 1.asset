@@ -24,7 +24,7 @@ MonoBehaviour:
   - id:
       id: chain_cooldown_flat
     value:
-      type_value: 0
+      type_value: 1
       value_int: 0
       value_float: -0.2
       value_bool: 0

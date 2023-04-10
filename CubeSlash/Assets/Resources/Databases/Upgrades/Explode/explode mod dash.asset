@@ -24,7 +24,7 @@ MonoBehaviour:
   - id:
       id: explode_slow_linger
     value:
-      type_value: 3
+      type_value: 2
       value_int: 0
       value_float: -0.75
       value_bool: 1

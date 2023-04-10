@@ -24,7 +24,7 @@ MonoBehaviour:
   - id:
       id: explode_minis
     value:
-      type_value: 3
+      type_value: 0
       value_int: 5
       value_float: 0
       value_bool: 1

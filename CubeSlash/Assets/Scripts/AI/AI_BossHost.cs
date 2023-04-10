@@ -25,7 +25,7 @@ public class AI_BossHost : EnemyAI
 
     private void OnDudKilled(HealthDud dud)
     {
-        if(DifficultyController.Instance.DifficultyIndex > 0)
+        if(DifficultyController.Instance.DifficultyIndex > 0 && Self.EnemyBody.HasLivingDuds())
         {
             HideAndShowDuds(3);
         }
