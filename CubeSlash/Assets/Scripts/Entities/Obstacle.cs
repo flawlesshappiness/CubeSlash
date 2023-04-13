@@ -10,14 +10,4 @@ public class Obstacle : MonoBehaviour, IKillable, IHurt
 
     public virtual void Kill() { }
     public bool CanHurt() => hurts;
-
-    protected virtual void OnEnable()
-    {
-        ObjectController.Instance.Add(gameObject);
-    }
-
-    protected virtual void OnDestroy()
-    {
-        ObjectController.Instance.Remove(gameObject);
-    }
 }

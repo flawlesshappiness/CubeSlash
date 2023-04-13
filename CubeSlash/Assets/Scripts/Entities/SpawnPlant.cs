@@ -33,9 +33,8 @@ public class SpawnPlant : SpawnObject, IKillable
 
         SoundController.Instance.Play(type_sfx_death);
 
-        DestroySpawnObject();
-
         IsDead = true;
+        Destroy();
     }
 
     public override void Initialize()

@@ -30,7 +30,6 @@ public class Area : ScriptableObject
     [Header("MUSIC")]
     public SoundEffectType bgm_type;
 
-    public static Area Current;
     public static Area First { get { return AreaDatabase.LoadAsset().areas[0]; } }
 
     private void OnValidate()

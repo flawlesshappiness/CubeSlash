@@ -6,7 +6,6 @@ public class ObjectSpawnController : Singleton
 {
     public static ObjectSpawnController Instance { get { return Instance<ObjectSpawnController>(); } }
 
-    private List<SpawnObject> objects = new List<SpawnObject>();
     private List<Coroutine> cr_spawns = new List<Coroutine>();
 
     private Area current_area;
@@ -40,7 +39,6 @@ public class ObjectSpawnController : Singleton
 
     public void OnObjectDestroyed(SpawnObject obj)
     {
-        objects.Remove(obj);
         if (obj.Area != current_area) return;
 
         var cr = StartCoroutine(SpawnObjectCr(obj.Info, obj.Info.delay));
@@ -57,7 +55,6 @@ public class ObjectSpawnController : Singleton
         inst.Info = info;
         inst.Area = current_area;
         inst.Initialize();
-        objects.Add(inst);
     }
 
     IEnumerator RemoveWhenFinishedCr(Coroutine cr)
@@ -75,18 +72,8 @@ public class ObjectSpawnController : Singleton
         cr_spawns.Clear();
     }
 
-    private void ClearObjects()
-    {
-        foreach(var obj in objects)
-        {
-            Destroy(obj.gameObject);
-        }
-        objects.Clear();
-    }
-
     public void Clear()
     {
         ClearCoroutines();
-        ClearObjects();
     }
 }
