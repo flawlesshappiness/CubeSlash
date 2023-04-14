@@ -103,14 +103,11 @@ MonoBehaviour:
     m_NumColorKeys: 2
     m_NumAlphaKeys: 2
   spawn_objects:
-  - prefab: {fileID: 3561371122137596645, guid: 73dffd6c51ea6d443a2dd8a3964bd1fd, type: 3}
+  - prefab: {fileID: 3561371122137596645, guid: 85d99ecfb60fb014c8554d8b046fc4a2, type: 3}
     delay: 10
     count: 5
-  - prefab: {fileID: -8144886329794796608, guid: 20d33d5c00e0a5544896e1aaca43c606, type: 3}
+  - prefab: {fileID: 2201685024680150908, guid: 0a0f666e3f51da746948720ef24a7e1a, type: 3}
     delay: 1
     count: 5
-  - prefab: {fileID: -8144886329794796608, guid: 734e940a4366b6346898f7ba7269c336, type: 3}
-    delay: 1
-    count: 6
   bgm_type:
     id: bgm_ocean

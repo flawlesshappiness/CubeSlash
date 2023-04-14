@@ -2,6 +2,7 @@ IDEAS:
 enemy that pushes the player
 enemy that pulls the player
 enemy that shoots aoe of bullets
+enemy that leaves a trail during life / after death
 waves that push things in a direction
 endless mode
 shielded enemy with a dud on its back
@@ -23,22 +24,7 @@ more health on easy?
 ability off cooldown sound
 update exp bar
 
-## OBJECTS ##
+Jellyfish area/boss
 
-Large rock (medium / big, static)
-
-  variation: moss, spiky crystal, lily pad
-
-floating rock (small)
-
-  variation: moss, spiky crystal, lily pad
-
-bubble (small, pop on damage)
-
-bubble cluster (medium, pop on damage into smaller bubbles)
-
-wave (pushes anything in a direction)
-
-bomb (explode on damage, hurt both player and enemy)
-
-  variation: mushroom, crystal
+## BUGS ##
+Hold to refund sound can be triggered after selecting an upgrade

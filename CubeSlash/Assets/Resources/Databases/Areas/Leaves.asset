@@ -119,8 +119,11 @@ MonoBehaviour:
     count: 5
   - prefab: {fileID: 2201685024680150908, guid: a627e5c6ee80ad94bb3daa234125d528, type: 3}
     delay: 1
-    count: 5
+    count: 2
   - prefab: {fileID: 4973394195239199387, guid: 022b2a1d1740d8649bf656f126f32c86, type: 3}
+    delay: 1
+    count: 2
+  - prefab: {fileID: 2201685024680150908, guid: fca10d96cd915b548b81968384f4768c, type: 3}
     delay: 1
     count: 6
   bgm_type:
