@@ -28,13 +28,6 @@ public class AI_BossBone : BossAI
         body_bone = enemy.Body.GetComponent<BossBoneBody>();
 
         Body.OnDudKilled += dud => OnDudKilled();
-
-        Self.OnDeath += OnDeath;
-    }
-
-    private void OnDeath()
-    {
-        SoundController.Instance.Play(SoundEffectType.sfx_enemy_boss_scream);
     }
 
     private void FixedUpdate()

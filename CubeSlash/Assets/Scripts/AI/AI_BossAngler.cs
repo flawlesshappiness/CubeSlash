@@ -18,7 +18,6 @@ public class AI_BossAngler : BossAI
         angler_body = enemy.Body as BossAnglerBody;
         var lamp_target = angler_body.GetLampTarget();
 
-        Self.OnDeath += OnDeath;
         Body.OnDudKilled += dud => HideDuds();
         Body.OnDudKilled += dud => hits_taken++;
 
@@ -46,14 +45,13 @@ public class AI_BossAngler : BossAI
         }
     }
 
-    private void OnDeath()
+    protected override void OnDeath()
     {
+        base.OnDeath();
         if(lamp != null)
         {
             Destroy(lamp.gameObject);
         }
-
-        SoundController.Instance.Play(SoundEffectType.sfx_enemy_boss_scream);
     }
 
     private IEnumerator AttacksCr()

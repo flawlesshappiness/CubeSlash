@@ -11,11 +11,17 @@ public class BossAI : EnemyAI
         base.Initialize(enemy);
 
         Self.IsBoss = true;
+        Self.OnDeath += OnDeath;
 
         if (Body.HasDuds)
         {
             Body.OnDudKilled += OnDudKilled;
         }
+    }
+
+    protected virtual void OnDeath()
+    {
+        SoundController.Instance.Play(SoundEffectType.sfx_enemy_boss_scream);
     }
 
     private void OnDudKilled(HealthDud dud)

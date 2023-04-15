@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9c301fa7d26535e4cb7056a730ebca5e, type: 3}
+  m_Name: Boss_Jelly
+  m_EditorClassIdentifier: 
+  body: {fileID: 1506008273371056403, guid: 4979ec254d8bb1e4f8885220f55f36b8, type: 3}
+  linear_acceleration: 20
+  linear_velocity: 10
+  linear_drag: 20
+  angular_acceleration: 6
+  angular_velocity: 50
+  size: 5
+  mass: 100
+  ai: {fileID: -8603643819023297211, guid: 6c0a45e6b01029e429fb8ad89b5a85a4, type: 3}

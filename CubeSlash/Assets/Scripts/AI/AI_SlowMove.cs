@@ -3,12 +3,6 @@ using UnityEngine;
 public class AI_SlowMove : EnemyAI
 {
     private Vector3 pos_player_prev;
-    private static bool debug = true;
-
-    public override void Initialize(Enemy enemy)
-    {
-        base.Initialize(enemy);
-    }
 
     private void FixedUpdate()
     {

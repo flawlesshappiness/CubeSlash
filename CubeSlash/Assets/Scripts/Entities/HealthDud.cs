@@ -65,8 +65,11 @@ public class HealthDud : MonoBehaviour, IKillable
 
     public void Kill()
     {
+        ps_kill.Duplicate()
+            .Parent(GameController.Instance.world)
+            .Destroy(5f);
+
         pivot.SetActive(false);
-        ps_kill.Play();
         ps_ooze.Play();
         SoundController.Instance.Play(SoundEffectType.sfx_dud_death);
         Dead = true;

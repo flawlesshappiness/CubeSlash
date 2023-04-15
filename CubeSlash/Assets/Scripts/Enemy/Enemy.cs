@@ -9,6 +9,7 @@ public class Enemy : Character, IKillable, IHurt
 
     public bool IsBoss { get; set; }
     public bool IsDead { get; private set; }
+    public bool CanReposition { get; set; }
     public MultiLock InvincibleLock { get; private set; } = new MultiLock();
 
     public event System.Action OnDeath;
@@ -16,7 +17,9 @@ public class Enemy : Character, IKillable, IHurt
     public void Initialize(EnemySettings settings)
     {
         IsDead = false;
+        IsBoss = false;
         OnDeath = null;
+        CanReposition = true;
 
         this.Settings = settings;
         LinearAcceleration = settings.linear_acceleration;
@@ -50,6 +53,7 @@ public class Enemy : Character, IKillable, IHurt
     public void RepositionUpdate()
     {
         if (Player.Instance == null) return;
+        if (!CanReposition) return;
 
         var size = GameSettings.Instance.area_size;
         var sh = size * 0.5f;
