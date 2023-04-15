@@ -114,7 +114,7 @@ public class AI_BossJelly : BossAI
 
         tether.ps.ModifyShape(shape =>
         {
-            shape.scale = new Vector3(0.5f, 1f, distance - 3);
+            shape.scale = new Vector3(0.5f, 1f, distance - 2);
         });
 
         tether.ps.ModifyEmission(e =>
