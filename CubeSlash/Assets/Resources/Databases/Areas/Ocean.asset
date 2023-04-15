@@ -106,7 +106,7 @@ MonoBehaviour:
   - prefab: {fileID: 3561371122137596645, guid: 85d99ecfb60fb014c8554d8b046fc4a2, type: 3}
     delay: 10
     count: 5
-  - prefab: {fileID: 2201685024680150908, guid: 0a0f666e3f51da746948720ef24a7e1a, type: 3}
+  - prefab: {fileID: 4973394195239199387, guid: b69854ff95cf1fb4cb33f8dcbad3573e, type: 3}
     delay: 1
     count: 5
   bgm_type:

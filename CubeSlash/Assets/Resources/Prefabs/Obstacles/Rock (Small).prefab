@@ -455,7 +455,7 @@ GameObject:
   - component: {fileID: 3683016353986101016}
   - component: {fileID: -8144886329794796608}
   m_Layer: 0
-  m_Name: Rock (Physics)
+  m_Name: Rock (Small)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

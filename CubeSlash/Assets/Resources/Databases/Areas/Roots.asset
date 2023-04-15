@@ -119,7 +119,7 @@ MonoBehaviour:
   - prefab: {fileID: 3561371122137596645, guid: 097c2ad46ae883642b9c6d1dc05c5ebd, type: 3}
     delay: 10
     count: 7
-  - prefab: {fileID: 2201685024680150908, guid: 464e713d45efc424382fd7c4b806a35c, type: 3}
+  - prefab: {fileID: 4973394195239199387, guid: f34cc46294d5a5c44a9f011d94e87557, type: 3}
     delay: 1
     count: 5
   - prefab: {fileID: 4973394195239199387, guid: 15223bcffd3671441b5ba3d22a807473, type: 3}

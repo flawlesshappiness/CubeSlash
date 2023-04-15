@@ -10,36 +10,36 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2a24aa1140318f84bb86c4b408b90009, type: 3}
-  m_Name: Kelp
+  m_Name: Jelly
   m_EditorClassIdentifier: 
   index_level_min: 1
-  boss: {fileID: 11400000, guid: 8d0d7ea4526316246bbdc4a47f15c606, type: 2}
+  boss: {fileID: 11400000, guid: 8730164c5f8fadc4d879416cd37bf689, type: 2}
   enemies:
-  - enemy: {fileID: 11400000, guid: db0782c6ad8291647b08bacf671fe0eb, type: 2}
-    chance: 0.1
-    max: 15
-  color_fog: {r: 0.061764713, g: 0.15, b: 0.0882353, a: 1}
-  color_bg: {r: 0.023529412, g: 0.02745098, b: 0.101960786, a: 1}
+  - enemy: {fileID: 11400000, guid: ad27c58b70b50004bb8b62c6f01a64bd, type: 2}
+    chance: 0.8
+    max: 0
+  color_fog: {r: 0.05882353, g: 0.059577744, b: 0.23529412, a: 1}
+  color_bg: {r: 0.077124186, g: 0.02352941, b: 0.101960786, a: 1}
   ac_alpha_fog:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
       time: 0
       value: 0.6
-      inSlope: -0.0022974142
-      outSlope: -0.0022974142
+      inSlope: -0.0041285106
+      outSlope: -0.0041285106
       tangentMode: 0
       weightedMode: 3
       inWeight: 0
-      outWeight: 0.615942
+      outWeight: 0.57125604
     - serializedVersion: 3
       time: 1
       value: 0
-      inSlope: -0.6
-      outSlope: -0.6
-      tangentMode: 34
+      inSlope: -1.9173262
+      outSlope: -1.9173262
+      tangentMode: 0
       weightedMode: 0
-      inWeight: 0.33333334
+      inWeight: 0.026570022
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
@@ -49,37 +49,35 @@ MonoBehaviour:
   background_layers:
   - name: 0
     is_foreground: 0
-    size_sprite_min: 5
-    size_sprite_max: 10
-    count_sprite: 25
-    sprites:
-    - {fileID: 21300000, guid: 863d64dc0199c8948a6b8dc5ad8f34e7, type: 3}
-    - {fileID: 21300000, guid: 301a40a7e6f53cf45b59669c1344dfda, type: 3}
-    particles:
-    - {fileID: 6471937910845384915, guid: 4227469584206424696bac83a7f5da41, type: 3}
-  - name: 1
-    is_foreground: 0
-    size_sprite_min: 10
-    size_sprite_max: 20
-    count_sprite: 50
-    sprites:
-    - {fileID: 21300000, guid: 863d64dc0199c8948a6b8dc5ad8f34e7, type: 3}
-    - {fileID: 21300000, guid: 301a40a7e6f53cf45b59669c1344dfda, type: 3}
-    particles:
-    - {fileID: 6471937910845384915, guid: 4227469584206424696bac83a7f5da41, type: 3}
-  - name: 2
-    is_foreground: 0
-    size_sprite_min: 10
-    size_sprite_max: 20
+    size_sprite_min: 0
+    size_sprite_max: 0
     count_sprite: 0
     sprites: []
     particles:
     - {fileID: 6471937910845384915, guid: 4227469584206424696bac83a7f5da41, type: 3}
+  - name: 1
+    is_foreground: 0
+    size_sprite_min: 0
+    size_sprite_max: 0
+    count_sprite: 0
+    sprites: []
+    particles:
+    - {fileID: 7935337046598179359, guid: 4b69278ff55303c4a83b81a88ad7e1a1, type: 3}
+    - {fileID: 6471937910845384915, guid: 4227469584206424696bac83a7f5da41, type: 3}
+  - name: 2
+    is_foreground: 0
+    size_sprite_min: 0
+    size_sprite_max: 0
+    count_sprite: 0
+    sprites: []
+    particles:
+    - {fileID: 7935337046598179359, guid: 4b69278ff55303c4a83b81a88ad7e1a1, type: 3}
+    - {fileID: 6471937910845384915, guid: 4227469584206424696bac83a7f5da41, type: 3}
   vignette_gradient:
     serializedVersion: 2
-    key0: {r: 0.07609471, g: 0.3584906, b: 0.16081347, a: 1}
-    key1: {r: 0.18600929, g: 0.7169812, b: 0.34530082, a: 1}
-    key2: {r: 0, g: 0, b: 0, a: 0}
+    key0: {r: 0.11372546, g: 0.27564168, b: 0.7529412, a: 1}
+    key1: {r: 0.8478848, g: 0.24477705, b: 0.915, a: 1}
+    key2: {r: 0.78607273, g: 0.4936, b: 0.8, a: 0}
     key3: {r: 0, g: 0, b: 0, a: 0}
     key4: {r: 0, g: 0, b: 0, a: 0}
     key5: {r: 0, g: 0, b: 0, a: 0}
@@ -87,7 +85,7 @@ MonoBehaviour:
     key7: {r: 0, g: 0, b: 0, a: 0}
     ctime0: 0
     ctime1: 65535
-    ctime2: 0
+    ctime2: 65535
     ctime3: 0
     ctime4: 0
     ctime5: 0
@@ -105,14 +103,14 @@ MonoBehaviour:
     m_NumColorKeys: 2
     m_NumAlphaKeys: 2
   spawn_objects:
-  - prefab: {fileID: 3561371122137596645, guid: 43cf28e00c020e14fa42509606b0bd08, type: 3}
+  - prefab: {fileID: 3561371122137596645, guid: 85d99ecfb60fb014c8554d8b046fc4a2, type: 3}
     delay: 10
     count: 5
-  - prefab: {fileID: 4973394195239199387, guid: 7660db5c79acea344b410689b94e6833, type: 3}
+  - prefab: {fileID: 4973394195239199387, guid: 84bb73d02e12858489958d4d88d43015, type: 3}
     delay: 1
     count: 5
-  - prefab: {fileID: 4973394195239199387, guid: 022b2a1d1740d8649bf656f126f32c86, type: 3}
+  - prefab: {fileID: 4973394195239199387, guid: efb88de3a7f05d448b600b3e1d1dbade, type: 3}
     delay: 1
-    count: 6
+    count: 5
   bgm_type:
-    id: bgm_kelp
+    id: bgm_ocean
