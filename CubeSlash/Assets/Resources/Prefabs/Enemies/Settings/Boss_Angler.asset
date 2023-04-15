@@ -12,12 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c301fa7d26535e4cb7056a730ebca5e, type: 3}
   m_Name: Boss_Angler
   m_EditorClassIdentifier: 
-  body: {fileID: 4793739910255355596, guid: f833f9fe7ab117a42a52bc444bb10ab7, type: 3}
+  body: {fileID: 5658857249211950320, guid: 9108769eefa3c1345875a22cd431a5b7, type: 3}
   linear_acceleration: 5
   linear_velocity: 4
   linear_drag: 20
   angular_acceleration: 3
   angular_velocity: 75
-  size: 12
+  size: 6
   mass: 100
   ai: {fileID: 1783516599788648400, guid: d9147703d724ad8409fb85f71ddda74e, type: 3}

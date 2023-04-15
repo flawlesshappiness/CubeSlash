@@ -9,9 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8995362243463947394}
-  - component: {fileID: 8995362243463947397}
+  - component: {fileID: 896746247608233834}
   m_Layer: 0
-  m_Name: BossPlant
+  m_Name: InvisibleBoss
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -31,7 +31,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8995362243463947397
+--- !u!114 &896746247608233834
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -40,20 +40,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 8995362243463947395}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7a870d008b4e8db41b738a75a8de1557, type: 3}
+  m_Script: {fileID: 11500000, guid: f3e42868605e9f24280fa52485d3b45f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pivot_main: {fileID: 0}
+  pivot_sprite: {fileID: 0}
   Collider: {fileID: 0}
   Trigger: {fileID: 0}
   ps_death: {fileID: 0}
-  parent_health_duds: {fileID: 0}
+  scale_by_velocity: 0
   template_dud: {fileID: 0}
-  volume_proximity_max: 0.5
-  sfx_proximity:
-    reference:
-      Guid:
-        Data1: 587128435
-        Data2: 1295019151
-        Data3: 2122816644
-        Data4: -1594795463
-      Path: event:/Game/Enemy/boss_proximity_001
+  duds_map: []

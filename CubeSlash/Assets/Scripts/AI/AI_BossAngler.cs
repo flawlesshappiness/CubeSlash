@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-public class AI_BossAngler : EnemyAI
+public class AI_BossAngler : BossAI
 {
     [SerializeField] private AnglerLamp template_lamp;
     [SerializeField] private AnglerTeeth template_teeth;
@@ -19,8 +19,8 @@ public class AI_BossAngler : EnemyAI
         var lamp_target = angler_body.GetLampTarget();
 
         Self.OnDeath += OnDeath;
-        Self.EnemyBody.OnDudKilled += dud => HideDuds();
-        Self.EnemyBody.OnDudKilled += dud => hits_taken++;
+        Body.OnDudKilled += dud => HideDuds();
+        Body.OnDudKilled += dud => hits_taken++;
 
         lamp = Instantiate(template_lamp, GameController.Instance.world);
         lamp.transform.localScale = Vector3.one * Self.Settings.size;

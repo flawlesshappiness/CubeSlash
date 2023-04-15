@@ -6,8 +6,8 @@ public class Enemy : Character, IKillable, IHurt
     private EnemyAI AI { get; set; }
     public EnemySettings Settings { get; private set; }
     public Vector3 MoveDirection { get { return Body.transform.up; } }
-    public EnemyBody EnemyBody { get { return Body as EnemyBody; } }
 
+    public bool IsBoss { get; set; }
     public bool IsDead { get; private set; }
     public MultiLock InvincibleLock { get; private set; } = new MultiLock();
 
@@ -83,7 +83,7 @@ public class Enemy : Character, IKillable, IHurt
         Rigidbody.AddTorque(angle * AngularAcceleration * Rigidbody.mass);
     }
     #region HEALTH
-    public bool CanKill() => !EnemyBody.HasLivingDuds() && !IsDead && InvincibleLock.IsFree;
+    public virtual bool CanKill() => !IsBoss && !IsDead && InvincibleLock.IsFree;
 
     public void Kill()
     {

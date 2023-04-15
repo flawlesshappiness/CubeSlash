@@ -448,11 +448,15 @@ public class Player : Character
         InvincibilityLock.AddLock("Damage");
         yield return new WaitForSeconds(time);
         InvincibilityLock.RemoveLock("Damage");
+        DamageIfInsideEnemy();
+    }
 
-        // Check if still inside an enemy
+    public void DamageIfInsideEnemy()
+    {
         var hits = Physics2D.OverlapCircleAll(transform.position, Body.Trigger.radius);
         foreach (var hit in hits)
         {
+            if (!hit.isTrigger) continue;
             var e = hit.GetComponentInParent<Enemy>();
             if (e)
             {

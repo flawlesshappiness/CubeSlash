@@ -2,12 +2,12 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class EnemyBody : Body
+public class BossBody : EnemyBody
 {
-    [Header("DUDS (OPTIONAL)")]
+    [Header("BOSS BODY")]
     [SerializeField] public HealthDud template_dud;
     [SerializeField] private List<DudsTransformList> duds_map = new List<DudsTransformList>();
-    
+
     public List<HealthDud> Duds { get { return health_duds.ToList(); } }
 
     private List<HealthDud> health_duds = new List<HealthDud>();

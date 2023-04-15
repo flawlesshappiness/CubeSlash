@@ -26,10 +26,10 @@ Transform:
   m_GameObject: {fileID: 509724303943375344}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.5683, y: 1.5683, z: 1.5683}
   m_Children: []
-  m_Father: {fileID: 6910449358142236740}
-  m_RootOrder: 1
+  m_Father: {fileID: 7875275390701577481}
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!58 &1421184977900173726
 CircleCollider2D:
@@ -46,7 +46,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.8
+  m_Radius: 0.5
 --- !u!1 &2973982606120359821
 GameObject:
   m_ObjectHideFlags: 0
@@ -58,7 +58,7 @@ GameObject:
   - component: {fileID: 7875275390701577481}
   - component: {fileID: 863415056158122022}
   m_Layer: 0
-  m_Name: Cell
+  m_Name: Jelly
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -75,7 +75,9 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 4698688860807605468}
+  - {fileID: 7115478356348238807}
+  - {fileID: 7115478355917221535}
+  - {fileID: 4424763086466636412}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -91,92 +93,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a870d008b4e8db41b738a75a8de1557, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pivot_main: {fileID: 4698688860807605468}
-  pivot_sprite: {fileID: 2354750420328967086}
   Collider: {fileID: 1421184977900173726}
   Trigger: {fileID: 5938915428007740160}
   ps_death: {fileID: 1272193720796475515, guid: 56a4aa63eefd7704981ffb7c14788af0, type: 3}
   scale_by_velocity: 0
---- !u!1 &3289154265624446672
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 4698688860807605468}
-  m_Layer: 0
-  m_Name: MainPivot
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &4698688860807605468
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3289154265624446672}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 2354750420328967086}
-  - {fileID: 6910449358142236740}
-  m_Father: {fileID: 7875275390701577481}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &4393215693751166832
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 6910449358142236740}
-  - component: {fileID: 8439242484545042581}
-  m_Layer: 0
-  m_Name: ColliderGroup
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &6910449358142236740
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4393215693751166832}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 7115478355917221535}
-  - {fileID: 4424763086466636412}
-  m_Father: {fileID: 4698688860807605468}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8439242484545042581
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4393215693751166832}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cfc5c42293f803d42b2ea35a38d70a1b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  gizmos_enabled: 1
-  gizmos_wire: 1
-  gizmos_color: {r: 0.2123871, g: 0.823, b: 0.22376502, a: 1}
+  template_dud: {fileID: 0}
+  duds_map: []
 --- !u!1 &7115478355917221534
 GameObject:
   m_ObjectHideFlags: 0
@@ -205,8 +127,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 6910449358142236740}
-  m_RootOrder: 0
+  m_Father: {fileID: 7875275390701577481}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!58 &5938915428007740160
 CircleCollider2D:
@@ -253,7 +175,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0.072, z: 0}
   m_LocalScale: {x: 6.34944, y: 6.34944, z: 6.34944}
   m_Children: []
-  m_Father: {fileID: 2354750420328967086}
+  m_Father: {fileID: 7875275390701577481}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &7115478356348238808
@@ -297,7 +219,7 @@ SpriteRenderer:
   m_SortingLayerID: 1630863459
   m_SortingLayer: 1
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 45c8c35a63dc7374fa1cf8c00bfda4c4, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 97fbd47c1afa7bb4087add24e9032a1f, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -327,34 +249,3 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!1 &8055433490034975879
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2354750420328967086}
-  m_Layer: 0
-  m_Name: SpritePivot
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &2354750420328967086
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8055433490034975879}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 7115478356348238807}
-  m_Father: {fileID: 4698688860807605468}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class BossShooterBody : EnemyBody
+public class BossShooterBody : BossBody
 {
+    [Header("SHOOTER")]
     [SerializeField] private EyeGroup eyes_single;
     [SerializeField] private EyeGroup eyes_arc;
     [SerializeField] private EyeGroup eyes_circle;

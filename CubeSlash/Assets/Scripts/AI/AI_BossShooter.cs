@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-public class AI_BossShooter : EnemyAI
+public class AI_BossShooter : BossAI
 {
     [SerializeField] private Projectile prefab_projectile;
 
@@ -24,7 +24,7 @@ public class AI_BossShooter : EnemyAI
 
         body_shooter = enemy.Body.GetComponent<BossShooterBody>();
 
-        Self.EnemyBody.OnDudKilled += OnDudKilled;
+        Body.OnDudKilled += OnDudKilled;
         Self.OnDeath += OnDeath;
     }
     

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c301fa7d26535e4cb7056a730ebca5e, type: 3}
   m_Name: Boss_Plant
   m_EditorClassIdentifier: 
-  body: {fileID: 8995362243463947397, guid: a9ef3d1755cc74d43aa924d6e8512470, type: 3}
+  body: {fileID: 896746247608233834, guid: a9ef3d1755cc74d43aa924d6e8512470, type: 3}
   linear_acceleration: 5
   linear_velocity: 3
   linear_drag: 20

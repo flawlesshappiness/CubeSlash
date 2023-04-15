@@ -12,12 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c301fa7d26535e4cb7056a730ebca5e, type: 3}
   m_Name: Boss_Bone
   m_EditorClassIdentifier: 
-  body: {fileID: 8669159107685843513, guid: fe9e0a4f92a4b084292a2217c15ee08b, type: 3}
+  body: {fileID: 8000614519184504168, guid: e1b341c12eab16e48a9b084bfaa4eb21, type: 3}
   linear_acceleration: 5
   linear_velocity: 3
   linear_drag: 20
   angular_acceleration: 3
   angular_velocity: 75
-  size: 12
+  size: 6
   mass: 100
   ai: {fileID: 79873212917397757, guid: 8845570e09b92354d8942905baa25e26, type: 3}

@@ -1,11 +1,11 @@
-using System.Collections;
-using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
 public class Body : MonoBehaviourExtended
 {
-    public enum Type { CIRCLE, SQUARE }
+    [Header("BODY")]
+    [SerializeField] public Transform pivot_main;
+    [SerializeField] public Transform pivot_sprite;
     [SerializeField] public CircleCollider2D Collider;
     [SerializeField] public CircleCollider2D Trigger;
     [SerializeField] public ParticleSystem ps_death;
@@ -14,6 +14,7 @@ public class Body : MonoBehaviourExtended
     public float Size { get; set; } = 1f;
 
     private Rigidbody2D Rigidbody { get { return GetComponentOnce<Rigidbody2D>(ComponentSearchType.PARENT); } }
+
     private Quaternion rotation_look;
 
     public virtual void Initialize()

@@ -5,7 +5,6 @@ using UnityEngine;
 public class EnemyVolatileBody : EnemyBody
 {
     [Header("VOLATILE")]
-    [SerializeField] private Transform pivot_animation;
     [SerializeField] private ParticleSystem ps_charge;
 
     public override void Initialize()
@@ -22,8 +21,8 @@ public class EnemyVolatileBody : EnemyBody
 
         while (true)
         {
-            yield return LerpEnumerator.LocalScale(pivot_animation, 0.4f, scale1).Curve(curve);
-            yield return LerpEnumerator.LocalScale(pivot_animation, 0.4f, scale2).Curve(curve);
+            yield return LerpEnumerator.LocalScale(pivot_sprite, 0.4f, scale1).Curve(curve);
+            yield return LerpEnumerator.LocalScale(pivot_sprite, 0.4f, scale2).Curve(curve);
         }
     }
 

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class AI_BossBone : EnemyAI
+public class AI_BossBone : BossAI
 {
     [SerializeField] private PlantWall template_wall;
     [SerializeField] private EnemyProjectile template_projectile;
@@ -27,7 +27,7 @@ public class AI_BossBone : EnemyAI
         base.Initialize(enemy);
         body_bone = enemy.Body.GetComponent<BossBoneBody>();
 
-        Self.EnemyBody.OnDudKilled += dud => OnDudKilled();
+        Body.OnDudKilled += dud => OnDudKilled();
 
         Self.OnDeath += OnDeath;
     }
@@ -49,7 +49,7 @@ public class AI_BossBone : EnemyAI
 
     private void RotateBodyUpdate()
     {
-        var duds = Self.EnemyBody.Duds;
+        var duds = Body.Duds;
         var duds_dead = duds.Where(d => d.Dead);
         var t_duds = (float)duds_dead.Count() / duds.Count();
         var speed = Mathf.Lerp(speed_rotate_min_max.x, speed_rotate_min_max.y, t_duds);

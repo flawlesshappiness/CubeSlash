@@ -1,8 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using Flawliz.Lerp;
-using System.Linq;
 
 public abstract class EnemyAI : MonoBehaviour
 {
@@ -12,20 +9,6 @@ public abstract class EnemyAI : MonoBehaviour
     public virtual void Initialize(Enemy enemy)
     {
         Self = enemy;
-
-        if (Self.EnemyBody.HasDuds)
-        {
-            Self.EnemyBody.OnDudKilled += OnDudKilled;
-        }
-    }
-
-    private void OnDudKilled(HealthDud dud)
-    {
-        var count_alive = Self.EnemyBody.Duds.Count(dud => !dud.Dead);
-        if (count_alive == 0)
-        {
-            Self.Kill();
-        }
     }
 
     public void Kill()
@@ -90,36 +73,4 @@ public abstract class EnemyAI : MonoBehaviour
     protected void LerpAngularAcceleration(float time, float end) => Lerp.Value("angular_acceleration_" + Self.GetInstanceID(), time, Self.AngularAcceleration, end, f => Self.AngularAcceleration = f);
     protected void LerpLinearVelocity(float time, float end) => Lerp.Value("linear_velocity_" + Self.GetInstanceID(), time, Self.LinearVelocity, end, f => Self.LinearVelocity = f);
     protected void LerpLinearAcceleration(float time, float end) => Lerp.Value("linear_acceleration_" + Self.GetInstanceID(), time, Self.LinearAcceleration, end, f => Self.LinearAcceleration = f);
-
-    protected void ShieldDuds(float duration)
-    {
-        StartCoroutine(Cr());
-        IEnumerator Cr()
-        {
-            Self.EnemyBody.Duds.Where(d => d.IsAlive()).ToList().ForEach(d => d.SetArmorActive(true));
-            yield return new WaitForSeconds(duration);
-            Self.EnemyBody.Duds.Where(d => d.IsAlive()).ToList().ForEach(d => d.SetArmorActive(false));
-        }
-    }
-
-    protected void HideAndShowDuds(float duration)
-    {
-        StartCoroutine(Cr());
-        IEnumerator Cr()
-        {
-            HideDuds();
-            yield return new WaitForSeconds(duration);
-            ShowDuds();
-        }
-    }
-
-    protected void HideDuds()
-    {
-        Self.EnemyBody.Duds.Where(d => d.IsAlive()).ToList().ForEach(d => d.SetDudActive(false));
-    }
-
-    protected void ShowDuds()
-    {
-        Self.EnemyBody.Duds.Where(d => d.IsAlive()).ToList().ForEach(d => d.SetDudActive(true));
-    }
 }

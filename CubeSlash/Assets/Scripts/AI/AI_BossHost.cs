@@ -2,7 +2,7 @@ using System.Collections;
 using System.Linq;
 using UnityEngine;
 
-public class AI_BossHost : EnemyAI
+public class AI_BossHost : BossAI
 {
     [SerializeField] private Color color_beam;
     [SerializeField] private Vector2 speed_rotate_min_max;
@@ -14,7 +14,7 @@ public class AI_BossHost : EnemyAI
         base.Initialize(enemy);
         this.StartCoroutineWithID(BeamCooldownCr(), "BeamCooldown_" + GetInstanceID());
 
-        Self.EnemyBody.OnDudKilled += OnDudKilled;
+        Body.OnDudKilled += OnDudKilled;
         Self.OnDeath += OnDeath;
     }
 
@@ -25,7 +25,7 @@ public class AI_BossHost : EnemyAI
 
     private void OnDudKilled(HealthDud dud)
     {
-        if(DifficultyController.Instance.DifficultyIndex > 0 && Self.EnemyBody.HasLivingDuds())
+        if(DifficultyController.Instance.DifficultyIndex > 0 && Body.HasLivingDuds())
         {
             HideAndShowDuds(3);
         }
@@ -58,7 +58,7 @@ public class AI_BossHost : EnemyAI
 
     private void RotateBodyUpdate()
     {
-        var duds = Self.EnemyBody.Duds;
+        var duds = Body.Duds;
         var duds_dead = duds.Where(d => d.Dead);
         var t_duds = (float)duds_dead.Count() / duds.Count();
         var speed = Mathf.Lerp(speed_rotate_min_max.x, speed_rotate_min_max.y, t_duds);
@@ -80,7 +80,7 @@ public class AI_BossHost : EnemyAI
 
     private void ShootBeams()
     {
-        foreach(var dud in Self.EnemyBody.Duds)
+        foreach(var dud in Body.Duds)
         {
             if (!dud.Dead) continue;
             dud.StartCoroutineWithID(ShootBeam(dud), "ShootBeam_" + dud.GetInstanceID());

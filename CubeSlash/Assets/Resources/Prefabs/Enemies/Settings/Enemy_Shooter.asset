@@ -12,12 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c301fa7d26535e4cb7056a730ebca5e, type: 3}
   m_Name: Enemy_Shooter
   m_EditorClassIdentifier: 
-  body: {fileID: 8094660313205461888, guid: c3089b761f1048242b2fcb74c354cc49, type: 3}
+  body: {fileID: 4160787836209392310, guid: aad9ea359b71a5f4f9f5a2812589ec69, type: 3}
   linear_acceleration: 9
   linear_velocity: 3
   linear_drag: 20
   angular_acceleration: 5
   angular_velocity: 200
-  size: 1.5
+  size: 1
   mass: 2
   ai: {fileID: 3873106988618322131, guid: e8b3dcbf445451b44b56254a18515441, type: 3}
