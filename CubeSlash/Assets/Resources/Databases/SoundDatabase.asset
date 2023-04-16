@@ -552,3 +552,14 @@ MonoBehaviour:
           Data3: 386416055
           Data4: -1201064192
         Path: event:/Game/Enemy/boss_scream_001
+  - name: sfx_ability_off_cooldown
+    type:
+      id: sfx_ability_off_cooldown
+    sfx:
+      reference:
+        Guid:
+          Data1: 766617320
+          Data2: 1194392997
+          Data3: -1903174765
+          Data4: 1762305203
+        Path: event:/Game/Abilities/ability_off_cooldown

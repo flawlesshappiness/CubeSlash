@@ -69,6 +69,7 @@ public class SoundEffectType : FakeEnum
     public static readonly SoundEffectType sfx_ability_cooldown = new SoundEffectType(nameof(sfx_ability_cooldown));
     public static readonly SoundEffectType sfx_dud_death = new SoundEffectType(nameof(sfx_dud_death));
     public static readonly SoundEffectType sfx_avoid_damage = new SoundEffectType(nameof(sfx_avoid_damage));
+    public static readonly SoundEffectType sfx_ability_off_cooldown = new SoundEffectType(nameof(sfx_ability_off_cooldown));
 
     // Charge
     public static readonly SoundEffectType sfx_charge_start = new SoundEffectType(nameof(sfx_charge_start));

@@ -614,6 +614,7 @@ public class Player : Character
     public void PlayCooldownCompleteFX()
     {
         ps_ability_off_cooldown.Play();
+        SoundController.Instance.Play(SoundEffectType.sfx_ability_off_cooldown);
     }
 
     public void PlayAvoidDamageFX()

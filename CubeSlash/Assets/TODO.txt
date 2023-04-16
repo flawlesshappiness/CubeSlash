@@ -18,11 +18,9 @@ update exp bar
 enemy speed based on difficulty
 max enemies based on difficulty
 more health on easy - health static no matter what ability you choose
-ability off cooldown sound
 root area new enemies and environment
 geode area with splitting enemies and boss
 crystal area with crystal beam enemy and boss
 
 ## BUGS ##
 Hold to refund sound can be triggered after selecting an upgrade ??
-jelly boss tether should have physics

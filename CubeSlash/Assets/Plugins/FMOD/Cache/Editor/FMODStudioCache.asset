@@ -97,7 +97,7 @@ MonoBehaviour:
   Path: Assets/FMOD/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 638139268145926652
+  lastModified: 638172744778981742
   FileSizes: []
   Exists: 1
 --- !u!114 &-7872426760261806101
@@ -1268,12 +1268,13 @@ MonoBehaviour:
   - {fileID: 7873440793602500186}
   - {fileID: -3849707120075743259}
   - {fileID: 8415450989838431725}
+  - {fileID: 4744129259821379637}
   EditorParameters: []
   MasterBanks:
   - {fileID: -8060980804293988741}
   StringsBanks:
   - {fileID: 5917708036578608240}
-  cacheTime: 638139268145956656
+  cacheTime: 638172744779024762
   cacheVersion: 131593
 --- !u!114 &1453305857757199432
 MonoBehaviour:
@@ -1623,6 +1624,33 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 0
+--- !u!114 &4744129259821379637
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Game/Abilities/ability_off_cooldown
+  m_EditorClassIdentifier: 
+  Path: event:/Game/Abilities/ability_off_cooldown
+  Guid:
+    Data1: 766617320
+    Data2: 1194392997
+    Data3: -1903174765
+    Data4: 1762305203
+  Banks:
+  - {fileID: -8060980804293988741}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
 --- !u!114 &5007586681927520725
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1719,10 +1747,10 @@ MonoBehaviour:
   Path: Assets/FMOD/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 638139268145956656
+  lastModified: 638172744779024762
   FileSizes:
   - Name: 
-    Value: 4346
+    Value: 4398
   Exists: 1
 --- !u!114 &5992827859230917708
 MonoBehaviour:
