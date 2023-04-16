@@ -67,6 +67,7 @@ public class HealthDud : MonoBehaviour, IKillable
     {
         ps_kill.Duplicate()
             .Parent(GameController.Instance.world)
+            .Scale(transform.localScale)
             .Play()
             .Destroy(5f);
 

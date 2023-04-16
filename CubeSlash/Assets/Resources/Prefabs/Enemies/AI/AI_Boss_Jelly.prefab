@@ -45,7 +45,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ps_tether: {fileID: 7503386832245874166}
-  prefab_dud: {fileID: 3405480637174817150, guid: 23ec884aeae69e74c9efdd36a40fc296, type: 3}
+  prefab_dud: {fileID: 3405480637174817150, guid: 1595ab7dc5c50984cb776dd6422f7b55, type: 3}
 --- !u!1 &3876632364915221631
 GameObject:
   m_ObjectHideFlags: 0

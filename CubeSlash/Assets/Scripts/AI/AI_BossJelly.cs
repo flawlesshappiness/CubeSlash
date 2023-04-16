@@ -91,6 +91,7 @@ public class AI_BossJelly : BossAI
         tether.dud = Instantiate(prefab_dud);
         tether.dud.Initialize();
         tether.dud.transform.position = Player.Instance.transform.position + Random.insideUnitCircle.normalized.ToVector3() * Random.Range(40f, 50f);
+        tether.dud.transform.localScale = Vector3.one * 2f;
         tether.dud.OnKilled += () => OnDudKilled(tether);
 
         tethers.Add(tether);
