@@ -125,11 +125,7 @@ public class AbilityMines : Ability
             trail.CreateTrail(position);
         }
 
-        if (FragmentChain)
-        {
-            ChainFragments(position, FragmentCount);
-        }
-        else
+        if (!FragmentChain)
         {
             var ps = ShootFragments(position, prefab_fragment, FragmentCount, FRAGMENT_SPEED, FragmentSize);
             foreach (var p in ps)

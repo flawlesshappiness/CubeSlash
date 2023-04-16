@@ -3,27 +3,26 @@ enemy that pushes the player
 enemy that pulls the player
 enemy that shoots aoe of bullets
 enemy that leaves a trail during life / after death
-waves that push things in a direction
+enemy with a dud on its back
 endless mode
-shielded enemy with a dud on its back
 
 CHARM: Orbiting damage
 CHARM: Gain x when y
+Spend many DNA points to upgrade health and other stats
 
-progress bar on lose game (see how far you got) (might be good to keep the mystery?)
-refund more? 50%?
 difficulties increase max area count?
-physics objects in the world are fun. Hazards? Affect both player and enemy?
 
 TODO:
-
-players dont understand how exp works
+awesome looking ability ui
+update exp bar
 enemy speed based on difficulty
 max enemies based on difficulty
-more health on easy?
+more health on easy - health static no matter what ability you choose
 ability off cooldown sound
-update exp bar
+root area new enemies and environment
+geode area with splitting enemies and boss
+crystal area with crystal beam enemy and boss
 
 ## BUGS ##
-Hold to refund sound can be triggered after selecting an upgrade
-projectiles pass through things they cannot kill
+Hold to refund sound can be triggered after selecting an upgrade ??
+jelly boss tether should have physics
