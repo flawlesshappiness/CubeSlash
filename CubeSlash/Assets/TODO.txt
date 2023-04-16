@@ -21,6 +21,7 @@ more health on easy - health static no matter what ability you choose
 root area new enemies and environment
 geode area with splitting enemies and boss
 crystal area with crystal beam enemy and boss
+jelly area background
 
 ## BUGS ##
 Hold to refund sound can be triggered after selecting an upgrade ??

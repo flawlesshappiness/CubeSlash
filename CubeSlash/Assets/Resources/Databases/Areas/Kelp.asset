@@ -113,6 +113,6 @@ MonoBehaviour:
     count: 5
   - prefab: {fileID: 4973394195239199387, guid: 022b2a1d1740d8649bf656f126f32c86, type: 3}
     delay: 1
-    count: 6
+    count: 3
   bgm_type:
     id: bgm_kelp

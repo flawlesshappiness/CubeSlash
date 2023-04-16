@@ -124,6 +124,6 @@ MonoBehaviour:
     count: 5
   - prefab: {fileID: 4973394195239199387, guid: 15223bcffd3671441b5ba3d22a807473, type: 3}
     delay: 1
-    count: 6
+    count: 3
   bgm_type:
     id: bgm_roots
