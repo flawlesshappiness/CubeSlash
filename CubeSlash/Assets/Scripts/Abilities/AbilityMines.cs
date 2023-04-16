@@ -95,43 +95,44 @@ public class AbilityMines : Ability
             prefab = prefab_mine,
             position_start = Player.transform.position,
             velocity = direction.normalized * MINE_SPEED,
-            onKill = OnMineExplode
+            onKill = (p, k) => OnMineHit(p.transform.position)
         }) as MinesProjectile;
 
         p.transform.localScale = Vector3.one * ShellSize;
         p.Drag = MINE_DRAG;
         p.Lifetime = ShellLifetime;
-        p.onDeath += () => OnMineExplode(p);
+        p.onDeath += () => OnMineHit(p.transform.position);
+        p.onChainHit += OnMineHit;
 
         p.HasChain = FragmentChain;
         p.HasTrail = Trail;
         p.ChainHits = FragmentCount;
     }
 
-    private void OnMineExplode(Projectile projectile, IKillable k = null)
+    private void OnMineHit(Vector3 position)
     {
         SoundController.Instance.Play(SoundEffectType.sfx_mines_explode);
 
         if (ExplodingFragments)
         {
             var radius = 3f * ShellSize;
-            AbilityExplode.Explode(projectile.transform.position, radius, 0);
+            AbilityExplode.Explode(position, radius, 0);
         }
 
         if (Trail)
         {
             trail.radius = 1f;
             trail.lifetime = 2f;
-            var t = trail.CreateTrail(projectile.transform.position);
+            trail.CreateTrail(position);
         }
 
         if (FragmentChain)
         {
-            ChainFragments(projectile.transform.position, FragmentCount);
+            ChainFragments(position, FragmentCount);
         }
         else
         {
-            var ps = ShootFragments(projectile.transform.position, prefab_fragment, FragmentCount, FRAGMENT_SPEED, FragmentSize);
+            var ps = ShootFragments(position, prefab_fragment, FragmentCount, FRAGMENT_SPEED, FragmentSize);
             foreach (var p in ps)
             {
                 SetupMineFragment(p);

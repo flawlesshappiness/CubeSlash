@@ -8,6 +8,8 @@ public class MinesProjectile : Projectile
     public int ChainHits { get; set; }
     public float ChainRadius { get; set; } = 5f;
 
+    public System.Action<Vector3> onChainHit;
+
     [Header(nameof(SplitProjectile))]
     [SerializeField] private Collider2D trigger;
     [SerializeField] private ParticleSystem ps_gas;
@@ -46,7 +48,12 @@ public class MinesProjectile : Projectile
         {
             if (Time.time > time_zap)
             {
-                var success = AbilityChain.TryChainToTarget(transform.position, ChainRadius, 1, 1, 1);
+                var success = AbilityChain.TryChainToTarget(transform.position, ChainRadius, 1, 1, 1, k =>
+                {
+                    var position = k.GetPosition();
+                    onChainHit(position);
+                });
+
                 if (success)
                 {
                     time_zap = Time.time + TIME_CHAIN_HIT;

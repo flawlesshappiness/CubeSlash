@@ -27,4 +27,3 @@ update exp bar
 ## BUGS ##
 Hold to refund sound can be triggered after selecting an upgrade
 projectiles pass through things they cannot kill
-mines mod chain mod explode does not explode properly
