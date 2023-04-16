@@ -101,7 +101,8 @@ public class AbilityMines : Ability
         p.transform.localScale = Vector3.one * ShellSize;
         p.Drag = MINE_DRAG;
         p.Lifetime = ShellLifetime;
-        p.onDeath += () => OnMineHit(p.transform.position);
+        p.onDestroy += () => OnMineHit(p.transform.position);
+        p.onDestroy += OnMineDestroy;
         p.onChainHit += OnMineHit;
 
         p.HasChain = FragmentChain;
@@ -111,8 +112,6 @@ public class AbilityMines : Ability
 
     private void OnMineHit(Vector3 position)
     {
-        SoundController.Instance.Play(SoundEffectType.sfx_mines_explode);
-
         if (ExplodingFragments)
         {
             var radius = 3f * ShellSize;
@@ -138,6 +137,11 @@ public class AbilityMines : Ability
                 SetupMineFragment(p);
             }
         }
+    }
+
+    private void OnMineDestroy()
+    {
+        SoundController.Instance.Play(SoundEffectType.sfx_mines_explode);
     }
 
     private void ChainFragments(Vector3 position, int count)

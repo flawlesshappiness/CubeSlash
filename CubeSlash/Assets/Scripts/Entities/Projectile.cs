@@ -107,7 +107,7 @@ public class Projectile : MonoBehaviourExtended
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        var success = false;
+        var hit_success = false;
         if (hits_player)
         {
             var player = collision.GetComponentInParent<Player>();
@@ -115,21 +115,25 @@ public class Projectile : MonoBehaviourExtended
             {
                 player.Damage(transform.position);
                 onHitPlayer?.Invoke(player);
-                success = true;
+                hit_success = true;
             }
         }
         else if (hits_enemy)
         {
             var k = collision.GetComponentInParent<IKillable>();
-            if (k != null && k.CanKill())
+            if (k != null)
             {
-                Player.Instance.KillEnemy(k);
-                onHitEnemy?.Invoke(k);
-                success = true;
+                hit_success = true;
+
+                if (k.CanKill())
+                {
+                    Player.Instance.KillEnemy(k);
+                    onHitEnemy?.Invoke(k);
+                }
             }
         }
 
-        if (success)
+        if (hit_success)
         {
             var can_pierce = Piercing != 0;
             if(can_pierce)
