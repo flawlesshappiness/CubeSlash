@@ -79,6 +79,8 @@ MonoBehaviour:
     m_RotationOrder: 4
   radius: 1
   lifetime: 3
+  hits_player: 0
+  hits_enemy: 1
 --- !u!1 &3755111070116341535
 GameObject:
   m_ObjectHideFlags: 0

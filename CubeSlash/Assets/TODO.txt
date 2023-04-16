@@ -24,7 +24,7 @@ more health on easy?
 ability off cooldown sound
 update exp bar
 
-Jellyfish area/boss
-
 ## BUGS ##
 Hold to refund sound can be triggered after selecting an upgrade
+projectiles pass through things they cannot kill
+mines mod chain mod explode does not explode properly

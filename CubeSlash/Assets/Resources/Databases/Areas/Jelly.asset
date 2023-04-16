@@ -49,18 +49,24 @@ MonoBehaviour:
   background_layers:
   - name: 0
     is_foreground: 0
-    size_sprite_min: 0
-    size_sprite_max: 0
-    count_sprite: 0
-    sprites: []
+    size_sprite_min: 5
+    size_sprite_max: 10
+    count_sprite: 25
+    sprites:
+    - {fileID: 21300000, guid: 78dae4a261c7ada48a8cc7394a08aef8, type: 3}
+    - {fileID: 21300000, guid: 054348f3c393e4e4abf6d780bcf993e3, type: 3}
+    - {fileID: 21300000, guid: af7161ab3b250764d905ece680fef6b4, type: 3}
     particles:
     - {fileID: 6471937910845384915, guid: 4227469584206424696bac83a7f5da41, type: 3}
   - name: 1
     is_foreground: 0
-    size_sprite_min: 0
-    size_sprite_max: 0
-    count_sprite: 0
-    sprites: []
+    size_sprite_min: 10
+    size_sprite_max: 20
+    count_sprite: 50
+    sprites:
+    - {fileID: 21300000, guid: 402160f155b27d942b78d4896390074c, type: 3}
+    - {fileID: 21300000, guid: 54e0707715bb981419608f00ddee19bc, type: 3}
+    - {fileID: 21300000, guid: 02a3b25c877657a4ca4a157026856f65, type: 3}
     particles:
     - {fileID: 7935337046598179359, guid: 4b69278ff55303c4a83b81a88ad7e1a1, type: 3}
     - {fileID: 6471937910845384915, guid: 4227469584206424696bac83a7f5da41, type: 3}

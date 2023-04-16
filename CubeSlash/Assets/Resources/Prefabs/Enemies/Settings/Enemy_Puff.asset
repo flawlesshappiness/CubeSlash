@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9c301fa7d26535e4cb7056a730ebca5e, type: 3}
+  m_Name: Enemy_Puff
+  m_EditorClassIdentifier: 
+  body: {fileID: 4160787836209392310, guid: fcad91081c252aa4bbe3f220226b1df3, type: 3}
+  linear_acceleration: 8
+  linear_velocity: 4
+  linear_drag: 20
+  angular_acceleration: 8
+  angular_velocity: 200
+  size: 1
+  mass: 1
+  ai: {fileID: 3136121701060145983, guid: aac29e73b8dd98d46be1444d1623a2be, type: 3}

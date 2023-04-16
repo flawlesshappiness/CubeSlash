@@ -9,6 +9,8 @@ public class DamageTrail : MonoBehaviour
     
     public float radius;
     public float lifetime;
+    public bool hits_player;
+    public bool hits_enemy;
 
     public System.Action<IKillable> onHit;
 
@@ -30,11 +32,23 @@ public class DamageTrail : MonoBehaviour
         var hits = Physics2D.OverlapCircleAll(transform.position, radius);
         foreach(var hit in hits)
         {
-            var k = hit.GetComponentInParent<IKillable>();
-            if(k != null && k.CanKill())
+            if (hits_enemy)
             {
-                k.Kill(); 
-                onHit?.Invoke(k);
+                var k = hit.GetComponentInParent<IKillable>();
+                if (k != null && k.CanKill())
+                {
+                    k.Kill();
+                    onHit?.Invoke(k);
+                }
+            }
+
+            if (hits_player)
+            {
+                var p = hit.GetComponentInParent<Player>();
+                if(p != null)
+                {
+                    p.Damage(transform.position);
+                }
             }
         }
     }
@@ -78,6 +92,8 @@ public class DamageTrail : MonoBehaviour
         trail.gameObject.SetActive(true);
         trail.lifetime = lifetime;
         trail.radius = radius;
+        trail.hits_enemy = hits_enemy;
+        trail.hits_player = hits_player;
         trail.StopParticleSystems();
         Lerp.LocalScale(trail.transform, lifetime, Vector3.zero, Vector3.one * radius).Curve(ac_size);
         Destroy(trail.gameObject, lifetime);
