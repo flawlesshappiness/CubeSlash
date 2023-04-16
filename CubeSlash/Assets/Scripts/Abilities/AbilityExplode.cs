@@ -173,10 +173,7 @@ public class AbilityExplode : Ability
         if (ChainExplode)
         {
             AbilityChain.CreateImpactPS(position);
-        }
 
-        if (ChainExplode)
-        {
             StartCoroutine(ExplodeCr(new ChargeInfo
             {
                 parent = GameController.Instance.world,
@@ -184,7 +181,6 @@ public class AbilityExplode : Ability
                 delay = Random.Range(0.3f, 0.6f),
                 getPosition = () => position,
                 play_charge_sfx = false,
-                onHit = OnHit,
             }));
         }
     }
