@@ -143,7 +143,13 @@ public class AbilityMines : Ability
     private void ChainFragments(Vector3 position, int count)
     {
         AbilityChain.CreateImpactPS(position);
-        AbilityChain.TryChainToTarget(position, 5f, 1, count, 0);
+        AbilityChain.TryChainToTarget(new AbilityChain.ChainInfo
+        {
+            center = position,
+            radius = 5f,
+            chains_left = 1,
+            initial_strikes = count
+        });
     }
 
     private void SetupMineFragment(Projectile p)

@@ -6,6 +6,7 @@ public abstract class EnemyAI : MonoBehaviour
     protected Enemy Self { get; private set; }
     protected Vector3 Position { get { return Self.transform.position; } }
     protected Vector3 PlayerPosition { get { return Player.Instance.transform.position; } }
+    protected EnemyBody Body { get { return Self.Body as EnemyBody; } }
     public virtual void Initialize(Enemy enemy)
     {
         Self = enemy;

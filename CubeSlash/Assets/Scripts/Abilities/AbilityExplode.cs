@@ -228,10 +228,9 @@ public class AbilityExplode : Ability
             var k = hit.GetComponentInParent<IKillable>();
             if (k == null) continue;
 
-            if (k.CanKill())
+            if (Player.Instance.TryKillEnemy(k))
             {
                 onHit?.Invoke(k);
-                Player.Instance.KillEnemy(k);
             }
         }
 

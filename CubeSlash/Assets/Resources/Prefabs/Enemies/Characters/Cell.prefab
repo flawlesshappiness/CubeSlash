@@ -93,6 +93,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pivot_main: {fileID: 4698688860807605468}
   pivot_sprite: {fileID: 2354750420328967086}
+  animator_main: {fileID: 129216412035343752}
   Collider: {fileID: 1421184977900173726}
   Trigger: {fileID: 5938915428007740160}
   ps_death: {fileID: 1272193720796475515, guid: 56a4aa63eefd7704981ffb7c14788af0, type: 3}

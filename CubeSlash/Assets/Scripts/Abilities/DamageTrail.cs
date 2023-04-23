@@ -35,10 +35,12 @@ public class DamageTrail : MonoBehaviour
             if (hits_enemy)
             {
                 var k = hit.GetComponentInParent<IKillable>();
-                if (k != null && k.CanKill())
+                if(k != null)
                 {
-                    k.Kill();
-                    onHit?.Invoke(k);
+                    if (k.TryKill())
+                    {
+                        onHit?.Invoke(k);
+                    }
                 }
             }
 

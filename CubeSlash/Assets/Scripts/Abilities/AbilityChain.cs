@@ -1,5 +1,6 @@
 using Flawliz.Lerp;
 using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
@@ -74,7 +75,15 @@ public class AbilityChain : Ability
         if (Time.time < time_attack) return;
 
         var center = Player.Instance.transform.position;
-        var success = TryChainToTarget(center, Radius, Chains, Strikes, ChainSplits, HitTarget);
+        var success = TryChainToTarget(new ChainInfo
+        {
+            center = center,
+            radius = Radius,
+            chains_left = Chains,
+            initial_strikes = Strikes,
+            chain_strikes = ChainSplits,
+            onHit = HitTarget
+        });
 
         var time_success = Time.time + Cooldown * Player.Instance.GlobalCooldownMultiplier;
         var time_fail = Time.time + 0.1f;
@@ -123,51 +132,66 @@ public class AbilityChain : Ability
         }
     }
 
-    public static bool TryChainToTarget(Vector3 center, float radius, int chains_left, int strikes, int chain_strikes, System.Action<IKillable> onHit = null)
+    public class ChainInfo
     {
-        var hits = Physics2D.OverlapCircleAll(center, radius)
+        public Vector3 center;
+        public float radius;
+        public int chains_left;
+        public int initial_strikes;
+        public int chain_strikes;
+        public System.Action<IKillable> onHit;
+        public List<IKillable> hits = new List<IKillable>();
+    }
+
+    public static bool TryChainToTarget(ChainInfo info)
+    {
+        var hits = Physics2D.OverlapCircleAll(info.center, info.radius)
             .Select(hit => hit.GetComponentInParent<IKillable>())
-            .Where(hit => hit != null && hit.CanKill())
+            .Where(hit => hit != null && hit.CanHit() && !info.hits.Contains(hit))
             .Distinct();
 
         if (hits.Count() == 0) return false;
 
         var count_hits = 0;
-        var order_by_dist = hits.OrderBy(hit => Vector3.Distance(center, hit.GetPosition()));
+        var order_by_dist = hits.OrderBy(hit => Vector3.Distance(info.center, hit.GetPosition()));
         foreach(var hit in order_by_dist)
         {
-            if (!hit.CanKill()) continue;
-            if (count_hits >= strikes) break;
+            if (count_hits >= info.initial_strikes) break;
             count_hits++;
 
-            ChainToTarget(hit, center, radius, chains_left, chain_strikes, onHit);
+            ChainToTarget(hit, info);
         }
 
         return true;
     }
 
-    public static void ChainToTarget(IKillable k, Vector3 center, float radius, int chains_left, int strikes, System.Action<IKillable> onHit = null)
+    public static void ChainToTarget(IKillable k, ChainInfo info)
     {
         Vector3 target_position = k.GetPosition();
 
         // Create particle system
-        CreateZapPS(center, target_position);
+        CreateZapPS(info.center, target_position);
         CreateImpactPS(target_position);
 
         // Audio
         SoundController.Instance.Play(SoundEffectType.sfx_chain_zap);
         
         // Kill target
-        onHit?.Invoke(k);
-        Player.Instance.KillEnemy(k);
+        info.onHit?.Invoke(k);
+        Player.Instance.TryKillEnemy(k);
 
         // Keep chaining
-        if (chains_left <= 1) return;
+        if (info.chains_left <= 1) return;
         CoroutineController.Instance.StartCoroutine(ChainCr());
         IEnumerator ChainCr()
         {
             yield return new WaitForSeconds(0.1f);
-            TryChainToTarget(target_position, radius, chains_left - 1, strikes, strikes, onHit);
+
+            info.center = target_position;
+            info.chains_left--;
+            info.initial_strikes = info.chain_strikes;
+            info.hits.Add(k);
+            TryChainToTarget(info);
         }
     }
 

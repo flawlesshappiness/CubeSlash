@@ -56,7 +56,14 @@ public class SplitProjectile : Projectile
         {
             if (Time.time > time_zap)
             {
-                var success = AbilityChain.TryChainToTarget(transform.position, ChainRadius, 1, 1, 1);
+                var success = AbilityChain.TryChainToTarget(new AbilityChain.ChainInfo
+                {
+                    center = transform.position,
+                    radius = ChainRadius,
+                    chains_left = 1,
+                    initial_strikes = 1,
+                });
+
                 if (success)
                 {
                     time_zap = Time.time + TIME_CHAIN_HIT;

@@ -48,10 +48,17 @@ public class MinesProjectile : Projectile
         {
             if (Time.time > time_zap)
             {
-                var success = AbilityChain.TryChainToTarget(transform.position, ChainRadius, 1, 1, 1, k =>
+                var success = AbilityChain.TryChainToTarget(new AbilityChain.ChainInfo
                 {
-                    var position = k.GetPosition();
-                    onChainHit(position);
+                    center = transform.position,
+                    radius = ChainRadius,
+                    chains_left = 1,
+                    initial_strikes = 1,
+                    onHit = k =>
+                    {
+                        var position = k.GetPosition();
+                        onChainHit(position);
+                    }
                 });
 
                 if (success)

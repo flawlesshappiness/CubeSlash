@@ -39,10 +39,8 @@ public class PlantWall : Obstacle
         spr.sortingOrder = order;
     }
 
-    public override void Kill()
+    public void Kill()
     {
-        base.Kill();
-
         ps_death.Duplicate()
             .Parent(GameController.Instance.world)
             .Play()

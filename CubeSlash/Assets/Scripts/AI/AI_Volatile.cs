@@ -58,7 +58,7 @@ public class AI_Volatile : EnemyAI
             }
 
             Explode();
-            Self.Kill();
+            Self.TryKill();
         }
     }
 

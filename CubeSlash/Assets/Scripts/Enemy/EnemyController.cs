@@ -267,7 +267,7 @@ public class EnemyController : Singleton
     {
         foreach(var enemy in enemies_active.ToList())
         {
-            enemy.Kill();
+            enemy.TryKill();
         }
     }
 

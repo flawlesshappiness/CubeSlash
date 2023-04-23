@@ -12,7 +12,7 @@ public class AI_BossPlant : EnemyAI
     private List<PlantWall> walls = new List<PlantWall>();
     private List<PlantPillar> pillars = new List<PlantPillar>();
 
-    private const int EXP_PER_WALL = 3;
+    private const int EXP_PER_WALL = 2;
     private static readonly int[] HITPOINTS = new int[] { 4, 5, 6 };
     private const float SIZE_WALL = 5;
     private const float RADIUS = 20;
@@ -135,6 +135,7 @@ public class AI_BossPlant : EnemyAI
                 var rnd = Random.insideUnitCircle * SIZE_WALL * 0.25f;
                 var pos = wall.transform.position + rnd.ToVector3();
                 var exp = ItemController.Instance.SpawnPlant(pos);
+                exp.AnimateCollect();
             }
 
             wall.Kill();

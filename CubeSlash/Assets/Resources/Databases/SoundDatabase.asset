@@ -563,3 +563,36 @@ MonoBehaviour:
           Data3: -1903174765
           Data4: 1762305203
         Path: event:/Game/Abilities/ability_off_cooldown
+  - name: sfx_enemy_crystal_shield
+    type:
+      id: sfx_enemy_crystal_shield
+    sfx:
+      reference:
+        Guid:
+          Data1: 400757742
+          Data2: 1195812934
+          Data3: 1976145581
+          Data4: -2142800881
+        Path: event:/Game/Enemy/crystalmeat_close_001
+  - name: sfx_enemy_crystal_unshield
+    type:
+      id: sfx_enemy_crystal_unshield
+    sfx:
+      reference:
+        Guid:
+          Data1: 400757742
+          Data2: 1195812934
+          Data3: 1976145581
+          Data4: -2142800881
+        Path: event:/Game/Enemy/crystalmeat_close_001
+  - name: sfx_enemy_crystal_break
+    type:
+      id: sfx_enemy_crystal_break
+    sfx:
+      reference:
+        Guid:
+          Data1: -428480143
+          Data2: 1331063070
+          Data3: 1847881873
+          Data4: 1261385574
+        Path: event:/Game/Enemy/crystalmeat_break_001

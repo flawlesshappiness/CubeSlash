@@ -103,6 +103,9 @@ public class SoundEffectType : FakeEnum
     public static readonly SoundEffectType sfx_enemy_boss_proximity = new SoundEffectType(nameof(sfx_enemy_boss_proximity));
     public static readonly SoundEffectType sfx_enemy_death = new SoundEffectType(nameof(sfx_enemy_death));
     public static readonly SoundEffectType sfx_enemy_boss_scream = new SoundEffectType(nameof(sfx_enemy_boss_scream));
+    public static readonly SoundEffectType sfx_enemy_crystal_shield = new SoundEffectType(nameof(sfx_enemy_crystal_shield));
+    public static readonly SoundEffectType sfx_enemy_crystal_unshield = new SoundEffectType(nameof(sfx_enemy_crystal_unshield));
+    public static readonly SoundEffectType sfx_enemy_crystal_break = new SoundEffectType(nameof(sfx_enemy_crystal_break));
 
     // UI
     public static readonly SoundEffectType sfx_ui_level_up = new SoundEffectType(nameof(sfx_ui_level_up));

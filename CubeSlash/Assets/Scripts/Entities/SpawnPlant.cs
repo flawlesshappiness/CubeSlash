@@ -14,12 +14,13 @@ public class SpawnPlant : SpawnObject, IKillable
 
     public bool IsDead { get; private set; }
 
-    public bool CanKill() => !IsDead;
+    public bool CanHit() => !IsDead;
+    public bool CanKill() => CanHit();
     public Vector3 GetPosition() => transform.position;
 
-    public void Kill()
+    public bool TryKill()
     {
-        if (IsDead) return;
+        if (!CanKill()) return false;
 
         SpawnExp();
         SpawnHealth();
@@ -35,6 +36,8 @@ public class SpawnPlant : SpawnObject, IKillable
 
         IsDead = true;
         Destroy();
+
+        return true;
     }
 
     public override void Initialize()

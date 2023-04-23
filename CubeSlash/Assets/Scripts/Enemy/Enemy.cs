@@ -11,15 +11,23 @@ public class Enemy : Character, IKillable, IHurt
     public bool IsDead { get; private set; }
     public bool CanReposition { get; set; }
     public MultiLock InvincibleLock { get; private set; } = new MultiLock();
+    public MultiLock HitLock { get; private set; } = new MultiLock();
 
+    public event System.Action OnHit;
     public event System.Action OnDeath;
+
+    private float time_spawn;
 
     public void Initialize(EnemySettings settings)
     {
         IsDead = false;
         IsBoss = false;
         OnDeath = null;
+        OnHit = null;
         CanReposition = true;
+
+        InvincibleLock.ClearLock();
+        HitLock.ClearLock();
 
         this.Settings = settings;
         LinearAcceleration = settings.linear_acceleration;
@@ -33,13 +41,7 @@ public class Enemy : Character, IKillable, IHurt
         SetBody(settings.body);
         SetAI(settings.ai);
 
-        StartCoroutine(InvincibleCr());
-        IEnumerator InvincibleCr()
-        {
-            InvincibleLock.AddLock("Spawn");
-            yield return null;
-            InvincibleLock.RemoveLock("Spawn");
-        }
+        time_spawn = Time.time + 0.2f;
     }
 
     protected override void OnUpdate()
@@ -87,36 +89,48 @@ public class Enemy : Character, IKillable, IHurt
         Rigidbody.AddTorque(angle * AngularAcceleration * Rigidbody.mass);
     }
     #region HEALTH
-    public virtual bool CanKill() => !IsBoss && !IsDead && InvincibleLock.IsFree;
+    public virtual bool CanHit() => !HasSpawnProtection() && HitLock.IsFree && !IsBoss && !IsDead;
+    public virtual bool CanKill() => CanHit() && InvincibleLock.IsFree;
+    public bool HasSpawnProtection() => Time.time < time_spawn;
+
+    public bool TryKill()
+    {
+        if (IsDead) return false;
+
+        OnHit?.Invoke();
+
+        if (!CanKill()) return false;
+
+        Kill();
+
+        return true;
+    }
 
     public void Kill()
     {
-        if (!IsDead)
+        IsDead = true;
+
+        // PS
+        if (Body.ps_death != null)
         {
-            IsDead = true;
-
-            // PS
-            if(Body.ps_death != null)
-            {
-                Body.ps_death.Duplicate()
-                    .Position(transform.position)
-                    .Scale(Vector3.one * Settings.size)
-                    .Destroy(10)
-                    .Play();
-            }
-
-            var sfx = SoundDatabase.GetEntry(SoundEffectType.sfx_enemy_death).sfx;
-            SoundController.Instance.PlayGroup(sfx);
-
-            // Event
-            OnDeath?.Invoke();
-
-            // AI
-            SetAI(null);
-
-            // Respawn
-            Respawn();
+            Body.ps_death.Duplicate()
+                .Position(transform.position)
+                .Scale(Vector3.one * Settings.size)
+                .Destroy(15)
+                .Play();
         }
+
+        var sfx = SoundDatabase.GetEntry(SoundEffectType.sfx_enemy_death).sfx;
+        SoundController.Instance.PlayGroup(sfx);
+
+        // Event
+        OnDeath?.Invoke();
+
+        // AI
+        SetAI(null);
+
+        // Respawn
+        Respawn();
     }
 
     public void Respawn()

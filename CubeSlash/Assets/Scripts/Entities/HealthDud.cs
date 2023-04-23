@@ -63,8 +63,10 @@ public class HealthDud : MonoBehaviour, IKillable
 
     public bool IsAlive() => !Dead;
 
-    public void Kill()
+    public bool TryKill()
     {
+        if (!CanKill()) return false;
+
         ps_kill.Duplicate()
             .Parent(GameController.Instance.world)
             .Scale(transform.localScale)
@@ -76,8 +78,11 @@ public class HealthDud : MonoBehaviour, IKillable
         SoundController.Instance.Play(SoundEffectType.sfx_dud_death);
         Dead = true;
         OnKilled?.Invoke();
+
+        return true;
     }
 
-    public bool CanKill() => IsAlive() && !ArmorActive && DudActive;
+    public bool CanHit() => IsAlive() && !ArmorActive && DudActive;
+    public bool CanKill() => CanHit();
     public Vector3 GetPosition() => transform.position;
 }

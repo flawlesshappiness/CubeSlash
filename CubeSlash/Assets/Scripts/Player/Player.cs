@@ -328,10 +328,16 @@ public class Player : Character
         }
     }
 
-    public void KillEnemy(IKillable k)
+    public bool TryKillEnemy(IKillable k)
     {
-        k.Kill();
-        DecrementKillsUntilShieldRegen();
+        var success = k.TryKill();
+
+        if (success)
+        {
+            DecrementKillsUntilShieldRegen();
+        }
+
+        return success;
     }
 
     private void DecrementKillsUntilShieldRegen()

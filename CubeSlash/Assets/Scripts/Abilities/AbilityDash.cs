@@ -198,13 +198,14 @@ public class AbilityDash : Ability
         var hits = Physics2D.OverlapCircleAll(position, radius)
             .Select(hit => hit.GetComponentInParent<IKillable>())
             .Distinct()
-            .Where(k => k != null && k.CanKill());
+            .Where(k => k != null);
 
         foreach(var hit in hits)
         {
-            if (!hit.CanKill()) continue;
-            Player.KillEnemy(hit);
-            count++;
+            if (Player.TryKillEnemy(hit))
+            {
+                count++;
+            }
         }
 
         return count;
@@ -270,7 +271,13 @@ public class AbilityDash : Ability
 
                 trail.onHit += k =>
                 {
-                    AbilityChain.TryChainToTarget(k.GetPosition(), 6f, 0, 1, 0);
+                    AbilityChain.TryChainToTarget(new AbilityChain.ChainInfo
+                    {
+                        center = k.GetPosition(),
+                        radius = 6f,
+                        chains_left = 1,
+                        initial_strikes = 1
+                    });
                 };
             }
         }

@@ -97,7 +97,7 @@ MonoBehaviour:
   Path: Assets/FMOD/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 638172744778981742
+  lastModified: 638176310662864255
   FileSizes: []
   Exists: 1
 --- !u!114 &-7872426760261806101
@@ -397,6 +397,33 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 0
+--- !u!114 &-5789439977451316129
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Game/Enemy/crystalmeat_break_001
+  m_EditorClassIdentifier: 
+  Path: event:/Game/Enemy/crystalmeat_break_001
+  Guid:
+    Data1: -428480143
+    Data2: 1331063070
+    Data3: 1847881873
+    Data4: 1261385574
+  Banks:
+  - {fileID: -8060980804293988741}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 435
 --- !u!114 &-5770864616696661268
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1269,12 +1296,14 @@ MonoBehaviour:
   - {fileID: -3849707120075743259}
   - {fileID: 8415450989838431725}
   - {fileID: 4744129259821379637}
+  - {fileID: -5789439977451316129}
+  - {fileID: 5539064285418462032}
   EditorParameters: []
   MasterBanks:
   - {fileID: -8060980804293988741}
   StringsBanks:
   - {fileID: 5917708036578608240}
-  cacheTime: 638172744779024762
+  cacheTime: 638176310662904275
   cacheVersion: 131593
 --- !u!114 &1453305857757199432
 MonoBehaviour:
@@ -1678,6 +1707,33 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 650
+--- !u!114 &5539064285418462032
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Game/Enemy/crystalmeat_close_001
+  m_EditorClassIdentifier: 
+  Path: event:/Game/Enemy/crystalmeat_close_001
+  Guid:
+    Data1: 400757742
+    Data2: 1195812934
+    Data3: 1976145581
+    Data4: -2142800881
+  Banks:
+  - {fileID: -8060980804293988741}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 1760
 --- !u!114 &5787270293951152080
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1747,10 +1803,10 @@ MonoBehaviour:
   Path: Assets/FMOD/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 638172744779024762
+  lastModified: 638176310662904275
   FileSizes:
   - Name: 
-    Value: 4398
+    Value: 4502
   Exists: 1
 --- !u!114 &5992827859230917708
 MonoBehaviour:
