@@ -41,7 +41,7 @@ public class AI_EnemyShield : EnemyAI
         SetState(state + 1);
     }
 
-    private void SetState(int state)
+    protected virtual void SetState(int state)
     {
         this.state = state;
 
@@ -52,7 +52,7 @@ public class AI_EnemyShield : EnemyAI
 
         if (state == 1)
         {
-            Body.animator_main.SetTrigger("shielded");
+            Body.animator_main.SetBool("shielded", true);
             var duration = 0.2f;
             time_invincible = Time.time + duration;
             Self.Rigidbody.mass = 100f;
@@ -82,7 +82,13 @@ public class AI_EnemyShield : EnemyAI
     private IEnumerator UnshieldCr()
     {
         yield return new WaitForSeconds(8f);
-        Body.animator_main.SetTrigger("unshielded");
+        Unshield();
+    }
+
+    protected void Unshield()
+    {
+        if(cr_unshield != null) StopCoroutine(cr_unshield);
+        Body.animator_main.SetBool("shielded", false);
         SetState(0);
 
         SoundController.Instance.Play(SoundEffectType.sfx_enemy_crystal_unshield);

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Ocean
   m_EditorClassIdentifier: 
   index_level_min: 0
-  boss: {fileID: 11400000, guid: 4fe64771ce63226478a6456e661756ff, type: 2}
+  boss: {fileID: 11400000, guid: 80b4b4d92a4b01045a5ad67d39e979f7, type: 2}
   enemies:
   - enemy: {fileID: 11400000, guid: cfcae6b5621e50448a5872f62f68b1ba, type: 2}
     chance: 1

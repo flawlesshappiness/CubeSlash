@@ -1,5 +1,51 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &828072107902888196
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1945788655767330077}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e40b66bd68a8b7043b1a93213b9c6c5d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pivot_pupil: {fileID: 4838351743748653121}
+  body: {fileID: 4160787836209392310}
+  radius_pupil: 0.25
+--- !u!1 &5742806569727721499
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4838351743748653121}
+  m_Layer: 0
+  m_Name: pivot_pupil
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4838351743748653121
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5742806569727721499}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 4844515920998350715}
+  m_Father: {fileID: 1362514934858604862}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7001010105696285110
 GameObject:
   m_ObjectHideFlags: 0
@@ -12,7 +58,7 @@ GameObject:
   - component: {fileID: 3924153449871826044}
   - component: {fileID: 2122944432548314372}
   m_Layer: 0
-  m_Name: Pupil
+  m_Name: pupil
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -29,8 +75,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 6.373372, y: 6.373372, z: 6.373372}
   m_Children: []
-  m_Father: {fileID: 1362514934858604862}
-  m_RootOrder: 1
+  m_Father: {fileID: 4838351743748653121}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &3924153449871826044
 SpriteRenderer:
@@ -111,13 +157,9 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 129216412035343752, guid: 45499daff63c9d64b8e9f610d9bfd8a4, type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 129216412035343752, guid: 45499daff63c9d64b8e9f610d9bfd8a4, type: 3}
       propertyPath: m_Controller
       value: 
-      objectReference: {fileID: 9100000, guid: 4a57e16633cc5ec458ca6ee71cfd4c1a, type: 2}
+      objectReference: {fileID: 9100000, guid: e5361379f7c418b4db687fd03f0e122e, type: 2}
     - target: {fileID: 2973982606120359821, guid: 45499daff63c9d64b8e9f610d9bfd8a4, type: 3}
       propertyPath: m_Name
       value: CrystalEye
@@ -200,6 +242,22 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 45499daff63c9d64b8e9f610d9bfd8a4, type: 3}
+--- !u!1 &1945788655767330077 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2973982606120359821, guid: 45499daff63c9d64b8e9f610d9bfd8a4, type: 3}
+  m_PrefabInstance: {fileID: 3622408219302922896}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &4160787836209392310 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 863415056158122022, guid: 45499daff63c9d64b8e9f610d9bfd8a4, type: 3}
+  m_PrefabInstance: {fileID: 3622408219302922896}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1945788655767330077}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a870d008b4e8db41b738a75a8de1557, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &1362514934858604862 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2354750420328967086, guid: 45499daff63c9d64b8e9f610d9bfd8a4, type: 3}

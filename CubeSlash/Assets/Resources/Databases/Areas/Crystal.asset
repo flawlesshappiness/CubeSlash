@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Crystal
   m_EditorClassIdentifier: 
   index_level_min: 3
-  boss: {fileID: 11400000, guid: c27a6b5c0fe4b3f4a9dcc2af39fb178f, type: 2}
+  boss: {fileID: 11400000, guid: 80b4b4d92a4b01045a5ad67d39e979f7, type: 2}
   enemies:
   - enemy: {fileID: 11400000, guid: a872563796c3b96429dd5870d77d4b78, type: 2}
     chance: 0.1
