@@ -69,6 +69,7 @@ public class AI_BossPlant : EnemyAI
             wall.transform.rotation = rotation;
             walls.Add(wall);
             wall.AnimateAppear();
+            ObjectController.Instance.Add(wall.gameObject);
 
             distance += wall_length;
             i_wall++;
@@ -97,6 +98,7 @@ public class AI_BossPlant : EnemyAI
         pillar.transform.position = Player.Instance.transform.position;
         pillar.SetHidden();
         pillars.Add(pillar);
+        ObjectController.Instance.Add(pillar.gameObject);
 
         var t = GetHealthPercentage();
         var scale = Vector3.one * Mathf.Lerp(PILLAR_SIZE_MIN, PILLAR_SIZE_MAX, t);

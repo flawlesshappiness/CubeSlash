@@ -133,7 +133,7 @@ public class AI_BossJelly : BossAI
 
         if(tethers.Count == 0)
         {
-            Self.TryKill();
+            Self.Kill();
         }
     }
 }

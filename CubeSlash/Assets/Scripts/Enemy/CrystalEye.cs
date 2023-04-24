@@ -9,7 +9,7 @@ public class CrystalEye : MonoBehaviour
 
     public float radius_pupil;
 
-    public float PupilRadius { get { return radius_pupil * transform.localScale.x; } }
+    public float PupilRadius { get { return radius_pupil * transform.lossyScale.x; } }
     public bool LookingAtPlayer { get; set; }
     public bool Open { set { body.animator_main.SetBool("open", value); } }
     public bool Shielded { set { body.animator_main.SetBool("shielded", value); } }
@@ -19,8 +19,8 @@ public class CrystalEye : MonoBehaviour
     {
         var position = GetTargetPosition();
         var dir = position - transform.position;
-        var clamped_position = transform.position + dir.normalized * radius_pupil;
-        pivot_pupil.position = Vector3.Lerp(pivot_pupil.position, clamped_position, Time.deltaTime * 50f);
+        var clamped_position = transform.position + dir.normalized * PupilRadius;
+        pivot_pupil.position = Vector3.Lerp(pivot_pupil.position, clamped_position, Time.deltaTime * 5f);
     }
 
     private void OnDrawGizmos()
@@ -41,7 +41,7 @@ public class CrystalEye : MonoBehaviour
         {
             LookingAtPlayer = false;
             Open = true;
-            yield return LerpEnumerator.Value(0.2f, f =>
+            yield return LerpEnumerator.Value(0.4f, f =>
             {
                 pivot_pupil.localScale = Vector3.one * Mathf.Lerp(0f, 1f, f);
             });
@@ -56,7 +56,7 @@ public class CrystalEye : MonoBehaviour
         {
             LookingAtPlayer = false;
             Open = false;
-            yield return LerpEnumerator.Value(0.2f, f =>
+            yield return LerpEnumerator.Value(0.4f, f =>
             {
                 pivot_pupil.localScale = Vector3.one * Mathf.Lerp(1f, 0f, f);
             });

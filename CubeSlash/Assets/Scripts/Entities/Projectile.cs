@@ -124,10 +124,11 @@ public class Projectile : MonoBehaviourExtended
             if (k != null)
             {
                 hit_success = true;
+                onHitEnemy?.Invoke(k);
 
                 if (Player.Instance.TryKillEnemy(k))
                 {
-                    onHitEnemy?.Invoke(k);
+                    
                 }
             }
         }

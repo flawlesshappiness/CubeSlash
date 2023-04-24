@@ -58,6 +58,7 @@ public class UnlockUpgradeView : View
     {
         PlayerInput.Controls.Player.West.started -= RefundPressed;
         PlayerInput.Controls.Player.West.canceled -= RefundReleased;
+        sfx_refund_hold?.Stop();
     }
 
     private IEnumerator AnimateStartCr()

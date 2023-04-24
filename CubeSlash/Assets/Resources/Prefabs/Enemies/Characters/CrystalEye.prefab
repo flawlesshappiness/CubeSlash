@@ -160,6 +160,10 @@ PrefabInstance:
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: e5361379f7c418b4db687fd03f0e122e, type: 2}
+    - target: {fileID: 863415056158122022, guid: 45499daff63c9d64b8e9f610d9bfd8a4, type: 3}
+      propertyPath: ps_death
+      value: 
+      objectReference: {fileID: 2844366362743934499, guid: 666b0fa72b787a44f805ea5067d1f33f, type: 3}
     - target: {fileID: 2973982606120359821, guid: 45499daff63c9d64b8e9f610d9bfd8a4, type: 3}
       propertyPath: m_Name
       value: CrystalEye

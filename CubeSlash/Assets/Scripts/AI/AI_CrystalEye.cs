@@ -3,7 +3,9 @@ using UnityEngine;
 
 public class AI_CrystalEye : AI_EnemyShield
 {
-    [SerializeField] private CrystalEye eye;
+    [SerializeField] private Projectile prefab_projectile;
+
+    private CrystalEye eye;
 
     public override void Initialize(Enemy enemy)
     {
@@ -28,7 +30,15 @@ public class AI_CrystalEye : AI_EnemyShield
             Self.Body.Collider.enabled = true;
             Self.Body.Trigger.enabled = true;
 
-            yield return new WaitForSeconds(Random.Range(5f, 8f));
+            yield return new WaitForSeconds(Random.Range(3f, 5f));
+            ShootProjectile();
+            yield return new WaitForSeconds(Random.Range(3f, 5f));
+
+            if(!IsShielded && Random.Range(0f, 1f) < 0.25f)
+            {
+                ShootProjectile();
+                yield return new WaitForSeconds(Random.Range(2f, 4f));
+            }
 
             Self.Body.Collider.enabled = false;
             Self.Body.Trigger.enabled = false;
@@ -37,6 +47,22 @@ public class AI_CrystalEye : AI_EnemyShield
             Unshield();
             yield return eye.AnimateClose();
         }
+    }
+
+    private void ShootProjectile()
+    {
+        if (IsShielded) return;
+
+        var dir = PlayerPosition - Position;
+        var p = ProjectileController.Instance.CreateProjectile(prefab_projectile);
+        p.transform.position = Position;
+        p.transform.localScale = Self.transform.lossyScale;
+        p.SetDirection(dir);
+        p.Rigidbody.velocity = dir.normalized * 10f;
+        p.Lifetime = 999f;
+        p.Piercing = -1;
+
+        SoundController.Instance.Play(SoundEffectType.sfx_enemy_shoot);
     }
 
     protected override void SetState(int state)

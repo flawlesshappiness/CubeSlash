@@ -8,10 +8,14 @@ public class AI_EnemyShield : EnemyAI
 
     private Vector3 pos_player_prev;
 
-    private int state = 0;
+    protected int state = 0;
     private float time_invincible;
 
     private Coroutine cr_unshield;
+
+    public bool IsNormal { get { return state == 0; } }
+    public bool IsShielded { get { return state == 1; } }
+    public bool IsBroken { get { return state == 2; } }
 
     public override void Initialize(Enemy enemy)
     {
@@ -88,10 +92,14 @@ public class AI_EnemyShield : EnemyAI
     protected void Unshield()
     {
         if(cr_unshield != null) StopCoroutine(cr_unshield);
+
+        if(state == 1)
+        {
+            SoundController.Instance.Play(SoundEffectType.sfx_enemy_crystal_unshield);
+        }
+
         Body.animator_main.SetBool("shielded", false);
         SetState(0);
-
-        SoundController.Instance.Play(SoundEffectType.sfx_enemy_crystal_unshield);
     }
 
     private IEnumerator PhaseOutCr(float delay)

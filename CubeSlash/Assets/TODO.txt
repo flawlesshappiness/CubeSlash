@@ -28,3 +28,4 @@ crystal area with crystal beam enemy and boss
 
 ## BUGS ##
 Hold to refund sound can be triggered after selecting an upgrade ??
+plantboss does not properly clean up

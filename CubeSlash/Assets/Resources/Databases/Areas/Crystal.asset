@@ -72,18 +72,8 @@ MonoBehaviour:
     is_foreground: 0
     size_sprite_min: 10
     size_sprite_max: 20
-    count_sprite: 20
+    count_sprite: 0
     sprites: []
-    particles:
-    - {fileID: 6471937910845384915, guid: 4227469584206424696bac83a7f5da41, type: 3}
-  - name: 3
-    is_foreground: 0
-    size_sprite_min: 10
-    size_sprite_max: 20
-    count_sprite: 20
-    sprites:
-    - {fileID: 21300000, guid: 6c4384cdf3c8f7148abbbd5fbb6b8c75, type: 3}
-    - {fileID: 21300000, guid: 6c4384cdf3c8f7148abbbd5fbb6b8c75, type: 3}
     particles:
     - {fileID: 6471937910845384915, guid: 4227469584206424696bac83a7f5da41, type: 3}
   vignette_gradient:
