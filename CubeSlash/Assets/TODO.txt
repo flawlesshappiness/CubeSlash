@@ -24,8 +24,7 @@ more health on easy - health static no matter what ability you choose
 root area new enemies and environment (enemy moves by using roots, appear/disappear)
 geode area with splitting enemies and boss
 jelly obstacles
-crystal area with crystal beam enemy and boss
+crystal area with crystal enemy and boss
 
 ## BUGS ##
 Hold to refund sound can be triggered after selecting an upgrade ??
-plantboss does not properly clean up

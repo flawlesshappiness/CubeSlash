@@ -30,15 +30,15 @@ public class AI_CrystalEye : AI_EnemyShield
             Self.Body.Collider.enabled = true;
             Self.Body.Trigger.enabled = true;
 
-            yield return new WaitForSeconds(Random.Range(3f, 5f));
-            ShootProjectile();
-            yield return new WaitForSeconds(Random.Range(3f, 5f));
+            yield return new WaitForSeconds(Random.Range(2f, 4f));
+            yield return ShootProjectileCr();
 
-            if(!IsShielded && Random.Range(0f, 1f) < 0.25f)
+            if(Random.Range(0f, 1f) < 0.25f)
             {
-                ShootProjectile();
-                yield return new WaitForSeconds(Random.Range(2f, 4f));
+                yield return ShootProjectileCr();
             }
+
+            yield return new WaitForSeconds(Random.Range(1f, 3f));
 
             Self.Body.Collider.enabled = false;
             Self.Body.Trigger.enabled = false;
@@ -49,10 +49,25 @@ public class AI_CrystalEye : AI_EnemyShield
         }
     }
 
+    private IEnumerator ShootProjectileCr()
+    {
+        if (!IsShielded)
+        {
+            eye.PlayChargeFX();
+            yield return eye.AnimatePupilCharged(1f, true);
+        }
+
+        if (!IsShielded)
+        {
+            eye.PlayShootFX();
+            ShootProjectile();
+            yield return eye.AnimatePupilCharged(0.25f, false);
+            yield return new WaitForSeconds(Random.Range(2f, 4f));
+        }
+    }
+
     private void ShootProjectile()
     {
-        if (IsShielded) return;
-
         var dir = PlayerPosition - Position;
         var p = ProjectileController.Instance.CreateProjectile(prefab_projectile);
         p.transform.position = Position;
