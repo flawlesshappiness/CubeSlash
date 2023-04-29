@@ -17,4 +17,5 @@ MonoBehaviour:
   desc_ability: Hold to zap nearby enemies
   sprite_icon: {fileID: 21300000, guid: 704c46460f2ea97478c57508c8014614, type: 3}
   modifiers: {fileID: 11400000, guid: 1c17cffe6c75de34d8d263b689ea2a04, type: 2}
-  prefab_bodypart: {fileID: 1981302560155398986, guid: 28af7074ad5cb4c47a11ef1ef8d3cdab, type: 3}
+  type_bodypart:
+    id: ability_chain_A

@@ -17,4 +17,5 @@ MonoBehaviour:
   desc_ability: Release shells from behind, that explode into fragments
   sprite_icon: {fileID: 21300000, guid: 665d236bf40dab74b8856500b22623e3, type: 3}
   modifiers: {fileID: 11400000, guid: b70a156231423fe4bafd44a38fe49f40, type: 2}
-  prefab_bodypart: {fileID: 907548112857068121, guid: 38cf3bf170882eb4d80a25cb6818a808, type: 3}
+  type_bodypart:
+    id: ability_mines_A

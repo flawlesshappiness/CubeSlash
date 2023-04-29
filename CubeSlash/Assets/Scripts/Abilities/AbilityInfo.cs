@@ -8,5 +8,5 @@ public class AbilityInfo : ScriptableObject
     [TextArea] public string desc_ability;
     public Sprite sprite_icon;
     public AbilityModifierCollection modifiers;
-    public Bodypart prefab_bodypart;
+    public BodypartType type_bodypart;
 }

@@ -2,24 +2,30 @@ using UnityEngine;
 
 public class Bodypart : MonoBehaviour
 {
-    [Range(0,1)]
-    public float priority_position;
+    public BodypartInfo Info { get; set; }
+    public BodySkeleton Skeleton { get; set; }
+    public Bodypart CounterPart { get; set; }
 
-    protected Ability Ability { get; private set; }
+    public enum Side { Left, Right };
+    public Side BoneSide { get; set; }
 
-    public virtual void Initialize(Ability ability)
+    public void SetPosition(float y, bool is_counter_part = false)
     {
-        this.Ability = ability;
-        ability.onTrigger += OnAbilityTrigger;
-    }
+        var position = Skeleton.GetBonePosition(y);
+        var side = BoneSide == Side.Left ? position.left : position.right;
+        var angle = Vector3.SignedAngle(side.normal, Vector3.up, Vector3.back);
+        var rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+        var show_counterpart = !position.is_top_or_bottom;
 
-    private void OnDestroy()
-    {
-        Ability.onTrigger -= OnAbilityTrigger;
-    }
+        gameObject.SetActive(!is_counter_part || show_counterpart);
 
-    protected virtual void OnAbilityTrigger()
-    {
+        transform.localPosition = side.localPosition;
+        transform.localRotation = rotation;
+        transform.localScale = Vector3.one;
 
+        if (!is_counter_part)
+        {
+            CounterPart.SetPosition(y, is_counter_part: true);
+        }
     }
 }

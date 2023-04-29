@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 public class PlayerBody : Body
@@ -12,49 +11,52 @@ public class PlayerBody : Body
 
     public void ClearBodyparts()
     {
-        foreach(var bp in bodyparts)
+        foreach(var bdp in bodyparts)
         {
-            Destroy(bp.gameObject);
+            Destroy(bdp.gameObject);
         }
         bodyparts.Clear();
     }
 
-    public List<Bodypart> CreateBodyparts(Bodypart prefab)
+    public BodypartAbility CreateAbilityBodypart(AbilityInfo info)
     {
-        var bps = new List<Bodypart>();
-        var position = GetClosestPriorityPosition(prefab.priority_position);
+        var bdp = CreateBodypart(info.type_bodypart);
+        var bdpa = bdp as BodypartAbility;
+        bdpa.SetPosition(bdpa.priority_position);
 
-        Create(position.left);
-
-        if (!position.is_top_or_bottom)
+        if (bdpa == null)
         {
-            Create(position.right);
+            LogController.Instance.LogMessage($"PlayerBody.CreateAbilityBodypart; Failed to create BodypartAbility with type {info.type_bodypart}");
         }
 
-        return bps;
+        return bdpa;
+    }
 
-        void Create(BoneSide side)
-        {
-            var bp = Instantiate(prefab);
-            bp.transform.parent = transform;
-            bodyparts.Add(bp);
+    public Bodypart CreateBodypart(BodypartType type)
+    {
+        var left = InstantiateBodypart(type);
+        left.BoneSide = Bodypart.Side.Left;
 
-            bp.transform.localPosition = side.localPosition;
+        var right = InstantiateBodypart(type);
+        right.BoneSide = Bodypart.Side.Right;
 
-            var angle = Vector3.SignedAngle(side.normal, Vector3.up, Vector3.back);
-            var rotation = Quaternion.AngleAxis(angle, Vector3.forward);
-            bp.transform.localRotation = rotation;
+        left.CounterPart = right;
+        right.CounterPart = left;
 
-            bp.transform.localScale = Vector3.one;
+        right.gameObject.SetActive(false);
 
-            bps.Add(bp);
-        }
+        return left;
+    }
 
-        BonePositionInfo GetClosestPriorityPosition(float position)
-        {
-            var other_bps = bodyparts.Where(bp => bp.priority_position == prefab.priority_position);
-            var offset = (position < 0.5f ? 1 : -1) * 0.03f * other_bps.Count();
-            return skeleton.GetBonePosition(position + offset);
-        }
+    private Bodypart InstantiateBodypart(BodypartType type)
+    {
+        var bdp = BodypartController.Instance.CreateBodypart(type);
+        bdp.transform.parent = transform;
+        bdp.transform.localScale = Vector3.one;
+        bdp.Skeleton = skeleton;
+
+        bodyparts.Add(bdp);
+
+        return bdp;
     }
 }

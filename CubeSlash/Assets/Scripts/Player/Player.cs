@@ -230,19 +230,8 @@ public class Player : Character
     private void UpdateBodyparts()
     {
         PlayerBody.ClearBodyparts();
-
-        foreach (var ability in AbilityController.Instance.GetEquippedAbilities())
-        {
-            var prefab = ability.Info.prefab_bodypart;
-            if (prefab == null) continue;
-
-            var bps = PlayerBody.CreateBodyparts(prefab);
-
-            foreach (var bp in bps)
-            {
-                bp.Initialize(ability);
-            }
-        }
+        var equipped_abilities = AbilityController.Instance.GetEquippedAbilities();
+        equipped_abilities.ForEach(ability => PlayerBody.CreateAbilityBodypart(ability.Info));
     }
     #endregion
     #region UPGRADES

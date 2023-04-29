@@ -53,19 +53,20 @@ MonoBehaviour:
     size_sprite_max: 15
     count_sprite: 5
     sprites:
-    - {fileID: 21300000, guid: 640fbbfb061cbba479d10a639bd48840, type: 3}
-    - {fileID: 21300000, guid: cb2c140939c5603439784266d6756762, type: 3}
-    - {fileID: 21300000, guid: a6352acc5ced9734ba02379b54b3bac0, type: 3}
-    particles: []
+    - {fileID: 21300000, guid: 985c011eb483302448e497eac2a51de1, type: 3}
+    - {fileID: 21300000, guid: d5ce1c42c8f49e34db3fe8c4ca0aa060, type: 3}
+    - {fileID: 21300000, guid: 44810f49c55d1ed4683866c7dd6517c1, type: 3}
+    particles:
+    - {fileID: 6471937910845384915, guid: 4227469584206424696bac83a7f5da41, type: 3}
   - name: 1
     is_foreground: 0
     size_sprite_min: 10
     size_sprite_max: 20
     count_sprite: 10
     sprites:
-    - {fileID: 21300000, guid: 2feea07599e47be4d912fb5ddbfd71f4, type: 3}
-    - {fileID: 21300000, guid: 329922c5393a59944a84e0da5b364327, type: 3}
-    - {fileID: 21300000, guid: a6352acc5ced9734ba02379b54b3bac0, type: 3}
+    - {fileID: 21300000, guid: cac9804e672348947838e25f48085590, type: 3}
+    - {fileID: 21300000, guid: 7fb5b4bd3072d7042800f79373a25b26, type: 3}
+    - {fileID: 21300000, guid: e28389d197d41934ab86c1d3d276961d, type: 3}
     particles:
     - {fileID: 6471937910845384915, guid: 4227469584206424696bac83a7f5da41, type: 3}
   - name: 2
@@ -73,7 +74,10 @@ MonoBehaviour:
     size_sprite_min: 10
     size_sprite_max: 20
     count_sprite: 0
-    sprites: []
+    sprites:
+    - {fileID: 21300000, guid: 932f8c461ad122543ab3fcbd41003dc1, type: 3}
+    - {fileID: 21300000, guid: 7f500827e5074134585826a70ffcd018, type: 3}
+    - {fileID: 21300000, guid: e171e602d8125664a954aa59c79b8185, type: 3}
     particles:
     - {fileID: 6471937910845384915, guid: 4227469584206424696bac83a7f5da41, type: 3}
   vignette_gradient:
