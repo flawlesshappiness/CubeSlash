@@ -232,6 +232,9 @@ public class Player : Character
         PlayerBody.ClearBodyparts();
         var equipped_abilities = AbilityController.Instance.GetEquippedAbilities();
         equipped_abilities.ForEach(ability => PlayerBody.CreateAbilityBodypart(ability.Info));
+
+        var eye = PlayerBody.CreateBodypart(BodypartType.eyestalk_A);
+        eye.SetPosition(0.8f);
     }
     #endregion
     #region UPGRADES

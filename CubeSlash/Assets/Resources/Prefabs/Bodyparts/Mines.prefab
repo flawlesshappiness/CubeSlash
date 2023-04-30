@@ -189,4 +189,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 950c921141b74a948b616d9485a63f76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  variations:
+  - {fileID: 5314737790775165444}
   priority_position: 0.25
