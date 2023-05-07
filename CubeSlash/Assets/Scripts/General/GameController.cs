@@ -1,4 +1,3 @@
-using Flawliz.Console;
 using System.Collections;
 using UnityEditor;
 using UnityEngine;
@@ -215,6 +214,8 @@ public class GameController : MonoBehaviour
 
     public void Win()
     {
+        if (IsGameEnded) return;
+
         // Difficulty
         if(Save.Game.idx_difficulty_completed < DifficultyController.Instance.DifficultyIndex)
         {
@@ -222,6 +223,7 @@ public class GameController : MonoBehaviour
         }
 
         // End
+        IsGameEnded = true;
         SessionController.Instance.CurrentData.won = true;
         MusicController.Instance.StopBGM();
         EnemyController.Instance.KillActiveEnemies();
