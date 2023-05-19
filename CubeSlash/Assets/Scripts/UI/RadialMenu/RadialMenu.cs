@@ -8,29 +8,42 @@ public class RadialMenu : MonoBehaviour
     [SerializeField] private RadialMenuElement element_template;
     [SerializeField] private RadialMenuElementSelector selector;
 
+    public bool SubmitAnimationEnabled { get; set; } = true;
     public RadialMenuElement CurrentElement { get; private set; }
 
     public event System.Action<RadialMenuElement> OnSelect;
-    public event System.Action<RadialMenuElement> OnSubmit;
-    public event System.Action<RadialMenuElement> OnSubmitEnd;
+    public event System.Action<RadialMenuElement> OnSubmitBegin;
+    public event System.Action<RadialMenuElement> OnSubmitComplete;
 
-    private bool submitting;
+    private bool submitting = true;
+
+    private const string ID_CR_SHOW = "animate_show";
 
     private void Awake()
     {
         element_template.gameObject.SetActive(false);
     }
 
+    public void Clear()
+    {
+        CurrentElement = null;
+        selector.Clear();
+    }
+
     public void AddOptions(List<RadialMenuOption> options)
     {
         options.ForEach(option => CreateElementFromOption(option));
         selector.UpdateElements();
+
+        submitting = false;
     }
 
     public void AddOption(RadialMenuOption option)
     {
         CreateElementFromOption(option);
         selector.UpdateElements();
+
+        submitting = false;
     }
 
     private void CreateElementFromOption(RadialMenuOption option)
@@ -40,33 +53,35 @@ public class RadialMenu : MonoBehaviour
         element.Initialize(option);
     }
 
-    public void Submit()
+    public void BeginSubmit()
     {
         if (submitting) return;
         if (CurrentElement == null) return;
 
-        CurrentElement.Submit();
-        OnSubmit?.Invoke(CurrentElement);
+        submitting = true;
+        CurrentElement.Option.OnSubmitBegin?.Invoke();
+        OnSubmitBegin?.Invoke(CurrentElement);
 
-        selector.Elements
-            .Where(e => e != CurrentElement)
-            .ToList().ForEach(e => e.Hide());
-
-        StartCoroutine(Cr());
-        IEnumerator Cr()
+        if (SubmitAnimationEnabled)
         {
-            submitting = true;
-
-            yield return new WaitForSecondsRealtime(0.5f);
-
-            CurrentElement.Option.OnSubmit?.Invoke();
-            OnSubmitEnd?.Invoke(CurrentElement);
+            AnimateSubmit();
         }
+        else
+        {
+            Submit();
+        }
+    }
+
+    private void Submit()
+    {
+        CurrentElement.Option.OnSubmitComplete?.Invoke();
+        OnSubmitComplete?.Invoke(CurrentElement);
     }
 
     public void SelectElement(Vector2 direction)
     {
         if (selector == null) return;
+        if (submitting) return;
 
         var element = selector.GetElement(direction);
         if (element == CurrentElement) return;
@@ -80,7 +95,7 @@ public class RadialMenu : MonoBehaviour
 
         if(CurrentElement != null)
         {
-            CurrentElement.Deselect();
+            CurrentElement.AnimateSelect(false);
         }
 
         CurrentElement = element;
@@ -88,7 +103,42 @@ public class RadialMenu : MonoBehaviour
 
         if(CurrentElement != null)
         {
-            CurrentElement.Select();
+            CurrentElement.AnimateSelect(true);
+        }
+    }
+
+    public CustomCoroutine AnimateShowElements(bool show, float delay = 0)
+    {
+        return this.StartCoroutineWithID(Cr(), ID_CR_SHOW);
+        IEnumerator Cr()
+        {
+            foreach(var element in selector.Elements)
+            {
+                element.AnimateShow(show);
+
+                if(delay > 0)
+                {
+                    yield return new WaitForSecondsRealtime(delay);
+                }
+            }
+
+            yield return new WaitForSecondsRealtime(0.5f);
+        }
+    }
+
+    public CustomCoroutine AnimateSubmit()
+    {
+        return this.StartCoroutineWithID(Cr(), ID_CR_SHOW);
+        IEnumerator Cr()
+        {
+            CurrentElement.AnimateSubmit();
+            selector.Elements
+                .Where(e => e != CurrentElement)
+                .ToList().ForEach(e => e.AnimateShow(false));
+
+            yield return new WaitForSecondsRealtime(0.5f);
+
+            Submit();
         }
     }
 }

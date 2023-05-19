@@ -8,4 +8,9 @@ public class IconType : FakeEnum
     public static readonly IconType quit = new IconType(nameof(quit));
     public static readonly IconType arrow_back = new IconType(nameof(arrow_back));
     public static readonly IconType customize_body = new IconType(nameof(customize_body));
+
+    public static readonly IconType customize_option_body = new IconType(nameof(customize_option_body));
+    public static readonly IconType customize_add_part = new IconType(nameof(customize_add_part));
+    public static readonly IconType customize_remove_part = new IconType(nameof(customize_remove_part));
+    public static readonly IconType customize_move_part = new IconType(nameof(customize_move_part));
 }

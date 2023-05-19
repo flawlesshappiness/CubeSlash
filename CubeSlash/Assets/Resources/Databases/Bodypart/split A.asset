@@ -14,4 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type:
     id: ability_split_A
-  prefab: {fileID: 5008542070012072928, guid: cbbf2664f4a8754449b1880e881ed7e3, type: 3}
+  preview: {fileID: 0}
+  prefab: {fileID: 3976195390652213528, guid: 4a7059456cde39b43b7197a19d12fb13, type: 3}
+  is_ability_part: 1

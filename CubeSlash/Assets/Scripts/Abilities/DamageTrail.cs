@@ -106,7 +106,7 @@ public class DamageTrail : MonoBehaviour
     {
         foreach(var ps in GetComponentsInChildren<ParticleSystem>())
         {
-            this.StartCoroutineWithID(StopParticleSystemCr(ps), "stop_" + ps.GetInstanceID());
+            this.StartCoroutineWithID(StopParticleSystemCr(ps), "stop_" + ps.GetInstanceID(), false);
         }
     }
 

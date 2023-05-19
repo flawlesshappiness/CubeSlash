@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class Player : Character
@@ -11,6 +12,7 @@ public class Player : Character
     [SerializeField] private ParticleSystem ps_ability_off_cooldown, ps_avoid_damage;
     public PlayerBody PlayerBody { get { return Body as PlayerBody; } }
     public MinMaxFloat Experience { get; private set; } = new MinMaxFloat();
+    public PlayerInfo Info { get { return PlayerInfo.Instance; } }
     public Health Health { get; private set; } = new Health();
     public int Level { get; private set; }
     public int LevelsUntilAbility { get; private set; }
@@ -57,6 +59,8 @@ public class Player : Character
         // Setup
         MoveDirection = transform.up;
         g_invincible.SetActive(false);
+
+        SetPlayerBody(Info.default_body);
     }
 
     public void Clear()
@@ -65,10 +69,29 @@ public class Player : Character
         UpgradeController.Instance.ClearUpgrades();
     }
 
+    public void SetPlayerBody(PlayerBodyInfo info)
+    {
+        SetBody(info.prefab);
+        Body.Size = Info.body_size;
+        Rigidbody.mass = Info.mass;
+
+        Body.transform.localScale = Vector3.one * Info.body_size;
+        MoveDirection = transform.up;
+
+        foreach(var data in Save.PlayerBody.bodyparts)
+        {
+            var part = PlayerBody.CreateBodypart(data.type);
+
+            part.SaveData = data;
+            part.CounterPart.SaveData = data;
+
+            part.SetPosition(data.position);
+        }
+    }
+
     public void SetPlayerBody(PlayerBodySettings settings)
     {
         SetBody(settings.body);
-        PlayerBody.Settings = settings;
         Body.Size = settings.body_size;
         Rigidbody.mass = settings.mass;
 
@@ -143,9 +166,9 @@ public class Player : Character
         var collect_boost_acceleration = CollectSpeedBoost ? Mathf.Lerp(10, 0, t_collect_boost) : 0;
         var collect_boost_velocity = CollectSpeedBoost ? Mathf.Lerp(8, 0, t_collect_boost) : 0;
 
-        LinearAcceleration = (PlayerBody.Settings.linear_acceleration + flat_acceleration + collect_boost_acceleration) * perc_acceleration;
-        LinearVelocity = (PlayerBody.Settings.linear_velocity + flat_velocity + collect_boost_velocity) * perc_velocity;
-        LinearDrag = PlayerBody.Settings.linear_drag;
+        LinearAcceleration = (Info.linear_acceleration + flat_acceleration + collect_boost_acceleration) * perc_acceleration;
+        LinearVelocity = (Info.linear_velocity + flat_velocity + collect_boost_velocity) * perc_velocity;
+        LinearDrag = Info.linear_drag;
 
         // Move
         var dir = PlayerInput.MoveDirection;
@@ -251,7 +274,7 @@ public class Player : Character
         CollectCooldownReduction = PlayerValueController.Instance.GetFloatValue(StatID.player_collect_cooldown_flat);
         CollectSpeedBoost = PlayerValueController.Instance.GetBoolValue(StatID.player_collect_speed_perc);
         ConvertHealthToArmor = PlayerValueController.Instance.GetBoolValue(StatID.player_convert_health);
-        Body.Size = PlayerBody.Settings.body_size * PlayerValueController.Instance.GetFloatValue(StatID.player_body_size_perc);
+        Body.Size = Info.body_size * PlayerValueController.Instance.GetFloatValue(StatID.player_body_size_perc);
         InfiniteDrag = PlayerValueController.Instance.GetBoolValue(StatID.player_infinite_drag);
         KillEnemyShieldRegen = PlayerValueController.Instance.GetIntValue(StatID.player_regen_kill);
         PlantExpHealthRegen = PlayerValueController.Instance.GetIntValue(StatID.player_regen_plant);
@@ -363,10 +386,10 @@ public class Player : Character
         if (Health == null) Health = new Health();
         Health.Clear();
 
-        var init_health = PlayerBody.Settings.health + PlayerValueController.Instance.GetIntValue(StatID.player_health);
+        var init_health = Info.health + PlayerValueController.Instance.GetIntValue(StatID.player_health);
         for (int i = 0; i < init_health; i++) Health.AddHealth(HealthPoint.Type.FULL);
 
-        var init_temp = PlayerBody.Settings.armor + PlayerValueController.Instance.GetIntValue(StatID.player_armor);
+        var init_temp = Info.armor + PlayerValueController.Instance.GetIntValue(StatID.player_armor);
         for (int i = 0; i < init_temp; i++) Health.AddHealth(HealthPoint.Type.TEMPORARY);
     }
 

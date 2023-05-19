@@ -134,7 +134,7 @@ public class ChargeBeam : MonoBehaviour
     {
         var beam = Instantiate(pivot_sprite, GameController.Instance.world);
         var spr = beam.GetComponentInChildren<SpriteRenderer>();
-        return CoroutineController.Instance.StartCoroutineWithID(Cr(), "fire_beam_"+spr_beam.GetInstanceID());
+        return CoroutineController.Instance.StartCoroutineWithID(Cr(), "fire_beam_"+spr_beam.GetInstanceID(), false);
 
         IEnumerator Cr()
         {

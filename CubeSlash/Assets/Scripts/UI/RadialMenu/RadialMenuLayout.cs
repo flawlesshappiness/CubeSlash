@@ -54,7 +54,6 @@ public class RadialMenuLayout : LayoutGroup
         {
             var dir3 = 
                 Quaternion.AngleAxis(angle_delta * i, Vector3.forward) * 
-                Quaternion.AngleAxis(180f, Vector3.forward) * 
                 Vector3.up;
             var dir = new Vector2(dir3.x, dir3.y);
             positions[i] = center - offset + dir * distance;

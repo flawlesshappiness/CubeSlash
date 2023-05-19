@@ -12,7 +12,7 @@ public class RadialMenuDisplay : MonoBehaviour
     {
         menu ??= GetComponentInParent<RadialMenu>();
         menu.OnSelect += OnElementSelected;
-        menu.OnSubmit += OnSubmit;
+        menu.OnSubmitBegin += OnSubmit;
 
         pivot.localScale = Vector3.zero;
     }

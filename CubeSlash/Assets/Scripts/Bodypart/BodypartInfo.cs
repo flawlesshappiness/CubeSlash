@@ -4,5 +4,7 @@ using UnityEngine;
 public class BodypartInfo : ScriptableObject
 {
     public BodypartType type;
+    public Sprite preview;
     public Bodypart prefab;
+    public bool is_ability_part;
 }

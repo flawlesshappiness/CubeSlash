@@ -4,7 +4,6 @@ using UnityEngine;
 public class Body : MonoBehaviourExtended
 {
     [Header("BODY")]
-    [SerializeField] public Transform pivot_main;
     [SerializeField] public Transform pivot_sprite;
     [SerializeField] public Animator animator_main;
     [SerializeField] public CircleCollider2D Collider;

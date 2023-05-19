@@ -14,4 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type:
     id: eye_A
-  prefab: {fileID: 1086570096481239487, guid: 54f7cbe2665b37e4b976ffe50e390041, type: 3}
+  preview: {fileID: 21300000, guid: 51d25fb35cec64448850c1e8907ee71e, type: 3}
+  prefab: {fileID: 9044670076722975821, guid: c94a3d74fb8b4684a8a6687ec61c8d52, type: 3}
+  is_ability_part: 0

@@ -13,6 +13,16 @@ public class RadialMenuElementSelector : MonoBehaviour
         UpdateElements();
     }
 
+    public void Clear()
+    {
+        elements.ForEach(e =>
+        {
+            e.gameObject.SetActive(false);
+            Destroy(e.gameObject);
+        });
+        elements.Clear();
+    }
+
     public void UpdateElements()
     {
         elements = GetComponentsInChildren<RadialMenuElement>().ToList();
@@ -28,6 +38,7 @@ public class RadialMenuElementSelector : MonoBehaviour
 
     public RadialMenuElement GetElement(float angle)
     {
+        angle += 180;
         var arc = 360f;
         angle = angle < 0 ? angle + arc : angle;
         var count = elements.Count;

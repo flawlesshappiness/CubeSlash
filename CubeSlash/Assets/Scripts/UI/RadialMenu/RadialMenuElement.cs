@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class RadialMenuElement : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
 {
     [SerializeField] private Image image_icon;
-    [SerializeField] private RectTransform pivot_idle;
+    [SerializeField] private RectTransform pivot_idle, pivot_select;
     public enum AnimationType { ScaleBounce }
     public AnimationType animation_type;
 
@@ -31,6 +31,7 @@ public class RadialMenuElement : MonoBehaviour, IPointerEnterHandler, IPointerEx
     private void Awake()
     {
         menu = GetComponentInParent<RadialMenu>();
+        SetHidden();
     }
 
     private void Start()
@@ -45,27 +46,12 @@ public class RadialMenuElement : MonoBehaviour, IPointerEnterHandler, IPointerEx
         image_icon.sprite = option.Sprite;
     }
 
-    public void Show() => AnimateShow(true);
-    public void Hide() => AnimateShow(false);
-
-    public void Submit()
-    {
-        AnimateSubmit();
-    }
-
-    public void Select()
-    {
-        AnimateSelect(true);
-    }
-
-    public void Deselect()
-    {
-        AnimateSelect(false);
-    }
+    public void SetHidden() => transform.localScale = Vector3.zero;
+    public void SetVisible() => transform.localScale = Vector3.one;
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        menu.Submit();
+        menu.BeginSubmit();
     }
 
     public void OnPointerExit(PointerEventData eventData)
@@ -88,8 +74,8 @@ public class RadialMenuElement : MonoBehaviour, IPointerEnterHandler, IPointerEx
         while (true)
         {
             var duration = Random.Range(idle_animation_info.scale_duration_min, idle_animation_info.scale_duration_max);
-            yield return LerpEnumerator.LocalScale(pivot_idle, duration, start, end).Curve(EasingCurves.EaseInOutSine);
-            yield return LerpEnumerator.LocalScale(pivot_idle, duration, end, start).Curve(EasingCurves.EaseInOutSine);
+            yield return LerpEnumerator.LocalScale(pivot_idle, duration, start, end).Curve(EasingCurves.EaseInOutSine).UnscaledTime();
+            yield return LerpEnumerator.LocalScale(pivot_idle, duration, end, start).Curve(EasingCurves.EaseInOutSine).UnscaledTime();
         }
     }
 
@@ -108,7 +94,7 @@ public class RadialMenuElement : MonoBehaviour, IPointerEnterHandler, IPointerEx
         }
     }
 
-    private CustomCoroutine AnimateSelect(bool selected)
+    public CustomCoroutine AnimateSelect(bool selected)
     {
         switch (animation_type)
         {
@@ -117,35 +103,39 @@ public class RadialMenuElement : MonoBehaviour, IPointerEnterHandler, IPointerEx
         }
     }
 
-    private CustomCoroutine AnimateSelectBounce(bool selected)
+    public CustomCoroutine AnimateSelectBounce(bool selected)
     {
-        return this.StartCoroutineWithID(Cr(), "animate_" + GetInstanceID());
+        return this.StartCoroutineWithID(Cr(), "animate_select_" + GetInstanceID());
         IEnumerator Cr()
         {
-            var end = selected ? 1.5f : 1f;
+            var end = selected ? 1.25f : 1f;
             var curve = selected ? EasingCurves.EaseOutBack : EasingCurves.EaseOutBack;
-            yield return LerpEnumerator.LocalScale(transform, 0.25f, Vector3.one * end).Curve(curve);
+            yield return LerpEnumerator.LocalScale(pivot_select, 0.25f, Vector3.one * end)
+                .Curve(curve)
+                .UnscaledTime();
         }
     }
 
-    private CustomCoroutine AnimateSubmit()
+    public CustomCoroutine AnimateSubmit()
     {
         return this.StartCoroutineWithID(Cr(), "animate_" + GetInstanceID());
         IEnumerator Cr()
         {
-            yield return LerpEnumerator.LocalScale(transform, 0.1f, Vector3.one * 2f).Curve(EasingCurves.EaseOutQuad);
-            yield return LerpEnumerator.LocalScale(transform, 0.25f, Vector3.zero).Curve(EasingCurves.EaseInQuad);
+            yield return LerpEnumerator.LocalScale(transform, 0.1f, Vector3.one * 1.4f).Curve(EasingCurves.EaseOutQuad).UnscaledTime();
+            yield return LerpEnumerator.LocalScale(transform, 0.25f, Vector3.zero).Curve(EasingCurves.EaseInQuad).UnscaledTime();
         }
     }
 
-    private CustomCoroutine AnimateShow(bool show)
+    public CustomCoroutine AnimateShow(bool show)
     {
         return this.StartCoroutineWithID(Cr(), "animate_" + GetInstanceID());
         IEnumerator Cr()
         {
             var end = Vector3.one * (show ? 1f : 0f);
             var curve = show ? EasingCurves.EaseOutBack : EasingCurves.EaseInQuad;
-            yield return LerpEnumerator.LocalScale(transform, 0.25f, end).Curve(curve);
+            yield return LerpEnumerator.LocalScale(transform, 0.25f, end)
+                .Curve(curve)
+                .UnscaledTime();
         }
     }
 }

@@ -3,20 +3,29 @@ using UnityEngine;
 
 public class Bodypart : MonoBehaviour
 {
+    [SerializeField] public Transform pivot_mirror, pivot_animation, pivot_scale;
+    [SerializeField] private GameObject hover, selected;
     [SerializeField] private GameObject[] variations;
 
     public BodypartInfo Info { get; set; }
     public BodySkeleton Skeleton { get; set; }
     public Bodypart CounterPart { get; set; }
+    public BodypartSavaData SaveData { get; set; }
     public int VariationIndex { get; set; }
-    public float Position { get; set; }
+    public float Position { get; private set; }
 
     public enum Side { Left, Right };
     public Side BoneSide { get; set; }
 
+    private void Start()
+    {
+        SetSelected(false);
+    }
+
     public void SetPosition(float y, bool is_counter_part = false)
     {
         Position = y;
+        SaveData.position = y;
 
         var position = Skeleton.GetBonePosition(y);
         var side = BoneSide == Side.Left ? position.left : position.right;
@@ -43,5 +52,21 @@ public class Bodypart : MonoBehaviour
         VariationIndex = Mathf.Clamp(i, 0, list.Count - 1);
         var v = variations[VariationIndex];
         v.SetActive(true);
+    }
+
+    public void SetMirrored(bool mirrored)
+    {
+        var x = mirrored ? -1 : 1;
+        pivot_mirror.localScale = new Vector3(x, 1, 1);
+    }
+
+    public void SetHover(bool hover)
+    {
+        this.hover.SetActive(hover);
+    }
+
+    public void SetSelected(bool selected)
+    {
+        this.selected.SetActive(selected);
     }
 }

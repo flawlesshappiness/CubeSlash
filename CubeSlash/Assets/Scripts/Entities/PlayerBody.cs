@@ -3,19 +3,21 @@ using UnityEngine;
 
 public class PlayerBody : Body
 {
+    [SerializeField] public SpriteRenderer spr_main;
     [SerializeField] public BodySkeleton skeleton;
 
-    public PlayerBodySettings Settings { get; set; }
+    public List<Bodypart> Bodyparts { get; private set; } = new List<Bodypart>();
 
-    private List<Bodypart> bodyparts = new List<Bodypart>();
+    public Sprite GetBodySprite() => spr_main.sprite;
+    public void SetBodySprite(Sprite sprite) => spr_main.sprite = sprite;
 
     public void ClearBodyparts()
     {
-        foreach(var bdp in bodyparts)
+        foreach(var bdp in Bodyparts)
         {
             Destroy(bdp.gameObject);
         }
-        bodyparts.Clear();
+        Bodyparts.Clear();
     }
 
     public BodypartAbility CreateAbilityBodypart(AbilityInfo info)
@@ -44,8 +46,19 @@ public class PlayerBody : Body
         right.CounterPart = left;
 
         right.gameObject.SetActive(false);
+        right.SetMirrored(true);
 
         return left;
+    }
+
+    public void RemoveBodypart(Bodypart part)
+    {
+        var counter = part.CounterPart;
+        Bodyparts.Remove(part);
+        Bodyparts.Remove(counter);
+
+        Destroy(part.gameObject);
+        Destroy(counter.gameObject);
     }
 
     private Bodypart InstantiateBodypart(BodypartType type)
@@ -56,7 +69,7 @@ public class PlayerBody : Body
         bdp.Skeleton = skeleton;
         bdp.SetVariation(0);
 
-        bodyparts.Add(bdp);
+        Bodyparts.Add(bdp);
 
         return bdp;
     }

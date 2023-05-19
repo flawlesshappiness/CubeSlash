@@ -14,4 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type:
     id: eyestalk_A
-  prefab: {fileID: 1086570096481239487, guid: 56b0644ebdf2ffc479e7daa579b22c84, type: 3}
+  preview: {fileID: 21300000, guid: 47cfa1027b4005c4dbf6236add5b7d74, type: 3}
+  prefab: {fileID: 9044670076722975821, guid: 2f3a3e0e73340bc4aa186772adcd3e6a, type: 3}
+  is_ability_part: 0

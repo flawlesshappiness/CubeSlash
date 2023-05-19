@@ -14,4 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type:
     id: ability_explode_A
-  prefab: {fileID: 2885719434192428580, guid: a598b6e1237c46d4aaa610523957efa6, type: 3}
+  preview: {fileID: 0}
+  prefab: {fileID: 3976195390652213528, guid: 8ca3cc71f059238418caccde6d4747c5, type: 3}
+  is_ability_part: 1

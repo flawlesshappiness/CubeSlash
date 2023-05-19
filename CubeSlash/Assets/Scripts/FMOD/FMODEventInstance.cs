@@ -124,7 +124,7 @@ public class FMODEventInstance
 
 	public FMODEventInstance StopWith(GameObject g)
 	{
-		var cr = CoroutineController.Instance.StartCoroutineWithID(Cr(), $"{reference.Info.path}_{g.GetInstanceID()}");
+		var cr = CoroutineController.Instance.StartCoroutineWithID(Cr(), $"{reference.Info.path}_{g.GetInstanceID()}", false);
 		crs_stopwith.Add(cr);
 		return this;
 		IEnumerator Cr()

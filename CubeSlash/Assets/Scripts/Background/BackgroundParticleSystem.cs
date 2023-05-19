@@ -53,7 +53,7 @@ public class BackgroundParticleSystem : BackgroundObject
 
     private CustomCoroutine DestroyPS(ParticleSystem ps)
     {
-        return this.StartCoroutineWithID(StopAndDestroyCr(), "destroy_" + ps.GetInstanceID());
+        return this.StartCoroutineWithID(StopAndDestroyCr(), "destroy_" + ps.GetInstanceID(), false);
         IEnumerator StopAndDestroyCr()
         {
             ps.SetEmissionEnabled(false);

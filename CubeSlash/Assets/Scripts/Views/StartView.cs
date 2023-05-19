@@ -30,31 +30,36 @@ public class StartView : View
         {
             new RadialMenuOption
             {
-                Title = "Play",
-                Sprite = Icon.Get(IconType.start_game),
-                OnSubmit = ClickPlay
-            },
-            new RadialMenuOption
-            {
-                Title = "Options",
-                Sprite = Icon.Get(IconType.settings),
-                OnSubmit = ClickOptions
-            },
-            new RadialMenuOption
-            {
                 Title = "Quit",
                 Sprite = Icon.Get(IconType.quit),
-                OnSubmit = ClickQuit
+                OnSubmitComplete = ClickQuit
             },
             new RadialMenuOption
             {
                 Title = "Customize",
                 Sprite = Icon.Get(IconType.customize_body),
-                OnSubmit = ClickCustomizeBody
+                OnSubmitComplete = ClickCustomizeBody
+            },
+            new RadialMenuOption
+            {
+                Title = "Play",
+                Sprite = Icon.Get(IconType.start_game),
+                OnSubmitComplete = ClickPlay
+            },
+            new RadialMenuOption
+            {
+                Title = "Options",
+                Sprite = Icon.Get(IconType.settings),
+                OnSubmitComplete = ClickOptions
             },
         });
 
-        StartCoroutine(TransitionShowCr(true));
+        StartCoroutine(Cr());
+        IEnumerator Cr()
+        {
+            yield return TransitionShowCr(true);
+            radial_menu.AnimateShowElements(true, 0.1f);
+        }
     }
 
     private void ClickPlay()

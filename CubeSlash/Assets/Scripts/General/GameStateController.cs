@@ -8,6 +8,12 @@ public class GameStateController : Singleton
 
     public System.Action<GameStateType> onGameStateChanged;
 
+    protected override void Initialize()
+    {
+        base.Initialize();
+        SetGameState(GameStateType.MENU);
+    }
+
     public void SetGameState(GameStateType type)
     {
         GameState = type;
