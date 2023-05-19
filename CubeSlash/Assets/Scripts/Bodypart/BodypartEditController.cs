@@ -147,16 +147,16 @@ public class BodypartEditController : Singleton
         {
             if(selected != null)
             {
-                selected.SetSelected(false);
-                selected.CounterPart.SetSelected(false);
+                selected.SetHover(false);
+                selected.CounterPart.SetHover(false);
             }
 
             selected = part;
 
             if(selected != null)
             {
-                selected.SetSelected(true);
-                selected.CounterPart.SetSelected(true);
+                selected.SetHover(true);
+                selected.CounterPart.SetHover(true);
             }
         }
 
@@ -174,12 +174,22 @@ public class BodypartEditController : Singleton
 
         void End()
         {
-            selected.SetSelected(false);
-            selected.CounterPart.SetSelected(false);
+            selected.SetHover(false);
+            selected.CounterPart.SetHover(false);
 
             PlayerInput.Controls.UI.Submit.started -= Submit;
             PlayerInput.Controls.UI.Cancel.started -= Cancel;
             StopCoroutine(cr);
         }
+    }
+
+    public void BeginRemovingPart(Bodypart part, System.Action<Bodypart> OnRemove)
+    {
+        var idx = Body.Bodyparts.IndexOf(part);
+        RemovePart(part);
+
+        var parts = Body.Bodyparts;
+        part = parts.Count > 0 ? parts[Mathf.Clamp(idx, 0, parts.Count - 1)] : null;
+        OnRemove(part);
     }
 }

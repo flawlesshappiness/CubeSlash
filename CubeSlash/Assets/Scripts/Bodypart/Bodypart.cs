@@ -17,15 +17,15 @@ public class Bodypart : MonoBehaviour
     public enum Side { Left, Right };
     public Side BoneSide { get; set; }
 
-    private void Start()
+    public void Initialize()
     {
+        SetHover(false);
         SetSelected(false);
     }
 
     public void SetPosition(float y, bool is_counter_part = false)
     {
         Position = y;
-        SaveData.position = y;
 
         var position = Skeleton.GetBonePosition(y);
         var side = BoneSide == Side.Left ? position.left : position.right;
@@ -38,6 +38,11 @@ public class Bodypart : MonoBehaviour
         transform.localPosition = side.localPosition;
         transform.localRotation = rotation;
         transform.localScale = Vector3.one;
+
+        if(SaveData != null)
+        {
+            SaveData.position = y;
+        }
 
         if (!is_counter_part)
         {
@@ -62,11 +67,17 @@ public class Bodypart : MonoBehaviour
 
     public void SetHover(bool hover)
     {
-        this.hover.SetActive(hover);
+        if(this.hover != null)
+        {
+            this.hover.SetActive(hover);
+        }
     }
 
     public void SetSelected(bool selected)
     {
-        this.selected.SetActive(selected);
+        if(this.selected != null)
+        {
+            this.selected.SetActive(selected);
+        }
     }
 }

@@ -1,8 +1,6 @@
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class BodyEditView : View
 {
@@ -67,7 +65,7 @@ public class BodyEditView : View
             options.Add(new RadialMenuOption
             {
                 Sprite = Icon.Get(IconType.customize_remove_part),
-                OnSubmitComplete = ShowBodypartSelect
+                OnSubmitComplete = () => SelectPartToRemove(null)
             });
         }
 
@@ -139,13 +137,13 @@ public class BodyEditView : View
         {
             var part = BodypartEditController.Instance.CreatePart(info);
             part.SetPosition(0.5f);
-            BodypartEditController.Instance.BeginMovingPart(part, ShowBodyOptions, () => Cancel(part));
+            BodypartEditController.Instance.BeginMovingPart(part, ShowBodypartSelect, () => Cancel(part));
         }
 
         void Cancel(Bodypart part)
         {
             BodypartEditController.Instance.RemovePart(part);
-            ShowBodyOptions();
+            ShowBodypartSelect();
         }
     }
 
@@ -156,6 +154,33 @@ public class BodyEditView : View
         void Select(Bodypart part)
         {
             BodypartEditController.Instance.BeginMovingPart(part, () => SelectPartToMove(part), () => SelectPartToMove(part));
+        }
+
+        void Cancel()
+        {
+            ShowBodyOptions();
+        }
+    }
+
+    private void SelectPartToRemove(Bodypart selected)
+    {
+        BodypartEditController.Instance.BeginSelectingPart(null, Select, Cancel);
+
+        void Select(Bodypart part)
+        {
+            BodypartEditController.Instance.BeginRemovingPart(part, OnRemove);
+        }
+
+        void OnRemove(Bodypart part)
+        {
+            if(part != null)
+            {
+                SelectPartToRemove(part);
+            }
+            else
+            {
+                ShowBodyOptions();
+            }
         }
 
         void Cancel()

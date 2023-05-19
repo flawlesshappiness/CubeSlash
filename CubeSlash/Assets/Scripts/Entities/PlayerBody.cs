@@ -68,6 +68,7 @@ public class PlayerBody : Body
         bdp.transform.localScale = Vector3.one;
         bdp.Skeleton = skeleton;
         bdp.SetVariation(0);
+        bdp.Initialize();
 
         Bodyparts.Add(bdp);
 

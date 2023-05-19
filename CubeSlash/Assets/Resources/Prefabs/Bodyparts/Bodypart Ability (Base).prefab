@@ -15,6 +15,8 @@ MonoBehaviour:
   pivot_mirror: {fileID: 4801049887902003561}
   pivot_animation: {fileID: 7549870604413733915}
   pivot_scale: {fileID: 1047845465012077707}
+  hover: {fileID: 6615536579107145832}
+  selected: {fileID: 9043267833721212567}
   variations: []
   priority_position: 0
 --- !u!1001 &7144354821496783076
@@ -65,5 +67,15 @@ Transform:
 --- !u!4 &1047845465012077707 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7903651584006341743, guid: 5904e8c0d9feb7645b1050b085cfd1c2, type: 3}
+  m_PrefabInstance: {fileID: 7144354821496783076}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &6615536579107145832 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4101305555264637068, guid: 5904e8c0d9feb7645b1050b085cfd1c2, type: 3}
+  m_PrefabInstance: {fileID: 7144354821496783076}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &9043267833721212567 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2208449325267226227, guid: 5904e8c0d9feb7645b1050b085cfd1c2, type: 3}
   m_PrefabInstance: {fileID: 7144354821496783076}
   m_PrefabAsset: {fileID: 0}
