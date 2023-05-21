@@ -60,13 +60,31 @@ public class Player : Character
         MoveDirection = transform.up;
         g_invincible.SetActive(false);
 
-        SetPlayerBody(Info.default_body);
+        Clear();
     }
 
     public void Clear()
     {
         AbilityController.Instance.Clear();
         UpgradeController.Instance.ClearUpgrades();
+
+        ResetPlayerBody();
+        SetPrimaryAbility(Save.PlayerBody.primary_ability);
+        UpdateBodyparts();
+
+        gameObject.SetActive(true);
+        transform.rotation = Quaternion.identity;
+        Body.SetLookDirection(transform.up);
+    }
+
+    public void ResetPlayerBody()
+    {
+        var db_body = Database.Load<PlayerBodyDatabase>();
+        var info = db_body.collection.First(info => info.type == Save.PlayerBody.body_type);
+        SetPlayerBody(info);
+
+        var skin = info.skins[Save.PlayerBody.body_skin];
+        PlayerBody.SetBodySprite(skin);
     }
 
     public void SetPlayerBody(PlayerBodyInfo info)
@@ -77,16 +95,6 @@ public class Player : Character
 
         Body.transform.localScale = Vector3.one * Info.body_size;
         MoveDirection = transform.up;
-
-        foreach(var data in Save.PlayerBody.bodyparts)
-        {
-            var part = PlayerBody.CreateBodypart(data.type);
-
-            part.SaveData = data;
-            part.CounterPart.SaveData = data;
-
-            part.SetPosition(data.position);
-        }
     }
 
     public void SetPlayerBody(PlayerBodySettings settings)
@@ -100,13 +108,23 @@ public class Player : Character
 
         g_invincible.SetActive(false);
 
-        // Add ability
+        // Ability
         var ability = AbilityController.Instance.GainAbility(settings.ability_type);
         AbilityController.Instance.EquipAbility(ability, PlayerInput.ButtonType.WEST);
 
         ResetValues();
         UpdateUpgradeValues();
         UpdateBodyparts();
+    }
+
+    public void SetPrimaryAbility(Ability.Type type)
+    {
+        AbilityController.Instance.Clear();
+
+        Save.PlayerBody.primary_ability = type;
+        AbilityController.Instance.GainAbility(type);
+        var ability = AbilityController.Instance.GetAbility(type);
+        AbilityController.Instance.EquipAbility(ability, PlayerInput.ButtonType.WEST);
     }
 
     public void ResetValues()
@@ -191,6 +209,16 @@ public class Player : Character
         }
     }
 
+    public void SetRigidbodyEnabled(bool enabled)
+    {
+        Rigidbody.isKinematic = !enabled;
+
+        if (!enabled)
+        {
+            Rigidbody.velocity = Vector3.zero;
+        }
+    }
+
     #region ABILITIES
     private bool CanPressAbility(Ability ability)
     {
@@ -250,14 +278,21 @@ public class Player : Character
         }
     }
 
-    private void UpdateBodyparts()
+    public void UpdateBodyparts()
     {
         PlayerBody.ClearBodyparts();
         var equipped_abilities = AbilityController.Instance.GetEquippedAbilities();
         equipped_abilities.ForEach(ability => PlayerBody.CreateAbilityBodypart(ability.Info));
 
-        var eye = PlayerBody.CreateBodypart(BodypartType.eyestalk_A);
-        eye.SetPosition(0.8f);
+        foreach (var data in Save.PlayerBody.bodyparts)
+        {
+            var part = PlayerBody.CreateBodypart(data.type);
+
+            part.SaveData = data;
+            part.CounterPart.SaveData = data;
+
+            part.SetPosition(data.position);
+        }
     }
     #endregion
     #region UPGRADES
@@ -267,7 +302,7 @@ public class Player : Character
         UpdateBodyparts();
     }
 
-    private void UpdateUpgradeValues()
+    public void UpdateUpgradeValues()
     {
         ChanceToAvoidDamage = PlayerValueController.Instance.GetFloatValue(StatID.player_avoid_damage_chance);
         CollectRadius = COLLECT_RADIUS * PlayerValueController.Instance.GetFloatValue(StatID.player_collect_radius_perc);

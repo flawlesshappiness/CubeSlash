@@ -59,7 +59,7 @@ public class GameController : MonoBehaviour
         Player.Instance.onDeath += OnPlayerDeath;
         Player.Instance.onLevelUp += OnPlayerLevelUp;
         CameraController.Instance.Target = Player.Instance.transform;
-        Player.Instance.gameObject.SetActive(false);
+        Player.Instance.gameObject.SetActive(true);
     }
 
     public void OpenPauseView()
@@ -110,6 +110,11 @@ public class GameController : MonoBehaviour
         GameStateController.Instance.SetGameState(GameStateType.MENU);
         AreaController.Instance.StartAreaCoroutine();
         ViewController.Instance.ShowView<GameView>(0);
+        CameraController.Instance.AnimateSize(1f, 12f, EasingCurves.EaseInOutQuad);
+
+        Player.Instance.SetRigidbodyEnabled(true);
+        Player.Instance.ResetValues();
+        Player.Instance.UpdateUpgradeValues();
 
         onGameStart?.Invoke();
         ResumeLevel();
@@ -197,9 +202,11 @@ public class GameController : MonoBehaviour
         IsGameStarted = false;
         IsGameEnded = false;
         GameStateController.Instance.SetGameState(GameStateType.MENU);
-        Player.Instance.gameObject.SetActive(false);
         ViewController.Instance.ShowView<StartView>(0f);
         CameraController.Instance.SetSize(15f);
+
+        Player.Instance.SetRigidbodyEnabled(false);
+        Player.Instance.Clear();
 
         onMainMenu?.Invoke();
     }

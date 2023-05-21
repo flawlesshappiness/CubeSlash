@@ -8,6 +8,12 @@ public class DifficultyController : Singleton
     public float DifficultyValue { get { return Difficulty.difficulty_value; } }
     public int DifficultyIndex { get; private set; }
 
+    protected override void Initialize()
+    {
+        base.Initialize();
+        SetDifficulty(Save.Game.idx_gamesetup_difficulty);
+    }
+
     public void SetDifficulty(int i)
     {
         var db = Database.Load<DifficultyDatabase>();

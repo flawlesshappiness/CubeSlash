@@ -63,7 +63,7 @@ public class VignetteController : Singleton
     {
         var w = CameraController.Instance.Width;
         var h = CameraController.Instance.Height;
-        var glows_per_w = 20;
+        var glows_per_w = 0;
         var units_per_glow = w / glows_per_w;
         var glows_per_h = (int)(h / units_per_glow);
 

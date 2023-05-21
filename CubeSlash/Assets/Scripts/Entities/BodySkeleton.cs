@@ -10,12 +10,12 @@ public class BodySkeleton : MonoBehaviour
     public List<float> bones = new List<float>();
     public List<BoneInfo> boneInfos;
 
-    public Vector3 Center { get { return transform.position; } }
+    public Vector3 LocalCenter { get { return transform.localPosition; } }
     public Vector3 Up { get { return transform.up; } }
     public Vector3 Right { get { return transform.right; } }
     public Vector3 OffsetPosition { get { return Up * offset; } }
-    public Vector3 Top { get { return Center + Up * HalfHeight + OffsetPosition; } }
-    public Vector3 Bottom { get { return Center - Up * HalfHeight + OffsetPosition; } }
+    public Vector3 Top { get { return LocalCenter + Up * HalfHeight + OffsetPosition; } }
+    public Vector3 Bottom { get { return LocalCenter - Up * HalfHeight + OffsetPosition; } }
     public float HalfHeight { get { return height * 0.5f; } }
 
     private void OnValidate()
@@ -25,8 +25,10 @@ public class BodySkeleton : MonoBehaviour
 
     private void OnDrawGizmos()
     {
+        var actual_center = transform.position;
+
         Gizmos.color = Color.white;
-        Gizmos.DrawLine(Top, Bottom);
+        Gizmos.DrawLine(actual_center + Top, actual_center + Bottom);
 
         if(boneInfos != null)
         {
@@ -34,18 +36,18 @@ public class BodySkeleton : MonoBehaviour
             {
                 Gizmos.color = Color.white;
                 var info = GetBone(i);
-                var left = Center + info.left.localPosition;
-                var right = Center + info.right.localPosition;
+                var left = actual_center + LocalCenter + info.left.localPosition;
+                var right = actual_center + LocalCenter + info.right.localPosition;
 
                 if (i > 0)
                 {
                     var info_prev = GetBone(i - 1);
-                    Gizmos.DrawLine(left, Center + info_prev.left.localPosition);
-                    Gizmos.DrawLine(right, Center + info_prev.right.localPosition);
+                    Gizmos.DrawLine(left, actual_center + LocalCenter + info_prev.left.localPosition);
+                    Gizmos.DrawLine(right, actual_center + LocalCenter + info_prev.right.localPosition);
                 }
 
                 Gizmos.DrawLine(left, right);
-                Gizmos.DrawSphere(Center + info.localPosition, 0.03f);
+                Gizmos.DrawSphere(actual_center + LocalCenter + info.localPosition, 0.03f);
 
                 // Normals
                 Gizmos.color = Color.cyan;
@@ -55,14 +57,14 @@ public class BodySkeleton : MonoBehaviour
         }
 
         var bone_position = GetBonePosition(t_test);
-        var p_left = Center + bone_position.left.localPosition;
-        var p_right = Center + bone_position.right.localPosition;
+        var p_left = actual_center + LocalCenter + bone_position.left.localPosition;
+        var p_right = actual_center + LocalCenter + bone_position.right.localPosition;
 
         Gizmos.color = Color.green;
-        Gizmos.DrawSphere(Center + bone_position.upper.localPosition, 0.05f);
+        Gizmos.DrawSphere(actual_center + LocalCenter + bone_position.upper.localPosition, 0.05f);
 
         Gizmos.color = Color.red;
-        Gizmos.DrawSphere(Center + bone_position.lower.localPosition, 0.05f);
+        Gizmos.DrawSphere(actual_center + LocalCenter + bone_position.lower.localPosition, 0.05f);
 
         Gizmos.color = Color.yellow;
         Gizmos.DrawSphere(p_left, 0.05f);

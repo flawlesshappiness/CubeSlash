@@ -36,12 +36,6 @@ public class StartView : View
             },
             new RadialMenuOption
             {
-                Title = "Customize",
-                Sprite = Icon.Get(IconType.customize_body),
-                OnSubmitComplete = ClickCustomizeBody
-            },
-            new RadialMenuOption
-            {
                 Title = "Play",
                 Sprite = Icon.Get(IconType.start_game),
                 OnSubmitComplete = ClickPlay
@@ -77,16 +71,11 @@ public class StartView : View
         GameController.Instance.Quit();
     }
 
-    private void ClickCustomizeBody()
-    {
-        ViewController.Instance.ShowView<BodyEditView>();
-    }
-
     IEnumerator TransitionToGameSetupCr()
     {
         SelectableMenuItem.RemoveSelection();
         yield return TransitionShowCr(false);
-        ViewController.Instance.ShowView<GameSetupView>(0);
+        ViewController.Instance.ShowView<PlayRadialView>(0);
     }
 
     IEnumerator TransitionToOptions()

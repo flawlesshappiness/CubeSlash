@@ -300,6 +300,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7903651584515211459}
   - component: {fileID: 1326003052195312476}
+  - component: {fileID: 1412183868054088319}
   m_Layer: 0
   m_Name: Bodypart (Base)
   m_TagString: Untagged
@@ -341,3 +342,14 @@ MonoBehaviour:
   hover: {fileID: 4101305555264637068}
   selected: {fileID: 2208449325267226227}
   variations: []
+--- !u!210 &1412183868054088319
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7903651584515211458}
+  m_Enabled: 1
+  m_SortingLayerID: 1630863459
+  m_SortingLayer: 1
+  m_SortingOrder: 10

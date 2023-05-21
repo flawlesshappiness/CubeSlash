@@ -11,19 +11,12 @@ public class BodyEditView : View
 
     private void Start()
     {
-        InitializePlayer();
-        ShowBodyOptions();
-    }
-
-    private void InitializePlayer()
-    {
-        Player.gameObject.SetActive(true);
-        Player.Rigidbody.isKinematic = true;
+        ShowMainOptions();
     }
 
     private void Back()
     {
-        ViewController.Instance.ShowView<StartView>(0);
+        ViewController.Instance.ShowView<PlayRadialView>(0);
     }
 
     private void InsertBackOption(List<RadialMenuOption> options, System.Action OnBack)
@@ -35,7 +28,7 @@ public class BodyEditView : View
         });
     }
 
-    private void ShowBodyOptions()
+    private void ShowMainOptions()
     {
         radial.Clear();
 
@@ -86,7 +79,7 @@ public class BodyEditView : View
             OnSubmitComplete = () => ShowBodySkinSelect(info)
         }).ToList();
 
-        InsertBackOption(options, ShowBodyOptions);
+        InsertBackOption(options, ShowMainOptions);
 
         radial.AddOptions(options);
         radial.AnimateShowElements(true, 0.05f);
@@ -109,8 +102,12 @@ public class BodyEditView : View
 
         void SelectBody(PlayerBodyInfo info, Sprite skin)
         {
+            Save.PlayerBody.body_type = info.type;
+            Save.PlayerBody.body_skin = info.skins.IndexOf(skin);
+
             Player.SetPlayerBody(info);
             Body.SetBodySprite(skin);
+            Player.UpdateBodyparts();
             ShowBodySelect();
         }
     }
@@ -128,7 +125,7 @@ public class BodyEditView : View
             OnSubmitComplete = () => SelectBodypart(info)
             }).ToList();
 
-        InsertBackOption(options, ShowBodyOptions);
+        InsertBackOption(options, ShowMainOptions);
 
         radial.AddOptions(options);
         radial.AnimateShowElements(true, 0.05f);
@@ -158,7 +155,7 @@ public class BodyEditView : View
 
         void Cancel()
         {
-            ShowBodyOptions();
+            ShowMainOptions();
         }
     }
 
@@ -179,13 +176,13 @@ public class BodyEditView : View
             }
             else
             {
-                ShowBodyOptions();
+                ShowMainOptions();
             }
         }
 
         void Cancel()
         {
-            ShowBodyOptions();
+            ShowMainOptions();
         }
     }
 }

@@ -95,7 +95,6 @@ public class AbilityMines : Ability
             prefab = prefab_mine,
             position_start = Player.transform.position,
             velocity = direction.normalized * MINE_SPEED,
-            onKill = (p, k) => OnMineHit(p.transform.position)
         }) as MinesProjectile;
 
         p.transform.localScale = Vector3.one * ShellSize;
