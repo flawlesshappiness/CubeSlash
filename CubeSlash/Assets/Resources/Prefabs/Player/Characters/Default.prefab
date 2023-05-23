@@ -44,8 +44,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   height: 1.05
-  offset: -0.06
-  t_test: 1
+  offset: -0.6
+  t_test: 0
   bones:
   - 0.1
   - 0.38

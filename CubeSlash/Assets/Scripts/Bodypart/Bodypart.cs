@@ -29,7 +29,7 @@ public class Bodypart : MonoBehaviour
 
         var position = Skeleton.GetBonePosition(y);
         var side = BoneSide == Side.Left ? position.left : position.right;
-        var angle = Vector3.SignedAngle(side.normal, Vector3.up, Vector3.back);
+        var angle = Vector3.SignedAngle(side.localNormal, Vector3.up, Vector3.back);
         var rotation = Quaternion.AngleAxis(angle, Vector3.forward);
         var show_counterpart = !position.is_top_or_bottom;
 

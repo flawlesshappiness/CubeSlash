@@ -8,218 +8,98 @@ public class BodySkeleton : MonoBehaviour
     [Range(0f, 1f)]
     public float t_test;
     public List<float> bones = new List<float>();
-    public List<BoneInfo> boneInfos;
 
     public Vector3 LocalCenter { get { return transform.localPosition; } }
-    public Vector3 Up { get { return transform.up; } }
-    public Vector3 Right { get { return transform.right; } }
+    public Vector3 Up { get { return Vector3.up; } }
+    public Vector3 Right { get { return Vector3.right; } }
     public Vector3 OffsetPosition { get { return Up * offset; } }
     public Vector3 Top { get { return LocalCenter + Up * HalfHeight + OffsetPosition; } }
     public Vector3 Bottom { get { return LocalCenter - Up * HalfHeight + OffsetPosition; } }
     public float HalfHeight { get { return height * 0.5f; } }
 
-    private void OnValidate()
-    {
-        InitializeBones();
-    }
-
     private void OnDrawGizmos()
     {
-        var actual_center = transform.position;
-
-        Gizmos.color = Color.white;
-        Gizmos.DrawLine(actual_center + Top, actual_center + Bottom);
-
-        if(boneInfos != null)
-        {
-            for (int i = 0; i < boneInfos.Count; i++)
-            {
-                Gizmos.color = Color.white;
-                var info = GetBone(i);
-                var left = actual_center + LocalCenter + info.left.localPosition;
-                var right = actual_center + LocalCenter + info.right.localPosition;
-
-                if (i > 0)
-                {
-                    var info_prev = GetBone(i - 1);
-                    Gizmos.DrawLine(left, actual_center + LocalCenter + info_prev.left.localPosition);
-                    Gizmos.DrawLine(right, actual_center + LocalCenter + info_prev.right.localPosition);
-                }
-
-                Gizmos.DrawLine(left, right);
-                Gizmos.DrawSphere(actual_center + LocalCenter + info.localPosition, 0.03f);
-
-                // Normals
-                Gizmos.color = Color.cyan;
-                Gizmos.DrawLine(left, left + info.left.normal);
-                Gizmos.DrawLine(right, right + info.right.normal);
-            }
-        }
-
-        var bone_position = GetBonePosition(t_test);
-        var p_left = actual_center + LocalCenter + bone_position.left.localPosition;
-        var p_right = actual_center + LocalCenter + bone_position.right.localPosition;
-
-        Gizmos.color = Color.green;
-        Gizmos.DrawSphere(actual_center + LocalCenter + bone_position.upper.localPosition, 0.05f);
-
-        Gizmos.color = Color.red;
-        Gizmos.DrawSphere(actual_center + LocalCenter + bone_position.lower.localPosition, 0.05f);
-
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawSphere(p_left, 0.05f);
-        Gizmos.DrawSphere(p_right, 0.05f);
-
-        Gizmos.DrawLine(p_left, p_left + bone_position.left.normal);
-        Gizmos.DrawLine(p_right, p_right + bone_position.right.normal);
-    }
-
-    private void InitializeBones()
-    {
-        boneInfos = new List<BoneInfo>();
-
-        var p_delta = height / (bones.Count - 1);
+        var i_max = bones.Count - 1;
         for (int i = 0; i < bones.Count; i++)
         {
-            var b = bones[i];
-            var info = new BoneInfo();
-            info.width = b;
-            info.localPosition = (Up * HalfHeight) + (-Up * p_delta * i) + OffsetPosition;
-            info.left.localPosition = info.localPosition - Right * info.width;
-            info.right.localPosition = info.localPosition + Right * info.width;
+            Gizmos.color = Color.white;
+            var t = (float)i / i_max;
+            t = t == 0 ? 0.001f : t == 1 ? 0.999f : t;
+            var p = GetBonePosition(t);
 
-            boneInfos.Add(info);
-        }
+            Gizmos.DrawLine(p.left.position, p.right.position);
 
-        // Normals
-        for (int i = 0; i < boneInfos.Count; i++)
-        {
-            var info = GetBone(i);
-            if(i == 0)
+            if (i < bones.Count - 1)
             {
-                info.left.normal = Vector3.up;
-                info.right.normal = Vector3.up;
-            }
-            else if(i == boneInfos.Count - 1)
-            {
-                info.left.normal = Vector3.down;
-                info.right.normal = Vector3.down;
-            }
-            else
-            {
-                var prev = GetBone(i - 1);
-                var next = GetBone(i + 1);
+                var t_next = (float)(i + 1) / i_max;
+                t_next = t_next == 1 ? 0.999f : t_next;
+                var p_next = GetBonePosition(t_next);
 
-                var n_prev_left = CalculateNormal(prev, info, b => b.left.localPosition);
-                var n_next_left = CalculateNormal(info, next, b => b.left.localPosition);
-                info.left.normal = Vector3.Lerp(n_prev_left, n_next_left, 0.5f).normalized;
-
-                var n_prev_right = CalculateNormal(info, prev, b => b.right.localPosition);
-                var n_next_right = CalculateNormal(next, info, b => b.right.localPosition);
-                info.right.normal = Vector3.Lerp(n_prev_right, n_next_right, 0.5f).normalized;
+                Gizmos.DrawLine(p.left.position, p_next.left.position);
+                Gizmos.DrawLine(p.right.position, p_next.right.position);
             }
         }
 
-        Vector3 CalculateNormal(BoneInfo boneA, BoneInfo boneB, System.Func<BoneInfo, Vector3> getPosition)
+        var p_test = GetBonePosition(t_test);
+
+        Gizmos.DrawSphere(p_test.left.position, 0.03f);
+        Gizmos.DrawSphere(p_test.right.position, 0.03f);
+
+        Gizmos.DrawLine(p_test.left.position, p_test.left.position + p_test.left.normal * 0.2f);
+        Gizmos.DrawLine(p_test.right.position, p_test.right.position + p_test.right.normal * 0.2f);
+    }
+
+    public BonePosition GetBonePosition(float t)
+    {
+        var position = new BonePosition();
+        position.is_top_or_bottom = t == 0 || t == 1;
+
+        if(position.is_top_or_bottom)
         {
-            var dir = getPosition(boneB) - getPosition(boneA);
-            return Vector3.Cross(dir, Vector3.forward).normalized;
+            var y = offset + (t == 0 ? 0 : height);
+            position.left.localPosition = new Vector3(0, y);
+            position.right.localPosition = new Vector3(0, y);
         }
-    }
-
-    public BoneInfo GetBone(int i)
-    {
-        if(boneInfos == null)
+        else
         {
-            InitializeBones();
-        }
-        return boneInfos[i];
-    }
+            t = 1f - Mathf.Clamp01(t);
+            var i_max = bones.Count - 1;
+            var i_lower = (int)Mathf.Lerp(0, i_max, t);
+            var i_upper = Mathf.Clamp(i_lower + 1, 0, i_max);
+            var t_lower = (float)i_lower / i_max;
+            var t_upper = (float)i_upper / i_max;
+            var t_local = t == 0 ? 0 : t == 1 ? 1 : (t - t_lower) / (t_upper - t_lower);
 
-    public int GetBoneCount()
-    {
-        if(boneInfos == null)
-        {
-            InitializeBones();
-        }
-        return boneInfos.Count;
-    }
+            //Debug.Log($"({t} - {t_lower}) / ({t_upper} - {t_lower}) = {t_local}");
 
-    public BoneInfo GetLowerBone(float t)
-    {
-        t = 1 - t;
-        var count = GetBoneCount() - 1;
-        var i = (int)Mathf.Clamp(1 + count * t, 1, count);
-        return GetBone(i);
-    }
+            var y = height * (1f - t) + offset;
+            var w_upper = bones[i_upper];
+            var w_lower = bones[i_lower];
+            var w = Mathf.Lerp(w_upper, w_lower, 1f - t_local);
 
-    public BoneInfo GetUpperBone(float t)
-    {
-        t = 1 - t;
-        var count = GetBoneCount() - 1;
-        var i = (int)Mathf.Clamp(count * t, 0, count - 1);
-        return GetBone(i);
-    }
-
-    public BonePositionInfo GetBonePosition(float t)
-    {
-        if(t == 0 || t == 1)
-        {
-            var bone = t == 0 ? GetLowerBone(0) : GetUpperBone(1);
-            var _info = new BonePositionInfo
-            {
-                upper = bone,
-                lower = bone,
-                is_top_or_bottom = true,
-            };
-
-            _info.left.localPosition = bone.localPosition;
-            _info.right.localPosition = bone.localPosition;
-            _info.left.normal = bone.left.normal;
-            _info.right.normal = bone.right.normal;
-
-            return _info;
+            position.left.localPosition = new Vector3(w, y);
+            position.right.localPosition = new Vector3(-w, y);
         }
 
-        var upper = GetUpperBone(t);
-        var lower = GetLowerBone(t);
+        // Transform
+        var center = transform.position;
+        var rotation = transform.rotation;
 
-        var y_top = Top.y;
-        var y_bottom = Bottom.y;
-        var y_t = Mathf.Lerp(y_top, y_bottom, 1 - t);
-        var y_upper = upper.localPosition.y;
-        var y_lower = lower.localPosition.y;
-        var t_local = 1 - ((y_t - y_lower) / (y_upper - y_lower));
-        //Debug.Log($"({y_t} - {y_lower}) / ({y_upper} - {y_lower}) = {t_local}");
+        position.left.position = center + rotation * position.left.localPosition;
+        position.right.position = center + rotation * position.right.localPosition;
 
-        var info = new BonePositionInfo
-        {
-            upper = upper,
-            lower = lower,
-        };
+        position.left.localNormal = position.left.localPosition.normalized;
+        position.right.localNormal = position.right.localPosition.normalized;
 
-        info.left.localPosition = Vector3.Lerp(upper.left.localPosition, lower.left.localPosition, t_local);
-        info.right.localPosition = Vector3.Lerp(upper.right.localPosition, lower.right.localPosition, t_local);
+        position.left.normal = (position.left.position - center).normalized;
+        position.right.normal = (position.right.position - center).normalized;
 
-        info.left.normal = Vector3.Lerp(upper.left.normal, lower.left.normal, t_local);
-        info.right.normal = Vector3.Lerp(upper.right.normal, lower.right.normal, t_local);
-
-        return info;
+        return position;
     }
 }
 
-public class BoneInfo
+public struct BonePosition
 {
-    public Vector3 localPosition;
-    public BoneSide left;
-    public BoneSide right;
-    public float width;
-}
-
-public class BonePositionInfo
-{
-    public BoneInfo upper;
-    public BoneInfo lower;
     public BoneSide left;
     public BoneSide right;
     public bool is_top_or_bottom;
@@ -227,6 +107,8 @@ public class BonePositionInfo
 
 public struct BoneSide
 {
+    public Vector3 position;
     public Vector3 localPosition;
     public Vector3 normal;
+    public Vector3 localNormal;
 }
