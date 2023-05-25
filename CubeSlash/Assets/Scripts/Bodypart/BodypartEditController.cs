@@ -45,6 +45,7 @@ public class BodypartEditController : Singleton
         _selected_part.CounterPart.SetSelected(true);
 
         var start_position = _selected_part.Position;
+        var start_size = _selected_part.Size;
         var cr = StartCoroutine(UpdateCr());
 
         PlayerInput.Controls.UI.Submit.started += Submit;
@@ -55,21 +56,31 @@ public class BodypartEditController : Singleton
             while (true)
             {
                 var dir = PlayerInput.Controls.UI.Navigate.ReadValue<Vector2>();
-                if (dir.y.Abs() < DEAD_ZONE)
+                if (dir.y.Abs() > DEAD_ZONE)
                 {
-                    yield return null;
-                    continue;
+                    var sign = Mathf.Sign(dir.y);
+                    var t_max = 1f - DEAD_ZONE;
+                    var t = Mathf.Abs(dir.y) - DEAD_ZONE;
+                    var t_y = t / t_max * sign;
+
+                    var y = _selected_part.Position;
+                    var delta = t_y * MOVE_SPEED * Time.unscaledDeltaTime;
+                    var y_next = Mathf.Clamp01(y + delta);
+                    _selected_part.SetPosition(y_next);
                 }
 
-                var sign = Mathf.Sign(dir.y);
-                var t_max = 1f - DEAD_ZONE;
-                var t = Mathf.Abs(dir.y) - DEAD_ZONE;
-                var t_y = t / t_max * sign;
+                if(dir.x.Abs() > DEAD_ZONE)
+                {
+                    var sign = Mathf.Sign(dir.x);
+                    var t_max = 1f - DEAD_ZONE;
+                    var t = Mathf.Abs(dir.x) - DEAD_ZONE;
+                    var t_size = t / t_max * sign;
 
-                var y = _selected_part.Position;
-                var delta = t_y * MOVE_SPEED * Time.unscaledDeltaTime;
-                var y_next = Mathf.Clamp01(y + delta);
-                _selected_part.SetPosition(y_next);
+                    var size = _selected_part.Size;
+                    var delta = t_size * MOVE_SPEED * Time.unscaledDeltaTime;
+                    var size_next = Mathf.Clamp01(size + delta);
+                    _selected_part.SetSize(size_next);
+                }
 
                 yield return null;
             }
@@ -85,6 +96,7 @@ public class BodypartEditController : Singleton
         {
             End();
             _selected_part.SetPosition(start_position);
+            _selected_part.SetSize(start_size);
             OnCancel?.Invoke();
         }
 

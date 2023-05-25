@@ -292,6 +292,7 @@ public class Player : Character
             part.CounterPart.SaveData = data;
 
             part.SetPosition(data.position);
+            part.SetSize(data.size);
         }
     }
     #endregion

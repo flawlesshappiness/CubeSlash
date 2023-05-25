@@ -14,4 +14,5 @@ public class BodypartSavaData
 {
     public BodypartType type;
     public float position;
+    public float size;
 }

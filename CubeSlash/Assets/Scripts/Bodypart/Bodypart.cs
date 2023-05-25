@@ -13,6 +13,7 @@ public class Bodypart : MonoBehaviour
     public BodypartSavaData SaveData { get; set; }
     public int VariationIndex { get; set; }
     public float Position { get; private set; }
+    public float Size { get; private set; }
 
     public enum Side { Left, Right };
     public Side BoneSide { get; set; }
@@ -23,11 +24,11 @@ public class Bodypart : MonoBehaviour
         SetSelected(false);
     }
 
-    public void SetPosition(float y, bool is_counter_part = false)
+    public void SetPosition(float t, bool is_counter_part = false)
     {
-        Position = y;
+        Position = t;
 
-        var position = Skeleton.GetBonePosition(y);
+        var position = Skeleton.GetBonePosition(t);
         var side = BoneSide == Side.Left ? position.left : position.right;
         var angle = Vector3.SignedAngle(side.localNormal, Vector3.up, Vector3.back);
         var rotation = Quaternion.AngleAxis(angle, Vector3.forward);
@@ -41,12 +42,29 @@ public class Bodypart : MonoBehaviour
 
         if(SaveData != null)
         {
-            SaveData.position = y;
+            SaveData.position = t;
         }
 
         if (!is_counter_part)
         {
-            CounterPart.SetPosition(y, is_counter_part: true);
+            CounterPart.SetPosition(t, is_counter_part: true);
+        }
+    }
+
+    public void SetSize(float t, bool is_counter_part = false)
+    {
+        Size = t;
+
+        pivot_scale.localScale = Vector3.one * Mathf.Lerp(1f, 2f, t);
+
+        if (SaveData != null)
+        {
+            SaveData.size = t;
+        }
+
+        if (!is_counter_part)
+        {
+            CounterPart.SetSize(t, is_counter_part: true);
         }
     }
 

@@ -134,6 +134,7 @@ public class BodyEditView : View
         {
             var part = BodypartEditController.Instance.CreatePart(info);
             part.SetPosition(0.5f);
+            part.SetSize(0.5f);
             BodypartEditController.Instance.BeginMovingPart(part, ShowBodypartSelect, () => Cancel(part));
         }
 
