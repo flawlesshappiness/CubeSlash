@@ -703,6 +703,28 @@
                 },
                 {
                     "name": "",
+                    "id": "2d5b67b3-6295-4c8e-a7ff-69da87db7e42",
+                    "path": "<Gamepad>/buttonEast",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Cancel",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "671b0bb6-d8ef-4ee3-8ea2-14ef65feb7d6",
+                    "path": "<Keyboard>/l",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Cancel",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "3da6d2aa-a914-4def-be09-4c474c083f2d",
                     "path": "<Mouse>/position",
                     "interactions": "",

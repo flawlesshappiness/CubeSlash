@@ -13,6 +13,7 @@ public class RadialMenuPlayerInput : MonoBehaviour
         menu = GetComponent<RadialMenu>();
 
         PlayerInput.Controls.UI.Submit.started += _ => menu.BeginSubmit();
+        PlayerInput.Controls.UI.Cancel.started += _ => menu.Cancel();
     }
 
     private void Update()

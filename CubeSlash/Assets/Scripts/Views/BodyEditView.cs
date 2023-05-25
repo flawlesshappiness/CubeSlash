@@ -66,6 +66,7 @@ public class BodyEditView : View
 
         radial.AddOptions(options);
         radial.AnimateShowElements(true, 0.05f);
+        radial.SetCancelElement(radial.GetElement(0));
     }
 
     private void ShowBodySelect()
@@ -83,6 +84,7 @@ public class BodyEditView : View
 
         radial.AddOptions(options);
         radial.AnimateShowElements(true, 0.05f);
+        radial.SetCancelElement(radial.GetElement(0));
     }
 
     private void ShowBodySkinSelect(PlayerBodyInfo info)
@@ -99,6 +101,7 @@ public class BodyEditView : View
 
         radial.AddOptions(options);
         radial.AnimateShowElements(true, 0.05f);
+        radial.SetCancelElement(radial.GetElement(0));
 
         void SelectBody(PlayerBodyInfo info, Sprite skin)
         {
@@ -129,6 +132,7 @@ public class BodyEditView : View
 
         radial.AddOptions(options);
         radial.AnimateShowElements(true, 0.05f);
+        radial.SetCancelElement(radial.GetElement(0));
 
         void SelectBodypart(BodypartInfo info)
         {

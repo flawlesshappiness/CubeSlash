@@ -10,6 +10,7 @@ public class RadialMenu : MonoBehaviour
 
     public bool SubmitAnimationEnabled { get; set; } = true;
     public RadialMenuElement CurrentElement { get; private set; }
+    public RadialMenuElement CancelElement { get; private set; }
 
     public event System.Action<RadialMenuElement> OnSelect;
     public event System.Action<RadialMenuElement> OnSubmitBegin;
@@ -53,6 +54,12 @@ public class RadialMenu : MonoBehaviour
         element.Initialize(option);
     }
 
+    public RadialMenuElement GetElement(int i)
+    {
+        var elements = selector.Elements;
+        return elements[Mathf.Clamp(i, 0, elements.Count - 1)];
+    }
+
     public void BeginSubmit()
     {
         if (submitting) return;
@@ -78,6 +85,19 @@ public class RadialMenu : MonoBehaviour
         OnSubmitComplete?.Invoke(CurrentElement);
     }
 
+    public void SetCancelElement(RadialMenuElement element)
+    {
+        CancelElement = element;
+    }
+
+    public void Cancel()
+    {
+        if (CancelElement == null) return;
+
+        SetCurrentElement(CancelElement);
+        BeginSubmit();
+    }
+
     public void SelectElement(Vector2 direction)
     {
         if (selector == null) return;
@@ -91,6 +111,7 @@ public class RadialMenu : MonoBehaviour
 
     public void SetCurrentElement(RadialMenuElement element)
     {
+        if (selector == null) return;
         if (submitting) return;
 
         if(CurrentElement != null)

@@ -62,6 +62,7 @@ public class PlayRadialView : View
 
         radial.AddOptions(options);
         radial.AnimateShowElements(true, 0.05f);
+        radial.SetCancelElement(radial.GetElement(0));
     }
 
     private void ShowAbilityOptions()
@@ -81,6 +82,7 @@ public class PlayRadialView : View
 
         radial.AddOptions(options);
         radial.AnimateShowElements(true, 0.05f);
+        radial.SetCancelElement(radial.GetElement(0));
 
         void SelectAbility(AbilityInfo info)
         {
