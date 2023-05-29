@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5897f911dca0ab4caf31dc68205d639, type: 3}
+  m_Name: plant
+  m_EditorClassIdentifier: 
+  type:
+    id: plant_body
+  prefab: {fileID: 6651210199192526230, guid: c197517a172464e4fbea3fb3410512e2, type: 3}
+  skins:
+  - {fileID: 21300000, guid: ce3b952b3c7f9d2478c524e477f001e6, type: 3}
+  - {fileID: 21300000, guid: 70d09298430b0ee4983be1aeec7454a1, type: 3}
+  - {fileID: 21300000, guid: a8f56ae36ebdaf347a450f7178ff0fb5, type: 3}
+  - {fileID: 21300000, guid: b80e084c03ba1634681cb88af900ec23, type: 3}
+  - {fileID: 21300000, guid: 9c6426bf60f77d8469cb3bbe4c3432ba, type: 3}
+  - {fileID: 21300000, guid: e1b95469876dc5a4abda31adb2be9d04, type: 3}

@@ -6,6 +6,8 @@ public class PlayerBody : Body
     [SerializeField] public SpriteRenderer spr_main;
     [SerializeField] public BodySkeleton skeleton;
 
+    public Color base_color = Color.white;
+
     public List<Bodypart> Bodyparts { get; private set; } = new List<Bodypart>();
 
     public Sprite GetBodySprite() => spr_main.sprite;
@@ -47,6 +49,9 @@ public class PlayerBody : Body
 
         right.gameObject.SetActive(false);
         right.SetMirrored(true);
+
+        left.SetBaseColor(base_color);
+        right.SetBaseColor(base_color);
 
         return left;
     }

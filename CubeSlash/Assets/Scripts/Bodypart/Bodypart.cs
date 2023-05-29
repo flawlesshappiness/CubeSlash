@@ -5,6 +5,7 @@ public class Bodypart : MonoBehaviour
 {
     [SerializeField] public Transform pivot_mirror, pivot_animation, pivot_scale;
     [SerializeField] private GameObject hover, selected;
+    [SerializeField] public SpriteRenderer spr_base;
     [SerializeField] private GameObject[] variations;
 
     public BodypartInfo Info { get; set; }
@@ -97,5 +98,10 @@ public class Bodypart : MonoBehaviour
         {
             this.selected.SetActive(selected);
         }
+    }
+
+    public void SetBaseColor(Color color)
+    {
+        spr_base.color = color;
     }
 }

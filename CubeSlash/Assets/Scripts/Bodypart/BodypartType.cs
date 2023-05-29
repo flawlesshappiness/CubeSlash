@@ -12,6 +12,8 @@ public class BodypartType : FakeEnum
     public static readonly BodypartType bone_B = new BodypartType(nameof(bone_B));
     public static readonly BodypartType crystal_A = new BodypartType(nameof(crystal_A));
     public static readonly BodypartType crystal_B = new BodypartType(nameof(crystal_B));
+    public static readonly BodypartType crystal_C = new BodypartType(nameof(crystal_C));
+    public static readonly BodypartType crystal_D = new BodypartType(nameof(crystal_D));
     public static readonly BodypartType eye_A = new BodypartType(nameof(eye_A));
     public static readonly BodypartType eyestalk_A = new BodypartType(nameof(eyestalk_A));
     public static readonly BodypartType puff_A = new BodypartType(nameof(puff_B));

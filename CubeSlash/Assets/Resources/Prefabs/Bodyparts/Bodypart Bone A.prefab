@@ -352,6 +352,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 1326003052195312476, guid: 5904e8c0d9feb7645b1050b085cfd1c2, type: 3}
+      propertyPath: spr_base
+      value: 
+      objectReference: {fileID: 2121455274022602148}
+    - target: {fileID: 1326003052195312476, guid: 5904e8c0d9feb7645b1050b085cfd1c2, type: 3}
       propertyPath: variations.Array.size
       value: 2
       objectReference: {fileID: 0}

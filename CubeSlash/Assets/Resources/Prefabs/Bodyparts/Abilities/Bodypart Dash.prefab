@@ -119,6 +119,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4844002050994401294, guid: aadbd85929fdd8d42b9e27dc53233cca, type: 3}
+      propertyPath: spr_base
+      value: 
+      objectReference: {fileID: 2445276517303158790}
+    - target: {fileID: 4844002050994401294, guid: aadbd85929fdd8d42b9e27dc53233cca, type: 3}
       propertyPath: priority_position
       value: 0
       objectReference: {fileID: 0}
@@ -130,6 +134,10 @@ PrefabInstance:
       propertyPath: variations.Array.data[0]
       value: 
       objectReference: {fileID: 1221049752316130980}
+    - target: {fileID: 8846417088286173569, guid: aadbd85929fdd8d42b9e27dc53233cca, type: 3}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8846417088286173569, guid: aadbd85929fdd8d42b9e27dc53233cca, type: 3}
       propertyPath: m_LocalPosition.y
       value: 0.877

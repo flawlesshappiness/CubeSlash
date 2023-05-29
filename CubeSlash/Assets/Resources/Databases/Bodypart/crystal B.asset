@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac4cd3749a175684eb481bc5c8746bea, type: 3}
+  m_Name: crystal B
+  m_EditorClassIdentifier: 
+  type:
+    id: crystal_B
+  preview: {fileID: 21300000, guid: 2b29cf076378be1469eac0beef33f1ad, type: 3}
+  prefab: {fileID: 9044670076722975821, guid: 36087abd9b42e264d9540c5333c26496, type: 3}
+  is_ability_part: 0
