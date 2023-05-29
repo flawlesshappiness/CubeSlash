@@ -35,3 +35,10 @@ MonoBehaviour:
       value_int: 0
       value_float: 0.2
       value_bool: 0
+  - id:
+      id: split_cooldown_flat
+    value:
+      type_value: 1
+      value_int: 0
+      value_float: 0.5
+      value_bool: 0
