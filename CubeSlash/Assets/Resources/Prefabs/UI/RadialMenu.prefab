@@ -631,8 +631,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sfx_submit:
     id: sfx_ui_marima_001
-  sfx_cancel:
-    id: sfx_ui_marima_002
+  sfx_select:
+    id: sfx_ui_fadiano_001
 --- !u!1 &7286212597033933491
 GameObject:
   m_ObjectHideFlags: 0
@@ -904,8 +904,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 100, y: 0}
+  m_SizeDelta: {x: 200, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8732863235938193107
 CanvasRenderer:

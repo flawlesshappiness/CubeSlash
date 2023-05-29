@@ -119,6 +119,7 @@ public class SoundEffectType : FakeEnum
     public static readonly SoundEffectType sfx_ui_stats_appear = new SoundEffectType(nameof(sfx_ui_stats_appear));
     public static readonly SoundEffectType sfx_ui_marima_001 = new SoundEffectType(nameof(sfx_ui_marima_001));
     public static readonly SoundEffectType sfx_ui_marima_002 = new SoundEffectType(nameof(sfx_ui_marima_002));
+    public static readonly SoundEffectType sfx_ui_fadiano_001 = new SoundEffectType(nameof(sfx_ui_fadiano_001));
 
     // BGM
     public static readonly SoundEffectType bgm_menu = new SoundEffectType(nameof(bgm_menu));

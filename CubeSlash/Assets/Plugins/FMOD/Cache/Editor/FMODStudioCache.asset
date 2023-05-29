@@ -97,7 +97,7 @@ MonoBehaviour:
   Path: Assets/FMOD/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 638209712958303968
+  lastModified: 638209758274408473
   FileSizes: []
   Exists: 1
 --- !u!114 &-7872426760261806101
@@ -1354,12 +1354,13 @@ MonoBehaviour:
   - {fileID: 5539064285418462032}
   - {fileID: -322542166197979872}
   - {fileID: -5379824391959199112}
+  - {fileID: 2556223880156347520}
   EditorParameters: []
   MasterBanks:
   - {fileID: -8060980804293988741}
   StringsBanks:
   - {fileID: 5917708036578608240}
-  cacheTime: 638209712958363982
+  cacheTime: 638209758274458539
   cacheVersion: 131593
 --- !u!114 &1453305857757199432
 MonoBehaviour:
@@ -1493,6 +1494,33 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 16000
+--- !u!114 &2556223880156347520
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/UI/ui_fadiano_001
+  m_EditorClassIdentifier: 
+  Path: event:/UI/ui_fadiano_001
+  Guid:
+    Data1: -467395374
+    Data2: 1205010143
+    Data3: -1157347928
+    Data4: 1666919361
+  Banks:
+  - {fileID: -8060980804293988741}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
 --- !u!114 &2606001295264177313
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1859,10 +1887,10 @@ MonoBehaviour:
   Path: Assets/FMOD/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 638209712958363982
+  lastModified: 638209758274458539
   FileSizes:
   - Name: 
-    Value: 4598
+    Value: 4640
   Exists: 1
 --- !u!114 &5992827859230917708
 MonoBehaviour:
