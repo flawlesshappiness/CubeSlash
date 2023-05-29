@@ -99,6 +99,9 @@ public class DamageTrail : MonoBehaviour
         trail.StopParticleSystems();
         Lerp.LocalScale(trail.transform, lifetime, Vector3.zero, Vector3.one * radius).Curve(ac_size);
         Destroy(trail.gameObject, lifetime);
+
+        ObjectController.Instance.Add(trail.gameObject);
+
         return trail;
     }
 

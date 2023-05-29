@@ -113,11 +113,13 @@ public class Enemy : Character, IKillable, IHurt
         // PS
         if (Body.ps_death != null)
         {
-            Body.ps_death.Duplicate()
+            var psd = Body.ps_death.Duplicate()
                 .Position(transform.position)
                 .Scale(Vector3.one * Settings.size)
                 .Destroy(15)
                 .Play();
+
+            ObjectController.Instance.Add(psd.ps.gameObject);
         }
 
         var sfx = SoundDatabase.GetEntry(SoundEffectType.sfx_enemy_death).sfx;

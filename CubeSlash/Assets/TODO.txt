@@ -22,8 +22,6 @@ awesome looking ability ui
 enemy speed based on difficulty
 max enemies based on difficulty
 more health on easy - health static no matter what ability you choose
-add all particle effects to object controller
-modifiers should add both % and flat cooldown
 
 ## BUGS ##
 Hold to refund sound can be triggered after selecting an upgrade ??
