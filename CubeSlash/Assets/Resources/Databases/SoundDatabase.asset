@@ -596,3 +596,25 @@ MonoBehaviour:
           Data3: 1847881873
           Data4: 1261385574
         Path: event:/Game/Enemy/crystalmeat_break_001
+  - name: sfx_ui_marima_001
+    type:
+      id: sfx_ui_marima_001
+    sfx:
+      reference:
+        Guid:
+          Data1: 806770032
+          Data2: 1284228927
+          Data3: 219371967
+          Data4: -1162151884
+        Path: event:/UI/ui_marima_001
+  - name: sfx_ui_marima_002
+    type:
+      id: sfx_ui_marima_002
+    sfx:
+      reference:
+        Guid:
+          Data1: 919993464
+          Data2: 1342133223
+          Data3: 1614340238
+          Data4: 5971973
+        Path: event:/UI/ui_marima_002

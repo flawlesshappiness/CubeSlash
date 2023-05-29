@@ -19,10 +19,11 @@ TODO:
 root area new enemies and environment (enemy moves by using roots, appear/disappear)
 geode area with splitting enemies and boss
 awesome looking ability ui
-update exp bar
 enemy speed based on difficulty
 max enemies based on difficulty
 more health on easy - health static no matter what ability you choose
+add all particle effects to object controller
+modifiers should add both % and flat cooldown
 
 ## BUGS ##
 Hold to refund sound can be triggered after selecting an upgrade ??

@@ -97,7 +97,7 @@ MonoBehaviour:
   Path: Assets/FMOD/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 638176310662864255
+  lastModified: 638209712958303968
   FileSizes: []
   Exists: 1
 --- !u!114 &-7872426760261806101
@@ -469,6 +469,33 @@ MonoBehaviour:
     Data2: 1163232061
     Data3: 1613986490
     Data4: 1563063974
+  Banks:
+  - {fileID: -8060980804293988741}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
+--- !u!114 &-5379824391959199112
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/UI/ui_marima_002
+  m_EditorClassIdentifier: 
+  Path: event:/UI/ui_marima_002
+  Guid:
+    Data1: 919993464
+    Data2: 1342133223
+    Data3: 1614340238
+    Data4: 5971973
   Banks:
   - {fileID: -8060980804293988741}
   IsStream: 0
@@ -1126,6 +1153,33 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 8000
+--- !u!114 &-322542166197979872
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/UI/ui_marima_001
+  m_EditorClassIdentifier: 
+  Path: event:/UI/ui_marima_001
+  Guid:
+    Data1: 806770032
+    Data2: 1284228927
+    Data3: 219371967
+    Data4: -1162151884
+  Banks:
+  - {fileID: -8060980804293988741}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
 --- !u!114 &-243892825821260796
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1298,12 +1352,14 @@ MonoBehaviour:
   - {fileID: 4744129259821379637}
   - {fileID: -5789439977451316129}
   - {fileID: 5539064285418462032}
+  - {fileID: -322542166197979872}
+  - {fileID: -5379824391959199112}
   EditorParameters: []
   MasterBanks:
   - {fileID: -8060980804293988741}
   StringsBanks:
   - {fileID: 5917708036578608240}
-  cacheTime: 638176310662904275
+  cacheTime: 638209712958363982
   cacheVersion: 131593
 --- !u!114 &1453305857757199432
 MonoBehaviour:
@@ -1803,10 +1859,10 @@ MonoBehaviour:
   Path: Assets/FMOD/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 638176310662904275
+  lastModified: 638209712958363982
   FileSizes:
   - Name: 
-    Value: 4502
+    Value: 4598
   Exists: 1
 --- !u!114 &5992827859230917708
 MonoBehaviour:

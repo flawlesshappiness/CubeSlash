@@ -12,8 +12,8 @@ public class RadialMenuPlayerInput : MonoBehaviour
     {
         menu = GetComponent<RadialMenu>();
 
-        PlayerInput.Controls.UI.Submit.started += _ => menu.BeginSubmit();
-        PlayerInput.Controls.UI.Cancel.started += _ => menu.Cancel();
+        PlayerInput.Controls.UI.Submit.started += _ => Submit();
+        PlayerInput.Controls.UI.Cancel.started += _ => Cancel();
     }
 
     private void Update()
@@ -34,5 +34,15 @@ public class RadialMenuPlayerInput : MonoBehaviour
             in_deadzone = false;
             menu.SelectElement(input);
         }
+    }
+
+    private void Submit()
+    {
+        menu.BeginSubmit();
+    }
+
+    private void Cancel()
+    {
+        menu.Cancel();
     }
 }

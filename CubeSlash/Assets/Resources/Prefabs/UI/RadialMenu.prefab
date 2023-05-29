@@ -549,6 +549,7 @@ GameObject:
   - component: {fileID: 8777414026075546782}
   - component: {fileID: 2072169690457729059}
   - component: {fileID: 6034776128756017503}
+  - component: {fileID: 2206467366942001784}
   m_Layer: 5
   m_Name: RadialMenu
   m_TagString: Untagged
@@ -616,6 +617,22 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
+--- !u!114 &2206467366942001784
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4928851846211531284}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e47a294bb772bf44b83115fc542fdcaf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sfx_submit:
+    id: sfx_ui_marima_001
+  sfx_cancel:
+    id: sfx_ui_marima_002
 --- !u!1 &7286212597033933491
 GameObject:
   m_ObjectHideFlags: 0
@@ -887,8 +904,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 100, y: 0}
-  m_SizeDelta: {x: 200, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8732863235938193107
 CanvasRenderer:
