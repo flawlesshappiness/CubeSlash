@@ -36,25 +36,37 @@ public class PlayRadialView : View
         radial.Clear();
 
         var ability_icon = AbilityController.Instance.GetAbilityPrefab(Save.PlayerBody.primary_ability).Info.sprite_icon;
+        var difficulty_icon = DifficultyController.Instance.Difficulty.difficulty_sprite;
 
         var options = new List<RadialMenuOption>
         {
             new RadialMenuOption
             {
+                Title = "Customize",
+                Description = "Body",
                 Sprite = Icon.Get(IconType.customize),
                 OnSubmitComplete = () => ViewController.Instance.ShowView<BodyEditView>(0)
             },
 
             new RadialMenuOption
             {
+                Title = "Start",
                 Sprite = Icon.Get(IconType.start_game),
                 OnSubmitComplete = () => GameController.Instance.StartGame()
             },
 
             new RadialMenuOption
             {
+                Title = "Ability",
                 Sprite = ability_icon,
                 OnSubmitComplete = ShowAbilityOptions
+            },
+
+            new RadialMenuOption
+            {
+                Title = "Difficulty",
+                Sprite = difficulty_icon,
+                OnSubmitComplete = ShowDifficultyOptions
             },
         };
 
@@ -88,6 +100,33 @@ public class PlayRadialView : View
         {
             Player.Instance.SetPrimaryAbility(info.type);
             Player.Instance.UpdateBodyparts();
+            ShowMainOptions();
+        }
+    }
+
+    private void ShowDifficultyOptions()
+    {
+        radial.Clear();
+
+        var infos = DifficultyController.Instance.DifficultyInfos;
+
+        var options = infos
+            .Select(info => new RadialMenuOption
+            {
+                Title = info.difficulty_name,
+                Sprite = info.difficulty_sprite,
+                OnSubmitComplete = () => SelectDifficulty(info)
+            }).ToList();
+
+        InsertBackOption(options, ShowMainOptions);
+
+        radial.AddOptions(options);
+        radial.AnimateShowElements(true, 0.05f);
+        radial.SetCancelElement(radial.GetElement(0));
+
+        void SelectDifficulty(DifficultyInfo info)
+        {
+            DifficultyController.Instance.SetDifficulty(info);
             ShowMainOptions();
         }
     }

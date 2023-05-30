@@ -3,6 +3,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = nameof(DifficultyInfo), menuName = "Game/" + nameof(DifficultyInfo), order = 1)]
 public class DifficultyInfo : ScriptableObject
 {
+    public Sprite difficulty_sprite;
     public string difficulty_name;
 
     [TextArea]

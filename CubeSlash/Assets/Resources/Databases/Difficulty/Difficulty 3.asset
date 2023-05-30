@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 82cb847149cd9564ba1328eea0862e9f, type: 3}
   m_Name: Difficulty 3
   m_EditorClassIdentifier: 
-  difficulty_name: abyss
+  difficulty_sprite: {fileID: 21300000, guid: a682950efae51d0428de1c9d662981f4, type: 3}
+  difficulty_name: Hard
   difficulty_description: 'slow evolving
 
     even more enemies

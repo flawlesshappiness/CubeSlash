@@ -24,7 +24,9 @@ public class RadialMenuDisplay : MonoBehaviour
 
     private void OnElementSelected(RadialMenuElement element)
     {
-        if(element == null)
+        var show = element != null && (!string.IsNullOrEmpty(element.Option.Title) || !string.IsNullOrEmpty(element.Option.Description));
+
+        if(!show)
         {
             ClearSelection();
             return;
