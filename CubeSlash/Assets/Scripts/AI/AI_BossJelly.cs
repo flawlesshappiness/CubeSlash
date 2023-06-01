@@ -87,6 +87,7 @@ public class AI_BossJelly : BossAI
         var tether = new Tether();
         tether.ps = Instantiate(ps_tether);
         tether.ps.Play();
+        ObjectController.Instance.Add(tether.ps.gameObject);
 
         tether.dud = Instantiate(prefab_dud);
         tether.dud.Initialize();
