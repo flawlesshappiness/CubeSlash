@@ -49,41 +49,34 @@ MonoBehaviour:
   background_layers:
   - name: 0
     is_foreground: 0
-    size_sprite_min: 10
-    size_sprite_max: 15
-    count_sprite: 5
+    size_sprite_min: 15
+    size_sprite_max: 20
+    count_sprite: 15
     sprites:
-    - {fileID: 21300000, guid: 6c4384cdf3c8f7148abbbd5fbb6b8c75, type: 3}
-    - {fileID: 21300000, guid: 6c4384cdf3c8f7148abbbd5fbb6b8c75, type: 3}
+    - {fileID: 21300000, guid: 77efce3a24c7dd341a65fc9486f03b89, type: 3}
+    - {fileID: 21300000, guid: a7c644b6a8e8eb841af6074d20acb7bb, type: 3}
+    - {fileID: 21300000, guid: 2a6f7b1b9c5c7e04b84010b88dbe9fb2, type: 3}
     particles: []
   - name: 1
     is_foreground: 0
-    size_sprite_min: 10
-    size_sprite_max: 20
-    count_sprite: 10
+    size_sprite_min: 20
+    size_sprite_max: 25
+    count_sprite: 20
     sprites:
-    - {fileID: 21300000, guid: 6c4384cdf3c8f7148abbbd5fbb6b8c75, type: 3}
-    - {fileID: 21300000, guid: 6c4384cdf3c8f7148abbbd5fbb6b8c75, type: 3}
+    - {fileID: 21300000, guid: 07f583e2f2c4f6f4db315b0b7df442cd, type: 3}
+    - {fileID: 21300000, guid: ebca581333b582448961e66f6b0eb210, type: 3}
+    - {fileID: 21300000, guid: c29cb14881d166e45baba45a5c0cf346, type: 3}
     particles:
     - {fileID: 6471937910845384915, guid: 4227469584206424696bac83a7f5da41, type: 3}
   - name: 2
     is_foreground: 0
-    size_sprite_min: 10
-    size_sprite_max: 20
-    count_sprite: 20
+    size_sprite_min: 25
+    size_sprite_max: 30
+    count_sprite: 15
     sprites:
-    - {fileID: 21300000, guid: 6c4384cdf3c8f7148abbbd5fbb6b8c75, type: 3}
-    - {fileID: 21300000, guid: 6c4384cdf3c8f7148abbbd5fbb6b8c75, type: 3}
-    particles:
-    - {fileID: 6471937910845384915, guid: 4227469584206424696bac83a7f5da41, type: 3}
-  - name: 3
-    is_foreground: 0
-    size_sprite_min: 10
-    size_sprite_max: 20
-    count_sprite: 20
-    sprites:
-    - {fileID: 21300000, guid: 6c4384cdf3c8f7148abbbd5fbb6b8c75, type: 3}
-    - {fileID: 21300000, guid: 6c4384cdf3c8f7148abbbd5fbb6b8c75, type: 3}
+    - {fileID: 21300000, guid: dce88a4fb0c78ef48907d2480ee8ca3b, type: 3}
+    - {fileID: 21300000, guid: 4f5b418aa1152be41a7c0ff837c75ebb, type: 3}
+    - {fileID: 21300000, guid: 29df67c7d77e06c45aba485d9dce79db, type: 3}
     particles:
     - {fileID: 6471937910845384915, guid: 4227469584206424696bac83a7f5da41, type: 3}
   vignette_gradient:
@@ -116,13 +109,13 @@ MonoBehaviour:
     m_NumColorKeys: 2
     m_NumAlphaKeys: 2
   spawn_objects:
-  - prefab: {fileID: 3561371122137596645, guid: 097c2ad46ae883642b9c6d1dc05c5ebd, type: 3}
+  - prefab: {fileID: 3561371122137596645, guid: 224fefe24fbe0dd4ba32efffa00d5e35, type: 3}
     delay: 10
     count: 7
-  - prefab: {fileID: 4973394195239199387, guid: f34cc46294d5a5c44a9f011d94e87557, type: 3}
+  - prefab: {fileID: 4973394195239199387, guid: f04834c938868734596fd1a3a9a109cb, type: 3}
     delay: 1
     count: 5
-  - prefab: {fileID: 4973394195239199387, guid: 15223bcffd3671441b5ba3d22a807473, type: 3}
+  - prefab: {fileID: 4973394195239199387, guid: da65ce778684a3c4683771e0b5aba9d6, type: 3}
     delay: 1
     count: 3
   bgm_type:

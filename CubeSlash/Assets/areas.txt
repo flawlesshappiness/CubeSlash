@@ -26,10 +26,3 @@ AREA 5: Abyss
 Color: Black
 Enemy: Volatile Cell
 Boss: 
-
-
-
-
-
-Enemy ideas:
-Jellyfish-like movement

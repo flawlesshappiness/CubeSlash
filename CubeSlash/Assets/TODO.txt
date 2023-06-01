@@ -16,14 +16,14 @@ Customize cell editor
 difficulties increase max area count?
 
 TODO:
-abyss area with enemies that teleport using bite move
-root area new enemies and environment (enemy moves by using roots, appear/disappear)
 geode area with splitting enemies and boss
 awesome looking ability ui
 enemy speed based on difficulty
 max enemies based on difficulty
 more health on easy - health static no matter what ability you choose
 sounds further away have lower volume
+abyss area with enemies that teleport using bite move
+root area new enemies and environment (enemy moves by using roots, appear/disappear)
 
 ## BUGS ##
 Hold to refund sound can be triggered after selecting an upgrade ??
