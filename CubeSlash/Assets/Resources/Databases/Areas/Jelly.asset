@@ -112,10 +112,10 @@ MonoBehaviour:
   - prefab: {fileID: 3561371122137596645, guid: 85d99ecfb60fb014c8554d8b046fc4a2, type: 3}
     delay: 10
     count: 5
-  - prefab: {fileID: 4973394195239199387, guid: 84bb73d02e12858489958d4d88d43015, type: 3}
+  - prefab: {fileID: 4973394195239199387, guid: e37427817ae961f4f8b6ba7e00249baf, type: 3}
     delay: 1
     count: 5
-  - prefab: {fileID: 4973394195239199387, guid: efb88de3a7f05d448b600b3e1d1dbade, type: 3}
+  - prefab: {fileID: 4973394195239199387, guid: 49f63c93c009d3f48903af9c4f8f9628, type: 3}
     delay: 1
     count: 3
   bgm_type:

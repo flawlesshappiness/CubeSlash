@@ -24,11 +24,12 @@ public class DifficultyController : Singleton
     {
         Difficulty = _database.collection[i];
         DifficultyIndex = i;
+        Save.Game.idx_gamesetup_difficulty = i;
     }
 
     public void SetDifficulty(DifficultyInfo info)
     {
-        Difficulty = info;
-        DifficultyIndex = _database.collection.IndexOf(info);
+        var i = _database.collection.IndexOf(info);
+        SetDifficulty(i);
     }
 }
