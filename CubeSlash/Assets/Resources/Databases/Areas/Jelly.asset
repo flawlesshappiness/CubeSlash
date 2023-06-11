@@ -16,7 +16,7 @@ MonoBehaviour:
   boss: {fileID: 11400000, guid: 8730164c5f8fadc4d879416cd37bf689, type: 2}
   enemies:
   - enemy: {fileID: 11400000, guid: ad27c58b70b50004bb8b62c6f01a64bd, type: 2}
-    chance: 0.8
+    chance: 0.7
     max: 0
   color_fog: {r: 0.05882353, g: 0.059577744, b: 0.23529412, a: 1}
   color_bg: {r: 0.077124186, g: 0.02352941, b: 0.101960786, a: 1}
