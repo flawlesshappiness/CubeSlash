@@ -14,6 +14,12 @@ public class AI_RootPull : EnemyAI
     public override void Initialize(Enemy enemy)
     {
         base.Initialize(enemy);
+        enemy.OnDeath += OnDeath;
+    }
+
+    private void OnDeath()
+    {
+        _vine.PlayDissolveFX();
     }
 
     private void FixedUpdate()

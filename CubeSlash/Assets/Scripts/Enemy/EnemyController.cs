@@ -41,6 +41,7 @@ public class EnemyController : Singleton
     {
         enemies_unlocked.AddRange(area.enemies);
 
+        if(cr_spawn_boss != null) StopCoroutine(cr_spawn_boss);
         var boss_spawn_delay = GameSettings.Instance.area_duration * GameSettings.Instance.time_boss_spawn;
         cr_spawn_boss = StartCoroutine(SpawnBossCr(area.boss, boss_spawn_delay));
     }

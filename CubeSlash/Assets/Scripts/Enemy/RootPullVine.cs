@@ -6,7 +6,7 @@ public class RootPullVine : MonoBehaviour
 {
     [SerializeField] private SpriteRenderer spr_main;
     [SerializeField] private Transform pivot_main;
-    [SerializeField] private ParticleSystem ps_pull;
+    [SerializeField] private ParticleSystem ps_pull, ps_dissolve;
 
     public float pull_force;
     public float drawmode_size = 0.32f;
@@ -34,13 +34,13 @@ public class RootPullVine : MonoBehaviour
         if (animating) return;
         UpdateScale();
         UpdateVisual();
+        UpdateForce();
     }
 
     private void UpdateVisual()
     {
         UpdateSize();
         UpdateRotation();
-        UpdateForce();
         UpdateParticles();
     }
 
@@ -94,6 +94,28 @@ public class RootPullVine : MonoBehaviour
         {
             m.rateOverTime = dist * 2;
         });
+    }
+
+    public void PlayDissolveFX()
+    {
+        if (ps_dissolve == null) return;
+        if (target == null) return;
+
+        var dist = DistanceToTarget;
+        ps_dissolve.ModifyShape(m =>
+        {
+            m.scale = m.scale.SetZ(dist);
+            m.position = m.position.SetY(dist * 0.5f);
+        });
+        ps_dissolve.ModifyEmission(m =>
+        {
+            m.SetBurst(0, new ParticleSystem.Burst(0, 5 * dist));
+        });
+
+        ps_dissolve.Duplicate()
+            .Parent(GameController.Instance.world)
+            .Destroy(5f)
+            .Play();
     }
 
     public Coroutine AnimateToTarget()

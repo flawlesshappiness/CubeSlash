@@ -178,7 +178,13 @@ public class DebugConsoleHandler : Singleton
         foreach(var area in db.collection)
         {
             var btn = window.CreateButton(area.name);
-            btn.onClick.AddListener(() => AreaController.Instance.SetArea(area));
+            btn.onClick.AddListener(() => SetArea(area));
+        }
+
+        void SetArea(Area area)
+        {
+            AreaController.Instance.SetArea(area);
+            CloseView();
         }
     }
 
