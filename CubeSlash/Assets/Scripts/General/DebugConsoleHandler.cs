@@ -52,6 +52,7 @@ public class DebugConsoleHandler : Singleton
             window.CreateButton("Gain Ability", ClickGainAbility);
             window.CreateButton("Equipment", ClickEquipment);
             window.CreateButton(GameController.DAMAGE_DISABLED ? "Enable damage" : "Disable damage", ClickToggleDamage);
+            window.CreateButton("Set Area", ClickSetArea);
             window.CreateButton("Next Area", ClickNextArea);
             window.CreateButton("Suicide", ClickSuicide);
             window.CreateButton("Win", ClickWin);
@@ -166,6 +167,19 @@ public class DebugConsoleHandler : Singleton
     {
         Player.Instance.Suicide();
         CloseView();
+    }
+
+    private void ClickSetArea()
+    {
+        var window = view.ShowList();
+        window.Clear();
+
+        var db = Database.Load<AreaDatabase>();
+        foreach(var area in db.collection)
+        {
+            var btn = window.CreateButton(area.name);
+            btn.onClick.AddListener(() => AreaController.Instance.SetArea(area));
+        }
     }
 
     private void ClickNextArea()

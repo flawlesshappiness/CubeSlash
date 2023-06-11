@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = nameof(Area), menuName = "Game/" + nameof(Area), order = 1)]
@@ -30,7 +31,7 @@ public class Area : ScriptableObject
     [Header("MUSIC")]
     public SoundEffectType bgm_type;
 
-    public static Area First { get { return AreaDatabase.LoadAsset().areas[0]; } }
+    public static Area First { get { return Database.Load<AreaDatabase>().collection.First(); } }
 
     private void OnValidate()
     {

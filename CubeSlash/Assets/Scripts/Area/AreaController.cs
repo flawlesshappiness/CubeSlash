@@ -31,7 +31,7 @@ public class AreaController : Singleton
     protected override void Initialize()
     {
         base.Initialize();
-        db = AreaDatabase.Instance;
+        db = Database.Load<AreaDatabase>();
         GameController.Instance.onGameEnd += OnGameEnd;
         GameController.Instance.onMainMenu += OnMainMenu;
     }
@@ -69,20 +69,27 @@ public class AreaController : Singleton
         while (true)
         {
             index_area++;
-            current_area = GetNextArea();
+
+            var next_area = GetNextArea();
+            SetArea(next_area);
+
             visited_areas.Add(current_area);
             available_areas.Remove(current_area);
-            TimeAreaStart = Time.time;
 
-            onNextArea?.Invoke(current_area);
-
-            time_next_area = Time.time + GameSettings.Instance.area_duration;
             var is_locked = NextAreaLock.IsLocked;
             while(is_locked || Time.time < time_next_area)
             {
                 yield return null;
             }
         }
+    }
+
+    public void SetArea(Area area)
+    {
+        current_area = area;
+        TimeAreaStart = Time.time;
+        time_next_area = Time.time + GameSettings.Instance.area_duration;
+        onNextArea?.Invoke(current_area);
     }
 
     public void ForceNextArea()
@@ -96,7 +103,7 @@ public class AreaController : Singleton
         {
             area_refills++;
             visited_areas.Clear();
-            available_areas.AddRange(db.areas);
+            available_areas.AddRange(db.collection);
 
             // First time endless
             if (area_refills == 1)
