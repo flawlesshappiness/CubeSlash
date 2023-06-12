@@ -57,6 +57,7 @@ public class DebugConsoleHandler : Singleton
             window.CreateButton("Suicide", ClickSuicide);
             window.CreateButton("Win", ClickWin);
             window.CreateButton("Spawn Boss", ClickSpawnBoss);
+            window.CreateButton(EnemyController.Instance.EnemySpawnEnabled ? "Disable enemy spawn" : "Enable enemy spawn", ClickToggleEnemySpawn);
             window.CreateButton("Kill Enemies", ClickKillEnemies);
         }
 
@@ -209,6 +210,12 @@ public class DebugConsoleHandler : Singleton
     private void ClickSpawnBoss()
     {
         EnemyController.Instance.DebugSpawnBoss();
+        CloseView();
+    }
+
+    private void ClickToggleEnemySpawn()
+    {
+        EnemyController.Instance.EnemySpawnEnabled = !EnemyController.Instance.EnemySpawnEnabled;
         CloseView();
     }
 

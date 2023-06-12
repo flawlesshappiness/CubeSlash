@@ -254,7 +254,7 @@ ParticleSystem:
       serializedVersion: 2
       minMaxState: 0
       minColor: {r: 1, g: 1, b: 1, a: 1}
-      maxColor: {r: 0.5686275, g: 0.60784316, b: 0.54509807, a: 1}
+      maxColor: {r: 0.101960786, g: 0.07116501, b: 0, a: 1}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
@@ -5060,7 +5060,7 @@ ParticleSystem:
       serializedVersion: 2
       minMaxState: 0
       minColor: {r: 1, g: 1, b: 1, a: 1}
-      maxColor: {r: 0.5686275, g: 0.60784316, b: 0.54509807, a: 1}
+      maxColor: {r: 1, g: 0.9032118, b: 0.56700003, a: 0.5019608}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
@@ -14544,7 +14544,7 @@ GameObject:
   - component: {fileID: 5090685796167623138}
   - component: {fileID: 3405480637174817150}
   m_Layer: 0
-  m_Name: BoneDud
+  m_Name: RootDud
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -14632,6 +14632,14 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  sfx_death:
+    reference:
+      Guid:
+        Data1: 1670559046
+        Data2: 1203043853
+        Data3: -1995059786
+        Data4: -2040260450
+      Path: event:/Game/Enemy/healthdud_death_001
 --- !u!1 &4723074693683760720
 GameObject:
   m_ObjectHideFlags: 0
@@ -14782,7 +14790,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 3e410690478fb6c458f6ae89573ded9e, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 7257d941216459745be259f1fc3a5303, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -15015,7 +15023,7 @@ ParticleSystem:
       serializedVersion: 2
       minMaxState: 0
       minColor: {r: 1, g: 1, b: 1, a: 1}
-      maxColor: {r: 0.8941177, g: 0.909804, b: 0.86666673, a: 1}
+      maxColor: {r: 1, g: 0.92549026, b: 0.6666667, a: 1}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
@@ -19880,7 +19888,7 @@ ParticleSystem:
       serializedVersion: 2
       minMaxState: 0
       minColor: {r: 1, g: 1, b: 1, a: 1}
-      maxColor: {r: 0.8941177, g: 0.909804, b: 0.86666673, a: 1}
+      maxColor: {r: 1, g: 0.92549026, b: 0.6666667, a: 1}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}

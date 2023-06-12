@@ -9,9 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8290725483284165671}
-  - component: {fileID: 8290725483284165672}
+  - component: {fileID: 466179704934905642}
   m_Layer: 0
-  m_Name: AI_Enemy_RootPull
+  m_Name: AI_Boss_RootPull
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -26,13 +26,13 @@ Transform:
   m_GameObject: {fileID: 8290725483284165673}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.5, y: 1.5, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4894743488091751890}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8290725483284165672
+--- !u!114 &466179704934905642
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -41,11 +41,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 8290725483284165673}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 266b2937ce36348408ddafac24e11525, type: 3}
+  m_Script: {fileID: 11500000, guid: 476ec8bb36eede449a87da005a3ee130, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _vine: {fileID: 4327244987187040586}
-  max_dist_to_player: 0.3
 --- !u!1001 &4226003169196797399
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -53,9 +52,37 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8290725483284165671}
     m_Modifications:
+    - target: {fileID: 479828104516861085, guid: 32e21063672caf348936e98d0863a235, type: 3}
+      propertyPath: scale
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 479828104516861085, guid: 32e21063672caf348936e98d0863a235, type: 3}
+      propertyPath: pull_force
+      value: 0.1
+      objectReference: {fileID: 0}
     - target: {fileID: 932272499489608597, guid: 32e21063672caf348936e98d0863a235, type: 3}
       propertyPath: m_Name
       value: RootPullVine
+      objectReference: {fileID: 0}
+    - target: {fileID: 942094317532818455, guid: 32e21063672caf348936e98d0863a235, type: 3}
+      propertyPath: ShapeModule.m_Scale.x
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 942094317532818455, guid: 32e21063672caf348936e98d0863a235, type: 3}
+      propertyPath: EmissionModule.enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6404080365959626461, guid: 32e21063672caf348936e98d0863a235, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 6404080365959626461, guid: 32e21063672caf348936e98d0863a235, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 6404080365959626461, guid: 32e21063672caf348936e98d0863a235, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.96
       objectReference: {fileID: 0}
     - target: {fileID: 8739332079520311301, guid: 32e21063672caf348936e98d0863a235, type: 3}
       propertyPath: m_RootOrder
@@ -100,6 +127,10 @@ PrefabInstance:
     - target: {fileID: 8739332079520311301, guid: 32e21063672caf348936e98d0863a235, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9020289492896352758, guid: 32e21063672caf348936e98d0863a235, type: 3}
+      propertyPath: m_Size.y
+      value: 0.32
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 32e21063672caf348936e98d0863a235, type: 3}

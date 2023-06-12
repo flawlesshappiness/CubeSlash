@@ -15,6 +15,10 @@ PrefabInstance:
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: 2bfdce0033ba9624d8c267be8eacdc2b, type: 2}
+    - target: {fileID: 863415056158122022, guid: 45499daff63c9d64b8e9f610d9bfd8a4, type: 3}
+      propertyPath: ps_death
+      value: 
+      objectReference: {fileID: 337763147675244119, guid: ee279bd4f57f405499d163757875eb1d, type: 3}
     - target: {fileID: 2973982606120359821, guid: 45499daff63c9d64b8e9f610d9bfd8a4, type: 3}
       propertyPath: m_Name
       value: RootPull

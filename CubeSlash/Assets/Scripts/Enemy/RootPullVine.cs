@@ -128,10 +128,32 @@ public class RootPullVine : MonoBehaviour
         {
             animating = true;
             var curve = EasingCurves.EaseOutQuad;
+            var start_scale = scale;
             yield return LerpEnumerator.Value(0.5f, f =>
             {
                 var t = curve.Evaluate(f);
-                scale = Mathf.Lerp(0f, GetScaleToTarget(), t);
+                scale = Mathf.Lerp(start_scale, GetScaleToTarget(), t);
+                UpdateVisual();
+            });
+            animating = false;
+        }
+    }
+
+    public Coroutine AnimateFromTarget()
+    {
+        if (target == null) return null;
+
+        return StartCoroutine(Cr());
+
+        IEnumerator Cr()
+        {
+            animating = true;
+            var curve = EasingCurves.EaseInQuad;
+            var scale_start = GetScaleToTarget();
+            yield return LerpEnumerator.Value(0.5f, f =>
+            {
+                var t = curve.Evaluate(f);
+                scale = Mathf.Lerp(scale_start, 0f, t);
                 UpdateVisual();
             });
             animating = false;

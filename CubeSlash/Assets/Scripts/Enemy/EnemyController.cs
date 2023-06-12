@@ -12,6 +12,7 @@ public class EnemyController : Singleton
     private List<Enemy> enemies_inactive = new List<Enemy>();
     private List<AreaEnemyInfo> enemies_unlocked = new List<AreaEnemyInfo>();
 
+    public bool EnemySpawnEnabled { get; set; } = true;
     public System.Action OnEnemyKilled { get; set; }
     public System.Action<Enemy> OnEnemySpawned { get; set; }
     public List<Enemy> ActiveEnemies { get { return enemies_active.ToList(); } }
@@ -116,6 +117,7 @@ public class EnemyController : Singleton
 
     private void SpawnUpdate()
     {
+        if (!EnemySpawnEnabled) return;
         if (Time.time < time_next_spawn_enemy) return;
         if (enemies_unlocked.Count == 0) return;
         time_next_spawn_enemy += GetSpawnFrequency();
