@@ -1,14 +1,20 @@
+using Flawliz.Lerp;
 using System.Collections;
 using UnityEngine;
 
 public class AI_BossRootPull : BossAI
 {
     [SerializeField] private RootPullVine _vine;
+    [SerializeField] private Transform _pivot_walls_rotation;
+    [SerializeField] private Transform[] _pivot_walls;
+    [SerializeField] private Obstacle[] _walls;
 
     private BossRootBody root_body;
     private Vector3 destination;
     private bool attached;
     private bool can_attach = true;
+
+    private int hits_taken;
 
     public override void Initialize(Enemy enemy)
     {
@@ -16,11 +22,14 @@ public class AI_BossRootPull : BossAI
 
         root_body = enemy.Body.GetComponent<BossRootBody>();
         Body.OnDudKilled += dud => OnDudKilled();
+
+        _pivot_walls_rotation.gameObject.SetActive(false);
     }
 
     private void Update()
     {
         VineUpdate();
+        UpdateWallsRotation();
     }
 
     private void FixedUpdate()
@@ -81,6 +90,8 @@ public class AI_BossRootPull : BossAI
     {
         if (Self.IsDead) return;
 
+        hits_taken++;
+
         StartCoroutine(Cr());
         IEnumerator Cr()
         {
@@ -92,7 +103,8 @@ public class AI_BossRootPull : BossAI
             yield return new WaitForSeconds(time);
             TeleportHide();
             yield return new WaitForSeconds(0.5f);
-            //yield return GetAttackCr();
+            SetupWalls();
+            yield return ShrinkWallsCr();
             yield return new WaitForSeconds(1f);
             TeleportAppear();
             yield return new WaitForSeconds(1f);
@@ -133,5 +145,74 @@ public class AI_BossRootPull : BossAI
             .Scale(root_body.ps_teleport.transform.lossyScale)
             .Play()
             .Destroy(5f);
+    }
+
+    private void SetupWalls()
+    {
+        ObjectController.Instance.Add(_pivot_walls_rotation.gameObject);
+        _pivot_walls_rotation.parent = GameController.Instance.world;
+        _pivot_walls_rotation.transform.localScale = Vector3.one;
+        _pivot_walls_rotation.transform.position = Player.Instance.transform.position;
+
+        var width = CameraController.Instance.Width;
+        var delta_angle = 360f / _pivot_walls.Length;
+
+        for (int i = 0; i < _pivot_walls.Length; i++)
+        {
+            var pivot = _pivot_walls[i];
+            var angle = delta_angle * i;
+            var rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+
+            pivot.rotation = rotation;
+        }
+
+        for (int i = 0; i < _walls.Length; i++)
+        {
+            var wall = _walls[i];
+            wall.transform.localPosition = new Vector3(width * 2, 0);
+        }
+
+        _pivot_walls_rotation.rotation = Quaternion.AngleAxis(Random.Range(0f, 360f), Vector3.forward);
+        _pivot_walls_rotation.gameObject.SetActive(true);
+    }
+
+    private IEnumerator ShrinkWallsCr()
+    {
+        var duration_move = 2f;
+        var width_max = CameraController.Instance.Width * 0.4f;
+        var width_min = CameraController.Instance.Width * 0.2f - (0.025f * hits_taken);
+        var count_move = 3 + hits_taken;
+
+        for (int i = 0; i < count_move; i++)
+        {
+            var ti = (float)i / (count_move - 1);
+
+            foreach (var wall in _walls)
+            {
+                var w = Mathf.Lerp(width_max, width_min, ti);
+                Lerp.LocalPosition(wall.transform, duration_move, new Vector3(w, 0))
+                    .Curve(EasingCurves.EaseOutQuad);
+            }
+
+            yield return new WaitForSeconds(duration_move);
+            yield return new WaitForSeconds(0.2f);
+        }
+
+        foreach (var wall in _walls)
+        {
+            var w = CameraController.Instance.Width * 2;
+            Lerp.LocalPosition(wall.transform, duration_move, new Vector3(w, 0))
+                .Curve(EasingCurves.EaseInOutQuad);
+        }
+
+        yield return new WaitForSeconds(duration_move);
+
+        _pivot_walls_rotation.gameObject.SetActive(false);
+    }
+
+    private void UpdateWallsRotation()
+    {
+        if (GameController.Instance.IsPaused) return;
+        _pivot_walls_rotation.rotation *= Quaternion.AngleAxis(10f * Time.deltaTime, Vector3.forward);
     }
 }

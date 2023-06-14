@@ -18,6 +18,12 @@ MonoBehaviour:
   - enemy: {fileID: 11400000, guid: cfcae6b5621e50448a5872f62f68b1ba, type: 2}
     chance: 1
     max: 0
+  - enemy: {fileID: 11400000, guid: f41298fdccde658438bc50f38c6c1f2d, type: 2}
+    chance: 0.2
+    max: 10
+  - enemy: {fileID: 11400000, guid: 5103badcabd8e2c42be0237f2f73cad1, type: 2}
+    chance: 0.1
+    max: 5
   color_fog: {r: 0.0328125, g: 0.16406249, b: 0.35, a: 1}
   color_bg: {r: 0.023529412, g: 0.02745098, b: 0.101960786, a: 1}
   ac_alpha_fog:

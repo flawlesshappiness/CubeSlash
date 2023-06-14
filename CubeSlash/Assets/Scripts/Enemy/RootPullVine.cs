@@ -68,6 +68,7 @@ public class RootPullVine : MonoBehaviour
     private void UpdateForce()
     {
         if(target == null) return;
+        if (GameController.Instance.IsPaused) return;
         var dir = transform.DirectionTo(target.transform);
         target.AddForce(-dir * pull_force);
     }
