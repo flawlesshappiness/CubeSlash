@@ -122,7 +122,8 @@ public class Enemy : Character, IKillable, IHurt
             ObjectController.Instance.Add(psd.ps.gameObject);
         }
 
-        var sfx = SoundDatabase.GetEntry(SoundEffectType.sfx_enemy_death).sfx;
+        var sfx = SoundEffectType.sfx_enemy_death;
+        SoundController.Instance.SetGroupVolumeByPosition(sfx, transform.position);
         SoundController.Instance.PlayGroup(sfx);
 
         // Event

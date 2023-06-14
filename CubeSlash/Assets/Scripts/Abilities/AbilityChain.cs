@@ -174,7 +174,8 @@ public class AbilityChain : Ability
         CreateImpactPS(target_position);
 
         // Audio
-        SoundController.Instance.Play(SoundEffectType.sfx_chain_zap);
+        SoundController.Instance.SetGroupVolumeByPosition(SoundEffectType.sfx_chain_zap, info.center);
+        SoundController.Instance.PlayGroup(SoundEffectType.sfx_chain_zap);
         
         // Kill target
         info.onHit?.Invoke(k);

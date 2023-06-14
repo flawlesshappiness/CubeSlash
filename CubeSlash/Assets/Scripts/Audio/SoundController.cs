@@ -1,4 +1,3 @@
-using FMODUnity;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -14,7 +13,31 @@ public class SoundController : Singleton
         public string path;
         public int count;
         public int max;
+        public float volume = 1;
+        public FMODEventReference reference;
         public CustomCoroutine coroutine;
+        public FMODEventInstance[] instances;
+        private int _current_instance_index;
+
+        public GroupCoroutine(FMODEventReference reference)
+        {
+            this.reference = reference;
+            path = reference.Info.path;
+            instances = new FMODEventInstance[25];
+        }
+
+        public FMODEventInstance NextInstance()
+        {
+            if (instances[_current_instance_index] == null)
+            {
+                instances[_current_instance_index] = reference.CreateInstance();
+            }
+            var instance = instances[_current_instance_index];
+            _current_instance_index = (_current_instance_index + 1) % instances.Length;
+            return instance;
+        }
+
+        public bool HasInstances() => instances != null && instances.Length > 0;
     }
 
     public FMODEventInstance Play(SoundEffectType type)
@@ -37,6 +60,21 @@ public class SoundController : Singleton
         }
     }
 
+    private GroupCoroutine GetGroup(FMODEventReference reference)
+    {
+        var path = reference.Info.path;
+        if (group_coroutines.ContainsKey(path))
+        {
+            return group_coroutines[path];
+        }
+        else
+        {
+            var group = new GroupCoroutine(reference);
+            group_coroutines.Add(path, group);
+            return group;
+        }
+    }
+
     public void PlayGroup(SoundEffectType type)
     {
         var entry = SoundDatabase.GetEntry(type);
@@ -48,8 +86,7 @@ public class SoundController : Singleton
     {
         if (!reference.Exists) return;
         var path = reference.Info.path;
-
-        var group = GetGroup();
+        var group = GetGroup(reference);
         group.count += (group.count < 3 ? 1 : 0);
 
         if (group.coroutine == null)
@@ -61,26 +98,28 @@ public class SoundController : Singleton
         {
             while (group.count > 0)
             {
-                RuntimeManager.PlayOneShot(path);
+                var instance = group.NextInstance();
+                instance.SetVolume(group.volume);
+                instance.Play();
                 group.count--;
                 yield return new WaitForSecondsRealtime(0.05f);
             }
 
             group.coroutine = null;
         }
+    }
 
-        GroupCoroutine GetGroup()
-        {
-            if (group_coroutines.ContainsKey(path))
-            {
-                return group_coroutines[path];
-            }
-            else
-            {
-                var group = new GroupCoroutine { path = path };
-                group_coroutines.Add(path, group);
-                return group;
-            }
-        }
+    public void SetGroupVolumeByPosition(SoundEffectType type, Vector3 position)
+    {
+        var entry = SoundDatabase.GetEntry(type);
+        if (entry == null) return;
+        SetGroupVolumeByPosition(entry.sfx, position);
+    }
+
+    public void SetGroupVolumeByPosition(FMODEventReference reference, Vector3 position)
+    {
+        if (!reference.Exists) return;
+        var group = GetGroup(reference);
+        group.volume = FMODEventInstance.GetVolumeByPosition(position);
     }
 }

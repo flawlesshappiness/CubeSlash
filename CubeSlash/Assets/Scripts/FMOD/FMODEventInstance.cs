@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Data.Common;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class FMODEventInstance
 {
@@ -70,6 +71,23 @@ public class FMODEventInstance
             instance.setVolume(f);
         }
         return this;
+    }
+
+	public static float GetVolumeByPosition(Vector3 position)
+	{
+        var max_distance = CameraController.Instance.Width * 0.5f;
+        var distance = Vector3.Distance(Player.Instance.transform.position, position);
+        var t = distance / max_distance;
+
+        var far_volume = 0.1f;
+        var close_volume = 1f;
+        var volume = Mathf.Lerp(close_volume, far_volume, t);
+		return volume;
+    }
+
+	public void SetVolumeByPosition(Vector3 position)
+	{
+        SetVolume(GetVolumeByPosition(position));
     }
 
 	public FMODEventInstance SetPitch(int half_note)

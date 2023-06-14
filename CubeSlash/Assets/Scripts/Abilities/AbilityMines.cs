@@ -101,7 +101,7 @@ public class AbilityMines : Ability
         p.Drag = MINE_DRAG;
         p.Lifetime = ShellLifetime;
         p.onDestroy += () => OnMineHit(p.transform.position);
-        p.onDestroy += OnMineDestroy;
+        p.onDestroy += () => OnMineDestroy(p);
         p.onChainHit += OnMineHit;
 
         p.HasChain = FragmentChain;
@@ -134,9 +134,10 @@ public class AbilityMines : Ability
         }
     }
 
-    private void OnMineDestroy()
+    private void OnMineDestroy(MinesProjectile p)
     {
-        SoundController.Instance.Play(SoundEffectType.sfx_mines_explode);
+        var instance = SoundController.Instance.Play(SoundEffectType.sfx_mines_explode);
+        instance.SetVolumeByPosition(p.transform.position);
     }
 
     private void ChainFragments(Vector3 position, int count)

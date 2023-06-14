@@ -278,6 +278,7 @@ public class AbilityExplode : Ability
             .Destroy(2);
 
         // Sfx
+        SoundController.Instance.SetGroupVolumeByPosition(SoundEffectType.sfx_explode_release, position);
         SoundController.Instance.PlayGroup(SoundEffectType.sfx_explode_release);
     }
 }

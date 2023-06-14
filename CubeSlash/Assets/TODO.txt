@@ -1,30 +1,26 @@
+## TODO ##
+- Gain custom body parts by playing
+sounds further away have lower volume
+root sounds
+
+## BUGS ##
+too many sounds makes crackle
+
+## MAYBE ##
+geode area with splitting enemies and boss
+abyss area with enemies that teleport using bite move
+more health on easy - health static no matter what ability you choose
+difficulties increase max area count?
+Spend many DNA points to upgrade health and other stats
+enemy speed based on difficulty
+max enemies based on difficulty
+
 IDEAS:
 enemy that pushes the player
 enemy that pulls the player
 enemy that shoots aoe of bullets
 enemy that leaves a trail during life / after death
 enemy with a dud on its back
-endless mode
-
 CHARM: Orbiting damage
 CHARM: Gain x when y
-Spend many DNA points to upgrade health and other stats
-
-Customize cell editor
-- Gain custom body parts by playing
-
-difficulties increase max area count?
-
-TODO:
-geode area with splitting enemies and boss
-awesome looking ability ui
-enemy speed based on difficulty
-max enemies based on difficulty
-more health on easy - health static no matter what ability you choose
-sounds further away have lower volume
-abyss area with enemies that teleport using bite move
-root area new enemies and environment (enemy moves by using roots, appear/disappear)
-
-## BUGS ##
-Hold to refund sound can be triggered after selecting an upgrade ??
-too many sounds makes crackle
+endless mode
