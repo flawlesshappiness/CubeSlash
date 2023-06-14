@@ -76,6 +76,9 @@ public class AI_BossRootPull : BossAI
         attached = true;
         _vine.target = Player.Instance.Rigidbody;
         _vine.AnimateToTarget();
+
+        var sfx = SoundController.Instance.Play(SoundEffectType.sfx_enemy_root);
+        sfx.SetPitch(-1);
     }
 
     private void UnattachVine()
@@ -187,6 +190,9 @@ public class AI_BossRootPull : BossAI
         {
             var ti = (float)i / (count_move - 1);
 
+            var sfx = SoundController.Instance.Play(SoundEffectType.sfx_enemy_root);
+            sfx.SetPitch(-2);
+
             foreach (var wall in _walls)
             {
                 var w = Mathf.Lerp(width_max, width_min, ti);
@@ -203,6 +209,9 @@ public class AI_BossRootPull : BossAI
             var w = CameraController.Instance.Width * 2;
             Lerp.LocalPosition(wall.transform, duration_move, new Vector3(w, 0))
                 .Curve(EasingCurves.EaseInOutQuad);
+
+            var sfx = SoundController.Instance.Play(SoundEffectType.sfx_enemy_root);
+            sfx.SetPitch(1);
         }
 
         yield return new WaitForSeconds(duration_move);

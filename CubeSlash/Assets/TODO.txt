@@ -1,10 +1,7 @@
 ## TODO ##
 - Gain custom body parts by playing
-sounds further away have lower volume
-root sounds
 
 ## BUGS ##
-too many sounds makes crackle
 
 ## MAYBE ##
 geode area with splitting enemies and boss

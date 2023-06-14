@@ -629,3 +629,14 @@ MonoBehaviour:
           Data3: -1157347928
           Data4: 1666919361
         Path: event:/UI/ui_fadiano_001
+  - name: sfx_enemy_root
+    type:
+      id: sfx_enemy_root
+    sfx:
+      reference:
+        Guid:
+          Data1: 2031399060
+          Data2: 1149068172
+          Data3: 1450793390
+          Data4: -513007
+        Path: event:/Game/Enemy/root_001

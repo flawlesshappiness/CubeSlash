@@ -53,5 +53,7 @@ public class AI_RootPull : EnemyAI
         _attached = true;
         _vine.target = Player.Instance.Rigidbody;
         _vine.AnimateToTarget();
+
+        var sfx = SoundController.Instance.Play(SoundEffectType.sfx_enemy_root);
     }
 }
