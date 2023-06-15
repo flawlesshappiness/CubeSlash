@@ -106,7 +106,7 @@ public class Enemy : Character, IKillable, IHurt
         return true;
     }
 
-    public void Kill()
+    public void Kill(bool callOnDeathEvents = true)
     {
         IsDead = true;
 
@@ -127,7 +127,10 @@ public class Enemy : Character, IKillable, IHurt
         SoundController.Instance.PlayGroup(sfx);
 
         // Event
-        OnDeath?.Invoke();
+        if (callOnDeathEvents)
+        {
+            OnDeath?.Invoke();
+        }
 
         // AI
         SetAI(null);
