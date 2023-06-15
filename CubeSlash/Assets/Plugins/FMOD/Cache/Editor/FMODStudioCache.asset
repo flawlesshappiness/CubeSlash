@@ -97,7 +97,7 @@ MonoBehaviour:
   Path: Assets/FMOD/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 638223677450081260
+  lastModified: 638224213029268304
   FileSizes: []
   Exists: 1
 --- !u!114 &-7872426760261806101
@@ -856,6 +856,33 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 122181
+--- !u!114 &-2660639502744854097
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Music/bgm_jelly_001
+  m_EditorClassIdentifier: 
+  Path: event:/Music/bgm_jelly_001
+  Guid:
+    Data1: -878518999
+    Data2: 1128232510
+    Data3: -617150547
+    Data4: 590042606
+  Banks:
+  - {fileID: -8060980804293988741}
+  IsStream: 1
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 72000
 --- !u!114 &-2396034613374441782
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1356,12 +1383,13 @@ MonoBehaviour:
   - {fileID: -5379824391959199112}
   - {fileID: 2556223880156347520}
   - {fileID: 2643746081648176733}
+  - {fileID: -2660639502744854097}
   EditorParameters: []
   MasterBanks:
   - {fileID: -8060980804293988741}
   StringsBanks:
   - {fileID: 5917708036578608240}
-  cacheTime: 638223677450121259
+  cacheTime: 638224213029308312
   cacheVersion: 131593
 --- !u!114 &1453305857757199432
 MonoBehaviour:
@@ -1915,10 +1943,10 @@ MonoBehaviour:
   Path: Assets/FMOD/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 638223677450121259
+  lastModified: 638224213029308312
   FileSizes:
   - Name: 
-    Value: 4678
+    Value: 4718
   Exists: 1
 --- !u!114 &5992827859230917708
 MonoBehaviour:

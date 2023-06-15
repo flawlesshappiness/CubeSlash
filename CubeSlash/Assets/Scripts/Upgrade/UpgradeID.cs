@@ -34,10 +34,20 @@ public class UpgradeID : FakeEnum
     public static readonly UpgradeID player_max_speed_2 = new UpgradeID(nameof(player_max_speed_2));
     public static readonly UpgradeID player_max_speed_3 = new UpgradeID(nameof(player_max_speed_3));
     
+    public static readonly UpgradeID player_exp_bonus_1 = new UpgradeID(nameof(player_exp_bonus_1));
+    public static readonly UpgradeID player_exp_bonus_2 = new UpgradeID(nameof(player_exp_bonus_2));
+    public static readonly UpgradeID player_exp_bonus_3 = new UpgradeID(nameof(player_exp_bonus_3));
+    public static readonly UpgradeID player_exp_bonus_4 = new UpgradeID(nameof(player_exp_bonus_4));
+    public static readonly UpgradeID player_exp_bonus_5 = new UpgradeID(nameof(player_exp_bonus_5));
+
+    public static readonly UpgradeID player_cooldown_reduc_1 = new UpgradeID(nameof(player_cooldown_reduc_1));
+    public static readonly UpgradeID player_cooldown_reduc_2 = new UpgradeID(nameof(player_cooldown_reduc_2));
+    public static readonly UpgradeID player_cooldown_reduc_3 = new UpgradeID(nameof(player_cooldown_reduc_3));
+    public static readonly UpgradeID player_cooldown_reduc_4 = new UpgradeID(nameof(player_cooldown_reduc_4));
+    public static readonly UpgradeID player_cooldown_reduc_5 = new UpgradeID(nameof(player_cooldown_reduc_5));
+
     public static readonly UpgradeID player_collect_cooldown_reduc = new UpgradeID(nameof(player_collect_cooldown_reduc));
     public static readonly UpgradeID player_infinite_drag = new UpgradeID(nameof(player_infinite_drag));
-    public static readonly UpgradeID player_exp_bonus = new UpgradeID(nameof(player_exp_bonus));
-    public static readonly UpgradeID player_cooldown_reduc = new UpgradeID(nameof(player_cooldown_reduc));
 
     // Charm
     public static readonly UpgradeID charm_armor = new UpgradeID(nameof(charm_armor));

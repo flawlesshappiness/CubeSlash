@@ -1,5 +1,8 @@
 ## TODO ##
-- Gain custom body parts by playing
+Gain custom body parts by playing
+- Locked behind paywall
+
+Make passive upgrades more fun and less overpowered
 
 ## BUGS ##
 

@@ -119,4 +119,4 @@ MonoBehaviour:
     delay: 1
     count: 3
   bgm_type:
-    id: bgm_ocean
+    id: bgm_jelly

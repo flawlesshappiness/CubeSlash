@@ -486,6 +486,28 @@ MonoBehaviour:
           Data3: -1133450321
           Data4: 326138994
         Path: event:/Music/bgm_abyss_001
+  - name: bgm_jelly
+    type:
+      id: bgm_jelly
+    sfx:
+      reference:
+        Guid:
+          Data1: -878518999
+          Data2: 1128232510
+          Data3: -617150547
+          Data4: 590042606
+        Path: event:/Music/bgm_jelly_001
+  - name: bgm_crystal [EMPTY]
+    type:
+      id: bgm_crystal
+    sfx:
+      reference:
+        Guid:
+          Data1: 0
+          Data2: 0
+          Data3: 0
+          Data4: 0
+        Path: 
   - name: bgm_lose_game
     type:
       id: bgm_lose_game

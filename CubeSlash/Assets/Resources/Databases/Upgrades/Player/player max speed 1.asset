@@ -16,7 +16,7 @@ MonoBehaviour:
     id: player_max_speed_1
   name: Max speed 1
   icon: {fileID: 21300000, guid: 2370653417ecfeb44957534d22b94ba6, type: 3}
-  id_stats: player
+  hidden: 0
   require_ability: 0
   ability_required: 0
   upgrades_required: []
@@ -27,4 +27,11 @@ MonoBehaviour:
       type_value: 3
       value_int: 0
       value_float: 0.2
+      value_bool: 0
+  - id:
+      id: player_acceleration_perc
+    value:
+      type_value: 3
+      value_int: 0
+      value_float: 0.1
       value_bool: 0

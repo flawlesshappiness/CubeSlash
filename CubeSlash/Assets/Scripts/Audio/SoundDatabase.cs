@@ -131,4 +131,6 @@ public class SoundEffectType : FakeEnum
     public static readonly SoundEffectType bgm_kelp = new SoundEffectType(nameof(bgm_kelp));
     public static readonly SoundEffectType bgm_roots = new SoundEffectType(nameof(bgm_roots));
     public static readonly SoundEffectType bgm_abyss = new SoundEffectType(nameof(bgm_abyss));
+    public static readonly SoundEffectType bgm_jelly = new SoundEffectType(nameof(bgm_jelly));
+    public static readonly SoundEffectType bgm_crystal = new SoundEffectType(nameof(bgm_crystal));
 }
