@@ -30,6 +30,7 @@ public class AbilityChain : Ability
         base.InitializeFirstTime();
 
         trail.gameObject.SetActive(false);
+        spr_preview.SetAlpha(0);
     }
 
     public override void OnValuesUpdated()
