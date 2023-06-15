@@ -2,7 +2,6 @@ using Flawliz.Lerp;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class StartView : View
 {
@@ -56,6 +55,11 @@ public class StartView : View
         }
     }
 
+    private void LateUpdate()
+    {
+        UpdateCamera();
+    }
+
     private void ClickPlay()
     {
         StartCoroutine(TransitionToGameSetupCr());
@@ -75,6 +79,7 @@ public class StartView : View
     {
         SelectableMenuItem.RemoveSelection();
         yield return TransitionShowCr(false);
+        OnTransition();
         ViewController.Instance.ShowView<PlayRadialView>(0);
     }
 
@@ -83,6 +88,7 @@ public class StartView : View
         SelectableMenuItem.RemoveSelection();
         yield return TransitionShowCr(false);
 
+        OnTransition();
         var view = ViewController.Instance.ShowView<OptionsView>(0);
         view.onClickBack += () => ViewController.Instance.ShowView<StartView>(0);
 
@@ -97,5 +103,17 @@ public class StartView : View
         CanvasGroup.alpha = start;
         yield return LerpEnumerator.Alpha(CanvasGroup, 0.2f, end).UnscaledTime();
         Interactable = show;
+    }
+
+    private void OnTransition()
+    {
+        CameraController.Instance.Offset = Vector3.zero;
+    }
+
+    private void UpdateCamera()
+    {
+        var player_ui_pos = CameraController.Instance.Camera.WorldToScreenPoint(Player.Instance.transform.position);
+        var offset = player_ui_pos - radial_menu.transform.position;
+        CameraController.Instance.Offset = offset;
     }
 }

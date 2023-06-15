@@ -11,6 +11,7 @@ public class GameController : MonoBehaviour
     public static GameController Instance;
     public static bool DAMAGE_DISABLED = false;
 
+    public bool FirstTimeBoot { get; private set; } = true;
     public bool IsGameStarted { get; private set; }
     public bool IsGameEnded { get; private set; }
     public bool IsPaused { get { return PauseLock.IsLocked; } }
@@ -202,11 +203,20 @@ public class GameController : MonoBehaviour
         IsGameStarted = false;
         IsGameEnded = false;
         GameStateController.Instance.SetGameState(GameStateType.MENU);
-        ViewController.Instance.ShowView<StartView>(0f);
         CameraController.Instance.SetSize(15f);
 
         Player.Instance.SetRigidbodyEnabled(false);
         Player.Instance.Clear();
+
+        if (FirstTimeBoot)
+        {
+            FirstTimeBoot = false;
+            ViewController.Instance.ShowView<TitleView>(0f);
+        }
+        else
+        {
+            ViewController.Instance.ShowView<StartView>(0f);
+        }
 
         onMainMenu?.Invoke();
     }

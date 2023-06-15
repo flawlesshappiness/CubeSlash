@@ -11,6 +11,7 @@ public class CameraController : Singleton
     public Transform Target { get; set; }
     public float Height { get { return Camera.orthographicSize * 2f; } }
     public float Width { get { return Height * Camera.aspect; } }
+    public Vector3 Offset { get; set; }
     private float TargetSize { get; set; }
 
     protected override void Initialize()
@@ -28,7 +29,7 @@ public class CameraController : Singleton
         if (Target == null) return;
 
         var z = -10;
-        Camera.transform.position = Vector3.Lerp(Camera.transform.position, Target.position.SetZ(z), 5 * Time.deltaTime);
+        Camera.transform.position = Vector3.Lerp(Camera.transform.position, Target.position.SetZ(z), 5f * Time.unscaledDeltaTime);
     }
 
     public Vector3 GetPositionOutsideCamera()
