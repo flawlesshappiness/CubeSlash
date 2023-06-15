@@ -470,11 +470,11 @@ MonoBehaviour:
     sfx:
       reference:
         Guid:
-          Data1: -1916634330
-          Data2: 1167983941
-          Data3: 1833073581
-          Data4: 1918650056
-        Path: event:/Music/bgm_leaves_001
+          Data1: -38482353
+          Data2: 1334729337
+          Data3: 959909280
+          Data4: 1829695969
+        Path: event:/Music/bgm_roots_001
   - name: bgm_abyss
     type:
       id: bgm_abyss
