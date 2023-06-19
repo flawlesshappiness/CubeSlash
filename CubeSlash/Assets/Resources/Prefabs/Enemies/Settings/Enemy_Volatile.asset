@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c301fa7d26535e4cb7056a730ebca5e, type: 3}
   m_Name: Enemy_Volatile
   m_EditorClassIdentifier: 
+  type: 7
   body: {fileID: 3756660391525168152, guid: 897ba2725ed91284ea7eb1650678047b, type: 3}
   linear_acceleration: 8
   linear_velocity: 4

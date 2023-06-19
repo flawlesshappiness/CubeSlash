@@ -77,6 +77,10 @@ public class BodyEditView : View
         var options = db.collection.Select(info => new RadialMenuOption
         {
             Sprite = info.prefab.GetBodySprite(),
+            Title = Save.Game.unlocked_player_bodies.Contains(info.type) ? "" : "Play",
+            Description = Save.Game.unlocked_player_bodies.Contains(info.type) ? "" : "to unlock",
+            IsLocked = !Save.Game.unlocked_player_bodies.Contains(info.type),
+            IsNew = Save.Game.new_player_bodies.Contains(info.type),
             OnSubmitComplete = () => ShowBodySkinSelect(info)
         }).ToList();
 
@@ -123,9 +127,14 @@ public class BodyEditView : View
         var options = db.collection
             .Where(info => !info.is_ability_part)
             .Select(info => new RadialMenuOption
-        {
-            Sprite = info.preview,
-            OnSubmitComplete = () => SelectBodypart(info)
+            {
+                Sprite = info.preview,
+                Title = Save.Game.unlocked_bodyparts.Contains(info.type) ? "" : "Play",
+                Description = Save.Game.unlocked_bodyparts.Contains(info.type) ? "" : "to unlock",
+                IsLocked = !Save.Game.unlocked_bodyparts.Contains(info.type),
+                IsNew = Save.Game.new_bodyparts.Contains(info.type),
+                OnSelect = () => Select(info),
+                OnSubmitComplete = () => Submit(info)
             }).ToList();
 
         InsertBackOption(options, ShowMainOptions);
@@ -134,7 +143,7 @@ public class BodyEditView : View
         radial.AnimateShowElements(true, 0.05f);
         radial.SetCancelElement(radial.GetElement(0));
 
-        void SelectBodypart(BodypartInfo info)
+        void Submit(BodypartInfo info)
         {
             var part = BodypartEditController.Instance.CreatePart(info);
             part.SetPosition(0.5f);
@@ -146,6 +155,11 @@ public class BodyEditView : View
         {
             BodypartEditController.Instance.RemovePart(part);
             ShowBodypartSelect();
+        }
+
+        void Select(BodypartInfo info)
+        {
+            Save.Game.new_bodyparts.Remove(info.type);
         }
     }
 

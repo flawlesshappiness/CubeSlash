@@ -1460,22 +1460,6 @@ MonoBehaviour:
   cvg_stats: {fileID: 9201476452387556010}
   cvg_background: {fileID: 139907549686133900}
   currencybar: {fileID: 3197850876155388974}
-  sfx_stats_row:
-    reference:
-      Guid:
-        Data1: 551728765
-        Data2: 1228176803
-        Data3: -1119487074
-        Data4: 843589799
-      Path: event:/UI/ui_boom_002
-  sfx_tally:
-    reference:
-      Guid:
-        Data1: -441240914
-        Data2: 1232832515
-        Data3: 954617766
-        Data4: 77190578
-      Path: event:/UI/ui_tally_001
 --- !u!1 &3830068432956609509
 GameObject:
   m_ObjectHideFlags: 0
@@ -2782,27 +2766,27 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2008407727072852272, guid: 33a49f184e4d79241b98dd340037f16c, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2008407727072852272, guid: 33a49f184e4d79241b98dd340037f16c, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2008407727072852272, guid: 33a49f184e4d79241b98dd340037f16c, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 2008407727072852272, guid: 33a49f184e4d79241b98dd340037f16c, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: 65
       objectReference: {fileID: 0}
     - target: {fileID: 2008407727072852272, guid: 33a49f184e4d79241b98dd340037f16c, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 25
       objectReference: {fileID: 0}
     - target: {fileID: 2008407727072852272, guid: 33a49f184e4d79241b98dd340037f16c, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -32.5
       objectReference: {fileID: 0}
     - target: {fileID: 3859672721932486778, guid: 33a49f184e4d79241b98dd340037f16c, type: 3}
       propertyPath: m_Pivot.x
@@ -2912,29 +2896,33 @@ PrefabInstance:
       propertyPath: m_Name
       value: DNA Bar (CurrencyBar)
       objectReference: {fileID: 0}
+    - target: {fileID: 8696790169806044833, guid: 33a49f184e4d79241b98dd340037f16c, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8991920192088021123, guid: 33a49f184e4d79241b98dd340037f16c, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8991920192088021123, guid: 33a49f184e4d79241b98dd340037f16c, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8991920192088021123, guid: 33a49f184e4d79241b98dd340037f16c, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: 180
       objectReference: {fileID: 0}
     - target: {fileID: 8991920192088021123, guid: 33a49f184e4d79241b98dd340037f16c, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: 65
       objectReference: {fileID: 0}
     - target: {fileID: 8991920192088021123, guid: 33a49f184e4d79241b98dd340037f16c, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 140
       objectReference: {fileID: 0}
     - target: {fileID: 8991920192088021123, guid: 33a49f184e4d79241b98dd340037f16c, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -32.5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 33a49f184e4d79241b98dd340037f16c, type: 3}

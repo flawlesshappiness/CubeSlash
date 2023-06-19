@@ -22,6 +22,7 @@ public class DifficultyController : Singleton
 
     public void SetDifficulty(int i)
     {
+        i = Mathf.Clamp(i, 0, _database.collection.Count);
         Difficulty = _database.collection[i];
         DifficultyIndex = i;
         Save.Game.idx_gamesetup_difficulty = i;
@@ -31,5 +32,12 @@ public class DifficultyController : Singleton
     {
         var i = _database.collection.IndexOf(info);
         SetDifficulty(i);
+    }
+
+    public DifficultyInfo GetInfo(int i)
+    {
+        i = Mathf.Clamp(i, 0, _database.collection.Count);
+        var info = _database.collection[i];
+        return info;
     }
 }

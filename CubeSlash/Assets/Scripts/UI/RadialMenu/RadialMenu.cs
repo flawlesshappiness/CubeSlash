@@ -52,6 +52,7 @@ public class RadialMenu : MonoBehaviour
         var element = Instantiate(element_template, element_template.transform.parent);
         element.gameObject.SetActive(true);
         element.Initialize(option);
+        element.UpdateVisual();
     }
 
     public RadialMenuElement GetElement(int i)
@@ -64,10 +65,12 @@ public class RadialMenu : MonoBehaviour
     {
         if (submitting) return;
         if (CurrentElement == null) return;
+        if (CurrentElement.Option.IsLocked) return;
 
         submitting = true;
         CurrentElement.Option.OnSubmitBegin?.Invoke();
         OnSubmitBegin?.Invoke(CurrentElement);
+        CurrentElement.UpdateVisual();
 
         if (SubmitAnimationEnabled)
         {
@@ -124,6 +127,9 @@ public class RadialMenu : MonoBehaviour
 
         if(CurrentElement != null)
         {
+            CurrentElement.Option.IsNew = false;
+            CurrentElement.Option.OnSelect?.Invoke();
+            CurrentElement.UpdateVisual(true);
             CurrentElement.AnimateSelect(true);
         }
     }

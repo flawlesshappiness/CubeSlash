@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c301fa7d26535e4cb7056a730ebca5e, type: 3}
   m_Name: Enemy_Cell_Two
   m_EditorClassIdentifier: 
+  type: 1
   body: {fileID: 8483547853118312613, guid: 428c34c06554f2f4cb4f768bae8b0ef9, type: 3}
   linear_acceleration: 2
   linear_velocity: 3

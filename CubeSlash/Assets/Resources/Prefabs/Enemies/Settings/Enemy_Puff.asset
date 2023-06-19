@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c301fa7d26535e4cb7056a730ebca5e, type: 3}
   m_Name: Enemy_Puff
   m_EditorClassIdentifier: 
+  type: 4
   body: {fileID: 4160787836209392310, guid: fcad91081c252aa4bbe3f220226b1df3, type: 3}
   linear_acceleration: 8
   linear_velocity: 4

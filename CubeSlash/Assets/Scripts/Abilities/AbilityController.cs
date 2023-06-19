@@ -43,6 +43,11 @@ public class AbilityController : Singleton
     }
 
     #region GAIN
+    public List<Ability> GetAbilities()
+    {
+        return DB.collection.ToList();
+    }
+
     public bool CanGainAbility() => GetAvailableAbilities().Count > 0;
     public List<Ability> GetAvailableAbilities()
     {
@@ -80,11 +85,29 @@ public class AbilityController : Singleton
 
     public bool IsAbilityUnlocked(Ability.Type type)
     {
-        var db = Database.Load<PlayerBodySettingsDatabase>();
-        var entry = db.collection.FirstOrDefault(e => e.ability_type == type);
-        if (entry == null) return true;
-        if (entry.shop_product == null) return true;
-        return entry.shop_product.IsUnlocked();
+        return Save.Game.unlocked_abilities.Contains(type);
+    }
+
+    public void UnlockAbility(Ability.Type type)
+    {
+        if (Save.Game.unlocked_abilities.Contains(type)) return;
+        Save.Game.unlocked_abilities.Add(type);
+        Save.Game.new_abilities.Add(type);
+    }
+
+    public AbilityInfo UnlockRandomAbility()
+    {
+        var abilities = GetAbilities()
+            .Where(a => !IsAbilityUnlocked(a.Info.type));
+
+        if (abilities.Count() > 0)
+        {
+            var ability = abilities.ToList().Random();
+            UnlockAbility(ability.Info.type);
+            return ability.Info;
+        }
+
+        return null;
     }
     #endregion
     #region EQUIP

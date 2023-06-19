@@ -108,6 +108,8 @@ public class GameController : MonoBehaviour
     {
         IsGameStarted = true;
 
+        onGameStart?.Invoke();
+
         GameStateController.Instance.SetGameState(GameStateType.MENU);
         AreaController.Instance.StartAreaCoroutine();
         ViewController.Instance.ShowView<GameView>(0);
@@ -117,7 +119,6 @@ public class GameController : MonoBehaviour
         Player.Instance.ResetValues();
         Player.Instance.UpdateUpgradeValues();
 
-        onGameStart?.Invoke();
         ResumeLevel();
     }
 
@@ -233,12 +234,6 @@ public class GameController : MonoBehaviour
     {
         if (IsGameEnded) return;
 
-        // Difficulty
-        if(Save.Game.idx_difficulty_completed < DifficultyController.Instance.DifficultyIndex)
-        {
-            Save.Game.idx_difficulty_completed = DifficultyController.Instance.DifficultyIndex;
-        }
-
         // End
         IsGameEnded = true;
         SessionController.Instance.CurrentData.won = true;
@@ -253,7 +248,8 @@ public class GameController : MonoBehaviour
         IsGameEnded = true;
         yield return new WaitForSeconds(1f);
         GameStateController.Instance.SetGameState(GameStateType.MENU);
-        var end_view = ViewController.Instance.ShowView<EndView>(0, "End");
+        ViewController.Instance.CloseView(0.5f);
+        var end_view = ViewController.Instance.ShowView<GameEndView>(0, nameof(GameEndView));
     }
 
     public void ResumeEndless()

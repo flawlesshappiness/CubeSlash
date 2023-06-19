@@ -7,7 +7,9 @@ using UnityEngine.UI;
 public class RadialMenuElement : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
 {
     [SerializeField] private Image image_icon;
+    [SerializeField] private GameObject notification, locked;
     [SerializeField] private RectTransform pivot_idle, pivot_select;
+
     public enum AnimationType { ScaleBounce }
     public AnimationType animation_type;
 
@@ -44,10 +46,27 @@ public class RadialMenuElement : MonoBehaviour, IPointerEnterHandler, IPointerEx
     {
         Option = option;
         image_icon.sprite = option.Sprite;
+        UpdateVisual();
+    }
+
+    public void UpdateVisual(bool animate = false)
+    {
+        SetLocked(Option.IsLocked);
+
+        if (animate)
+        {
+            AnimateNotificationActive(Option.IsNew);
+        }
+        else
+        {
+            SetNotificationActive(Option.IsNew);
+        }
     }
 
     public void SetHidden() => transform.localScale = Vector3.zero;
     public void SetVisible() => transform.localScale = Vector3.one;
+    public void SetLocked(bool locked) => this.locked.SetActive(locked);
+    public void SetNotificationActive(bool active) => notification.SetActive(active);
 
     public void OnPointerClick(PointerEventData eventData)
     {
@@ -134,6 +153,19 @@ public class RadialMenuElement : MonoBehaviour, IPointerEnterHandler, IPointerEx
             var end = Vector3.one * (show ? 1f : 0f);
             var curve = show ? EasingCurves.EaseOutBack : EasingCurves.EaseInQuad;
             yield return LerpEnumerator.LocalScale(transform, 0.25f, end)
+                .Curve(curve)
+                .UnscaledTime();
+        }
+    }
+
+    public CustomCoroutine AnimateNotificationActive(bool active)
+    {
+        return this.StartCoroutineWithID(Cr(), "notification_" + GetInstanceID());
+        IEnumerator Cr()
+        {
+            var end = Vector3.one * (active ? 1f : 0f);
+            var curve = active ? EasingCurves.EaseOutBack : EasingCurves.EaseInQuad;
+            yield return LerpEnumerator.LocalScale(notification.transform, 0.25f, end)
                 .Curve(curve)
                 .UnscaledTime();
         }

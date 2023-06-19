@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c301fa7d26535e4cb7056a730ebca5e, type: 3}
   m_Name: Enemy_CrystalMeat
   m_EditorClassIdentifier: 
+  type: 6
   body: {fileID: 4160787836209392310, guid: 77a074f270cdef148b7f89e8ba6b8420, type: 3}
   linear_acceleration: 6
   linear_velocity: 5

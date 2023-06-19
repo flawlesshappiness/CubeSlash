@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c301fa7d26535e4cb7056a730ebca5e, type: 3}
   m_Name: Boss_RootPull
   m_EditorClassIdentifier: 
+  type: 11
   body: {fileID: 5219381806043515592, guid: a0c12bdfe31194147be3d6e95350d54e, type: 3}
   linear_acceleration: 1
   linear_velocity: 2

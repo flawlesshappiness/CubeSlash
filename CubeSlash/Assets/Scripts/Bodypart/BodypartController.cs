@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using System.Linq;
-using UnityEngine;
 
 public class BodypartController : Singleton
 {
@@ -22,5 +21,25 @@ public class BodypartController : Singleton
         var bdp = Instantiate(info.prefab);
         bdp.Info = info;
         return bdp;
+    }
+
+    public void UnlockPart(BodypartInfo info)
+    {
+        if (Save.Game.unlocked_bodyparts.Contains(info.type)) return;
+        Save.Game.unlocked_bodyparts.Add(info.type);
+        Save.Game.new_bodyparts.Add(info.type);
+    }
+
+    public BodypartInfo UnlockRandomPart()
+    {
+        var parts = _db.collection.Where(info => !info.is_ability_part && !Save.Game.unlocked_bodyparts.Contains(info.type));
+        if(parts.Count() > 0)
+        {
+            var info = parts.ToList().Random();
+            UnlockPart(info);
+            return info;
+        }
+
+        return null;
     }
 }

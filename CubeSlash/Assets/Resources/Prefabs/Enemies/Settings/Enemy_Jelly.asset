@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c301fa7d26535e4cb7056a730ebca5e, type: 3}
   m_Name: Enemy_Jelly
   m_EditorClassIdentifier: 
+  type: 14
   body: {fileID: 4160787836209392310, guid: 5b835ab6315aae14e8ad3001eb992cc5, type: 3}
   linear_acceleration: 20
   linear_velocity: 10

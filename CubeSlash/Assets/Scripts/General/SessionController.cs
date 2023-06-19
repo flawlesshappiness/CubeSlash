@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class SessionController : Singleton
@@ -9,9 +10,11 @@ public class SessionController : Singleton
     {
         public int enemies_killed;
         public int levels_gained;
+        public int areas_completed;
         public float time_start;
         public bool won;
         public bool has_received_currency;
+        public List<EnemyType> bosses_killed = new List<EnemyType>();
 
         public int GetCurrencyEarned()
         {
@@ -31,6 +34,8 @@ public class SessionController : Singleton
         GameController.Instance.onGameStart += CreateSession;
         EnemyController.Instance.OnEnemyKilled += () => CurrentData.enemies_killed++;
         GameController.Instance.onPlayerLevelUp += () => CurrentData.levels_gained++;
+        AreaController.Instance.onNextArea += _ => CurrentData.areas_completed++;
+        EnemyController.Instance.OnBossKilled += type => CurrentData.bosses_killed.Add(type);
     }
 
     public void CreateSession()

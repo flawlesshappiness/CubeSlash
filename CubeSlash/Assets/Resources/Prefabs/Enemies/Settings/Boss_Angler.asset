@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c301fa7d26535e4cb7056a730ebca5e, type: 3}
   m_Name: Boss_Angler
   m_EditorClassIdentifier: 
+  type: 13
   body: {fileID: 5658857249211950320, guid: 9108769eefa3c1345875a22cd431a5b7, type: 3}
   linear_acceleration: 5
   linear_velocity: 4

@@ -5,6 +5,8 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "EnemySettings", menuName = "Game/Enemy/Settings", order = 1)]
 public class EnemySettings : ScriptableObject
 {
+    public EnemyType type;
+
     [Header("CHARACTER")]
     public Body body;
     public float linear_acceleration;

@@ -81,13 +81,18 @@ public class PlayRadialView : View
     {
         radial.Clear();
 
-        var abilities = AbilityController.Instance.GetAvailableAbilities();
+        var abilities = AbilityController.Instance.GetAbilities();
 
         var options = abilities
             .Select(a => new RadialMenuOption
             {
+                Title = AbilityController.Instance.IsAbilityUnlocked(a.Info.type) ? null : "Play",
+                Description = AbilityController.Instance.IsAbilityUnlocked(a.Info.type) ? null : "to unlock",
                 Sprite = a.Info.sprite_icon,
-                OnSubmitComplete = () => SelectAbility(a.Info)
+                IsLocked = !AbilityController.Instance.IsAbilityUnlocked(a.Info.type),
+                IsNew = Save.Game.new_abilities.Contains(a.Info.type),
+                OnSelect = () => Select(a.Info),
+                OnSubmitComplete = () => Submit(a.Info)
             }).ToList();
 
         InsertBackOption(options, ShowMainOptions);
@@ -96,11 +101,16 @@ public class PlayRadialView : View
         radial.AnimateShowElements(true, 0.05f);
         radial.SetCancelElement(radial.GetElement(0));
 
-        void SelectAbility(AbilityInfo info)
+        void Submit(AbilityInfo info)
         {
             Player.Instance.SetPrimaryAbility(info.type);
             Player.Instance.UpdateBodyparts();
             ShowMainOptions();
+        }
+
+        void Select(AbilityInfo info)
+        {
+            Save.Game.new_abilities.Remove(info.type);
         }
     }
 
@@ -115,6 +125,7 @@ public class PlayRadialView : View
             {
                 Title = info.difficulty_name,
                 Sprite = info.difficulty_sprite,
+                IsLocked = infos.IndexOf(info) > (Save.Game.idx_difficulty_completed + 1),
                 OnSubmitComplete = () => SelectDifficulty(info)
             }).ToList();
 

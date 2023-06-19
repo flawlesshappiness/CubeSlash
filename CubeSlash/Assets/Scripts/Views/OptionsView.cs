@@ -102,6 +102,7 @@ public class OptionsView : View
         void Confirm()
         {
             SaveDataController.Instance.ClearSaveData();
+            Player.Instance.Clear();
             Back();
             PressBack(new InputAction.CallbackContext());
         }

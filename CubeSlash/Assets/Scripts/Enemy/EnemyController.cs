@@ -15,6 +15,7 @@ public class EnemyController : Singleton
     public bool EnemySpawnEnabled { get; set; } = true;
     public System.Action OnEnemyKilled { get; set; }
     public System.Action<Enemy> OnEnemySpawned { get; set; }
+    public System.Action<EnemyType> OnBossKilled { get; set; }
     public List<Enemy> ActiveEnemies { get { return enemies_active.ToList(); } }
 
     private const int COUNT_ENEMY_POOL_EXTEND = 20;
@@ -159,6 +160,7 @@ public class EnemyController : Singleton
             AreaController.Instance.NextAreaLock.AddLock(nameof(EnemyController));
         }
 
+        var area = AreaController.Instance.CurrentArea;
         var enemy = SpawnBoss(boss);
         enemy.OnDeath += () =>
         {
@@ -178,6 +180,9 @@ public class EnemyController : Singleton
                 experience.transform.position = enemy.transform.position + Random.insideUnitCircle.ToVector3() * enemy.Settings.size * 0.5f;
                 experience.AnimateCollect();
             }
+
+            // Log
+            OnBossKilled?.Invoke(enemy.Settings.type);
         };
 
         return enemy;

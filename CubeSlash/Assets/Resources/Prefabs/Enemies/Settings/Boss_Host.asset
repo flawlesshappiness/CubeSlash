@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c301fa7d26535e4cb7056a730ebca5e, type: 3}
   m_Name: Boss_Host
   m_EditorClassIdentifier: 
+  type: 8
   body: {fileID: 1506008273371056403, guid: 11ff3473a7d8bd8448fb8c7807989654, type: 3}
   linear_acceleration: 1
   linear_velocity: 3

@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c301fa7d26535e4cb7056a730ebca5e, type: 3}
   m_Name: Boss_Jelly
   m_EditorClassIdentifier: 
+  type: 15
   body: {fileID: 1506008273371056403, guid: 4979ec254d8bb1e4f8885220f55f36b8, type: 3}
   linear_acceleration: 20
   linear_velocity: 10
