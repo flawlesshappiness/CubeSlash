@@ -15,7 +15,7 @@ MonoBehaviour:
   id:
     id: split_pierce_2
   name: Projectile Size 3
-  icon: {fileID: 21300000, guid: 0aba2c311cbcf4b49a93fc5c835d599e, type: 3}
+  icon: {fileID: 21300000, guid: 72a0091d72cdf9147aa7237cba4f5f10, type: 3}
   hidden: 0
   require_ability: 1
   ability_required: 1

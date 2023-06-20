@@ -431,17 +431,17 @@ MonoBehaviour:
           Data3: 1777809578
           Data4: -281874303
         Path: event:/Music/bgm_start_game_001
-  - name: bgm_ocean [EMPTY]
+  - name: bgm_ocean
     type:
       id: bgm_ocean
     sfx:
       reference:
         Guid:
-          Data1: 0
-          Data2: 0
-          Data3: 0
-          Data4: 0
-        Path: 
+          Data1: 1722869511
+          Data2: 1202826652
+          Data3: 1893821587
+          Data4: 373278733
+        Path: event:/Music/bgm_ocean_001
   - name: bgm_leaves
     type:
       id: bgm_leaves

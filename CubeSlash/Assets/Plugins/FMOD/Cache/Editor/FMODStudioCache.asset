@@ -28,6 +28,33 @@ MonoBehaviour:
   MinDistance: 0
   MaxDistance: 0
   Length: 0
+--- !u!114 &-8471770106108916243
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Music/bgm_ocean_001
+  m_EditorClassIdentifier: 
+  Path: event:/Music/bgm_ocean_001
+  Guid:
+    Data1: 1722869511
+    Data2: 1202826652
+    Data3: 1893821587
+    Data4: 373278733
+  Banks:
+  - {fileID: -8060980804293988741}
+  IsStream: 1
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 108000
 --- !u!114 &-8307252730091020738
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -97,7 +124,7 @@ MonoBehaviour:
   Path: Assets/FMOD/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 638228735332933806
+  lastModified: 638228875489147678
   FileSizes: []
   Exists: 1
 --- !u!114 &-7872426760261806101
@@ -1385,12 +1412,13 @@ MonoBehaviour:
   - {fileID: 2643746081648176733}
   - {fileID: -2660639502744854097}
   - {fileID: 5335320224464017973}
+  - {fileID: -8471770106108916243}
   EditorParameters: []
   MasterBanks:
   - {fileID: -8060980804293988741}
   StringsBanks:
   - {fileID: 5917708036578608240}
-  cacheTime: 638228735332973815
+  cacheTime: 638228875489187698
   cacheVersion: 131593
 --- !u!114 &1453305857757199432
 MonoBehaviour:
@@ -1971,10 +1999,10 @@ MonoBehaviour:
   Path: Assets/FMOD/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 638228735332973815
+  lastModified: 638228875489187698
   FileSizes:
   - Name: 
-    Value: 4756
+    Value: 4796
   Exists: 1
 --- !u!114 &5992827859230917708
 MonoBehaviour:
