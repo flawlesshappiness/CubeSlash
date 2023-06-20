@@ -125,6 +125,7 @@ public class SoundEffectType : FakeEnum
     // BGM
     public static readonly SoundEffectType bgm_menu = new SoundEffectType(nameof(bgm_menu));
     public static readonly SoundEffectType bgm_lose_game = new SoundEffectType(nameof(bgm_lose_game));
+    public static readonly SoundEffectType bgm_win_game = new SoundEffectType(nameof(bgm_win_game));
     public static readonly SoundEffectType bgm_start_game = new SoundEffectType(nameof(bgm_start_game));
     public static readonly SoundEffectType bgm_ocean = new SoundEffectType(nameof(bgm_ocean));
     public static readonly SoundEffectType bgm_leaves = new SoundEffectType(nameof(bgm_leaves));

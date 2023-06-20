@@ -519,6 +519,17 @@ MonoBehaviour:
           Data3: 189750964
           Data4: -1995803853
         Path: event:/Music/bgm_lose_game_001
+  - name: bgm_win_game
+    type:
+      id: bgm_win_game
+    sfx:
+      reference:
+        Guid:
+          Data1: -1987043459
+          Data2: 1180653067
+          Data3: 1779082925
+          Data4: 1429604646
+        Path: event:/Music/bgm_win_001
   - name: sfx_dud_death
     type:
       id: sfx_dud_death

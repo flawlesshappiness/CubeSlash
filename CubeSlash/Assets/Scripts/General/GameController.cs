@@ -24,6 +24,7 @@ public class GameController : MonoBehaviour
     public System.Action onMainMenu { get; set; }
     public System.Action onPlayerLevelUp { get; set; }
     public System.Action onPlayerDeath { get; set; }
+    public System.Action onWin { get; set; }
 
     public const string TAG_ABILITY_VIEW = "Ability";
 
@@ -239,6 +240,7 @@ public class GameController : MonoBehaviour
         SessionController.Instance.CurrentData.won = true;
         MusicController.Instance.StopBGM();
         EnemyController.Instance.KillActiveEnemies();
+        onWin?.Invoke();
         StartCoroutine(EndGameCr());
     }
 

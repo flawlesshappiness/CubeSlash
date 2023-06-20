@@ -16,6 +16,7 @@ public class MusicController : Singleton
         GameController.Instance.onMainMenu += OnMainMenu;
         GameController.Instance.onGameStart += OnGameStart;
         GameController.Instance.onPlayerDeath += OnPlayerDeath;
+        GameController.Instance.onWin += OnWin;
         AreaController.Instance.onNextArea += OnNextArea;
     }
 
@@ -38,6 +39,11 @@ public class MusicController : Singleton
     private void OnPlayerDeath()
     {
         PlayBGM(SoundEffectType.bgm_lose_game);
+    }
+
+    private void OnWin()
+    {
+        PlayBGM(SoundEffectType.bgm_win_game);
     }
 
     private void OnNextArea(Area area)
