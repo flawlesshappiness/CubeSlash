@@ -118,12 +118,12 @@ public class GameEndView : View
 
         if (data.bosses_killed.Contains(EnemyType.BossPlant))
         {
-            UnlockBody(PlayerBodyType.plant_body);
+            UnlockBody(PlayerBodyType.Plant);
         }
 
         if (data.bosses_killed.Contains(EnemyType.BossCrystalEyes))
         {
-            UnlockBody(PlayerBodyType.meat_body);
+            UnlockBody(PlayerBodyType.Meat);
         }
 
         if (data.won && Save.Game.idx_difficulty_completed <= DifficultyController.Instance.DifficultyIndex)

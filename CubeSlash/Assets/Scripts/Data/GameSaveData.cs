@@ -30,6 +30,6 @@ public class GameSaveData : SaveDataObject
     public List<PlayerBodyType> new_player_bodies = new List<PlayerBodyType>();
     public List<PlayerBodyType> unlocked_player_bodies = new List<PlayerBodyType>()
     {
-        PlayerBodyType.cell_body,
+        PlayerBodyType.Cell,
     };
 }
