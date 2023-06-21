@@ -51,7 +51,7 @@ public class AI_RootPull : EnemyAI
         if (Player.Instance == null) return;
         if (Player.Instance.IsDead) return;
         _attached = true;
-        _vine.target = Player.Instance.Rigidbody;
+        _vine.Attach();
         _vine.AnimateToTarget();
 
         var sfx = SoundController.Instance.Play(SoundEffectType.sfx_enemy_root);

@@ -371,7 +371,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 479828104516861085, guid: 32e21063672caf348936e98d0863a235, type: 3}
       propertyPath: pull_force
-      value: 0.1
+      value: 0.12
+      objectReference: {fileID: 0}
+    - target: {fileID: 479828104516861085, guid: 32e21063672caf348936e98d0863a235, type: 3}
+      propertyPath: ignore_max_attached
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 932272499489608597, guid: 32e21063672caf348936e98d0863a235, type: 3}
       propertyPath: m_Name

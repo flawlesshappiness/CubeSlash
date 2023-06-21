@@ -12,21 +12,36 @@ public class RootPullVine : MonoBehaviour
     public float drawmode_size = 0.32f;
     public float drawmode_position = 0.16f;
     [Min(0)] public float scale;
-
-
-    public Rigidbody2D target;
+    public int count_max_attached;
+    public bool ignore_max_attached;
 
     private float SpriteScale { get { return spr_main.transform.lossyScale.y; } }
     private float UnitToScale { get { return 1f / (drawmode_position * SpriteScale * 2); } }
     private float DistanceToTarget { get { return Vector3.Distance(transform.position, target.transform.position); } }
 
+    private Rigidbody2D target;
     private bool animating;
+    private static int count_attached;
 
     private void OnValidate()
     {
         if (Application.isPlaying) return;
         if (target != null) UpdateScale();
         UpdateVisual();
+    }
+
+    public void Attach()
+    {
+        if (target != null) return;
+        target = Player.Instance.Rigidbody;
+        count_attached++;
+    }
+
+    public void Unattach()
+    {
+        if (target == null) return;
+        target = null;
+        count_attached--;
     }
 
     private void Update()
@@ -70,7 +85,8 @@ public class RootPullVine : MonoBehaviour
         if(target == null) return;
         if (GameController.Instance.IsPaused) return;
         var dir = transform.DirectionTo(target.transform);
-        target.AddForce(-dir * pull_force);
+        var force = (ignore_max_attached || count_attached <= count_max_attached) ? pull_force : (pull_force / count_attached);
+        target.AddForce(-dir * force);
     }
 
     private void UpdateParticles()

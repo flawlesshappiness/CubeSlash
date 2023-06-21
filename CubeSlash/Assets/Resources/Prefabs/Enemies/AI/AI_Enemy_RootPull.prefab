@@ -45,7 +45,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _vine: {fileID: 4327244987187040586}
-  max_dist_to_player: 0.3
+  max_dist_to_player: 0.35
 --- !u!1001 &4226003169196797399
 PrefabInstance:
   m_ObjectHideFlags: 0

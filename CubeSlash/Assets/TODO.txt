@@ -1,5 +1,4 @@
 ## TODO ##
-shooter max enemy count
 rootpull needs to be stronger and stack less
 max speed is too much
 explosion is too weak in the beginning
@@ -37,3 +36,4 @@ enemy with a dud on its back
 CHARM: Orbiting damage
 CHARM: Gain x when y
 endless mode
+Mushroom bodypart

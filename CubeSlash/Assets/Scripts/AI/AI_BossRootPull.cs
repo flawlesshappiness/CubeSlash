@@ -74,7 +74,7 @@ public class AI_BossRootPull : BossAI
         if (attached) return;
         if (!can_attach) return;
         attached = true;
-        _vine.target = Player.Instance.Rigidbody;
+        _vine.Attach();
         _vine.AnimateToTarget();
 
         var sfx = SoundController.Instance.Play(SoundEffectType.sfx_enemy_root);
@@ -86,7 +86,7 @@ public class AI_BossRootPull : BossAI
         if (!attached) return;
         attached = false;
         _vine.AnimateFromTarget();
-        _vine.target = null;
+        _vine.Unattach();
     }
 
     private void OnDudKilled()
