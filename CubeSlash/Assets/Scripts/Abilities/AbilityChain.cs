@@ -187,7 +187,7 @@ public class AbilityChain : Ability
         CoroutineController.Instance.StartCoroutine(ChainCr());
         IEnumerator ChainCr()
         {
-            yield return new WaitForSeconds(0.1f);
+            yield return new WaitForSeconds(0.2f);
 
             info.center = target_position;
             info.chains_left--;
