@@ -15,7 +15,7 @@ MonoBehaviour:
   id:
     id: explode_radius_3
   name: Explode rings 3
-  icon: {fileID: 21300000, guid: c958cb6accbb0944aa2480e4d2a1e75c, type: 3}
+  icon: {fileID: 21300000, guid: 296ef821edc3bd0468e87951e8613f1a, type: 3}
   hidden: 0
   require_ability: 1
   ability_required: 2
@@ -27,5 +27,5 @@ MonoBehaviour:
     value:
       type_value: 3
       value_int: 0
-      value_float: 0.5
+      value_float: 0.2
       value_bool: 0

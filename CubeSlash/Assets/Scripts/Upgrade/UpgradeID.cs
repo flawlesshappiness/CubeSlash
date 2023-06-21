@@ -33,7 +33,7 @@ public class UpgradeID : FakeEnum
     public static readonly UpgradeID player_max_speed_1 = new UpgradeID(nameof(player_max_speed_1));
     public static readonly UpgradeID player_max_speed_2 = new UpgradeID(nameof(player_max_speed_2));
     public static readonly UpgradeID player_max_speed_3 = new UpgradeID(nameof(player_max_speed_3));
-    
+
     public static readonly UpgradeID player_exp_bonus_1 = new UpgradeID(nameof(player_exp_bonus_1));
     public static readonly UpgradeID player_exp_bonus_2 = new UpgradeID(nameof(player_exp_bonus_2));
     public static readonly UpgradeID player_exp_bonus_3 = new UpgradeID(nameof(player_exp_bonus_3));
@@ -90,9 +90,13 @@ public class UpgradeID : FakeEnum
     public static readonly UpgradeID explode_charge_time_1 = new UpgradeID(nameof(explode_charge_time_1));
     public static readonly UpgradeID explode_charge_time_2 = new UpgradeID(nameof(explode_charge_time_2));
     public static readonly UpgradeID explode_charge_time_3 = new UpgradeID(nameof(explode_charge_time_3));
+    public static readonly UpgradeID explode_charge_time_4 = new UpgradeID(nameof(explode_charge_time_4));
+    public static readonly UpgradeID explode_charge_time_5 = new UpgradeID(nameof(explode_charge_time_5));
     public static readonly UpgradeID explode_radius_1 = new UpgradeID(nameof(explode_radius_1));
     public static readonly UpgradeID explode_radius_2 = new UpgradeID(nameof(explode_radius_2));
     public static readonly UpgradeID explode_radius_3 = new UpgradeID(nameof(explode_radius_3));
+    public static readonly UpgradeID explode_radius_4 = new UpgradeID(nameof(explode_radius_4));
+    public static readonly UpgradeID explode_radius_5 = new UpgradeID(nameof(explode_radius_5));
     public static readonly UpgradeID explode_slow_1 = new UpgradeID(nameof(explode_slow_1));
     public static readonly UpgradeID explode_slow_2 = new UpgradeID(nameof(explode_slow_2));
     public static readonly UpgradeID explode_slow_3 = new UpgradeID(nameof(explode_slow_3));

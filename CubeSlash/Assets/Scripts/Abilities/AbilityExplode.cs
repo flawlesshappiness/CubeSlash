@@ -1,13 +1,10 @@
 using System.Collections;
-using System.Linq;
 using UnityEngine;
 
 public class AbilityExplode : Ability
 {
     [Header("EXPLODE")]
     [SerializeField] private ExplodeChargeEffect fx_charge;
-
-    public event System.Action onChargeStart, onChargeEnd, onExplode;
 
     // Values
     public float Cooldown { get; private set; }
@@ -21,10 +18,10 @@ public class AbilityExplode : Ability
     public bool SlowLinger { get; private set; }
     public int MiniExplosions { get; private set; }
 
-    private const float RADIUS = 4f;
+    private const float RADIUS = 5f;
     private const float RADIUS_MUL_START = 0f;
-    private const float CHARGE_TIME = 1f;
-    private const float FORCE = 200f;
+    private const float CHARGE_TIME = 0.25f;
+    private const float FORCE = 250f;
 
     private float time_charge_start;
 
@@ -41,7 +38,7 @@ public class AbilityExplode : Ability
         Cooldown = GetFloatValue(StatID.explode_cooldown_flat) * GetFloatValue(StatID.explode_cooldown_perc);
         Radius = RADIUS * GetFloatValue(StatID.explode_radius_perc);
         Knockback = FORCE;
-        ChargeTime = CHARGE_TIME * GetFloatValue(StatID.explode_charge_time);
+        ChargeTime = CHARGE_TIME * GetFloatValue(StatID.explode_charge_time) * Radius;
         SlowPerc = 1f - GetFloatValue(StatID.explode_slow_perc);
         SlowRadius = RADIUS * GetFloatValue(StatID.explode_slow_area_perc);
         ChainExplode = GetBoolValue(StatID.explode_chain);
@@ -57,8 +54,6 @@ public class AbilityExplode : Ability
         InUse = true;
         base.Pressed();
         time_charge_start = Time.time;
-
-        onChargeStart?.Invoke();
 
         var parent = HasFragments ? GameController.Instance.world : transform;
         var position = transform.position;
@@ -79,7 +74,6 @@ public class AbilityExplode : Ability
         if (!InUse) return;
 
         InUse = false;
-        onChargeEnd?.Invoke();
 
         fx_charge.StopAnimating();
 
@@ -99,10 +93,10 @@ public class AbilityExplode : Ability
     private void ReleaseOverTime()
     {
         if (!InUse) return;
-        
+
         var t = (time_charge_start + ChargeTime + 1);
         if (Time.time < t) return;
-        
+
         Released();
     }
 
@@ -162,8 +156,6 @@ public class AbilityExplode : Ability
                 onHit = OnHit,
             }));
         }
-
-        onExplode?.Invoke();
     }
 
     private void OnHit(IKillable k)
@@ -223,7 +215,7 @@ public class AbilityExplode : Ability
     public static void Explode(Vector3 position, float radius, float force, System.Action<IKillable> onHit = null)
     {
         var hits = Physics2D.OverlapCircleAll(position, radius);
-        foreach(var hit in hits)
+        foreach (var hit in hits)
         {
             var k = hit.GetComponentInParent<IKillable>();
             if (k == null) continue;
@@ -235,7 +227,7 @@ public class AbilityExplode : Ability
         }
 
         // Knockback
-        if(force > 0)
+        if (force > 0)
         {
             Player.PushEnemiesInArea(position, radius * 3, force);
         }

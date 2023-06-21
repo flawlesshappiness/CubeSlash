@@ -10,22 +10,22 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 616189df85cb92d40806459b9c9111b7, type: 3}
-  m_Name: explode charge time 3
+  m_Name: explode radius 5
   m_EditorClassIdentifier: 
   id:
-    id: explode_charge_time_3
-  name: Charge time 3
-  icon: {fileID: 21300000, guid: 121b2ac6f9cb24c418b45a31699a06b0, type: 3}
+    id: explode_radius_5
+  name: Explode rings 5
+  icon: {fileID: 21300000, guid: e9686456eb2f6e9428b9fc5915e45676, type: 3}
   hidden: 0
   require_ability: 1
   ability_required: 2
   upgrades_required:
-  - id: explode_charge_time_2
+  - id: explode_radius_4
   stats:
   - id:
-      id: explode_charge_time
+      id: explode_radius_perc
     value:
       type_value: 3
       value_int: 0
-      value_float: -0.15
+      value_float: 0.3
       value_bool: 0

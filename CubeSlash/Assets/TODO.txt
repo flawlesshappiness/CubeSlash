@@ -37,3 +37,5 @@ CHARM: Orbiting damage
 CHARM: Gain x when y
 endless mode
 Mushroom bodypart
+
+Boomerang ability
