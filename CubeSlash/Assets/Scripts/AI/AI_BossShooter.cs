@@ -17,6 +17,8 @@ public class AI_BossShooter : BossAI
 
     private BossShooterBody body_shooter;
 
+    private int times_hit;
+
     public override void Initialize(Enemy enemy)
     {
         base.Initialize(enemy);
@@ -30,6 +32,7 @@ public class AI_BossShooter : BossAI
     private void OnDudKilled(HealthDud dud)
     {
         HideDuds();
+        times_hit++;
         do_circle_attack = true;
     }
 
@@ -51,7 +54,7 @@ public class AI_BossShooter : BossAI
 
         if(state == MoveState.WATCH)
         {
-            if(Vector3.Distance(Position, PlayerPosition) > CameraController.Instance.Width * 0.45f)
+            if(Vector3.Distance(Position, PlayerPosition) > CameraController.Instance.Width * 0.4f)
             {
                 state = MoveState.MOVE_TO_PLAYER;
             }
@@ -72,7 +75,7 @@ public class AI_BossShooter : BossAI
         }
         else if(state == MoveState.MOVE_TO_PLAYER)
         {
-            if (Vector3.Distance(Position, PlayerPosition) > CameraController.Instance.Width * 0.4f)
+            if (Vector3.Distance(Position, PlayerPosition) > CameraController.Instance.Width * 0.45f)
             {
                 destination = IsPlayerAlive() ? PlayerPosition : Position;
                 MoveTowards(destination);
@@ -194,7 +197,7 @@ public class AI_BossShooter : BossAI
 
         yield return new WaitForSeconds(1.0f);
 
-        for (int i = 0; i < 5; i++)
+        for (int i = 0; i < 1 + times_hit; i++)
         {
             ShootCircle();
             yield return new WaitForSeconds(1.0f);
