@@ -17,7 +17,7 @@ MonoBehaviour:
   enemies:
   - enemy: {fileID: 11400000, guid: db0782c6ad8291647b08bacf671fe0eb, type: 2}
     chance: 0.3
-    max: 0
+    max: 5
   color_fog: {r: 0.08458333, g: 0.23625006, b: 0.28, a: 1}
   color_bg: {r: 0.023529412, g: 0.02745098, b: 0.101960786, a: 1}
   ac_alpha_fog:

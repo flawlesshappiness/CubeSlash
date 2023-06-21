@@ -1,5 +1,4 @@
 ## TODO ##
-end game gradient is scaled
 shooter max enemy count
 rootpull needs to be stronger and stack less
 max speed is too much
