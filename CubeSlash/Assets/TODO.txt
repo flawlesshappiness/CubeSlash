@@ -1,6 +1,4 @@
 ## TODO ##
-rootpull needs to be stronger and stack less
-max speed is too much
 explosion is too weak in the beginning
 increase camera size based on area index
 camera look ahead based on speed
