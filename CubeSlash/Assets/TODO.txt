@@ -1,6 +1,22 @@
 ## TODO ##
-Gain custom body parts by playing
-- Locked behind paywall
+end game gradient is scaled
+shooter max enemy count
+rootpull needs to be stronger and stack less
+max speed is too much
+explosion is too weak in the beginning
+increase camera size based on area index
+camera look ahead based on speed
+missing ability tooltips
+test if player bodies are unlocked correctly
+player body notif is always on
+it is unclear if some things are danger on touch (add red outline)
+body edit mirror part
+too many crystal body parts (each body part should be distinct)
+shield upgrade is boring
+dash ability is bad
+usually you only want one ability
+enemies tend to clump together or move into objects
+ability cooldown UI and health ui is too far away from play area
 
 ## BUGS ##
 
