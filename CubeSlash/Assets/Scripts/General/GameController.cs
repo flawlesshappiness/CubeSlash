@@ -154,7 +154,7 @@ public class GameController : MonoBehaviour
         IEnumerator Cr()
         {
             Player.Instance.PlayLevelUpFX();
-            Player.PushEnemiesInArea(Player.Instance.transform.position, 12, 500);
+            Player.PushEnemiesInArea(Player.Instance.transform.position, 12, 500, use_mass: true);
             yield return LerpTimeScale(1.0f, 0.25f);
             GameStateController.Instance.SetGameState(GameStateType.MENU);
             PauseLevel();

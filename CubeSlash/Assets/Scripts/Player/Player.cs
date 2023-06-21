@@ -358,7 +358,7 @@ public class Player : Character
         }
     }
 
-    public static void PushEnemiesInArea(Vector3 position, float radius, float force, AnimationCurve curve_force = null)
+    public static void PushEnemiesInArea(Vector3 position, float radius, float force, bool use_mass = false, AnimationCurve curve_force = null)
     {
         var hits = new List<Enemy>();
         foreach (var hit in Physics2D.OverlapCircleAll(position, radius))
@@ -374,7 +374,7 @@ public class Player : Character
                 var t_force = curve_force == null ? 1 : curve_force.Evaluate(t_dist);
                 var calc_force = force * t_force;
                 var dir_knock = dir.normalized.ToVector2() * calc_force;
-                enemy.Knockback(dir_knock, false, false);
+                enemy.Knockback(dir_knock, use_mass, false);
             }
         }
     }

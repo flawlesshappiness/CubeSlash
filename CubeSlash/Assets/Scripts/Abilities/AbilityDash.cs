@@ -181,7 +181,7 @@ public class AbilityDash : Ability
         {
             KnockbackSelf();
             SoundController.Instance.Play(SoundEffectType.sfx_dash_impact);
-            Player.PushEnemiesInArea(Player.transform.position, RADIUS_FORCE, FORCE, ac_push_enemies);
+            Player.PushEnemiesInArea(Player.transform.position, RADIUS_FORCE, FORCE, false, ac_push_enemies);
         }
 
         StartCoroutine(InvincibleCr());
