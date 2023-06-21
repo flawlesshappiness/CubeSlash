@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id:
     id: player_cooldown_multiplier
-  description: $ cooldown multiplier
+  description: $ ability cooldown
   value:
     type_value: 3
     value_int: 0
