@@ -1,7 +1,4 @@
 ## TODO ##
-explosion is too weak in the beginning
-increase camera size based on area index
-camera look ahead based on speed
 missing ability tooltips
 make sure mine size reflects in modifiers
 make sure projectile size reflects in modifiers
@@ -10,6 +7,7 @@ player body notif is always on
 it is unclear if some things are danger on touch (add red outline)
 body edit mirror part
 too many crystal body parts (each body part should be distinct)
+explode charge sound effect
 shield upgrade is boring
 dash ability is bad
 usually you only want one ability

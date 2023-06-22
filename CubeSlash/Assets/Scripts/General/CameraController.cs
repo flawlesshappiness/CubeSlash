@@ -1,6 +1,5 @@
 using Flawliz.Lerp;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class CameraController : Singleton
@@ -70,7 +69,10 @@ public class CameraController : Singleton
 
     private void OnNextArea(Area area)
     {
-        //AnimateSize(5f, area.camera_size, EasingCurves.EaseInOutQuad);
+        var settings = GameSettings.Instance;
+        var t = (float)AreaController.Instance.AreaIndex / (settings.areas_to_win - 1);
+        var size = settings.camera_size_start + settings.camera_size_game.Evaluate(t);
+        AnimateSize(15f, size, EasingCurves.EaseInOutQuad);
     }
 
     private void OnMainMenu()

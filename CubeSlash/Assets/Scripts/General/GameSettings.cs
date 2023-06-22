@@ -32,6 +32,10 @@ public class GameSettings : ScriptableObject
     public int currency_reward_win;
     public AnimationCurve currency_mul_difficulty;
 
+    [Header("CAMERA")]
+    public float camera_size_start;
+    public AnimationCurve camera_size_game;
+
     public static GameSettings Instance { get { return _instance ?? LoadAsset(); } }
     private static GameSettings _instance;
 

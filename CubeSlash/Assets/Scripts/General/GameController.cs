@@ -1,8 +1,8 @@
+using Flawliz.Lerp;
 using System.Collections;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using Flawliz.Lerp;
 
 public class GameController : MonoBehaviour
 {
@@ -60,7 +60,6 @@ public class GameController : MonoBehaviour
         Player.Instance.Initialize();
         Player.Instance.onDeath += OnPlayerDeath;
         Player.Instance.onLevelUp += OnPlayerLevelUp;
-        CameraController.Instance.Target = Player.Instance.transform;
         Player.Instance.gameObject.SetActive(true);
     }
 
@@ -114,7 +113,6 @@ public class GameController : MonoBehaviour
         GameStateController.Instance.SetGameState(GameStateType.MENU);
         AreaController.Instance.StartAreaCoroutine();
         ViewController.Instance.ShowView<GameView>(0);
-        CameraController.Instance.AnimateSize(1f, 12f, EasingCurves.EaseInOutQuad);
 
         Player.Instance.SetRigidbodyEnabled(true);
         Player.Instance.ResetValues();

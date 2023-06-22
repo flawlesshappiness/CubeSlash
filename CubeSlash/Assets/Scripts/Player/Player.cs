@@ -6,6 +6,7 @@ using UnityEngine;
 public class Player : Character
 {
     public static Player Instance;
+    [SerializeField] private Transform camera_target;
     [SerializeField] private PlayerSettings settings;
     [SerializeField] private GameObject g_invincible;
     [SerializeField] private ParticleSystem ps_collect_meat, ps_collect_plant, ps_collect_health, ps_level_up, ps_upgrade;
@@ -59,6 +60,7 @@ public class Player : Character
         // Setup
         MoveDirection = transform.up;
         g_invincible.SetActive(false);
+        CameraController.Instance.Target = camera_target;
 
         Clear();
     }
@@ -155,6 +157,7 @@ public class Player : Character
     {
         base.OnUpdate();
         QueuedAbilityUpdate();
+        UpdateCameraTarget();
     }
 
     protected override void OnFixedUpdate()
@@ -198,7 +201,7 @@ public class Player : Character
                 Move(MoveDirection);
                 Body.SetLookDirection(MoveDirection);
             }
-            else if(InfiniteDrag && !IsStunned())
+            else if (InfiniteDrag && !IsStunned())
             {
                 Rigidbody.velocity = Vector2.zero;
             }
@@ -322,9 +325,9 @@ public class Player : Character
     {
         ps_upgrade.Play();
 
-        foreach(var stat in info.upgrade.stats)
+        foreach (var stat in info.upgrade.stats)
         {
-            if(stat.id == StatID.player_health)
+            if (stat.id == StatID.player_health)
             {
                 for (int i = 0; i < stat.value.GetIntValue(); i++)
                 {
@@ -338,7 +341,7 @@ public class Player : Character
                     Health.AddHealth(HealthPoint.Type.TEMPORARY);
                 }
             }
-            else if(stat.id == StatID.player_convert_health)
+            else if (stat.id == StatID.player_convert_health)
             {
                 Health.ConvertHealthToArmor();
             }
@@ -396,7 +399,7 @@ public class Player : Character
         if (KillEnemyShieldRegen <= 0) return;
 
         enemy_kills_until_shield_regen--;
-        if(enemy_kills_until_shield_regen <= 0)
+        if (enemy_kills_until_shield_regen <= 0)
         {
             SoundController.Instance.Play(SoundEffectType.sfx_gain_health);
 
@@ -455,7 +458,7 @@ public class Player : Character
 
         if (!GameController.DAMAGE_DISABLED)
         {
-            if(ChanceToAvoidDamage == 0 || Random.Range(0f, 1f) > ChanceToAvoidDamage)
+            if (ChanceToAvoidDamage == 0 || Random.Range(0f, 1f) > ChanceToAvoidDamage)
             {
                 Health.Damage();
                 SoundController.Instance.Play(SoundEffectType.sfx_player_damage);
@@ -484,11 +487,11 @@ public class Player : Character
     public void CollectHealth(HealthPoint.Type type)
     {
         // Heal
-        if(type == HealthPoint.Type.TEMPORARY)
+        if (type == HealthPoint.Type.TEMPORARY)
         {
             Health.AddHealth(HealthPoint.Type.TEMPORARY);
         }
-        else if(type == HealthPoint.Type.FULL)
+        else if (type == HealthPoint.Type.FULL)
         {
             Health.Heal();
         }
@@ -584,12 +587,12 @@ public class Player : Character
         AbilityController.Instance.GetEquippedAbilities()
             .ForEach(a => a.AdjustCooldownFlat(CollectCooldownReduction));
 
-        if(type == ExperienceType.PLANT)
+        if (type == ExperienceType.PLANT)
         {
             DecrementPlantExperienceUntilHealthRegen();
             ps_collect_plant.Play();
         }
-        else if(type == ExperienceType.MEAT)
+        else if (type == ExperienceType.MEAT)
         {
             ps_collect_meat.Play();
         }
@@ -678,6 +681,13 @@ public class Player : Character
     {
         ps_avoid_damage.Play();
         SoundController.Instance.Play(SoundEffectType.sfx_avoid_damage);
+    }
+    #endregion
+    #region CAMERA
+    private void UpdateCameraTarget()
+    {
+        var distance = Rigidbody.velocity.magnitude * 0.3f;
+        camera_target.localPosition = Rigidbody.velocity.normalized * distance;
     }
     #endregion
 }
