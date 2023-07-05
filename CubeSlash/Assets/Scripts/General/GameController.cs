@@ -218,6 +218,8 @@ public class GameController : MonoBehaviour
             ViewController.Instance.ShowView<StartView>(0f);
         }
 
+        GameAttributeController.Instance.Clear();
+
         onMainMenu?.Invoke();
     }
 

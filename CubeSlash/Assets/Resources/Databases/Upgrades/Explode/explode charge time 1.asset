@@ -28,3 +28,11 @@ MonoBehaviour:
       value_int: 0
       value_float: -0.05
       value_bool: 0
+  modifiers:
+  - attribute_type:
+      id: explode_charge_time
+    value_type: 3
+    int_value: 0
+    float_value: 0
+    percent_value: -0.05
+    bool_value: 0

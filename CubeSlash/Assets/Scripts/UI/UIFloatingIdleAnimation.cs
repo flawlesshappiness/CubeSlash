@@ -1,7 +1,6 @@
 using Flawliz.Lerp;
 using System.Collections;
 using UnityEngine;
-using static RadialMenuElement;
 
 public class UIFloatingIdleAnimation : MonoBehaviour
 {
@@ -11,8 +10,8 @@ public class UIFloatingIdleAnimation : MonoBehaviour
     public float position_scale = 10f;
     public float scale_min = 0.95f;
     public float scale_max = 1.0f;
-    public float scale_duration_min = 0.2f;
-    public float scale_duration_max = 0.3f;
+    public float scale_duration_min = 2.0f;
+    public float scale_duration_max = 3.0f;
 
     private void Start()
     {

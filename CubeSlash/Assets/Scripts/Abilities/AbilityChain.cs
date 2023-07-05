@@ -12,81 +12,46 @@ public class AbilityChain : Ability
     [SerializeField] private DamageTrail trail;
     [SerializeField] private Projectile projectile_fragment;
 
-    public float Cooldown { get; private set; }
-    public float Radius { get; private set; }
-    public int Chains { get; private set; }
-    public int Strikes { get; private set; }
-    public int ChainSplits { get; private set; }
-    public bool HitsExplode { get; private set; }
-    public bool HitsFragment { get; private set; }
-    public bool Trail { get; private set; }
+    public GameAttribute Cooldown { get { return GameAttributeController.Instance.GetAttribute(GameAttributeType.chain_cooldown); } }
+    public GameAttribute Radius { get { return GameAttributeController.Instance.GetAttribute(GameAttributeType.chain_radius); } }
+    public GameAttribute Chains { get { return GameAttributeController.Instance.GetAttribute(GameAttributeType.chain_chains); } }
+    public GameAttribute Strikes { get { return GameAttributeController.Instance.GetAttribute(GameAttributeType.chain_strikes); } }
+    public GameAttribute ExplosionRadius { get { return GameAttributeController.Instance.GetAttribute(GameAttributeType.chain_explosion_radius); } }
+    public GameAttribute Fragments { get { return GameAttributeController.Instance.GetAttribute(GameAttributeType.chain_fragments); } }
 
     private float time_attack;
-
-    private const float RADIUS = 6;
 
     public override void InitializeFirstTime()
     {
         base.InitializeFirstTime();
 
         trail.gameObject.SetActive(false);
-        spr_preview.SetAlpha(0);
+
+        spr_preview.SetAlpha(0.05f);
+        UpdatePreviewRadius();
+        Radius.OnValueModified += () => UpdatePreviewRadius();
     }
 
-    public override void OnValuesUpdated()
-    {
-        base.OnValuesUpdated();
+    public override float GetBaseCooldown() => Cooldown.ModifiedValue.float_value;
 
-        Cooldown = GetFloatValue(StatID.chain_cooldown_flat) * GetFloatValue(StatID.chain_cooldown_perc);
-        Radius = RADIUS * GetFloatValue(StatID.chain_radius_perc);
-        Chains = GetIntValue(StatID.chain_chains);
-        Strikes = GetIntValue(StatID.chain_strikes);
-        ChainSplits = GetIntValue(StatID.chain_chain_strikes);
-        HitsExplode = GetBoolValue(StatID.chain_hits_explode);
-        HitsFragment = GetBoolValue(StatID.chain_fragments);
-        Trail = GetBoolValue(StatID.chain_trail);
-
-        pivot_preview.localScale = Vector3.one * Radius * 2;
-        spr_preview.SetAlpha(0);
-    }
-
-
-    public override float GetBaseCooldown() => Cooldown;
-    public override bool CanPressWhileOnCooldown() => true;
-
-    public override void Pressed()
-    {
-        base.Pressed();
-        AnimateShowPreview(true);
-        InUse = true;
-        Player.Instance.AbilityLock.AddLock(nameof(AbilityChain));
-    }
-
-    public override void Released()
-    {
-        base.Released();
-        AnimateShowPreview(false);
-        InUse = false;
-        Player.Instance.AbilityLock.RemoveLock(nameof(AbilityChain));
-    }
+    private void UpdatePreviewRadius() => pivot_preview.localScale = Vector3.one * Radius.ModifiedValue.float_value * 2;
 
     private void Update()
     {
-        if (!InUse) return;
         if (Time.time < time_attack) return;
 
         var center = Player.Instance.transform.position;
         var success = TryChainToTarget(new ChainInfo
         {
             center = center,
-            radius = Radius,
-            chains_left = Chains,
-            initial_strikes = Strikes,
-            chain_strikes = ChainSplits,
+            radius = Radius.ModifiedValue.float_value,
+            chains_left = Chains.ModifiedValue.int_value,
+            initial_strikes = Strikes.ModifiedValue.int_value,
+            chain_strikes = 1,
             onHit = HitTarget
         });
 
-        var time_success = Time.time + Cooldown * Player.Instance.GlobalCooldownMultiplier;
+        var time_success = Time.time + Cooldown.ModifiedValue.float_value * Player.Instance.GlobalCooldownMultiplier;
         var time_fail = Time.time + 0.1f;
 
         if (success)
@@ -104,12 +69,12 @@ public class AbilityChain : Ability
     {
         var position = k.GetPosition();
 
-        if (HitsExplode)
+        if (ExplosionRadius.ModifiedValue.float_value > 0)
         {
             StartCoroutine(ExplodeCr(position));
         }
 
-        if (HitsFragment)
+        if (Fragments.ModifiedValue.int_value > 0)
         {
             var distance = 6f;
             var speed = 10f;
@@ -119,7 +84,7 @@ public class AbilityChain : Ability
             fragments.ForEach(f => f.Lifetime = lifetime);
         }
 
-        if (Trail)
+        if (false)
         {
             trail.radius = 1.5f;
             trail.lifetime = 1f;
@@ -129,7 +94,7 @@ public class AbilityChain : Ability
         IEnumerator ExplodeCr(Vector3 position)
         {
             yield return new WaitForSeconds(0.25f);
-            AbilityExplode.Explode(position, 3f, 0);
+            AbilityExplode.Explode(position, ExplosionRadius.ModifiedValue.float_value, 0);
         }
     }
 
@@ -155,7 +120,7 @@ public class AbilityChain : Ability
 
         var count_hits = 0;
         var order_by_dist = hits.OrderBy(hit => Vector3.Distance(info.center, hit.GetPosition()));
-        foreach(var hit in order_by_dist)
+        foreach (var hit in order_by_dist)
         {
             if (count_hits >= info.initial_strikes) break;
             count_hits++;
@@ -177,7 +142,7 @@ public class AbilityChain : Ability
         // Audio
         SoundController.Instance.SetGroupVolumeByPosition(SoundEffectType.sfx_chain_zap, info.center);
         SoundController.Instance.PlayGroup(SoundEffectType.sfx_chain_zap);
-        
+
         // Kill target
         info.onHit?.Invoke(k);
         Player.Instance.TryKillEnemy(k);

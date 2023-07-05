@@ -42,3 +42,25 @@ MonoBehaviour:
       value_int: 0
       value_float: 0.5
       value_bool: 1
+  modifiers:
+  - attribute_type:
+      id: explode_split
+    value_type: 2
+    int_value: 5
+    float_value: 0
+    percent_value: 0
+    bool_value: 1
+  - attribute_type:
+      id: explode_cooldown
+    value_type: 3
+    int_value: 5
+    float_value: 0
+    percent_value: 0.2
+    bool_value: 0
+  - attribute_type:
+      id: explode_radius
+    value_type: 3
+    int_value: 5
+    float_value: 0
+    percent_value: -0.5
+    bool_value: 0

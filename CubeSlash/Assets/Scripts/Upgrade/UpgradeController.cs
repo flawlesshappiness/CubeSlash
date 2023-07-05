@@ -1,7 +1,5 @@
 using System.Collections.Generic;
 using System.Linq;
-using UnityEngine;
-using UnityEngine.UI;
 
 public class UpgradeController : Singleton
 {
@@ -44,6 +42,7 @@ public class UpgradeController : Singleton
     {
         var info = GetUpgradeInfo(id);
         info.is_unlocked = true;
+        AddGameAttributeModifiers(info);
         onUpgradeUnlocked?.Invoke(info);
     }
 
@@ -56,7 +55,7 @@ public class UpgradeController : Singleton
     public bool IsUpgradeUnlocked(UpgradeID id) => GetUpgradeInfo(id).is_unlocked;
     public UpgradeInfo GetUpgradeInfo(UpgradeID id)
     {
-        if(upgrades.TryGetValue(id, out var info))
+        if (upgrades.TryGetValue(id, out var info))
         {
             return info;
         }
@@ -117,5 +116,16 @@ public class UpgradeController : Singleton
     {
         UnlockUpgrade(info.upgrade.id);
         PlayerValueController.Instance.UpdateValues();
+    }
+
+    private void AddGameAttributeModifiers(UpgradeInfo info)
+    {
+        var modifiers = info.upgrade.modifiers;
+        foreach (var modifier in modifiers)
+        {
+            var attribute = GameAttributeController.Instance.GetAttribute(modifier.attribute_type);
+            if (attribute == null) continue;
+            attribute.AddModifier(modifier);
+        }
     }
 }

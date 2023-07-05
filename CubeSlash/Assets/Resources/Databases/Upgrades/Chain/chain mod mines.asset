@@ -42,3 +42,18 @@ MonoBehaviour:
       value_int: 0
       value_float: 0.5
       value_bool: 1
+  modifiers:
+  - attribute_type:
+      id: chain_cooldown
+    value_type: 3
+    int_value: 0
+    float_value: 0
+    percent_value: 0.2
+    bool_value: 0
+  - attribute_type:
+      id: chain_fragments
+    value_type: 0
+    int_value: 3
+    float_value: 0
+    percent_value: 0.2
+    bool_value: 0

@@ -37,3 +37,4 @@ endless mode
 Mushroom bodypart
 
 Boomerang ability
+Split modifier > Penetrate?

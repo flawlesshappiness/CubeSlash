@@ -17,6 +17,8 @@ public class UnlockUpgradeView : View
     [SerializeField] private Image img_fg_refund;
     [SerializeField] private CanvasGroup cvg_upgrades, cvg_background, cvg_description, cvg_past_upgrades;
     [SerializeField] private UIScrollableUpgradeTree template_upgrade_tree;
+    [SerializeField] private UIFloatingPanel floating_panel;
+    [SerializeField] private UIFloatingPanelUpgrade floating_panel_upgrade;
 
     public event System.Action<Upgrade> OnUpgradeSelected;
 
@@ -37,7 +39,7 @@ public class UnlockUpgradeView : View
         tmp_upgrade.gameObject.SetActive(false);
         template_upgrade_tree.gameObject.SetActive(false);
 
-        layout_unlocked_upgrades.OnUpgradeLevelSelected += level => DisplayUpgradeText(level);
+        layout_unlocked_upgrades.OnUpgradeLevelSelected += (btn, upgrade) => DisplayUpgradeText(btn, upgrade);
 
         // Upgrades
         CreateUpgradeTrees();
@@ -79,7 +81,7 @@ public class UnlockUpgradeView : View
         var first_tree = trees[0];
         first_tree.SetChildUpgradesVisible(true);
         first_tree.Select();
-        DisplayUpgradeText(first_tree.MainInfo.upgrade);
+        DisplayUpgradeText(first_tree.MainButton, first_tree.MainInfo.upgrade);
 
         cvg_description.alpha = 1;
         cvg_past_upgrades.alpha = 1;
@@ -122,7 +124,7 @@ public class UnlockUpgradeView : View
     private void CreateUpgradeTrees()
     {
         var upgrades = GetRandomUpgrades();
-        foreach(var info in upgrades)
+        foreach (var info in upgrades)
         {
             var tree = Instantiate(template_upgrade_tree, template_upgrade_tree.transform.parent);
             tree.gameObject.SetActive(true);
@@ -130,14 +132,14 @@ public class UnlockUpgradeView : View
             tree.SetChildUpgradesVisible(false, 0);
             trees.Add(tree);
 
-            tree.onMainButtonSelected += () => OnMainButtonSelected(tree);
-            tree.onUpgradeSelected += u => DisplayUpgradeText(u.upgrade);
+            tree.onMainButtonSelected += btn => OnMainButtonSelected(tree);
+            tree.onUpgradeSelected += (btn, u) => DisplayUpgradeText(btn, u.upgrade);
             tree.MainButton.Button.onSubmit += () => ClickUpgradeButton(info.upgrade);
         }
 
         void OnMainButtonSelected(UIScrollableUpgradeTree tree)
         {
-            if(selected_tree != null)
+            if (selected_tree != null)
             {
                 selected_tree.ScrollToPosition(selected_tree.MainButton.transform.position);
                 selected_tree.SetChildUpgradesVisible(false);
@@ -145,7 +147,7 @@ public class UnlockUpgradeView : View
 
             selected_tree = tree;
 
-            if(selected_tree != null)
+            if (selected_tree != null)
             {
                 selected_tree.SetChildUpgradesVisible(true);
             }
@@ -159,13 +161,13 @@ public class UnlockUpgradeView : View
         {
             Lerp.Alpha(cvg_background, 0.5f, 1).UnscaledTime();
 
-            foreach(var tree in trees)
+            foreach (var tree in trees)
             {
                 tree.AnimateShowMainButton();
                 yield return new WaitForSecondsRealtime(0.1f);
             }
 
-            foreach(var tree in trees)
+            foreach (var tree in trees)
             {
                 tree.AnimateShowParentButtons();
                 tree.AnimateShowChildButtons();
@@ -189,10 +191,21 @@ public class UnlockUpgradeView : View
         tmps_upgrade.Clear();
     }
 
-    private void DisplayUpgradeText(Upgrade upgrade)
+    private void DisplayUpgradeText(UIIconButton btn, Upgrade upgrade)
     {
+        floating_panel_upgrade.Clear();
+        var modifiers = upgrade.modifiers;
+        foreach (var modifier in modifiers)
+        {
+            var attribute = GameAttributeController.Instance.GetAttribute(modifier.attribute_type);
+            floating_panel_upgrade.AddModifiedAttribute(attribute, modifier);
+        }
+
+        floating_panel.SetTarget(btn.transform, new Vector2(50, 50));
+        floating_panel.ContentSizeFitterRefresh.RefreshContentFitters();
+
         ClearUpgradeTexts();
-        foreach(var stat in upgrade.stats)
+        foreach (var stat in upgrade.stats)
         {
             var text = stat.GetDisplayString();
             CreateUpgradeText(text);

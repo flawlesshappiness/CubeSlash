@@ -1,12 +1,11 @@
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 public class UIUnlockedUpgradesLayout : MonoBehaviour
 {
     [SerializeField] private UIIconButton temp_btn;
 
-    public System.Action<Upgrade> OnUpgradeLevelSelected;
+    public System.Action<UIIconButton, Upgrade> OnUpgradeLevelSelected;
 
     private List<UIIconButton> btns = new List<UIIconButton>();
 
@@ -22,12 +21,12 @@ public class UIUnlockedUpgradesLayout : MonoBehaviour
             var btn = Instantiate(temp_btn, temp_btn.transform.parent);
             btn.gameObject.SetActive(true);
             btn.Icon = u.upgrade.icon;
-            btn.Button.onSelect += () => OnSelect(u.upgrade);
+            btn.Button.onSelect += () => OnSelect(btn, u.upgrade);
         });
 
-        void OnSelect(Upgrade upgrade)
+        void OnSelect(UIIconButton btn, Upgrade upgrade)
         {
-            OnUpgradeLevelSelected?.Invoke(upgrade);
+            OnUpgradeLevelSelected?.Invoke(btn, upgrade);
         }
     }
 }

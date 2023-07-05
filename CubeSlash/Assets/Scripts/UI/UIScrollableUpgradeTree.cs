@@ -2,7 +2,6 @@ using Flawliz.Lerp;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class UIScrollableUpgradeTree : MonoBehaviour
@@ -15,8 +14,8 @@ public class UIScrollableUpgradeTree : MonoBehaviour
     public UpgradeInfo MainInfo { get; set; }
     public UIIconButton MainButton { get { return btn_upgrade_main; } }
 
-    public event System.Action onMainButtonSelected;
-    public event System.Action<UpgradeInfo> onUpgradeSelected;
+    public event System.Action<UIIconButton> onMainButtonSelected;
+    public event System.Action<UIIconButton, UpgradeInfo> onUpgradeSelected;
 
     private List<UIIconButton> btns_children = new List<UIIconButton>();
     private List<GameObject> lines_children = new List<GameObject>();
@@ -97,7 +96,7 @@ public class UIScrollableUpgradeTree : MonoBehaviour
         btn.Icon = info.upgrade.icon;
 
         btn.Button.onSelect += () => OnButtonSelected(btn);
-        btn.Button.onSelect += () => OnUpgradeSelected(info);
+        btn.Button.onSelect += () => OnUpgradeSelected(btn, info);
 
         return btn;
     }
@@ -152,16 +151,16 @@ public class UIScrollableUpgradeTree : MonoBehaviour
         ScrollToPosition(btn.transform.position);
     }
 
-    private void OnUpgradeSelected(UpgradeInfo info)
+    private void OnUpgradeSelected(UIIconButton btn, UpgradeInfo info)
     {
-        onUpgradeSelected?.Invoke(info);
+        onUpgradeSelected?.Invoke(btn, info);
     }
 
     private void OnMainButtonSelected()
     {
         OnButtonSelected(MainButton);
-        OnUpgradeSelected(MainInfo);
-        onMainButtonSelected?.Invoke();
+        OnUpgradeSelected(MainButton, MainInfo);
+        onMainButtonSelected?.Invoke(MainButton);
     }
 
     public void Select()

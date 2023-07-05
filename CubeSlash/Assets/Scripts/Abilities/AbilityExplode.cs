@@ -1,50 +1,29 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class AbilityExplode : Ability
 {
-    [Header("EXPLODE")]
-    [SerializeField] private ExplodeChargeEffect fx_charge;
+    public float Cooldown { get { return GameAttributeController.Instance.GetAttribute(GameAttributeType.explode_cooldown).ModifiedValue.float_value; } }
+    public float Radius { get { return GameAttributeController.Instance.GetAttribute(GameAttributeType.explode_radius).ModifiedValue.float_value; } }
+    public float ChargeTime { get { return GameAttributeController.Instance.GetAttribute(GameAttributeType.explode_charge_time).ModifiedValue.float_value; } }
+    public float Slow { get { return GameAttributeController.Instance.GetAttribute(GameAttributeType.explode_slow).ModifiedValue.float_value; } }
+    public bool ChainExplode { get { return GameAttributeController.Instance.GetAttribute(GameAttributeType.explode_chain).ModifiedValue.bool_value; } }
+    public bool SplitExplode { get { return GameAttributeController.Instance.GetAttribute(GameAttributeType.explode_split).ModifiedValue.bool_value; } }
+    public int Fragments { get { return GameAttributeController.Instance.GetAttribute(GameAttributeType.explode_fragments).ModifiedValue.int_value; } }
+    public int MiniExplosions { get { return GameAttributeController.Instance.GetAttribute(GameAttributeType.explode_minis).ModifiedValue.int_value; } }
 
-    // Values
-    public float Cooldown { get; private set; }
-    public float Radius { get; private set; }
-    public float ChargeTime { get; private set; }
-    public float Knockback { get; private set; }
-    public float SlowRadius { get; private set; }
-    public float SlowPerc { get; private set; }
-    public bool ChainExplode { get; private set; }
-    public bool HasFragments { get; private set; }
-    public bool SlowLinger { get; private set; }
-    public int MiniExplosions { get; private set; }
-
-    private const float RADIUS = 5f;
-    private const float RADIUS_MUL_START = 0f;
-    private const float CHARGE_TIME = 0.25f;
     private const float FORCE = 250f;
 
     private float time_charge_start;
 
-    private SlowArea _slow_area;
+    private List<ActiveCharge> _active_charges = new List<ActiveCharge>();
 
-    public override void InitializeFirstTime()
+    private class ActiveCharge
     {
-        base.InitializeFirstTime();
-    }
-
-    public override void OnValuesUpdated()
-    {
-        base.OnValuesUpdated();
-        Cooldown = GetFloatValue(StatID.explode_cooldown_flat) * GetFloatValue(StatID.explode_cooldown_perc);
-        Radius = RADIUS * GetFloatValue(StatID.explode_radius_perc);
-        Knockback = FORCE;
-        ChargeTime = CHARGE_TIME * GetFloatValue(StatID.explode_charge_time) * Radius;
-        SlowPerc = 1f - GetFloatValue(StatID.explode_slow_perc);
-        SlowRadius = RADIUS * GetFloatValue(StatID.explode_slow_area_perc);
-        ChainExplode = GetBoolValue(StatID.explode_chain);
-        HasFragments = GetBoolValue(StatID.explode_fragments);
-        SlowLinger = GetBoolValue(StatID.explode_slow_linger);
-        MiniExplosions = GetIntValue(StatID.explode_minis);
+        public ExplodeChargeEffect fx;
+        public float radius;
+        public Vector3 dir;
     }
 
     public override float GetBaseCooldown() => Cooldown;
@@ -55,38 +34,47 @@ public class AbilityExplode : Ability
         base.Pressed();
         time_charge_start = Time.time;
 
-        var parent = HasFragments ? GameController.Instance.world : transform;
-        var position = transform.position;
+        if (SplitExplode)
+        {
+            var count = 3;
+            var delta_angle = 360f / count;
+            for (int i = 0; i < count; i++)
+            {
+                var angle = delta_angle * i;
+                var dir = Quaternion.AngleAxis(angle, Vector3.forward) * Vector3.up;
+                var fx = CreateChargeEffect(Vector3.zero, Vector3.one * Radius, ChargeTime);
+                fx.transform.parent = Player.Body.transform;
+                fx.transform.localPosition = Vector3.zero;
 
-        fx_charge.transform.parent = parent;
-        fx_charge.transform.position = position;
-        fx_charge.Animate(Vector3.one * Radius * RADIUS_MUL_START, Vector3.one * Radius, ChargeTime);
+                var charge = new ActiveCharge
+                {
+                    fx = fx,
+                    radius = Radius,
+                    dir = dir,
+                };
+                _active_charges.Add(charge);
+            }
+        }
+        else
+        {
+            var fx = CreateChargeEffect(Vector3.zero, Vector3.one * Radius, ChargeTime);
+            fx.transform.parent = transform;
+            fx.transform.localPosition = Vector3.zero;
 
-        _slow_area = SlowArea.Create();
-        _slow_area.transform.parent = parent;
-        _slow_area.transform.position = position;
-        _slow_area.SetSlowPercentage(SlowPerc);
+            var charge = new ActiveCharge
+            {
+                fx = fx,
+                radius = Radius
+            };
+            _active_charges.Add(charge);
+        }
     }
 
     public override void Released()
     {
         base.Released();
         if (!InUse) return;
-
         InUse = false;
-
-        fx_charge.StopAnimating();
-
-        if (SlowLinger)
-        {
-            _slow_area.transform.parent = GameController.Instance.world;
-            _slow_area.Destroy(4f);
-        }
-        else
-        {
-            Destroy(_slow_area.gameObject);
-        }
-
         Trigger();
     }
 
@@ -103,21 +91,20 @@ public class AbilityExplode : Ability
     private void Update()
     {
         ReleaseOverTime();
-        SlowEnemiesInArea();
+        UpdateChargePosition();
     }
 
     private float GetChargeValue() => (Time.time - time_charge_start) / ChargeTime;
 
-    private void SlowEnemiesInArea()
+    private void UpdateChargePosition()
     {
-        if (!InUse) return;
-        if (_slow_area == null) return;
+        if (_active_charges.Count == 0) return;
 
         var t = Mathf.Clamp01(GetChargeValue());
-        var r_end = (Radius + SlowRadius);
-        var r_start = r_end * RADIUS_MUL_START;
-        var r = Mathf.Lerp(r_start, r_end, t);
-        _slow_area.SetRadius(r);
+        foreach (var charge in _active_charges)
+        {
+            charge.fx.transform.localPosition = charge.dir * charge.radius * t * 1.25f;
+        }
     }
 
     public override void Trigger()
@@ -125,11 +112,22 @@ public class AbilityExplode : Ability
         if (InUse) return;
         base.Trigger();
         var t = Mathf.Clamp01(GetChargeValue());
-        var r = Radius * t;
-        var f = Knockback * t;
+        var f = FORCE * t / _active_charges.Count;
         var c = (Cooldown * 0.5f) + (Cooldown * 0.5f * t);
-        Explode(_slow_area.transform.position, r, f, OnHit);
-        OnExplode(_slow_area.transform.position, t);
+
+        foreach (var charge in _active_charges)
+        {
+            var r = charge.radius * t;
+
+            var position = charge.fx.transform.position;
+            Explode(position, r, f, OnHit);
+            OnExplode(position, t);
+
+            charge.fx.StopAnimating();
+            Destroy(charge.fx.gameObject, 1);
+        }
+        _active_charges.Clear();
+
         StartCooldown(c);
     }
 
@@ -198,7 +196,11 @@ public class AbilityExplode : Ability
         var onHit = info.onHit;
         var getPosition = info.getPosition;
 
-        CreateChargeEffect(parent, getPosition(), radius, delay);
+        var fx_start = Vector3.zero;
+        var fx_end = Vector3.one * info.radius;
+        var fx = CreateChargeEffect(fx_start, fx_end, delay);
+        fx.transform.parent = parent;
+        fx.transform.position = getPosition();
 
         var sfx_charge = SoundController.Instance.CreateInstance(SoundEffectType.sfx_explode_charge);
         if (info.play_charge_sfx) sfx_charge.Play();
@@ -236,19 +238,12 @@ public class AbilityExplode : Ability
         CreateExplodeEffect(position, radius);
     }
 
-    public static void CreateChargeEffect(Transform parent, Vector3 position, float radius, float duration)
+    public static ExplodeChargeEffect CreateChargeEffect(Vector3 start, Vector3 end, float duration)
     {
-        var ps = Resources.Load<ParticleSystem>("Particles/ps_explode_charge");
-        var psd = ps.Duplicate()
-            .Parent(parent)
-            .Position(position)
-            .Scale(Vector3.one * radius * 2);
-
-        psd.ps.ModifyMain(m =>
-        {
-            m.startLifetime = new ParticleSystem.MinMaxCurve { constant = duration };
-        });
-        psd.Play();
+        var prefab = Resources.Load<ExplodeChargeEffect>("Particles/ExplodeChargeEffect");
+        var fx = Instantiate(prefab);
+        fx.Animate(start, end, duration);
+        return fx;
     }
 
     public static void CreateExplodeEffect(Vector3 position, float radius, Color? color = null)

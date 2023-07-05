@@ -12,4 +12,5 @@ public class Upgrade : ScriptableObject
     public Ability.Type ability_required;
     public List<UpgradeID> upgrades_required;
     public List<UpgradeStat> stats = new List<UpgradeStat>();
+    public List<GameAttributeModifier> modifiers = new List<GameAttributeModifier>();
 }
