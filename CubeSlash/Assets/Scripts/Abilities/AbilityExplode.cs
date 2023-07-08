@@ -4,9 +4,12 @@ using UnityEngine;
 
 public class AbilityExplode : Ability
 {
+    [SerializeField] private ParticleSystem ps_charge_reduc;
+
     public float Cooldown { get { return GameAttributeController.Instance.GetAttribute(GameAttributeType.explode_cooldown).ModifiedValue.float_value; } }
     public float Radius { get { return GameAttributeController.Instance.GetAttribute(GameAttributeType.explode_radius).ModifiedValue.float_value; } }
     public float ChargeTime { get { return GameAttributeController.Instance.GetAttribute(GameAttributeType.explode_charge_time).ModifiedValue.float_value; } }
+    public float ChargeTimeReduc { get { return GameAttributeController.Instance.GetAttribute(GameAttributeType.explode_charge_time_reduc).ModifiedValue.float_value; } }
     public float Slow { get { return GameAttributeController.Instance.GetAttribute(GameAttributeType.explode_slow).ModifiedValue.float_value; } }
     public bool ChainExplode { get { return GameAttributeController.Instance.GetAttribute(GameAttributeType.explode_chain).ModifiedValue.bool_value; } }
     public bool SplitExplode { get { return GameAttributeController.Instance.GetAttribute(GameAttributeType.explode_split).ModifiedValue.bool_value; } }
@@ -16,13 +19,17 @@ public class AbilityExplode : Ability
     private const float FORCE = 250f;
 
     private float time_charge_start;
+    private float time_charge_current;
+    private float time_charge_reduced;
+    private int count_killed;
+
+    private Coroutine cr_charge_reduc_ps;
 
     private List<ActiveCharge> _active_charges = new List<ActiveCharge>();
 
     private class ActiveCharge
     {
         public ExplodeChargeEffect fx;
-        public float radius;
         public Vector3 dir;
     }
 
@@ -34,6 +41,10 @@ public class AbilityExplode : Ability
         base.Pressed();
         time_charge_start = Time.time;
 
+        time_charge_current = Mathf.Clamp(ChargeTime - time_charge_reduced, 0, ChargeTime);
+        time_charge_reduced = 0;
+        count_killed = 0;
+
         if (SplitExplode)
         {
             var count = 3;
@@ -42,14 +53,13 @@ public class AbilityExplode : Ability
             {
                 var angle = delta_angle * i;
                 var dir = Quaternion.AngleAxis(angle, Vector3.forward) * Vector3.up;
-                var fx = CreateChargeEffect(Vector3.zero, Vector3.one * Radius, ChargeTime);
+                var fx = CreateChargeEffect(Vector3.zero, Vector3.one * Radius, time_charge_current);
                 fx.transform.parent = Player.Body.transform;
                 fx.transform.localPosition = Vector3.zero;
 
                 var charge = new ActiveCharge
                 {
                     fx = fx,
-                    radius = Radius,
                     dir = dir,
                 };
                 _active_charges.Add(charge);
@@ -57,14 +67,13 @@ public class AbilityExplode : Ability
         }
         else
         {
-            var fx = CreateChargeEffect(Vector3.zero, Vector3.one * Radius, ChargeTime);
+            var fx = CreateChargeEffect(Vector3.zero, Vector3.one * Radius, time_charge_current);
             fx.transform.parent = transform;
             fx.transform.localPosition = Vector3.zero;
 
             var charge = new ActiveCharge
             {
                 fx = fx,
-                radius = Radius
             };
             _active_charges.Add(charge);
         }
@@ -94,7 +103,7 @@ public class AbilityExplode : Ability
         UpdateChargePosition();
     }
 
-    private float GetChargeValue() => (Time.time - time_charge_start) / ChargeTime;
+    private float GetChargeValue() => (Time.time - time_charge_start) / time_charge_current;
 
     private void UpdateChargePosition()
     {
@@ -103,8 +112,20 @@ public class AbilityExplode : Ability
         var t = Mathf.Clamp01(GetChargeValue());
         foreach (var charge in _active_charges)
         {
-            charge.fx.transform.localPosition = charge.dir * charge.radius * t * 1.25f;
+            charge.fx.transform.localPosition = charge.dir * Radius * t * 1.25f;
         }
+    }
+
+    private IEnumerator ChargeReducCr()
+    {
+        while (count_killed > 0 && time_charge_reduced > 0)
+        {
+            count_killed--;
+            ps_charge_reduc.ModifyMain(m => m.startSize = new ParticleSystem.MinMaxCurve { constant = Radius }, affectChildren: false);
+            ps_charge_reduc.Play();
+            yield return new WaitForSeconds(0.1f);
+        }
+        cr_charge_reduc_ps = null;
     }
 
     public override void Trigger()
@@ -114,11 +135,10 @@ public class AbilityExplode : Ability
         var t = Mathf.Clamp01(GetChargeValue());
         var f = FORCE * t / _active_charges.Count;
         var c = (Cooldown * 0.5f) + (Cooldown * 0.5f * t);
+        var r = Radius * t;
 
         foreach (var charge in _active_charges)
         {
-            var r = charge.radius * t;
-
             var position = charge.fx.transform.position;
             Explode(position, r, f, OnHit);
             OnExplode(position, t);
@@ -137,12 +157,12 @@ public class AbilityExplode : Ability
         StartCooldown();
         Player.Instance.AbilityLock.RemoveLock(nameof(AbilityExplode));
 
-        for (int i = 0; i < MiniExplosions; i++)
+        for (int i = 0; i < (int)(MiniExplosions * t); i++)
         {
-            var radius = Radius * Random.Range(0.3f, 0.75f);
+            var radius = Radius * Random.Range(0.3f, 0.5f);
             var dir = Random.insideUnitCircle.ToVector3().normalized;
             var pos = position + dir * (Radius + radius);
-            var delay = Random.Range(0.3f, 0.6f);
+            var delay = Random.Range(0.2f, 1.0f);
 
             StartCoroutine(ExplodeCr(new ChargeInfo
             {
@@ -159,6 +179,14 @@ public class AbilityExplode : Ability
     private void OnHit(IKillable k)
     {
         var position = k.GetPosition();
+
+        if (time_charge_reduced < ChargeTimeReduc * 10)
+        {
+            time_charge_reduced += ChargeTimeReduc;
+
+            count_killed += count_killed < 3 ? 1 : 0;
+            cr_charge_reduc_ps ??= StartCoroutine(ChargeReducCr());
+        }
 
         if (ChainExplode)
         {
@@ -196,11 +224,13 @@ public class AbilityExplode : Ability
         var onHit = info.onHit;
         var getPosition = info.getPosition;
 
+        /*
         var fx_start = Vector3.zero;
         var fx_end = Vector3.one * info.radius;
         var fx = CreateChargeEffect(fx_start, fx_end, delay);
         fx.transform.parent = parent;
         fx.transform.position = getPosition();
+        */
 
         var sfx_charge = SoundController.Instance.CreateInstance(SoundEffectType.sfx_explode_charge);
         if (info.play_charge_sfx) sfx_charge.Play();

@@ -51,9 +51,9 @@ MonoBehaviour:
       value_bool: 0
   modifiers:
   - attribute_type:
-      id: explode_fragments
+      id: explode_minis
     value_type: 0
-    int_value: 3
+    int_value: 8
     float_value: 0
     percent_value: 0
     bool_value: 0

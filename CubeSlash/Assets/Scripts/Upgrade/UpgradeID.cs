@@ -92,6 +92,11 @@ public class UpgradeID : FakeEnum
     public static readonly UpgradeID explode_charge_time_3 = new UpgradeID(nameof(explode_charge_time_3));
     public static readonly UpgradeID explode_charge_time_4 = new UpgradeID(nameof(explode_charge_time_4));
     public static readonly UpgradeID explode_charge_time_5 = new UpgradeID(nameof(explode_charge_time_5));
+    public static readonly UpgradeID explode_charge_time_reduc_1 = new UpgradeID(nameof(explode_charge_time_reduc_1));
+    public static readonly UpgradeID explode_charge_time_reduc_2 = new UpgradeID(nameof(explode_charge_time_reduc_2));
+    public static readonly UpgradeID explode_charge_time_reduc_3 = new UpgradeID(nameof(explode_charge_time_reduc_3));
+    public static readonly UpgradeID explode_charge_time_reduc_4 = new UpgradeID(nameof(explode_charge_time_reduc_4));
+    public static readonly UpgradeID explode_charge_time_reduc_5 = new UpgradeID(nameof(explode_charge_time_reduc_5));
     public static readonly UpgradeID explode_radius_1 = new UpgradeID(nameof(explode_radius_1));
     public static readonly UpgradeID explode_radius_2 = new UpgradeID(nameof(explode_radius_2));
     public static readonly UpgradeID explode_radius_3 = new UpgradeID(nameof(explode_radius_3));

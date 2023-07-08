@@ -15,6 +15,7 @@ enemies tend to clump together or move into objects
 ability cooldown UI and health ui is too far away from play area
 
 ## BUGS ##
+Every game attributed is reapplied when exiting equipment menu
 
 ## MAYBE ##
 geode area with splitting enemies and boss

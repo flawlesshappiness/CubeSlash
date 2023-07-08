@@ -78,7 +78,8 @@ public class DebugConsoleHandler : Singleton
         view.ShowBackButton(ShowFunctionsWindow);
 
         window.Clear();
-        var infos = UpgradeController.Instance.GetUpgradeInfos();
+        var infos = UpgradeController.Instance.GetUpgradeInfos()
+            .OrderBy(info => info.upgrade.id.id);
         foreach (var info in infos)
         {
             var name = $"{info.upgrade.id}";

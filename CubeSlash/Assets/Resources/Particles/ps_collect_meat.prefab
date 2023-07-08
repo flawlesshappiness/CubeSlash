@@ -3862,10 +3862,10 @@ ParticleSystem:
     primitives: []
   SubModule:
     serializedVersion: 2
-    enabled: 0
+    enabled: 1
     subEmitters:
     - serializedVersion: 3
-      emitter: {fileID: 0}
+      emitter: {fileID: 8559804742714696986}
       type: 0
       properties: 0
       emitProbability: 1
