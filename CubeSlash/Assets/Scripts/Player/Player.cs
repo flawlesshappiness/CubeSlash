@@ -25,28 +25,15 @@ public class Player : Character
     public Vector3 MoveDirection { get; set; }
     public Ability AbilityQueued { get; private set; }
 
-    // UPGRADE VALUES
-    public float ChanceToAvoidDamage { get; private set; }
-    public float GlobalCooldownMultiplier { get; private set; }
-    public float CollectCooldownReduction { get; private set; }
-    public float ExperienceMultiplier { get; private set; }
-    public float CollectRadius { get; private set; }
-    public bool CollectSpeedBoost { get; private set; }
-    public bool ConvertHealthToArmor { get; private set; }
-    public bool InfiniteDrag { get; private set; }
-    public int KillEnemyShieldRegen { get; private set; }
-    public int PlantExpHealthRegen { get; private set; }
-
-    private const float COLLECT_RADIUS = 3;
-
     public event System.Action onLevelUp;
     public event System.Action onDeath;
     public event System.Action<Collider2D> onTriggerEnter;
     public event System.Action onValuesUpdated;
 
-    private float timestamp_collect_last;
-    private int enemy_kills_until_shield_regen;
-    private int plant_exp_until_health_regen;
+    private GameAttribute att_velocity;
+    private GameAttribute att_acceleration;
+    private GameAttribute att_chance_avoid_damage;
+    private GameAttribute att_experience_multiplier;
 
     public void Initialize()
     {
@@ -77,6 +64,11 @@ public class Player : Character
         gameObject.SetActive(true);
         transform.rotation = Quaternion.identity;
         Body.SetLookDirection(transform.up);
+
+        att_velocity = GameAttributeController.Instance.GetAttribute(GameAttributeType.player_velocity);
+        att_acceleration = GameAttributeController.Instance.GetAttribute(GameAttributeType.player_acceleration);
+        att_chance_avoid_damage = GameAttributeController.Instance.GetAttribute(GameAttributeType.player_avoid_damage_chance);
+        att_experience_multiplier = GameAttributeController.Instance.GetAttribute(GameAttributeType.player_exp_multiplier);
     }
 
     public void ResetPlayerBody()
@@ -136,8 +128,6 @@ public class Player : Character
         ResetHealth();
         ResetExperience();
         ResetLevelsUntilAbility();
-        ResetKillsUntilShieldRegen();
-        ResetPlantExperienceUntilHealthRegen();
         ResetLocks();
     }
 
@@ -177,18 +167,8 @@ public class Player : Character
     {
         if (!GameController.Instance.IsGameStarted) return;
 
-        // Update move values
-        var flat_velocity = PlayerValueController.Instance.GetFloatValue(StatID.player_velocity_flat);
-        var flat_acceleration = PlayerValueController.Instance.GetFloatValue(StatID.player_acceleration_flat);
-        var perc_velocity = PlayerValueController.Instance.GetFloatValue(StatID.player_velocity_perc);
-        var perc_acceleration = PlayerValueController.Instance.GetFloatValue(StatID.player_acceleration_perc);
-
-        var t_collect_boost = (Time.time - timestamp_collect_last) / 0.5f;
-        var collect_boost_acceleration = CollectSpeedBoost ? Mathf.Lerp(10, 0, t_collect_boost) : 0;
-        var collect_boost_velocity = CollectSpeedBoost ? Mathf.Lerp(8, 0, t_collect_boost) : 0;
-
-        LinearAcceleration = (Info.linear_acceleration + flat_acceleration + collect_boost_acceleration) * perc_acceleration;
-        LinearVelocity = (Info.linear_velocity + flat_velocity + collect_boost_velocity) * perc_velocity;
+        LinearVelocity = att_velocity.ModifiedValue.float_value;
+        LinearAcceleration = att_acceleration.ModifiedValue.float_value;
         LinearDrag = Info.linear_drag;
 
         // Move
@@ -200,10 +180,6 @@ public class Player : Character
                 MoveDirection = dir.normalized;
                 Move(MoveDirection);
                 Body.SetLookDirection(MoveDirection);
-            }
-            else if (InfiniteDrag && !IsStunned())
-            {
-                Rigidbody.velocity = Vector2.zero;
             }
             else
             {
@@ -308,17 +284,7 @@ public class Player : Character
 
     public void UpdateUpgradeValues()
     {
-        ChanceToAvoidDamage = PlayerValueController.Instance.GetFloatValue(StatID.player_avoid_damage_chance);
-        CollectRadius = COLLECT_RADIUS * PlayerValueController.Instance.GetFloatValue(StatID.player_collect_radius_perc);
-        CollectCooldownReduction = PlayerValueController.Instance.GetFloatValue(StatID.player_collect_cooldown_flat);
-        CollectSpeedBoost = PlayerValueController.Instance.GetBoolValue(StatID.player_collect_speed_perc);
-        ConvertHealthToArmor = PlayerValueController.Instance.GetBoolValue(StatID.player_convert_health);
         Body.Size = Info.body_size * PlayerValueController.Instance.GetFloatValue(StatID.player_body_size_perc);
-        InfiniteDrag = PlayerValueController.Instance.GetBoolValue(StatID.player_infinite_drag);
-        KillEnemyShieldRegen = PlayerValueController.Instance.GetIntValue(StatID.player_regen_kill);
-        PlantExpHealthRegen = PlayerValueController.Instance.GetIntValue(StatID.player_regen_plant);
-        GlobalCooldownMultiplier = PlayerValueController.Instance.GetFloatValue(StatID.player_cooldown_multiplier);
-        ExperienceMultiplier = PlayerValueController.Instance.GetFloatValue(StatID.player_exp_multiplier);
     }
 
     public void OnUpgradeUnlocked(UpgradeInfo info)
@@ -388,29 +354,10 @@ public class Player : Character
 
         if (success)
         {
-            DecrementKillsUntilShieldRegen();
+            // Do something on enemy killed
         }
 
         return success;
-    }
-
-    private void DecrementKillsUntilShieldRegen()
-    {
-        if (KillEnemyShieldRegen <= 0) return;
-
-        enemy_kills_until_shield_regen--;
-        if (enemy_kills_until_shield_regen <= 0)
-        {
-            SoundController.Instance.Play(SoundEffectType.sfx_gain_health);
-
-            ResetKillsUntilShieldRegen();
-            Health.AddHealth(HealthPoint.Type.TEMPORARY);
-        }
-    }
-
-    private void ResetKillsUntilShieldRegen()
-    {
-        enemy_kills_until_shield_regen += KillEnemyShieldRegen;
     }
     #endregion
     #region HEALTH
@@ -458,7 +405,8 @@ public class Player : Character
 
         if (!GameController.DAMAGE_DISABLED)
         {
-            if (ChanceToAvoidDamage == 0 || Random.Range(0f, 1f) > ChanceToAvoidDamage)
+            var chance = att_chance_avoid_damage.ModifiedValue.float_value;
+            if (chance == 0 || Random.Range(0f, 1f) > chance)
             {
                 Health.Damage();
                 SoundController.Instance.Play(SoundEffectType.sfx_player_damage);
@@ -578,18 +526,11 @@ public class Player : Character
 
     public void CollectExperience(ExperienceType type)
     {
-        timestamp_collect_last = Time.time;
-
         var mul_difficulty = GameSettings.Instance.experience_mul_difficulty.Evaluate(DifficultyController.Instance.DifficultyValue);
-        Experience.Value += 1f * ExperienceMultiplier * mul_difficulty;
-
-        // Adjust ability cooldown
-        AbilityController.Instance.GetEquippedAbilities()
-            .ForEach(a => a.AdjustCooldownFlat(CollectCooldownReduction));
+        Experience.Value += 1f * att_experience_multiplier.ModifiedValue.float_value * mul_difficulty;
 
         if (type == ExperienceType.PLANT)
         {
-            DecrementPlantExperienceUntilHealthRegen();
             ps_collect_plant.Play();
         }
         else if (type == ExperienceType.MEAT)
@@ -599,28 +540,6 @@ public class Player : Character
 
         // Sound
         SoundController.Instance.PlayGroup(SoundEffectType.sfx_collect_experience);
-    }
-
-    private void DecrementPlantExperienceUntilHealthRegen()
-    {
-        if (PlantExpHealthRegen <= 0) return;
-        plant_exp_until_health_regen--;
-
-        if (plant_exp_until_health_regen <= 0)
-        {
-            if (Health.HasHealth(HealthPoint.Type.EMPTY))
-            {
-                SoundController.Instance.Play(SoundEffectType.sfx_gain_health);
-            }
-
-            Health.Heal();
-            ResetPlantExperienceUntilHealthRegen();
-        }
-    }
-
-    private void ResetPlantExperienceUntilHealthRegen()
-    {
-        plant_exp_until_health_regen += PlantExpHealthRegen;
     }
 
     public void ResetExperience()

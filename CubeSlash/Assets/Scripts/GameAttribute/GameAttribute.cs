@@ -1,3 +1,6 @@
+using System.Collections.Generic;
+using System.Linq;
+
 [System.Serializable]
 public class GameAttribute
 {
@@ -10,7 +13,7 @@ public class GameAttribute
     public System.Action OnValueModified;
 
     private GameAttributeValue _modified_value;
-    private GameAttributeModifier _modifier = new GameAttributeModifier();
+    private List<GameAttributeModifier> _modifiers = new List<GameAttributeModifier>();
 
     private bool _is_updated_after_modified;
 
@@ -28,7 +31,7 @@ public class GameAttribute
         att.base_value = base_value;
         att.text = text;
         att.high_is_negative = high_is_negative;
-        att._modifier = _modifier.Clone();
+        att._modifiers = _modifiers.ToList();
         return att;
     }
 
@@ -44,14 +47,24 @@ public class GameAttribute
 
     private void UpdateModifiedValue()
     {
+        var modifier_sum = new GameAttributeModifier();
+        _modifiers.ForEach(m => modifier_sum.Add(m));
+
         _modified_value = new GameAttributeValue(base_value);
-        _modifier.Modify(_modified_value);
+        modifier_sum.Modify(_modified_value);
         _is_updated_after_modified = true;
     }
 
     public void AddModifier(GameAttributeModifier modifier)
     {
-        _modifier.Add(modifier);
+        _modifiers.Add(modifier);
+        _is_updated_after_modified = false;
+        OnValueModified?.Invoke();
+    }
+
+    public void RemoveModifier(GameAttributeModifier modifier)
+    {
+        _modifiers.Remove(modifier);
         _is_updated_after_modified = false;
         OnValueModified?.Invoke();
     }

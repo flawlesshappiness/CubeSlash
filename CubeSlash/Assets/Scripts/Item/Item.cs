@@ -39,7 +39,7 @@ public class Item : MonoBehaviour
         if (IsDespawning) return;
         if (IsBeingCollected) return;
 
-        var collect_distance = Player.Instance.CollectRadius * mul_dist_collect;
+        var collect_distance = 3f * mul_dist_collect;
         var can_collect = Vector3.Distance(transform.position, Player.Instance.transform.position) <= collect_distance;
         if (can_collect)
         {

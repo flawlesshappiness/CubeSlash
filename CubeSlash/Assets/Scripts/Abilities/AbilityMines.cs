@@ -9,22 +9,17 @@ public class AbilityMines : Ability
     [SerializeField] private Projectile prefab_fragment;
     [SerializeField] private DamageTrail trail;
 
-    private float Cooldown { get; set; }
-    private int ShellCount { get; set; }
-    private int FragmentCount { get; set; }
-    private float ShellSize { get; set; }
-    private float FragmentSize { get; set; }
-    private float ShellLifetime { get; set; }
-    private float FragmentLifetime { get; set; }
-    private bool ExplodingFragments { get; set; }
-    private bool DoubleShells { get; set; }
-    private bool FragmentChain { get; set; }
-    private bool Trail { get; set; }
+    private float Cooldown { get { return GameAttributeController.Instance.GetAttribute(GameAttributeType.mines_cooldown).ModifiedValue.float_value; } }
+    private int ShellCount { get { return GameAttributeController.Instance.GetAttribute(GameAttributeType.mines_shell_count).ModifiedValue.int_value; } }
+    private int FragmentCount { get { return GameAttributeController.Instance.GetAttribute(GameAttributeType.mines_fragment_count).ModifiedValue.int_value; } }
+    private bool ExplodingFragments { get { return GameAttributeController.Instance.GetAttribute(GameAttributeType.mines_explode).ModifiedValue.bool_value; } }
+    private bool DoubleShells { get { return GameAttributeController.Instance.GetAttribute(GameAttributeType.mines_double_shell).ModifiedValue.bool_value; } }
+    private bool FragmentChain { get { return GameAttributeController.Instance.GetAttribute(GameAttributeType.mines_chain).ModifiedValue.bool_value; } }
 
-    private const float MINE_SPEED = 10f;
-    private const float MINE_DRAG = 0.95f;
-    private const float MINE_SIZE = 0.8f;
-    private const float MINE_LIFETIME = 2f;
+    private const float SHELL_SPEED = 10f;
+    private const float SHELL_DRAG = 0.95f;
+    private const float SHELL_SIZE = 0.8f;
+    private const float SHELL_LIFETIME = 2f;
     private const float FRAGMENT_SIZE = 0.5f;
     private const float FRAGMENT_SPEED = 20f;
     private const float FRAGMENT_DRAG = 0.95f;
@@ -34,23 +29,6 @@ public class AbilityMines : Ability
     {
         base.InitializeFirstTime();
         trail.gameObject.SetActive(false);
-    }
-
-    public override void OnValuesUpdated()
-    {
-        base.OnValuesUpdated();
-
-        Cooldown = GetFloatValue(StatID.mines_cooldown_flat) * GetFloatValue(StatID.mines_cooldown_perc);
-        ShellCount = GetIntValue(StatID.mines_shell_count);
-        FragmentCount = GetIntValue(StatID.mines_fragment_count);
-        ShellSize = MINE_SIZE * GetFloatValue(StatID.mines_size_perc);
-        FragmentSize = FRAGMENT_SIZE * GetFloatValue(StatID.mines_fragment_size_perc);
-        ShellLifetime = MINE_LIFETIME * GetFloatValue(StatID.mines_shell_lifetime_perc);
-        FragmentLifetime = FRAGMENT_LIFETIME * GetFloatValue(StatID.mines_fragment_lifetime_perc);
-        ExplodingFragments = GetBoolValue(StatID.mines_fragment_explode);
-        DoubleShells = GetBoolValue(StatID.mines_double_shell);
-        FragmentChain = GetBoolValue(StatID.mines_fragment_chain);
-        Trail = GetBoolValue(StatID.mines_trail);
     }
 
     public override float GetBaseCooldown() => Cooldown;
@@ -94,18 +72,18 @@ public class AbilityMines : Ability
         {
             prefab = prefab_mine,
             position_start = Player.transform.position,
-            velocity = direction.normalized * MINE_SPEED,
+            velocity = direction.normalized * SHELL_SPEED,
         }) as MinesProjectile;
 
-        p.transform.localScale = Vector3.one * ShellSize;
-        p.Drag = MINE_DRAG;
-        p.Lifetime = ShellLifetime;
+        p.transform.localScale = Vector3.one * SHELL_SIZE;
+        p.Drag = SHELL_DRAG;
+        p.Lifetime = SHELL_LIFETIME;
         p.onDestroy += () => OnMineHit(p.transform.position);
         p.onDestroy += () => OnMineDestroy(p);
         p.onChainHit += OnMineHit;
 
         p.HasChain = FragmentChain;
-        p.HasTrail = Trail;
+        p.HasTrail = false;
         p.ChainHits = FragmentCount;
     }
 
@@ -113,20 +91,13 @@ public class AbilityMines : Ability
     {
         if (ExplodingFragments)
         {
-            var radius = 3f * ShellSize;
+            var radius = 3f * SHELL_SIZE;
             AbilityExplode.Explode(position, radius, 0);
-        }
-
-        if (Trail)
-        {
-            trail.radius = 1f;
-            trail.lifetime = 2f;
-            trail.CreateTrail(position);
         }
 
         if (!FragmentChain)
         {
-            var ps = ShootFragments(position, prefab_fragment, FragmentCount, FRAGMENT_SPEED, FragmentSize);
+            var ps = ShootFragments(position, prefab_fragment, FragmentCount, FRAGMENT_SPEED, FRAGMENT_SIZE);
             foreach (var p in ps)
             {
                 SetupMineFragment(p);
@@ -154,7 +125,7 @@ public class AbilityMines : Ability
 
     private void SetupMineFragment(Projectile p)
     {
-        p.Lifetime = FragmentLifetime * Random.Range(0.8f, 1.2f);
+        p.Lifetime = FRAGMENT_LIFETIME * Random.Range(0.8f, 1.2f);
         p.Rigidbody.velocity = p.Rigidbody.velocity.normalized * p.Rigidbody.velocity.magnitude * Random.Range(0.8f, 1f);
         p.Drag = FRAGMENT_DRAG;
 
@@ -165,7 +136,7 @@ public class AbilityMines : Ability
         {
             if (ExplodingFragments)
             {
-                var radius = 2f * FragmentSize;
+                var radius = 2f * FRAGMENT_SIZE;
                 AbilityExplode.Explode(p.transform.position, radius, 0);
             }
         }

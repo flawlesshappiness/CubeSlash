@@ -35,3 +35,18 @@ MonoBehaviour:
       value_int: 1
       value_float: 0.5
       value_bool: 0
+  modifiers:
+  - attribute_type:
+      id: split_count
+    value_type: 0
+    int_value: 1
+    float_value: 0
+    percent_value: 0
+    bool_value: 0
+  - attribute_type:
+      id: split_arc
+    value_type: 3
+    int_value: 1
+    float_value: 0
+    percent_value: 0.5
+    bool_value: 0

@@ -28,3 +28,11 @@ MonoBehaviour:
       value_int: 1
       value_float: 0
       value_bool: 0
+  modifiers:
+  - attribute_type:
+      id: mines_fragment_count
+    value_type: 0
+    int_value: 1
+    float_value: 0
+    percent_value: 0
+    bool_value: 0

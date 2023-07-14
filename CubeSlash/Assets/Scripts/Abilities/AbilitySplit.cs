@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -9,40 +8,22 @@ public class AbilitySplit : Ability
     [SerializeField] private Projectile prefab_fragment;
 
     // Values
-    private float Cooldown { get; set; }
-    private int CountProjectiles { get; set; }
-    private float ArcProjectiles { get; set; }
-    private float SizeProjectiles { get; set; }
-    private int ProjectileFragments { get; set; }
-    private int Piercing { get; set; }
-    private bool ChainLightning { get; set; }
-    private bool Trail { get; set; }
-    private bool ProjectileExplode { get; set; }
+    private float Cooldown { get { return GameAttributeController.Instance.GetAttribute(GameAttributeType.split_cooldown).ModifiedValue.float_value; } }
+    private int CountProjectiles { get { return GameAttributeController.Instance.GetAttribute(GameAttributeType.split_count).ModifiedValue.int_value; } }
+    private float ArcProjectiles { get { return GameAttributeController.Instance.GetAttribute(GameAttributeType.split_arc).ModifiedValue.float_value; } }
+    private float SizeProjectiles { get { return GameAttributeController.Instance.GetAttribute(GameAttributeType.split_size).ModifiedValue.float_value; } }
+    private int ProjectileFragments { get { return GameAttributeController.Instance.GetAttribute(GameAttributeType.split_fragments).ModifiedValue.int_value; } }
+    private int Piercing { get { return GameAttributeController.Instance.GetAttribute(GameAttributeType.split_piercing_count).ModifiedValue.int_value; } }
+    private bool ChainLightning { get { return GameAttributeController.Instance.GetAttribute(GameAttributeType.split_chain).ModifiedValue.bool_value; } }
+    private bool ProjectileExplode { get { return GameAttributeController.Instance.GetAttribute(GameAttributeType.split_explode).ModifiedValue.bool_value; } }
 
     private const float PROJECTILE_SPEED = 15f;
-    private const float PROJECTILE_ARC = 40f;
-    private const float PROJECTILE_SIZE = 0.5f;
     private const float PROJECTILE_LIFETIME = 0.75f;
     private const float FORCE_SELF = 100f;
 
     public override void InitializeFirstTime()
     {
         base.InitializeFirstTime();
-    }
-
-    public override void OnValuesUpdated()
-    {
-        base.OnValuesUpdated();
-
-        Cooldown = GetFloatValue(StatID.split_cooldown_flat) * GetFloatValue(StatID.split_cooldown_perc);
-        CountProjectiles = Mathf.Max(1, GetIntValue(StatID.split_count));
-        ArcProjectiles = PROJECTILE_ARC * GetFloatValue(StatID.split_arc_perc);
-        SizeProjectiles = PROJECTILE_SIZE * GetFloatValue(StatID.split_size_perc);
-        ProjectileFragments = GetIntValue(StatID.split_projectile_fragments);
-        ChainLightning = GetBoolValue(StatID.split_chain);
-        Trail = GetBoolValue(StatID.split_trail);
-        ProjectileExplode = GetBoolValue(StatID.split_explode);
-        Piercing = GetIntValue(StatID.split_piercing_count);
     }
 
     public override float GetBaseCooldown() => Cooldown;
@@ -60,7 +41,7 @@ public class AbilitySplit : Ability
         var forward = Player.MoveDirection;
         var arc = ArcProjectiles;
         var directions = GetSplitDirections(CountProjectiles, arc, forward);
-        foreach(var direction in directions)
+        foreach (var direction in directions)
         {
             var p = ProjectileController.Instance.ShootPlayerProjectile(new ProjectileController.PlayerShootInfo
             {
@@ -75,7 +56,7 @@ public class AbilitySplit : Ability
             p.Lifetime = PROJECTILE_LIFETIME;
             p.onDeath += () => OnDeath(p);
 
-            p.HasTrail = Trail;
+            p.HasTrail = false;
             p.HasChain = ChainLightning;
             p.ChainRadius = 4f * GetFloatValue(StatID.split_size_perc);
 
@@ -87,7 +68,7 @@ public class AbilitySplit : Ability
         }
 
         // Play sound
-        if(projectiles.Count > 0)
+        if (projectiles.Count > 0)
         {
             SoundController.Instance.Play(SoundEffectType.sfx_split_shoot);
         }
@@ -124,7 +105,7 @@ public class AbilitySplit : Ability
 
     public static List<Vector3> GetSplitDirections(int count, float angle_max, Vector3 forward)
     {
-        if(count == 1)
+        if (count == 1)
         {
             return new List<Vector3> { forward };
         }

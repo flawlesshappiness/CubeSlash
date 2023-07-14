@@ -50,6 +50,7 @@ public class UpgradeController : Singleton
     {
         var info = GetUpgradeInfo(id);
         info.is_unlocked = false;
+        RemoveGameAttributeModifiers(info);
     }
 
     public bool IsUpgradeUnlocked(UpgradeID id) => GetUpgradeInfo(id).is_unlocked;
@@ -126,6 +127,17 @@ public class UpgradeController : Singleton
             var attribute = GameAttributeController.Instance.GetAttribute(modifier.attribute_type);
             if (attribute == null) continue;
             attribute.AddModifier(modifier);
+        }
+    }
+
+    private void RemoveGameAttributeModifiers(UpgradeInfo info)
+    {
+        var modifiers = info.upgrade.modifiers;
+        foreach (var modifier in modifiers)
+        {
+            var attribute = GameAttributeController.Instance.GetAttribute(modifier.attribute_type);
+            if (attribute == null) continue;
+            attribute.RemoveModifier(modifier);
         }
     }
 }

@@ -51,7 +51,7 @@ public class AbilityChain : Ability
             onHit = HitTarget
         });
 
-        var time_success = Time.time + Cooldown.ModifiedValue.float_value * Player.Instance.GlobalCooldownMultiplier;
+        var time_success = Time.time + Cooldown.ModifiedValue.float_value * att_cooldown_multiplier.ModifiedValue.float_value;
         var time_fail = Time.time + 0.1f;
 
         if (success)

@@ -21,9 +21,12 @@ public abstract class Ability : MonoBehaviourExtended
 
     private Coroutine cr_release;
 
-    public virtual void InitializeFirstTime() 
+    protected GameAttribute att_cooldown_multiplier;
+
+    public virtual void InitializeFirstTime()
     {
         PlayerValueController.Instance.onValuesUpdated += OnValuesUpdated;
+        att_cooldown_multiplier = GameAttributeController.Instance.GetAttribute(GameAttributeType.player_global_cooldown_multiplier);
     }
 
     private void OnDestroy()
@@ -31,7 +34,7 @@ public abstract class Ability : MonoBehaviourExtended
         PlayerValueController.Instance.onValuesUpdated -= OnValuesUpdated;
     }
 
-    public virtual void OnValuesUpdated() 
+    public virtual void OnValuesUpdated()
     {
     }
 
@@ -80,7 +83,7 @@ public abstract class Ability : MonoBehaviourExtended
 
     private IEnumerator WaitForGamestatePlaying()
     {
-        while(GameStateController.Instance.GameState != GameStateType.PLAYING)
+        while (GameStateController.Instance.GameState != GameStateType.PLAYING)
         {
             yield return null;
         }
@@ -94,7 +97,7 @@ public abstract class Ability : MonoBehaviourExtended
     {
         InUse = false || CanPressWhileOnCooldown();
 
-        var mul_global = Player.Instance.GlobalCooldownMultiplier;
+        var mul_global = att_cooldown_multiplier.ModifiedValue.float_value;
 
         TimeCooldownStart = Time.time;
         TimeCooldownEnd = TimeCooldownStart + duration * mul_global;
@@ -102,7 +105,7 @@ public abstract class Ability : MonoBehaviourExtended
 
         IEnumerator WaitForCooldownCr()
         {
-            while(Time.time < TimeCooldownEnd)
+            while (Time.time < TimeCooldownEnd)
             {
                 yield return null;
             }

@@ -29,3 +29,11 @@ MonoBehaviour:
       value_int: 0
       value_float: 0.05
       value_bool: 0
+  modifiers:
+  - attribute_type:
+      id: player_avoid_damage_chance
+    value_type: 1
+    int_value: 0
+    float_value: 0.05
+    percent_value: 0.05
+    bool_value: 0

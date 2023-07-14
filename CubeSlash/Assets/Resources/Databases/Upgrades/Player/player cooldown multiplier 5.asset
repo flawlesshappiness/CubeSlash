@@ -29,3 +29,11 @@ MonoBehaviour:
       value_int: 1
       value_float: -0.2
       value_bool: 0
+  modifiers:
+  - attribute_type:
+      id: player_global_cooldown_multiplier
+    value_type: 3
+    int_value: 0
+    float_value: 0
+    percent_value: -0.2
+    bool_value: 0
