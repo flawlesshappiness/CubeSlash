@@ -23,26 +23,29 @@ public abstract class Ability : MonoBehaviourExtended
 
     protected GameAttribute att_cooldown_multiplier;
 
+    private void OnEnable()
+    {
+        GameController.Instance.onResume += OnResume;
+    }
+
+    private void OnDisable()
+    {
+        GameController.Instance.onResume -= OnResume;
+    }
+
     public virtual void InitializeFirstTime()
     {
-        PlayerValueController.Instance.onValuesUpdated += OnValuesUpdated;
         att_cooldown_multiplier = GameAttributeController.Instance.GetAttribute(GameAttributeType.player_global_cooldown_multiplier);
     }
 
-    private void OnDestroy()
+    protected virtual void OnResume()
     {
-        PlayerValueController.Instance.onValuesUpdated -= OnValuesUpdated;
-    }
 
-    public virtual void OnValuesUpdated()
-    {
     }
-
-    protected int GetIntValue(StatID id) => PlayerValueController.Instance.GetIntValue(id);
-    protected float GetFloatValue(StatID id) => PlayerValueController.Instance.GetFloatValue(id);
-    protected bool GetBoolValue(StatID id) => PlayerValueController.Instance.GetBoolValue(id);
 
     public bool HasModifier(Type modifier) => AbilityController.Instance.HasModifier(Info.type, modifier);
+
+    public bool IsModifier() => AbilityController.Instance.IsModifier(Info.type);
 
     #region INPUT
     public void ResetInput()

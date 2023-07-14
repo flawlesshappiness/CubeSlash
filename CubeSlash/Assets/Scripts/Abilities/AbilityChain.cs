@@ -27,9 +27,16 @@ public class AbilityChain : Ability
 
         trail.gameObject.SetActive(false);
 
-        spr_preview.SetAlpha(0.05f);
-        UpdatePreviewRadius();
         Radius.OnValueModified += () => UpdatePreviewRadius();
+    }
+
+    protected override void OnResume()
+    {
+        base.OnResume();
+
+        var a = IsModifier() ? 0f : 0.05f;
+        spr_preview.SetAlpha(a);
+        UpdatePreviewRadius();
     }
 
     public override float GetBaseCooldown() => Cooldown.ModifiedValue.float_value;
@@ -38,6 +45,7 @@ public class AbilityChain : Ability
 
     private void Update()
     {
+        if (IsModifier()) return;
         if (Time.time < time_attack) return;
 
         var center = Player.Instance.transform.position;

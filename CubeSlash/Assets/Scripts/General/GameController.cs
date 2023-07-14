@@ -116,7 +116,6 @@ public class GameController : MonoBehaviour
 
         Player.Instance.SetRigidbodyEnabled(true);
         Player.Instance.ResetValues();
-        Player.Instance.UpdateUpgradeValues();
 
         ResumeLevel();
     }
@@ -134,7 +133,6 @@ public class GameController : MonoBehaviour
 
     public void ResumeLevel()
     {
-        PlayerValueController.Instance.UpdateValues();
         GameStateController.Instance.SetGameState(GameStateType.PLAYING);
         PauseLock.RemoveLock(nameof(GameController));
         onResume?.Invoke();

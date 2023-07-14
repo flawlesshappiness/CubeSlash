@@ -42,7 +42,6 @@ public class Player : Character
 
         // Upgrades
         UpgradeController.Instance.onUpgradeUnlocked += OnUpgradeUnlocked;
-        PlayerValueController.Instance.onValuesUpdated += OnValuesUpdated;
 
         // Setup
         MoveDirection = transform.up;
@@ -107,7 +106,6 @@ public class Player : Character
         AbilityController.Instance.EquipAbility(ability, PlayerInput.ButtonType.WEST);
 
         ResetValues();
-        UpdateUpgradeValues();
         UpdateBodyparts();
     }
 
@@ -276,40 +274,25 @@ public class Player : Character
     }
     #endregion
     #region UPGRADES
-    private void OnValuesUpdated()
-    {
-        UpdateUpgradeValues();
-        UpdateBodyparts();
-    }
-
-    public void UpdateUpgradeValues()
-    {
-        Body.Size = Info.body_size * PlayerValueController.Instance.GetFloatValue(StatID.player_body_size_perc);
-    }
-
     public void OnUpgradeUnlocked(UpgradeInfo info)
     {
         ps_upgrade.Play();
 
-        foreach (var stat in info.upgrade.stats)
+        foreach (var modif in info.upgrade.modifiers)
         {
-            if (stat.id == StatID.player_health)
+            if (modif.attribute_type == GameAttributeType.player_health)
             {
-                for (int i = 0; i < stat.value.GetIntValue(); i++)
+                for (int i = 0; i < modif.int_value; i++)
                 {
                     Health.AddHealth(HealthPoint.Type.FULL);
                 }
             }
-            else if (stat.id == StatID.player_armor)
+            else if (modif.attribute_type == GameAttributeType.player_armor)
             {
-                for (int i = 0; i < stat.value.GetIntValue(); i++)
+                for (int i = 0; i < modif.int_value; i++)
                 {
                     Health.AddHealth(HealthPoint.Type.TEMPORARY);
                 }
-            }
-            else if (stat.id == StatID.player_convert_health)
-            {
-                Health.ConvertHealthToArmor();
             }
         }
     }
@@ -372,10 +355,10 @@ public class Player : Character
         if (Health == null) Health = new Health();
         Health.Clear();
 
-        var init_health = Info.health + PlayerValueController.Instance.GetIntValue(StatID.player_health);
+        var init_health = Info.health;
         for (int i = 0; i < init_health; i++) Health.AddHealth(HealthPoint.Type.FULL);
 
-        var init_temp = Info.armor + PlayerValueController.Instance.GetIntValue(StatID.player_armor);
+        var init_temp = Info.armor;
         for (int i = 0; i < init_temp; i++) Health.AddHealth(HealthPoint.Type.TEMPORARY);
     }
 

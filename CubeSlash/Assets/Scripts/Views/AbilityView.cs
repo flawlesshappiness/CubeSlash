@@ -1,10 +1,10 @@
+using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 using System.Linq;
 using TMPro;
-using UnityEngine.InputSystem;
+using UnityEngine;
 using UnityEngine.EventSystems;
-using System.Collections;
+using UnityEngine.InputSystem;
 
 public class AbilityView : View
 {
@@ -64,13 +64,13 @@ public class AbilityView : View
 
         // Unlocked slots
         template_slot_unlocked.gameObject.SetActive(false);
-        foreach(var ability in AbilityController.Instance.GetGainedAbilities())
+        foreach (var ability in AbilityController.Instance.GetGainedAbilities())
         {
             InitializeAbilitySlot(ability);
         }
 
         // Equipment slots
-        foreach(var equipment in equipments)
+        foreach (var equipment in equipments)
         {
             InitializeEquipmentSlot(equipment);
         }
@@ -138,7 +138,7 @@ public class AbilityView : View
 
     private void UpdateEquipmentOrder(PlayerInput.DeviceType type)
     {
-        if(type == PlayerInput.DeviceType.KEYBOARD)
+        if (type == PlayerInput.DeviceType.KEYBOARD)
         {
             // WASD
             SetEquipmentOrder(PlayerInput.ButtonType.NORTH, 0);
@@ -183,7 +183,7 @@ public class AbilityView : View
     {
         slot_move.MoveToSlot(slot);
 
-        if(slot.Ability != null)
+        if (slot.Ability != null)
         {
             if (is_modifier)
             {
@@ -195,7 +195,7 @@ public class AbilityView : View
                 DisplayAbility(slot.Ability);
             }
         }
-        else if(IsMovingAbility())
+        else if (IsMovingAbility())
         {
             SoundController.Instance.Play(SoundEffectType.sfx_ui_move);
             if (is_modifier)
@@ -232,7 +232,7 @@ public class AbilityView : View
         AbilityController.Instance.UnequipAllAbilities();
 
         // Equip abilities
-        foreach(var equipment in equipments)
+        foreach (var equipment in equipments)
         {
             if (equipment.Slot.Ability == null) continue;
 
@@ -246,6 +246,9 @@ public class AbilityView : View
                 AbilityController.Instance.AddModifier(ability.Info.type, slot.Ability.Info.type);
             }
         }
+
+        // Update bodyparts
+        Player.Instance.UpdateBodyparts();
     }
     #endregion
     #region BUTTONS
@@ -296,7 +299,7 @@ public class AbilityView : View
 
     private void DisplayAbility(Ability a)
     {
-        if(a != null)
+        if (a != null)
         {
             tmp_desc.text = a.Info.desc_ability;
             DisplayInputAbility();
@@ -308,12 +311,13 @@ public class AbilityView : View
     }
     private void DisplayModifier(UIAbilitySlot equipment_slot, Ability modifier_ability)
     {
-        if(modifier_ability == null)
+        if (modifier_ability == null)
         {
             DisplayNoAbility();
         }
-        else if(equipment_slot.Ability != null)
+        else if (equipment_slot.Ability != null)
         {
+            /*
             var modifier = equipment_slot.Ability.Info.modifiers.GetModifier(modifier_ability.Info.type);
             var info = UpgradeController.Instance.GetUpgradeInfo(modifier.id);
             string s = "";
@@ -325,6 +329,7 @@ public class AbilityView : View
             }
             tmp_desc.text = s;
             DisplayInputAbility();
+            */
         }
     }
     #endregion
@@ -355,13 +360,12 @@ public class AbilityView : View
 
     private void OnNorthPressed(InputAction.CallbackContext context)
     {
-        if(selected_slot != null && selected_slot.Ability != null)
+        if (selected_slot != null && selected_slot.Ability != null)
         {
             Interactable = false;
             SelectableMenuItem.RemoveSelection();
 
             UpdatePlayer();
-            PlayerValueController.Instance.UpdateValues();
 
             view_stats = ViewController.Instance.ShowView<AbilityStatView>(0, "AbilityStatView");
             view_stats.SetAbility(selected_slot.Ability);
@@ -370,7 +374,7 @@ public class AbilityView : View
 
     private void OnNorthReleased(InputAction.CallbackContext context)
     {
-        if(view_stats != null)
+        if (view_stats != null)
         {
             view_stats.Close(0);
             view_stats = null;

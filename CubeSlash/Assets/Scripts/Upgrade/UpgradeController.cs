@@ -116,7 +116,6 @@ public class UpgradeController : Singleton
     public void CheatUnlockUpgrade(UpgradeInfo info)
     {
         UnlockUpgrade(info.upgrade.id);
-        PlayerValueController.Instance.UpdateValues();
     }
 
     private void AddGameAttributeModifiers(UpgradeInfo info)

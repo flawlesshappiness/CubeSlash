@@ -205,11 +205,6 @@ public class UnlockUpgradeView : View
         floating_panel.ContentSizeFitterRefresh.RefreshContentFitters();
 
         ClearUpgradeTexts();
-        foreach (var stat in upgrade.stats)
-        {
-            var text = stat.GetDisplayString();
-            CreateUpgradeText(text);
-        }
     }
 
     private void DisplayInput()

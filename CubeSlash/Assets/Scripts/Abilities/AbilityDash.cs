@@ -53,20 +53,6 @@ public class AbilityDash : Ability
         Player.onTriggerEnter -= OnImpact;
     }
 
-    public override void OnValuesUpdated()
-    {
-        base.OnValuesUpdated();
-
-        Cooldown = GetFloatValue(StatID.dash_cooldown_flat) * GetFloatValue(StatID.dash_cooldown_perc);
-        Distance = DISTANCE * GetFloatValue(StatID.dash_distance_perc);
-        Speed = SPEED * GetFloatValue(StatID.dash_speed_perc);
-        TrailDecayTime = TRAIL_DECAY_TIME * GetFloatValue(StatID.dash_trail_time_perc);
-        TrailRadius = TRAIL_RADIUS * GetFloatValue(StatID.dash_trail_radius_perc);
-        TrailChain =  GetBoolValue(StatID.dash_trail_chain);
-        TrailSplit =  GetBoolValue(StatID.dash_trail_split);
-        TrailFragment = GetBoolValue(StatID.dash_trail_fragment);
-    }
-
     public override float GetBaseCooldown() => Cooldown;
 
     public override void Trigger()
@@ -113,7 +99,7 @@ public class AbilityDash : Ability
 
             // Update direction
             var input = PlayerInput.MoveDirection;
-            if(input.magnitude > 0.5f)
+            if (input.magnitude > 0.5f)
             {
                 var right = Vector3.Cross(direction, Vector3.forward);
                 var dot = Vector3.Dot(right, input);
@@ -200,7 +186,7 @@ public class AbilityDash : Ability
             .Distinct()
             .Where(k => k != null);
 
-        foreach(var hit in hits)
+        foreach (var hit in hits)
         {
             if (Player.TryKillEnemy(hit))
             {
@@ -250,12 +236,12 @@ public class AbilityDash : Ability
             var speed = 10f;
             var size = 0.5f;
             var lifetime = Calculator.DST_Time(distance, speed);
-            foreach(var trail in trails)
+            foreach (var trail in trails)
             {
                 trail.onHit += k =>
                 {
                     var fragments = AbilityMines.ShootFragments(k.GetPosition(), projectile_fragment, 5, speed, size);
-                    foreach(var frag in fragments)
+                    foreach (var frag in fragments)
                     {
                         frag.Lifetime = lifetime;
                     }
@@ -265,7 +251,7 @@ public class AbilityDash : Ability
 
         if (TrailChain)
         {
-            foreach(var trail in trails)
+            foreach (var trail in trails)
             {
                 AbilityChain.CreateImpactPS(trail.transform.position);
 

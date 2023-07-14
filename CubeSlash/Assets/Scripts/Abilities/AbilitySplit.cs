@@ -58,7 +58,7 @@ public class AbilitySplit : Ability
 
             p.HasTrail = false;
             p.HasChain = ChainLightning;
-            p.ChainRadius = 4f * GetFloatValue(StatID.split_size_perc);
+            p.ChainRadius = 4f * SizeProjectiles;
 
             var force = FORCE_SELF;
 
