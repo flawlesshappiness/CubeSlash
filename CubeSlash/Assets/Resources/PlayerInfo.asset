@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 3
   armor: 2
-  body_size: 1.25
+  body_size: 1.5
   mass: 1
   linear_velocity: 6
   linear_acceleration: 20

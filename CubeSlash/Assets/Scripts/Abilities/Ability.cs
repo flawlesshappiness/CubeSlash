@@ -18,6 +18,7 @@ public abstract class Ability : MonoBehaviourExtended
     public float CooldownPercentage { get { return (Time.time - TimeCooldownStart) / (TimeCooldownEnd - TimeCooldownStart); } }
     public bool IsOnCooldown { get { return Time.time < TimeCooldownEnd; } }
     public bool InUse { get; set; }
+    public BodypartAbility Bodypart { get; set; }
 
     private Coroutine cr_release;
 
@@ -43,9 +44,21 @@ public abstract class Ability : MonoBehaviourExtended
 
     }
 
+    protected virtual void Update()
+    {
+        UpdateCooldown();
+    }
+
     public bool HasModifier(Type modifier) => AbilityController.Instance.HasModifier(Info.type, modifier);
 
     public bool IsModifier() => AbilityController.Instance.IsModifier(Info.type);
+
+    public bool IsEquipped() => AbilityController.Instance.IsAbilityEquipped(Info.type);
+
+    public void SetBodypart(BodypartAbility bdp)
+    {
+        Bodypart = bdp;
+    }
 
     #region INPUT
     public void ResetInput()
@@ -123,5 +136,15 @@ public abstract class Ability : MonoBehaviourExtended
     }
 
     public virtual bool CanPressWhileOnCooldown() => false;
+
+    private void UpdateCooldown()
+    {
+        var end = TimeCooldownEnd - TimeCooldownStart;
+        var t = end == 0 ? 1 : (Time.time - TimeCooldownStart) / end;
+        if (Bodypart != null)
+        {
+            Bodypart.SetCooldown(1f - Mathf.Clamp01(t));
+        }
+    }
     #endregion
 }

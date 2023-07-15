@@ -97,8 +97,9 @@ public class AbilityExplode : Ability
         Released();
     }
 
-    private void Update()
+    protected override void Update()
     {
+        base.Update();
         ReleaseOverTime();
         UpdateChargePosition();
     }

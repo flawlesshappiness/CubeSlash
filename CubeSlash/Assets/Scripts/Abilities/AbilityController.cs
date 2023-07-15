@@ -28,7 +28,7 @@ public class AbilityController : Singleton
 
         // Modifiers
         var ability_types = System.Enum.GetValues(typeof(Ability.Type)).Cast<Ability.Type>();
-        foreach(var type in ability_types)
+        foreach (var type in ability_types)
         {
             modifiers.Add(type, new List<Ability.Type>());
         }
@@ -52,7 +52,7 @@ public class AbilityController : Singleton
     public List<Ability> GetAvailableAbilities()
     {
         var gained_types = abilities.Select(ability => ability.Info.type).ToList();
-        var ability_types = System.Enum.GetValues(typeof(Ability.Type)).Cast<Ability.Type>();
+        var ability_types = DB.collection.Select(a => a.Info.type);
 
         return ability_types
             .Where(type => IsValid(type))
@@ -163,7 +163,7 @@ public class AbilityController : Singleton
     {
         // Upgrade
         var modified_ability = GetAbilityPrefab(ability);
-        foreach(var modifier in modifiers[ability])
+        foreach (var modifier in modifiers[ability])
         {
             var upgrade = modified_ability.Info.modifiers.GetModifier(modifier);
             UpgradeController.Instance.LockUpgrade(upgrade.id);
@@ -185,7 +185,7 @@ public class AbilityController : Singleton
 
     public Ability GetModifier(Ability.Type ability, Ability.Type modifier)
     {
-        if(HasModifier(ability, modifier))
+        if (HasModifier(ability, modifier))
         {
             return GetAbilityPrefab(modifier);
         }

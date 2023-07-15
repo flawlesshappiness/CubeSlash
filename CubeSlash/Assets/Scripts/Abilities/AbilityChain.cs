@@ -43,9 +43,11 @@ public class AbilityChain : Ability
 
     private void UpdatePreviewRadius() => pivot_preview.localScale = Vector3.one * Radius.ModifiedValue.float_value * 2;
 
-    private void Update()
+    protected override void Update()
     {
+        base.Update();
         if (IsModifier()) return;
+        if (!IsEquipped()) return;
         if (Time.time < time_attack) return;
 
         var center = Player.Instance.transform.position;

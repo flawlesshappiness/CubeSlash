@@ -15,7 +15,8 @@ enemies tend to clump together or move into objects
 ability cooldown UI and health ui is too far away from play area
 
 ## BUGS ##
-Every game attributed is reapplied when exiting equipment menu
+what happens if there are no more upgrades to unlock?
+player upgrades like speed are applied on the next round not the current round
 
 ## MAYBE ##
 geode area with splitting enemies and boss

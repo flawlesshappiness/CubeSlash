@@ -259,7 +259,11 @@ public class Player : Character
     {
         PlayerBody.ClearBodyparts();
         var equipped_abilities = AbilityController.Instance.GetEquippedAbilities();
-        equipped_abilities.ForEach(ability => PlayerBody.CreateAbilityBodypart(ability.Info));
+        equipped_abilities.ForEach(ability =>
+        {
+            var bdp = PlayerBody.CreateAbilityBodypart(ability.Info);
+            ability.SetBodypart(bdp);
+        });
 
         foreach (var data in Save.PlayerBody.bodyparts)
         {

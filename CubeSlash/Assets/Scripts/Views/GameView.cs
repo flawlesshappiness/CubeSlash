@@ -1,9 +1,7 @@
+using Flawliz.Lerp;
 using System.Collections;
-using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using Flawliz.Lerp;
 
 public class GameView : View
 {
@@ -84,7 +82,7 @@ public class GameView : View
         void AddAbility(PlayerInput.ButtonType type, PlayerInput.UIButtonType ui)
         {
             var a = AbilityController.Instance.GetEquippedAbility(type);
-            if(a != null)
+            if (a != null)
             {
                 input_tutorial.AddInput(ui, "Use equipped ability");
             }
