@@ -114,7 +114,6 @@ public class GameController : MonoBehaviour
         AreaController.Instance.StartAreaCoroutine();
         ViewController.Instance.ShowView<GameView>(0);
 
-        Player.Instance.SetRigidbodyEnabled(true);
         Player.Instance.ResetValues();
 
         ResumeLevel();
@@ -202,9 +201,6 @@ public class GameController : MonoBehaviour
         IsGameEnded = false;
         GameStateController.Instance.SetGameState(GameStateType.MENU);
         CameraController.Instance.SetSize(15f);
-
-        Player.Instance.SetRigidbodyEnabled(false);
-        Player.Instance.Clear();
 
         if (FirstTimeBoot)
         {

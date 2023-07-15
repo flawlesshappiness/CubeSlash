@@ -37,6 +37,9 @@ public class Player : Character
 
     public void Initialize()
     {
+        GameController.Instance.onMainMenu += OnMainMenu;
+        GameController.Instance.onGameStart += OnGameStart;
+
         // Experience
         Experience.onMax += OnLevelUp;
 
@@ -51,6 +54,17 @@ public class Player : Character
         Clear();
     }
 
+    private void OnMainMenu()
+    {
+        SetRigidbodyEnabled(false);
+        Clear();
+    }
+
+    private void OnGameStart()
+    {
+        SetRigidbodyEnabled(true);
+    }
+
     public void Clear()
     {
         AbilityController.Instance.Clear();
@@ -59,15 +73,11 @@ public class Player : Character
         ResetPlayerBody();
         SetPrimaryAbility(Save.PlayerBody.primary_ability);
         UpdateBodyparts();
+        UpdateGameAttributes();
 
         gameObject.SetActive(true);
         transform.rotation = Quaternion.identity;
         Body.SetLookDirection(transform.up);
-
-        att_velocity = GameAttributeController.Instance.GetAttribute(GameAttributeType.player_velocity);
-        att_acceleration = GameAttributeController.Instance.GetAttribute(GameAttributeType.player_acceleration);
-        att_chance_avoid_damage = GameAttributeController.Instance.GetAttribute(GameAttributeType.player_avoid_damage_chance);
-        att_experience_multiplier = GameAttributeController.Instance.GetAttribute(GameAttributeType.player_exp_multiplier);
     }
 
     public void ResetPlayerBody()
@@ -186,7 +196,7 @@ public class Player : Character
         }
     }
 
-    public void SetRigidbodyEnabled(bool enabled)
+    private void SetRigidbodyEnabled(bool enabled)
     {
         Rigidbody.isKinematic = !enabled;
 
@@ -194,6 +204,14 @@ public class Player : Character
         {
             Rigidbody.velocity = Vector3.zero;
         }
+    }
+
+    private void UpdateGameAttributes()
+    {
+        att_velocity = GameAttributeController.Instance.GetAttribute(GameAttributeType.player_velocity);
+        att_acceleration = GameAttributeController.Instance.GetAttribute(GameAttributeType.player_acceleration);
+        att_chance_avoid_damage = GameAttributeController.Instance.GetAttribute(GameAttributeType.player_avoid_damage_chance);
+        att_experience_multiplier = GameAttributeController.Instance.GetAttribute(GameAttributeType.player_exp_multiplier);
     }
 
     #region ABILITIES
