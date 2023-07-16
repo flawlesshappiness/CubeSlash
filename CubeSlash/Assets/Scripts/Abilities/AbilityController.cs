@@ -8,8 +8,9 @@ public class AbilityController : Singleton
 
     private AbilityDatabase DB { get; set; }
     private List<Ability> abilities = new List<Ability>();
-    private Dictionary<PlayerInput.ButtonType, Ability> equipment = new Dictionary<PlayerInput.ButtonType, Ability>();
-    private Dictionary<Ability.Type, List<Ability.Type>> modifiers = new Dictionary<Ability.Type, List<Ability.Type>>();
+
+    private Ability.Type equipped_ability;
+    private List<Ability.Type> modifiers = new List<Ability.Type>();
 
     protected override void Initialize()
     {
@@ -18,28 +19,11 @@ public class AbilityController : Singleton
         Clear();
     }
 
-    private void InitializeEquipment()
-    {
-        equipment.Clear();
-        equipment.Add(PlayerInput.ButtonType.NORTH, null);
-        equipment.Add(PlayerInput.ButtonType.EAST, null);
-        equipment.Add(PlayerInput.ButtonType.SOUTH, null);
-        equipment.Add(PlayerInput.ButtonType.WEST, null);
-
-        // Modifiers
-        var ability_types = System.Enum.GetValues(typeof(Ability.Type)).Cast<Ability.Type>();
-        foreach (var type in ability_types)
-        {
-            modifiers.Add(type, new List<Ability.Type>());
-        }
-    }
-
     public void Clear()
     {
         abilities.ForEach(a => Destroy(a.gameObject));
         abilities.Clear();
         modifiers.Clear();
-        InitializeEquipment();
     }
 
     #region GAIN
@@ -83,6 +67,15 @@ public class AbilityController : Singleton
         return ability;
     }
 
+    private void AttachAbilityToPlayer(Ability ability)
+    {
+        ability.transform.position = Player.Instance.transform.position;
+        ability.transform.rotation = Player.Instance.transform.rotation;
+        ability.transform.localScale = Vector3.one;
+        ability.transform.parent = Player.Instance.transform;
+        ability.onCooldownComplete += Player.Instance.PlayCooldownCompleteFX;
+    }
+
     public bool IsAbilityUnlocked(Ability.Type type)
     {
         return Save.Game.unlocked_abilities.Contains(type);
@@ -111,90 +104,27 @@ public class AbilityController : Singleton
     }
     #endregion
     #region EQUIP
-    public void EquipAbility(Ability ability, PlayerInput.ButtonType button)
+    public void SetEquippedAbility(Ability.Type type)
     {
-        UnequipAbility(button);
-        equipment[button] = ability;
+        equipped_ability = type;
     }
 
-    public Ability GetEquippedAbility(PlayerInput.ButtonType type) => equipment[type];
-    public List<Ability> GetEquippedAbilities() => equipment.Values.Where(a => a != null).ToList();
-    public bool IsAbilityEquipped(Ability.Type type) => equipment.Values.Any(ability => ability != null && ability.Info.type == type);
-    #endregion
-    #region UNEQUIP
-    public void UnequipAbility(PlayerInput.ButtonType button)
-    {
-        var ability = equipment[button];
-        if (ability == null) return;
-        equipment[button] = null;
-        RemoveModifiers(ability.Info.type);
-    }
-
-    public void UnequipAllAbilities()
-    {
-        equipment.Keys.ToList().ForEach(button =>
-        {
-            UnequipAbility(button);
-        });
-    }
-
-    private void AttachAbilityToPlayer(Ability ability)
-    {
-        ability.transform.position = Player.Instance.transform.position;
-        ability.transform.rotation = Player.Instance.transform.rotation;
-        ability.transform.localScale = Vector3.one;
-        ability.transform.parent = Player.Instance.transform;
-        ability.onCooldownComplete += Player.Instance.PlayCooldownCompleteFX;
-    }
+    public Ability GetEquippedAbility() => abilities.FirstOrDefault(a => a.Info.type == equipped_ability);
+    public bool IsAbilityEquipped(Ability.Type type) => equipped_ability == type;
     #endregion
     #region MODIFIER
-    public void AddModifier(Ability.Type ability, Ability.Type modifier)
+    public void AddModifier(Ability.Type modifier)
     {
         // Modifier
-        modifiers[ability].Add(modifier);
+        modifiers.Add(modifier);
 
         // Upgrade
-        var modified_ability = GetAbilityPrefab(ability);
+        var modified_ability = GetAbilityPrefab(equipped_ability);
         var upgrade = modified_ability.Info.modifiers.GetModifier(modifier);
         UpgradeController.Instance.UnlockUpgrade(upgrade.id);
     }
 
-    public void RemoveModifiers(Ability.Type ability)
-    {
-        // Upgrade
-        var modified_ability = GetAbilityPrefab(ability);
-        foreach (var modifier in modifiers[ability])
-        {
-            var upgrade = modified_ability.Info.modifiers.GetModifier(modifier);
-            UpgradeController.Instance.LockUpgrade(upgrade.id);
-        }
-
-        // Modifier
-        modifiers[ability].Clear();
-    }
-
-    public bool HasModifier(Ability.Type ability, Ability.Type modifier)
-    {
-        return modifiers[ability].Contains(modifier);
-    }
-
-    public bool IsModifier(Ability.Type modifier)
-    {
-        return modifiers.Keys.Any(ability => HasModifier(ability, modifier));
-    }
-
-    public Ability GetModifier(Ability.Type ability, Ability.Type modifier)
-    {
-        if (HasModifier(ability, modifier))
-        {
-            return GetAbilityPrefab(modifier);
-        }
-        return null;
-    }
-
-    public List<Ability.Type> GetModifiers(Ability.Type ability)
-    {
-        return modifiers[ability];
-    }
+    public bool HasModifier(Ability.Type modifier) => modifiers.Contains(modifier);
+    public List<Ability.Type> GetModifiers(Ability.Type ability) => modifiers;
     #endregion
 }

@@ -94,7 +94,7 @@ public class UnlockUpgradeView : View
 
     private List<UpgradeInfo> GetRandomUpgrades()
     {
-        var count_upgrades = Mathf.Min(4, AbilityController.Instance.GetEquippedAbilities().Count + 2);
+        var count_upgrades = 3;
         var upgrades = UpgradeController.Instance.GetUnlockableUpgrades()
             .TakeRandom(count_upgrades);
         return upgrades;

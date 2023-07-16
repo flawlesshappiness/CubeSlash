@@ -81,7 +81,7 @@ public class AbilityView : View
     private void InitializeAbilitySlot(Ability ability)
     {
         var equipped = AbilityController.Instance.IsAbilityEquipped(ability.Info.type);
-        var modifier = AbilityController.Instance.IsModifier(ability.Info.type);
+        var modifier = AbilityController.Instance.HasModifier(ability.Info.type);
         var slot = Instantiate(template_slot_unlocked, template_slot_unlocked.transform.parent);
         slot.gameObject.SetActive(true);
         slot.SetAbility((equipped || modifier) ? null : ability);
@@ -97,7 +97,7 @@ public class AbilityView : View
 
     private void InitializeEquipmentSlot(UIAbilityEquipment equipment)
     {
-        var ability = AbilityController.Instance.GetEquippedAbility(equipment.type_button);
+        var ability = AbilityController.Instance.GetEquippedAbility();
         equipment.gameObject.SetActive(true);
         equipment.Initialize(ability);
 
@@ -226,6 +226,7 @@ public class AbilityView : View
 
     private bool IsMovingAbility() => slot_move.Ability != null;
 
+    /*
     private void UpdatePlayer()
     {
         // Unequip abilities
@@ -250,11 +251,12 @@ public class AbilityView : View
         // Update bodyparts
         Player.Instance.UpdateBodyparts();
     }
+    */
     #endregion
     #region BUTTONS
     private void ClickContinue()
     {
-        UpdatePlayer();
+        //UpdatePlayer();
         OnContinue?.Invoke();
 
         StartCoroutine(Cr());
@@ -365,7 +367,7 @@ public class AbilityView : View
             Interactable = false;
             SelectableMenuItem.RemoveSelection();
 
-            UpdatePlayer();
+            //UpdatePlayer();
 
             view_stats = ViewController.Instance.ShowView<AbilityStatView>(0, "AbilityStatView");
             view_stats.SetAbility(selected_slot.Ability);

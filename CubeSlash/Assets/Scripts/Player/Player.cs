@@ -100,33 +100,13 @@ public class Player : Character
         MoveDirection = transform.up;
     }
 
-    public void SetPlayerBody(PlayerBodySettings settings)
-    {
-        SetBody(settings.body);
-        Body.Size = settings.body_size;
-        Rigidbody.mass = settings.mass;
-
-        Body.transform.localEulerAngles = Vector3.one * settings.body_size;
-        MoveDirection = transform.up;
-
-        g_invincible.SetActive(false);
-
-        // Ability
-        var ability = AbilityController.Instance.GainAbility(settings.ability_type);
-        AbilityController.Instance.EquipAbility(ability, PlayerInput.ButtonType.WEST);
-
-        ResetValues();
-        UpdateBodyparts();
-    }
-
     public void SetPrimaryAbility(Ability.Type type)
     {
         AbilityController.Instance.Clear();
 
         Save.PlayerBody.primary_ability = type;
         AbilityController.Instance.GainAbility(type);
-        var ability = AbilityController.Instance.GetAbility(type);
-        AbilityController.Instance.EquipAbility(ability, PlayerInput.ButtonType.WEST);
+        AbilityController.Instance.SetEquippedAbility(type);
     }
 
     public void ResetValues()
@@ -227,10 +207,19 @@ public class Player : Character
     private void PressAbility(PlayerInput.ButtonType button)
     {
         if (InputLock.IsLocked) return;
-        var ability = AbilityController.Instance.GetEquippedAbility(button);
-        if (ability == null) return;
+        switch (button)
+        {
+            case PlayerInput.ButtonType.WEST:
+                PressEquippedAbility();
+                break;
+        }
+    }
+
+    private void PressEquippedAbility()
+    {
         if (GameStateController.Instance.GameState != GameStateType.PLAYING) return;
 
+        var ability = AbilityController.Instance.GetEquippedAbility();
         if (CanPressAbility(ability))
         {
             ability.Pressed();
@@ -247,8 +236,17 @@ public class Player : Character
     {
         if (InputLock.IsLocked) return;
 
-        var ability = AbilityController.Instance.GetEquippedAbility(button);
-        if (ability == null) return;
+        switch (button)
+        {
+            case PlayerInput.ButtonType.WEST:
+                ReleaseEquippedAbility();
+                break;
+        }
+    }
+
+    private void ReleaseEquippedAbility()
+    {
+        var ability = AbilityController.Instance.GetEquippedAbility();
 
         if (ability.IsPressed)
         {
@@ -276,12 +274,9 @@ public class Player : Character
     public void UpdateBodyparts()
     {
         PlayerBody.ClearBodyparts();
-        var equipped_abilities = AbilityController.Instance.GetEquippedAbilities();
-        equipped_abilities.ForEach(ability =>
-        {
-            var bdp = PlayerBody.CreateAbilityBodypart(ability.Info);
-            ability.SetBodypart(bdp);
-        });
+        var equipped_ability = AbilityController.Instance.GetEquippedAbility();
+        var bdp = PlayerBody.CreateAbilityBodypart(equipped_ability.Info);
+        equipped_ability.SetBodypart(bdp);
 
         foreach (var data in Save.PlayerBody.bodyparts)
         {

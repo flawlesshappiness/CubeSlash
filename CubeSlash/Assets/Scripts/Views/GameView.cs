@@ -56,10 +56,7 @@ public class GameView : View
     public void ShowIntroTutorial()
     {
         input_tutorial.AddInput(PlayerInput.UIButtonType.NAV_ALL, "Move");
-        AddAbility(PlayerInput.ButtonType.SOUTH, PlayerInput.UIButtonType.SOUTH);
-        AddAbility(PlayerInput.ButtonType.EAST, PlayerInput.UIButtonType.EAST);
-        AddAbility(PlayerInput.ButtonType.WEST, PlayerInput.UIButtonType.WEST);
-        AddAbility(PlayerInput.ButtonType.NORTH, PlayerInput.UIButtonType.NORTH);
+        input_tutorial.AddInput(PlayerInput.UIButtonType.WEST, "Use ability");
 
         StartCoroutine(Cr());
         IEnumerator Cr()
@@ -77,15 +74,6 @@ public class GameView : View
             {
                 cvg_tutorial.alpha = Mathf.Lerp(1f, 0f, f);
             });
-        }
-
-        void AddAbility(PlayerInput.ButtonType type, PlayerInput.UIButtonType ui)
-        {
-            var a = AbilityController.Instance.GetEquippedAbility(type);
-            if (a != null)
-            {
-                input_tutorial.AddInput(ui, "Use equipped ability");
-            }
         }
     }
 }

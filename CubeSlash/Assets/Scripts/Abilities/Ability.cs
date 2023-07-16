@@ -49,10 +49,7 @@ public abstract class Ability : MonoBehaviourExtended
         UpdateCooldown();
     }
 
-    public bool HasModifier(Type modifier) => AbilityController.Instance.HasModifier(Info.type, modifier);
-
-    public bool IsModifier() => AbilityController.Instance.IsModifier(Info.type);
-
+    public bool IsModifier() => AbilityController.Instance.HasModifier(Info.type);
     public bool IsEquipped() => AbilityController.Instance.IsAbilityEquipped(Info.type);
 
     public void SetBodypart(BodypartAbility bdp)

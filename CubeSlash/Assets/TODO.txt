@@ -12,11 +12,10 @@ shield upgrade is boring
 dash ability is bad
 usually you only want one ability
 enemies tend to clump together or move into objects
-ability cooldown UI and health ui is too far away from play area
 
 ## BUGS ##
 what happens if there are no more upgrades to unlock?
-player upgrades like speed are applied on the next round not the current round
+parallax sprites z fighting
 
 ## MAYBE ##
 geode area with splitting enemies and boss
@@ -40,3 +39,4 @@ Mushroom bodypart
 
 Boomerang ability
 Split modifier > Penetrate?
+Split mod mines > bullets become smaller bullets on death, like a shotgun

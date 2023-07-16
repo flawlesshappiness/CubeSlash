@@ -1,9 +1,7 @@
 using Flawliz.Lerp;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.UI;
 
 public class GameSetupView : View
 {
@@ -94,7 +92,7 @@ public class GameSetupView : View
         var charms = charm_panel.GetActivatedCharms();
         charms.ForEach(c => UpgradeController.Instance.UnlockUpgrade(c.upgrade_id));
 
-        Player.Instance.SetPlayerBody(ability_panel.CurrentSettings);
+        //Player.Instance.SetPlayerBody(ability_panel.CurrentSettings);
 
         // Start
         GameController.Instance.StartGame();

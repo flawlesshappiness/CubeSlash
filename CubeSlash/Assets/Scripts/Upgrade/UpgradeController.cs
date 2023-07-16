@@ -76,7 +76,7 @@ public class UpgradeController : Singleton
             var is_locked = !info.is_unlocked;
             var is_not_hidden = !info.upgrade.hidden;
             var has_required_upgrades = info.upgrade.upgrades_required.All(id => IsUpgradeUnlocked(id));
-            var has_required_ability = !info.upgrade.require_ability || AbilityController.Instance.GetEquippedAbilities().Any(a => a.Info.type == info.upgrade.ability_required);
+            var has_required_ability = !info.upgrade.require_ability || AbilityController.Instance.IsAbilityEquipped(info.upgrade.ability_required);
             return is_locked && is_not_hidden && has_required_upgrades && has_required_ability;
         }
     }

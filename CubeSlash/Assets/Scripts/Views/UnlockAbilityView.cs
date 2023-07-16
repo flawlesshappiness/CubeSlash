@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.UI;
 
 public class UnlockAbilityView : View
 {
@@ -27,7 +26,7 @@ public class UnlockAbilityView : View
 
         DisplayAbility(abilities[0]);
         ClearButtons();
-        foreach(var ability in abilities)
+        foreach (var ability in abilities)
         {
             var btn = CreateButton();
             btn.Icon = ability.Info.sprite_icon;
@@ -41,6 +40,7 @@ public class UnlockAbilityView : View
         void Click(UIIconButton btn, Ability ability)
         {
             AbilityController.Instance.GainAbility(ability.Info.type);
+            AbilityController.Instance.AddModifier(ability.Info.type);
             SoundController.Instance.Play(SoundEffectType.sfx_ui_unlock_ability);
             OnAbilitySelected?.Invoke();
             Close(0);
@@ -65,7 +65,7 @@ public class UnlockAbilityView : View
     {
         var text = "";
 
-        if(ability != null)
+        if (ability != null)
         {
             //text += ability.Info.name_ability;
             //text += "\n";
