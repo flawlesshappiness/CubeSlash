@@ -42,8 +42,13 @@ public class UIFloatingPanelUpgradeFromToText : MonoBehaviour
         to_attribute.AddModifier(modifier);
         var to_value = to_attribute.ModifiedValue;
 
-        SetFromText(from_value.GetStringValue());
-        SetToText(to_value.GetStringValue());
+        var is_bool = attribute.base_value.value_type == GameAttributeValue.ValueType.Bool;
+        var from_text = is_bool ? "" : from_value.GetStringValue();
+        var to_text = is_bool ? "" : to_value.GetStringValue();
+        tmp_arrow.enabled = !is_bool;
+
+        SetFromText(from_text);
+        SetToText(to_text);
 
         var color = GetColorType(from_value, to_value, attribute.high_is_negative);
         SetToColor(color);

@@ -2,8 +2,9 @@ using UnityEngine;
 
 public class UIFloatingPanel : MonoBehaviourExtended
 {
-    public RectTransform RectTransform { get { return GetComponentOnce<RectTransform>(); } }
-    public ContentSizeFitterRefresh ContentSizeFitterRefresh { get { return GetComponentOnce<ContentSizeFitterRefresh>(); } }
+    public RectTransform RectTransform { get { return GetComponentOnce<RectTransform>(ComponentSearchType.THIS); } }
+    public ContentSizeFitterRefresh ContentSizeFitterRefresh { get { return GetComponentOnce<ContentSizeFitterRefresh>(ComponentSearchType.THIS); } }
+    public CanvasGroup CanvasGroup { get { return GetComponentOnce<CanvasGroup>(ComponentSearchType.THIS); } }
 
     private Transform _target;
     private Vector3 _offset;

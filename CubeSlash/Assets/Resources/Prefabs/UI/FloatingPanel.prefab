@@ -76,6 +76,7 @@ GameObject:
   - component: {fileID: 7469575834838666108}
   - component: {fileID: 8159824709430587944}
   - component: {fileID: 521622106554347264}
+  - component: {fileID: 4752046225092109828}
   m_Layer: 5
   m_Name: FloatingPanel
   m_TagString: Untagged
@@ -167,6 +168,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_HorizontalFit: 2
   m_VerticalFit: 2
+--- !u!225 &4752046225092109828
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5516982702565126960}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1001 &3124026968357650728
 PrefabInstance:
   m_ObjectHideFlags: 0
