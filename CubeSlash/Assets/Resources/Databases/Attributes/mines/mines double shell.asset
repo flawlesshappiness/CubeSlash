@@ -16,9 +16,9 @@ MonoBehaviour:
     type:
       id: mines_double_shell
     base_value:
-      value_type: 1
+      value_type: 2
       int_value: 2
       float_value: 2.5
       bool_value: 0
-    text: Cooldown
+    text: Double shells
     high_is_negative: 0
