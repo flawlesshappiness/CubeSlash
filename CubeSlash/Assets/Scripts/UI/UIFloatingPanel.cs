@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class UIFloatingPanel : MonoBehaviourExtended
@@ -35,5 +36,18 @@ public class UIFloatingPanel : MonoBehaviourExtended
     private Vector3 GetPosition()
     {
         return _target.position + _offset;
+    }
+
+    public void Refresh()
+    {
+        StartCoroutine(RefreshCr());
+    }
+
+    private IEnumerator RefreshCr()
+    {
+        CanvasGroup.alpha = 0;
+        yield return null;
+        ContentSizeFitterRefresh.RefreshContentFitters();
+        CanvasGroup.alpha = 1;
     }
 }

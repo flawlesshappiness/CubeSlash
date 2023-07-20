@@ -1,18 +1,21 @@
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class PlayRadialView : View
 {
     [SerializeField] private RadialMenu radial;
+    [SerializeField] private UIFloatingPanel floating_panel;
+    [SerializeField] private UIFloatingPanelText floating_text;
 
     private Player Player { get { return Player.Instance; } }
 
     private void Start()
     {
         ShowMainOptions();
+
+        radial.OnSelect += OnRadialSelect;
+        radial.OnSubmitBegin += _ => HideFloatingPanel();
 
         CameraController.Instance.AnimateSize(1f, 6f, EasingCurves.EaseInOutQuad);
     }
@@ -22,11 +25,29 @@ public class PlayRadialView : View
         ViewController.Instance.ShowView<StartView>(0);
     }
 
+    private void HideFloatingPanel()
+    {
+        floating_panel.gameObject.SetActive(false);
+    }
+
+    private void OnRadialSelect(RadialMenuElement element)
+    {
+        if (element == null)
+        {
+            HideFloatingPanel();
+        }
+        else
+        {
+            floating_panel.SetTarget(element.transform, new Vector2(50, 50));
+        }
+    }
+
     private void InsertBackOption(List<RadialMenuOption> options, System.Action OnBack)
     {
         options.Insert(0, new RadialMenuOption
         {
             Sprite = Icon.Get(IconType.arrow_back),
+            OnSelect = HideFloatingPanel,
             OnSubmitComplete = OnBack
         });
     }
@@ -111,6 +132,11 @@ public class PlayRadialView : View
         void Select(AbilityInfo info)
         {
             Save.Game.new_abilities.Remove(info.type);
+
+            floating_text.Clear();
+            floating_text.AddText(info.desc_ability);
+            floating_text.gameObject.SetActive(true);
+            floating_panel.Refresh();
         }
     }
 

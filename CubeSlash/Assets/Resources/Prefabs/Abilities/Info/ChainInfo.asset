@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: 3
   name_ability: Zapper
-  desc_ability: Hold to zap nearby enemies
+  desc_ability: Chain zap nearby enemies
   sprite_icon: {fileID: 21300000, guid: 704c46460f2ea97478c57508c8014614, type: 3}
   modifiers: {fileID: 11400000, guid: 1c17cffe6c75de34d8d263b689ea2a04, type: 2}
   type_bodypart:

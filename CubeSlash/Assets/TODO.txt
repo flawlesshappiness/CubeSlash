@@ -10,8 +10,10 @@ too many crystal body parts (each body part should be distinct)
 explode charge sound effect
 shield upgrade is boring
 dash ability is bad
-usually you only want one ability
 enemies tend to clump together or move into objects
+root boss is bad
+dodge action
+heal action
 
 ## BUGS ##
 what happens if there are no more upgrades to unlock?

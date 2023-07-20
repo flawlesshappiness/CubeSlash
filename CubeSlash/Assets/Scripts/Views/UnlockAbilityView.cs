@@ -1,5 +1,4 @@
 using Flawliz.Lerp;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -116,14 +115,7 @@ public class UnlockAbilityView : View
             floating_upgrade.AddModifiedAttribute(attribute, modifier);
         }
 
-        StartCoroutine(Cr());
-        IEnumerator Cr()
-        {
-            floating_panel.CanvasGroup.alpha = 0;
-            yield return null;
-            floating_panel.ContentSizeFitterRefresh.RefreshContentFitters();
-            floating_panel.CanvasGroup.alpha = 1;
-        }
+        floating_panel.Refresh();
     }
 
     private void Skip()
