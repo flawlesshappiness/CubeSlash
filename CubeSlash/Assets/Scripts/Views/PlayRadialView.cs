@@ -12,6 +12,7 @@ public class PlayRadialView : View
 
     private void Start()
     {
+        HideFloatingPanel();
         ShowMainOptions();
 
         radial.OnSelect += OnRadialSelect;
@@ -133,10 +134,18 @@ public class PlayRadialView : View
         {
             Save.Game.new_abilities.Remove(info.type);
 
-            floating_text.Clear();
-            floating_text.AddText(info.desc_ability);
-            floating_text.gameObject.SetActive(true);
-            floating_panel.Refresh();
+            var unlocked = AbilityController.Instance.IsAbilityUnlocked(info.type);
+            if (unlocked)
+            {
+                floating_text.Clear();
+                floating_text.AddText(info.desc_ability);
+                floating_text.gameObject.SetActive(true);
+                floating_panel.Refresh();
+            }
+            else
+            {
+                HideFloatingPanel();
+            }
         }
     }
 
