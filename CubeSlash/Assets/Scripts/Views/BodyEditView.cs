@@ -47,7 +47,7 @@ public class BodyEditView : View
             },
         };
 
-        if(Body.Bodyparts.Count > 0)
+        if (Body.Bodyparts.Count > 0)
         {
             options.Add(new RadialMenuOption
             {
@@ -81,6 +81,7 @@ public class BodyEditView : View
             Description = Save.Game.unlocked_player_bodies.Contains(info.type) ? "" : "to unlock",
             IsLocked = !Save.Game.unlocked_player_bodies.Contains(info.type),
             IsNew = Save.Game.new_player_bodies.Contains(info.type),
+            OnSelect = () => Select(info),
             OnSubmitComplete = () => ShowBodySkinSelect(info)
         }).ToList();
 
@@ -89,6 +90,11 @@ public class BodyEditView : View
         radial.AddOptions(options);
         radial.AnimateShowElements(true, 0.05f);
         radial.SetCancelElement(radial.GetElement(0));
+
+        void Select(PlayerBodyInfo info)
+        {
+            Save.Game.new_player_bodies.Remove(info.type);
+        }
     }
 
     private void ShowBodySkinSelect(PlayerBodyInfo info)
@@ -98,7 +104,7 @@ public class BodyEditView : View
         var options = info.skins.Select(skin => new RadialMenuOption
         {
             Sprite = skin,
-            OnSubmitComplete = () => SelectBody(info, skin)
+            OnSubmitComplete = () => Submit(info, skin)
         }).ToList();
 
         InsertBackOption(options, ShowBodySelect);
@@ -107,7 +113,7 @@ public class BodyEditView : View
         radial.AnimateShowElements(true, 0.05f);
         radial.SetCancelElement(radial.GetElement(0));
 
-        void SelectBody(PlayerBodyInfo info, Sprite skin)
+        void Submit(PlayerBodyInfo info, Sprite skin)
         {
             Save.PlayerBody.body_type = info.type;
             Save.PlayerBody.body_skin = info.skins.IndexOf(skin);
@@ -189,7 +195,7 @@ public class BodyEditView : View
 
         void OnRemove(Bodypart part)
         {
-            if(part != null)
+            if (part != null)
             {
                 SelectPartToRemove(part);
             }
