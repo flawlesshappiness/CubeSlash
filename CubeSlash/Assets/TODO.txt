@@ -1,5 +1,4 @@
 ## TODO ##
-missing ability tooltips
 make sure mine size reflects in modifiers
 make sure projectile size reflects in modifiers
 test if player bodies are unlocked correctly

@@ -136,7 +136,7 @@ public class AbilityMines : Ability
         {
             if (ExplodingFragments)
             {
-                var radius = 2f * FRAGMENT_SIZE;
+                var radius = 4f * FRAGMENT_SIZE;
                 AbilityExplode.Explode(p.transform.position, radius, 0);
             }
         }
