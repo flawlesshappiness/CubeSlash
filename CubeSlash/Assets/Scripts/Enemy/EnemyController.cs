@@ -43,7 +43,7 @@ public class EnemyController : Singleton
     {
         enemies_unlocked.AddRange(area.enemies);
 
-        if(cr_spawn_boss != null) StopCoroutine(cr_spawn_boss);
+        if (cr_spawn_boss != null) StopCoroutine(cr_spawn_boss);
         var boss_spawn_delay = GameSettings.Instance.area_duration * GameSettings.Instance.time_boss_spawn;
         cr_spawn_boss = StartCoroutine(SpawnBossCr(area.boss, boss_spawn_delay));
     }
@@ -56,7 +56,7 @@ public class EnemyController : Singleton
     private void OnGameEnd()
     {
         // Clear boss
-        if(cr_spawn_boss != null)
+        if (cr_spawn_boss != null)
         {
             StopCoroutine(cr_spawn_boss);
             cr_spawn_boss = null;
@@ -172,13 +172,16 @@ public class EnemyController : Singleton
             }
 
             // Exp
-            for (int i = 0; i < 25; i++)
+            if (boss.type != EnemyType.BossPlant)
             {
-                var experience = ItemController.Instance.SpawnExperience(enemy.transform.position);
-                experience.Initialize();
-                experience.SetMeat();
-                experience.transform.position = enemy.transform.position + Random.insideUnitCircle.ToVector3() * enemy.Settings.size * 0.5f;
-                experience.AnimateCollect();
+                for (int i = 0; i < 25; i++)
+                {
+                    var experience = ItemController.Instance.SpawnExperience(enemy.transform.position);
+                    experience.Initialize();
+                    experience.SetMeat();
+                    experience.transform.position = enemy.transform.position + Random.insideUnitCircle.ToVector3() * enemy.Settings.size * 0.5f;
+                    experience.AnimateCollect();
+                }
             }
 
             // Log
@@ -191,16 +194,16 @@ public class EnemyController : Singleton
     private Enemy SpawnRandomEnemy(Vector3 position)
     {
         var random = new WeightedRandom<EnemySettings>();
-        foreach(var e in enemies_unlocked)
+        foreach (var e in enemies_unlocked)
         {
             var count = enemies_active.Count(x => x.Settings == e.enemy);
-            if(count < e.max || e.max <= 0)
+            if (count < e.max || e.max <= 0)
             {
                 random.AddElement(e.enemy, e.chance);
             }
         }
 
-        if(random.Count == 0)
+        if (random.Count == 0)
         {
             return null;
         }
@@ -214,7 +217,7 @@ public class EnemyController : Singleton
 
     public Enemy SpawnEnemy(EnemySettings settings, Vector3 position)
     {
-        if(enemies_inactive.Count == 0)
+        if (enemies_inactive.Count == 0)
         {
             ExtendEnemyPool(COUNT_ENEMY_POOL_EXTEND);
         }
@@ -227,7 +230,7 @@ public class EnemyController : Singleton
         enemy.Initialize(settings);
 
         OnEnemySpawned?.Invoke(enemy);
-        
+
         return enemy;
     }
 
@@ -273,7 +276,7 @@ public class EnemyController : Singleton
 
     public void KillActiveEnemies()
     {
-        foreach(var enemy in enemies_active.ToList())
+        foreach (var enemy in enemies_active.ToList())
         {
             enemy.Kill(false);
         }
@@ -281,7 +284,7 @@ public class EnemyController : Singleton
 
     public void RemoveActiveEnemies()
     {
-        foreach(var enemy in enemies_active.ToList())
+        foreach (var enemy in enemies_active.ToList())
         {
             enemy.gameObject.SetActive(false);
             EnemyKilled(enemy);

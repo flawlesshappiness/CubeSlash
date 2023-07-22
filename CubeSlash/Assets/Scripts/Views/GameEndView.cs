@@ -5,7 +5,6 @@ using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.UI;
 
 public class GameEndView : View
 {
@@ -73,7 +72,7 @@ public class GameEndView : View
             Lerp.Alpha(input.CanvasGroup, 0.5f, 0).UnscaledTime();
             yield return new WaitForSecondsRealtime(0.5f);
 
-            foreach(var item in unlocked_items)
+            foreach (var item in unlocked_items)
             {
                 var next = false;
                 var view = ViewController.Instance.ShowView<UnlockItemView>(0, nameof(UnlockItemView));
@@ -111,7 +110,7 @@ public class GameEndView : View
             UnlockRandomAbility();
         }
 
-        if(data.areas_completed >= 2 || data.levels_gained > 4)
+        if (data.areas_completed >= 2 || data.levels_gained > 4)
         {
             UnlockRandomBodypart();
         }
@@ -135,7 +134,7 @@ public class GameEndView : View
     private void UnlockRandomAbility()
     {
         var info = AbilityController.Instance.UnlockRandomAbility();
-        
+
         if (info != null)
         {
             unlocked_items.Add(new UnlockItem
@@ -150,7 +149,7 @@ public class GameEndView : View
     {
         var info = BodypartController.Instance.UnlockRandomPart();
 
-        if(info != null)
+        if (info != null)
         {
             unlocked_items.Add(new UnlockItem
             {
@@ -169,7 +168,7 @@ public class GameEndView : View
         var db = Database.Load<PlayerBodyDatabase>();
         var info = db.collection.FirstOrDefault(info => info.type == type);
 
-        if(info == null)
+        if (info != null)
         {
             unlocked_items.Add(new UnlockItem
             {

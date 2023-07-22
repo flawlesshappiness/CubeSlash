@@ -1,9 +1,9 @@
-using UnityEngine;
 using PathCreation;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 
-public class AI_BossPlant : EnemyAI
+public class AI_BossPlant : BossAI
 {
     [SerializeField] private PlantWall template_wall;
     [SerializeField] private PlantPillar template_pillar;
@@ -110,7 +110,7 @@ public class AI_BossPlant : EnemyAI
 
     private void OnDudKilled()
     {
-        if(duds_to_kill > 0)
+        if (duds_to_kill > 0)
         {
             CreateDud();
             duds_to_kill--;
@@ -124,7 +124,7 @@ public class AI_BossPlant : EnemyAI
     private void End()
     {
         CleanupAndSpawnExp();
-        Self.Respawn();
+        Self.Kill();
     }
 
     private void CleanupAndSpawnExp()
@@ -164,7 +164,7 @@ public class AI_BossPlant : EnemyAI
         if (Player.Instance.IsDead) return;
 
         var t = GetHealthPercentage();
-        if(Time.time > time_until_pillar)
+        if (Time.time > time_until_pillar)
         {
             CreatePillar();
             var cooldown = Mathf.Lerp(COOLDOWN_PILLAR_MAX, COOLDOWN_PILLAR_MIN, t);

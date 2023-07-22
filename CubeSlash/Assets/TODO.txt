@@ -1,6 +1,4 @@
 ## TODO ##
-make sure mine size reflects in modifiers
-make sure projectile size reflects in modifiers
 test if player bodies are unlocked correctly
 player body notif is always on
 it is unclear if some things are danger on touch (add red outline)
@@ -33,8 +31,6 @@ enemy that pulls the player
 enemy that shoots aoe of bullets
 enemy that leaves a trail during life / after death
 enemy with a dud on its back
-CHARM: Orbiting damage
-CHARM: Gain x when y
 endless mode
 Mushroom bodypart
 
