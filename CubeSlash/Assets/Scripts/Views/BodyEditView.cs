@@ -5,6 +5,7 @@ using UnityEngine;
 public class BodyEditView : View
 {
     [SerializeField] private RadialMenu radial;
+    [SerializeField] private UIInputLayout inputs;
 
     private Player Player { get { return Player.Instance; } }
     private PlayerBody Body { get { return Player.PlayerBody; } }
@@ -129,6 +130,7 @@ public class BodyEditView : View
     {
         var db = Database.Load<BodypartDatabase>();
         radial.Clear();
+        inputs.Clear();
 
         var options = db.collection
             .Where(info => !info.is_ability_part)
@@ -155,6 +157,8 @@ public class BodyEditView : View
             part.SetPosition(0.5f);
             part.SetSize(0.5f);
             BodypartEditController.Instance.BeginMovingPart(part, ShowBodypartSelect, () => Cancel(part));
+
+            ShowMoveBodypartInput();
         }
 
         void Cancel(Bodypart part)
@@ -172,10 +176,12 @@ public class BodyEditView : View
     private void SelectPartToMove(Bodypart selected)
     {
         BodypartEditController.Instance.BeginSelectingPart(selected, Select, Cancel);
+        inputs.Clear();
 
         void Select(Bodypart part)
         {
             BodypartEditController.Instance.BeginMovingPart(part, () => SelectPartToMove(part), () => SelectPartToMove(part));
+            ShowMoveBodypartInput();
         }
 
         void Cancel()
@@ -209,5 +215,14 @@ public class BodyEditView : View
         {
             ShowMainOptions();
         }
+    }
+
+    private void ShowMoveBodypartInput()
+    {
+        inputs.Clear();
+        inputs.AddInput(PlayerInput.UIButtonType.NAV_ALL, "Move");
+        inputs.AddInput(PlayerInput.UIButtonType.SOUTH, "Set");
+        inputs.AddInput(PlayerInput.UIButtonType.WEST, "Mirror");
+        inputs.AddInput(PlayerInput.UIButtonType.EAST, "Cancel");
     }
 }

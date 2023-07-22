@@ -15,6 +15,7 @@ public class Bodypart : MonoBehaviour
     public int VariationIndex { get; set; }
     public float Position { get; private set; }
     public float Size { get; private set; }
+    public bool Mirrored { get; private set; }
 
     public enum Side { Left, Right };
     public Side BoneSide { get; set; }
@@ -41,7 +42,7 @@ public class Bodypart : MonoBehaviour
         transform.localRotation = rotation;
         transform.localScale = Vector3.one;
 
-        if(SaveData != null)
+        if (SaveData != null)
         {
             SaveData.position = t;
         }
@@ -78,15 +79,31 @@ public class Bodypart : MonoBehaviour
         v.SetActive(true);
     }
 
-    public void SetMirrored(bool mirrored)
+    public void SetMirrored(bool mirrored, bool is_counter_part = false)
     {
+        Mirrored = mirrored;
         var x = mirrored ? -1 : 1;
         pivot_mirror.localScale = new Vector3(x, 1, 1);
+
+        if (!is_counter_part)
+        {
+            if (SaveData != null)
+            {
+                SaveData.mirrored = Mirrored;
+            }
+
+            CounterPart.SetMirrored(!mirrored, is_counter_part: true);
+        }
+    }
+
+    public void ToggleMirror()
+    {
+        SetMirrored(!Mirrored);
     }
 
     public void SetHover(bool hover)
     {
-        if(this.hover != null)
+        if (this.hover != null)
         {
             this.hover.SetActive(hover);
         }
@@ -94,7 +111,7 @@ public class Bodypart : MonoBehaviour
 
     public void SetSelected(bool selected)
     {
-        if(this.selected != null)
+        if (this.selected != null)
         {
             this.selected.SetActive(selected);
         }

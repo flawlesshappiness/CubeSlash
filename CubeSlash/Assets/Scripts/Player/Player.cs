@@ -287,6 +287,7 @@ public class Player : Character
 
             part.SetPosition(data.position);
             part.SetSize(data.size);
+            part.SetMirrored(data.mirrored);
         }
     }
     #endregion

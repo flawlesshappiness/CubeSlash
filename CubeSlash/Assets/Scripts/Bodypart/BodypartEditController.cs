@@ -1,4 +1,3 @@
-using FMOD;
 using System.Collections;
 using System.Linq;
 using UnityEngine;
@@ -45,10 +44,12 @@ public class BodypartEditController : Singleton
 
         var start_position = _selected_part.Position;
         var start_size = _selected_part.Size;
+        var start_mirrored = _selected_part.Mirrored;
         var cr = StartCoroutine(UpdateCr());
 
         PlayerInput.Controls.UI.Submit.started += Submit;
         PlayerInput.Controls.UI.Cancel.started += Cancel;
+        PlayerInput.Controls.Player.West.started += Mirror;
 
         IEnumerator UpdateCr()
         {
@@ -68,7 +69,7 @@ public class BodypartEditController : Singleton
                     _selected_part.SetPosition(y_next);
                 }
 
-                if(dir.x.Abs() > DEAD_ZONE)
+                if (dir.x.Abs() > DEAD_ZONE)
                 {
                     var sign = Mathf.Sign(dir.x);
                     var t_max = 1f - DEAD_ZONE;
@@ -96,7 +97,13 @@ public class BodypartEditController : Singleton
             End();
             _selected_part.SetPosition(start_position);
             _selected_part.SetSize(start_size);
+            _selected_part.SetMirrored(start_mirrored);
             OnCancel?.Invoke();
+        }
+
+        void Mirror(InputAction.CallbackContext context)
+        {
+            _selected_part.ToggleMirror();
         }
 
         void End()
@@ -106,6 +113,7 @@ public class BodypartEditController : Singleton
 
             PlayerInput.Controls.UI.Submit.started -= Submit;
             PlayerInput.Controls.UI.Cancel.started -= Cancel;
+            PlayerInput.Controls.Player.West.started -= Mirror;
             StopCoroutine(cr);
 
             var part = _selected_part;
@@ -120,8 +128,8 @@ public class BodypartEditController : Singleton
             .Where(part => !part.Info.is_ability_part)
             .OrderBy(part => part.Position)
             .ToList();
-        
-        if(parts.Count == 0)
+
+        if (parts.Count == 0)
         {
             OnCancel?.Invoke();
             return;
@@ -140,7 +148,7 @@ public class BodypartEditController : Singleton
             while (true)
             {
                 var dir = PlayerInput.Controls.UI.Navigate.ReadValue<Vector2>();
-                if(dir.y.Abs() > DEAD_ZONE)
+                if (dir.y.Abs() > DEAD_ZONE)
                 {
                     var i = (int)Mathf.Sign(dir.y);
                     i_selected = Mathf.Clamp(i_selected + i, 0, parts.Count - 1);
@@ -156,7 +164,7 @@ public class BodypartEditController : Singleton
 
         void SelectPart(Bodypart part)
         {
-            if(selected != null)
+            if (selected != null)
             {
                 selected.SetHover(false);
                 selected.CounterPart.SetHover(false);
@@ -164,7 +172,7 @@ public class BodypartEditController : Singleton
 
             selected = part;
 
-            if(selected != null)
+            if (selected != null)
             {
                 selected.SetHover(true);
                 selected.CounterPart.SetHover(true);

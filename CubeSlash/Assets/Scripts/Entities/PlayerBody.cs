@@ -15,7 +15,7 @@ public class PlayerBody : Body
 
     public void ClearBodyparts()
     {
-        foreach(var bdp in Bodyparts)
+        foreach (var bdp in Bodyparts)
         {
             Destroy(bdp.gameObject);
         }
@@ -48,7 +48,7 @@ public class PlayerBody : Body
         right.CounterPart = left;
 
         right.gameObject.SetActive(false);
-        right.SetMirrored(true);
+        right.SetMirrored(true, is_counter_part: true);
 
         left.SetBaseColor(base_color);
         right.SetBaseColor(base_color);
