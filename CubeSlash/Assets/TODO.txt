@@ -1,5 +1,4 @@
 ## TODO ##
-too many crystal body parts (each body part should be distinct)
 explode charge sound effect
 shield upgrade is boring
 dash ability is bad
