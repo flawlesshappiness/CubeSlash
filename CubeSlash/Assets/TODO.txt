@@ -1,6 +1,5 @@
 ## TODO ##
 explode charge sound effect
-shield upgrade is boring
 dash ability is bad
 enemies tend to clump together or move into objects
 root boss is bad

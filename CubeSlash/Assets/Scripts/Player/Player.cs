@@ -7,6 +7,7 @@ public class Player : Character
 {
     public static Player Instance;
     [SerializeField] private Transform camera_target;
+    [SerializeField] private PlayerDodge dodge;
     [SerializeField] private PlayerSettings settings;
     [SerializeField] private GameObject g_invincible;
     [SerializeField] private ParticleSystem ps_collect_meat, ps_collect_plant, ps_collect_health, ps_level_up, ps_upgrade;
@@ -211,6 +212,10 @@ public class Player : Character
         {
             case PlayerInput.ButtonType.WEST:
                 PressEquippedAbility();
+                break;
+
+            case PlayerInput.ButtonType.EAST:
+                dodge.Press();
                 break;
         }
     }
