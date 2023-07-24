@@ -4,9 +4,8 @@ using UnityEngine;
 public class PlayerDodge : MonoBehaviour
 {
     public bool Dashing { get; private set; }
-    public float Distance { get; private set; } = 3;
-    private float Speed { get; set; } = 20;
-    private float Cooldown { get; set; } = 2;
+    public float Distance { get { return GameAttributeController.Instance.GetAttribute(GameAttributeType.dodge_distance).ModifiedValue.float_value; } }
+    private float Cooldown { get { return GameAttributeController.Instance.GetAttribute(GameAttributeType.dodge_cooldown).ModifiedValue.float_value; } }
     public Player Player { get { return Player.Instance; } }
 
     private float time_cooldown_start;
@@ -14,6 +13,8 @@ public class PlayerDodge : MonoBehaviour
     private float distance_dashed;
     private Vector3 dir_dash;
     private Coroutine cr_dash;
+
+    private const float TIME = 0.2f;
 
     public void Press()
     {
@@ -37,7 +38,8 @@ public class PlayerDodge : MonoBehaviour
 
     private IEnumerator DashCr(Vector3 direction)
     {
-        var velocity = direction * Speed;
+        var speed = Calculator.DST_Speed(Distance, TIME);
+        var velocity = direction * speed;
         var pos_prev = Player.transform.position;
         distance_dashed = 0f;
         dir_dash = direction;
@@ -57,7 +59,7 @@ public class PlayerDodge : MonoBehaviour
                 var sign = Mathf.Sign(dot);
                 var angle = -2 * sign;
                 direction = Quaternion.AngleAxis(angle, Vector3.forward) * direction;
-                velocity = direction * Speed;
+                velocity = direction * speed;
             }
 
             Player.Rigidbody.velocity = velocity;

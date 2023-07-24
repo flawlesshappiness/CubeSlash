@@ -49,6 +49,15 @@ public class UpgradeID : FakeEnum
     public static readonly UpgradeID player_collect_cooldown_reduc = new UpgradeID(nameof(player_collect_cooldown_reduc));
     public static readonly UpgradeID player_infinite_drag = new UpgradeID(nameof(player_infinite_drag));
 
+    // Dodge
+    public static readonly UpgradeID dodge_distance_1 = new UpgradeID(nameof(dodge_distance_1));
+    public static readonly UpgradeID dodge_distance_2 = new UpgradeID(nameof(dodge_distance_2));
+    public static readonly UpgradeID dodge_distance_3 = new UpgradeID(nameof(dodge_distance_3));
+
+    public static readonly UpgradeID dodge_cooldown_1 = new UpgradeID(nameof(dodge_cooldown_1));
+    public static readonly UpgradeID dodge_cooldown_2 = new UpgradeID(nameof(dodge_cooldown_2));
+    public static readonly UpgradeID dodge_cooldown_3 = new UpgradeID(nameof(dodge_cooldown_3));
+
     // Charm
     public static readonly UpgradeID charm_armor = new UpgradeID(nameof(charm_armor));
     public static readonly UpgradeID charm_health = new UpgradeID(nameof(charm_health));

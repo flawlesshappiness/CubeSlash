@@ -45,4 +45,8 @@ public partial class GameAttributeType : FakeEnum
     public static readonly GameAttributeType player_avoid_damage_chance = new GameAttributeType(nameof(player_avoid_damage_chance));
     public static readonly GameAttributeType player_global_cooldown_multiplier = new GameAttributeType(nameof(player_global_cooldown_multiplier));
     public static readonly GameAttributeType player_exp_multiplier = new GameAttributeType(nameof(player_exp_multiplier));
+
+    // DODGE
+    public static readonly GameAttributeType dodge_cooldown = new GameAttributeType(nameof(dodge_cooldown));
+    public static readonly GameAttributeType dodge_distance = new GameAttributeType(nameof(dodge_distance));
 }
