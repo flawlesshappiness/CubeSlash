@@ -124,7 +124,7 @@ MonoBehaviour:
   Path: Assets/FMOD/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 638228875489147678
+  lastModified: 638260860060869700
   FileSizes: []
   Exists: 1
 --- !u!114 &-7872426760261806101
@@ -586,6 +586,33 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 0
+--- !u!114 &-4771936854684110022
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Game/Abilities/explode_charge_003
+  m_EditorClassIdentifier: 
+  Path: event:/Game/Abilities/explode_charge_003
+  Guid:
+    Data1: -2013928099
+    Data2: 1151694112
+    Data3: -401327476
+    Data4: 1178696683
+  Banks:
+  - {fileID: -8060980804293988741}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 4000
 --- !u!114 &-4653878745155567962
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1413,12 +1440,14 @@ MonoBehaviour:
   - {fileID: -2660639502744854097}
   - {fileID: 5335320224464017973}
   - {fileID: -8471770106108916243}
+  - {fileID: 5208076496472344432}
+  - {fileID: -4771936854684110022}
   EditorParameters: []
   MasterBanks:
   - {fileID: -8060980804293988741}
   StringsBanks:
   - {fileID: 5917708036578608240}
-  cacheTime: 638228875489187698
+  cacheTime: 638260860060919696
   cacheVersion: 131593
 --- !u!114 &1453305857757199432
 MonoBehaviour:
@@ -1876,6 +1905,33 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 650
+--- !u!114 &5208076496472344432
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Game/Abilities/explode_charge_004
+  m_EditorClassIdentifier: 
+  Path: event:/Game/Abilities/explode_charge_004
+  Guid:
+    Data1: -795966185
+    Data2: 1198326162
+    Data3: -273825894
+    Data4: -676902351
+  Banks:
+  - {fileID: -8060980804293988741}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 4000
 --- !u!114 &5335320224464017973
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1999,10 +2055,10 @@ MonoBehaviour:
   Path: Assets/FMOD/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 638228875489187698
+  lastModified: 638260860060919696
   FileSizes:
   - Name: 
-    Value: 4796
+    Value: 4872
   Exists: 1
 --- !u!114 &5992827859230917708
 MonoBehaviour:

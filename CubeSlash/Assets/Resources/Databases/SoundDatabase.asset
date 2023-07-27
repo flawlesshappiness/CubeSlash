@@ -41,11 +41,11 @@ MonoBehaviour:
     sfx:
       reference:
         Guid:
-          Data1: -1606689935
-          Data2: 1248855069
-          Data3: -2061241667
-          Data4: -1398195708
-        Path: event:/Game/Abilities/explode_charge_002
+          Data1: -2013928099
+          Data2: 1151694112
+          Data3: -401327476
+          Data4: 1178696683
+        Path: event:/Game/Abilities/explode_charge_003
   - name: sfx_explode_release
     type:
       id: sfx_explode_release

@@ -45,6 +45,8 @@ public class AbilityExplode : Ability
         time_charge_reduced = 0;
         count_killed = 0;
 
+        SoundController.Instance.Play(SoundEffectType.sfx_explode_charge);
+
         if (SplitExplode)
         {
             var count = 3;
