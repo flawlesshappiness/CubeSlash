@@ -28,6 +28,7 @@ public class Player : Character
 
     public event System.Action onLevelUp;
     public event System.Action onDeath;
+    public event System.Action onHurt;
     public event System.Action<Collider2D> onTriggerEnter;
     public event System.Action onValuesUpdated;
 
@@ -421,6 +422,8 @@ public class Player : Character
             {
                 PlayAvoidDamageFX();
             }
+
+            onHurt?.Invoke();
         }
 
         if (Health.IsDead())

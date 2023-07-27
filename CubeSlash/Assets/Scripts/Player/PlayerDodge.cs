@@ -16,6 +16,19 @@ public class PlayerDodge : MonoBehaviour
 
     private const float TIME = 0.2f;
 
+    private void Start()
+    {
+        Player.onHurt += OnHurt;
+    }
+
+    private void OnHurt()
+    {
+        if (Dashing)
+        {
+            EndDash();
+        }
+    }
+
     public void Press()
     {
         StartDashing();
