@@ -150,9 +150,13 @@ public class GameController : MonoBehaviour
         {
             Player.Instance.PlayLevelUpFX();
             Player.PushEnemiesInArea(Player.Instance.transform.position, 12, 500, use_mass: true);
-            yield return LerpTimeScale(1.0f, 0.25f);
-            GameStateController.Instance.SetGameState(GameStateType.MENU);
-            PauseLevel();
+
+            if (unlock_ability || unlock_upgrade)
+            {
+                yield return LerpTimeScale(1.0f, 0.25f);
+                GameStateController.Instance.SetGameState(GameStateType.MENU);
+                PauseLevel();
+            }
 
             if (unlock_ability)
             {

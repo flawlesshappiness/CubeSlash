@@ -41,7 +41,8 @@ public class AbilityExplode : Ability
         base.Pressed();
         time_charge_start = Time.time;
 
-        time_charge_current = Mathf.Clamp(ChargeTime - time_charge_reduced, 0, ChargeTime);
+        var time_charge_min = 0.05f;
+        time_charge_current = Mathf.Clamp(ChargeTime - time_charge_reduced, time_charge_min, ChargeTime);
         time_charge_reduced = 0;
         count_killed = 0;
 
@@ -76,6 +77,7 @@ public class AbilityExplode : Ability
             var charge = new ActiveCharge
             {
                 fx = fx,
+                dir = Vector3.zero,
             };
             _active_charges.Add(charge);
         }
@@ -106,7 +108,7 @@ public class AbilityExplode : Ability
         UpdateChargePosition();
     }
 
-    private float GetChargeValue() => (Time.time - time_charge_start) / time_charge_current;
+    private float GetChargeValue() => time_charge_current <= 0 ? 1 : (Time.time - time_charge_start) / time_charge_current;
 
     private void UpdateChargePosition()
     {
