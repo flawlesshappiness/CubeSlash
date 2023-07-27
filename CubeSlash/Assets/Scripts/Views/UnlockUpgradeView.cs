@@ -75,7 +75,6 @@ public class UnlockUpgradeView : View
 
         radial.AddOptions(options);
         radial.AnimateShowElements(true, 0.05f);
-        radial.SetCancelElement(radial.GetElement(0));
     }
 
     private void SelectUpgrade(UpgradeInfo info)

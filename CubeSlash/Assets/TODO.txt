@@ -8,7 +8,6 @@ dodge cooldown ui
 ## BUGS ##
 what happens if there are no more upgrades to unlock?
 parallax sprites z fighting
-can cancel upgrade selection
 
 ## MAYBE ##
 geode area with splitting enemies and boss
