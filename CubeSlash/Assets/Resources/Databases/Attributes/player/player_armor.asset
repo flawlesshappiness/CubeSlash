@@ -17,7 +17,7 @@ MonoBehaviour:
       id: player_armor
     base_value:
       value_type: 0
-      int_value: 5
+      int_value: 0
       float_value: 6
       bool_value: 0
     text: Armor

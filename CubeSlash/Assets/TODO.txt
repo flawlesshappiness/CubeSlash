@@ -2,7 +2,6 @@
 enemies tend to clump together or move into objects
 root boss is bad
 heal action
-dodge cooldown ui
 
 
 ## BUGS ##

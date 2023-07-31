@@ -17,7 +17,7 @@ MonoBehaviour:
       id: player_health
     base_value:
       value_type: 0
-      int_value: 5
+      int_value: 3
       float_value: 6
       bool_value: 0
     text: Health
