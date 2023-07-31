@@ -6,7 +6,6 @@ dodge cooldown ui
 
 
 ## BUGS ##
-what happens if there are no more upgrades to unlock?
 parallax sprites z fighting
 
 ## MAYBE ##

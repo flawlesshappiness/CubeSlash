@@ -11,6 +11,22 @@ PrefabInstance:
       propertyPath: m_Name
       value: Meat
       objectReference: {fileID: 0}
+    - target: {fileID: 894481075922572876, guid: f5fbfb80795043b4ca6e62aab876e931, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.300781
+      objectReference: {fileID: 0}
+    - target: {fileID: 894481075922572876, guid: f5fbfb80795043b4ca6e62aab876e931, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.29675743
+      objectReference: {fileID: 0}
+    - target: {fileID: 894481075922572876, guid: f5fbfb80795043b4ca6e62aab876e931, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.00092
+      objectReference: {fileID: 0}
+    - target: {fileID: 894481075922572876, guid: f5fbfb80795043b4ca6e62aab876e931, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.14996
+      objectReference: {fileID: 0}
     - target: {fileID: 1353097371446324401, guid: f5fbfb80795043b4ca6e62aab876e931, type: 3}
       propertyPath: base_color.b
       value: 0.21568629
@@ -111,5 +127,13 @@ PrefabInstance:
       propertyPath: m_LocalPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6741459019439812530, guid: f5fbfb80795043b4ca6e62aab876e931, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.1643
+      objectReference: {fileID: 0}
+    - target: {fileID: 6980216343754511010, guid: f5fbfb80795043b4ca6e62aab876e931, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 75ab48a1b2307a944acfb26c236cdaea, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f5fbfb80795043b4ca6e62aab876e931, type: 3}

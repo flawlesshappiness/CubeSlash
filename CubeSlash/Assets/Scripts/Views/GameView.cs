@@ -57,6 +57,7 @@ public class GameView : View
     {
         input_tutorial.AddInput(PlayerInput.UIButtonType.NAV_ALL, "Move");
         input_tutorial.AddInput(PlayerInput.UIButtonType.WEST, "Use ability");
+        input_tutorial.AddInput(PlayerInput.UIButtonType.EAST, "Dash");
 
         StartCoroutine(Cr());
         IEnumerator Cr()

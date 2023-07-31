@@ -4,6 +4,7 @@ using UnityEngine;
 public class PlayerBody : Body
 {
     [SerializeField] public SpriteRenderer spr_main;
+    [SerializeField] public SpriteMaskCooldown dodge_cooldown;
     [SerializeField] public BodySkeleton skeleton;
 
     public Color base_color = Color.white;
@@ -11,7 +12,10 @@ public class PlayerBody : Body
     public List<Bodypart> Bodyparts { get; private set; } = new List<Bodypart>();
 
     public Sprite GetBodySprite() => spr_main.sprite;
-    public void SetBodySprite(Sprite sprite) => spr_main.sprite = sprite;
+    public void SetBodySprite(Sprite sprite)
+    {
+        spr_main.sprite = sprite;
+    }
 
     public void ClearBodyparts()
     {
@@ -78,5 +82,10 @@ public class PlayerBody : Body
         Bodyparts.Add(bdp);
 
         return bdp;
+    }
+
+    public void SetCooldown(float t)
+    {
+        dodge_cooldown.SetCooldown(t);
     }
 }

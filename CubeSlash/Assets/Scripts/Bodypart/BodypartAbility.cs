@@ -3,8 +3,7 @@ using UnityEngine;
 public class BodypartAbility : Bodypart
 {
     [Header("BodypartAbility")]
-    [SerializeField]
-    private Transform pivot_cooldown;
+    [SerializeField] private SpriteMaskCooldown cooldown;
 
     [Range(0, 1)]
     public float priority_position;
@@ -13,11 +12,7 @@ public class BodypartAbility : Bodypart
 
     public void SetCooldown(float t, bool is_counter_part = false)
     {
-        if (pivot_cooldown == null) return;
-
-        var tv = t == 0 ? t : Mathf.Lerp(0.1f, 1f, t);
-        pivot_cooldown.transform.localScale = new Vector3(1, tv);
-
+        cooldown.SetCooldown(t);
         if (!is_counter_part) CounterPartAbility.SetCooldown(t, true);
     }
 }

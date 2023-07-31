@@ -11,6 +11,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Plant
       objectReference: {fileID: 0}
+    - target: {fileID: 894481075922572876, guid: f5fbfb80795043b4ca6e62aab876e931, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.28212532
+      objectReference: {fileID: 0}
+    - target: {fileID: 894481075922572876, guid: f5fbfb80795043b4ca6e62aab876e931, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.00069
+      objectReference: {fileID: 0}
     - target: {fileID: 1353097371446324401, guid: f5fbfb80795043b4ca6e62aab876e931, type: 3}
       propertyPath: base_color.b
       value: 0.12941177
@@ -111,5 +119,13 @@ PrefabInstance:
       propertyPath: m_LocalPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6741459019439812530, guid: f5fbfb80795043b4ca6e62aab876e931, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.162
+      objectReference: {fileID: 0}
+    - target: {fileID: 6980216343754511010, guid: f5fbfb80795043b4ca6e62aab876e931, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: ce3b952b3c7f9d2478c524e477f001e6, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f5fbfb80795043b4ca6e62aab876e931, type: 3}

@@ -20,5 +20,5 @@ MonoBehaviour:
       int_value: 0
       float_value: 2
       bool_value: 0
-    text: Dodge distance
+    text: Dodge cooldown
     high_is_negative: 1

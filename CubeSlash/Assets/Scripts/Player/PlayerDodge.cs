@@ -104,4 +104,6 @@ public class PlayerDodge : MonoBehaviour
     }
 
     private bool IsOnCooldown() => Time.time < time_cooldown_end;
+
+    public float GetCooldownPercentage() => time_cooldown_end == 0 ? 0 : 1f - Mathf.Clamp01((Time.time - time_cooldown_start) / (time_cooldown_end - time_cooldown_start));
 }

@@ -138,6 +138,7 @@ public class Player : Character
         base.OnUpdate();
         QueuedAbilityUpdate();
         UpdateCameraTarget();
+        UpdateDodgeCooldown();
     }
 
     protected override void OnFixedUpdate()
@@ -196,18 +197,23 @@ public class Player : Character
         att_experience_multiplier = GameAttributeController.Instance.GetAttribute(GameAttributeType.player_exp_multiplier);
     }
 
+    private void UpdateDodgeCooldown()
+    {
+        PlayerBody.SetCooldown(dodge.GetCooldownPercentage());
+    }
+
     #region ABILITIES
     private bool CanPressAbility(Ability ability)
     {
-        var not_paused = !GameController.Instance.IsPaused;
         var not_blocking = AbilityLock.IsFree;
         var not_cooldown = !(ability.IsOnCooldown && !ability.CanPressWhileOnCooldown());
-        var game_started = GameController.Instance.IsGameStarted;
-        return not_blocking && not_cooldown && not_paused && game_started;
+        return not_blocking && not_cooldown;
     }
 
     private void PressAbility(PlayerInput.ButtonType button)
     {
+        if (!GameController.Instance.IsGameStarted) return;
+        if (GameController.Instance.IsPaused) return;
         if (InputLock.IsLocked) return;
         switch (button)
         {
@@ -240,6 +246,8 @@ public class Player : Character
 
     private void ReleaseAbility(PlayerInput.ButtonType button)
     {
+        if (!GameController.Instance.IsGameStarted) return;
+        if (GameController.Instance.IsPaused) return;
         if (InputLock.IsLocked) return;
 
         switch (button)
