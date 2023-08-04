@@ -1,7 +1,6 @@
 ## TODO ##
 enemies tend to clump together or move into objects
 
-
 ## BUGS ##
 
 ## MAYBE ##

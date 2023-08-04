@@ -13,13 +13,20 @@ public class UIMana : MonoBehaviourExtended
     private Lerp _lerp_fill;
     private Coroutine cr_wrong;
 
-    private void Start()
+    private void OnEnable()
     {
         Player.Instance.heal.OnPercentChanged += OnPercentChanged;
         Player.Instance.heal.OnHeal += OnHeal;
         Player.Instance.heal.OnHealFailed += OnHealFailed;
         SetFill(Player.Instance.heal.ValuePercent);
         SetColor(color_normal.GetColor());
+    }
+
+    private void OnDisable()
+    {
+        Player.Instance.heal.OnPercentChanged -= OnPercentChanged;
+        Player.Instance.heal.OnHeal -= OnHeal;
+        Player.Instance.heal.OnHealFailed -= OnHealFailed;
     }
 
     public void AnimateValue(float value)
