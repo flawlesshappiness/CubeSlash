@@ -1,6 +1,5 @@
 ## TODO ##
 enemies tend to clump together or move into objects
-root boss is bad
 
 
 ## BUGS ##

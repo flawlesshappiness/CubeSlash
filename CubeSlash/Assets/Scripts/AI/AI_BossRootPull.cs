@@ -59,7 +59,7 @@ public class AI_BossRootPull : BossAI
         var max_dist = width * 0.4f;
         var dist = DistanceToPlayer();
 
-        if(dist > max_dist)
+        if (dist > max_dist)
         {
             AttachVine();
         }
@@ -105,15 +105,18 @@ public class AI_BossRootPull : BossAI
             HideDuds();
             yield return new WaitForSeconds(time);
             TeleportHide();
-            yield return new WaitForSeconds(0.5f);
+            yield return new WaitForSeconds(3f);
+            /*
             SetupWalls();
             yield return ShrinkWallsCr();
             yield return new WaitForSeconds(1f);
+            */
             TeleportAppear();
             yield return new WaitForSeconds(1f);
-            ShowDuds();
-
             can_attach = true;
+            yield return new WaitForSeconds(4f);
+
+            ShowDuds();
         }
     }
 

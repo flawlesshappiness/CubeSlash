@@ -48,11 +48,11 @@ MonoBehaviour:
   pivot_main: {fileID: 5592202413366252488}
   ps_pull: {fileID: 942094317532818455}
   ps_dissolve: {fileID: 3174589064601820328}
-  pull_force: 0.08
+  pull_force: 0.12
   drawmode_size: 0.32
   drawmode_position: 0.16
   scale: 1.86
-  count_max_attached: 3
+  count_max_attached: 5
   ignore_max_attached: 0
 --- !u!1 &1348543345448739101
 GameObject:

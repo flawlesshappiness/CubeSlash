@@ -82,16 +82,16 @@ public class RootPullVine : MonoBehaviour
 
     private void UpdateForce()
     {
-        if(target == null) return;
+        if (target == null) return;
         if (GameController.Instance.IsPaused) return;
         var dir = transform.DirectionTo(target.transform);
-        var force = (ignore_max_attached || count_attached <= count_max_attached) ? pull_force : (pull_force / count_attached);
+        var force = (ignore_max_attached || count_attached <= count_max_attached) ? pull_force : (pull_force * count_max_attached / count_attached);
         target.AddForce(-dir * force);
     }
 
     private void UpdateParticles()
     {
-        if(target == null)
+        if (target == null)
         {
             ps_pull.SetEmissionEnabled(false);
             return;
