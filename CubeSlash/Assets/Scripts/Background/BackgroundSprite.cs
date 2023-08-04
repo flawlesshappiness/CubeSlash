@@ -7,7 +7,7 @@ public class BackgroundSprite : BackgroundObject
     public SpriteRenderer spr;
 
     public Sprite Sprite { set { spr.sprite = value; } }
-    public int SortingOrder { set { spr.sortingOrder = value * 10 + 1; } }
+    public int SortingOrder { set { spr.sortingOrder = value; } }
 
     public override void Initialize(Area area)
     {

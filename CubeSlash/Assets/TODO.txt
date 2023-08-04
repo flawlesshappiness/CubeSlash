@@ -4,7 +4,6 @@ root boss is bad
 
 
 ## BUGS ##
-parallax sprites z fighting
 
 ## MAYBE ##
 geode area with splitting enemies and boss

@@ -1,7 +1,6 @@
-using System.Collections;
+using Flawliz.Lerp;
 using System.Collections.Generic;
 using UnityEngine;
-using Flawliz.Lerp;
 
 public class BackgroundController : Singleton
 {
@@ -53,7 +52,7 @@ public class BackgroundController : Singleton
     private void ParallaxUpdate()
     {
         var cam_pos = GetCameraPosition();
-        foreach(var parallax in objects)
+        foreach (var parallax in objects)
         {
             parallax.UpdateParallax(cam_pos);
         }
@@ -63,7 +62,7 @@ public class BackgroundController : Singleton
 
     private void ClearObjects()
     {
-        foreach(var o in objects)
+        foreach (var o in objects)
         {
             o.Destroy();
         }
@@ -72,7 +71,7 @@ public class BackgroundController : Singleton
 
     private void ClearObjectsImmediate()
     {
-        foreach(var o in objects)
+        foreach (var o in objects)
         {
             o.DestroyImmediate();
         }
@@ -94,6 +93,7 @@ public class BackgroundController : Singleton
                 bg.transform.parent = GameController.Instance.world;
 
                 bg.Sprite = layer.sprites.Random();
+                bg.SortingOrder = (i % (100 - 1)) - 99 - 100 * i_layer;
                 bg.spr.color = bg.spr.color.SetA(0);
                 bg.AnimateAppear(OBJECT_FADE_TIME);
 
@@ -119,7 +119,7 @@ public class BackgroundController : Singleton
                 objects.Add(bg);
                 bg.Layer = i_layer;
                 bg.transform.parent = GameController.Instance.world;
-
+                bg.SortingOrder = -1 - 100 * i_layer;
                 bg.transform.position = Player.Instance.transform.position;
                 bg.Initialize(area);
                 bg.SetPrefab(ps_prefab);
@@ -136,14 +136,14 @@ public class BackgroundController : Singleton
         {
             var t = Mathf.Clamp(i / (float)(count + 1), 0, 1);
             var alpha = area.ac_alpha_fog.Evaluate(t);
-            if(i >= fogs.Count) // Create new fog
+            if (i >= fogs.Count) // Create new fog
             {
                 var fog = CreateFog(i);
                 fog.spr.color = area.color_fog.SetA(0);
                 Lerp.Alpha(fog.spr, OBJECT_FADE_TIME, alpha);
                 fogs.Add(fog);
             }
-            else if(i >= layers.Count) // Destroy fog
+            else if (i >= layers.Count) // Destroy fog
             {
                 var fog = fogs[i];
                 fog.Destroy(OBJECT_FADE_TIME);
@@ -161,6 +161,7 @@ public class BackgroundController : Singleton
         var fog = Instantiate(Resources.Load<FogLayer>("Prefabs/Background/Fog"));
         fog.transform.SetParent(CameraController.Instance.Camera.transform);
         fog.transform.localPosition = new Vector3(0, 0, 20 + 10 * layer);
+        fog.SortingOrder = -100 * layer;
         return fog;
     }
 

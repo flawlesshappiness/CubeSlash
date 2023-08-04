@@ -7,7 +7,7 @@ public class FogLayer : MonoBehaviour
     public SpriteRenderer spr;
     public Transform shadow;
 
-    public int SortingOrder { set { spr.sortingOrder = value * 10 + 9; } }
+    public int SortingOrder { set { spr.sortingOrder = value; } }
 
     private void Update()
     {

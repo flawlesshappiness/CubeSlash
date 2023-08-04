@@ -10,6 +10,8 @@ public class BackgroundParticleSystem : BackgroundObject
 
     private Vector3 offset_ps;
 
+    public int SortingOrder { get; set; }
+
     public override void Initialize(Area area)
     {
         base.Initialize(area);
@@ -27,7 +29,7 @@ public class BackgroundParticleSystem : BackgroundObject
         base.UpdateParallax(camera_position);
 
         var dist = GetDistanceToCamera();
-        if(dist > MaxWidth)
+        if (dist > MaxWidth)
         {
             DestroyPS(ParticleSystem);
             offset_ps += GetCameraDirection();
@@ -74,6 +76,7 @@ public class BackgroundParticleSystem : BackgroundObject
     {
         var ps = Instantiate(Prefab, transform);
         ps.transform.localPosition = offset_ps + Vector3.forward * (1 + 20 + 10 * Layer);
+        ps.ModifyRenderer(r => r.sortingOrder = SortingOrder);
         return ps;
     }
 }
