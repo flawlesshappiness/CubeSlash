@@ -49,4 +49,8 @@ public partial class GameAttributeType : FakeEnum
     // DODGE
     public static readonly GameAttributeType dodge_cooldown = new GameAttributeType(nameof(dodge_cooldown));
     public static readonly GameAttributeType dodge_distance = new GameAttributeType(nameof(dodge_distance));
+
+    // HEAL
+    public static readonly GameAttributeType heal_kill_value = new GameAttributeType(nameof(heal_kill_value));
+    public static readonly GameAttributeType heal_max_value = new GameAttributeType(nameof(heal_max_value));
 }

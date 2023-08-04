@@ -58,6 +58,11 @@ public class UpgradeID : FakeEnum
     public static readonly UpgradeID dodge_cooldown_2 = new UpgradeID(nameof(dodge_cooldown_2));
     public static readonly UpgradeID dodge_cooldown_3 = new UpgradeID(nameof(dodge_cooldown_3));
 
+    // Heal
+    public static readonly UpgradeID heal_kill_value_1 = new UpgradeID(nameof(heal_kill_value_1));
+    public static readonly UpgradeID heal_kill_value_2 = new UpgradeID(nameof(heal_kill_value_2));
+    public static readonly UpgradeID heal_kill_value_3 = new UpgradeID(nameof(heal_kill_value_3));
+
     // Charm
     public static readonly UpgradeID charm_armor = new UpgradeID(nameof(charm_armor));
     public static readonly UpgradeID charm_health = new UpgradeID(nameof(charm_health));

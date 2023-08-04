@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using System.Linq;
-using UnityEngine;
 
 public class Health
 {
@@ -20,7 +19,7 @@ public class Health
 
     public void AddHealth(HealthPoint.Type type)
     {
-        if(HealthConvertedToArmor && (type == HealthPoint.Type.FULL || type == HealthPoint.Type.EMPTY))
+        if (HealthConvertedToArmor && (type == HealthPoint.Type.FULL || type == HealthPoint.Type.EMPTY))
         {
             AddHealth(HealthPoint.Type.TEMPORARY);
             AddHealth(HealthPoint.Type.TEMPORARY);
@@ -64,7 +63,7 @@ public class Health
             hp.Destroy();
             list_temp.Remove(hp);
         }
-        else if(HasHealth(HealthPoint.Type.FULL))
+        else if (HasHealth(HealthPoint.Type.FULL))
         {
             var list_full = GetHealthList(HealthPoint.Type.FULL);
             var list_empty = GetHealthList(HealthPoint.Type.EMPTY);
@@ -82,6 +81,7 @@ public class Health
             var list_empty = GetHealthList(HealthPoint.Type.EMPTY);
             var list_full = GetHealthList(HealthPoint.Type.FULL);
             var hp = list_empty.First();
+            list_empty.Remove(hp);
             list_full.Add(hp);
             hp.Fill();
         }

@@ -8,6 +8,7 @@ public class Player : Character
     public static Player Instance;
     [SerializeField] private Transform camera_target;
     [SerializeField] private PlayerDodge dodge;
+    [SerializeField] public PlayerHeal heal;
     [SerializeField] private PlayerSettings settings;
     [SerializeField] private GameObject g_invincible;
     [SerializeField] private ParticleSystem ps_collect_meat, ps_collect_plant, ps_collect_health, ps_level_up, ps_upgrade;
@@ -29,6 +30,7 @@ public class Player : Character
     public event System.Action onLevelUp;
     public event System.Action onDeath;
     public event System.Action onHurt;
+    public event System.Action onEnemyKilled;
     public event System.Action<Collider2D> onTriggerEnter;
     public event System.Action onValuesUpdated;
 
@@ -224,6 +226,10 @@ public class Player : Character
             case PlayerInput.ButtonType.EAST:
                 dodge.Press();
                 break;
+
+            case PlayerInput.ButtonType.NORTH:
+                heal.Press();
+                break;
         }
     }
 
@@ -369,7 +375,7 @@ public class Player : Character
 
         if (success)
         {
-            // Do something on enemy killed
+            onEnemyKilled?.Invoke();
         }
 
         return success;
@@ -449,7 +455,7 @@ public class Player : Character
         }
     }
 
-    public void CollectHealth(HealthPoint.Type type)
+    public void AddHealth(HealthPoint.Type type)
     {
         // Heal
         if (type == HealthPoint.Type.TEMPORARY)

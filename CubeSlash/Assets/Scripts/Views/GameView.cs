@@ -58,6 +58,7 @@ public class GameView : View
         input_tutorial.AddInput(PlayerInput.UIButtonType.NAV_ALL, "Move");
         input_tutorial.AddInput(PlayerInput.UIButtonType.WEST, "Use ability");
         input_tutorial.AddInput(PlayerInput.UIButtonType.EAST, "Dash");
+        input_tutorial.AddInput(PlayerInput.UIButtonType.NORTH, "Heal using energy");
 
         StartCoroutine(Cr());
         IEnumerator Cr()

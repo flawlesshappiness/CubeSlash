@@ -7,7 +7,7 @@ public class HealthItem : Item
     protected override void Collect()
     {
         base.Collect();
-        Player.Instance.CollectHealth(type);
+        Player.Instance.AddHealth(type);
     }
 
     public override void Despawn()
