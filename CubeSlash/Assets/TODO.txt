@@ -1,7 +1,9 @@
 ## TODO ##
-enemies tend to clump together or move into objects
+better abyss?
+Simplify plant boss - show all duds
 
 ## BUGS ##
+unlocked difficulty III on difficulty I
 
 ## MAYBE ##
 geode area with splitting enemies and boss

@@ -1,5 +1,6 @@
-using UnityEngine;
 using Flawliz.Lerp;
+using System.Collections.Generic;
+using UnityEngine;
 
 public abstract class EnemyAI : MonoBehaviour
 {
@@ -43,16 +44,16 @@ public abstract class EnemyAI : MonoBehaviour
         return Vector3.SignedAngle(Self.MoveDirection, dir, Vector3.forward);
     }
 
-    protected void MoveTowards(Vector3 position)
+    protected void MoveTowards(Vector3 destination)
     {
-        var dir = position - transform.position;
-        Self.Move(dir);
+        var direction = GetOpenDirectionTowards(destination);
+        Self.Move(direction);
     }
 
     protected void MoveToStop(float mul = 1f)
     {
         var v = Self.Rigidbody.velocity;
-        if(v.magnitude > 0)
+        if (v.magnitude > 0)
         {
             Self.Rigidbody.AddForce(-v * mul * Self.Rigidbody.mass);
         }
@@ -67,6 +68,66 @@ public abstract class EnemyAI : MonoBehaviour
             var vel_max = Self.Settings.angular_velocity * t;
             Self.AngularVelocity = vel_max;
             Self.Turn(angle < 0);
+        }
+    }
+
+    protected Vector3 GetOpenDirectionTowards(Vector3 destination)
+    {
+        var raycast_distance = 5f;
+        var forward = (destination - Self.transform.position).normalized;
+        var angle = 0;
+        var angle_delta = 30;
+        while (angle < 180)
+        {
+            var directions = new List<Vector3>();
+            if (angle == 0)
+            {
+                directions.Add(forward);
+            }
+            else
+            {
+                var left = Quaternion.AngleAxis(angle, Vector3.forward) * forward;
+                var right = Quaternion.AngleAxis(-angle, Vector3.forward) * forward;
+                directions.Add(left);
+                directions.Add(right);
+            }
+
+            foreach (var dir in directions)
+            {
+                //var hits = Physics2D.RaycastAll(Self.transform.position, dir, raycast_distance);
+                var radius = Self.Settings.size * 0.5f;
+                var origin = Self.transform.position + dir * radius;
+                var hits = Physics2D.CircleCastAll(origin, radius, dir, raycast_distance);
+                if (AnyValidHits(hits))
+                {
+                    Debug.DrawLine(Self.transform.position, Self.transform.position + dir * raycast_distance, Color.red);
+                    continue;
+                }
+                else
+                {
+                    Debug.DrawLine(Self.transform.position, Self.transform.position + dir * raycast_distance, Color.green);
+                }
+
+                return dir.normalized;
+            }
+
+            angle += angle_delta;
+        }
+
+        return forward.normalized;
+
+        bool AnyValidHits(RaycastHit2D[] hits)
+        {
+            foreach (var hit in hits)
+            {
+                var enemy = hit.collider.GetComponentInParent<Enemy>();
+                if (enemy != null && enemy != Self) return true;
+
+                var obstacle = hit.collider.GetComponentInParent<Obstacle>();
+                if (obstacle != null && !obstacle.enemy_ai_ignore) return true;
+            }
+
+            return false;
         }
     }
 

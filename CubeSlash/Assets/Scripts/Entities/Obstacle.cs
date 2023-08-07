@@ -3,6 +3,7 @@ using UnityEngine;
 public class Obstacle : MonoBehaviour, IKillable, IHurt
 {
     public bool hurts;
+    public bool enemy_ai_ignore;
 
     public bool CanHit() => false;
     public bool CanKill() => false;

@@ -110,6 +110,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hurts: 1
+  enemy_ai_ignore: 1
 --- !u!1 &5762934625793288172
 GameObject:
   m_ObjectHideFlags: 0

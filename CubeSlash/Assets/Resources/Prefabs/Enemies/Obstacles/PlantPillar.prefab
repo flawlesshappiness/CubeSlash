@@ -5111,7 +5111,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4672642891476563618}
-  - component: {fileID: 7758534654089599657}
   - component: {fileID: 2881529307739850907}
   m_Layer: 0
   m_Name: PlantPillar
@@ -5141,23 +5140,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7758534654089599657
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4672642891476563617}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 43f727e6f009b104e9a46c89ab911da7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  hurts: 1
-  pivot_animation: {fileID: 3960380912000343170}
-  pivot_dud: {fileID: 2736827158614871292}
-  spr: {fileID: 4672642889497616806}
-  ps_death: {fileID: 0}
 --- !u!114 &2881529307739850907
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5171,6 +5153,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hurts: 1
+  enemy_ai_ignore: 1
   pivot_animation: {fileID: 3960380912000343170}
   collider: {fileID: 4672642889626735420}
   trigger: {fileID: 4672642890250424393}
