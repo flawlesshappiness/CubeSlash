@@ -3,7 +3,6 @@ better abyss?
 Simplify plant boss - show all duds
 
 ## BUGS ##
-unlocked difficulty III on difficulty I
 
 ## MAYBE ##
 geode area with splitting enemies and boss

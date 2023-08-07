@@ -125,7 +125,7 @@ public class GameEndView : View
             UnlockBody(PlayerBodyType.Meat);
         }
 
-        if (data.won && Save.Game.idx_difficulty_completed <= DifficultyController.Instance.DifficultyIndex)
+        if (data.won && Save.Game.idx_difficulty_completed < DifficultyController.Instance.DifficultyIndex)
         {
             UnlockDifficulty();
         }
