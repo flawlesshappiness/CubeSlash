@@ -39,7 +39,15 @@ public class AI_BossPlant : BossAI
         Self.transform.position = Player.Instance.transform.position;
 
         CreateArena();
-        CreateDud();
+
+        if (DifficultyController.Instance.DifficultyValue > 0.1f)
+        {
+            CreateDud();
+        }
+        else
+        {
+            CreateDuds();
+        }
     }
 
     private void CreateArena()
@@ -76,11 +84,25 @@ public class AI_BossPlant : BossAI
         }
     }
 
+    private void CreateDuds()
+    {
+        var dud_walls = walls.TakeRandom(duds_max);
+        foreach (var wall in dud_walls)
+        {
+            CreateDud(wall);
+        }
+    }
+
     private void CreateDud()
     {
         var player_position = Player.Instance.transform.position;
         var min_distance = RADIUS * 0.9f;
         var wall = walls.Where(w => Vector3.Distance(w.transform.position, player_position) > min_distance).ToList().Random();
+        CreateDud(wall);
+    }
+
+    private void CreateDud(PlantWall wall)
+    {
         var dud = Instantiate(template_dud, wall.transform);
         var tdud = wall.GetDudTransform();
         dud.transform.position = tdud.position;
@@ -110,10 +132,11 @@ public class AI_BossPlant : BossAI
 
     private void OnDudKilled()
     {
-        if (duds_to_kill > 0)
+        duds_to_kill--;
+
+        if (duds_to_kill > 0 && DifficultyController.Instance.DifficultyValue > 0.1f)
         {
             CreateDud();
-            duds_to_kill--;
         }
         else
         {
