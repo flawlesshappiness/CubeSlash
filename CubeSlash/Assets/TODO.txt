@@ -1,8 +1,9 @@
 ## TODO ##
-better abyss?
-Simplify plant boss - show all duds
+better abyss? final boss abyss? teeth arena
 
 ## BUGS ##
+reset heal on new game
+plant boss dies in 1 hit
 
 ## MAYBE ##
 geode area with splitting enemies and boss

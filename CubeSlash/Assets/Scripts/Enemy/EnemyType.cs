@@ -1,5 +1,3 @@
-using UnityEngine;
-
 public enum EnemyType
 {
     Cell, CellTwo, CellFour,
@@ -17,5 +15,7 @@ public enum EnemyType
     BossAngler,
 
     Jelly,
-    BossJelly
+    BossJelly,
+
+    BossMaw,
 }

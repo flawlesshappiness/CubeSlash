@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Abyss
   m_EditorClassIdentifier: 
   index_level_min: 4
-  boss: {fileID: 11400000, guid: 4fbbd0666cfd0cb4c8967515c2fd4eeb, type: 2}
+  boss: {fileID: 11400000, guid: 30e30135ff2e10940af19a852a8f0577, type: 2}
   enemies:
   - enemy: {fileID: 11400000, guid: 446594942849cc545a50a1af0a528adc, type: 2}
     chance: 0.1
@@ -107,12 +107,6 @@ MonoBehaviour:
     m_Mode: 0
     m_NumColorKeys: 2
     m_NumAlphaKeys: 2
-  spawn_objects:
-  - prefab: {fileID: 4973394195239199387, guid: 06a20586d6f18f44286ba3deb3441698, type: 3}
-    delay: 1
-    count: 5
-  - prefab: {fileID: 4973394195239199387, guid: 352b9871a3978c84d84fa4af71b959d0, type: 3}
-    delay: 1
-    count: 5
+  spawn_objects: []
   bgm_type:
     id: bgm_abyss
