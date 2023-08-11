@@ -2,18 +2,27 @@ using Flawliz.Lerp;
 using PathCreation;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class AI_BossMaw : BossAI
 {
+    [SerializeField] private HealthDud template_dud;
     [SerializeField] private MawWall template_wall;
+    [SerializeField] private Projectile template_projectile;
 
+    private static readonly int[] HITPOINTS = new int[] { 4, 5, 6 };
     private const float RADIUS = 20;
     private const float RADIUS_PER_INDEX = 3;
     private const float RADIUS_MAX = 35;
     private const float SIZE_WALL = 5;
 
+    private int duds_to_kill, duds_max;
+    private int hits_taken;
+
     private List<Arena> arenas = new List<Arena>();
+
+    private float T_HitsTaken { get { return Mathf.Clamp01((float)hits_taken / (duds_max - 1)); } }
 
     private class Arena
     {
@@ -25,24 +34,115 @@ public class AI_BossMaw : BossAI
         base.Initialize(enemy);
 
         CreateArenas();
-        AnimateAppear();
 
         EnemyController.Instance.EnemySpawnEnabled = false;
+
+        var i_diff = DifficultyController.Instance.DifficultyIndex;
+        duds_max = HITPOINTS[Mathf.Clamp(i_diff, 0, HITPOINTS.Length - 1)];
+        duds_to_kill = duds_max;
+
+        StartCoroutine(MainCr());
     }
 
-    private void AnimateAppear()
+    IEnumerator MainCr()
+    {
+        // init
+        yield return AnimateAppear();
+
+        CreateDud();
+
+        // attack loop
+        while (true)
+        {
+            Attack_Random();
+
+            var cooldown = Mathf.Lerp(10f, 5f, T_HitsTaken);
+            yield return new WaitForSeconds(cooldown);
+        }
+    }
+
+    private void Attack_Random()
+    {
+        var r = new WeightedRandom<System.Action>();
+        r.AddElement(() => Attack_EnemyGroup(), 1);
+        r.AddElement(() => Attack_Projectiles(), 1);
+        var a = r.Random();
+        a?.Invoke();
+    }
+
+    private void Attack_EnemyGroup()
+    {
+        var is_fixed_position = Random.Range(0, 2) == 0;
+        var fixed_position = CameraController.Instance.GetPositionOutsideCamera();
+        var area_enemy_info = EnemyController.Instance.GetEnemiesUnlocked().Random();
+        var count = Random.Range(6, 10);
+        for (int i = 0; i < count; i++)
+        {
+            var position = GetPosition() + Random.insideUnitCircle.ToVector3().normalized;
+            var e = EnemyController.Instance.SpawnEnemy(area_enemy_info.enemy, position);
+            e.OnDeath += () => EnemyController.Instance.EnemyDeathSpawnMeat(e);
+        }
+
+        Vector3 GetPosition() => is_fixed_position ? fixed_position : CameraController.Instance.GetPositionOutsideCamera();
+    }
+
+    private void Attack_Projectiles()
     {
         StartCoroutine(Cr());
         IEnumerator Cr()
         {
+            var count = Random.Range(5, 10);
+            var has_delay = Random.Range(0, 2) == 0;
+            var delay = 0.2f;
+            for (int i = 0; i < count; i++)
+            {
+                var position = CameraController.Instance.GetPositionOutsideCamera();
+                var dir = Player.Instance.transform.position - position;
+                var p = ProjectileController.Instance.CreateProjectile(template_projectile);
+                p.transform.localScale = Vector3.one * 2;
+                p.transform.position = position;
+                p.Lifetime = 20f;
+                p.Rigidbody.velocity = dir.normalized * 5;
+                p.Piercing = -1;
+
+                if (has_delay)
+                {
+                    yield return new WaitForSeconds(delay);
+                }
+            }
+        }
+    }
+
+    private void Attack_FollowingProjectile()
+    {
+        // Spawn a projectile that follows the player around for a while
+    }
+
+    private void Attack_Beam()
+    {
+        // Beam attack
+    }
+
+    private Coroutine AnimateAppear()
+    {
+        return StartCoroutine(Cr());
+        IEnumerator Cr()
+        {
+            var crs = new List<Coroutine>();
             foreach (var arena in arenas)
             {
                 foreach (var wall in arena.walls)
                 {
-                    wall.AnimateAppear();
+                    var cr = wall.AnimateAppear();
+                    crs.Add(cr);
                 }
 
                 yield return new WaitForSeconds(0.5f);
+            }
+
+            foreach (var cr in crs)
+            {
+                yield return cr;
             }
         }
     }
@@ -109,6 +209,78 @@ public class AI_BossMaw : BossAI
         }
 
         return walls;
+    }
+
+    private void CreateDud()
+    {
+        var player_position = Player.Instance.transform.position;
+        var min_distance = RADIUS * 0.9f;
+        var arena = arenas[0];
+        var wall = arena.walls.Where(w => Vector3.Distance(w.transform.position, player_position) > min_distance).ToList().Random();
+        CreateDud(wall);
+    }
+
+    private void CreateDud(MawWall wall)
+    {
+        var dud = Instantiate(template_dud, wall.transform);
+        var tdud = wall.GetDudTransform();
+        dud.transform.position = tdud.position;
+        dud.transform.rotation = tdud.rotation;
+        dud.transform.localScale = tdud.localScale;
+        dud.OnKilled += OnDudKilled;
+        dud.SetDudActive(false, false);
+        dud.SetDudActive(true, true);
+        dud.SetGlowEnabled(true);
+    }
+
+    private void OnDudKilled()
+    {
+        duds_to_kill--;
+        hits_taken++;
+
+        if (duds_to_kill <= 0)
+        {
+            End();
+            return;
+        }
+
+        StartCoroutine(Cr());
+        IEnumerator Cr()
+        {
+            yield return new WaitForSeconds(Random.Range(5f, 10f));
+            CreateDud();
+        }
+    }
+
+    private void End()
+    {
+        StartCoroutine(Cr());
+        IEnumerator Cr()
+        {
+            EnemyController.Instance.KillActiveEnemies(new List<Enemy> { Self });
+            ProjectileController.Instance.ClearProjectiles();
+            yield return AnimateDestroyWalls();
+            Self.Kill();
+        }
+    }
+
+    private Coroutine AnimateDestroyWalls()
+    {
+        return StartCoroutine(Cr());
+        IEnumerator Cr()
+        {
+            var rev_arenas = arenas.ToList();
+            rev_arenas.Reverse();
+
+            foreach (var arena in rev_arenas)
+            {
+                foreach (var wall in arena.walls)
+                {
+                    wall.Kill();
+                    yield return new WaitForSeconds(0.01f);
+                }
+            }
+        }
     }
 
     private void AnimateBreathing(Transform pivot, float delay)

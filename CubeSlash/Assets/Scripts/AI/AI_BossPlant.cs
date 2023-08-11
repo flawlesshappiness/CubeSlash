@@ -134,7 +134,7 @@ public class AI_BossPlant : BossAI
     {
         duds_to_kill--;
 
-        if (duds_to_kill == 0)
+        if (duds_to_kill <= 0)
         {
             End();
             return;

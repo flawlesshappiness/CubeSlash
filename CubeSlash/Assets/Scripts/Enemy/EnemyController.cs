@@ -274,10 +274,11 @@ public class EnemyController : Singleton
         OnEnemyKilled?.Invoke();
     }
 
-    public void KillActiveEnemies()
+    public void KillActiveEnemies(List<Enemy> enemies_except = null)
     {
         foreach (var enemy in enemies_active.ToList())
         {
+            if (enemies_except.Contains(enemy)) continue;
             enemy.Kill(false);
         }
     }
@@ -290,5 +291,8 @@ public class EnemyController : Singleton
             EnemyKilled(enemy);
         }
     }
+
+    public List<AreaEnemyInfo> GetEnemiesUnlocked() =>
+        enemies_unlocked.ToList();
     #endregion
 }

@@ -1,5 +1,7 @@
 using Flawliz.Lerp;
+using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Rendering;
 
@@ -8,7 +10,9 @@ public class MawWall : Obstacle
     [SerializeField] private Collider2D collider, trigger;
     [SerializeField] private Transform pivot_sprites;
     [SerializeField] private List<SpriteRenderer> tooth_sprs = new List<SpriteRenderer>();
+    [SerializeField] private List<Transform> dud_transforms = new List<Transform>();
     [SerializeField] private SortingGroup sorting_group;
+    [SerializeField] private ParticleSystem ps_death;
 
     public int SortingOrder { set { sorting_group.sortingOrder = value; } }
 
@@ -44,7 +48,7 @@ public class MawWall : Obstacle
         enemy_ai_ignore = true;
         collider.enabled = !isBackground;
         trigger.enabled = !isBackground;
-        SortingOrder = -layer;
+        SortingOrder = -layer + (isBackground ? -5 : 0);
 
         var t_layer = GetLayerTValue();
         var color = GetColor();
@@ -76,13 +80,46 @@ public class MawWall : Obstacle
         }
     }
 
-    public void AnimateAppear()
+    public Coroutine AnimateAppear()
     {
+        var lerps = new List<Lerp>();
         var end = GetColor();
         foreach (SpriteRenderer spr in pivot_sprites.GetComponentsInChildren<SpriteRenderer>())
         {
             if (!spr.enabled) continue;
-            Lerp.Color(spr, 2f, Color.black, end);
+            var lerp = Lerp.Color(spr, 2f, Color.black, end);
+            lerps.Add(lerp);
         }
+
+        return StartCoroutine(WaitForLerpsCr());
+        IEnumerator WaitForLerpsCr()
+        {
+            foreach (var lerp in lerps)
+            {
+                yield return lerp;
+            }
+        }
+    }
+
+    public Transform GetDudTransform()
+    {
+        var spr = tooth_sprs
+            .Where(spr => !spr.enabled)
+            .ToList()
+            .Random();
+
+        var idx = tooth_sprs.IndexOf(spr);
+
+        return dud_transforms[idx];
+    }
+
+    public void Kill()
+    {
+        ps_death.Duplicate()
+            .Parent(GameController.Instance.world)
+            .Play()
+            .Destroy(10);
+
+        Destroy(gameObject);
     }
 }

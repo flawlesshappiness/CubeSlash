@@ -43,4 +43,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f66847ab9dc036448e1bf21b58e39a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  template_dud: {fileID: 3405480637174817150, guid: 23ec884aeae69e74c9efdd36a40fc296, type: 3}
   template_wall: {fileID: 7824772162318204421, guid: d0359596f55bfae4da30885ea08c5387, type: 3}
+  template_projectile: {fileID: 7462172402094969671, guid: 71203e8c07f4e5e45872096491b16f9a, type: 3}
