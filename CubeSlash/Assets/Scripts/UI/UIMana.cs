@@ -62,6 +62,8 @@ public class UIMana : MonoBehaviourExtended
 
     public void SetFill(float fill)
     {
+        if (img_fill == null) return;
+
         img_fill.fillAmount = Mathf.Clamp01(fill);
     }
 

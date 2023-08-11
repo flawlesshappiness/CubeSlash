@@ -73,6 +73,7 @@ public class Player : Character
     {
         AbilityController.Instance.Clear();
         UpgradeController.Instance.ClearUpgrades();
+        heal.Clear();
 
         ResetPlayerBody();
         SetPrimaryAbility(Save.PlayerBody.primary_ability);
