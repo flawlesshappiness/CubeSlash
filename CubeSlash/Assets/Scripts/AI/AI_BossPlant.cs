@@ -134,13 +134,15 @@ public class AI_BossPlant : BossAI
     {
         duds_to_kill--;
 
-        if (duds_to_kill > 0 && DifficultyController.Instance.DifficultyValue > 0.1f)
-        {
-            CreateDud();
-        }
-        else
+        if (duds_to_kill == 0)
         {
             End();
+            return;
+        }
+
+        if (DifficultyController.Instance.DifficultyValue > 0.1f)
+        {
+            CreateDud();
         }
     }
 
