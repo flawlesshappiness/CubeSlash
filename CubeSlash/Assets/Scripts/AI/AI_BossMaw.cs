@@ -10,6 +10,7 @@ public class AI_BossMaw : BossAI
     [SerializeField] private HealthDud template_dud;
     [SerializeField] private MawWall template_wall;
     [SerializeField] private Projectile template_projectile;
+    [SerializeField] private ColorPaletteValue color_beam;
 
     private static readonly int[] HITPOINTS = new int[] { 4, 5, 6 };
     private const float RADIUS = 20;
@@ -22,11 +23,14 @@ public class AI_BossMaw : BossAI
 
     private List<Arena> arenas = new List<Arena>();
 
+    private Coroutine cr_main;
+
     private float T_HitsTaken { get { return Mathf.Clamp01((float)hits_taken / (duds_max - 1)); } }
 
     private class Arena
     {
         public List<MawWall> walls = new List<MawWall>();
+        public Transform pivot;
     }
 
     public override void Initialize(Enemy enemy)
@@ -41,7 +45,7 @@ public class AI_BossMaw : BossAI
         duds_max = HITPOINTS[Mathf.Clamp(i_diff, 0, HITPOINTS.Length - 1)];
         duds_to_kill = duds_max;
 
-        StartCoroutine(MainCr());
+        cr_main = StartCoroutine(MainCr());
     }
 
     IEnumerator MainCr()
@@ -66,6 +70,8 @@ public class AI_BossMaw : BossAI
         var r = new WeightedRandom<System.Action>();
         r.AddElement(() => Attack_EnemyGroup(), 1);
         r.AddElement(() => Attack_Projectiles(), 1);
+        r.AddElement(() => Attack_Beam(), 1);
+        r.AddElement(() => Attack_Beams(), 1);
         var a = r.Random();
         a?.Invoke();
     }
@@ -121,6 +127,77 @@ public class AI_BossMaw : BossAI
     private void Attack_Beam()
     {
         // Beam attack
+        var center = arenas[0].pivot.position;
+        var dir_to_player = Player.Instance.transform.position - center;
+        var origin = center + dir_to_player.normalized * CameraController.Instance.Width * 2;
+        var direction = -dir_to_player.normalized;
+        var width = 30f;
+        StartCoroutine(ShootBeamCr(origin, direction, width, 4f));
+    }
+
+    private void Attack_Beams()
+    {
+        // Multi-beam attack
+        StartCoroutine(Cr());
+        IEnumerator Cr()
+        {
+            var width = 5f;
+            var beam_delay_max = 2f;
+            var beam_delay_min = 1f;
+            var count = Random.Range(8, 12);
+            for (int i = 0; i < count; i++)
+            {
+                var t = Mathf.Clamp01((float)i / (count - 1));
+                var delay = Mathf.Lerp(beam_delay_max, beam_delay_min, t);
+                var delay_next = delay * 0.5f;
+                var angle = Random.Range(0f, 360f);
+                var direction = Quaternion.AngleAxis(angle, Vector3.forward) * Vector3.up;
+                var origin = Player.Instance.transform.position + direction * CameraController.Instance.Width * 2;
+                StartCoroutine(ShootBeamCr(origin, -direction, width, delay));
+                yield return new WaitForSeconds(delay_next);
+            }
+        }
+    }
+
+    private IEnumerator ShootBeamCr(Vector3 origin, Vector3 direction, float width, float delay)
+    {
+        var angle = Vector3.SignedAngle(Vector3.up, direction, Vector3.forward);
+        var rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+        var beam = ChargeBeam.Create();
+        var length = CameraController.Instance.Width * 8;
+
+        beam.transform.parent = GameController.Instance.world;
+        beam.transform.position = origin;
+        beam.transform.rotation = rotation;
+        beam.SetColor(color_beam.GetColor());
+        beam.SetWidth(width);
+        beam.SetLength(length);
+        beam.UpdateVisual();
+        beam.AnimateShowPreview(true);
+
+        var sfx_charge_start = SoundController.Instance.Play(SoundEffectType.sfx_charge_start)
+            .SetPitch(-1)
+            .StopWith(gameObject);
+
+        yield return new WaitForSeconds(delay);
+
+        sfx_charge_start.Stop();
+        SoundController.Instance.Play(SoundEffectType.sfx_charge_shoot);
+
+        Physics2D.CircleCastAll(origin, width * 0.25f, direction, length)
+                .Select(hit => hit.collider.GetComponentInParent<Player>())
+                .Distinct()
+                .Where(p => p != null && !p.IsDead)
+                .ToList().ForEach(p =>
+                {
+                    p.Damage(origin);
+                });
+
+        Self.Knockback(-direction * 200f, true, false);
+
+        yield return beam.AnimateFire();
+
+        Destroy(beam.gameObject);
     }
 
     private Coroutine AnimateAppear()
@@ -156,9 +233,9 @@ public class AI_BossMaw : BossAI
             arenas.Add(arena);
 
             arena.walls = CreateArena(template_wall, size_muls[i]);
-            var pivot = arena.walls[0].transform.parent;
-            AnimateBreathing(pivot, i * 0.5f);
-            AnimateSwaying(pivot, i * 0.5f);
+            arena.pivot = arena.walls[0].transform.parent;
+            AnimateBreathing(arena.pivot, i * 0.5f);
+            AnimateSwaying(arena.pivot, i * 0.5f);
 
             arena.walls.ForEach(wall =>
             {
@@ -257,6 +334,7 @@ public class AI_BossMaw : BossAI
         StartCoroutine(Cr());
         IEnumerator Cr()
         {
+            StopCoroutine(cr_main);
             EnemyController.Instance.KillActiveEnemies(new List<Enemy> { Self });
             ProjectileController.Instance.ClearProjectiles();
             yield return AnimateDestroyWalls();
