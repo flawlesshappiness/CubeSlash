@@ -4904,6 +4904,7 @@ MonoBehaviour:
   pivot_animation: {fileID: 1448235493184339119}
   ps_death: {fileID: 3411674202280282923}
   ps_trail: {fileID: 4236737699428214933}
+  scale_from_zero: 0
   anim_scale_duration: 0.6
   anim_rotation: 100
   curve_scale:
@@ -4949,6 +4950,7 @@ MonoBehaviour:
     m_PostInfinity: 1
     m_RotationOrder: 4
   spr: {fileID: 4541488802014595820}
+  rotates: 1
 --- !u!50 &2903384162585443172
 Rigidbody2D:
   serializedVersion: 4

@@ -74,6 +74,8 @@ public class AI_BossMaw : BossAI
         r.AddElement(() => Attack_Beams(), 1);
         var a = r.Random();
         a?.Invoke();
+
+        var s = nameof(Attack_EnemyGroup);
     }
 
     private void Attack_EnemyGroup()

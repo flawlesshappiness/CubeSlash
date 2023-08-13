@@ -27,7 +27,6 @@ public class Projectile : MonoBehaviourExtended
     {
         BirthTime = Time.time;
         DeathTime = BirthTime + Lifetime;
-        StartCoroutine(AnimateRotationCr());
 
         if (scale_from_zero)
         {
@@ -53,7 +52,7 @@ public class Projectile : MonoBehaviourExtended
     private void LifetimeUpdate()
     {
         var t = (Time.time - BirthTime) / (DeathTime - BirthTime);
-        if(t >= 1)
+        if (t >= 1)
         {
             onDeath?.Invoke();
             Kill();
@@ -63,14 +62,14 @@ public class Projectile : MonoBehaviourExtended
     private void DistanceUpdate()
     {
         var dist = CameraController.Instance.Width * 2;
-        if(Vector3.Distance(transform.position, Player.Instance.transform.position) > dist)
+        if (Vector3.Distance(transform.position, Player.Instance.transform.position) > dist)
         {
             Kill();
         }
     }
     private void DragUpdate()
     {
-        if(Rigidbody.velocity.magnitude > 0)
+        if (Rigidbody.velocity.magnitude > 0)
         {
             Rigidbody.velocity *= Drag;
         }
@@ -85,7 +84,7 @@ public class Projectile : MonoBehaviourExtended
 
     public void Kill()
     {
-        if(ps_death != null)
+        if (ps_death != null)
         {
             ps_death.Duplicate()
                 .Parent(GameController.Instance.world)
@@ -93,7 +92,7 @@ public class Projectile : MonoBehaviourExtended
                 .Destroy(1);
         }
 
-        if(ps_trail != null)
+        if (ps_trail != null)
         {
             ps_trail.transform.parent = null;
             Destroy(ps_trail.gameObject, 2);
@@ -111,7 +110,7 @@ public class Projectile : MonoBehaviourExtended
         if (hits_player)
         {
             var player = collision.GetComponentInParent<Player>();
-            if(player != null)
+            if (player != null)
             {
                 player.Damage(transform.position);
                 onHitPlayer?.Invoke(player);
@@ -128,7 +127,7 @@ public class Projectile : MonoBehaviourExtended
 
                 if (Player.Instance.TryKillEnemy(k))
                 {
-                    
+
                 }
             }
         }
@@ -136,7 +135,7 @@ public class Projectile : MonoBehaviourExtended
         if (hit_success)
         {
             var can_pierce = Piercing != 0;
-            if(can_pierce)
+            if (can_pierce)
             {
                 Piercing = Mathf.Clamp(Piercing - 1, -1, int.MaxValue);
             }
@@ -164,6 +163,11 @@ public class Projectile : MonoBehaviourExtended
                 pivot_animation.localScale = Vector3.LerpUnclamped(Vector3.zero, Vector3.one, t);
             });
         }
+    }
+
+    public Coroutine AnimateRotation()
+    {
+        return StartCoroutine(AnimateRotationCr());
     }
 
     private IEnumerator AnimateRotationCr()

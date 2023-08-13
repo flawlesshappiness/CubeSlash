@@ -144,6 +144,7 @@ MonoBehaviour:
     m_PostInfinity: 1
     m_RotationOrder: 4
   spr: {fileID: 0}
+  rotates: 1
 --- !u!50 &2903384162585443172
 Rigidbody2D:
   serializedVersion: 4
