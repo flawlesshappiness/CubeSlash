@@ -115,6 +115,8 @@ public class MawWall : Obstacle
 
     public void Kill()
     {
+        SoundController.Instance.PlayGroup(SoundEffectType.sfx_enemy_death);
+
         ps_death.Duplicate()
             .Parent(GameController.Instance.world)
             .Play()

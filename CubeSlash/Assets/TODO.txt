@@ -1,6 +1,5 @@
 ## TODO ##
 Maw boss attack sound
-Maw boss death sound
 Split mod chain
 
 ## BUGS ##
