@@ -54,6 +54,7 @@ public class DebugConsoleHandler : Singleton
             window.CreateButton(GameController.DAMAGE_DISABLED ? "Enable damage" : "Disable damage", ClickToggleDamage);
             window.CreateButton("Set Area", ClickSetArea);
             window.CreateButton("Next Area", ClickNextArea);
+            window.CreateButton("Final Area", ClickFinalArea);
             window.CreateButton("Suicide", ClickSuicide);
             window.CreateButton("Win", ClickWin);
             window.CreateButton("Spawn Boss", ClickSpawnBoss);
@@ -248,6 +249,12 @@ public class DebugConsoleHandler : Singleton
         CloseView();
     }
 
+    private void ClickFinalArea()
+    {
+        AreaController.Instance.ForceFinalArea();
+        CloseView();
+    }
+
     private void ClickWin()
     {
         GameController.Instance.Win();
@@ -303,7 +310,6 @@ public class DebugConsoleHandler : Singleton
             CreateText(() => $"Spawn frequency: {EnemyController.Instance.GetSpawnFrequency()}");
             CreateText(() => $"Spawn frequency (Difficulty): {EnemyController.Instance.GetSpawnFrequencyDifficulty()}");
             CreateText(() => $"Spawn frequency (Game): {EnemyController.Instance.GetSpawnFrequencyGame()}");
-            CreateText(() => $"Spawn frequency (Endless): {EnemyController.Instance.GetSpawnFrequencyEndless()}");
             CreateText(() => $"Spawn count: {EnemyController.Instance.GetSpawnCount()}");
             CreateText(() => $"Area progress locked: {AreaController.Instance.NextAreaLock.IsLocked}");
         }

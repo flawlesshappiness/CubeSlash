@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: AreaDatabase
   m_EditorClassIdentifier: 
   collection:
-  - {fileID: 11400000, guid: 57a6e213ab910cb4bb164a7019edbd19, type: 2}
   - {fileID: 11400000, guid: 49450187bb0f97d41828a02591a3f3b0, type: 2}
   - {fileID: 11400000, guid: 83bcdd72084943e4ab5b5d11b40e049a, type: 2}
   - {fileID: 11400000, guid: d0a0597e506bddc4a9a4835efccc3573, type: 2}
   - {fileID: 11400000, guid: c6db1963879f1fb4c9f6e13758a18fab, type: 2}
   - {fileID: 11400000, guid: 05cda483061ecb540840d2b69f3e52ca, type: 2}
   - {fileID: 11400000, guid: 426a543348b726d4b8ff81b9d40961dd, type: 2}
+  final_area: {fileID: 11400000, guid: 57a6e213ab910cb4bb164a7019edbd19, type: 2}

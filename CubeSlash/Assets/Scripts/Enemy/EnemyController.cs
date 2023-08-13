@@ -22,6 +22,7 @@ public class EnemyController : Singleton
 
     private Coroutine cr_spawn_boss;
     private float time_next_spawn_enemy;
+    private float time_spawn_boss;
 
     protected override void Initialize()
     {
@@ -89,20 +90,10 @@ public class EnemyController : Singleton
         return freq_game;
     }
 
-    public float GetSpawnFrequencyEndless()
-    {
-        var settings = GameSettings.Instance;
-        var max_endless_duration = settings.endless_duration;
-        var current_endless_duration = Time.time - AreaController.Instance.TimeEndlessStart;
-        var t_endless_duration = Mathf.Clamp01(current_endless_duration / max_endless_duration);
-        var freq_endless = settings.enemy_freq_endless.Evaluate(t_endless_duration);
-        return freq_endless;
-    }
-
     public float GetSpawnFrequency()
     {
         var freq_difficulty = GetSpawnFrequencyDifficulty();
-        var freq_game = AreaController.Instance.IsEndless ? GetSpawnFrequencyEndless() : GetSpawnFrequencyGame();
+        var freq_game = GetSpawnFrequencyGame();
         return Mathf.Max(0.1f, freq_game + freq_difficulty);
     }
 
@@ -131,16 +122,18 @@ public class EnemyController : Singleton
 
     private IEnumerator SpawnBossCr(EnemySettings boss, float delay)
     {
-        yield return new WaitForSeconds(delay);
+        time_spawn_boss = Time.time + delay;
+        while (Time.time < time_spawn_boss)
+        {
+            yield return null;
+        }
+
         SpawnAreaBoss(boss);
     }
 
     public void DebugSpawnBoss()
     {
-        var area = AreaController.Instance.CurrentArea;
-        var boss = area.boss;
-        var enemy = SpawnBoss(boss);
-        enemy.transform.position = Player.Instance.transform.position + new Vector3(20, 0);
+        time_spawn_boss = Time.time;
     }
 
     private Enemy SpawnBoss(EnemySettings boss)

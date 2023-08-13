@@ -18,7 +18,6 @@ public class GameSettings : ScriptableObject
     [Range(0f, 1f)] public float time_boss_spawn;
     public float endless_duration;
     public AnimationCurve enemy_freq_game;
-    public AnimationCurve enemy_freq_endless;
     public AnimationCurve enemy_freq_difficulty;
     public AnimationCurve enemy_count_game;
     public AnimationCurve boss_size_difficulty;

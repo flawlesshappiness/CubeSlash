@@ -13,17 +13,14 @@ public class AreaController : Singleton
     private Coroutine cr_next_area;
     private Area current_area;
     private int index_area;
-    private int area_refills;
 
     private List<Area> visited_areas = new List<Area>();
     private List<Area> available_areas = new List<Area>();
 
+    public bool IsFinalArea { get; set; }
     public int AreaIndex { get { return index_area; } }
     public float TimeAreaStart { get; private set; }
-    public float TimeEndlessStart { get; private set; }
     public Area CurrentArea { get { return current_area; } }
-    public bool IsEndless { get { return area_refills > 0; } }
-
     public MultiLock NextAreaLock { get; private set; } = new MultiLock();
 
     private float time_next_area;
@@ -43,8 +40,9 @@ public class AreaController : Singleton
 
     private void OnMainMenu()
     {
+        IsFinalArea = false;
         visited_areas.Clear();
-        available_areas.Clear();
+        available_areas = db.collection.ToList();
     }
 
     public void StartAreaCoroutine()
@@ -65,8 +63,7 @@ public class AreaController : Singleton
     private IEnumerator NextAreaCr()
     {
         index_area = -1;
-        area_refills = -1;
-        while (true)
+        while (!IsFinalArea)
         {
             index_area++;
 
@@ -77,7 +74,7 @@ public class AreaController : Singleton
             available_areas.Remove(current_area);
 
             var is_locked = NextAreaLock.IsLocked;
-            while(is_locked || Time.time < time_next_area)
+            while (is_locked || Time.time < time_next_area)
             {
                 yield return null;
             }
@@ -97,19 +94,18 @@ public class AreaController : Singleton
         time_next_area = Time.time;
     }
 
+    public void ForceFinalArea()
+    {
+        available_areas.Clear();
+        ForceNextArea();
+    }
+
     private Area GetNextArea()
     {
-        if(available_areas.Count == 0)
+        if (available_areas.Count == 0)
         {
-            area_refills++;
-            visited_areas.Clear();
-            available_areas.AddRange(db.collection);
-
-            // First time endless
-            if (area_refills == 1)
-            {
-                OnEndlessBegun();
-            }
+            IsFinalArea = true;
+            return db.final_area;
         }
 
         return available_areas
@@ -119,13 +115,8 @@ public class AreaController : Singleton
         bool IsValid(Area area)
         {
             var valid_index = index_area >= area.index_level_min;
-            var unvisited = IsEndless || !visited_areas.Contains(area);
+            var unvisited = !visited_areas.Contains(area);
             return valid_index && unvisited;
         }
-    }
-
-    private void OnEndlessBegun()
-    {
-        TimeEndlessStart = Time.time;
     }
 }

@@ -1,7 +1,7 @@
 ## TODO ##
 Maw boss attack sound
 Maw boss death sound
-Enter Abyss as final area
+Split mod chain
 
 ## BUGS ##
 
