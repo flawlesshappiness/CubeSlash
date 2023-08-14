@@ -65,7 +65,7 @@ public class GameController : MonoBehaviour
 
     public void OpenPauseView()
     {
-        if (!IsGameStarted) return;
+        if (!IsGameStarted || IsGameEnded) return;
         if (PauseView.Exists) return;
         if (GameState != GameStateType.PLAYING) return;
         if (PauseLock.IsLocked) return;
@@ -241,7 +241,7 @@ public class GameController : MonoBehaviour
     {
         Save.Game.runs_completed++;
         IsGameEnded = true;
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(3f);
         GameStateController.Instance.SetGameState(GameStateType.MENU);
         ViewController.Instance.CloseView(0.5f);
         var end_view = ViewController.Instance.ShowView<GameEndView>(0, nameof(GameEndView));

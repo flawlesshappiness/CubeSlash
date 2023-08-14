@@ -146,26 +146,18 @@ public class EnemyController : Singleton
 
     private Enemy SpawnAreaBoss(EnemySettings boss)
     {
-        var is_game_winning = (AreaController.Instance.AreaIndex + 1) == GameSettings.Instance.areas_to_win;
-
-        if (is_game_winning)
-        {
-            AreaController.Instance.NextAreaLock.AddLock(nameof(EnemyController));
-        }
-
         var area = AreaController.Instance.CurrentArea;
         var enemy = SpawnBoss(boss);
         enemy.OnDeath += () =>
         {
             // Win
-            if (is_game_winning)
+            if (AreaController.Instance.IsFinalArea)
             {
-                AreaController.Instance.NextAreaLock.RemoveLock(nameof(EnemyController));
                 GameController.Instance.Win();
             }
 
             // Exp
-            if (boss.type != EnemyType.BossPlant)
+            if (!AreaController.Instance.IsFinalArea && boss.type != EnemyType.BossPlant)
             {
                 for (int i = 0; i < 25; i++)
                 {
@@ -271,7 +263,7 @@ public class EnemyController : Singleton
     {
         foreach (var enemy in enemies_active.ToList())
         {
-            if (enemies_except.Contains(enemy)) continue;
+            if (enemies_except != null && enemies_except.Contains(enemy)) continue;
             enemy.Kill(false);
         }
     }

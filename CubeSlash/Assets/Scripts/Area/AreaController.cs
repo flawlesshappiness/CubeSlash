@@ -21,7 +21,6 @@ public class AreaController : Singleton
     public int AreaIndex { get { return index_area; } }
     public float TimeAreaStart { get; private set; }
     public Area CurrentArea { get { return current_area; } }
-    public MultiLock NextAreaLock { get; private set; } = new MultiLock();
 
     private float time_next_area;
 
@@ -73,8 +72,7 @@ public class AreaController : Singleton
             visited_areas.Add(current_area);
             available_areas.Remove(current_area);
 
-            var is_locked = NextAreaLock.IsLocked;
-            while (is_locked || Time.time < time_next_area)
+            while (Time.time < time_next_area)
             {
                 yield return null;
             }

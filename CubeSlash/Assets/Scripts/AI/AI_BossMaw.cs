@@ -340,7 +340,7 @@ public class AI_BossMaw : BossAI
             EnemyController.Instance.KillActiveEnemies(new List<Enemy> { Self });
             ProjectileController.Instance.ClearProjectiles();
             yield return AnimateDestroyWalls();
-            Self.Kill();
+            Self?.Kill();
         }
     }
 

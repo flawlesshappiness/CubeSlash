@@ -1,5 +1,4 @@
 using Flawliz.Lerp;
-using FMOD;
 using System.Collections;
 using UnityEngine;
 
@@ -19,6 +18,7 @@ public class ChargeBeam : MonoBehaviour
         var template = Resources.Load<ChargeBeam>("Prefabs/Abilities/Objects/Beam");
         var beam = Instantiate(template);
         beam.gameObject.SetActive(true);
+        ObjectController.Instance.Add(beam.gameObject);
         return beam;
     }
 
@@ -134,7 +134,7 @@ public class ChargeBeam : MonoBehaviour
     {
         var beam = Instantiate(pivot_sprite, GameController.Instance.world);
         var spr = beam.GetComponentInChildren<SpriteRenderer>();
-        return CoroutineController.Instance.StartCoroutineWithID(Cr(), "fire_beam_"+spr_beam.GetInstanceID(), false);
+        return CoroutineController.Instance.StartCoroutineWithID(Cr(), "fire_beam_" + spr_beam.GetInstanceID(), false);
 
         IEnumerator Cr()
         {

@@ -311,7 +311,6 @@ public class DebugConsoleHandler : Singleton
             CreateText(() => $"Spawn frequency (Difficulty): {EnemyController.Instance.GetSpawnFrequencyDifficulty()}");
             CreateText(() => $"Spawn frequency (Game): {EnemyController.Instance.GetSpawnFrequencyGame()}");
             CreateText(() => $"Spawn count: {EnemyController.Instance.GetSpawnCount()}");
-            CreateText(() => $"Area progress locked: {AreaController.Instance.NextAreaLock.IsLocked}");
         }
 
         // Start
