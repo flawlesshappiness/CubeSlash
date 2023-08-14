@@ -20,6 +20,7 @@ public class AI_BossMaw : BossAI
 
     private int duds_to_kill, duds_max;
     private int hits_taken;
+    private string prev_attack;
 
     private List<Arena> arenas = new List<Arena>();
 
@@ -67,15 +68,19 @@ public class AI_BossMaw : BossAI
 
     private void Attack_Random()
     {
-        var r = new WeightedRandom<System.Action>();
-        r.AddElement(() => Attack_EnemyGroup(), 1);
-        r.AddElement(() => Attack_Projectiles(), 1);
-        r.AddElement(() => Attack_Beam(), 1);
-        r.AddElement(() => Attack_Beams(), 1);
-        var a = r.Random();
-        a?.Invoke();
+        var r = new WeightedRandom<(string, System.Action)>();
+        AddElement(nameof(Attack_EnemyGroup), () => Attack_EnemyGroup());
+        AddElement(nameof(Attack_Projectiles), () => Attack_Projectiles());
+        AddElement(nameof(Attack_Beam), () => Attack_Beam());
+        AddElement(nameof(Attack_Beams), () => Attack_Beams());
+        var tuple = r.Random();
+        tuple.Item2?.Invoke();
 
-        var s = nameof(Attack_EnemyGroup);
+        void AddElement(string name, System.Action action)
+        {
+            if (name == prev_attack) return;
+            r.AddElement((name, action), 1);
+        }
     }
 
     private void Attack_EnemyGroup()
