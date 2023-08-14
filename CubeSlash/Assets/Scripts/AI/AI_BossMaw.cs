@@ -24,6 +24,7 @@ public class AI_BossMaw : BossAI
 
     private List<Arena> arenas = new List<Arena>();
 
+    private Coroutine cr_attack;
     private Coroutine cr_main;
 
     private float T_HitsTaken { get { return Mathf.Clamp01((float)hits_taken / (duds_max - 1)); } }
@@ -66,6 +67,14 @@ public class AI_BossMaw : BossAI
         }
     }
 
+    private void StopCurrentAttack()
+    {
+        if (cr_attack != null)
+        {
+            StopCoroutine(cr_attack);
+        }
+    }
+
     private void Attack_Random()
     {
         var r = new WeightedRandom<(string, System.Action)>();
@@ -75,6 +84,7 @@ public class AI_BossMaw : BossAI
         AddElement(nameof(Attack_Beams), () => Attack_Beams());
         var tuple = r.Random();
         tuple.Item2?.Invoke();
+        prev_attack = tuple.Item1;
 
         void AddElement(string name, System.Action action)
         {
@@ -101,7 +111,7 @@ public class AI_BossMaw : BossAI
 
     private void Attack_Projectiles()
     {
-        StartCoroutine(Cr());
+        cr_attack = StartCoroutine(Cr());
         IEnumerator Cr()
         {
             var count = Random.Range(5, 10);
@@ -139,13 +149,13 @@ public class AI_BossMaw : BossAI
         var origin = center + dir_to_player.normalized * CameraController.Instance.Width * 2;
         var direction = -dir_to_player.normalized;
         var width = 30f;
-        StartCoroutine(ShootBeamCr(origin, direction, width, 4f));
+        cr_attack = StartCoroutine(ShootBeamCr(origin, direction, width, 4f));
     }
 
     private void Attack_Beams()
     {
         // Multi-beam attack
-        StartCoroutine(Cr());
+        cr_attack = StartCoroutine(Cr());
         IEnumerator Cr()
         {
             var width = 5f;
@@ -341,10 +351,13 @@ public class AI_BossMaw : BossAI
         StartCoroutine(Cr());
         IEnumerator Cr()
         {
+            Player.Instance.InvincibilityLock.AddLock(nameof(AI_BossMaw));
             StopCoroutine(cr_main);
+            StopCurrentAttack();
             EnemyController.Instance.KillActiveEnemies(new List<Enemy> { Self });
             ProjectileController.Instance.ClearProjectiles();
             yield return AnimateDestroyWalls();
+            Player.Instance.InvincibilityLock.RemoveLock(nameof(AI_BossMaw));
             Self?.Kill();
         }
     }
