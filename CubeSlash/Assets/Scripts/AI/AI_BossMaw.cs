@@ -12,7 +12,7 @@ public class AI_BossMaw : BossAI
     [SerializeField] private Projectile template_projectile;
     [SerializeField] private ColorPaletteValue color_beam;
 
-    private static readonly int[] HITPOINTS = new int[] { 4, 5, 6 };
+    private static readonly int[] HITPOINTS = new int[] { 6, 8, 10 };
     private const float RADIUS = 20;
     private const float RADIUS_PER_INDEX = 3;
     private const float RADIUS_MAX = 35;
