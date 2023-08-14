@@ -62,7 +62,7 @@ public class AI_BossMaw : BossAI
         {
             Attack_Random();
 
-            var cooldown = Mathf.Lerp(10f, 5f, T_HitsTaken);
+            var cooldown = Mathf.Lerp(6f, 4f, T_HitsTaken);
             yield return new WaitForSeconds(cooldown);
         }
     }
@@ -98,7 +98,10 @@ public class AI_BossMaw : BossAI
         var is_fixed_position = Random.Range(0, 2) == 0;
         var fixed_position = CameraController.Instance.GetPositionOutsideCamera();
         var area_enemy_info = EnemyController.Instance.GetEnemiesUnlocked().Random();
-        var count = Random.Range(6, 10);
+        var t = T_HitsTaken;
+        var count_min = (int)Mathf.Lerp(8, 15, t);
+        var count_max = (int)Mathf.Lerp(15, 20, t);
+        var count = Random.Range(count_min, count_max);
         for (int i = 0; i < count; i++)
         {
             var position = GetPosition() + Random.insideUnitCircle.ToVector3().normalized;
@@ -144,11 +147,12 @@ public class AI_BossMaw : BossAI
     private void Attack_Beam()
     {
         // Beam attack
+        var t = T_HitsTaken;
         var center = arenas[0].pivot.position;
         var dir_to_player = Player.Instance.transform.position - center;
         var origin = center + dir_to_player.normalized * CameraController.Instance.Width * 2;
         var direction = -dir_to_player.normalized;
-        var width = 30f;
+        var width = Mathf.Lerp(25f, 35f, t);
         cr_attack = StartCoroutine(ShootBeamCr(origin, direction, width, 4f));
     }
 
@@ -158,14 +162,17 @@ public class AI_BossMaw : BossAI
         cr_attack = StartCoroutine(Cr());
         IEnumerator Cr()
         {
+            var t = T_HitsTaken;
             var width = 5f;
-            var beam_delay_max = 2f;
-            var beam_delay_min = 1f;
-            var count = Random.Range(8, 12);
+            var beam_delay_max = Mathf.Lerp(2.2f, 1.8f, t);
+            var beam_delay_min = Mathf.Lerp(1.4f, 1f, t);
+            var count_min = (int)Mathf.Lerp(4, 8, t);
+            var count_max = (int)Mathf.Lerp(8, 12, t);
+            var count = Random.Range(count_min, count_max);
             for (int i = 0; i < count; i++)
             {
-                var t = Mathf.Clamp01((float)i / (count - 1));
-                var delay = Mathf.Lerp(beam_delay_max, beam_delay_min, t);
+                var t_count = Mathf.Clamp01((float)i / (count - 1));
+                var delay = Mathf.Lerp(beam_delay_max, beam_delay_min, t_count);
                 var delay_next = delay * 0.5f;
                 var angle = Random.Range(0f, 360f);
                 var direction = Quaternion.AngleAxis(angle, Vector3.forward) * Vector3.up;
