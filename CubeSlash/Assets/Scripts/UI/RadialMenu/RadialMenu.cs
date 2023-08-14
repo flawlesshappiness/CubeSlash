@@ -16,6 +16,7 @@ public class RadialMenu : MonoBehaviour
     public event System.Action<RadialMenuElement> OnSubmitBegin;
     public event System.Action<RadialMenuElement> OnSubmitComplete;
 
+    private bool shown = false;
     private bool submitting = true;
 
     private const string ID_CR_SHOW = "animate_show";
@@ -63,6 +64,7 @@ public class RadialMenu : MonoBehaviour
 
     public void BeginSubmit()
     {
+        if (!shown) return;
         if (submitting) return;
         if (CurrentElement == null) return;
         if (CurrentElement.Option.IsLocked) return;
@@ -117,7 +119,7 @@ public class RadialMenu : MonoBehaviour
         if (selector == null) return;
         if (submitting) return;
 
-        if(CurrentElement != null)
+        if (CurrentElement != null)
         {
             CurrentElement.AnimateSelect(false);
         }
@@ -125,7 +127,7 @@ public class RadialMenu : MonoBehaviour
         CurrentElement = element;
         OnSelect?.Invoke(element);
 
-        if(CurrentElement != null)
+        if (CurrentElement != null)
         {
             CurrentElement.Option.IsNew = false;
             CurrentElement.Option.OnSelect?.Invoke();
@@ -139,11 +141,12 @@ public class RadialMenu : MonoBehaviour
         return this.StartCoroutineWithID(Cr(), ID_CR_SHOW);
         IEnumerator Cr()
         {
-            foreach(var element in selector.Elements)
+            shown = true;
+            foreach (var element in selector.Elements)
             {
                 element.AnimateShow(show);
 
-                if(delay > 0)
+                if (delay > 0)
                 {
                     yield return new WaitForSecondsRealtime(delay);
                 }
