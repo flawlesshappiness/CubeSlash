@@ -56,9 +56,7 @@ public class AbilitySplit : Ability
             p.Lifetime = PROJECTILE_LIFETIME;
             p.onDeath += () => OnDeath(p);
 
-            p.HasTrail = false;
             p.HasChain = ChainLightning;
-            p.ChainRadius = 4f * SizeProjectiles;
 
             var force = FORCE_SELF;
 

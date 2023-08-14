@@ -117,6 +117,8 @@ public class AbilityChain : Ability
         public int chain_strikes;
         public System.Action<IKillable> onHit;
         public List<IKillable> hits = new List<IKillable>();
+
+        public int debug_chain_hits;
     }
 
     public static bool TryChainToTarget(ChainInfo info)
@@ -156,6 +158,7 @@ public class AbilityChain : Ability
         // Kill target
         info.onHit?.Invoke(k);
         Player.Instance.TryKillEnemy(k);
+        info.debug_chain_hits++;
 
         // Keep chaining
         if (info.chains_left <= 1) return;

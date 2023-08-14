@@ -1,9 +1,8 @@
 ## TODO ##
 Maw boss attack sound
-Split mod chain
+explode mod split: better pattern
 
 ## BUGS ##
-radial menu press too fast
 
 ## MAYBE ##
 geode area with splitting enemies and boss
