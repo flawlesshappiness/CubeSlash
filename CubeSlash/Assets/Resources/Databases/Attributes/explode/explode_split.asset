@@ -20,5 +20,5 @@ MonoBehaviour:
       int_value: 0
       float_value: 0.4
       bool_value: 0
-    text: Charge 3 smaller explosions
+    text: Charge 3 slightly smaller explosions
     high_is_negative: 0

@@ -51,10 +51,12 @@ public class AbilityExplode : Ability
         if (SplitExplode)
         {
             var count = 3;
-            var delta_angle = 360f / count;
+            var max_angle = 180f + Radius * 5f;
+            var delta_angle = max_angle / count;
+            var start_angle = -delta_angle;
             for (int i = 0; i < count; i++)
             {
-                var angle = delta_angle * i;
+                var angle = start_angle + delta_angle * i;
                 var dir = Quaternion.AngleAxis(angle, Vector3.forward) * Vector3.up;
                 var fx = CreateChargeEffect(Vector3.zero, Vector3.one * Radius, time_charge_current);
                 fx.transform.parent = Player.Body.transform;
@@ -117,7 +119,7 @@ public class AbilityExplode : Ability
         var t = Mathf.Clamp01(GetChargeValue());
         foreach (var charge in _active_charges)
         {
-            charge.fx.transform.localPosition = charge.dir * Radius * t * 1.25f;
+            charge.fx.transform.localPosition = charge.dir * Radius * t * 1.05f;
         }
     }
 
