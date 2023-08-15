@@ -25,6 +25,8 @@ public class AbilityChain : Ability
     {
         base.InitializeFirstTime();
 
+        trail.radius = 0.5f;
+        trail.lifetime = 1.5f;
         trail.gameObject.SetActive(false);
 
         Radius.OnValueModified += () => UpdatePreviewRadius();
@@ -75,8 +77,9 @@ public class AbilityChain : Ability
         }
     }
 
-    private void HitTarget(IKillable k)
+    private void HitTarget(ChainInfo info, IKillable k)
     {
+        var position_prev = info.center;
         var position = k.GetPosition();
 
         if (ExplosionRadius.ModifiedValue.float_value > 0)
@@ -84,14 +87,12 @@ public class AbilityChain : Ability
             StartCoroutine(ExplodeCr(position));
         }
 
-        if (Fragments.ModifiedValue.int_value > 0)
+        if (Fragments.ModifiedValue.bool_value)
         {
-            var distance = 6f;
-            var speed = 10f;
-            var size = 0.5f;
-            var lifetime = Calculator.DST_Time(distance, speed);
-            var fragments = AbilityMines.ShootFragments(position, projectile_fragment, 3, speed, size);
-            fragments.ForEach(f => f.Lifetime = lifetime);
+            trail.transform.position = position_prev;
+            trail.ResetTrail();
+            trail.transform.position = position;
+            trail.CreateTrailsFromPreviousPosition();
         }
 
         if (false)
@@ -115,7 +116,7 @@ public class AbilityChain : Ability
         public int chains_left;
         public int initial_strikes;
         public int chain_strikes;
-        public System.Action<IKillable> onHit;
+        public System.Action<ChainInfo, IKillable> onHit;
         public List<IKillable> hits = new List<IKillable>();
 
         public int debug_chain_hits;
@@ -156,7 +157,7 @@ public class AbilityChain : Ability
         SoundController.Instance.PlayGroup(SoundEffectType.sfx_chain_zap);
 
         // Kill target
-        info.onHit?.Invoke(k);
+        info.onHit?.Invoke(info, k);
         Player.Instance.TryKillEnemy(k);
         info.debug_chain_hits++;
 

@@ -20,28 +20,6 @@ MonoBehaviour:
   require_ability: 1
   ability_required: 3
   upgrades_required: []
-  stats:
-  - id:
-      id: chain_fragments
-    value:
-      type_value: 2
-      value_int: 0
-      value_float: 0
-      value_bool: 1
-  - id:
-      id: chain_cooldown_perc
-    value:
-      type_value: 3
-      value_int: 0
-      value_float: 0.2
-      value_bool: 1
-  - id:
-      id: chain_cooldown_flat
-    value:
-      type_value: 1
-      value_int: 0
-      value_float: 0.5
-      value_bool: 1
   modifiers:
   - attribute_type:
       id: chain_cooldown
@@ -52,8 +30,8 @@ MonoBehaviour:
     bool_value: 0
   - attribute_type:
       id: chain_fragments
-    value_type: 0
+    value_type: 2
     int_value: 3
     float_value: 0
     percent_value: 0.2
-    bool_value: 0
+    bool_value: 1

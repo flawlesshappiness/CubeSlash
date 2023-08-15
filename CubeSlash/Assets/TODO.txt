@@ -1,6 +1,5 @@
 ## TODO ##
 Maw boss attack sound
-chain mod mines:
 
 ## BUGS ##
 

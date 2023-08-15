@@ -54,7 +54,7 @@ public class MinesProjectile : Projectile
                     radius = ChainRadius,
                     chains_left = 1,
                     initial_strikes = 1,
-                    onHit = k =>
+                    onHit = (info, k) =>
                     {
                         var position = k.GetPosition();
                         onChainHit(position);

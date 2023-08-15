@@ -16,9 +16,9 @@ MonoBehaviour:
     type:
       id: chain_fragments
     base_value:
-      value_type: 0
+      value_type: 2
       int_value: 0
       float_value: 0
       bool_value: 0
-    text: Fragments on kill
+    text: Zaps leave behind a trail
     high_is_negative: 0

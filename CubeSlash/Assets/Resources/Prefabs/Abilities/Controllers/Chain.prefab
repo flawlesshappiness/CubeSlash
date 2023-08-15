@@ -175,6 +175,10 @@ PrefabInstance:
       propertyPath: m_RootOrder
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 6501968469034548299, guid: 732d4a07cc727d14c82a6bcfa4b4ff52, type: 3}
+      propertyPath: EmissionModule.rateOverTime.scalar
+      value: 16
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 732d4a07cc727d14c82a6bcfa4b4ff52, type: 3}
 --- !u!4 &3971904343486002861 stripped
