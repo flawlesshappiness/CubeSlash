@@ -97,7 +97,18 @@ public class AbilitySplit : Ability
 
         void SpawnFragments(Projectile p)
         {
-            AbilityMines.ShootFragments(p.transform.position, prefab_fragment, ProjectileFragments, PROJECTILE_SPEED, SizeProjectiles);
+            var angle = 35f;
+            var forward = p.Rigidbody.velocity.normalized;
+            var left = Quaternion.AngleAxis(angle, Vector3.forward) * forward;
+            var right = Quaternion.AngleAxis(-angle, Vector3.forward) * forward;
+            var directions = new List<Vector3> { left, right };
+
+            var position = p.transform.position;
+            var speed = p.Rigidbody.velocity.magnitude;
+            foreach (var direction in directions)
+            {
+                AbilityMines.ShootFragment(prefab_fragment, position, direction * speed, SizeProjectiles * 0.75f);
+            }
         }
     }
 

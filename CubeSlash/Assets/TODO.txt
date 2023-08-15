@@ -1,6 +1,8 @@
 ## TODO ##
 Maw boss attack sound
 explode mod split: better pattern
+chain mod mines:
+remove plant health spawn
 
 ## BUGS ##
 
