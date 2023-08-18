@@ -1,6 +1,14 @@
 ## TODO ##
 Maw boss attack sound
 
+boomerang:
+shoot boomerang forwards, penetrating all enemies, then returning to you.
+
+game attributes:
+size
+distance
+suspend time
+
 ## BUGS ##
 
 ## MAYBE ##
