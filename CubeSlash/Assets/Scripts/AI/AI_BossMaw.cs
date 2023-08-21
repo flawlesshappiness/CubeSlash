@@ -95,6 +95,8 @@ public class AI_BossMaw : BossAI
 
     private void Attack_EnemyGroup()
     {
+        SoundController.Instance.Play(SoundEffectType.sfx_enemy_maw_attack);
+
         var is_fixed_position = Random.Range(0, 2) == 0;
         var fixed_position = CameraController.Instance.GetPositionOutsideCamera();
         var area_enemy_info = EnemyController.Instance.GetEnemiesUnlocked().Random();

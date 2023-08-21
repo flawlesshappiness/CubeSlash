@@ -673,3 +673,36 @@ MonoBehaviour:
           Data3: 1450793390
           Data4: -513007
         Path: event:/Game/Enemy/root_001
+  - name: 
+    type:
+      id: sfx_boomerang_shoot
+    sfx:
+      reference:
+        Guid:
+          Data1: 399181871
+          Data2: 1235218131
+          Data3: -96337256
+          Data4: -13198275
+        Path: event:/Game/Abilities/boomerang_shoot_001
+  - name: 
+    type:
+      id: sfx_boomerang_catch
+    sfx:
+      reference:
+        Guid:
+          Data1: -927195861
+          Data2: 1267167294
+          Data3: -2069009269
+          Data4: 462807467
+        Path: event:/Game/Abilities/boomerang_catch_001
+  - name: 
+    type:
+      id: sfx_enemy_maw_attack
+    sfx:
+      reference:
+        Guid:
+          Data1: -569236952
+          Data2: 1323489016
+          Data3: -1475807084
+          Data4: -100670737
+        Path: event:/Game/Enemy/boss_maw_attack_001
