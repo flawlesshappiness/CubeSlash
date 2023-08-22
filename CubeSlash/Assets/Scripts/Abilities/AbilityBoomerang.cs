@@ -44,13 +44,29 @@ public class AbilityBoomerang : Ability
             foreach (var direction in directions)
             {
                 var velocity = direction * PROJECTILE_SPEED;
-                ShootProjectile(velocity);
+                Shoot(velocity);
             }
         }
         else
         {
             var velocity = forward * PROJECTILE_SPEED;
-            ShootProjectile(velocity);
+            Shoot(velocity);
+        }
+
+        void Shoot(Vector3 velocity)
+        {
+            var fragment = FragmentProjectile > 0;
+            var count = Mathf.Max(1, FragmentProjectile);
+            var angle_delta = fragment ? 45 : 0;
+            var velocity_min = fragment ? 0.75f : 1f;
+            var velocity_max = fragment ? 1.5f : 1f;
+            for (int i = 0; i < count; i++)
+            {
+                var angle = Random.Range(-angle_delta, angle_delta);
+                var q = Quaternion.AngleAxis(angle, Vector3.forward);
+                var mul = Random.Range(velocity_min, velocity_max);
+                ShootProjectile(q * velocity * mul);
+            }
         }
     }
 
@@ -76,14 +92,18 @@ public class AbilityBoomerang : Ability
         p.Lifetime = PROJECTILE_LIFETIME;
         p.onDestroy += () => OnDestroy(p);
 
-        Player.Knockback(-direction * (FORCE_SELF + FORCE_SELF_SIZE * SizeProjectile), false, false);
+        p.HasChain = ChainLightning;
+
+        var force_mul = FragmentProjectile > 0 ? 1f / FragmentProjectile : 1f;
+        var force = (FORCE_SELF + FORCE_SELF_SIZE * SizeProjectile) * force_mul;
+        Player.Knockback(-direction * force, false, false);
 
         void OnDestroy(BoomerangProjectile p)
         {
             if (p.Caught)
             {
                 AdjustCooldownFlat(CatchCooldown);
-                SoundController.Instance.Play(SoundEffectType.sfx_boomerang_catch);
+                SoundController.Instance.PlayGroup(SoundEffectType.sfx_boomerang_catch);
             }
         }
 

@@ -4,21 +4,32 @@ using UnityEngine;
 
 public class BoomerangProjectile : Projectile
 {
+    [SerializeField] private ParticleSystem ps_chain;
+
     public Vector3 StartPosition { get; set; }
     public Vector3 Velocity { get; set; }
     public float Distance { get; set; }
+    public bool HasChain { get; set; }
 
     public bool Caught { get; private set; }
 
     private bool _returning;
+    private float _time_chain_hit;
 
     private const float DISTANCE_CATCH = 1.5f;
+    private const float TIME_CHAIN_HIT = 0.5f;
+    private const float RADIUS_CHAIN = 5f;
 
     protected override void Start()
     {
         base.Start();
 
         AnimateRotation();
+
+        if (HasChain)
+        {
+            ps_chain.Play();
+        }
     }
 
     private Coroutine AnimateRotation()
@@ -43,6 +54,7 @@ public class BoomerangProjectile : Projectile
         UpdateReturn();
         UpdateCatch();
         UpdateSize();
+        UpdateChain();
     }
 
     private void UpdateDistance()
@@ -85,5 +97,27 @@ public class BoomerangProjectile : Projectile
         var size_max = Vector3.one * 1f;
         var size = Vector3.Lerp(size_min, size_max, t);
         pivot_animation.localScale = size;
+    }
+
+    private void UpdateChain()
+    {
+        if (!HasChain) return;
+        if (Time.time < _time_chain_hit) return;
+
+        var success = AbilityChain.TryChainToTarget(new AbilityChain.ChainInfo
+        {
+            center = transform.position,
+            radius = RADIUS_CHAIN,
+            chains_left = 1,
+            initial_strikes = 1,
+            onHit = (info, k) =>
+            {
+                var position = k.GetPosition();
+                onHitEnemy?.Invoke(k);
+            }
+        });
+
+        var time_add = success ? TIME_CHAIN_HIT : 0.1f;
+        _time_chain_hit = Time.time + time_add;
     }
 }

@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -16,28 +17,35 @@ public class ContentSizeFitterRefresh : MonoBehaviour
 
     private void RefreshContentFitter(RectTransform transform)
     {
-        if (transform == null || !transform.gameObject.activeSelf)
+        try
         {
-            return;
+            if (transform == null || !transform.gameObject.activeSelf)
+            {
+                return;
+            }
+
+            foreach (RectTransform child in transform)
+            {
+                RefreshContentFitter(child);
+            }
+
+            var layoutGroup = transform.GetComponent<LayoutGroup>();
+            var contentSizeFitter = transform.GetComponent<ContentSizeFitter>();
+
+            if (layoutGroup != null)
+            {
+                layoutGroup.SetLayoutHorizontal();
+                layoutGroup.SetLayoutVertical();
+            }
+
+            if (contentSizeFitter != null)
+            {
+                LayoutRebuilder.ForceRebuildLayoutImmediate(transform);
+            }
         }
-
-        foreach (RectTransform child in transform)
+        catch (Exception e)
         {
-            RefreshContentFitter(child);
-        }
-
-        var layoutGroup = transform.GetComponent<LayoutGroup>();
-        var contentSizeFitter = transform.GetComponent<ContentSizeFitter>();
-
-        if (layoutGroup != null)
-        {
-            layoutGroup.SetLayoutHorizontal();
-            layoutGroup.SetLayoutVertical();
-        }
-
-        if (contentSizeFitter != null)
-        {
-            LayoutRebuilder.ForceRebuildLayoutImmediate(transform);
+            Debug.Log(e.Message);
         }
     }
 }

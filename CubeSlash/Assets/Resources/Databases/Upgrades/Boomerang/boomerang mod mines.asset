@@ -29,9 +29,23 @@ MonoBehaviour:
     percent_value: 0
     bool_value: 0
   - attribute_type:
+      id: boomerang_size
+    value_type: 3
+    int_value: 5
+    float_value: 0
+    percent_value: -0.66
+    bool_value: 0
+  - attribute_type:
       id: boomerang_cooldown
     value_type: 3
     int_value: 5
     float_value: 0
     percent_value: 0.2
+    bool_value: 0
+  - attribute_type:
+      id: boomerang_catch_cooldown
+    value_type: 3
+    int_value: 5
+    float_value: 0
+    percent_value: -0.75
     bool_value: 0
