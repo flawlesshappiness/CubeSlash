@@ -26,6 +26,6 @@ MonoBehaviour:
       id: boomerang_catch_cooldown
     value_type: 1
     int_value: 0
-    float_value: -0.8
+    float_value: 0.8
     percent_value: 0
     bool_value: 0

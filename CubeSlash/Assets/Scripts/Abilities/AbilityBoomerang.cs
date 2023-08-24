@@ -102,7 +102,7 @@ public class AbilityBoomerang : Ability
         {
             if (p.Caught)
             {
-                AdjustCooldownFlat(CatchCooldown);
+                AdjustCooldownFlat(-CatchCooldown);
                 SoundController.Instance.PlayGroup(SoundEffectType.sfx_boomerang_catch);
             }
         }

@@ -1,6 +1,5 @@
 ## TODO ##
 boomerang upgrade sprites
-cooldown replenish = positive value
 
 ## BUGS ##
 

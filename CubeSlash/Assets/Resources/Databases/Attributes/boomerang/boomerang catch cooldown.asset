@@ -18,7 +18,7 @@ MonoBehaviour:
     base_value:
       value_type: 1
       int_value: 1
-      float_value: -5
+      float_value: 5
       bool_value: 0
     text: Catch cooldown replenish
-    high_is_negative: 1
+    high_is_negative: 0
