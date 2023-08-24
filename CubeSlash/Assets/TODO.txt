@@ -1,5 +1,9 @@
 ## TODO ##
-boomerang upgrade sprites
+fix jelly boss dud drag
+ui play sprite
+ui settings sprite
+ui exit sprite
+ui customize sprite
 
 ## BUGS ##
 
