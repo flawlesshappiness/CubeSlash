@@ -17,7 +17,7 @@ PrefabInstance:
       objectReference: {fileID: 21300000, guid: 4a56c232fd300af40b4b9dd91c1a7928, type: 3}
     - target: {fileID: 3683016353986101013, guid: 734e940a4366b6346898f7ba7269c336, type: 3}
       propertyPath: m_Name
-      value: Crystalrock (Physics)
+      value: Crystalrock (Small)
       objectReference: {fileID: 0}
     - target: {fileID: 3683016353986101018, guid: 734e940a4366b6346898f7ba7269c336, type: 3}
       propertyPath: m_RootOrder

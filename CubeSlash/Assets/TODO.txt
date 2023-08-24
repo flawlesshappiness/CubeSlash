@@ -1,9 +1,6 @@
 ## TODO ##
-fix jelly boss dud drag
-ui play sprite
-ui settings sprite
-ui exit sprite
-ui customize sprite
+real settings menu
+controls in pause menu
 
 ## BUGS ##
 
@@ -24,7 +21,3 @@ enemy that leaves a trail during life / after death
 enemy with a dud on its back
 endless mode
 Mushroom bodypart
-
-Boomerang ability
-Split modifier > Penetrate?
-Split mod mines > bullets become smaller bullets on death, like a shotgun

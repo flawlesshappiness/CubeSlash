@@ -492,7 +492,7 @@ Rigidbody2D:
   m_UseAutoMass: 0
   m_Mass: 10
   m_LinearDrag: 0.1
-  m_AngularDrag: 0.5
+  m_AngularDrag: 50
   m_GravityScale: 0
   m_Material: {fileID: 0}
   m_Interpolate: 1
@@ -531,6 +531,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hurts: 0
+  enemy_ai_ignore: 0
 --- !u!114 &-8144886329794796608
 MonoBehaviour:
   m_ObjectHideFlags: 0

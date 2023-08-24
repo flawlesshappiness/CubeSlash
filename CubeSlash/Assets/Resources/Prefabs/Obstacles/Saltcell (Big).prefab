@@ -1,16 +1,16 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!58 &3287178530334231285
+--- !u!58 &8904931086175476429
 CircleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8713961148221675087}
+  m_GameObject: {fileID: 2330373045470860921}
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -48,17 +48,17 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 1.6
---- !u!58 &8904931086175476429
+--- !u!58 &3287178530334231285
 CircleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2330373045470860921}
+  m_GameObject: {fileID: 8713961148221675087}
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -177,7 +177,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3683016353986101019, guid: 734e940a4366b6346898f7ba7269c336, type: 3}
       propertyPath: m_LinearDrag
-      value: 0.1
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 3683016354744887479, guid: 734e940a4366b6346898f7ba7269c336, type: 3}
       propertyPath: m_Sprite
