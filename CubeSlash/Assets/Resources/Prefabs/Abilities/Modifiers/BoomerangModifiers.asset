@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e72ec920637b88348b294d24f48bf858, type: 3}
+  m_Name: BoomerangModifiers
+  m_EditorClassIdentifier: 
+  modifiers:
+  - type: 2
+    id:
+      id: boomerang_mod_explode
+  - type: 3
+    id:
+      id: boomerang_mod_chain
+  - type: 4
+    id:
+      id: boomerang_mod_mines
+  - type: 1
+    id:
+      id: boomerang_mod_split

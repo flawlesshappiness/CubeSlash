@@ -1,4 +1,3 @@
-using FMOD;
 using System.Linq;
 using UnityEngine;
 
@@ -8,13 +7,14 @@ public class SoundDatabase : Database<SoundEffectEntry>
     private static SoundDatabase Load() => Load<SoundDatabase>();
 
 #if UNITY_EDITOR
-    private void OnValidate()
+    protected override void OnValidate()
     {
+        base.OnValidate();
         var types = FakeEnum.GetAll(typeof(SoundEffectType));
-        foreach(var type in types)
+        foreach (var type in types)
         {
             var entry = collection.FirstOrDefault(entry => entry.type == type);
-            if(entry == null)
+            if (entry == null)
             {
                 collection.Add(new SoundEffectEntry
                 {
@@ -24,9 +24,9 @@ public class SoundDatabase : Database<SoundEffectEntry>
             }
         }
 
-        foreach(var entry in collection)
+        foreach (var entry in collection)
         {
-            if(entry.type != null)
+            if (entry.type != null)
             {
                 entry.name = entry.type.ToString();
                 if (string.IsNullOrEmpty(entry.sfx.reference.Path))
@@ -88,6 +88,10 @@ public class SoundEffectType : FakeEnum
     // Split
     public static readonly SoundEffectType sfx_split_shoot = new SoundEffectType(nameof(sfx_split_shoot));
 
+    // Boomerang
+    public static readonly SoundEffectType sfx_boomerang_shoot = new SoundEffectType(nameof(sfx_boomerang_shoot));
+    public static readonly SoundEffectType sfx_boomerang_catch = new SoundEffectType(nameof(sfx_boomerang_catch));
+
     // Enemy
     public static readonly SoundEffectType sfx_enemy_bone_teleport_appear = new SoundEffectType(nameof(sfx_enemy_bone_teleport_appear));
     public static readonly SoundEffectType sfx_enemy_bone_teleport_disappear = new SoundEffectType(nameof(sfx_enemy_bone_teleport_disappear));
@@ -107,6 +111,7 @@ public class SoundEffectType : FakeEnum
     public static readonly SoundEffectType sfx_enemy_crystal_unshield = new SoundEffectType(nameof(sfx_enemy_crystal_unshield));
     public static readonly SoundEffectType sfx_enemy_crystal_break = new SoundEffectType(nameof(sfx_enemy_crystal_break));
     public static readonly SoundEffectType sfx_enemy_root = new SoundEffectType(nameof(sfx_enemy_root));
+    public static readonly SoundEffectType sfx_enemy_maw_attack = new SoundEffectType(nameof(sfx_enemy_maw_attack));
 
     // UI
     public static readonly SoundEffectType sfx_ui_level_up = new SoundEffectType(nameof(sfx_ui_level_up));

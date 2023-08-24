@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: 1
   name_ability: Split
-  desc_ability: Fire an arc of projectiles
+  desc_ability: Fire an arc of bullets
   sprite_icon: {fileID: 21300000, guid: aa601896f349e9c47acfcaef8d6bc4c6, type: 3}
   modifiers: {fileID: 11400000, guid: 057deef5701e54e4fa96b588847eeb3f, type: 2}
   type_bodypart:

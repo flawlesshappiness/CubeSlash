@@ -9,7 +9,7 @@ public abstract class Ability : MonoBehaviourExtended
     public event System.Action onTrigger;
     public event System.Action onCooldownComplete;
 
-    public enum Type { DASH, SPLIT, EXPLODE, CHAIN, MINES }
+    public enum Type { DASH, SPLIT, EXPLODE, CHAIN, MINES, BOOMERANG }
     public Player Player { get { return Player.Instance; } }
     public bool IsPressed { get; set; }
     public float TimeCooldownStart { get; private set; }
@@ -129,7 +129,7 @@ public abstract class Ability : MonoBehaviourExtended
 
     public void AdjustCooldownFlat(float seconds)
     {
-        TimeCooldownEnd += seconds;
+        TimeCooldownEnd = Mathf.Max(TimeCooldownStart, TimeCooldownEnd + seconds);
     }
 
     public virtual bool CanPressWhileOnCooldown() => false;

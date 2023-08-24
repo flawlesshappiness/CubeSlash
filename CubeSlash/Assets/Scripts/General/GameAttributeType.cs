@@ -37,6 +37,16 @@ public partial class GameAttributeType : FakeEnum
     public static readonly GameAttributeType split_fragments = new GameAttributeType(nameof(split_fragments));
     public static readonly GameAttributeType split_size = new GameAttributeType(nameof(split_size));
 
+    // BOOMERANG
+    public static readonly GameAttributeType boomerang_cooldown = new GameAttributeType(nameof(boomerang_cooldown));
+    public static readonly GameAttributeType boomerang_count = new GameAttributeType(nameof(boomerang_count));
+    public static readonly GameAttributeType boomerang_size = new GameAttributeType(nameof(boomerang_size));
+    public static readonly GameAttributeType boomerang_distance = new GameAttributeType(nameof(boomerang_distance));
+    public static readonly GameAttributeType boomerang_catch_cooldown = new GameAttributeType(nameof(boomerang_catch_cooldown));
+    public static readonly GameAttributeType boomerang_explode = new GameAttributeType(nameof(boomerang_explode));
+    public static readonly GameAttributeType boomerang_fragment = new GameAttributeType(nameof(boomerang_fragment));
+    public static readonly GameAttributeType boomerang_chain = new GameAttributeType(nameof(boomerang_chain));
+
     // PLAYER
     public static readonly GameAttributeType player_armor = new GameAttributeType(nameof(player_armor));
     public static readonly GameAttributeType player_health = new GameAttributeType(nameof(player_health));

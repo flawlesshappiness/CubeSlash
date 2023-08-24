@@ -1,16 +1,11 @@
-using Flawliz.Lerp;
-using System.Collections;
 using UnityEngine;
 
 public class Projectile : MonoBehaviourExtended
 {
     [SerializeField] private bool hits_player, hits_enemy;
-    [SerializeField] private Transform pivot_animation;
+    [SerializeField] protected Transform pivot_animation;
     [SerializeField] private ParticleSystem ps_death, ps_trail;
-    [SerializeField] private bool scale_from_zero;
-    [SerializeField] private float anim_scale_duration;
-    [SerializeField] private float anim_rotation;
-    [SerializeField] private AnimationCurve curve_scale;
+
     public float Drag { get; set; } = 1f;
     public float Lifetime { get; set; } = 1f;
     public int Piercing { get; set; }
@@ -27,15 +22,6 @@ public class Projectile : MonoBehaviourExtended
     {
         BirthTime = Time.time;
         DeathTime = BirthTime + Lifetime;
-
-        if (scale_from_zero)
-        {
-            StartCoroutine(AnimateScaleBeginCr());
-        }
-        else
-        {
-            StartCoroutine(AnimateScaleCr());
-        }
     }
 
     public virtual void Update()
@@ -143,41 +129,6 @@ public class Projectile : MonoBehaviourExtended
             {
                 Kill();
             }
-        }
-    }
-
-    private IEnumerator AnimateScaleBeginCr()
-    {
-        var end = Vector3.one * curve_scale.Evaluate(0);
-        yield return LerpEnumerator.LocalScale(pivot_animation, 0.2f, Vector3.zero, end);
-        StartCoroutine(AnimateScaleCr());
-    }
-
-    private IEnumerator AnimateScaleCr()
-    {
-        while (true)
-        {
-            yield return LerpEnumerator.Value(anim_scale_duration, f =>
-            {
-                var t = curve_scale.Evaluate(f);
-                pivot_animation.localScale = Vector3.LerpUnclamped(Vector3.zero, Vector3.one, t);
-            });
-        }
-    }
-
-    public Coroutine AnimateRotation()
-    {
-        return StartCoroutine(AnimateRotationCr());
-    }
-
-    private IEnumerator AnimateRotationCr()
-    {
-        var angle = Random.Range(-anim_rotation, anim_rotation);
-        while (true)
-        {
-            var z = (pivot_animation.eulerAngles.z + angle * Time.deltaTime) % 360f;
-            pivot_animation.eulerAngles = pivot_animation.eulerAngles.SetZ(z);
-            yield return null;
         }
     }
 }

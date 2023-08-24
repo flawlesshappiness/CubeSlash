@@ -1,5 +1,6 @@
 ## TODO ##
-Maw boss attack sound
+boomerang upgrade sprites
+cooldown replenish = positive value
 
 ## BUGS ##
 

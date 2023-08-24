@@ -83,6 +83,7 @@ public class UpgradeID : FakeEnum
     public static readonly UpgradeID chain_mod_explode = new UpgradeID(nameof(chain_mod_explode));
     public static readonly UpgradeID chain_mod_mines = new UpgradeID(nameof(chain_mod_mines));
     public static readonly UpgradeID chain_mod_split = new UpgradeID(nameof(chain_mod_split));
+    public static readonly UpgradeID chain_mod_boomerang = new UpgradeID(nameof(chain_mod_boomerang));
 
     // Dash
     public static readonly UpgradeID dash_distance_1 = new UpgradeID(nameof(dash_distance_1));
@@ -124,6 +125,7 @@ public class UpgradeID : FakeEnum
     public static readonly UpgradeID explode_mod_dash = new UpgradeID(nameof(explode_mod_dash));
     public static readonly UpgradeID explode_mod_mines = new UpgradeID(nameof(explode_mod_mines));
     public static readonly UpgradeID explode_mod_split = new UpgradeID(nameof(explode_mod_split));
+    public static readonly UpgradeID explode_mod_boomerang = new UpgradeID(nameof(explode_mod_boomerang));
 
     // Mines
     public static readonly UpgradeID mines_count_1 = new UpgradeID(nameof(mines_count_1));
@@ -140,6 +142,7 @@ public class UpgradeID : FakeEnum
     public static readonly UpgradeID mines_mod_dash = new UpgradeID(nameof(mines_mod_dash));
     public static readonly UpgradeID mines_mod_explode = new UpgradeID(nameof(mines_mod_explode));
     public static readonly UpgradeID mines_mod_split = new UpgradeID(nameof(mines_mod_split));
+    public static readonly UpgradeID mines_mod_boomerang = new UpgradeID(nameof(mines_mod_boomerang));
 
     // Split
     public static readonly UpgradeID split_count_1 = new UpgradeID(nameof(split_count_1));
@@ -156,4 +159,27 @@ public class UpgradeID : FakeEnum
     public static readonly UpgradeID split_mod_dash = new UpgradeID(nameof(split_mod_dash));
     public static readonly UpgradeID split_mod_explode = new UpgradeID(nameof(split_mod_explode));
     public static readonly UpgradeID split_mod_mines = new UpgradeID(nameof(split_mod_mines));
+    public static readonly UpgradeID split_mod_boomerang = new UpgradeID(nameof(split_mod_boomerang));
+
+    // Boomerang
+    public static readonly UpgradeID boomerang_distance_1 = new UpgradeID(nameof(boomerang_distance_1));
+    public static readonly UpgradeID boomerang_distance_2 = new UpgradeID(nameof(boomerang_distance_2));
+    public static readonly UpgradeID boomerang_distance_3 = new UpgradeID(nameof(boomerang_distance_3));
+    public static readonly UpgradeID boomerang_distance_4 = new UpgradeID(nameof(boomerang_distance_4));
+    public static readonly UpgradeID boomerang_distance_5 = new UpgradeID(nameof(boomerang_distance_5));
+    public static readonly UpgradeID boomerang_size_1 = new UpgradeID(nameof(boomerang_size_1));
+    public static readonly UpgradeID boomerang_size_2 = new UpgradeID(nameof(boomerang_size_2));
+    public static readonly UpgradeID boomerang_size_3 = new UpgradeID(nameof(boomerang_size_3));
+    public static readonly UpgradeID boomerang_size_4 = new UpgradeID(nameof(boomerang_size_4));
+    public static readonly UpgradeID boomerang_size_5 = new UpgradeID(nameof(boomerang_size_5));
+    public static readonly UpgradeID boomerang_catch_cd_1 = new UpgradeID(nameof(boomerang_catch_cd_1));
+    public static readonly UpgradeID boomerang_catch_cd_2 = new UpgradeID(nameof(boomerang_catch_cd_2));
+    public static readonly UpgradeID boomerang_catch_cd_3 = new UpgradeID(nameof(boomerang_catch_cd_3));
+    public static readonly UpgradeID boomerang_catch_cd_4 = new UpgradeID(nameof(boomerang_catch_cd_4));
+    public static readonly UpgradeID boomerang_catch_cd_5 = new UpgradeID(nameof(boomerang_catch_cd_5));
+
+    public static readonly UpgradeID boomerang_mod_split = new UpgradeID(nameof(boomerang_mod_split));
+    public static readonly UpgradeID boomerang_mod_mines = new UpgradeID(nameof(boomerang_mod_mines));
+    public static readonly UpgradeID boomerang_mod_chain = new UpgradeID(nameof(boomerang_mod_chain));
+    public static readonly UpgradeID boomerang_mod_explode = new UpgradeID(nameof(boomerang_mod_explode));
 }
