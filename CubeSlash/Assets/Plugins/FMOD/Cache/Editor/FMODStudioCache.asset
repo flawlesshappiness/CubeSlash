@@ -151,7 +151,7 @@ MonoBehaviour:
   Path: Assets/FMOD/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 638282529576610458
+  lastModified: 638284226014750228
   FileSizes: []
   Exists: 1
 --- !u!114 &-7872426760261806101
@@ -1499,12 +1499,13 @@ MonoBehaviour:
   - {fileID: -969185421788020572}
   - {fileID: 8159066000117265837}
   - {fileID: -8182980310798793663}
+  - {fileID: 5761857092000438841}
   EditorParameters: []
   MasterBanks:
   - {fileID: -8060980804293988741}
   StringsBanks:
   - {fileID: 5917708036578608240}
-  cacheTime: 638282529576660476
+  cacheTime: 638284226014790231
   cacheVersion: 131593
 --- !u!114 &1453305857757199432
 MonoBehaviour:
@@ -2043,6 +2044,33 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 1760
+--- !u!114 &5761857092000438841
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Music/bgm_crystal_001
+  m_EditorClassIdentifier: 
+  Path: event:/Music/bgm_crystal_001
+  Guid:
+    Data1: -389832120
+    Data2: 1175605071
+    Data3: 1335177398
+    Data4: 742731556
+  Banks:
+  - {fileID: -8060980804293988741}
+  IsStream: 1
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 140000
 --- !u!114 &5787270293951152080
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2112,10 +2140,10 @@ MonoBehaviour:
   Path: Assets/FMOD/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 638282529576660476
+  lastModified: 638284226014790231
   FileSizes:
   - Name: 
-    Value: 5020
+    Value: 5062
   Exists: 1
 --- !u!114 &5992827859230917708
 MonoBehaviour:

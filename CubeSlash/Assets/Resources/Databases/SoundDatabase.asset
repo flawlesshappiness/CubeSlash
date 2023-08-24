@@ -503,11 +503,11 @@ MonoBehaviour:
     sfx:
       reference:
         Guid:
-          Data1: 0
-          Data2: 0
-          Data3: 0
-          Data4: 0
-        Path: 
+          Data1: -389832120
+          Data2: 1175605071
+          Data3: 1335177398
+          Data4: 742731556
+        Path: event:/Music/bgm_crystal_001
   - name: bgm_lose_game
     type:
       id: bgm_lose_game

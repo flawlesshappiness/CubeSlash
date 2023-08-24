@@ -7,8 +7,9 @@ public class SoundDatabase : Database<SoundEffectEntry>
     private static SoundDatabase Load() => Load<SoundDatabase>();
 
 #if UNITY_EDITOR
-    private void OnValidate()
+    protected override void OnValidate()
     {
+        base.OnValidate();
         var types = FakeEnum.GetAll(typeof(SoundEffectType));
         foreach (var type in types)
         {
