@@ -1,6 +1,7 @@
 ## TODO ##
 real settings menu
-controls in pause menu
+increased exp curve
+gain modifiers later
 
 ## BUGS ##
 

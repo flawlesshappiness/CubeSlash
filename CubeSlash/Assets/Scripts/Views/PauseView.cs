@@ -1,8 +1,6 @@
 using Flawliz.Lerp;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class PauseView : View
 {
@@ -11,6 +9,7 @@ public class PauseView : View
     [SerializeField] private SelectableMenuItem btnContinue;
     [SerializeField] private SelectableMenuItem btnOptions;
     [SerializeField] private SelectableMenuItem btnMainMenu;
+    [SerializeField] private UIInputLayout input;
 
     private void OnEnable()
     {
@@ -33,6 +32,8 @@ public class PauseView : View
         btnContinue.onSubmit += ClickContinue;
         btnOptions.onSubmit += ClickOptions;
         btnMainMenu.onSubmit += ClickMainMenu;
+
+        input.SetupTutorial();
     }
 
     IEnumerator TransitionToOptionsCr()

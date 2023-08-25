@@ -1,7 +1,5 @@
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class UIInputLayout : MonoBehaviour
 {
@@ -44,10 +42,19 @@ public class UIInputLayout : MonoBehaviour
 
     public void Clear()
     {
-        foreach(var row in rows)
+        foreach (var row in rows)
         {
             Destroy(row.gameObject);
         }
         rows.Clear();
+    }
+
+    public void SetupTutorial()
+    {
+        Clear();
+        AddInput(PlayerInput.UIButtonType.NAV_ALL, "Move");
+        AddInput(PlayerInput.UIButtonType.WEST, "Use ability");
+        AddInput(PlayerInput.UIButtonType.EAST, "Dash");
+        AddInput(PlayerInput.UIButtonType.NORTH, "Heal using energy");
     }
 }
