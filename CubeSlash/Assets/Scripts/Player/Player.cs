@@ -586,26 +586,7 @@ public class Player : Character
         LevelsUntilAbility = i;
     }
 
-    public int GetMaxLevelsUntilAbility()
-    {
-        var count = AbilityController.Instance.GetGainedAbilities().Count;
-        if (count < 2)
-        {
-            return 5;
-        }
-        else if (count < 3)
-        {
-            return 7;
-        }
-        else if (count < 4)
-        {
-            return 10;
-        }
-        else
-        {
-            return 15;
-        }
-    }
+    public int GetMaxLevelsUntilAbility() => 8;
     #endregion
     #region EFFECTS
     public void PlayLevelUpFX()

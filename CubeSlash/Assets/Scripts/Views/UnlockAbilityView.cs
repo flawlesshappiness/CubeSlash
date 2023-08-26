@@ -105,7 +105,9 @@ public class UnlockAbilityView : View
     {
         floating_panel.gameObject.SetActive(true);
         floating_upgrade.Clear();
-        var upgrade_id = AbilityController.Instance.GetEquippedAbility().Info.modifiers.GetModifier(ability.Info.type).id;
+        var equipped_ability = AbilityController.Instance.GetEquippedAbility();
+        var equipped_ability_modifier = equipped_ability.Info.modifiers.GetModifier(ability.Info.type);
+        var upgrade_id = equipped_ability_modifier.id;
         var upgrade = UpgradeController.Instance.GetUpgradeInfo(upgrade_id).upgrade;
         var modifiers = upgrade.modifiers;
         foreach (var modifier in modifiers)

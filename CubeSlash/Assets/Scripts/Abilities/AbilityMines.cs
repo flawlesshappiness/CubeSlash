@@ -6,7 +6,7 @@ public class AbilityMines : Ability
 {
     [Header("MINES")]
     [SerializeField] private MinesProjectile prefab_mine;
-    [SerializeField] private Projectile prefab_fragment;
+    [SerializeField] private MinesFragmentProjectile prefab_fragment;
     [SerializeField] private DamageTrail trail;
 
     private float Cooldown { get { return GameAttributeController.Instance.GetAttribute(GameAttributeType.mines_cooldown).ModifiedValue.float_value; } }
@@ -15,6 +15,9 @@ public class AbilityMines : Ability
     private bool ExplodingFragments { get { return GameAttributeController.Instance.GetAttribute(GameAttributeType.mines_explode).ModifiedValue.bool_value; } }
     private bool DoubleShells { get { return GameAttributeController.Instance.GetAttribute(GameAttributeType.mines_double_shell).ModifiedValue.bool_value; } }
     private bool FragmentChain { get { return GameAttributeController.Instance.GetAttribute(GameAttributeType.mines_chain).ModifiedValue.bool_value; } }
+    private bool FragmentsPierce { get { return GameAttributeController.Instance.GetAttribute(GameAttributeType.mines_fragment_pierce).ModifiedValue.bool_value; } }
+    private bool FragmentsCurve { get { return GameAttributeController.Instance.GetAttribute(GameAttributeType.mines_fragment_curve).ModifiedValue.bool_value; } }
+    private float FragmentLifetime { get { return GameAttributeController.Instance.GetAttribute(GameAttributeType.mines_fragment_lifetime).ModifiedValue.float_value; } }
 
     private const float SHELL_SPEED = 10f;
     private const float SHELL_DRAG = 0.95f;
@@ -23,7 +26,7 @@ public class AbilityMines : Ability
     private const float FRAGMENT_SIZE = 0.5f;
     private const float FRAGMENT_SPEED = 20f;
     private const float FRAGMENT_DRAG = 0.95f;
-    private const float FRAGMENT_LIFETIME = 0.5f;
+    private const float FRAGMENT_DRAG_PIERCE = 0.98f;
 
     public override void InitializeFirstTime()
     {
@@ -100,7 +103,7 @@ public class AbilityMines : Ability
             var ps = ShootFragments(position, prefab_fragment, FragmentCount, FRAGMENT_SPEED, FRAGMENT_SIZE);
             foreach (var p in ps)
             {
-                SetupMineFragment(p);
+                SetupMineFragment(p as MinesFragmentProjectile);
             }
         }
     }
@@ -123,11 +126,13 @@ public class AbilityMines : Ability
         });
     }
 
-    private void SetupMineFragment(Projectile p)
+    private void SetupMineFragment(MinesFragmentProjectile p)
     {
-        p.Lifetime = FRAGMENT_LIFETIME * Random.Range(0.8f, 1.2f);
+        p.Piercing = FragmentsPierce ? -1 : 0;
+        p.Lifetime = FragmentLifetime * Random.Range(0.8f, 1.2f);
         p.Rigidbody.velocity = p.Rigidbody.velocity.normalized * p.Rigidbody.velocity.magnitude * Random.Range(0.8f, 1f);
-        p.Drag = FRAGMENT_DRAG;
+        p.Drag = FragmentsPierce ? FRAGMENT_DRAG_PIERCE : FRAGMENT_DRAG;
+        p.CurveAngle = FragmentsCurve ? 200 : 0;
 
         p.onHitEnemy += k => OnFragment(p);
         p.onDeath += () => OnFragment(p);

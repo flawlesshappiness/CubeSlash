@@ -46,7 +46,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Info: {fileID: 11400000, guid: 015b2150053ec634e8bb89d868f46651, type: 2}
   prefab_mine: {fileID: 2720236704435187714, guid: cdc1554d482d63e4cb8a5767d2530f54, type: 3}
-  prefab_fragment: {fileID: 2903384162585443173, guid: ddcb15fa1e981794fb20b9ac54b20037, type: 3}
+  prefab_fragment: {fileID: 7359493952130233828, guid: ddcb15fa1e981794fb20b9ac54b20037, type: 3}
   trail: {fileID: 8525420212349811941}
 --- !u!1001 &7283353562481547375
 PrefabInstance:

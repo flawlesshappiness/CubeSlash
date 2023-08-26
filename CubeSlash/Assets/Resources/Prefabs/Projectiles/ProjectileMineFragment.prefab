@@ -4862,7 +4862,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2903384162585443171}
-  - component: {fileID: 2903384162585443173}
+  - component: {fileID: 7359493952130233828}
   - component: {fileID: 2903384162585443172}
   m_Layer: 9
   m_Name: ProjectileMineFragment
@@ -4887,7 +4887,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2903384162585443173
+--- !u!114 &7359493952130233828
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -4896,7 +4896,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2903384162585443170}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 755abe5ebd74f14418e0b84bbc68b9ff, type: 3}
+  m_Script: {fileID: 11500000, guid: dc71b345fe44cc04c8ec08e59d80d411, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   hits_player: 0
@@ -4904,33 +4904,6 @@ MonoBehaviour:
   pivot_animation: {fileID: 1994163004210291878}
   ps_death: {fileID: 5512065486140733586}
   ps_trail: {fileID: 4236737699428214933}
-  scale_from_zero: 0
-  anim_scale_duration: 1
-  anim_rotation: 300
-  curve_scale:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 136
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 1
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 136
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
 --- !u!50 &2903384162585443172
 Rigidbody2D:
   serializedVersion: 4

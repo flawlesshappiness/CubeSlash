@@ -26,6 +26,9 @@ public partial class GameAttributeType : FakeEnum
     public static readonly GameAttributeType mines_explode = new GameAttributeType(nameof(mines_explode));
     public static readonly GameAttributeType mines_shell_count = new GameAttributeType(nameof(mines_shell_count));
     public static readonly GameAttributeType mines_fragment_count = new GameAttributeType(nameof(mines_fragment_count));
+    public static readonly GameAttributeType mines_fragment_lifetime = new GameAttributeType(nameof(mines_fragment_lifetime));
+    public static readonly GameAttributeType mines_fragment_pierce = new GameAttributeType(nameof(mines_fragment_pierce));
+    public static readonly GameAttributeType mines_fragment_curve = new GameAttributeType(nameof(mines_fragment_curve));
 
     // SPLIT
     public static readonly GameAttributeType split_piercing_count = new GameAttributeType(nameof(split_piercing_count));

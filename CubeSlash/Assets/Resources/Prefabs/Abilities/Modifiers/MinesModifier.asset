@@ -25,3 +25,6 @@ MonoBehaviour:
   - type: 3
     id:
       id: mines_mod_chain
+  - type: 5
+    id:
+      id: mines_mod_boomerang

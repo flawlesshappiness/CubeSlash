@@ -1,7 +1,11 @@
 ## TODO ##
 real settings menu
-increased exp curve
-gain modifiers later
+boomerang modifiers on other abilities
+
+chain mod boomerang > final chain back to player, hitting everything
+split mod boomerang > projectiles gain more lifetime and return to player
+explode mod boomerang > secondary delayed explosion
+mines mod boomerang > fragments penetrate and move further in a curve
 
 ## BUGS ##
 
@@ -14,7 +18,7 @@ Spend many DNA points to upgrade health and other stats
 enemy speed based on difficulty
 max enemies based on difficulty
 
-IDEAS:
+## IDEAS ##
 enemy that pushes the player
 enemy that pulls the player
 enemy that shoots aoe of bullets
