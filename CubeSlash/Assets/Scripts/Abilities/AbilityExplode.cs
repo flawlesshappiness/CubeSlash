@@ -15,6 +15,7 @@ public class AbilityExplode : Ability
     public bool SplitExplode { get { return GameAttributeController.Instance.GetAttribute(GameAttributeType.explode_split).ModifiedValue.bool_value; } }
     public int Fragments { get { return GameAttributeController.Instance.GetAttribute(GameAttributeType.explode_fragments).ModifiedValue.int_value; } }
     public int MiniExplosions { get { return GameAttributeController.Instance.GetAttribute(GameAttributeType.explode_minis).ModifiedValue.int_value; } }
+    public bool DelayedExplosion { get { return GameAttributeController.Instance.GetAttribute(GameAttributeType.explode_delayed).ModifiedValue.bool_value; } }
 
     private const float FORCE = 250f;
 
@@ -146,6 +147,19 @@ public class AbilityExplode : Ability
 
         foreach (var charge in _active_charges)
         {
+            DoExplosion(charge);
+
+            if (DelayedExplosion)
+            {
+                StartCoroutine(DelayedExplosionCr(charge.fx.transform.position, 2f));
+            }
+        }
+        _active_charges.Clear();
+
+        StartCooldown(c);
+
+        void DoExplosion(ActiveCharge charge)
+        {
             var position = charge.fx.transform.position;
             Explode(position, r, f, OnHit);
             OnExplode(position, t);
@@ -153,9 +167,13 @@ public class AbilityExplode : Ability
             charge.fx.StopAnimating();
             Destroy(charge.fx.gameObject, 1);
         }
-        _active_charges.Clear();
 
-        StartCooldown(c);
+        IEnumerator DelayedExplosionCr(Vector3 position, float delay)
+        {
+            yield return new WaitForSeconds(delay);
+            Explode(position, r, f, OnHit);
+            OnExplode(position, t);
+        }
     }
 
     private void OnExplode(Vector3 position, float t = 1)
@@ -164,6 +182,7 @@ public class AbilityExplode : Ability
         StartCooldown();
         Player.Instance.AbilityLock.RemoveLock(nameof(AbilityExplode));
 
+        // Mini explosions
         for (int i = 0; i < (int)(MiniExplosions * t); i++)
         {
             var radius = Radius * Random.Range(0.3f, 0.5f);

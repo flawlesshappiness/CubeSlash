@@ -1,0 +1,37 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 616189df85cb92d40806459b9c9111b7, type: 3}
+  m_Name: explode mod boomerang
+  m_EditorClassIdentifier: 
+  id:
+    id: explode_mod_boomerang
+  name: Chained Explosions
+  icon: {fileID: 21300000, guid: 704c46460f2ea97478c57508c8014614, type: 3}
+  hidden: 1
+  require_ability: 1
+  ability_required: 2
+  upgrades_required: []
+  modifiers:
+  - attribute_type:
+      id: explode_delayed
+    value_type: 2
+    int_value: 0
+    float_value: 0
+    percent_value: 0.2
+    bool_value: 1
+  - attribute_type:
+      id: explode_cooldown
+    value_type: 3
+    int_value: 0
+    float_value: 0
+    percent_value: 0.2
+    bool_value: 0

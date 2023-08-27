@@ -19,6 +19,7 @@ public partial class GameAttributeType : FakeEnum
     public static readonly GameAttributeType explode_radius = new GameAttributeType(nameof(explode_radius));
     public static readonly GameAttributeType explode_slow = new GameAttributeType(nameof(explode_slow));
     public static readonly GameAttributeType explode_split = new GameAttributeType(nameof(explode_split));
+    public static readonly GameAttributeType explode_delayed = new GameAttributeType(nameof(explode_delayed));
 
     // MINES
     public static readonly GameAttributeType mines_cooldown = new GameAttributeType(nameof(mines_cooldown));
