@@ -1,6 +1,5 @@
 ## TODO ##
 real settings menu
-boomerang modifiers on other abilities
 
 split mod boomerang > projectiles gain more lifetime and return to player
 explode mod boomerang > secondary delayed explosion

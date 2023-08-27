@@ -72,20 +72,37 @@ public class BoomerangProjectile : Projectile
         if (!_returning) return;
         if (GameController.Instance.IsPaused) return;
 
-        var direction = Player.Instance.transform.position - transform.position;
-        Rigidbody.AddForce(direction.normalized * 5f);
-        Rigidbody.velocity = Vector3.ClampMagnitude(Rigidbody.velocity, Velocity.magnitude);
+        var projectile = this;
+        var position_return = Player.Instance.transform.position;
+        var max_velocity = Velocity.magnitude;
+        UpdateReturnProjectile(projectile, position_return, max_velocity);
+    }
+
+    public static void UpdateReturnProjectile(Projectile projectile, Vector3 position_return, float max_velocity)
+    {
+        var rig = projectile.Rigidbody;
+        var direction = position_return - projectile.transform.position;
+        rig.AddForce(direction.normalized * 5f);
+        rig.velocity = Vector3.ClampMagnitude(rig.velocity, max_velocity);
     }
 
     private void UpdateCatch()
     {
         if (!_returning) return;
 
-        var distance = Vector3.Distance(transform.position, Player.Instance.transform.position);
-        if (distance > DISTANCE_CATCH) return;
+        if (TryCatch(this, Player.Instance.transform.position))
+        {
+            Caught = true;
+        }
+    }
 
-        Caught = true;
-        Kill();
+    public static bool TryCatch(Projectile projectile, Vector3 catch_position)
+    {
+        var distance = Vector3.Distance(projectile.transform.position, catch_position);
+        if (distance > DISTANCE_CATCH) return false;
+
+        projectile.Kill();
+        return true;
     }
 
     private void UpdateSize()

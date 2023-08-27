@@ -10,15 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 74fb1711040718646b14b53cd6510bf4, type: 3}
-  m_Name: split_size
+  m_Name: split lifetime
   m_EditorClassIdentifier: 
   attribute:
     type:
-      id: split_size
+      id: split_lifetime
     base_value:
       value_type: 1
       int_value: 3
-      float_value: 0.5
+      float_value: 0.75
       bool_value: 0
-    text: Bullet size
-    high_is_negative: 0
+    text: Bullet lifetime
+    high_is_negative: 1

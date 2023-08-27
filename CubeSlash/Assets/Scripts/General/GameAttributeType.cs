@@ -40,6 +40,8 @@ public partial class GameAttributeType : FakeEnum
     public static readonly GameAttributeType split_explode = new GameAttributeType(nameof(split_explode));
     public static readonly GameAttributeType split_fragments = new GameAttributeType(nameof(split_fragments));
     public static readonly GameAttributeType split_size = new GameAttributeType(nameof(split_size));
+    public static readonly GameAttributeType split_boomerang = new GameAttributeType(nameof(split_boomerang));
+    public static readonly GameAttributeType split_lifetime = new GameAttributeType(nameof(split_lifetime));
 
     // BOOMERANG
     public static readonly GameAttributeType boomerang_cooldown = new GameAttributeType(nameof(boomerang_cooldown));

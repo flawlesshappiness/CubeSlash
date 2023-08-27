@@ -20,5 +20,5 @@ MonoBehaviour:
       int_value: 0
       float_value: 40
       bool_value: 0
-    text: Projectiles zap nearby enemies
+    text: Bullets zap nearby enemies
     high_is_negative: 0

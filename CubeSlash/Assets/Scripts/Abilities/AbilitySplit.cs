@@ -16,9 +16,10 @@ public class AbilitySplit : Ability
     private int Piercing { get { return GameAttributeController.Instance.GetAttribute(GameAttributeType.split_piercing_count).ModifiedValue.int_value; } }
     private bool ChainLightning { get { return GameAttributeController.Instance.GetAttribute(GameAttributeType.split_chain).ModifiedValue.bool_value; } }
     private bool ProjectileExplode { get { return GameAttributeController.Instance.GetAttribute(GameAttributeType.split_explode).ModifiedValue.bool_value; } }
+    private bool ProjectileBoomerang { get { return GameAttributeController.Instance.GetAttribute(GameAttributeType.split_boomerang).ModifiedValue.bool_value; } }
+    private float ProjectileLifetime { get { return GameAttributeController.Instance.GetAttribute(GameAttributeType.split_lifetime).ModifiedValue.float_value; } }
 
     private const float PROJECTILE_SPEED = 15f;
-    private const float PROJECTILE_LIFETIME = 0.75f;
     private const float FORCE_SELF = 100f;
 
     public override void InitializeFirstTime()
@@ -43,20 +44,28 @@ public class AbilitySplit : Ability
         var directions = GetSplitDirections(CountProjectiles, arc, forward);
         foreach (var direction in directions)
         {
+            var start_position = Player.transform.position;
+            var velocity = direction * PROJECTILE_SPEED;
+
             var p = ProjectileController.Instance.ShootPlayerProjectile(new ProjectileController.PlayerShootInfo
             {
                 prefab = prefab_projectile,
-                position_start = Player.transform.position,
-                velocity = direction * PROJECTILE_SPEED,
+                position_start = start_position,
+                velocity = velocity,
                 onKill = OnKill
             }) as SplitProjectile;
 
             p.transform.localScale = Vector3.one * SizeProjectiles;
             p.Piercing = Piercing;
-            p.Lifetime = PROJECTILE_LIFETIME;
+            p.Lifetime = ProjectileLifetime;
             p.onDeath += () => OnDeath(p);
 
             p.HasChain = ChainLightning;
+            p.IsBoomerang = ProjectileBoomerang;
+
+            p.StartPosition = start_position;
+            p.Velocity = velocity.magnitude;
+            p.BoomerangDistance = 5f;
 
             var force = FORCE_SELF;
 

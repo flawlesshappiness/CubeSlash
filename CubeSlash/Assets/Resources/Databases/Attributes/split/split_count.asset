@@ -20,5 +20,5 @@ MonoBehaviour:
       int_value: 3
       float_value: 1.5
       bool_value: 0
-    text: Projectiles
+    text: Bullets
     high_is_negative: 0
