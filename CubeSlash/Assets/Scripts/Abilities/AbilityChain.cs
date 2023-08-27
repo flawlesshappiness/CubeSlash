@@ -18,8 +18,11 @@ public class AbilityChain : Ability
     public GameAttribute Strikes { get { return GameAttributeController.Instance.GetAttribute(GameAttributeType.chain_strikes); } }
     public GameAttribute ExplosionRadius { get { return GameAttributeController.Instance.GetAttribute(GameAttributeType.chain_explosion_radius); } }
     public GameAttribute Fragments { get { return GameAttributeController.Instance.GetAttribute(GameAttributeType.chain_fragments); } }
+    public bool ChainBoomerang { get { return GameAttributeController.Instance.GetAttribute(GameAttributeType.chain_boomerang).ModifiedValue.bool_value; } }
 
     private float time_attack;
+
+    private const float TIME_BETWEEN_CHAINS = 0.2f;
 
     public override void InitializeFirstTime()
     {
@@ -48,6 +51,9 @@ public class AbilityChain : Ability
     protected override void Update()
     {
         base.Update();
+        if (!GameController.Instance.IsGameStarted) return;
+        if (GameController.Instance.IsGameEnded) return;
+        if (GameController.Instance.IsPaused) return;
         if (IsModifier()) return;
         if (!IsEquipped()) return;
         if (Time.time < time_attack) return;
@@ -60,7 +66,8 @@ public class AbilityChain : Ability
             chains_left = Chains.ModifiedValue.int_value,
             initial_strikes = Strikes.ModifiedValue.int_value,
             chain_strikes = 1,
-            onHit = HitTarget
+            onHit = OnHit,
+            onFinalHit = OnFinalHit
         });
 
         var time_success = Time.time + Cooldown.ModifiedValue.float_value * att_cooldown_multiplier.ModifiedValue.float_value;
@@ -77,7 +84,7 @@ public class AbilityChain : Ability
         }
     }
 
-    private void HitTarget(ChainInfo info, IKillable k)
+    private void OnHit(ChainInfo info, IKillable k)
     {
         var position_prev = info.center;
         var position = k.GetPosition();
@@ -95,17 +102,39 @@ public class AbilityChain : Ability
             trail.CreateTrailsFromPreviousPosition();
         }
 
-        if (false)
-        {
-            trail.radius = 1.5f;
-            trail.lifetime = 1f;
-            var t = trail.CreateTrail(position);
-        }
-
         IEnumerator ExplodeCr(Vector3 position)
         {
             yield return new WaitForSeconds(0.25f);
             AbilityExplode.Explode(position, ExplosionRadius.ModifiedValue.float_value, 0);
+        }
+    }
+
+    private void OnFinalHit(ChainInfo info, IKillable k)
+    {
+        if (ChainBoomerang)
+        {
+            StartCoroutine(ChainBoomerangCr());
+        }
+
+        IEnumerator ChainBoomerangCr()
+        {
+            CreateImpactPS(info.center);
+            yield return new WaitForSeconds(TIME_BETWEEN_CHAINS);
+            CreateImpactPS(info.center);
+            yield return new WaitForSeconds(TIME_BETWEEN_CHAINS);
+
+            CreateImpactPS(Player.transform.position);
+            CreateZapPS(info.center, Player.transform.position);
+            SoundController.Instance.PlayGroup(SoundEffectType.sfx_chain_zap);
+
+            var dir = Player.transform.position - info.center;
+            var hits = Physics2D.CircleCastAll(info.center, 2f, dir, dir.magnitude);
+            foreach (var hit in hits)
+            {
+                var k = hit.collider.GetComponentInParent<IKillable>();
+                if (k == null) continue;
+                k.TryKill();
+            }
         }
     }
 
@@ -117,6 +146,7 @@ public class AbilityChain : Ability
         public int initial_strikes;
         public int chain_strikes;
         public System.Action<ChainInfo, IKillable> onHit;
+        public System.Action<ChainInfo, IKillable> onFinalHit;
         public List<IKillable> hits = new List<IKillable>();
 
         public int debug_chain_hits;
@@ -129,7 +159,15 @@ public class AbilityChain : Ability
             .Where(hit => hit != null && hit.CanHit() && !info.hits.Contains(hit))
             .Distinct();
 
-        if (hits.Count() == 0) return false;
+        if (hits.Count() == 0)
+        {
+            if (info.hits.Count() > 0)
+            {
+                info.onFinalHit?.Invoke(info, info.hits.Last());
+            }
+
+            return false;
+        }
 
         var count_hits = 0;
         var order_by_dist = hits.OrderBy(hit => Vector3.Distance(info.center, hit.GetPosition()));
@@ -161,17 +199,23 @@ public class AbilityChain : Ability
         Player.Instance.TryKillEnemy(k);
         info.debug_chain_hits++;
 
+        info.center = target_position;
+        info.initial_strikes = info.chain_strikes;
+        info.chains_left--;
+        info.hits.Add(k);
+
         // Keep chaining
-        if (info.chains_left <= 1) return;
+        if (info.chains_left <= 0)
+        {
+            info.onFinalHit?.Invoke(info, k);
+            return;
+        }
+
         CoroutineController.Instance.StartCoroutine(ChainCr());
         IEnumerator ChainCr()
         {
-            yield return new WaitForSeconds(0.2f);
+            yield return new WaitForSeconds(TIME_BETWEEN_CHAINS);
 
-            info.center = target_position;
-            info.chains_left--;
-            info.initial_strikes = info.chain_strikes;
-            info.hits.Add(k);
             TryChainToTarget(info);
         }
     }

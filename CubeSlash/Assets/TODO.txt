@@ -2,10 +2,8 @@
 real settings menu
 boomerang modifiers on other abilities
 
-chain mod boomerang > final chain back to player, hitting everything
 split mod boomerang > projectiles gain more lifetime and return to player
 explode mod boomerang > secondary delayed explosion
-mines mod boomerang > fragments penetrate and move further in a curve
 
 ## BUGS ##
 

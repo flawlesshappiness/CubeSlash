@@ -7,6 +7,7 @@ public partial class GameAttributeType : FakeEnum
     public static readonly GameAttributeType chain_cooldown = new GameAttributeType(nameof(chain_cooldown));
     public static readonly GameAttributeType chain_explosion_radius = new GameAttributeType(nameof(chain_explosion_radius));
     public static readonly GameAttributeType chain_radius = new GameAttributeType(nameof(chain_radius));
+    public static readonly GameAttributeType chain_boomerang = new GameAttributeType(nameof(chain_boomerang));
 
     // EXPLODE
     public static readonly GameAttributeType explode_chain = new GameAttributeType(nameof(explode_chain));

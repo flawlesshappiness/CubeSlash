@@ -10,24 +10,24 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 616189df85cb92d40806459b9c9111b7, type: 3}
-  m_Name: chain mod explode
+  m_Name: chain mod boomerang
   m_EditorClassIdentifier: 
   id:
-    id: chain_mod_explode
-  name: Disintegrate
-  icon: {fileID: 21300000, guid: 9fcc1744a317b8e4ab0aa3072a0a3ed5, type: 3}
+    id: chain_mod_boomerang
+  name: Double Chain
+  icon: {fileID: 21300000, guid: aa601896f349e9c47acfcaef8d6bc4c6, type: 3}
   hidden: 1
   require_ability: 1
   ability_required: 3
   upgrades_required: []
   modifiers:
   - attribute_type:
-      id: chain_explosion_radius
-    value_type: 1
-    int_value: 0
-    float_value: 3
+      id: chain_boomerang
+    value_type: 2
+    int_value: 2
+    float_value: 0
     percent_value: 0.2
-    bool_value: 0
+    bool_value: 1
   - attribute_type:
       id: chain_cooldown
     value_type: 3

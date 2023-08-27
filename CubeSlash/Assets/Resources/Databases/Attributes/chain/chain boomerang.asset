@@ -10,15 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 74fb1711040718646b14b53cd6510bf4, type: 3}
-  m_Name: boomerang cooldown
+  m_Name: chain boomerang
   m_EditorClassIdentifier: 
   attribute:
     type:
-      id: boomerang_cooldown
+      id: chain_boomerang
     base_value:
-      value_type: 1
-      int_value: 0
-      float_value: 8
+      value_type: 2
+      int_value: 1
+      float_value: 0
       bool_value: 0
-    text: Cooldown
-    high_is_negative: 1
+    text: Final chain returns to you
+    high_is_negative: 0
