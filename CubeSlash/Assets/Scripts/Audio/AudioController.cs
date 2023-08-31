@@ -1,5 +1,4 @@
 using FMOD.Studio;
-using UnityEngine;
 
 public class AudioController : Singleton
 {
@@ -39,10 +38,10 @@ public class AudioController : Singleton
 
     private void InitializeVolume()
     {
-        SetMasterVolume(Save.Game.volume_master);
-        SetMusicVolume(Save.Game.volume_music);
-        SetSFXVolume(Save.Game.volume_sfx);
-        SetUIVolume(Save.Game.volume_sfx);
+        SetMasterVolume(Save.Game.volumes[FMODBusType.Master]);
+        SetMusicVolume(Save.Game.volumes[FMODBusType.Music]);
+        SetSFXVolume(Save.Game.volumes[FMODBusType.SFX]);
+        SetUIVolume(Save.Game.volumes[FMODBusType.UI]);
     }
 
     public void SetMusicVolume(float volume) => Music.setVolume(volume);
@@ -62,11 +61,11 @@ public class AudioController : Singleton
 
     private void OnGameStateChanged(GameStateType type)
     {
-        if(type == GameStateType.MENU)
+        if (type == GameStateType.MENU)
         {
             SetInMenu(true);
         }
-        else if(type == GameStateType.PLAYING)
+        else if (type == GameStateType.PLAYING)
         {
             SetInMenu(false);
         }

@@ -1,10 +1,8 @@
 using Flawliz.Lerp;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
-using UnityEngine.UI;
 
 public class OptionsView : View
 {
@@ -16,9 +14,9 @@ public class OptionsView : View
 
     private void Start()
     {
-        slider_master.SetValue(Save.Game.volume_master);
-        slider_music.SetValue(Save.Game.volume_music);
-        slider_sfx.SetValue(Save.Game.volume_sfx);
+        slider_master.SetValue(Save.Game.volumes[FMODBusType.Master]);
+        slider_music.SetValue(Save.Game.volumes[FMODBusType.Music]);
+        slider_sfx.SetValue(Save.Game.volumes[FMODBusType.SFX]);
 
         slider_master.onValueChanged += AdjustMasterVolume;
         slider_music.onValueChanged += AdjustMusicVolume;
@@ -74,14 +72,14 @@ public class OptionsView : View
     {
         var value = slider_master.GetPercentage();
         AudioController.Instance.SetMasterVolume(value);
-        Save.Game.volume_master = value;
+        Save.Game.volumes[FMODBusType.Master] = value;
     }
 
     private void AdjustMusicVolume()
     {
         var value = slider_music.GetPercentage();
         AudioController.Instance.SetMusicVolume(value);
-        Save.Game.volume_music = value;
+        Save.Game.volumes[FMODBusType.Music] = value;
     }
 
     private void AdjustSFXVolume()
@@ -89,7 +87,8 @@ public class OptionsView : View
         var value = slider_sfx.GetPercentage();
         AudioController.Instance.SetSFXVolume(value);
         AudioController.Instance.SetUIVolume(value);
-        Save.Game.volume_sfx = value;
+        Save.Game.volumes[FMODBusType.SFX] = value;
+        Save.Game.volumes[FMODBusType.UI] = value;
     }
 
     private void ClickDeleteSave()

@@ -3,9 +3,13 @@ using System.Collections.Generic;
 [System.Serializable]
 public class GameSaveData : SaveDataObject
 {
-    public float volume_master = 0.5f;
-    public float volume_music = 1;
-    public float volume_sfx = 1;
+    public Dictionary<FMODBusType, float> volumes = new Dictionary<FMODBusType, float>()
+    {
+        { FMODBusType.Master, 0.5f },
+        { FMODBusType.Music, 1f },
+        { FMODBusType.SFX, 1f },
+        { FMODBusType.UI, 1f },
+    };
 
     public int runs_completed = 0;
     public int idx_difficulty_completed = -1;
