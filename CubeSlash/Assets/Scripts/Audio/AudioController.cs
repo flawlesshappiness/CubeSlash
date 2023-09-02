@@ -1,3 +1,4 @@
+using Flawliz.GenericOptions;
 using FMOD.Studio;
 
 public class AudioController : Singleton
@@ -38,10 +39,11 @@ public class AudioController : Singleton
 
     private void InitializeVolume()
     {
-        SetMasterVolume(Save.Game.volumes[FMODBusType.Master]);
-        SetMusicVolume(Save.Game.volumes[FMODBusType.Music]);
-        SetSFXVolume(Save.Game.volumes[FMODBusType.SFX]);
-        SetUIVolume(Save.Game.volumes[FMODBusType.UI]);
+        var data = GenericOptions.GetDataFromPlayerPrefs();
+        SetMasterVolume(data.MasterVolume);
+        SetMusicVolume(data.MusicVolume);
+        SetSFXVolume(data.SFXVolume);
+        SetUIVolume(data.SFXVolume);
     }
 
     public void SetMusicVolume(float volume) => Music.setVolume(volume);

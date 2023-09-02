@@ -1,3 +1,4 @@
+using Flawliz.GenericOptions;
 using Flawliz.Lerp;
 using System.Collections;
 using UnityEngine;
@@ -9,6 +10,7 @@ public class OptionsView : View
     [SerializeField] private UISlider slider_master, slider_music, slider_sfx;
     [SerializeField] private SelectableMenuItem btn_delete_save;
     [SerializeField] private UIInputLayout input;
+    [SerializeField] private GenericOptions options;
 
     public System.Action onClickBack;
 
@@ -23,6 +25,8 @@ public class OptionsView : View
         slider_sfx.onValueChanged += AdjustSFXVolume;
 
         btn_delete_save.onSubmit += ClickDeleteSave;
+
+        options.OnBack += Back;
 
         StartCoroutine(TransitionShowCr(true));
 
@@ -63,6 +67,11 @@ public class OptionsView : View
     private void PressBack(InputAction.CallbackContext context)
     {
         if (!Interactable) return;
+        options.ClickBack();
+    }
+
+    private void Back()
+    {
         SelectableMenuItem.RemoveSelection();
         SoundController.Instance.Play(SoundEffectType.sfx_ui_submit);
         StartCoroutine(TransitionBackCr());

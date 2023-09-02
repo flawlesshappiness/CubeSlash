@@ -819,7 +819,7 @@ MonoBehaviour:
   m_fontColor32:
     serializedVersion: 2
     rgba: 4279245329
-  m_fontColor: {r: 0.06538462, g: 0.1, b: 0.061538465, a: 1}
+  m_fontColor: {r: 0.06666667, g: 0.101960786, b: 0.0627451, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -896,7 +896,7 @@ MonoBehaviour:
     palette_name: Main
     map_index: 0
     map_name: Background
-    color: {r: 0, g: 0, b: 0, a: 0}
+    color: {r: 0.06666667, g: 0.101960786, b: 0.0627451, a: 1}
   graphic: {fileID: 7302488595550835137}
 --- !u!1001 &5217400611320841561
 PrefabInstance:

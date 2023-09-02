@@ -15,15 +15,11 @@ public class FMODVolumeControl : MonoBehaviour
         bus = FMODController.Instance.GetBus(path);
 
         _volume_control.OnPercentageChanged += SetVolume;
-        _volume_control.SetPercentage(Save.Game.volumes[_bus_type]);
     }
 
     private void OnValidate()
     {
-        if (_volume_control == null)
-        {
-            _volume_control = GetComponent<VolumeControl>();
-        }
+        _volume_control ??= GetComponent<VolumeControl>();
     }
 
     public void SetVolume(float f)

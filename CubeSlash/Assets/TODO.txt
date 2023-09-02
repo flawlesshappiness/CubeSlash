@@ -1,7 +1,9 @@
 ## TODO ##
 real settings menu
+Root area kinda sucks (enemies shoot projectiles when killed?)
 
 ## BUGS ##
+SlowMove GetOpenDirection kills frames - Optimize
 
 ## MAYBE ##
 geode area with splitting enemies and boss
