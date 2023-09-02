@@ -1,5 +1,4 @@
 ## TODO ##
-real settings menu
 Root area kinda sucks (enemies shoot projectiles when killed?)
 
 ## BUGS ##
