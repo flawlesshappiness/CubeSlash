@@ -25,6 +25,5 @@ public class FMODVolumeControl : MonoBehaviour
     public void SetVolume(float f)
     {
         bus.setVolume(f);
-        Save.Game.volumes[_bus_type] = f;
     }
 }

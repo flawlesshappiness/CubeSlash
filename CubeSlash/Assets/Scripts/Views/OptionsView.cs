@@ -16,9 +16,11 @@ public class OptionsView : View
 
     private void Start()
     {
+        /*
         slider_master.SetValue(Save.Game.volumes[FMODBusType.Master]);
         slider_music.SetValue(Save.Game.volumes[FMODBusType.Music]);
         slider_sfx.SetValue(Save.Game.volumes[FMODBusType.SFX]);
+        */
 
         slider_master.onValueChanged += AdjustMasterVolume;
         slider_music.onValueChanged += AdjustMusicVolume;
@@ -81,14 +83,14 @@ public class OptionsView : View
     {
         var value = slider_master.GetPercentage();
         AudioController.Instance.SetMasterVolume(value);
-        Save.Game.volumes[FMODBusType.Master] = value;
+        //Save.Game.volumes[FMODBusType.Master] = value;
     }
 
     private void AdjustMusicVolume()
     {
         var value = slider_music.GetPercentage();
         AudioController.Instance.SetMusicVolume(value);
-        Save.Game.volumes[FMODBusType.Music] = value;
+        //Save.Game.volumes[FMODBusType.Music] = value;
     }
 
     private void AdjustSFXVolume()
@@ -96,8 +98,8 @@ public class OptionsView : View
         var value = slider_sfx.GetPercentage();
         AudioController.Instance.SetSFXVolume(value);
         AudioController.Instance.SetUIVolume(value);
-        Save.Game.volumes[FMODBusType.SFX] = value;
-        Save.Game.volumes[FMODBusType.UI] = value;
+        //Save.Game.volumes[FMODBusType.SFX] = value;
+        //Save.Game.volumes[FMODBusType.UI] = value;
     }
 
     private void ClickDeleteSave()

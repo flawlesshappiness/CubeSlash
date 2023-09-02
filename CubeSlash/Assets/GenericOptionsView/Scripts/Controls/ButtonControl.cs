@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -7,12 +8,19 @@ namespace Flawliz.GenericOptions
     public class ButtonControl : SelectableControl
     {
         [SerializeField] private Image _img_normal, _img_selected, _img_submitted, _img_disabled;
+        [SerializeField] private TMP_Text _tmp;
 
         private State _state;
 
         private enum State
         {
             Normal, Submitted, Selected, Disabled
+        }
+
+        protected override void Awake()
+        {
+            base.Awake();
+            SetState(State.Normal);
         }
 
         private void SetState(State state)
@@ -52,5 +60,7 @@ namespace Flawliz.GenericOptions
             base.OnInteractable(interatable);
             SetState(interactable ? State.Normal : State.Disabled);
         }
+
+        public void SetText(string text) => _tmp.text = text;
     }
 }

@@ -1,3 +1,4 @@
+using System.Linq;
 using UnityEngine;
 
 namespace Flawliz.GenericOptions
@@ -12,6 +13,7 @@ namespace Flawliz.GenericOptions
         private int _idx_selected;
 
         public event System.Action<int> OnIndexChanged;
+        public event System.Action<T> OnValueChanged;
 
         protected virtual void Awake()
         {
@@ -42,7 +44,14 @@ namespace Flawliz.GenericOptions
         public void SetIndex(int i)
         {
             _idx_selected = Mathf.Clamp(i, 0, Values.Length - 1);
+            OnValueChanged?.Invoke(GetSelectedValue());
             OnIndexChanged?.Invoke(_idx_selected);
+        }
+
+        public void SetIndexFromValue(T value)
+        {
+            var idx = Values.ToList().IndexOf(value);
+            SetIndex(idx);
         }
 
         public T GetSelectedValue() => Values[Mathf.Clamp(_idx_selected, 0, Values.Length - 1)];

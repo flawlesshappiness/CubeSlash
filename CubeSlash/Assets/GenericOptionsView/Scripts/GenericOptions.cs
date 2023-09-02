@@ -8,7 +8,7 @@ namespace Flawliz.GenericOptions
     {
         [SerializeField] private CategoryControl _active_category_control;
         [SerializeField] private ButtonControl _btn_back, _btn_restore_defaults, _btn_apply;
-        [SerializeField] private ApplyWindow _apply_window;
+        [SerializeField] private ConfirmWindow _confirm_window;
         [SerializeField] private CanvasGroup _cvg_options_window;
         [SerializeField] private GameObject _options_foreground;
 
@@ -24,7 +24,7 @@ namespace Flawliz.GenericOptions
         private void OnValidate()
         {
             _active_category_control ??= GetComponentInChildren<CategoryControl>();
-            _apply_window ??= GetComponentInChildren<ApplyWindow>();
+            _confirm_window ??= GetComponentInChildren<ConfirmWindow>();
         }
 
         private void Awake()
@@ -40,10 +40,9 @@ namespace Flawliz.GenericOptions
             _btn_restore_defaults.OnSubmitEvent += ClickRestoreDefaults;
             _btn_apply.OnSubmitEvent += ClickApply;
 
-            _apply_window.OnApply += OnApply;
-            _apply_window.OnShow += () => SetApplyWindowEnabled(true);
-            _apply_window.OnHide += () => SetApplyWindowEnabled(false);
-            _apply_window.Hide();
+            _confirm_window.OnShow += () => SetApplyWindowEnabled(true);
+            _confirm_window.OnHide += () => SetApplyWindowEnabled(false);
+            _confirm_window.Hide();
 
             _btn_apply.SetInteractable(false);
 
@@ -52,7 +51,10 @@ namespace Flawliz.GenericOptions
 
         private void ClickApply()
         {
-            _apply_window.Show();
+            _confirm_window.TitleText = "Apply changes?";
+            _confirm_window.ConfirmText = "Yes";
+            _confirm_window.CancelText = "No";
+            _confirm_window.Show(OnApply, null);
         }
 
         public void ClickBack()
@@ -69,6 +71,22 @@ namespace Flawliz.GenericOptions
         }
 
         public void ClickRestoreDefaults()
+        {
+            _confirm_window.TitleText = "Restore defaults?";
+            _confirm_window.ConfirmText = "Yes";
+            _confirm_window.CancelText = "No";
+            _confirm_window.Show(OnRestoreDefaults, null);
+        }
+
+        public void ShowConfirmWindow(string title, string confirmText, string cancelText, System.Action onConfirm, System.Action onCancel)
+        {
+            _confirm_window.TitleText = title;
+            _confirm_window.ConfirmText = confirmText;
+            _confirm_window.CancelText = cancelText;
+            _confirm_window.Show(onConfirm, onCancel);
+        }
+
+        private void OnRestoreDefaults()
         {
             var category = CategoryControl.ActiveCategory;
             var controls = category.Content.GetComponentsInChildren<GenericOptionsHandler>();
