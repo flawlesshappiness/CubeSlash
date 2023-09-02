@@ -1,9 +1,9 @@
-using Flawliz.Lerp;
 using System.Collections;
 using UnityEngine;
 
 public class AI_BossRootPull : BossAI
 {
+    [SerializeField] private Projectile prefab_projectile;
     [SerializeField] private RootPullVine _vine;
     [SerializeField] private Transform _pivot_walls_rotation;
     [SerializeField] private Transform[] _pivot_walls;
@@ -29,7 +29,6 @@ public class AI_BossRootPull : BossAI
     private void Update()
     {
         VineUpdate();
-        UpdateWallsRotation();
     }
 
     private void FixedUpdate()
@@ -106,11 +105,6 @@ public class AI_BossRootPull : BossAI
             yield return new WaitForSeconds(time);
             TeleportHide();
             yield return new WaitForSeconds(3f);
-            /*
-            SetupWalls();
-            yield return ShrinkWallsCr();
-            yield return new WaitForSeconds(1f);
-            */
             TeleportAppear();
             yield return new WaitForSeconds(1f);
             can_attach = true;
@@ -125,6 +119,8 @@ public class AI_BossRootPull : BossAI
         SoundController.Instance.Play(SoundEffectType.sfx_enemy_bone_teleport_disappear);
         PlayTeleportPS();
         Self.Body.gameObject.SetActive(false);
+
+        ShootProjectiles();
     }
 
     private void TeleportAppear()
@@ -135,8 +131,9 @@ public class AI_BossRootPull : BossAI
 
         SoundController.Instance.Play(SoundEffectType.sfx_enemy_bone_teleport_appear);
         PlayTeleportPS();
-        StartCoroutine(Cr());
+        ShootProjectiles();
 
+        StartCoroutine(Cr());
         IEnumerator Cr()
         {
             yield return new WaitForSeconds(0.2f);
@@ -153,78 +150,25 @@ public class AI_BossRootPull : BossAI
             .Destroy(5f);
     }
 
-    private void SetupWalls()
+    private void ShootProjectiles()
     {
-        ObjectController.Instance.Add(_pivot_walls_rotation.gameObject);
-        _pivot_walls_rotation.parent = GameController.Instance.world;
-        _pivot_walls_rotation.transform.localScale = Vector3.one;
-        _pivot_walls_rotation.transform.position = Player.Instance.transform.position;
-
-        var width = CameraController.Instance.Width;
-        var delta_angle = 360f / _pivot_walls.Length;
-
-        for (int i = 0; i < _pivot_walls.Length; i++)
+        var count = 6 + hits_taken * 2;
+        var points = CircleHelper.Points(1, 10);
+        foreach (var point in points)
         {
-            var pivot = _pivot_walls[i];
-            var angle = delta_angle * i;
-            var rotation = Quaternion.AngleAxis(angle, Vector3.forward);
-
-            pivot.rotation = rotation;
+            var dir = Self.transform.rotation * point;
+            Shoot(dir);
         }
-
-        for (int i = 0; i < _walls.Length; i++)
-        {
-            var wall = _walls[i];
-            wall.transform.localPosition = new Vector3(width * 2, 0);
-        }
-
-        _pivot_walls_rotation.rotation = Quaternion.AngleAxis(Random.Range(0f, 360f), Vector3.forward);
-        _pivot_walls_rotation.gameObject.SetActive(true);
     }
 
-    private IEnumerator ShrinkWallsCr()
+    private void Shoot(Vector3 dir)
     {
-        var duration_move = 2f;
-        var width_max = CameraController.Instance.Width * 0.4f;
-        var width_min = CameraController.Instance.Width * 0.2f - (0.025f * hits_taken);
-        var count_move = 3 + hits_taken;
-
-        for (int i = 0; i < count_move; i++)
-        {
-            var ti = (float)i / (count_move - 1);
-
-            var sfx = SoundController.Instance.Play(SoundEffectType.sfx_enemy_root);
-            sfx.SetPitch(-2);
-
-            foreach (var wall in _walls)
-            {
-                var w = Mathf.Lerp(width_max, width_min, ti);
-                Lerp.LocalPosition(wall.transform, duration_move, new Vector3(w, 0))
-                    .Curve(EasingCurves.EaseOutQuad);
-            }
-
-            yield return new WaitForSeconds(duration_move);
-            yield return new WaitForSeconds(0.2f);
-        }
-
-        foreach (var wall in _walls)
-        {
-            var w = CameraController.Instance.Width * 2;
-            Lerp.LocalPosition(wall.transform, duration_move, new Vector3(w, 0))
-                .Curve(EasingCurves.EaseInOutQuad);
-
-            var sfx = SoundController.Instance.Play(SoundEffectType.sfx_enemy_root);
-            sfx.SetPitch(1);
-        }
-
-        yield return new WaitForSeconds(duration_move);
-
-        _pivot_walls_rotation.gameObject.SetActive(false);
-    }
-
-    private void UpdateWallsRotation()
-    {
-        if (GameController.Instance.IsPaused) return;
-        _pivot_walls_rotation.rotation *= Quaternion.AngleAxis(10f * Time.deltaTime, Vector3.forward);
+        var speed = 3;
+        var p = ProjectileController.Instance.CreateProjectile(prefab_projectile);
+        p.transform.position = Position;
+        p.Rigidbody.velocity = dir.normalized * speed;
+        p.SetDirection(dir);
+        p.Lifetime = 999f;
+        p.Piercing = -1;
     }
 }

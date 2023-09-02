@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9c301fa7d26535e4cb7056a730ebca5e, type: 3}
-  m_Name: Enemy_RootPull
+  m_Name: Enemy_Root
   m_EditorClassIdentifier: 
   type: 5
   body: {fileID: 4160787836209392310, guid: b7d20cc64e19b3e4f8f9ddf5944c8fad, type: 3}
@@ -21,4 +21,4 @@ MonoBehaviour:
   angular_velocity: 200
   size: 1.5
   mass: 2
-  ai: {fileID: 8290725483284165672, guid: 5226736125d08444baad135a2480a2cf, type: 3}
+  ai: {fileID: 8667807570293309192, guid: c6b933a97d01df54281cf202da7be1de, type: 3}

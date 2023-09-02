@@ -1,8 +1,8 @@
 ## TODO ##
-Root area kinda sucks (enemies shoot projectiles when killed?)
+Final boss spawn more enemies
+Easy difficuly - less areas
 
 ## BUGS ##
-SlowMove GetOpenDirection kills frames - Optimize
 
 ## MAYBE ##
 geode area with splitting enemies and boss

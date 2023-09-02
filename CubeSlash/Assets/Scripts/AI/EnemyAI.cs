@@ -8,6 +8,10 @@ public abstract class EnemyAI : MonoBehaviour
     protected Vector3 Position { get { return Self.transform.position; } }
     protected Vector3 PlayerPosition { get { return Player.Instance.transform.position; } }
     protected EnemyBody Body { get { return Self.Body as EnemyBody; } }
+    protected Vector3 LastOpenDirection { get; set; }
+
+    private float _time_open_direction;
+
     public virtual void Initialize(Enemy enemy)
     {
         Self = enemy;
@@ -46,8 +50,13 @@ public abstract class EnemyAI : MonoBehaviour
 
     protected void MoveTowards(Vector3 destination)
     {
-        var direction = GetOpenDirectionTowards(destination);
-        Self.Move(direction);
+        if (Time.time > _time_open_direction)
+        {
+            _time_open_direction = Time.time + 0.5f;
+            LastOpenDirection = GetOpenDirectionTowards(destination);
+        }
+
+        Self.Move(LastOpenDirection);
     }
 
     protected void MoveToStop(float mul = 1f)
@@ -77,6 +86,7 @@ public abstract class EnemyAI : MonoBehaviour
         var forward = (destination - Self.transform.position).normalized;
         var angle = 0;
         var angle_delta = 30;
+        var radius = Self.Settings.size * 0.5f;
         while (angle < 180)
         {
             var directions = new List<Vector3>();
@@ -94,19 +104,10 @@ public abstract class EnemyAI : MonoBehaviour
 
             foreach (var dir in directions)
             {
-                //var hits = Physics2D.RaycastAll(Self.transform.position, dir, raycast_distance);
-                var radius = Self.Settings.size * 0.5f;
                 var origin = Self.transform.position + dir * radius;
-                var hits = Physics2D.CircleCastAll(origin, radius, dir, raycast_distance);
-                if (AnyValidHits(hits))
-                {
-                    Debug.DrawLine(Self.transform.position, Self.transform.position + dir * raycast_distance, Color.red);
-                    continue;
-                }
-                else
-                {
-                    Debug.DrawLine(Self.transform.position, Self.transform.position + dir * raycast_distance, Color.green);
-                }
+                var hits = Physics2D.RaycastAll(origin, dir, raycast_distance);
+                //var hits = Physics2D.CircleCastAll(origin, radius, dir, raycast_distance);
+                if (AnyValidHits(hits)) continue;
 
                 return dir.normalized;
             }

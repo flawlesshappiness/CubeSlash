@@ -168,7 +168,7 @@ GameObject:
   - component: {fileID: 8290725483284165671}
   - component: {fileID: 466179704934905642}
   m_Layer: 0
-  m_Name: AI_Boss_RootPull
+  m_Name: AI_Boss_Root
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -202,6 +202,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 476ec8bb36eede449a87da005a3ee130, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  prefab_projectile: {fileID: 7462172402094969671, guid: 6538c54ea107f1b42afc16e280524ec3, type: 3}
   _vine: {fileID: 4327244987187040586}
   _pivot_walls_rotation: {fileID: 2628930992001202858}
   _pivot_walls:
