@@ -1,9 +1,7 @@
 using Flawliz.Lerp;
 using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class GameIntroView : View
 {
@@ -13,7 +11,7 @@ public class GameIntroView : View
 
     private void Start()
     {
-        foreach(var tmp in tmps_intro)
+        foreach (var tmp in tmps_intro)
         {
             tmp.color = tmp.color.SetA(0);
         }
@@ -40,7 +38,7 @@ public class GameIntroView : View
         IEnumerator Cr()
         {
             Lerp.Alpha(input.CanvasGroup, 0.5f, 1);
-            foreach(var tmp in tmps_intro)
+            foreach (var tmp in tmps_intro)
             {
                 var words = tmp.text.Split(' ').Length;
                 var time_read = words / 2;

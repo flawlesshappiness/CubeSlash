@@ -106,17 +106,32 @@ public class GameController : MonoBehaviour
 
     public void StartGame()
     {
-        IsGameStarted = true;
+        StartCoroutine(Cr());
 
-        onGameStart?.Invoke();
+        IEnumerator Cr()
+        {
+            /*
+            var view = ViewController.Instance.ShowView<GameIntroView>(1);
+            yield return new WaitForSecondsRealtime(1);
+            yield return view.AnimateIntro();
+            view.Close(1);
+            yield return new WaitForSecondsRealtime(1);
+            */
 
-        GameStateController.Instance.SetGameState(GameStateType.MENU);
-        AreaController.Instance.StartAreaCoroutine();
-        ViewController.Instance.ShowView<GameView>(0);
+            IsGameStarted = true;
 
-        Player.Instance.ResetValues();
+            onGameStart?.Invoke();
 
-        ResumeLevel();
+            GameStateController.Instance.SetGameState(GameStateType.MENU);
+            AreaController.Instance.StartAreaCoroutine();
+            ViewController.Instance.ShowView<GameView>(0);
+
+            Player.Instance.ResetValues();
+
+            ResumeLevel();
+
+            yield return null;
+        }
     }
 
     public void EndGame()
