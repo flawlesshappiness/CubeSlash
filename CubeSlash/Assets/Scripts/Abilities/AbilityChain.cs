@@ -176,7 +176,18 @@ public class AbilityChain : Ability
             if (count_hits >= info.initial_strikes) break;
             count_hits++;
 
-            ChainToTarget(hit, info);
+            var new_info = new ChainInfo
+            {
+                center = info.center,
+                radius = info.radius,
+                chains_left = info.chains_left,
+                initial_strikes = info.chain_strikes,
+                chain_strikes = info.chain_strikes,
+                onHit = info.onHit,
+                onFinalHit = info.onFinalHit
+            };
+
+            ChainToTarget(hit, new_info);
         }
 
         return true;
@@ -200,7 +211,6 @@ public class AbilityChain : Ability
         info.debug_chain_hits++;
 
         info.center = target_position;
-        info.initial_strikes = info.chain_strikes;
         info.chains_left--;
         info.hits.Add(k);
 

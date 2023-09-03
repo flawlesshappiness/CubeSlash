@@ -50,7 +50,7 @@ public class DebugConsoleHandler : Singleton
             window.CreateButton("Gain Ability", ClickGainAbility);
             window.CreateButton("Level up", ClickLevelUp);
             window.CreateButton("Level up (Ability)", ClickLevelUpAbility);
-            window.CreateButton("Equipment", ClickEquipment);
+            //window.CreateButton("Equipment", ClickEquipment);
             window.CreateButton(GameController.DAMAGE_DISABLED ? "Enable damage" : "Disable damage", ClickToggleDamage);
             window.CreateButton("Set Area", ClickSetArea);
             window.CreateButton("Next Area", ClickNextArea);
