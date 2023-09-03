@@ -70,7 +70,9 @@ public class CameraController : Singleton
     private void OnNextArea(Area area)
     {
         var settings = GameSettings.Instance;
-        var t = (float)AreaController.Instance.AreaIndex / (settings.areas_to_win - 1);
+        var diff = DifficultyController.Instance.DifficultyValue;
+        var max_area_count = settings.area_count_difficulty.Evaluate(diff);
+        var t = (float)AreaController.Instance.AreaIndex / (max_area_count - 1);
         var size = settings.camera_size_start + settings.camera_size_game.Evaluate(t);
         AnimateSize(15f, size, EasingCurves.EaseInOutQuad);
     }

@@ -13,6 +13,7 @@ public class AreaController : Singleton
     private Coroutine cr_next_area;
     private Area current_area;
     private int index_area;
+    private int max_area_index;
 
     private List<Area> visited_areas = new List<Area>();
     private List<Area> available_areas = new List<Area>();
@@ -28,8 +29,15 @@ public class AreaController : Singleton
     {
         base.Initialize();
         db = Database.Load<AreaDatabase>();
+        GameController.Instance.onGameStart += OnGameStart;
         GameController.Instance.onGameEnd += OnGameEnd;
         GameController.Instance.onMainMenu += OnMainMenu;
+    }
+
+    private void OnGameStart()
+    {
+        var diff = DifficultyController.Instance.DifficultyValue;
+        max_area_index = (int)GameSettings.Instance.area_count_difficulty.Evaluate(diff);
     }
 
     private void OnGameEnd()
@@ -100,7 +108,7 @@ public class AreaController : Singleton
 
     private Area GetNextArea()
     {
-        if (available_areas.Count == 0)
+        if (available_areas.Count == 0 || index_area >= max_area_index)
         {
             IsFinalArea = true;
             return db.final_area;

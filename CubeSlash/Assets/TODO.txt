@@ -1,6 +1,5 @@
 ## TODO ##
 Final boss spawn more enemies
-Easy difficuly - less areas
 
 ## BUGS ##
 

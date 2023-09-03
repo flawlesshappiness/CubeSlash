@@ -12,10 +12,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb1a4c0ebdbc5604ea4cacab89ca5a54, type: 3}
   m_Name: GameSettings
   m_EditorClassIdentifier: 
-  areas_to_win: 5
   main_menu_area: {fileID: 11400000, guid: 05cda483061ecb540840d2b69f3e52ca, type: 2}
   area_duration: 180
   area_size: 125
+  area_count_difficulty:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 3
+      inSlope: 3
+      outSlope: 3
+      tangentMode: 34
+      weightedMode: 3
+      inWeight: 0
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 6
+      inSlope: 3
+      outSlope: 3
+      tangentMode: 34
+      weightedMode: 3
+      inWeight: 0.33333334
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
   time_bgm_play: 0.3
   time_boss_spawn: 0.6
   endless_duration: 1200
@@ -39,30 +62,6 @@ MonoBehaviour:
       tangentMode: 0
       weightedMode: 3
       inWeight: 0.2258454
-      outWeight: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  enemy_freq_endless:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0.8
-      inSlope: -0.75
-      outSlope: -0.75
-      tangentMode: 34
-      weightedMode: 3
-      inWeight: 0
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 1
-      value: 0.05
-      inSlope: -0.75
-      outSlope: -0.75
-      tangentMode: 34
-      weightedMode: 3
-      inWeight: 0.33333334
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2

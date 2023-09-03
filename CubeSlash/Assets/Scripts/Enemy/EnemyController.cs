@@ -83,7 +83,9 @@ public class EnemyController : Singleton
     public float GetSpawnFrequencyGame()
     {
         var settings = GameSettings.Instance;
-        var max_game_duration = settings.areas_to_win * settings.area_duration;
+        var diff = DifficultyController.Instance.DifficultyValue;
+        var max_area_count = settings.area_count_difficulty.Evaluate(diff);
+        var max_game_duration = max_area_count * settings.area_duration;
         var current_game_duration = Time.time - SessionController.Instance.CurrentData.time_start;
         var t_game_duration = current_game_duration / max_game_duration;
         var freq_game = settings.enemy_freq_game.Evaluate(t_game_duration);
@@ -100,7 +102,9 @@ public class EnemyController : Singleton
     public int GetSpawnCount()
     {
         var settings = GameSettings.Instance;
-        var max_game_duration = settings.areas_to_win * settings.area_duration;
+        var diff = DifficultyController.Instance.DifficultyValue;
+        var max_area_count = settings.area_count_difficulty.Evaluate(diff);
+        var max_game_duration = max_area_count * settings.area_duration;
         var current_game_duration = Time.time - SessionController.Instance.CurrentData.time_start;
         var t_game_duration = current_game_duration / max_game_duration;
         var count = (int)settings.enemy_count_game.Evaluate(t_game_duration);

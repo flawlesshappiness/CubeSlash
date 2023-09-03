@@ -3,13 +3,11 @@ using UnityEngine;
 [CreateAssetMenu(fileName = nameof(GameSettings), menuName = "Game/" + nameof(GameSettings), order = 1)]
 public class GameSettings : ScriptableObject
 {
-    [Header("GENERAL")]
-    public int areas_to_win;
-
     [Header("AREA")]
     public Area main_menu_area;
     public float area_duration;
     public float area_size;
+    public AnimationCurve area_count_difficulty;
 
     [Header("MUSIC")]
     [Range(0f, 1f)] public float time_bgm_play;
