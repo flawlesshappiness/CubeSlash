@@ -1,8 +1,6 @@
-using Flawliz.Lerp;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class SplashView : View
 {
@@ -31,13 +29,14 @@ public class SplashView : View
     public Coroutine ShowSplashes()
     {
         cvg_splashes.ForEach(cvg => cvg.alpha = 0);
+        cvg_splashes.ForEach(cvg => cvg.gameObject.SetActive(true));
         return StartCoroutine(ShowSplashesCr());
     }
 
     private IEnumerator ShowSplashesCr()
     {
         yield return new WaitForSecondsRealtime(0.5f);
-        foreach(var cvg in cvg_splashes)
+        foreach (var cvg in cvg_splashes)
         {
             yield return SkippableLoopCr(FADE_DURATION, f => cvg.alpha = Mathf.Lerp(0, 1, f));
             yield return SkippableLoopCr(SHOW_DURATION, null);
@@ -52,12 +51,12 @@ public class SplashView : View
         var skipped = false;
         var time_start = Time.unscaledTime;
         var time_end = time_start + duration;
-        while(Time.unscaledTime < time_end)
+        while (Time.unscaledTime < time_end)
         {
             var t = (Time.unscaledTime - time_start) / (time_end - time_start);
             onLoop?.Invoke(t);
 
-            if(!skipped && skip_pressed)
+            if (!skipped && skip_pressed)
             {
                 skipped = true;
                 var mul = 0.1f;

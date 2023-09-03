@@ -90,6 +90,13 @@ public class PlayRadialView : View
                 Sprite = difficulty_icon,
                 OnSubmitComplete = ShowDifficultyOptions
             },
+
+             new RadialMenuOption
+            {
+                Title = "Credits",
+                Sprite = Icon.Get(IconType.credits),
+                OnSubmitComplete = ShowCredits
+            },
         };
 
         InsertBackOption(options, Back);
@@ -97,6 +104,11 @@ public class PlayRadialView : View
         radial.AddOptions(options);
         radial.AnimateShowElements(true, 0.05f);
         radial.SetCancelElement(radial.GetElement(0));
+    }
+
+    private void ShowCredits()
+    {
+        ViewController.Instance.ShowView<CreditsView>(0.5f);
     }
 
     private void ShowAbilityOptions()
