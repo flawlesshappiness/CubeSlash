@@ -373,6 +373,7 @@ public class AI_BossMaw : BossAI
             Player.Instance.InvincibilityLock.AddLock(nameof(AI_BossMaw));
             StopCoroutine(cr_main);
             StopCurrentAttack();
+            EnemyController.Instance.EnemySpawnEnabled = false;
             EnemyController.Instance.KillActiveEnemies(new List<Enemy> { Self });
             ProjectileController.Instance.ClearProjectiles();
             yield return AnimateDestroyWalls();

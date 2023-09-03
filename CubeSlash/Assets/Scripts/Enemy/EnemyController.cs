@@ -51,6 +51,7 @@ public class EnemyController : Singleton
 
     private void OnGameStart()
     {
+        EnemySpawnEnabled = true;
         time_next_spawn_enemy = Time.time;
     }
 
