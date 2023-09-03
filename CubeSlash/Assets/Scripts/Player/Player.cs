@@ -255,7 +255,7 @@ public class Player : Character
     private void ReleaseAbility(PlayerInput.ButtonType button)
     {
         if (!GameController.Instance.IsGameStarted) return;
-        if (GameController.Instance.IsPaused) return;
+        //if (GameController.Instance.IsPaused) return;
         if (InputLock.IsLocked) return;
 
         switch (button)

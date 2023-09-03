@@ -10,7 +10,13 @@ public class OptionsController : Singleton
         base.Initialize();
 
         var data = GenericOptions.GetDataFromPlayerPrefs();
-        Screen.SetResolution(data.Resolution.width, data.Resolution.height, data.FullScreenMode, data.Resolution.refreshRate);
+        var resolution = data.Resolution;
+        if (resolution.width == 0 || resolution.height == 0)
+        {
+            resolution = Screen.currentResolution;
+        }
+
+        Screen.SetResolution(resolution.width, resolution.height, data.FullScreenMode, data.Resolution.refreshRate);
         QualitySettings.vSyncCount = data.Vsync ? 1 : 0;
         Application.targetFrameRate = data.FrameRateCap;
     }
