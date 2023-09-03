@@ -156,7 +156,7 @@ public class EnemyController : Singleton
         enemy.OnDeath += () =>
         {
             // Win
-            if (AreaController.Instance.IsFinalArea)
+            if (boss.type == EnemyType.BossMaw)
             {
                 GameController.Instance.Win();
             }
