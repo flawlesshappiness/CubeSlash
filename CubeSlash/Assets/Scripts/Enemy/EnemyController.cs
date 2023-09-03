@@ -13,6 +13,7 @@ public class EnemyController : Singleton
     private List<AreaEnemyInfo> enemies_unlocked = new List<AreaEnemyInfo>();
 
     public bool EnemySpawnEnabled { get; set; } = true;
+    public bool IsFinalBossActive { get; set; }
     public System.Action OnEnemyKilled { get; set; }
     public System.Action<Enemy> OnEnemySpawned { get; set; }
     public System.Action<EnemyType> OnBossKilled { get; set; }
@@ -51,6 +52,7 @@ public class EnemyController : Singleton
 
     private void OnGameStart()
     {
+        IsFinalBossActive = false;
         EnemySpawnEnabled = true;
         time_next_spawn_enemy = Time.time;
     }
@@ -83,6 +85,7 @@ public class EnemyController : Singleton
 
     public float GetSpawnFrequencyGame()
     {
+        if (IsFinalBossActive) return 1.2f;
         var settings = GameSettings.Instance;
         var diff = DifficultyController.Instance.DifficultyValue;
         var max_area_count = settings.area_count_difficulty.Evaluate(diff);
@@ -151,6 +154,11 @@ public class EnemyController : Singleton
 
     private Enemy SpawnAreaBoss(EnemySettings boss)
     {
+        if (AreaController.Instance.IsFinalArea)
+        {
+            IsFinalBossActive = true;
+        }
+
         var area = AreaController.Instance.CurrentArea;
         var enemy = SpawnBoss(boss);
         enemy.OnDeath += () =>

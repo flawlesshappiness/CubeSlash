@@ -81,6 +81,7 @@ public class Player : Character
         UpdateGameAttributes();
 
         gameObject.SetActive(true);
+        g_invincible.SetActive(false);
         transform.rotation = Quaternion.identity;
         Body.SetLookDirection(transform.up);
     }
