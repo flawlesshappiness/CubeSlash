@@ -1,5 +1,4 @@
 ## TODO ##
-Final boss spawn more enemies
 
 ## BUGS ##
 

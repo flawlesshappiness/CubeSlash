@@ -41,8 +41,6 @@ public class AI_BossMaw : BossAI
 
         CreateArenas();
 
-        EnemyController.Instance.EnemySpawnEnabled = false;
-
         var i_diff = DifficultyController.Instance.DifficultyIndex;
         duds_max = HITPOINTS[Mathf.Clamp(i_diff, 0, HITPOINTS.Length - 1)];
         duds_to_kill = duds_max;
@@ -57,12 +55,23 @@ public class AI_BossMaw : BossAI
 
         CreateDud();
 
-        // attack loop
+        // Attack loop
         while (true)
         {
             Attack_Random();
 
             var cooldown = Mathf.Lerp(6f, 4f, T_HitsTaken);
+            yield return new WaitForSeconds(cooldown);
+        }
+    }
+
+    IEnumerator SpawnLoopCr()
+    {
+        while (true)
+        {
+            Attack_EnemyGroup();
+
+            var cooldown = Mathf.Lerp(5f, 3f, T_HitsTaken);
             yield return new WaitForSeconds(cooldown);
         }
     }
@@ -78,18 +87,17 @@ public class AI_BossMaw : BossAI
     private void Attack_Random()
     {
         var r = new WeightedRandom<(string, System.Action)>();
-        AddElement(nameof(Attack_EnemyGroup), () => Attack_EnemyGroup());
-        AddElement(nameof(Attack_Projectiles), () => Attack_Projectiles());
-        AddElement(nameof(Attack_Beam), () => Attack_Beam());
-        AddElement(nameof(Attack_Beams), () => Attack_Beams());
+        AddElement(nameof(Attack_Projectiles), 1, () => Attack_Projectiles());
+        AddElement(nameof(Attack_Beam), 1, () => Attack_Beam());
+        AddElement(nameof(Attack_Beams), 0.5f, () => Attack_Beams());
         var tuple = r.Random();
         tuple.Item2?.Invoke();
         prev_attack = tuple.Item1;
 
-        void AddElement(string name, System.Action action)
+        void AddElement(string name, float weight, System.Action action)
         {
             if (name == prev_attack) return;
-            r.AddElement((name, action), 1);
+            r.AddElement((name, action), weight);
         }
     }
 
@@ -116,6 +124,8 @@ public class AI_BossMaw : BossAI
 
     private void Attack_Projectiles()
     {
+        SoundController.Instance.Play(SoundEffectType.sfx_enemy_maw_attack);
+
         cr_attack = StartCoroutine(Cr());
         IEnumerator Cr()
         {
