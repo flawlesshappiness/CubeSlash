@@ -33,7 +33,7 @@ public class BodypartController : Singleton
     public BodypartInfo UnlockRandomPart()
     {
         var parts = _db.collection.Where(info => !info.is_ability_part && !Save.Game.unlocked_bodyparts.Contains(info.type));
-        if(parts.Count() > 0)
+        if (parts.Count() > 0)
         {
             var info = parts.ToList().Random();
             UnlockPart(info);
@@ -41,5 +41,11 @@ public class BodypartController : Singleton
         }
 
         return null;
+    }
+
+    public void UnlockAllParts()
+    {
+        var parts = _db.collection.Where(info => !info.is_ability_part && !Save.Game.unlocked_bodyparts.Contains(info.type));
+        parts.ToList().ForEach(info => UnlockPart(info));
     }
 }
