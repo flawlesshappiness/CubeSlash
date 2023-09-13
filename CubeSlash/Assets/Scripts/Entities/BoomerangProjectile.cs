@@ -16,6 +16,7 @@ public class BoomerangProjectile : Projectile
     private bool _returning;
     private float _time_chain_hit;
 
+    private const float RETURN_ACCELERATION = 20f;
     private const float DISTANCE_CATCH = 1.5f;
     private const float TIME_CHAIN_HIT = 0.5f;
     private const float RADIUS_CHAIN = 5f;
@@ -82,7 +83,7 @@ public class BoomerangProjectile : Projectile
     {
         var rig = projectile.Rigidbody;
         var direction = position_return - projectile.transform.position;
-        rig.AddForce(direction.normalized * 5f);
+        rig.AddForce(direction.normalized * RETURN_ACCELERATION);
         rig.velocity = Vector3.ClampMagnitude(rig.velocity, max_velocity);
     }
 
@@ -90,19 +91,29 @@ public class BoomerangProjectile : Projectile
     {
         if (!_returning) return;
 
-        if (TryCatch(this, Player.Instance.transform.position))
+        var projectile = this;
+        var catch_position = Player.Instance.transform.position;
+
+        if (CanCatch(projectile, catch_position))
         {
             Caught = true;
         }
+
+        TryCatch(projectile, catch_position);
     }
 
     public static bool TryCatch(Projectile projectile, Vector3 catch_position)
     {
-        var distance = Vector3.Distance(projectile.transform.position, catch_position);
-        if (distance > DISTANCE_CATCH) return false;
+        if (!CanCatch(projectile, catch_position)) return false;
 
         projectile.Kill();
         return true;
+    }
+
+    private static bool CanCatch(Projectile projectile, Vector3 catch_position)
+    {
+        var distance = Vector3.Distance(projectile.transform.position, catch_position);
+        return distance < DISTANCE_CATCH;
     }
 
     private void UpdateSize()

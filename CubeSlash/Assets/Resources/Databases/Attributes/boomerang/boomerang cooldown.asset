@@ -18,7 +18,7 @@ MonoBehaviour:
     base_value:
       value_type: 1
       int_value: 0
-      float_value: 8
+      float_value: 4
       bool_value: 0
     text: Cooldown
     high_is_negative: 1

@@ -16,7 +16,7 @@ public class AbilityBoomerang : Ability
     private int FragmentProjectile { get { return GameAttributeController.Instance.GetAttribute(GameAttributeType.boomerang_fragment).ModifiedValue.int_value; } } // MINES
 
     private const float PROJECTILE_SPEED = 15f;
-    private const float PROJECTILE_LIFETIME = 999f;
+    private const float PROJECTILE_LIFETIME = 5f;
     private const float FORCE_SELF = 300f;
     private const float FORCE_SELF_SIZE = 100f;
 
@@ -102,7 +102,10 @@ public class AbilityBoomerang : Ability
         {
             if (p.Caught)
             {
+                var prev = TimeCooldownLeft;
                 AdjustCooldownFlat(-CatchCooldown);
+                var cur = TimeCooldownLeft;
+                Debug.Log($"{prev} > {cur}");
                 SoundController.Instance.PlayGroup(SoundEffectType.sfx_boomerang_catch);
             }
         }

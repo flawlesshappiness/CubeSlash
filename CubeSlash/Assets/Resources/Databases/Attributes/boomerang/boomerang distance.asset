@@ -18,7 +18,7 @@ MonoBehaviour:
     base_value:
       value_type: 1
       int_value: 1
-      float_value: 3
+      float_value: 2
       bool_value: 0
     text: Distance
     high_is_negative: 0
