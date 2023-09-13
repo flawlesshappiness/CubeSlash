@@ -2,7 +2,6 @@
 energy bar full indicator (sound/graphic)
 boomerang need testing in build
 chain might kill shooter boss too fast
-roots area earlier
 puff trail outline
 
 ## BUGS ##

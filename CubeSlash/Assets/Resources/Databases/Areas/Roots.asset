@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2a24aa1140318f84bb86c4b408b90009, type: 3}
   m_Name: Roots
   m_EditorClassIdentifier: 
-  index_level_min: 2
+  index_level_min: 1
   boss: {fileID: 11400000, guid: 85521f39da960594887233b55076ef99, type: 2}
   enemies:
   - enemy: {fileID: 11400000, guid: bf9f58e046a1acb4a9b0123d3a09494b, type: 2}
