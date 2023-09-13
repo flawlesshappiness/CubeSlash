@@ -28,6 +28,8 @@ public class GameController : MonoBehaviour
 
     public const string TAG_ABILITY_VIEW = "Ability";
 
+    private bool _levelling_up;
+
     private GameStateType GameState { get { return GameStateController.Instance.GameState; } }
 
     private void Awake()
@@ -69,6 +71,7 @@ public class GameController : MonoBehaviour
         if (PauseView.Exists) return;
         if (GameState != GameStateType.PLAYING) return;
         if (PauseLock.IsLocked) return;
+        if (_levelling_up) return;
         GameStateController.Instance.SetGameState(GameStateType.MENU);
         ViewController.Instance.ShowView<PauseView>(0, nameof(PauseView));
     }
@@ -154,6 +157,8 @@ public class GameController : MonoBehaviour
 
     private void OnPlayerLevelUp()
     {
+        _levelling_up = true;
+
         Player.Instance.ResetExperience();
         onPlayerLevelUp?.Invoke();
 
@@ -189,6 +194,8 @@ public class GameController : MonoBehaviour
                     ResumeLevel();
                 };
             }
+
+            _levelling_up = false;
         }
     }
 

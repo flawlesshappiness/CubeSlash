@@ -1,5 +1,11 @@
 ## TODO ##
-Credits menu
+cap uprade value to x.xx
+energy bar full indicator (sound/graphic)
+crystal bodypart too big
+boomerang need testing in build
+chain might kill shooter boss too fast
+roots area earlier
+puff trail outline
 
 ## BUGS ##
 
