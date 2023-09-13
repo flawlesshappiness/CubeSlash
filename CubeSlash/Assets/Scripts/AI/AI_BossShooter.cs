@@ -52,9 +52,9 @@ public class AI_BossShooter : BossAI
             return;
         }
 
-        if(state == MoveState.WATCH)
+        if (state == MoveState.WATCH)
         {
-            if(Vector3.Distance(Position, PlayerPosition) > CameraController.Instance.Width * 0.4f)
+            if (Vector3.Distance(Position, PlayerPosition) > CameraController.Instance.Width * 0.4f)
             {
                 state = MoveState.MOVE_TO_PLAYER;
             }
@@ -73,7 +73,7 @@ public class AI_BossShooter : BossAI
                 }
             }
         }
-        else if(state == MoveState.MOVE_TO_PLAYER)
+        else if (state == MoveState.MOVE_TO_PLAYER)
         {
             if (Vector3.Distance(Position, PlayerPosition) > CameraController.Instance.Width * 0.45f)
             {
@@ -90,7 +90,7 @@ public class AI_BossShooter : BossAI
 
     private void SelectAttack()
     {
-        if(do_circle_attack)
+        if (do_circle_attack)
         {
             this.StartCoroutineWithID(AttackShootCircle(), "attack_" + GetInstanceID());
             do_circle_attack = false;
@@ -189,7 +189,6 @@ public class AI_BossShooter : BossAI
         Self.AngularVelocity = 25;
         Self.AngularAcceleration = 10;
         this.StartCoroutineWithID(TurnCr(duration), "turn_" + GetInstanceID());
-        HideAndShowDuds(duration);
 
         yield return new WaitForSeconds(1.0f);
 
@@ -217,7 +216,7 @@ public class AI_BossShooter : BossAI
         {
             var right = Random.Range(0, 2) == 0;
             var time_end = Time.time + duration;
-            while(Time.time < time_end)
+            while (Time.time < time_end)
             {
                 Self.Turn(right);
                 yield return null;
@@ -262,7 +261,7 @@ public class AI_BossShooter : BossAI
     private void ShootCircle()
     {
         var ts = body_shooter.GetCircleTransforms();
-        foreach(var t in ts)
+        foreach (var t in ts)
         {
             Shoot(t.position, t.up);
         }
@@ -308,7 +307,7 @@ public class AI_BossShooter : BossAI
     {
         var eye_transforms = body_shooter.GetCircleTransforms();
 
-        foreach(var t in eye_transforms)
+        foreach (var t in eye_transforms)
         {
             var angle = Vector3.SignedAngle(Vector3.up, t.up, Vector3.forward);
             var psd = Resources.Load<ParticleSystem>("particles/ps_telegraph_shoot_short")

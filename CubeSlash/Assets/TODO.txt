@@ -1,7 +1,5 @@
 ## TODO ##
 energy bar full indicator (sound/graphic)
-boomerang need testing in build
-chain might kill shooter boss too fast
 
 ## BUGS ##
 

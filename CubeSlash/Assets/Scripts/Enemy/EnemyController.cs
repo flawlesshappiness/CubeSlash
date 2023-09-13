@@ -45,9 +45,7 @@ public class EnemyController : Singleton
     {
         enemies_unlocked.AddRange(area.enemies);
 
-        if (cr_spawn_boss != null) StopCoroutine(cr_spawn_boss);
-        var boss_spawn_delay = GameSettings.Instance.area_duration * GameSettings.Instance.time_boss_spawn;
-        cr_spawn_boss = StartCoroutine(SpawnBossCr(area.boss, boss_spawn_delay));
+        StartSpawnBossTimer();
     }
 
     private void OnGameStart()
@@ -128,6 +126,14 @@ public class EnemyController : Singleton
         }
     }
 
+    private void StartSpawnBossTimer()
+    {
+        var area = AreaController.Instance.CurrentArea;
+        if (cr_spawn_boss != null) StopCoroutine(cr_spawn_boss);
+        var boss_spawn_delay = GameSettings.Instance.area_duration * GameSettings.Instance.time_boss_spawn;
+        cr_spawn_boss = StartCoroutine(SpawnBossCr(area.boss, boss_spawn_delay));
+    }
+
     private IEnumerator SpawnBossCr(EnemySettings boss, float delay)
     {
         time_spawn_boss = Time.time + delay;
@@ -141,6 +147,7 @@ public class EnemyController : Singleton
 
     public void DebugSpawnBoss()
     {
+        StartSpawnBossTimer();
         time_spawn_boss = Time.time;
     }
 
