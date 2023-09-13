@@ -1,5 +1,4 @@
 ## TODO ##
-cap uprade value to x.xx
 energy bar full indicator (sound/graphic)
 crystal bodypart too big
 boomerang need testing in build

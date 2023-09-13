@@ -24,7 +24,7 @@ public class GameAttributeValue
     public string GetStringValue() => value_type switch
     {
         ValueType.Int => int_value.ToString(),
-        ValueType.Float => float_value.ToString(),
+        ValueType.Float => float_value.ToString("0.##"),
         ValueType.Bool => bool_value.ToString(),
         _ => int_value.ToString(),
     };
