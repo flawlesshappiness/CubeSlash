@@ -60,6 +60,7 @@ public class DebugConsoleHandler : Singleton
             window.CreateButton("Spawn Boss", ClickSpawnBoss);
             window.CreateButton(EnemyController.Instance.EnemySpawnEnabled ? "Disable enemy spawn" : "Enable enemy spawn", ClickToggleEnemySpawn);
             window.CreateButton("Kill Enemies", ClickKillEnemies);
+            window.CreateButton("Fill mana", ClickFillMana);
         }
         else
         {
@@ -295,6 +296,11 @@ public class DebugConsoleHandler : Singleton
         view.OnSubmit += () => Debug.Log("Completed");
         view.Animate();
         CloseView();
+    }
+
+    private void ClickFillMana()
+    {
+        Player.Instance.heal.SetMax();
     }
 
     private void ClickGameValues()

@@ -10,11 +10,13 @@ public class PlayerHeal : MonoBehaviour
     public float ValuePercent { get { return _value / MaxValue; } }
 
     private float _value;
+    private bool _is_full;
 
     public System.Action<float> OnValueChanged;
     public System.Action<float> OnPercentChanged;
     public System.Action OnHeal;
     public System.Action OnHealFailed;
+    public System.Action OnFull;
 
     private void Start()
     {
@@ -63,9 +65,22 @@ public class PlayerHeal : MonoBehaviour
     {
         _value = Mathf.Clamp(value, 0, MaxValue);
 
+        if (!_is_full && _value == MaxValue)
+        {
+            _is_full = true;
+            SoundController.Instance.Play(SoundEffectType.sfx_ui_energy_full);
+            OnFull?.Invoke();
+        }
+        else if (_value < MaxValue)
+        {
+            _is_full = false;
+        }
+
         OnValueChanged?.Invoke(_value);
         OnPercentChanged?.Invoke(ValuePercent);
     }
+
+    public void SetMax() => SetValue(MaxValue);
 
     private void OnEnemyKilled()
     {

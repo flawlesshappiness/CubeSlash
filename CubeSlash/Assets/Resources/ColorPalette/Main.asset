@@ -25,3 +25,5 @@ MonoBehaviour:
     color: {r: 0.25, g: 0.1004902, b: 0.1004902, a: 1}
   - name: Player
     color: {r: 0.18039216, g: 0.53333336, b: 0.9019608, a: 1}
+  - name: Accent
+    color: {r: 1, g: 0.88305724, b: 0.4292453, a: 1}

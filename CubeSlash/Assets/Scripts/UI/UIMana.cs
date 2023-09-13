@@ -9,6 +9,7 @@ public class UIMana : MonoBehaviourExtended
     [SerializeField] private Image img_bar;
     [SerializeField] private ColorPaletteValue color_normal;
     [SerializeField] private ColorPaletteValue color_wrong;
+    [SerializeField] private ColorPaletteValue color_full;
 
     private Lerp _lerp_fill;
     private Coroutine cr_wrong;
@@ -18,6 +19,7 @@ public class UIMana : MonoBehaviourExtended
         Player.Instance.heal.OnPercentChanged += OnPercentChanged;
         Player.Instance.heal.OnHeal += OnHeal;
         Player.Instance.heal.OnHealFailed += OnHealFailed;
+        Player.Instance.heal.OnFull += OnFull;
         SetFill(Player.Instance.heal.ValuePercent);
         SetColor(color_normal.GetColor());
     }
@@ -27,6 +29,7 @@ public class UIMana : MonoBehaviourExtended
         Player.Instance.heal.OnPercentChanged -= OnPercentChanged;
         Player.Instance.heal.OnHeal -= OnHeal;
         Player.Instance.heal.OnHealFailed -= OnHealFailed;
+        Player.Instance.heal.OnFull -= OnFull;
     }
 
     public void AnimateValue(float value)
@@ -76,6 +79,7 @@ public class UIMana : MonoBehaviourExtended
     {
         if (_lerp_fill != null) _lerp_fill.Kill();
         SetFill(0);
+        SetColor(color_normal.GetColor());
     }
 
     private void OnHealFailed()
@@ -84,5 +88,10 @@ public class UIMana : MonoBehaviourExtended
         {
             AnimateWrong();
         }
+    }
+
+    private void OnFull()
+    {
+        SetColor(color_full.GetColor());
     }
 }
