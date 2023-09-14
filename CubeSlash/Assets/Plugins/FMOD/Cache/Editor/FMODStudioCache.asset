@@ -151,7 +151,7 @@ MonoBehaviour:
   Path: Assets/FMOD/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 638285011333843688
+  lastModified: 638303116662423343
   FileSizes: []
   Exists: 1
 --- !u!114 &-7872426760261806101
@@ -712,6 +712,33 @@ MonoBehaviour:
     Data2: 1128927549
     Data3: 189750964
     Data4: -1995803853
+  Banks:
+  - {fileID: -8060980804293988741}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
+--- !u!114 &-4358442914159365508
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Game/Health/health_mana_full_001
+  m_EditorClassIdentifier: 
+  Path: event:/Game/Health/health_mana_full_001
+  Guid:
+    Data1: -470347071
+    Data2: 1126748537
+    Data3: 858834102
+    Data4: 2088260866
   Banks:
   - {fileID: -8060980804293988741}
   IsStream: 0
@@ -1500,12 +1527,13 @@ MonoBehaviour:
   - {fileID: 8159066000117265837}
   - {fileID: -8182980310798793663}
   - {fileID: 5761857092000438841}
+  - {fileID: -4358442914159365508}
   EditorParameters: []
   MasterBanks:
   - {fileID: -8060980804293988741}
   StringsBanks:
   - {fileID: 5917708036578608240}
-  cacheTime: 638285011333853689
+  cacheTime: 638303116662463348
   cacheVersion: 131593
 --- !u!114 &1453305857757199432
 MonoBehaviour:
@@ -2140,10 +2168,10 @@ MonoBehaviour:
   Path: Assets/FMOD/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 638285011333853689
+  lastModified: 638303116662463348
   FileSizes:
   - Name: 
-    Value: 5062
+    Value: 5118
   Exists: 1
 --- !u!114 &5992827859230917708
 MonoBehaviour:

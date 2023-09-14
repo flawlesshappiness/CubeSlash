@@ -497,7 +497,7 @@ MonoBehaviour:
           Data3: -617150547
           Data4: 590042606
         Path: event:/Music/bgm_jelly_001
-  - name: bgm_crystal [EMPTY]
+  - name: bgm_crystal
     type:
       id: bgm_crystal
     sfx:
@@ -673,7 +673,7 @@ MonoBehaviour:
           Data3: 1450793390
           Data4: -513007
         Path: event:/Game/Enemy/root_001
-  - name: 
+  - name: sfx_boomerang_shoot
     type:
       id: sfx_boomerang_shoot
     sfx:
@@ -684,7 +684,7 @@ MonoBehaviour:
           Data3: -96337256
           Data4: -13198275
         Path: event:/Game/Abilities/boomerang_shoot_001
-  - name: 
+  - name: sfx_boomerang_catch
     type:
       id: sfx_boomerang_catch
     sfx:
@@ -695,7 +695,7 @@ MonoBehaviour:
           Data3: -2069009269
           Data4: 462807467
         Path: event:/Game/Abilities/boomerang_catch_001
-  - name: 
+  - name: sfx_enemy_maw_attack
     type:
       id: sfx_enemy_maw_attack
     sfx:
@@ -706,3 +706,14 @@ MonoBehaviour:
           Data3: -1475807084
           Data4: -100670737
         Path: event:/Game/Enemy/boss_maw_attack_001
+  - name: sfx_ui_energy_full
+    type:
+      id: sfx_ui_energy_full
+    sfx:
+      reference:
+        Guid:
+          Data1: -470347071
+          Data2: 1126748537
+          Data3: 858834102
+          Data4: 2088260866
+        Path: event:/Game/Health/health_mana_full_001
