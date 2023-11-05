@@ -110,8 +110,8 @@ public class AbilityMines : Ability
 
     private void OnMineDestroy(MinesProjectile p)
     {
-        var instance = SoundController.Instance.Play(SoundEffectType.sfx_mines_explode);
-        instance.SetVolumeByPosition(p.transform.position);
+        SoundController.Instance.PlayGroup(SoundEffectType.sfx_mines_explode);
+        SoundController.Instance.SetGroupVolumeByPosition(SoundEffectType.sfx_mines_explode, p.transform.position);
     }
 
     private void ChainFragments(Vector3 position, int count)

@@ -1,5 +1,5 @@
 ## TODO ##
-energy bar full indicator (sound/graphic)
+Add credits
 
 ## BUGS ##
 

@@ -16,28 +16,12 @@ public class SoundController : Singleton
         public float volume = 1;
         public FMODEventReference reference;
         public CustomCoroutine coroutine;
-        public FMODEventInstance[] instances;
-        private int _current_instance_index;
 
         public GroupCoroutine(FMODEventReference reference)
         {
             this.reference = reference;
             path = reference.Info.path;
-            instances = new FMODEventInstance[25];
         }
-
-        public FMODEventInstance NextInstance()
-        {
-            if (instances[_current_instance_index] == null)
-            {
-                instances[_current_instance_index] = reference.CreateInstance();
-            }
-            var instance = instances[_current_instance_index];
-            _current_instance_index = (_current_instance_index + 1) % instances.Length;
-            return instance;
-        }
-
-        public bool HasInstances() => instances != null && instances.Length > 0;
     }
 
     public FMODEventInstance Play(SoundEffectType type)
@@ -49,7 +33,7 @@ public class SoundController : Singleton
     public FMODEventInstance CreateInstance(SoundEffectType type)
     {
         var entry = SoundDatabase.GetEntry(type);
-        if(entry != null)
+        if (entry != null)
         {
             return entry.sfx.CreateInstance();
         }
@@ -98,7 +82,7 @@ public class SoundController : Singleton
         {
             while (group.count > 0)
             {
-                var instance = group.NextInstance();
+                var instance = reference.CreateInstance();
                 instance.SetVolume(group.volume);
                 instance.Play();
                 group.count--;
