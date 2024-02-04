@@ -118,11 +118,13 @@ public class GameEndView : View
         if (data.bosses_killed.Contains(EnemyType.BossPlant))
         {
             UnlockBody(PlayerBodyType.Plant);
+            SteamIntegration.Instance.UnlockAchievement(AchievementType.ACH_BODY_PLANT);
         }
 
         if (data.bosses_killed.Contains(EnemyType.BossCrystalEyes))
         {
             UnlockBody(PlayerBodyType.Meat);
+            SteamIntegration.Instance.UnlockAchievement(AchievementType.ACH_BODY_MEAT);
         }
 
         if (data.won && Save.Game.idx_difficulty_completed < DifficultyController.Instance.DifficultyIndex)

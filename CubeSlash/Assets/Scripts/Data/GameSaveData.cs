@@ -10,6 +10,9 @@ public class GameSaveData : SaveDataObject
     public int idx_gamesetup_charm = -1;
     public int idx_gamesetup_difficulty = 0;
 
+    public int count_wins = 0;
+    public int count_losses = 0;
+
     public List<Ability.Type> new_abilities = new List<Ability.Type>();
     public List<Ability.Type> unlocked_abilities = new List<Ability.Type>()
     {

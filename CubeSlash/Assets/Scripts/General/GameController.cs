@@ -35,6 +35,7 @@ public class GameController : MonoBehaviour
     private void Awake()
     {
         Instance = this;
+        SteamIntegration.Create();
         Singleton.CreateAllSingletons();
         PauseLock.OnLockChanged += OnPauseChanged;
     }
@@ -240,6 +241,23 @@ public class GameController : MonoBehaviour
 
     private void OnPlayerDeath()
     {
+        // Lose
+        Save.Game.count_losses++;
+
+        if (Save.Game.count_losses >= 1)
+        {
+            SteamIntegration.Instance.UnlockAchievement(AchievementType.ACH_LOSE_1);
+        }
+        else if (Save.Game.count_losses >= 5)
+        {
+            SteamIntegration.Instance.UnlockAchievement(AchievementType.ACH_LOSE_5);
+        }
+        else if (Save.Game.count_losses >= 10)
+        {
+            SteamIntegration.Instance.UnlockAchievement(AchievementType.ACH_LOSE_10);
+        }
+
+        // End
         EndGame();
         SessionController.Instance.CurrentData.won = false;
         StartCoroutine(EndGameCr());
@@ -249,6 +267,22 @@ public class GameController : MonoBehaviour
     public void Win()
     {
         if (IsGameEnded) return;
+
+        // Wins
+        Save.Game.count_wins++;
+
+        if (Save.Game.count_wins >= 1)
+        {
+            SteamIntegration.Instance.UnlockAchievement(AchievementType.ACH_WINS_1);
+        }
+        else if (Save.Game.count_wins >= 5)
+        {
+            SteamIntegration.Instance.UnlockAchievement(AchievementType.ACH_WINS_5);
+        }
+        else if (Save.Game.count_wins >= 10)
+        {
+            SteamIntegration.Instance.UnlockAchievement(AchievementType.ACH_WINS_10);
+        }
 
         // End
         IsGameEnded = true;
