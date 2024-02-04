@@ -1,6 +1,5 @@
 using FMOD.Studio;
 using FMODUnity;
-using UnityEngine;
 
 public class FMODEventReferenceInfo
 {
@@ -20,15 +19,7 @@ public class FMODEventReferenceInfo
         }
         catch (System.Exception e)
         {
-            DebugLog(e.StackTrace);
-        }
-    }
-
-    private void DebugLog(string text)
-    {
-        if (FMODEventReference.DEBUG)
-        {
-            Debug.Log(text);
+            LogController.Instance.LogMessage(e.Message);
         }
     }
 }

@@ -1,4 +1,5 @@
 using Flawliz.VisualConsole;
+using Steamworks;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,6 +23,8 @@ public class DebugConsoleHandler : Singleton
 
     private void ToggleView()
     {
+        if (!Application.isEditor) return;
+
         if (VisualConsoleController.Instance.ToggleView(out view))
         {
             ShowFunctionsWindow();
@@ -317,6 +320,21 @@ public class DebugConsoleHandler : Singleton
             CreateText(() => $"Spawn frequency (Difficulty): {EnemyController.Instance.GetSpawnFrequencyDifficulty()}");
             CreateText(() => $"Spawn frequency (Game): {EnemyController.Instance.GetSpawnFrequencyGame()}");
             CreateText(() => $"Spawn count: {EnemyController.Instance.GetSpawnCount()}");
+        }
+
+        CreateText(() => $"GameSaveData from cloud: {SaveDataController.Instance.Get<GameSaveData>().from_cloud}");
+        CreateText(() => $"PlayerBodySaveData from cloud: {SaveDataController.Instance.Get<PlayerBodySaveData>().from_cloud}");
+
+        CreateText(() => "");
+        CreateText(() => $"Steam IsValid: {SteamClient.IsValid}");
+        CreateText(() => $"Steam Username: {SteamClient.Name}");
+        CreateText(() => $"Steam Achievements: {SteamUserStats.Achievements.Count()}");
+
+        CreateText(() => $"Steam Cloud Files: {SteamRemoteStorage.FileCount}");
+        var files = SteamRemoteStorage.Files;
+        foreach (var file in files)
+        {
+            CreateText(() => $"Steam Cloud File: {file}");
         }
 
         // Start

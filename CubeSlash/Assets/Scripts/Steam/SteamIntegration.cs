@@ -17,13 +17,9 @@ public class SteamIntegration : MonoBehaviour
         if (Instance != null) return;
 
         var g = new GameObject(nameof(SteamIntegration));
+        DontDestroyOnLoad(g);
         Instance = g.AddComponent<SteamIntegration>();
-    }
-
-    private void Start()
-    {
-        DontDestroyOnLoad(gameObject);
-        InitializeClient();
+        Instance.InitializeClient();
     }
 
     private void InitializeClient()
@@ -103,24 +99,25 @@ public class SteamIntegration : MonoBehaviour
     public void UnlockAchievement(AchievementType type) =>
         UnlockAchievement(type.ToString());
 
-    public void UnlockAchievement(string name)
+    public void UnlockAchievement(string id)
     {
         try
         {
             if (!SteamClient.IsValid) return;
 
-            var has_achievement = SteamUserStats.Achievements.Any(a => a.Name == name);
-            var info = SteamUserStats.Achievements.FirstOrDefault(a => a.Name == name);
+            var achievements = SteamUserStats.Achievements.ToList();
+            var has_achievement = achievements.Any(a => a.Identifier == id);
+            var info = achievements.FirstOrDefault(a => a.Identifier == id);
             var is_unlocked = info.State;
 
             if (has_achievement && is_unlocked) return;
 
-            var achievement = new Achievement(info.Name);
+            var achievement = new Achievement(info.Identifier);
             achievement.Trigger();
         }
         catch (Exception e)
         {
-            Debug.Log($"Failed to unlock achievement {name}: {e.Message}");
+            Debug.Log($"Failed to unlock achievement {id}: {e.Message}");
         }
     }
 }

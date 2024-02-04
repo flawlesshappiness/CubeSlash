@@ -1,11 +1,9 @@
-using UnityEngine;
 using FMODUnity;
+using UnityEngine;
 
 [System.Serializable]
 public class FMODEventReference
 {
-    public const bool DEBUG = false;
-
     [SerializeField] public EventReference reference;
 
     public FMODEventReferenceInfo Info { get { return _info ?? GetInfo(); } }
