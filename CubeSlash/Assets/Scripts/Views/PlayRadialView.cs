@@ -72,16 +72,16 @@ public class PlayRadialView : View
 
             new RadialMenuOption
             {
-                Title = "Start",
-                Sprite = Icon.Get(IconType.start_game),
-                OnSubmitComplete = () => GameController.Instance.StartGame()
+                Title = "Ability",
+                Sprite = ability_icon,
+                OnSubmitComplete = ShowAbilityOptions
             },
 
             new RadialMenuOption
             {
-                Title = "Ability",
-                Sprite = ability_icon,
-                OnSubmitComplete = ShowAbilityOptions
+                Title = "Start",
+                Sprite = Icon.Get(IconType.start_game),
+                OnSubmitComplete = () => GameController.Instance.StartGame()
             },
 
             new RadialMenuOption

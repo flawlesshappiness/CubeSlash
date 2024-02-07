@@ -108,12 +108,11 @@ public class Projectile : MonoBehaviourExtended
             var k = collision.GetComponentInParent<IKillable>();
             if (k != null)
             {
-                hit_success = true;
                 onHitEnemy?.Invoke(k);
 
                 if (Player.Instance.TryKillEnemy(k))
                 {
-
+                    hit_success = true;
                 }
             }
         }

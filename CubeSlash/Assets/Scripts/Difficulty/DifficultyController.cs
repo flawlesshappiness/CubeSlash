@@ -36,7 +36,9 @@ public class DifficultyController : Singleton
 
     public DifficultyInfo GetInfo(int i)
     {
-        i = Mathf.Clamp(i, 0, _database.collection.Count);
+        if (i < 0 || i >= _database.collection.Count) return null;
+
+        i = Mathf.Clamp(i, 0, _database.collection.Count - 1);
         var info = _database.collection[i];
         return info;
     }
