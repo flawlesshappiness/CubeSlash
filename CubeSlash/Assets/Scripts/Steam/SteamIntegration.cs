@@ -103,6 +103,8 @@ public class SteamIntegration : MonoBehaviour
     {
         try
         {
+            Debug.Log($"Unlock achievement: {id}");
+
             if (!SteamClient.IsValid) return;
 
             var achievements = SteamUserStats.Achievements.ToList();

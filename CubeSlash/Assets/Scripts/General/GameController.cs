@@ -1,5 +1,6 @@
 using Flawliz.Lerp;
 using System.Collections;
+using System.Linq;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -244,18 +245,7 @@ public class GameController : MonoBehaviour
         // Lose
         Save.Game.count_losses++;
 
-        if (Save.Game.count_losses >= 1)
-        {
-            SteamIntegration.Instance.UnlockAchievement(AchievementType.ACH_LOSE_1);
-        }
-        else if (Save.Game.count_losses >= 5)
-        {
-            SteamIntegration.Instance.UnlockAchievement(AchievementType.ACH_LOSE_5);
-        }
-        else if (Save.Game.count_losses >= 10)
-        {
-            SteamIntegration.Instance.UnlockAchievement(AchievementType.ACH_LOSE_10);
-        }
+        UnlockLoseAchievement();
 
         // End
         EndGame();
@@ -271,18 +261,8 @@ public class GameController : MonoBehaviour
         // Wins
         Save.Game.count_wins++;
 
-        if (Save.Game.count_wins >= 1)
-        {
-            SteamIntegration.Instance.UnlockAchievement(AchievementType.ACH_WINS_1);
-        }
-        else if (Save.Game.count_wins >= 5)
-        {
-            SteamIntegration.Instance.UnlockAchievement(AchievementType.ACH_WINS_5);
-        }
-        else if (Save.Game.count_wins >= 10)
-        {
-            SteamIntegration.Instance.UnlockAchievement(AchievementType.ACH_WINS_10);
-        }
+        UnlockWinAchievement();
+        UnlockWinAbilityAchievement();
 
         // End
         IsGameEnded = true;
@@ -307,5 +287,60 @@ public class GameController : MonoBehaviour
     {
         IsGameEnded = false;
         GameStateController.Instance.SetGameState(GameStateType.PLAYING);
+    }
+
+    private void UnlockWinAchievement()
+    {
+        if (Save.Game.count_wins >= 1)
+        {
+            SteamIntegration.Instance.UnlockAchievement(AchievementType.ACH_WINS_1);
+        }
+
+        if (Save.Game.count_wins >= 5)
+        {
+            SteamIntegration.Instance.UnlockAchievement(AchievementType.ACH_WINS_5);
+        }
+
+        if (Save.Game.count_wins >= 10)
+        {
+            SteamIntegration.Instance.UnlockAchievement(AchievementType.ACH_WINS_10);
+        }
+    }
+
+    private void UnlockLoseAchievement()
+    {
+        if (Save.Game.count_losses >= 1)
+        {
+            SteamIntegration.Instance.UnlockAchievement(AchievementType.ACH_LOSE_1);
+        }
+
+        if (Save.Game.count_losses >= 5)
+        {
+            SteamIntegration.Instance.UnlockAchievement(AchievementType.ACH_LOSE_5);
+        }
+
+        if (Save.Game.count_losses >= 10)
+        {
+            SteamIntegration.Instance.UnlockAchievement(AchievementType.ACH_LOSE_10);
+        }
+    }
+
+    private void UnlockWinAbilityAchievement()
+    {
+        var diff = DifficultyController.Instance.DifficultyIndex + 1;
+        for (int i = 0; i < diff; i++)
+        {
+            var s_diff = i + 1;
+            var ability = Save.PlayerBody.primary_ability;
+            var ach_name = $"ACH_{ability.ToString().ToUpper()}_{s_diff}";
+            var enums = System.Enum.GetValues(typeof(AchievementType)).Cast<AchievementType>().ToList();
+            var valid_enum = enums.Any(e => e.ToString() == ach_name);
+
+            if (valid_enum)
+            {
+                var value = enums.FirstOrDefault(e => e.ToString() == ach_name);
+                SteamIntegration.Instance.UnlockAchievement(value);
+            }
+        }
     }
 }
