@@ -11,6 +11,7 @@ public class OptionsView : View
     [SerializeField] private SelectableMenuItem btn_delete_save;
     [SerializeField] private UIInputLayout input;
     [SerializeField] private GenericOptions options;
+    [SerializeField] private CategoryControl category_game;
 
     public System.Action onClickBack;
 
@@ -21,6 +22,8 @@ public class OptionsView : View
         slider_music.SetValue(Save.Game.volumes[FMODBusType.Music]);
         slider_sfx.SetValue(Save.Game.volumes[FMODBusType.SFX]);
         */
+
+        category_game.gameObject.SetActive(!GameController.Instance.IsGameStarted);
 
         slider_master.onValueChanged += AdjustMasterVolume;
         slider_music.onValueChanged += AdjustMusicVolume;

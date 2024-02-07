@@ -18,6 +18,13 @@ public class DifficultyController : Singleton
         base.Initialize();
         _database = Database.Load<DifficultyDatabase>();
         SetDifficulty(Save.Game.idx_gamesetup_difficulty);
+
+        SaveDataController.Instance.onSaveDataClear += OnSaveDataClear;
+    }
+
+    private void OnSaveDataClear()
+    {
+        SetDifficulty(0);
     }
 
     public void SetDifficulty(int i)
