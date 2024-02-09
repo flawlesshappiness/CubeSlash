@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 public class RadialMenuPlayerInput : MonoBehaviour
@@ -7,6 +6,8 @@ public class RadialMenuPlayerInput : MonoBehaviour
     private RadialMenu menu;
 
     private bool in_deadzone;
+
+    private Vector2 prev_input;
 
     private void Start()
     {
@@ -20,7 +21,7 @@ public class RadialMenuPlayerInput : MonoBehaviour
     {
         if (menu == null) return;
 
-        var input = PlayerInput.MoveDirection;
+        var input = PlayerInput.MoveDirection.normalized;
         if (input.magnitude < deadzone)
         {
             if (!in_deadzone)
@@ -31,6 +32,13 @@ public class RadialMenuPlayerInput : MonoBehaviour
         }
         else
         {
+            if (PlayerInput.CurrentDevice == PlayerInput.DeviceType.KEYBOARD)
+            {
+                Debug.Log("yes");
+                input = in_deadzone ? input : Vector2.Lerp(prev_input, input, Time.deltaTime);
+                prev_input = input;
+            }
+
             in_deadzone = false;
             menu.SelectElement(input);
         }
