@@ -50,6 +50,7 @@ public partial class GameAttributeType : FakeEnum
     public static readonly GameAttributeType boomerang_size = new GameAttributeType(nameof(boomerang_size));
     public static readonly GameAttributeType boomerang_distance = new GameAttributeType(nameof(boomerang_distance));
     public static readonly GameAttributeType boomerang_catch_cooldown = new GameAttributeType(nameof(boomerang_catch_cooldown));
+    public static readonly GameAttributeType boomerang_lifetime = new GameAttributeType(nameof(boomerang_lifetime));
     public static readonly GameAttributeType boomerang_explode = new GameAttributeType(nameof(boomerang_explode));
     public static readonly GameAttributeType boomerang_fragment = new GameAttributeType(nameof(boomerang_fragment));
     public static readonly GameAttributeType boomerang_chain = new GameAttributeType(nameof(boomerang_chain));
