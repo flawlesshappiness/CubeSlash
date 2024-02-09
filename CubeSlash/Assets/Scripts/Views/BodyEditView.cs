@@ -220,7 +220,8 @@ public class BodyEditView : View
     private void ShowMoveBodypartInput()
     {
         inputs.Clear();
-        inputs.AddInput(PlayerInput.UIButtonType.NAV_ALL, "Move");
+        inputs.AddInput(PlayerInput.UIButtonType.NAV_UP_DOWN, "Move");
+        inputs.AddInput(PlayerInput.UIButtonType.NAV_LEFT_RIGHT, "Size");
         inputs.AddInput(PlayerInput.UIButtonType.SOUTH, "Set");
         inputs.AddInput(PlayerInput.UIButtonType.WEST, "Mirror");
         inputs.AddInput(PlayerInput.UIButtonType.EAST, "Cancel");

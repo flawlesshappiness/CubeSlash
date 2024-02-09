@@ -72,6 +72,7 @@ public class Bodypart : MonoBehaviour
 
     public void SetVariation(int i)
     {
+        if (variations.Length <= 0) return;
         var list = variations.ToList();
         list.ForEach(v => v.SetActive(false));
         VariationIndex = Mathf.Clamp(i, 0, list.Count - 1);

@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac4cd3749a175684eb481bc5c8746bea, type: 3}
+  m_Name: volatile A
+  m_EditorClassIdentifier: 
+  type:
+    id: volatile_A
+  preview: {fileID: 21300000, guid: fa30d376fbb302a45b15e967cfd70947, type: 3}
+  prefab: {fileID: 9044670076722975821, guid: 854f615c7d8e0cc479bda8a441637097, type: 3}
+  is_ability_part: 0
