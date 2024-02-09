@@ -34,7 +34,6 @@ public class RadialMenuPlayerInput : MonoBehaviour
         {
             if (PlayerInput.CurrentDevice == PlayerInput.DeviceType.KEYBOARD)
             {
-                Debug.Log("yes");
                 input = in_deadzone ? input : Vector2.Lerp(prev_input, input, Time.deltaTime);
                 prev_input = input;
             }
