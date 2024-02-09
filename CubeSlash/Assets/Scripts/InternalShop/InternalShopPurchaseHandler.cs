@@ -1,5 +1,3 @@
-using UnityEngine;
-
 public class InternalShopPurchaseHandler : Singleton
 {
     public static InternalShopPurchaseHandler Instance { get { return Instance<InternalShopPurchaseHandler>(); } }
@@ -12,9 +10,9 @@ public class InternalShopPurchaseHandler : Singleton
 
     private void OnPurchase(InternalShopPurchase purchase)
     {
-        LogController.Instance.LogMessage($"InternalShopPurchaseHandler.OnPurchase(): Purchased {purchase.id}");
+        LogController.LogMessage($"InternalShopPurchaseHandler.OnPurchase(): Purchased {purchase.id}");
 
-        if(purchase.id == InternalShopProductID.Default)
+        if (purchase.id == InternalShopProductID.Default)
         {
             // Do nothing
         }

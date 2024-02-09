@@ -34,7 +34,7 @@ public class PlayerBody : Body
 
         if (bdpa == null)
         {
-            LogController.Instance.LogMessage($"PlayerBody.CreateAbilityBodypart; Failed to create BodypartAbility with type {info.type_bodypart}");
+            LogController.LogMessage($"PlayerBody.CreateAbilityBodypart; Failed to create BodypartAbility with type {info.type_bodypart}");
         }
 
         return bdpa;

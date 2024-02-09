@@ -35,6 +35,8 @@ public class GameController : MonoBehaviour
 
     private void Awake()
     {
+        LogController.LogMethod();
+
         Instance = this;
         SteamIntegration.Create();
         Singleton.CreateAllSingletons();
@@ -43,6 +45,8 @@ public class GameController : MonoBehaviour
 
     private void Start()
     {
+        LogController.LogMethod();
+
         StartCoroutine(StartupCr());
     }
 
@@ -59,6 +63,8 @@ public class GameController : MonoBehaviour
 
     public void InitializePlayer()
     {
+        LogController.LogMethod();
+
         var prefab_player = Resources.Load<GameObject>("Prefabs/Entities/Player");
         Player.Instance = Instantiate(prefab_player, world).GetComponent<Player>();
         Player.Instance.Initialize();
@@ -97,6 +103,8 @@ public class GameController : MonoBehaviour
 
     public void Quit()
     {
+        LogController.LogMethod();
+
 #if UNITY_EDITOR
         EditorApplication.ExitPlaymode();
 #else
@@ -111,6 +119,8 @@ public class GameController : MonoBehaviour
 
     public void StartGame()
     {
+        LogController.LogMethod();
+
         StartCoroutine(Cr());
 
         IEnumerator Cr()
@@ -141,6 +151,8 @@ public class GameController : MonoBehaviour
 
     public void EndGame()
     {
+        LogController.LogMethod();
+
         IsGameEnded = true;
         onGameEnd?.Invoke();
     }
@@ -159,6 +171,8 @@ public class GameController : MonoBehaviour
 
     private void OnPlayerLevelUp()
     {
+        LogController.LogMethod();
+
         _levelling_up = true;
 
         Player.Instance.ResetExperience();
@@ -203,6 +217,8 @@ public class GameController : MonoBehaviour
 
     public void ReturnToMainMenu()
     {
+        LogController.LogMethod();
+
         EndGame();
         StartCoroutine(Cr());
         IEnumerator Cr()
@@ -220,6 +236,8 @@ public class GameController : MonoBehaviour
 
     public void MainMenu()
     {
+        LogController.LogMethod();
+
         IsGameStarted = false;
         IsGameEnded = false;
         GameStateController.Instance.SetGameState(GameStateType.MENU);
@@ -242,6 +260,8 @@ public class GameController : MonoBehaviour
 
     private void OnPlayerDeath()
     {
+        LogController.LogMethod();
+
         // Lose
         Save.Game.count_losses++;
 
@@ -256,6 +276,8 @@ public class GameController : MonoBehaviour
 
     public void Win()
     {
+        LogController.LogMethod();
+
         if (IsGameEnded) return;
 
         // Wins
@@ -291,6 +313,8 @@ public class GameController : MonoBehaviour
 
     private void UnlockWinAchievement()
     {
+        LogController.LogMethod();
+
         if (Save.Game.count_wins >= 1)
         {
             SteamIntegration.Instance.UnlockAchievement(AchievementType.ACH_WINS_1);
@@ -309,6 +333,8 @@ public class GameController : MonoBehaviour
 
     private void UnlockLoseAchievement()
     {
+        LogController.LogMethod();
+
         if (Save.Game.count_losses >= 1)
         {
             SteamIntegration.Instance.UnlockAchievement(AchievementType.ACH_LOSE_1);
@@ -327,6 +353,8 @@ public class GameController : MonoBehaviour
 
     private void UnlockWinAbilityAchievement()
     {
+        LogController.LogMethod();
+
         var diff = DifficultyController.Instance.DifficultyIndex + 1;
         for (int i = 0; i < diff; i++)
         {

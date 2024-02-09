@@ -12,6 +12,8 @@ public class UpgradeController : Singleton
 
     protected override void Initialize()
     {
+        LogController.LogMethod();
+
         base.Initialize();
         database = Database.Load<UpgradeDatabase>();
         InitializeUpgrades();
@@ -19,6 +21,8 @@ public class UpgradeController : Singleton
 
     private void InitializeUpgrades()
     {
+        LogController.LogMethod();
+
         upgrades.Clear();
         foreach (var upgrade in database.collection)
         {
@@ -40,6 +44,8 @@ public class UpgradeController : Singleton
 
     public void UnlockUpgrade(UpgradeID id)
     {
+        LogController.LogMethod($"{id}");
+
         var info = GetUpgradeInfo(id);
         info.is_unlocked = true;
         AddGameAttributeModifiers(info);
@@ -48,6 +54,8 @@ public class UpgradeController : Singleton
 
     public void LockUpgrade(UpgradeID id)
     {
+        LogController.LogMethod($"{id}");
+
         var info = GetUpgradeInfo(id);
         info.is_unlocked = false;
         RemoveGameAttributeModifiers(info);
@@ -60,7 +68,7 @@ public class UpgradeController : Singleton
         {
             return info;
         }
-        LogController.Instance.LogMessage($"UpgradeController.GetUpgradeInfo({id}): No upgrade with that ID");
+        LogController.LogMessage($"UpgradeController.GetUpgradeInfo({id}): No upgrade with that ID");
         return null;
     }
     public List<UpgradeInfo> GetUpgradeInfos() => upgrades.Values.ToList();

@@ -19,7 +19,7 @@ public class FMODEventReferenceInfo
         }
         catch (System.Exception e)
         {
-            LogController.Instance.LogMessage(e.Message);
+            LogController.LogMessage(e.Message);
         }
     }
 }

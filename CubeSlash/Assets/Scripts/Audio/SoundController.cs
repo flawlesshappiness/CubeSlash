@@ -39,7 +39,7 @@ public class SoundController : Singleton
         }
         else
         {
-            LogController.Instance.LogMessage($"SoundController.CreateInstance: Failed to get entry with type {type}");
+            LogController.LogMessage($"SoundController.CreateInstance: Failed to get entry with type {type}");
             return new FMODEventInstance(null);
         }
     }

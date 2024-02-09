@@ -56,6 +56,8 @@ public class AbilityController : Singleton
     public bool HasGainedAbility(Ability.Type type) => abilities.Any(a => a.Info.type == type);
     public Ability GainAbility(Ability.Type type)
     {
+        LogController.LogMethod($"{type}");
+
         var prefab = DB.GetAbility(type);
         var ability = Instantiate(prefab.gameObject).GetComponent<Ability>();
         if (ability)
@@ -83,6 +85,8 @@ public class AbilityController : Singleton
 
     public void UnlockAbility(Ability.Type type)
     {
+        LogController.LogMethod($"{type}");
+
         if (Save.Game.unlocked_abilities.Contains(type)) return;
         Save.Game.unlocked_abilities.Add(type);
         Save.Game.new_abilities.Add(type);

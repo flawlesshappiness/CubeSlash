@@ -16,6 +16,8 @@ public class SteamIntegration : MonoBehaviour
     {
         if (Instance != null) return;
 
+        LogController.LogMethod();
+
         var g = new GameObject(nameof(SteamIntegration));
         DontDestroyOnLoad(g);
         Instance = g.AddComponent<SteamIntegration>();
@@ -26,11 +28,12 @@ public class SteamIntegration : MonoBehaviour
     {
         try
         {
+            LogController.LogMessage($"STEAM: Initializing SteamClient");
             SteamClient.Init(STEAM_ID);
         }
         catch (Exception e)
         {
-            Debug.Log(e.Message);
+            LogController.LogException(e);
         }
     }
 
@@ -48,8 +51,9 @@ public class SteamIntegration : MonoBehaviour
     {
         try
         {
+            LogController.LogMessage($"STEAM: Saving cloud data {filename}");
+
             var bytes = Encoding.UTF8.GetBytes(data);
-            //Debug.Log($"{filename} size: {bytes.Length}");
             if (SteamClient.IsValid)
             {
                 SteamRemoteStorage.FileWrite(filename, bytes);
@@ -57,7 +61,7 @@ public class SteamIntegration : MonoBehaviour
         }
         catch (Exception e)
         {
-            Debug.Log(e.Message);
+            LogController.LogException(e);
         }
     }
 
@@ -65,13 +69,16 @@ public class SteamIntegration : MonoBehaviour
     {
         try
         {
+            LogController.LogMessage($"STEAM: Loading cloud data {filename}");
+
             var json = LoadCloudData(filename);
             T data = JsonConvert.DeserializeObject<T>(json);
             return data;
         }
         catch (Exception e)
         {
-            Debug.Log($"Failed to load {filename} from cloud data: {e.Message}");
+            LogController.LogMessage($"Failed to deserialize {filename} from cloud data");
+            LogController.LogException(e);
         }
 
         return default;
@@ -90,7 +97,8 @@ public class SteamIntegration : MonoBehaviour
         }
         catch (Exception e)
         {
-            Debug.Log($"Failed to save {filename} to cloud data: {e.Message}");
+            LogController.LogMessage($"Failed to save {filename} to cloud data");
+            LogController.LogException(e);
         }
 
         return null;
@@ -103,7 +111,7 @@ public class SteamIntegration : MonoBehaviour
     {
         try
         {
-            Debug.Log($"Unlock achievement: {id}");
+            LogController.LogMessage($"STEAM: Unlock achievement: {id}");
 
             if (!SteamClient.IsValid) return;
 
@@ -119,7 +127,8 @@ public class SteamIntegration : MonoBehaviour
         }
         catch (Exception e)
         {
-            Debug.Log($"Failed to unlock achievement {id}: {e.Message}");
+            LogController.LogMessage($"Failed to unlock achievement {id}");
+            LogController.LogException(e);
         }
     }
 }

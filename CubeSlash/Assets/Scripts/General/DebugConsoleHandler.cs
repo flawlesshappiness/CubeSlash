@@ -189,7 +189,9 @@ public class DebugConsoleHandler : Singleton
 
         foreach (var log in LogController.Instance.LoggedMessages)
         {
-            window.CreateText(log.message);
+            var message = log.GetDebugMessage();
+            message = log.log_type == LogType.Exception ? message.Color(new Color(0.9f, 0.3f, 0.3f)) : message;
+            window.CreateText(message);
         }
     }
 
