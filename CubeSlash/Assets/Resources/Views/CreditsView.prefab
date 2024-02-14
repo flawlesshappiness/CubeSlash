@@ -2492,7 +2492,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5150376583673315296, guid: f4148e44000d4c844b365769a47e26ad, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 61.005
       objectReference: {fileID: 0}
     - target: {fileID: 5150376583673315296, guid: f4148e44000d4c844b365769a47e26ad, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -2712,29 +2712,33 @@ PrefabInstance:
       propertyPath: m_Name
       value: EwphoButton
       objectReference: {fileID: 0}
+    - target: {fileID: 2144021064972858171, guid: f4148e44000d4c844b365769a47e26ad, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5150376583673315296, guid: f4148e44000d4c844b365769a47e26ad, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5150376583673315296, guid: f4148e44000d4c844b365769a47e26ad, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5150376583673315296, guid: f4148e44000d4c844b365769a47e26ad, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: 112.51
       objectReference: {fileID: 0}
     - target: {fileID: 5150376583673315296, guid: f4148e44000d4c844b365769a47e26ad, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: 40
       objectReference: {fileID: 0}
     - target: {fileID: 5150376583673315296, guid: f4148e44000d4c844b365769a47e26ad, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 81.255005
       objectReference: {fileID: 0}
     - target: {fileID: 5150376583673315296, guid: f4148e44000d4c844b365769a47e26ad, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -25
       objectReference: {fileID: 0}
     - target: {fileID: 5308084853115616142, guid: f4148e44000d4c844b365769a47e26ad, type: 3}
       propertyPath: m_Sprite
@@ -2846,7 +2850,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8975691319639472368, guid: f4148e44000d4c844b365769a47e26ad, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: 162.51001
       objectReference: {fileID: 0}
     - target: {fileID: 8975691319639472368, guid: f4148e44000d4c844b365769a47e26ad, type: 3}
       propertyPath: m_SizeDelta.y
