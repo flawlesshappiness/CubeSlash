@@ -332,7 +332,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""9b911003-1430-40d6-bfd7-d0c11312c5c3"",
-                    ""path"": ""<Gamepad>/touchpadButton"",
+                    ""path"": ""*/{Menu}"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
