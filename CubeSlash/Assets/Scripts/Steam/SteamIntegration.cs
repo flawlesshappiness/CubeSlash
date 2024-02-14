@@ -12,10 +12,6 @@ public class SteamIntegration : MonoBehaviour
 
     private const uint STEAM_ID = 2814280;
 
-    private bool initialized;
-    private bool overlay_enabled;
-    public Action OnOverlayEnabled;
-
     public static void Create()
     {
         if (Instance != null) return;
@@ -34,7 +30,6 @@ public class SteamIntegration : MonoBehaviour
         {
             LogController.LogMessage($"STEAM: Initializing SteamClient");
             SteamClient.Init(STEAM_ID);
-            initialized = true;
         }
         catch (Exception e)
         {
@@ -45,27 +40,11 @@ public class SteamIntegration : MonoBehaviour
     private void Update()
     {
         SteamClient.RunCallbacks();
-        CheckForOverlay();
     }
 
     private void OnApplicationQuit()
     {
         SteamClient.Shutdown();
-    }
-
-    private void CheckForOverlay()
-    {
-        if (!initialized) return;
-        if (!SteamClient.IsValid) return;
-        if (SteamUtils.IsOverlayEnabled && !overlay_enabled)
-        {
-            overlay_enabled = true;
-            OnOverlayEnabled?.Invoke();
-        }
-        else if (!SteamUtils.IsOverlayEnabled && overlay_enabled)
-        {
-            overlay_enabled = false;
-        }
     }
 
     public void SaveCloudData(string filename, string data)

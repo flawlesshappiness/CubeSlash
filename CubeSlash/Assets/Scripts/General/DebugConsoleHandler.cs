@@ -331,6 +331,7 @@ public class DebugConsoleHandler : Singleton
         CreateText(() => $"Steam IsValid: {SteamClient.IsValid}");
         CreateText(() => $"Steam Username: {SteamClient.Name}");
         CreateText(() => $"Steam Achievements: {SteamUserStats.Achievements.Count()}");
+        CreateText(() => $"Steam Overlay Enabled: {SteamUtils.IsOverlayEnabled}");
 
         CreateText(() => $"Steam Cloud Files: {SteamRemoteStorage.FileCount}");
         var files = SteamRemoteStorage.Files;

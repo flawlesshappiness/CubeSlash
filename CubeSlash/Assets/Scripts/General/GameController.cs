@@ -43,7 +43,6 @@ public class GameController : MonoBehaviour
         Singleton.CreateAllSingletons();
         PauseLock.OnLockChanged += OnPauseChanged;
         PlayerInput.OnCurrentDeviceLost += OnDeviceLost;
-        SteamIntegration.Instance.OnOverlayEnabled += OnSteamOverlayEnabled;
     }
 
     private void Start()
