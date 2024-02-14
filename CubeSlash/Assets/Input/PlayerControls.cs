@@ -65,6 +65,14 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""Home"",
+                    ""type"": ""Button"",
+                    ""id"": ""2fd5f388-bb95-4494-89de-5bb9cbda5c38"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -318,6 +326,17 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Menu"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""9b911003-1430-40d6-bfd7-d0c11312c5c3"",
+                    ""path"": ""<Gamepad>/touchpadButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Home"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -892,6 +911,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         m_Player_South = m_Player.FindAction("South", throwIfNotFound: true);
         m_Player_West = m_Player.FindAction("West", throwIfNotFound: true);
         m_Player_Menu = m_Player.FindAction("Menu", throwIfNotFound: true);
+        m_Player_Home = m_Player.FindAction("Home", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -960,6 +980,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
     private readonly InputAction m_Player_South;
     private readonly InputAction m_Player_West;
     private readonly InputAction m_Player_Menu;
+    private readonly InputAction m_Player_Home;
     public struct PlayerActions
     {
         private @PlayerControls m_Wrapper;
@@ -970,6 +991,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         public InputAction @South => m_Wrapper.m_Player_South;
         public InputAction @West => m_Wrapper.m_Player_West;
         public InputAction @Menu => m_Wrapper.m_Player_Menu;
+        public InputAction @Home => m_Wrapper.m_Player_Home;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -997,6 +1019,9 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 @Menu.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMenu;
                 @Menu.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMenu;
                 @Menu.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMenu;
+                @Home.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnHome;
+                @Home.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnHome;
+                @Home.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnHome;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -1019,6 +1044,9 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 @Menu.started += instance.OnMenu;
                 @Menu.performed += instance.OnMenu;
                 @Menu.canceled += instance.OnMenu;
+                @Home.started += instance.OnHome;
+                @Home.performed += instance.OnHome;
+                @Home.canceled += instance.OnHome;
             }
         }
     }
@@ -1144,6 +1172,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         void OnSouth(InputAction.CallbackContext context);
         void OnWest(InputAction.CallbackContext context);
         void OnMenu(InputAction.CallbackContext context);
+        void OnHome(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {

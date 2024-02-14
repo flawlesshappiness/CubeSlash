@@ -29,7 +29,7 @@ public static class PlayerInput
     public enum UIButtonType
     {
         NORTH, EAST, SOUTH, WEST,
-        NAV_UP, NAV_RIGHT, NAV_DOWN, NAV_LEFT, NAV_UP_DOWN, NAV_LEFT_RIGHT, NAV_ALL
+        NAV_UP, NAV_RIGHT, NAV_DOWN, NAV_LEFT, NAV_UP_DOWN, NAV_LEFT_RIGHT, NAV_ALL,
     }
 
     public static void Initialize()
@@ -122,6 +122,8 @@ public static class PlayerInput
         _controls.Player.West.canceled += context => OnAbilityButton(context, ButtonType.WEST);
 
         _controls.Player.Menu.started += context => GameController.Instance.OpenPauseView();
+
+        _controls.Player.Home.started += context => GameController.Instance.HomeButtonPressed();
 
         _controls.Player.Enable();
         _controls.UI.Enable();

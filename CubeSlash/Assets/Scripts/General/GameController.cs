@@ -83,6 +83,10 @@ public class GameController : MonoBehaviour
         }
     }
 
+    public void HomeButtonPressed()
+    {
+    }
+
     public void OpenPauseView()
     {
         if (!IsGameStarted || IsGameEnded) return;
