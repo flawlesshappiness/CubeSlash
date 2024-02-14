@@ -43,6 +43,7 @@ public class GameController : MonoBehaviour
         Singleton.CreateAllSingletons();
         PauseLock.OnLockChanged += OnPauseChanged;
         PlayerInput.OnCurrentDeviceLost += OnDeviceLost;
+        SteamIntegration.Instance.OnOverlayEnabled += OnSteamOverlayEnabled;
     }
 
     private void Start()
@@ -85,6 +86,14 @@ public class GameController : MonoBehaviour
 
     public void HomeButtonPressed()
     {
+    }
+
+    private void OnSteamOverlayEnabled()
+    {
+        if (IsGameStarted)
+        {
+            OpenPauseView();
+        }
     }
 
     public void OpenPauseView()
