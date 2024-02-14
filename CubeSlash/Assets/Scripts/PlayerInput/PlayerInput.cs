@@ -12,7 +12,7 @@ public static class PlayerInput
     public static System.Action<ButtonType> OnAbilityButtonDown { get; set; }
     public static System.Action<ButtonType> OnAbilityButtonUp { get; set; }
     public static System.Action<DeviceType> OnDeviceChanged { get; set; }
-    public static System.Action<DeviceType> OnDeviceLost { get; set; }
+    public static System.Action<DeviceType> OnCurrentDeviceLost { get; set; }
     public static DeviceType CurrentDevice { get; private set; } = DeviceType.KEYBOARD;
     public static Vector2 MoveDirection { get { return Controls.Player.Move.ReadValue<Vector2>(); } }
 
@@ -93,7 +93,7 @@ public static class PlayerInput
         var type = GetDeviceType(device.name);
         if (type == CurrentDevice)
         {
-            OnDeviceLost?.Invoke(CurrentDevice);
+            OnCurrentDeviceLost?.Invoke(CurrentDevice);
         }
 
         // Find new valid device

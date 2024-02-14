@@ -42,7 +42,7 @@ public class GameController : MonoBehaviour
         SteamIntegration.Create();
         Singleton.CreateAllSingletons();
         PauseLock.OnLockChanged += OnPauseChanged;
-        PlayerInput.OnDeviceLost += OnDeviceLost;
+        PlayerInput.OnCurrentDeviceLost += OnDeviceLost;
     }
 
     private void Start()
