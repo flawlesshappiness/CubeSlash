@@ -31,6 +31,7 @@ public class BodyEditView : View
 
     private void ShowMainOptions()
     {
+        inputs.Clear();
         radial.Clear();
 
         var options = new List<RadialMenuOption>
@@ -175,8 +176,8 @@ public class BodyEditView : View
 
     private void SelectPartToMove(Bodypart selected)
     {
+        ShowSelectBodypartInput();
         BodypartEditController.Instance.BeginSelectingPart(selected, Select, Cancel);
-        inputs.Clear();
 
         void Select(Bodypart part)
         {
@@ -192,6 +193,7 @@ public class BodyEditView : View
 
     private void SelectPartToRemove(Bodypart selected)
     {
+        ShowRemoveBodypartInput();
         BodypartEditController.Instance.BeginSelectingPart(null, Select, Cancel);
 
         void Select(Bodypart part)
@@ -224,6 +226,22 @@ public class BodyEditView : View
         inputs.AddInput(PlayerInput.UIButtonType.NAV_LEFT_RIGHT, "Size");
         inputs.AddInput(PlayerInput.UIButtonType.SOUTH, "Set");
         inputs.AddInput(PlayerInput.UIButtonType.WEST, "Mirror");
+        inputs.AddInput(PlayerInput.UIButtonType.EAST, "Cancel");
+    }
+
+    private void ShowSelectBodypartInput()
+    {
+        inputs.Clear();
+        inputs.AddInput(PlayerInput.UIButtonType.NAV_UP_DOWN, "Move");
+        inputs.AddInput(PlayerInput.UIButtonType.SOUTH, "Select");
+        inputs.AddInput(PlayerInput.UIButtonType.EAST, "Cancel");
+    }
+
+    private void ShowRemoveBodypartInput()
+    {
+        inputs.Clear();
+        inputs.AddInput(PlayerInput.UIButtonType.NAV_UP_DOWN, "Move");
+        inputs.AddInput(PlayerInput.UIButtonType.SOUTH, "Remove");
         inputs.AddInput(PlayerInput.UIButtonType.EAST, "Cancel");
     }
 }
