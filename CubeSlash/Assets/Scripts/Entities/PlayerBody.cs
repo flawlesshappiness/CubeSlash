@@ -42,10 +42,12 @@ public class PlayerBody : Body
 
     public Bodypart CreateBodypart(BodypartType type)
     {
-        var left = InstantiateBodypart(type);
-        left.BoneSide = Bodypart.Side.Left;
+        LogController.LogMethod(type.id);
 
+        var left = InstantiateBodypart(type);
         var right = InstantiateBodypart(type);
+
+        left.BoneSide = Bodypart.Side.Left;
         right.BoneSide = Bodypart.Side.Right;
 
         left.CounterPart = right;
@@ -72,6 +74,8 @@ public class PlayerBody : Body
 
     private Bodypart InstantiateBodypart(BodypartType type)
     {
+        LogController.LogMethod(type.id);
+
         var bdp = BodypartController.Instance.CreateBodypart(type);
         bdp.transform.parent = transform;
         bdp.transform.localScale = Vector3.one;

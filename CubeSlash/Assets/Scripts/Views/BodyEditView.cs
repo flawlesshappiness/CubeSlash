@@ -155,11 +155,18 @@ public class BodyEditView : View
         void Submit(BodypartInfo info)
         {
             var part = BodypartEditController.Instance.CreatePart(info);
-            part.SetPosition(0.5f);
-            part.SetSize(0.5f);
-            BodypartEditController.Instance.BeginMovingPart(part, ShowBodypartSelect, () => Cancel(part));
+            if (part != null)
+            {
+                part.SetPosition(0.5f);
+                part.SetSize(0.5f);
+                BodypartEditController.Instance.BeginMovingPart(part, ShowBodypartSelect, () => Cancel(part));
 
-            ShowMoveBodypartInput();
+                ShowMoveBodypartInput();
+            }
+            else
+            {
+                ShowBodypartSelect();
+            }
         }
 
         void Cancel(Bodypart part)

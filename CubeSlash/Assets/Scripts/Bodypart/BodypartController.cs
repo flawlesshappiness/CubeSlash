@@ -17,6 +17,8 @@ public class BodypartController : Singleton
     public List<BodypartInfo> GetInfos() => _db.collection.ToList();
     public Bodypart CreateBodypart(BodypartType type)
     {
+        LogController.LogMethod(type.id);
+
         var info = GetInfo(type);
         var bdp = Instantiate(info.prefab);
         bdp.Info = info;

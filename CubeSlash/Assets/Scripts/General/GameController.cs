@@ -67,12 +67,30 @@ public class GameController : MonoBehaviour
     {
         LogController.LogMethod();
 
+        ValidatePlayerSaveData();
+
         var prefab_player = Resources.Load<GameObject>("Prefabs/Entities/Player");
         Player.Instance = Instantiate(prefab_player, world).GetComponent<Player>();
         Player.Instance.Initialize();
         Player.Instance.onDeath += OnPlayerDeath;
         Player.Instance.onLevelUp += OnPlayerLevelUp;
         Player.Instance.gameObject.SetActive(true);
+    }
+
+    private void ValidatePlayerSaveData()
+    {
+        LogController.LogMethod();
+
+        var body_data = Save.PlayerBody;
+        foreach (var part_data in body_data.bodyparts.ToList())
+        {
+            var info = BodypartController.Instance.GetInfo(part_data.type);
+            if (info == null)
+            {
+                LogController.LogMessage($"Found BodypartSaveData without BodypartInfo", LogType.Warning);
+                body_data.bodyparts.Remove(part_data);
+            }
+        }
     }
 
     private void OnDeviceLost(PlayerInput.DeviceType type)

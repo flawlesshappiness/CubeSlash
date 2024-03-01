@@ -156,7 +156,9 @@ public class AbilityExplode : Ability
         }
         _active_charges.Clear();
 
+        InUse = false;
         StartCooldown(c);
+        Player.Instance.AbilityLock.RemoveLock(nameof(AbilityExplode));
 
         void DoExplosion(ActiveCharge charge)
         {
@@ -178,10 +180,6 @@ public class AbilityExplode : Ability
 
     private void OnExplode(Vector3 position, float t = 1)
     {
-        InUse = false;
-        StartCooldown();
-        Player.Instance.AbilityLock.RemoveLock(nameof(AbilityExplode));
-
         // Mini explosions
         for (int i = 0; i < (int)(MiniExplosions * t); i++)
         {

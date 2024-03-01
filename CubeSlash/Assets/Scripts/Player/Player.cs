@@ -303,6 +303,7 @@ public class Player : Character
         foreach (var data in Save.PlayerBody.bodyparts)
         {
             var part = PlayerBody.CreateBodypart(data.type);
+            if (part == null) continue;
 
             part.SaveData = data;
             part.CounterPart.SaveData = data;
