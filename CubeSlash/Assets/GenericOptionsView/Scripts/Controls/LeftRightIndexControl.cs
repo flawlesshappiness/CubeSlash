@@ -12,6 +12,8 @@ namespace Flawliz.GenericOptions
 
         private int _idx_selected;
 
+        public bool Enabled { get; set; } = true;
+
         public event System.Action<int> OnIndexChanged;
         public event System.Action<T> OnValueChanged;
 
@@ -38,6 +40,7 @@ namespace Flawliz.GenericOptions
 
         private void AdjustIndex(int i)
         {
+            if (!Enabled) return;
             SetIndex(_idx_selected + i);
         }
 

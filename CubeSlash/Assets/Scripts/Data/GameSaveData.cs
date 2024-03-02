@@ -31,4 +31,23 @@ public class GameSaveData : SaveDataObject
     {
         PlayerBodyType.Cell,
     };
+
+    public override void Clear()
+    {
+        idx_gamesetup_ability = -1;
+        idx_gamesetup_charm = -1;
+        idx_gamesetup_difficulty = 0;
+
+        new_abilities.Clear();
+        unlocked_abilities.Clear();
+        new_bodyparts.Clear();
+        unlocked_bodyparts.Clear();
+        new_player_bodies.Clear();
+        unlocked_player_bodies.Clear();
+
+        unlocked_abilities.Add(Ability.Type.DASH);
+        unlocked_abilities.Add(Ability.Type.SPLIT);
+        unlocked_bodyparts.Add(BodypartType.eye_A);
+        unlocked_player_bodies.Add(PlayerBodyType.Cell);
+    }
 }

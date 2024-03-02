@@ -52,10 +52,14 @@ public class BoomerangProjectile : Projectile
         base.Update();
 
         UpdateDistance();
-        UpdateReturn();
         UpdateCatch();
         UpdateSize();
         UpdateChain();
+    }
+
+    public void FixedUpdate()
+    {
+        UpdateReturn();
     }
 
     private void UpdateDistance()

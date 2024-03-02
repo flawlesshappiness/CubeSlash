@@ -7,6 +7,14 @@ public class PlayerBodySaveData : SaveDataObject
     public int body_skin = 0;
     public Ability.Type primary_ability = Ability.Type.SPLIT;
     public List<BodypartSavaData> bodyparts = new List<BodypartSavaData>();
+
+    public override void Clear()
+    {
+        body_type = PlayerBodyType.Cell;
+        body_skin = 0;
+        primary_ability = Ability.Type.SPLIT;
+        bodyparts.Clear();
+    }
 }
 
 [System.Serializable]
