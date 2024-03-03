@@ -147,7 +147,7 @@ public static class PlayerInput
     private static void OnDeviceInput(InputDevice device)
     {
         var type = GetDeviceType(device.name);
-        Debug.Log($"{device.name}: {type}");
+        //Debug.Log($"{device.name}: {type}");
         if (type != CurrentDevice)
         {
             SetDevice(device);

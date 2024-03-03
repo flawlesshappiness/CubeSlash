@@ -27,6 +27,7 @@ public class BodypartEditController : Singleton
         part.SaveData = data;
         part.CounterPart.SaveData = data;
         Save.PlayerBody.bodyparts.Add(data);
+        SaveDataController.Instance.Save<PlayerBodySaveData>();
         return part;
     }
 
@@ -34,6 +35,7 @@ public class BodypartEditController : Singleton
     {
         Body.RemoveBodypart(part);
         Save.PlayerBody.bodyparts.Remove(part.SaveData);
+        SaveDataController.Instance.Save<PlayerBodySaveData>();
     }
 
     public void BeginMovingPart(Bodypart bodypart, System.Action OnSubmit, System.Action OnCancel)

@@ -139,6 +139,7 @@ public class PlayRadialView : View
         {
             Player.Instance.SetPrimaryAbility(info.type);
             Player.Instance.UpdateBodyparts();
+            SaveDataController.Instance.Save<GameSaveData>();
             ShowMainOptions();
         }
 
@@ -185,6 +186,7 @@ public class PlayRadialView : View
         void SelectDifficulty(DifficultyInfo info)
         {
             DifficultyController.Instance.SetDifficulty(info);
+            SaveDataController.Instance.Save<GameSaveData>();
             ShowMainOptions();
         }
     }

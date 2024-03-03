@@ -131,6 +131,8 @@ public class GameEndView : View
         {
             UnlockDifficulty();
         }
+
+        SaveDataController.Instance.Save<GameSaveData>();
     }
 
     private void UnlockRandomAbility()

@@ -96,6 +96,7 @@ public class BodyEditView : View
         void Select(PlayerBodyInfo info)
         {
             Save.Game.new_player_bodies.Remove(info.type);
+            SaveDataController.Instance.Save<PlayerBodySaveData>();
         }
     }
 
@@ -123,6 +124,7 @@ public class BodyEditView : View
             Player.SetPlayerBody(info);
             Body.SetBodySprite(skin);
             Player.UpdateBodyparts();
+            SaveDataController.Instance.Save<PlayerBodySaveData>();
             ShowBodySelect();
         }
     }
@@ -178,6 +180,7 @@ public class BodyEditView : View
         void Select(BodypartInfo info)
         {
             Save.Game.new_bodyparts.Remove(info.type);
+            SaveDataController.Instance.Save<PlayerBodySaveData>();
         }
     }
 
@@ -194,6 +197,7 @@ public class BodyEditView : View
 
         void Cancel()
         {
+            SaveDataController.Instance.Save<PlayerBodySaveData>();
             ShowMainOptions();
         }
     }
@@ -222,6 +226,7 @@ public class BodyEditView : View
 
         void Cancel()
         {
+            SaveDataController.Instance.Save<PlayerBodySaveData>();
             ShowMainOptions();
         }
     }
