@@ -14,15 +14,15 @@ public class AbilityChain : Ability
 
     public GameAttribute Cooldown { get { return GameAttributeController.Instance.GetAttribute(GameAttributeType.chain_cooldown); } }
     public GameAttribute Radius { get { return GameAttributeController.Instance.GetAttribute(GameAttributeType.chain_radius); } }
-    public GameAttribute Chains { get { return GameAttributeController.Instance.GetAttribute(GameAttributeType.chain_chains); } }
+    public int Chains { get { return GameAttributeController.Instance.GetAttribute(GameAttributeType.chain_chains).ModifiedValue.int_value; } }
     public GameAttribute Strikes { get { return GameAttributeController.Instance.GetAttribute(GameAttributeType.chain_strikes); } }
     public GameAttribute ExplosionRadius { get { return GameAttributeController.Instance.GetAttribute(GameAttributeType.chain_explosion_radius); } }
     public GameAttribute Fragments { get { return GameAttributeController.Instance.GetAttribute(GameAttributeType.chain_fragments); } }
+    public float ZapDelay { get { return GameAttributeController.Instance.GetAttribute(GameAttributeType.chain_zap_delay).ModifiedValue.float_value; } }
+    public float ZapMultiplier { get { return GameAttributeController.Instance.GetAttribute(GameAttributeType.chain_zap_multiplier).ModifiedValue.float_value; } }
     public bool ChainBoomerang { get { return GameAttributeController.Instance.GetAttribute(GameAttributeType.chain_boomerang).ModifiedValue.bool_value; } }
 
     private float time_attack;
-
-    private const float TIME_BETWEEN_CHAINS = 0.2f;
 
     public override void InitializeFirstTime()
     {
@@ -58,13 +58,16 @@ public class AbilityChain : Ability
         if (!IsEquipped()) return;
         if (Time.time < time_attack) return;
 
+        var chain_count = Mathf.RoundToInt(Chains * ZapMultiplier);
+
         var center = Player.Instance.transform.position;
         var success = TryChainToTarget(new ChainInfo
         {
             center = center,
             radius = Radius.ModifiedValue.float_value,
-            chains_left = Chains.ModifiedValue.int_value,
+            chains_left = chain_count,
             initial_strikes = Strikes.ModifiedValue.int_value,
+            zap_delay = ZapDelay,
             chain_strikes = 1,
             onHit = OnHit,
             onFinalHit = OnFinalHit
@@ -119,9 +122,9 @@ public class AbilityChain : Ability
         IEnumerator ChainBoomerangCr()
         {
             CreateImpactPS(info.center);
-            yield return new WaitForSeconds(TIME_BETWEEN_CHAINS);
+            yield return new WaitForSeconds(ZapDelay);
             CreateImpactPS(info.center);
-            yield return new WaitForSeconds(TIME_BETWEEN_CHAINS);
+            yield return new WaitForSeconds(ZapDelay);
 
             CreateImpactPS(Player.transform.position);
             CreateZapPS(info.center, Player.transform.position);
@@ -145,6 +148,7 @@ public class AbilityChain : Ability
         public int chains_left;
         public int initial_strikes;
         public int chain_strikes;
+        public float zap_delay = 0.25f;
         public System.Action<ChainInfo, IKillable> onHit;
         public System.Action<ChainInfo, IKillable> onFinalHit;
         public List<IKillable> hits = new List<IKillable>();
@@ -183,6 +187,7 @@ public class AbilityChain : Ability
                 chains_left = info.chains_left,
                 initial_strikes = info.chain_strikes,
                 chain_strikes = info.chain_strikes,
+                zap_delay = info.zap_delay,
                 onHit = info.onHit,
                 onFinalHit = info.onFinalHit
             };
@@ -224,7 +229,7 @@ public class AbilityChain : Ability
         CoroutineController.Instance.StartCoroutine(ChainCr());
         IEnumerator ChainCr()
         {
-            yield return new WaitForSeconds(TIME_BETWEEN_CHAINS);
+            yield return new WaitForSeconds(info.zap_delay);
 
             TryChainToTarget(info);
         }

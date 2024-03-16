@@ -8,6 +8,8 @@ public partial class GameAttributeType : FakeEnum
     public static readonly GameAttributeType chain_explosion_radius = new GameAttributeType(nameof(chain_explosion_radius));
     public static readonly GameAttributeType chain_radius = new GameAttributeType(nameof(chain_radius));
     public static readonly GameAttributeType chain_boomerang = new GameAttributeType(nameof(chain_boomerang));
+    public static readonly GameAttributeType chain_zap_delay = new GameAttributeType(nameof(chain_zap_delay));
+    public static readonly GameAttributeType chain_zap_multiplier = new GameAttributeType(nameof(chain_zap_multiplier));
 
     // EXPLODE
     public static readonly GameAttributeType explode_chain = new GameAttributeType(nameof(explode_chain));

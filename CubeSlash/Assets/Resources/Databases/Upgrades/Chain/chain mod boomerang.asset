@@ -22,16 +22,23 @@ MonoBehaviour:
   upgrades_required: []
   modifiers:
   - attribute_type:
-      id: chain_boomerang
-    value_type: 2
+      id: chain_zap_multiplier
+    value_type: 1
     int_value: 2
-    float_value: 0
+    float_value: 1.5
     percent_value: 0.2
     bool_value: 1
+  - attribute_type:
+      id: chain_zap_delay
+    value_type: 1
+    int_value: 0
+    float_value: -0.1
+    percent_value: 0.2
+    bool_value: 0
   - attribute_type:
       id: chain_cooldown
     value_type: 3
     int_value: 0
     float_value: 0
-    percent_value: 0.2
+    percent_value: 0.4
     bool_value: 0
