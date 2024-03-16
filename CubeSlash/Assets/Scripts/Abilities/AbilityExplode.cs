@@ -231,15 +231,24 @@ public class AbilityExplode : Ability
         if (ChainExplode)
         {
             AbilityChain.CreateImpactPS(position);
+            StartCoroutine(ChainCr());
+        }
 
-            StartCoroutine(ExplodeCr(new ChargeInfo
+        IEnumerator ChainCr()
+        {
+            yield return new WaitForSeconds(Random.Range(0.5f, 1.0f));
+
+            AbilityChain.TryChainToTarget(new AbilityChain.ChainInfo
             {
-                parent = GameController.Instance.world,
-                radius = Random.Range(Radius * 0.25f, Radius * 0.5f),
-                delay = Random.Range(0.3f, 0.6f),
-                getPosition = () => position,
-                play_charge_sfx = false,
-            }));
+                center = position,
+                chain_strikes = 1,
+                initial_strikes = 1,
+                radius = 6f,
+                onHit = (info, k) =>
+                {
+                    Explode(k.GetPosition(), Radius * 0.25f, 0f);
+                }
+            });
         }
     }
 

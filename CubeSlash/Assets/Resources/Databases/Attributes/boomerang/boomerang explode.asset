@@ -20,5 +20,5 @@ MonoBehaviour:
       int_value: 1
       float_value: 0
       bool_value: 0
-    text: Hit enemies explode
+    text: Hits explode
     high_is_negative: 0
