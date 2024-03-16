@@ -65,7 +65,7 @@ public class AbilitySplit : Ability
 
             p.StartPosition = start_position;
             p.Velocity = velocity.magnitude;
-            p.BoomerangDistance = 5f;
+            p.BoomerangDistance = 7f;
 
             var force = FORCE_SELF;
 

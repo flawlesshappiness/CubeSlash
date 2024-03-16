@@ -38,6 +38,11 @@ public class SplitProjectile : Projectile
         UpdateCatch();
     }
 
+    private void FixedUpdate()
+    {
+
+    }
+
     private void UpdateDistance()
     {
         if (!IsBoomerang) return;
