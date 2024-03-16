@@ -9,6 +9,7 @@ public class PauseView : View
     [SerializeField] private SelectableMenuItem btnContinue;
     [SerializeField] private SelectableMenuItem btnOptions;
     [SerializeField] private SelectableMenuItem btnMainMenu;
+    [SerializeField] private SelectableMenuItem btnEndRun;
     [SerializeField] private UIInputLayout input;
 
     private void OnEnable()
@@ -32,6 +33,7 @@ public class PauseView : View
         btnContinue.onSubmit += ClickContinue;
         btnOptions.onSubmit += ClickOptions;
         btnMainMenu.onSubmit += ClickMainMenu;
+        btnEndRun.onSubmit += ClickEndRun;
 
         input.SetupTutorial();
     }
@@ -74,5 +76,11 @@ public class PauseView : View
     {
         Close(0);
         GameController.Instance.ReturnToMainMenu();
+    }
+
+    private void ClickEndRun()
+    {
+        Close(0);
+        Player.Instance.Suicide();
     }
 }
