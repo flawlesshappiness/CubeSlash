@@ -34,13 +34,12 @@ public class SplitProjectile : Projectile
     {
         base.Update();
         UpdateDistance();
-        UpdateReturn();
         UpdateCatch();
     }
 
     private void FixedUpdate()
     {
-
+        UpdateReturn();
     }
 
     private void UpdateDistance()
