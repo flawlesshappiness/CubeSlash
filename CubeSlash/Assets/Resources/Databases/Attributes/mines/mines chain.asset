@@ -20,5 +20,5 @@ MonoBehaviour:
       int_value: 2
       float_value: 2.5
       bool_value: 0
-    text: Fragments zap neaby enemies
+    text: Multi-fragment shells
     high_is_negative: 0

@@ -28,6 +28,14 @@ public class AbilityMines : Ability
     private const float FRAGMENT_DRAG = 0.95f;
     private const float FRAGMENT_DRAG_PIERCE = 0.98f;
 
+    private class MineInfo
+    {
+        public Vector3 Origin { get; set; }
+        public Vector3 Direction { get; set; }
+        public float Size { get; set; }
+        public float Speed { get; set; }
+    }
+
     public override void InitializeFirstTime()
     {
         base.InitializeFirstTime();
@@ -52,13 +60,22 @@ public class AbilityMines : Ability
             var angle_max = 45;
             for (int i = 0; i < count; i++)
             {
+                SoundController.Instance.PlayGroup(SoundEffectType.sfx_mines_spawn);
+
                 var mul = i % 2 == 0 ? 1 : -1;
                 var sine_val = i * 0.3f;
                 var back = -Player.Body.transform.up;
                 var angle = Mathf.Sin(sine_val) * angle_max * mul;
                 var rotation = Quaternion.AngleAxis(angle, Vector3.forward);
                 var direction = rotation * back;
-                ShootMine(direction);
+                var size_mul = FragmentChain ? 1.5f : 1f;
+                ShootMine(new MineInfo
+                {
+                    Origin = Player.transform.position,
+                    Direction = direction,
+                    Speed = SHELL_SPEED,
+                    Size = SHELL_SIZE * size_mul,
+                });
                 yield return new WaitForSeconds(0.1f);
             }
 
@@ -67,43 +84,60 @@ public class AbilityMines : Ability
         }
     }
 
-    private void ShootMine(Vector3 direction)
+    private MinesProjectile ShootMine(MineInfo info)
     {
-        SoundController.Instance.Play(SoundEffectType.sfx_mines_spawn);
-
         var p = ProjectileController.Instance.ShootPlayerProjectile(new ProjectileController.PlayerShootInfo
         {
             prefab = prefab_mine,
-            position_start = Player.transform.position,
-            velocity = direction.normalized * SHELL_SPEED,
+            position_start = info.Origin,
+            velocity = info.Direction.normalized * info.Speed,
         }) as MinesProjectile;
 
-        p.transform.localScale = Vector3.one * SHELL_SIZE;
+        p.transform.localScale = Vector3.one * info.Size;
         p.Drag = SHELL_DRAG;
         p.Lifetime = SHELL_LIFETIME;
-        p.onDestroy += () => OnMineHit(p.transform.position);
+        p.onDestroy += () => OnMineHit(p);
         p.onDestroy += () => OnMineDestroy(p);
-        p.onChainHit += OnMineHit;
 
         p.HasChain = FragmentChain;
         p.HasTrail = false;
-        p.ChainHits = FragmentCount;
+
+        return p;
     }
 
-    private void OnMineHit(Vector3 position)
+    private void OnMineHit(MinesProjectile p)
     {
         if (ExplodingFragments)
         {
             var radius = 3f * SHELL_SIZE;
-            AbilityExplode.Explode(position, radius, 0);
+            AbilityExplode.Explode(p.transform.position, radius, 0);
         }
 
-        if (!FragmentChain)
+        if (p.HasChain)
         {
-            var ps = ShootFragments(position, prefab_fragment, FragmentCount, FRAGMENT_SPEED, FRAGMENT_SIZE);
-            foreach (var p in ps)
+            SoundController.Instance.PlayGroup(SoundEffectType.sfx_chain_zap);
+            AbilityChain.CreateImpactPS(p.transform.position);
+
+            var dir = Random.insideUnitCircle.ToVector3().normalized;
+            for (int i = 0; i < 2; i++)
             {
-                SetupMineFragment(p as MinesFragmentProjectile);
+                var mul = i % 2 == 0 ? 1 : -1;
+                var p_new = ShootMine(new MineInfo
+                {
+                    Origin = p.transform.position,
+                    Direction = dir * mul,
+                    Size = SHELL_SIZE,
+                    Speed = SHELL_SPEED * 2f
+                });
+                p_new.HasChain = false;
+            }
+        }
+        else
+        {
+            var fragments = ShootFragments(p.transform.position, prefab_fragment, FragmentCount, FRAGMENT_SPEED, FRAGMENT_SIZE);
+            foreach (var fragment in fragments)
+            {
+                SetupMineFragment(fragment as MinesFragmentProjectile);
             }
         }
     }
