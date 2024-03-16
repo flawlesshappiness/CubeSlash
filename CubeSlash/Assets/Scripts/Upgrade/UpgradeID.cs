@@ -182,6 +182,11 @@ public class UpgradeID : FakeEnum
     public static readonly UpgradeID boomerang_lifetime_3 = new UpgradeID(nameof(boomerang_lifetime_3));
     public static readonly UpgradeID boomerang_lifetime_4 = new UpgradeID(nameof(boomerang_lifetime_4));
     public static readonly UpgradeID boomerang_lifetime_5 = new UpgradeID(nameof(boomerang_lifetime_5));
+    public static readonly UpgradeID boomerang_linger_time_1 = new UpgradeID(nameof(boomerang_linger_time_1));
+    public static readonly UpgradeID boomerang_linger_time_2 = new UpgradeID(nameof(boomerang_linger_time_2));
+    public static readonly UpgradeID boomerang_linger_time_3 = new UpgradeID(nameof(boomerang_linger_time_3));
+    public static readonly UpgradeID boomerang_linger_time_4 = new UpgradeID(nameof(boomerang_linger_time_4));
+    public static readonly UpgradeID boomerang_linger_time_5 = new UpgradeID(nameof(boomerang_linger_time_5));
 
     public static readonly UpgradeID boomerang_mod_split = new UpgradeID(nameof(boomerang_mod_split));
     public static readonly UpgradeID boomerang_mod_mines = new UpgradeID(nameof(boomerang_mod_mines));

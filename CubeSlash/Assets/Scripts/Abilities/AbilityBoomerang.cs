@@ -11,6 +11,7 @@ public class AbilityBoomerang : Ability
     private float Distance { get { return GameAttributeController.Instance.GetAttribute(GameAttributeType.boomerang_distance).ModifiedValue.float_value; } }
     private float CatchCooldown { get { return GameAttributeController.Instance.GetAttribute(GameAttributeType.boomerang_catch_cooldown).ModifiedValue.float_value; } }
     private float Lifetime { get { return GameAttributeController.Instance.GetAttribute(GameAttributeType.boomerang_lifetime).ModifiedValue.float_value; } }
+    private float LingerTime { get { return GameAttributeController.Instance.GetAttribute(GameAttributeType.boomerang_linger_time).ModifiedValue.float_value; } }
 
     private bool ChainLightning { get { return GameAttributeController.Instance.GetAttribute(GameAttributeType.boomerang_chain).ModifiedValue.bool_value; } } // CHAIN
     private bool ProjectileExplode { get { return GameAttributeController.Instance.GetAttribute(GameAttributeType.boomerang_explode).ModifiedValue.bool_value; } } // EXPLODE
@@ -87,10 +88,11 @@ public class AbilityBoomerang : Ability
         p.StartPosition = start_position;
         p.Velocity = velocity;
         p.Distance = Distance;
+        p.LingerDuration = LingerTime;
 
         p.transform.localScale = Vector3.one * SizeProjectile;
         p.Piercing = -1;
-        p.Lifetime = Lifetime;
+        p.Lifetime = Lifetime + LingerTime;
         p.onDestroy += () => OnDestroy(p);
 
         p.HasChain = ChainLightning;

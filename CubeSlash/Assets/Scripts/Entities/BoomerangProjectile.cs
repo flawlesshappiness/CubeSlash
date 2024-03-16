@@ -9,10 +9,12 @@ public class BoomerangProjectile : Projectile
     public Vector3 StartPosition { get; set; }
     public Vector3 Velocity { get; set; }
     public float Distance { get; set; }
+    public float LingerDuration { get; set; }
     public bool HasChain { get; set; }
 
     public bool Caught { get; private set; }
 
+    private bool _stopping;
     private bool _returning;
     private float _time_chain_hit;
 
@@ -20,6 +22,8 @@ public class BoomerangProjectile : Projectile
     private const float DISTANCE_CATCH = 1.5f;
     private const float TIME_CHAIN_HIT = 0.5f;
     private const float RADIUS_CHAIN = 5f;
+
+    private const float MAX_STOPPING_VELOCITY = 0.5f;
 
     protected override void Start()
     {
@@ -31,6 +35,8 @@ public class BoomerangProjectile : Projectile
         {
             ps_chain.Play();
         }
+
+        StartCoroutine(StateCr());
     }
 
     private Coroutine AnimateRotation()
@@ -51,7 +57,6 @@ public class BoomerangProjectile : Projectile
     {
         base.Update();
 
-        UpdateDistance();
         UpdateCatch();
         UpdateSize();
         UpdateChain();
@@ -59,17 +64,43 @@ public class BoomerangProjectile : Projectile
 
     public void FixedUpdate()
     {
+        UpdateLinger();
         UpdateReturn();
     }
 
-    private void UpdateDistance()
+    private IEnumerator StateCr()
     {
-        if (_returning) return;
+        // Distance
+        while (Vector3.Distance(transform.position, StartPosition) < Distance)
+        {
+            yield return null;
+        }
 
-        var current_distance = Vector3.Distance(transform.position, StartPosition);
-        if (current_distance < Distance) return;
+        // Linger
+        _stopping = true;
+        while (Rigidbody.velocity.magnitude > MAX_STOPPING_VELOCITY)
+        {
+            yield return null;
+        }
 
+        yield return new WaitForSeconds(LingerDuration);
+
+        // Return
+        _stopping = false;
         _returning = true;
+    }
+
+    private void UpdateLinger()
+    {
+        if (!_stopping) return;
+        if (GameController.Instance.IsPaused) return;
+
+        Rigidbody.AddForce(-Rigidbody.velocity.normalized * RETURN_ACCELERATION);
+
+        if (Rigidbody.velocity.magnitude < MAX_STOPPING_VELOCITY)
+        {
+            Rigidbody.velocity = Vector3.zero;
+        }
     }
 
     private void UpdateReturn()
