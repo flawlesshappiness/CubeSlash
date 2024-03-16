@@ -39,8 +39,6 @@ public class AI_BossMaw : BossAI
     {
         base.Initialize(enemy);
 
-        CreateArenas();
-
         var i_diff = DifficultyController.Instance.DifficultyIndex;
         duds_max = HITPOINTS[Mathf.Clamp(i_diff, 0, HITPOINTS.Length - 1)];
         duds_to_kill = duds_max;
@@ -50,6 +48,13 @@ public class AI_BossMaw : BossAI
 
     IEnumerator MainCr()
     {
+        BackgroundController.Instance.ClearObjects();
+
+        yield return new WaitForSeconds(BackgroundController.OBJECT_FADE_TIME);
+
+        // arena
+        CreateArenas();
+
         // init
         yield return AnimateAppear();
 

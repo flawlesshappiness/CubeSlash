@@ -60,7 +60,7 @@ public class BackgroundController : Singleton
 
     private Vector3 GetCameraPosition() => CameraController.Instance.Camera.transform.position.SetZ(0);
 
-    private void ClearObjects()
+    public void ClearObjects()
     {
         foreach (var o in objects)
         {
