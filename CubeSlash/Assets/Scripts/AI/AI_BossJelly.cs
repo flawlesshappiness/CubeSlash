@@ -94,6 +94,7 @@ public class AI_BossJelly : BossAI
         tether.dud.transform.position = Player.Instance.transform.position + Random.insideUnitCircle.normalized.ToVector3() * Random.Range(40f, 50f);
         tether.dud.transform.localScale = Vector3.one * 2f;
         tether.dud.OnKilled += () => OnDudKilled(tether);
+        ObjectController.Instance.Add(tether.dud.gameObject);
 
         tethers.Add(tether);
         UpdateTether(tether);
@@ -132,7 +133,7 @@ public class AI_BossJelly : BossAI
         Destroy(tether.dud.gameObject);
         tethers.Remove(tether);
 
-        if(tethers.Count == 0)
+        if (tethers.Count == 0)
         {
             Self.Kill();
         }

@@ -96,7 +96,7 @@ public class AbilityBoomerang : Ability
         p.HasChain = ChainLightning;
 
         var force_mul = FragmentProjectile > 0 ? 1f / FragmentProjectile : 1f;
-        var force = (FORCE_SELF + FORCE_SELF_SIZE * SizeProjectile) * force_mul;
+        var force = (FORCE_SELF + FORCE_SELF_SIZE * SizeProjectile) * force_mul / CountProjectile;
         Player.Knockback(-direction * force, false, false);
 
         void OnDestroy(BoomerangProjectile p)
