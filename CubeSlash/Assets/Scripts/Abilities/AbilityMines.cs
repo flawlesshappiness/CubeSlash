@@ -49,13 +49,13 @@ public class AbilityMines : Ability
         {
             Player.AbilityLock.AddLock(nameof(AbilityMines));
 
-            var delta = 20;
+            var angle_max = 45;
             for (int i = 0; i < count; i++)
             {
                 var mul = i % 2 == 0 ? 1 : -1;
-                var second = 1 + i / 2;
+                var sine_val = i * 0.3f;
                 var back = -Player.Body.transform.up;
-                var angle = i == 0 ? 0 : delta * second * mul;
+                var angle = Mathf.Sin(sine_val) * angle_max * mul;
                 var rotation = Quaternion.AngleAxis(angle, Vector3.forward);
                 var direction = rotation * back;
                 ShootMine(direction);
