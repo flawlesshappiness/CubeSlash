@@ -21,19 +21,11 @@ MonoBehaviour:
   ability_required: 2
   upgrades_required:
   - id: explode_radius_2
-  stats:
-  - id:
-      id: explode_radius_perc
-    value:
-      type_value: 3
-      value_int: 0
-      value_float: 0.2
-      value_bool: 0
   modifiers:
   - attribute_type:
       id: explode_radius
     value_type: 3
     int_value: 0
     float_value: 0
-    percent_value: 0.2
+    percent_value: 0.4
     bool_value: 0

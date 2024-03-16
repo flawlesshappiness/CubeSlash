@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class AbilityExplode : Ability
@@ -181,11 +182,20 @@ public class AbilityExplode : Ability
     private void OnExplode(Vector3 position, float t = 1)
     {
         // Mini explosions
+        var mini_max_radius = Radius * 2f;
+        var mini_targets = EnemyController.Instance.ActiveEnemies
+            .Where(e => Vector3.Distance(e.transform.position, Player.transform.position) < mini_max_radius)
+            .OrderBy(e => Vector3.Distance(e.transform.position, Player.transform.position))
+            .ToList();
+
         for (int i = 0; i < (int)(MiniExplosions * t); i++)
         {
+            var target = i < mini_targets.Count ? mini_targets[i] : null;
+
             var radius = Radius * Random.Range(0.3f, 0.5f);
             var dir = Random.insideUnitCircle.ToVector3().normalized;
-            var pos = position + dir * (Radius + radius);
+            var rnd_pos = position + dir * (Radius + radius);
+            var pos = target == null ? rnd_pos : target.transform.position;
             var delay = Random.Range(0.2f, 1.0f);
 
             StartCoroutine(ExplodeCr(new ChargeInfo
