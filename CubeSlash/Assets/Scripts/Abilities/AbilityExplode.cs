@@ -10,6 +10,7 @@ public class AbilityExplode : Ability
     public float Cooldown { get { return GameAttributeController.Instance.GetAttribute(GameAttributeType.explode_cooldown).ModifiedValue.float_value; } }
     public float Radius { get { return GameAttributeController.Instance.GetAttribute(GameAttributeType.explode_radius).ModifiedValue.float_value; } }
     public float ChargeTime { get { return GameAttributeController.Instance.GetAttribute(GameAttributeType.explode_charge_time).ModifiedValue.float_value; } }
+    public float ChargeTimePerc { get { return GameAttributeController.Instance.GetAttribute(GameAttributeType.explode_charge_time_perc).ModifiedValue.float_value; } }
     public float ChargeTimeReduc { get { return GameAttributeController.Instance.GetAttribute(GameAttributeType.explode_charge_time_reduc).ModifiedValue.float_value; } }
     public float Slow { get { return GameAttributeController.Instance.GetAttribute(GameAttributeType.explode_slow).ModifiedValue.float_value; } }
     public bool ChainExplode { get { return GameAttributeController.Instance.GetAttribute(GameAttributeType.explode_chain).ModifiedValue.bool_value; } }
@@ -19,6 +20,7 @@ public class AbilityExplode : Ability
     public bool DelayedExplosion { get { return GameAttributeController.Instance.GetAttribute(GameAttributeType.explode_delayed).ModifiedValue.bool_value; } }
 
     private const float FORCE = 250f;
+    private const float CHARGE_TIME_PER_SIZE = 0.27f;
 
     private float time_charge_start;
     private float time_charge_current;
@@ -37,14 +39,18 @@ public class AbilityExplode : Ability
 
     public override float GetBaseCooldown() => Cooldown;
 
+    private float CalculateChargeTime()
+    {
+        return Radius * CHARGE_TIME_PER_SIZE * ChargeTimePerc * att_cooldown_multiplier.ModifiedValue.float_value;
+    }
+
     public override void Pressed()
     {
         InUse = true;
         base.Pressed();
         time_charge_start = Time.time;
 
-        var time_charge_min = 0.05f;
-        time_charge_current = Mathf.Clamp(ChargeTime - time_charge_reduced, time_charge_min, ChargeTime);
+        time_charge_current = CalculateChargeTime();
         time_charge_reduced = 0;
         count_killed = 0;
 
@@ -99,7 +105,7 @@ public class AbilityExplode : Ability
     {
         if (!InUse) return;
 
-        var t = (time_charge_start + ChargeTime + 1);
+        var t = (time_charge_start + time_charge_current + 1);
         if (Time.time < t) return;
 
         Released();

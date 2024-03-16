@@ -21,19 +21,11 @@ MonoBehaviour:
   ability_required: 2
   upgrades_required:
   - id: explode_charge_time_4
-  stats:
-  - id:
-      id: explode_charge_time
-    value:
-      type_value: 3
-      value_int: 0
-      value_float: -0.25
-      value_bool: 0
   modifiers:
   - attribute_type:
-      id: explode_charge_time
-    value_type: 3
+      id: explode_charge_time_perc
+    value_type: 1
     int_value: 0
-    float_value: 0
+    float_value: -0.05
     percent_value: -0.25
     bool_value: 0

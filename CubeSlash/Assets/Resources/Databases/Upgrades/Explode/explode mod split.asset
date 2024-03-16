@@ -20,28 +20,6 @@ MonoBehaviour:
   require_ability: 1
   ability_required: 2
   upgrades_required: []
-  stats:
-  - id:
-      id: explode_minis
-    value:
-      type_value: 0
-      value_int: 5
-      value_float: 0
-      value_bool: 1
-  - id:
-      id: explode_cooldown_perc
-    value:
-      type_value: 3
-      value_int: 0
-      value_float: 0.1
-      value_bool: 1
-  - id:
-      id: explode_cooldown_flat
-    value:
-      type_value: 1
-      value_int: 0
-      value_float: 0.5
-      value_bool: 1
   modifiers:
   - attribute_type:
       id: explode_split
@@ -51,10 +29,10 @@ MonoBehaviour:
     percent_value: 0
     bool_value: 1
   - attribute_type:
-      id: explode_cooldown
-    value_type: 3
+      id: explode_charge_time_perc
+    value_type: 1
     int_value: 5
-    float_value: 0
+    float_value: 0.2
     percent_value: 0.2
     bool_value: 0
   - attribute_type:

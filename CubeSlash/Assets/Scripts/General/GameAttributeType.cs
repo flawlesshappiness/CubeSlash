@@ -14,6 +14,7 @@ public partial class GameAttributeType : FakeEnum
     // EXPLODE
     public static readonly GameAttributeType explode_chain = new GameAttributeType(nameof(explode_chain));
     public static readonly GameAttributeType explode_charge_time = new GameAttributeType(nameof(explode_charge_time));
+    public static readonly GameAttributeType explode_charge_time_perc = new GameAttributeType(nameof(explode_charge_time_perc));
     public static readonly GameAttributeType explode_charge_time_reduc = new GameAttributeType(nameof(explode_charge_time_reduc));
     public static readonly GameAttributeType explode_cooldown = new GameAttributeType(nameof(explode_cooldown));
     public static readonly GameAttributeType explode_fragments = new GameAttributeType(nameof(explode_fragments));
