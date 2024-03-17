@@ -18,6 +18,8 @@ MonoBehaviour:
   - enemy: {fileID: 11400000, guid: ad27c58b70b50004bb8b62c6f01a64bd, type: 2}
     chance: 0.7
     max: 50
+  normal_enemies: 0e000000
+  special_enemies: 
   color_fog: {r: 0.05882353, g: 0.059577744, b: 0.23529412, a: 1}
   color_bg: {r: 0.077124186, g: 0.02352941, b: 0.101960786, a: 1}
   ac_alpha_fog:

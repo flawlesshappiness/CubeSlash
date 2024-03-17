@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c301fa7d26535e4cb7056a730ebca5e, type: 3}
   m_Name: Enemy_CrystalEye
   m_EditorClassIdentifier: 
+  type: 17
   body: {fileID: 4160787836209392310, guid: 0b8b3eb3570c4764986e0d127e9132d8, type: 3}
   linear_acceleration: 0
   linear_velocity: 0

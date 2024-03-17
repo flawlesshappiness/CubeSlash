@@ -17,6 +17,8 @@ public class GameSettings : ScriptableObject
     public float endless_duration;
     public AnimationCurve enemy_freq_game;
     public AnimationCurve enemy_freq_difficulty;
+    public AnimationCurve enemy_max_game;
+    public AnimationCurve enemy_max_difficulty;
     public AnimationCurve enemy_count_game;
     public AnimationCurve boss_size_difficulty;
 
@@ -40,4 +42,19 @@ public class GameSettings : ScriptableObject
     {
         return _instance ?? (_instance = Resources.Load<GameSettings>("GameSettings"));
     }
+
+    public float CurrentGameDuration => Time.time - SessionController.Instance.CurrentData.time_start;
+    public float T_GameDuration => CurrentGameDuration / MaxGameDuration;
+    public float Difficulty => DifficultyController.Instance.DifficultyValue;
+    public int MaxAreaCount => (int)area_count_difficulty.Evaluate(Difficulty);
+    public float MaxGameDuration => (MaxAreaCount + 1) * area_duration;
+    public int EnemySpawnCount => (int)enemy_count_game.Evaluate(T_GameDuration);
+    public float EnemySpawnFrequencyGame => enemy_freq_game.Evaluate(T_GameDuration);
+    public float EnemySpawnFrequencyDifficulty => enemy_freq_difficulty.Evaluate(Difficulty);
+    public float EnemySpawnFrequency =>
+        EnemyController.Instance.IsFinalBossActive ? 1.2f :
+        Mathf.Max(0.1f, EnemySpawnFrequencyGame + EnemySpawnFrequencyDifficulty);
+    public int EnemyMaxCountGame => (int)enemy_max_game.Evaluate(T_GameDuration);
+    public int EnemyMaxCountDifficulty => (int)enemy_max_difficulty.Evaluate(Difficulty);
+    public int EnemyMaxCount => EnemyMaxCountGame + EnemyMaxCountDifficulty;
 }

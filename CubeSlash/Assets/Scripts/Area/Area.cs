@@ -10,7 +10,8 @@ public class Area : ScriptableObject
 
     [Header("ENEMIES")]
     public EnemySettings boss;
-    public List<AreaEnemyInfo> enemies;
+    public List<EnemyType> normal_enemies;
+    public List<EnemyType> special_enemies;
 
     [Header("FOG")]
     public Color color_fog = Color.white;

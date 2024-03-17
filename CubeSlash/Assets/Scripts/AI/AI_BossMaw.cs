@@ -70,17 +70,6 @@ public class AI_BossMaw : BossAI
         }
     }
 
-    IEnumerator SpawnLoopCr()
-    {
-        while (true)
-        {
-            Attack_EnemyGroup();
-
-            var cooldown = Mathf.Lerp(5f, 3f, T_HitsTaken);
-            yield return new WaitForSeconds(cooldown);
-        }
-    }
-
     private void StopCurrentAttack()
     {
         if (cr_attack != null)
@@ -104,27 +93,6 @@ public class AI_BossMaw : BossAI
             if (name == prev_attack) return;
             r.AddElement((name, action), weight);
         }
-    }
-
-    private void Attack_EnemyGroup()
-    {
-        SoundController.Instance.Play(SoundEffectType.sfx_enemy_maw_attack);
-
-        var is_fixed_position = Random.Range(0, 2) == 0;
-        var fixed_position = CameraController.Instance.GetPositionOutsideCamera();
-        var area_enemy_info = EnemyController.Instance.GetEnemiesUnlocked().Random();
-        var t = T_HitsTaken;
-        var count_min = (int)Mathf.Lerp(8, 15, t);
-        var count_max = (int)Mathf.Lerp(15, 20, t);
-        var count = Random.Range(count_min, count_max);
-        for (int i = 0; i < count; i++)
-        {
-            var position = GetPosition() + Random.insideUnitCircle.ToVector3().normalized;
-            var e = EnemyController.Instance.SpawnEnemy(area_enemy_info.enemy, position);
-            e.OnDeath += () => EnemyController.Instance.EnemyDeathSpawnMeat(e);
-        }
-
-        Vector3 GetPosition() => is_fixed_position ? fixed_position : CameraController.Instance.GetPositionOutsideCamera();
     }
 
     private void Attack_Projectiles()

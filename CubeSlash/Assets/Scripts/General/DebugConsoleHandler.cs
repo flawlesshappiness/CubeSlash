@@ -318,10 +318,13 @@ public class DebugConsoleHandler : Singleton
 
         if (GameController.Instance.IsGameStarted)
         {
-            CreateText(() => $"Spawn frequency: {EnemyController.Instance.GetSpawnFrequency()}");
-            CreateText(() => $"Spawn frequency (Difficulty): {EnemyController.Instance.GetSpawnFrequencyDifficulty()}");
-            CreateText(() => $"Spawn frequency (Game): {EnemyController.Instance.GetSpawnFrequencyGame()}");
-            CreateText(() => $"Spawn count: {EnemyController.Instance.GetSpawnCount()}");
+            CreateText(() => $"Spawn frequency: {GameSettings.Instance.EnemySpawnFrequency}");
+            CreateText(() => $"Spawn frequency (Difficulty): {GameSettings.Instance.EnemySpawnFrequencyDifficulty}");
+            CreateText(() => $"Spawn frequency (Game): {GameSettings.Instance.EnemySpawnFrequencyGame}");
+            CreateText(() => $"Spawn count: {GameSettings.Instance.EnemySpawnCount}");
+            CreateText(() => $"Max count: {GameSettings.Instance.EnemyMaxCount}");
+            CreateText(() => $"Max count (Difficulty): {GameSettings.Instance.EnemyMaxCountDifficulty}");
+            CreateText(() => $"Max count (Game): {GameSettings.Instance.EnemyMaxCountGame}");
         }
 
         CreateText(() => $"GameSaveData from cloud: {SaveDataController.Instance.Get<GameSaveData>().from_cloud}");

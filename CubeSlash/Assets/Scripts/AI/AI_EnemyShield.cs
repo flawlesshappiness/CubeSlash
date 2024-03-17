@@ -49,7 +49,7 @@ public class AI_EnemyShield : EnemyAI
     {
         this.state = state;
 
-        if(state != 2)
+        if (state != 2)
         {
             Self.Rigidbody.mass = Self.Settings.mass;
         }
@@ -64,7 +64,7 @@ public class AI_EnemyShield : EnemyAI
             StartCoroutine(PhaseOutCr(duration));
 
             ps_shield.Play();
-            SoundController.Instance.Play(SoundEffectType.sfx_enemy_crystal_shield);
+            SoundController.Instance.PlayGroup(SoundEffectType.sfx_enemy_crystal_shield);
         }
         else if (state == 2)
         {
@@ -75,7 +75,7 @@ public class AI_EnemyShield : EnemyAI
             StartCoroutine(PhaseOutCr(duration));
 
             ps_break.Play();
-            SoundController.Instance.Play(SoundEffectType.sfx_enemy_crystal_break);
+            SoundController.Instance.PlayGroup(SoundEffectType.sfx_enemy_crystal_break);
         }
         else if (state > 2)
         {
@@ -91,11 +91,11 @@ public class AI_EnemyShield : EnemyAI
 
     protected void Unshield()
     {
-        if(cr_unshield != null) StopCoroutine(cr_unshield);
+        if (cr_unshield != null) StopCoroutine(cr_unshield);
 
-        if(state == 1)
+        if (state == 1)
         {
-            SoundController.Instance.Play(SoundEffectType.sfx_enemy_crystal_unshield);
+            SoundController.Instance.PlayGroup(SoundEffectType.sfx_enemy_crystal_unshield);
         }
 
         Body.animator_main.SetBool("shielded", false);

@@ -7,10 +7,14 @@ public class EnemyController : Singleton
 {
     public static EnemyController Instance { get { return Instance<EnemyController>(); } }
 
+    public EnemyDatabase Database => _database ?? (_database = EnemyDatabase.Load<EnemyDatabase>());
+    private EnemyDatabase _database;
+
     private Enemy prefab_enemy;
     private List<Enemy> enemies_active = new List<Enemy>();
     private List<Enemy> enemies_inactive = new List<Enemy>();
-    private List<AreaEnemyInfo> enemies_unlocked = new List<AreaEnemyInfo>();
+    private List<EnemySettings> normal_enemies_unlocked = new List<EnemySettings>();
+    private List<EnemySettings> special_enemies_unlocked = new List<EnemySettings>();
 
     public bool EnemySpawnEnabled { get; set; } = true;
     public bool IsFinalBossActive { get; set; }
@@ -43,7 +47,19 @@ public class EnemyController : Singleton
 
     private void OnNextArea(Area area)
     {
-        enemies_unlocked.AddRange(area.enemies);
+        // Normal enemies
+        foreach (var enemy in area.normal_enemies)
+        {
+            var settings = Database.Get(enemy);
+            normal_enemies_unlocked.Add(settings);
+        }
+
+        // Special enemies
+        foreach (var enemy in area.special_enemies)
+        {
+            var settings = Database.Get(enemy);
+            special_enemies_unlocked.Add(settings);
+        }
 
         StartSpawnBossTimer();
     }
@@ -65,7 +81,8 @@ public class EnemyController : Singleton
         }
 
         // Clear unlocked enemies
-        enemies_unlocked.Clear();
+        normal_enemies_unlocked.Clear();
+        special_enemies_unlocked.Clear();
     }
 
     private void OnMainMenu()
@@ -74,54 +91,20 @@ public class EnemyController : Singleton
     }
 
     #region SPAWNING
-    public float GetSpawnFrequencyDifficulty()
-    {
-        var settings = GameSettings.Instance;
-        var difficulty = DifficultyController.Instance.DifficultyValue;
-        return settings.enemy_freq_difficulty.Evaluate(difficulty);
-    }
-
-    public float GetSpawnFrequencyGame()
-    {
-        if (IsFinalBossActive) return 1.2f;
-        var settings = GameSettings.Instance;
-        var diff = DifficultyController.Instance.DifficultyValue;
-        var max_area_count = settings.area_count_difficulty.Evaluate(diff);
-        var max_game_duration = max_area_count * settings.area_duration;
-        var current_game_duration = Time.time - SessionController.Instance.CurrentData.time_start;
-        var t_game_duration = current_game_duration / max_game_duration;
-        var freq_game = settings.enemy_freq_game.Evaluate(t_game_duration);
-        return freq_game;
-    }
-
-    public float GetSpawnFrequency()
-    {
-        var freq_difficulty = GetSpawnFrequencyDifficulty();
-        var freq_game = GetSpawnFrequencyGame();
-        return Mathf.Max(0.1f, freq_game + freq_difficulty);
-    }
-
-    public int GetSpawnCount()
-    {
-        var settings = GameSettings.Instance;
-        var diff = DifficultyController.Instance.DifficultyValue;
-        var max_area_count = settings.area_count_difficulty.Evaluate(diff);
-        var max_game_duration = max_area_count * settings.area_duration;
-        var current_game_duration = Time.time - SessionController.Instance.CurrentData.time_start;
-        var t_game_duration = current_game_duration / max_game_duration;
-        var count = (int)settings.enemy_count_game.Evaluate(t_game_duration);
-        return count;
-    }
-
     private void SpawnUpdate()
     {
         if (!EnemySpawnEnabled) return;
+        if (normal_enemies_unlocked.Count == 0) return;
+        if (special_enemies_unlocked.Count == 0) return;
         if (Time.time < time_next_spawn_enemy) return;
-        if (enemies_unlocked.Count == 0) return;
-        time_next_spawn_enemy += GetSpawnFrequency();
-        var count = GetSpawnCount();
+
+        time_next_spawn_enemy += GameSettings.Instance.EnemySpawnFrequency;
+
+        var count = GameSettings.Instance.EnemySpawnCount;
         for (int i = 0; i < count; i++)
         {
+            if (ActiveEnemies.Count >= GameSettings.Instance.EnemyMaxCount) return;
+
             SpawnRandomEnemy(CameraController.Instance.GetPositionOutsideCamera());
         }
     }
@@ -198,22 +181,9 @@ public class EnemyController : Singleton
 
     private Enemy SpawnRandomEnemy(Vector3 position)
     {
-        var random = new WeightedRandom<EnemySettings>();
-        foreach (var e in enemies_unlocked)
-        {
-            var count = enemies_active.Count(x => x.Settings == e.enemy);
-            if (count < e.max || e.max <= 0)
-            {
-                random.AddElement(e.enemy, e.chance);
-            }
-        }
-
-        if (random.Count == 0)
-        {
-            return null;
-        }
-
-        var settings = random.Random();
+        var is_special = Random.Range(0f, 1f) < 0.2f;
+        var list = is_special ? special_enemies_unlocked : normal_enemies_unlocked;
+        var settings = list.Random();
         var enemy = SpawnEnemy(settings, position);
         enemy.OnDeath += () => EnemyDeathSpawnMeat(enemy);
 
@@ -296,8 +266,5 @@ public class EnemyController : Singleton
             EnemyKilled(enemy);
         }
     }
-
-    public List<AreaEnemyInfo> GetEnemiesUnlocked() =>
-        enemies_unlocked.ToList();
     #endregion
 }

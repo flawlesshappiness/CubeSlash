@@ -19,6 +19,6 @@ MonoBehaviour:
   linear_drag: 20
   angular_acceleration: 5
   angular_velocity: 200
-  size: 1.5
+  size: 1
   mass: 1
   ai: {fileID: 6206609025645444197, guid: 2f9e0cbc1bf9072409342f65a895df65, type: 3}
