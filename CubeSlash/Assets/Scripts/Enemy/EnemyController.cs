@@ -190,6 +190,12 @@ public class EnemyController : Singleton
         return enemy;
     }
 
+    public Enemy SpawnEnemy(EnemyType type, Vector3 position)
+    {
+        var settings = Database.Get(type);
+        return SpawnEnemy(settings, position);
+    }
+
     public Enemy SpawnEnemy(EnemySettings settings, Vector3 position)
     {
         if (enemies_inactive.Count == 0)

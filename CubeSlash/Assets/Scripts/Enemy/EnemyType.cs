@@ -10,6 +10,7 @@ public enum EnemyType
     Volatile = 7,
     Jelly = 14,
     Eye_Crystal = 17,
+    JellyShield = 18,
 
     BossInfection = 8,
     BossShooter = 9,

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6046504362380866051}
   - component: {fileID: -8236408355889482749}
   m_Layer: 0
-  m_Name: AI_Enemy_Jelly
+  m_Name: AI_Enemy_Jelly_Shield
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -43,4 +43,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e77bf1c3f84ec4c4fab3935181c3cac1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  max_distance_to_player: 0
+  max_distance_to_player: 30

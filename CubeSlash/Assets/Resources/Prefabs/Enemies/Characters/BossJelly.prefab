@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &1506008273371056403
+--- !u!114 &7769465834675856588
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -9,7 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1945788655767330077}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f3e42868605e9f24280fa52485d3b45f, type: 3}
+  m_Script: {fileID: 11500000, guid: c96358ebe5cdfb242b2f55dd0e94f3d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   pivot_sprite: {fileID: 1362514934858604862}
@@ -20,6 +20,7 @@ MonoBehaviour:
   scale_by_velocity: 0
   template_dud: {fileID: 3405480637174817150, guid: 23ec884aeae69e74c9efdd36a40fc296, type: 3}
   duds_map: []
+  spr_shield: {fileID: 986569728854890726}
 --- !u!1 &5529902658357810589
 GameObject:
   m_ObjectHideFlags: 0

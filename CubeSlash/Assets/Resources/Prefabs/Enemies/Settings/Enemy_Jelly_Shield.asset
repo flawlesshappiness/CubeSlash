@@ -10,15 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9c301fa7d26535e4cb7056a730ebca5e, type: 3}
-  m_Name: Boss_Jelly
+  m_Name: Enemy_Jelly_Shield
   m_EditorClassIdentifier: 
-  type: 15
-  body: {fileID: 7769465834675856588, guid: 4979ec254d8bb1e4f8885220f55f36b8, type: 3}
+  type: 18
+  body: {fileID: 4160787836209392310, guid: 674acf7e934add648bfb4379f46287ff, type: 3}
   linear_acceleration: 20
   linear_velocity: 10
   linear_drag: 20
-  angular_acceleration: 6
-  angular_velocity: 50
-  size: 5
-  mass: 100
-  ai: {fileID: -8603643819023297211, guid: 6c0a45e6b01029e429fb8ad89b5a85a4, type: 3}
+  angular_acceleration: 8
+  angular_velocity: 200
+  size: 1
+  mass: 1
+  ai: {fileID: -8236408355889482749, guid: acb5648684538a84991394b4ac1098f4, type: 3}

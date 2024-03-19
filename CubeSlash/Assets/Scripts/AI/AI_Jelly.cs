@@ -4,18 +4,16 @@ using UnityEngine;
 
 public class AI_Jelly : EnemyAI
 {
-    private Vector3 target_position;
+    public float max_distance_to_player;
+
     private bool moving;
+
+    private bool IsTooClose => DistanceToPlayer() < max_distance_to_player;
 
     public override void Initialize(Enemy enemy)
     {
         base.Initialize(enemy);
         StartCoroutine(MoveCr());
-    }
-
-    private void Update()
-    {
-        target_position = Player.Instance.transform.position;
     }
 
     private void FixedUpdate()
@@ -35,7 +33,7 @@ public class AI_Jelly : EnemyAI
 
             moving = true;
             var time_move = Time.time + 0.5f;
-            while (Time.time < time_move)
+            while (Time.time < time_move && !IsTooClose)
             {
                 Self.Move(Self.MoveDirection);
                 yield return new WaitForFixedUpdate();
@@ -45,10 +43,17 @@ public class AI_Jelly : EnemyAI
             Lerp.LocalScale(Self.Body.pivot_sprite, 1f, Vector3.one)
                 .Curve(EasingCurves.EaseInOutQuad);
 
-            var time_wait = Time.time + 1f;
-            while(Time.time < time_wait)
+            while (IsTooClose)
             {
-                TurnTowards(target_position);
+                MoveToStop();
+                TurnTowards(PlayerPosition);
+                yield return null;
+            }
+
+            var time_wait = Time.time + 1f;
+            while (Time.time < time_wait)
+            {
+                TurnTowards(PlayerPosition);
                 yield return new WaitForFixedUpdate();
             }
         }

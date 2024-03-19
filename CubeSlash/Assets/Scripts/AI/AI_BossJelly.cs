@@ -14,10 +14,17 @@ public class AI_BossJelly : BossAI
 
     private List<Tether> tethers = new List<Tether>();
 
+    private const int COUNT_TETHER_MIN = 4;
+    private const int COUNT_TETHER_MAX = 8;
+    private int max_tethers;
+    private int remaining_tethers;
+
+    private BossJellyBody JellyBody => Body as BossJellyBody;
+
     private class Tether
     {
         public ParticleSystem ps;
-        public HealthDud dud;
+        public IKillable target;
     }
 
     public override void Initialize(Enemy enemy)
@@ -75,29 +82,44 @@ public class AI_BossJelly : BossAI
     private void CreateTethers()
     {
         var diff = DifficultyController.Instance.DifficultyValue;
-        var count = Mathf.Lerp(4, 8, diff);
-        for (int i = 0; i < count; i++)
+        max_tethers = (int)Mathf.Lerp(COUNT_TETHER_MIN, COUNT_TETHER_MAX, diff);
+        remaining_tethers = max_tethers;
+
+        if (DifficultyController.Instance.DifficultyIndex == 0)
         {
-            CreateTether();
+            for (int i = 0; i < max_tethers; i++)
+            {
+                CreateTether();
+            }
+        }
+        else
+        {
+            for (int i = 0; i < Mathf.Min(max_tethers, 2); i++)
+            {
+                CreateTether();
+            }
         }
     }
 
     private void CreateTether()
     {
+        // Tether
         var tether = new Tether();
         tether.ps = Instantiate(ps_tether);
         tether.ps.Play();
         ObjectController.Instance.Add(tether.ps.gameObject);
 
-        tether.dud = Instantiate(prefab_dud);
-        tether.dud.Initialize();
-        tether.dud.transform.position = Player.Instance.transform.position + Random.insideUnitCircle.normalized.ToVector3() * Random.Range(40f, 50f);
-        tether.dud.transform.localScale = Vector3.one * 2f;
-        tether.dud.OnKilled += () => OnDudKilled(tether);
-        ObjectController.Instance.Add(tether.dud.gameObject);
+        // Enemy
+        var enemy = EnemyController.Instance.SpawnEnemy(EnemyType.JellyShield, CameraController.Instance.GetPositionOutsideCamera());
+        enemy.OnDeath += () => OnTetherKilled(tether);
+        tether.target = enemy;
 
         tethers.Add(tether);
         UpdateTether(tether);
+
+        // Update body
+        remaining_tethers--;
+        JellyBody.T_Health = remaining_tethers / (float)max_tethers;
     }
 
     private void UpdateTethers()
@@ -107,11 +129,11 @@ public class AI_BossJelly : BossAI
 
     private void UpdateTether(Tether tether)
     {
-        var dir = Self.transform.position - tether.dud.transform.position;
+        var dir = Self.transform.position - tether.target.GetPosition();
         var distance = dir.magnitude;
         var angle = Vector3.SignedAngle(Vector3.up, dir, Vector3.forward);
         var rotation = Quaternion.AngleAxis(angle, Vector3.forward);
-        var position = Vector3.Lerp(Self.transform.position, tether.dud.transform.position, 0.5f);
+        var position = Vector3.Lerp(Self.transform.position, tether.target.GetPosition(), 0.5f);
 
         tether.ps.transform.SetPositionAndRotation(position, rotation);
 
@@ -126,14 +148,17 @@ public class AI_BossJelly : BossAI
         });
     }
 
-    private void OnDudKilled(Tether tether)
+    private void OnTetherKilled(Tether tether)
     {
         tether.ps.SetEmissionEnabled(false);
         Destroy(tether.ps.gameObject, 5);
-        Destroy(tether.dud.gameObject);
         tethers.Remove(tether);
 
-        if (tethers.Count == 0)
+        if (remaining_tethers > 0 && DifficultyController.Instance.DifficultyIndex > 0)
+        {
+            CreateTether();
+        }
+        else if (tethers.Count == 0)
         {
             Self.Kill();
         }
