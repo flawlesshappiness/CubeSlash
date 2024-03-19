@@ -14,11 +14,16 @@ public class AI_BossJelly : BossAI
 
     private List<Tether> tethers = new List<Tether>();
 
-    private const int COUNT_TETHER_MIN = 4;
-    private const int COUNT_TETHER_MAX = 8;
+    private const int COUNT_TETHER_MIN_DIFF = 4;
+    private const int COUNT_TETHER_MAX_DIFF = 12;
     private int max_tethers;
     private int remaining_tethers;
 
+    private float mul_move_min = 0.5f;
+    private float mul_move_max = 1.0f;
+
+    private float T_Health => remaining_tethers / (float)max_tethers;
+    private float MulMove => Mathf.Lerp(mul_move_min, mul_move_max, T_Health);
     private BossJellyBody JellyBody => Body as BossJellyBody;
 
     private class Tether
@@ -55,22 +60,22 @@ public class AI_BossJelly : BossAI
     {
         while (true)
         {
-            Lerp.LocalScale(Self.Body.pivot_sprite, 0.5f, new Vector3(0.8f, 1.2f, 1f))
-            .Curve(EasingCurves.EaseOutQuad);
+            Lerp.LocalScale(Self.Body.pivot_sprite, 0.5f * MulMove, new Vector3(0.8f, 1.2f, 1f))
+                .Curve(EasingCurves.EaseOutQuad);
 
             moving = true;
             var time_move = Time.time + 0.5f;
             while (Time.time < time_move)
             {
-                Self.Move(Self.MoveDirection);
+                MoveTowards(Position + Self.MoveDirection * 10);
                 yield return new WaitForFixedUpdate();
             }
             moving = false;
 
-            Lerp.LocalScale(Self.Body.pivot_sprite, 1f, Vector3.one)
+            Lerp.LocalScale(Self.Body.pivot_sprite, 1f * MulMove, Vector3.one)
                 .Curve(EasingCurves.EaseInOutQuad);
 
-            var time_wait = Time.time + 1f;
+            var time_wait = Time.time + 1f * MulMove;
             while (Time.time < time_wait)
             {
                 TurnTowards(target_position);
@@ -82,7 +87,9 @@ public class AI_BossJelly : BossAI
     private void CreateTethers()
     {
         var diff = DifficultyController.Instance.DifficultyValue;
-        max_tethers = (int)Mathf.Lerp(COUNT_TETHER_MIN, COUNT_TETHER_MAX, diff);
+        var count_tether_diff = (int)Mathf.Lerp(COUNT_TETHER_MIN_DIFF, COUNT_TETHER_MAX_DIFF, diff);
+        var count_tether_area = AreaController.Instance.AreaIndex;
+        max_tethers = count_tether_diff + count_tether_area;
         remaining_tethers = max_tethers;
 
         if (DifficultyController.Instance.DifficultyIndex == 0)
@@ -119,7 +126,8 @@ public class AI_BossJelly : BossAI
 
         // Update body
         remaining_tethers--;
-        JellyBody.T_Health = remaining_tethers / (float)max_tethers;
+        var t = remaining_tethers / (float)max_tethers;
+        JellyBody.T_Health = t;
     }
 
     private void UpdateTethers()
