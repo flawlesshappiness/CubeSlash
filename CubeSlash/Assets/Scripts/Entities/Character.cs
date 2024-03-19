@@ -66,7 +66,7 @@ public abstract class Character : MonoBehaviourExtended
             {
                 Rigidbody.AddForce(-Rigidbody.velocity.normalized * LinearDrag * Rigidbody.mass);
             }
-            else if(Time.time > time_stun)
+            else if (Time.time > time_stun)
             {
                 ResetStun();
             }
@@ -78,12 +78,12 @@ public abstract class Character : MonoBehaviourExtended
         }
     }
 
-    public void Knockback(Vector3 direction, bool use_mass = false, bool reset_velocity = false)
+    public void Knockback(Vector3 velocity, bool use_mass = false, bool reset_velocity = false)
     {
         Stun();
-        direction *= use_mass ? Rigidbody.mass : 1;
+        velocity *= use_mass ? Rigidbody.mass : 1;
         if (reset_velocity) Rigidbody.velocity = Vector3.zero;
-        Rigidbody.AddForce(direction);
+        Rigidbody.AddForce(velocity);
     }
 
     public void Stun(float time = 0.2f)

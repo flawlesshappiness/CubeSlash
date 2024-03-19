@@ -63,11 +63,14 @@ public class AI_BossJelly : BossAI
             Lerp.LocalScale(Self.Body.pivot_sprite, 0.5f * MulMove, new Vector3(0.8f, 1.2f, 1f))
                 .Curve(EasingCurves.EaseOutQuad);
 
+            PushAwayEnemies();
+
             moving = true;
             var time_move = Time.time + 0.5f;
             while (Time.time < time_move)
             {
-                MoveTowards(Position + Self.MoveDirection * 10);
+                var move_dir = Self.MoveDirection;
+                Self.Move(move_dir);
                 yield return new WaitForFixedUpdate();
             }
             moving = false;
@@ -169,6 +172,32 @@ public class AI_BossJelly : BossAI
         else if (tethers.Count == 0)
         {
             Self.Kill();
+        }
+    }
+
+    private void PushAwayEnemies()
+    {
+        var enemies = EnemyController.Instance.ActiveEnemies
+            .Where(e => e != Self && Vector3.Distance(e.transform.position, transform.position) < 20)
+            .ToList();
+
+        var forward = Self.transform.up;
+        var right = Self.transform.right;
+
+        foreach (var e in enemies)
+        {
+            var dir = e.transform.position - transform.position;
+            var dist = dir.magnitude;
+            var dot_forward = Vector3.Dot(forward, dir);
+            var dot_right = Vector3.Dot(right, dir);
+            var force = (1f - Mathf.Min(dist / 20, 1)) * 500;
+
+            if (dot_forward > 0)
+            {
+                var sign = Mathf.Sign(dot_right);
+                var velocity = right.normalized * force * sign;
+                e.Knockback(velocity, true, false);
+            }
         }
     }
 }
