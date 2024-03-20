@@ -9,6 +9,7 @@ public class GameAttribute
 
     public string text;
     public bool high_is_negative;
+    public bool display_as_percentage;
 
     public System.Action OnValueModified;
 
@@ -32,6 +33,7 @@ public class GameAttribute
         att.text = text;
         att.high_is_negative = high_is_negative;
         att._modifiers = _modifiers.ToList();
+        att.display_as_percentage = display_as_percentage;
         return att;
     }
 
@@ -51,6 +53,7 @@ public class GameAttribute
         _modifiers.ForEach(m => modifier_sum.Add(m));
 
         _modified_value = new GameAttributeValue(base_value);
+        _modified_value.display_as_percentage = display_as_percentage;
         modifier_sum.Modify(_modified_value);
         _is_updated_after_modified = true;
     }

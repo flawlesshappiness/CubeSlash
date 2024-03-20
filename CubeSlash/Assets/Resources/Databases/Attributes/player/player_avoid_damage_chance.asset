@@ -20,5 +20,7 @@ MonoBehaviour:
       int_value: 5
       float_value: 0
       bool_value: 0
+      display_as_percentage: 0
     text: Chance to avoid damage
     high_is_negative: 0
+    display_as_percentage: 1

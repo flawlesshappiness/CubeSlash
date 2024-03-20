@@ -8,6 +8,8 @@ public class GameAttributeValue
     public float float_value;
     public bool bool_value;
 
+    public bool display_as_percentage;
+
     public GameAttributeValue()
     {
 
@@ -19,12 +21,14 @@ public class GameAttributeValue
         int_value = base_value.int_value;
         float_value = base_value.float_value;
         bool_value = base_value.bool_value;
+
+        display_as_percentage = base_value.display_as_percentage;
     }
 
     public string GetStringValue() => value_type switch
     {
         ValueType.Int => int_value.ToString(),
-        ValueType.Float => float_value.ToString("0.##"),
+        ValueType.Float => display_as_percentage ? $"{(float_value * 100).ToString("0")}%" : float_value.ToString("0.##"),
         ValueType.Bool => bool_value.ToString(),
         _ => int_value.ToString(),
     };
