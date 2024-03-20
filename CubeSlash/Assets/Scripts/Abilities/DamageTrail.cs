@@ -6,7 +6,7 @@ using UnityEngine;
 public class DamageTrail : MonoBehaviour
 {
     [SerializeField] private AnimationCurve ac_size;
-    
+
     public float radius;
     public float lifetime;
     public bool hits_player;
@@ -16,12 +16,6 @@ public class DamageTrail : MonoBehaviour
 
     private Vector3 pos_prev;
 
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.white;
-        Gizmos.DrawWireSphere(transform.position, radius);
-    }
-
     private void Update()
     {
         HitTargets();
@@ -30,12 +24,12 @@ public class DamageTrail : MonoBehaviour
     private void HitTargets()
     {
         var hits = Physics2D.OverlapCircleAll(transform.position, radius);
-        foreach(var hit in hits)
+        foreach (var hit in hits)
         {
             if (hits_enemy)
             {
                 var k = hit.GetComponentInParent<IKillable>();
-                if(k != null)
+                if (k != null)
                 {
                     if (k.TryKill())
                     {
@@ -47,7 +41,7 @@ public class DamageTrail : MonoBehaviour
             if (hits_player)
             {
                 var p = hit.GetComponentInParent<Player>();
-                if(p != null)
+                if (p != null)
                 {
                     p.Damage(transform.position);
                 }
@@ -69,7 +63,7 @@ public class DamageTrail : MonoBehaviour
         while (create_more)
         {
             var pos_next = pos_prev + dir;
-            if(Vector3.Distance(pos_next, transform.position) > max_dist)
+            if (Vector3.Distance(pos_next, transform.position) > max_dist)
             {
                 create_more = true;
                 var trail = CreateTrail(pos_next);
@@ -93,11 +87,11 @@ public class DamageTrail : MonoBehaviour
         trail.transform.localScale = Vector3.one * radius;
         trail.gameObject.SetActive(true);
         trail.lifetime = lifetime;
-        trail.radius = radius;
         trail.hits_enemy = hits_enemy;
         trail.hits_player = hits_player;
         trail.StopParticleSystems();
         Lerp.LocalScale(trail.transform, lifetime, Vector3.zero, Vector3.one * radius).Curve(ac_size);
+        Lerp.Value(lifetime, f => trail.radius = f * radius).Curve(ac_size);
         Destroy(trail.gameObject, lifetime);
 
         ObjectController.Instance.Add(trail.gameObject);
@@ -107,7 +101,7 @@ public class DamageTrail : MonoBehaviour
 
     public void StopParticleSystems()
     {
-        foreach(var ps in GetComponentsInChildren<ParticleSystem>())
+        foreach (var ps in GetComponentsInChildren<ParticleSystem>())
         {
             this.StartCoroutineWithID(StopParticleSystemCr(ps), "stop_" + ps.GetInstanceID(), false);
         }
