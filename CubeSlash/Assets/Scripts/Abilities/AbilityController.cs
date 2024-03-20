@@ -52,6 +52,7 @@ public class AbilityController : Singleton
 
     public Ability GetAbilityPrefab(Ability.Type type) => DB.GetAbility(type);
     public Ability GetAbility(Ability.Type type) => abilities.FirstOrDefault(a => a.Info.type == type);
+    public Ability GetPrimaryAbility() => GetAbility(Save.PlayerBody.primary_ability);
     public List<Ability> GetGainedAbilities() => abilities.ToList();
     public bool HasGainedAbility(Ability.Type type) => abilities.Any(a => a.Info.type == type);
     public Ability GainAbility(Ability.Type type)

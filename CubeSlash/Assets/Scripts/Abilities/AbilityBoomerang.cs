@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class AbilityBoomerang : Ability
@@ -18,11 +19,23 @@ public class AbilityBoomerang : Ability
     private int FragmentProjectile { get { return GameAttributeController.Instance.GetAttribute(GameAttributeType.boomerang_fragment).ModifiedValue.int_value; } } // MINES
 
     private const float PROJECTILE_SPEED = 15f;
-    private const float PROJECTILE_LIFETIME = 5f;
     private const float FORCE_SELF = 300f;
     private const float FORCE_SELF_SIZE = 100f;
 
     public override float GetBaseCooldown() => Cooldown;
+
+    public override Dictionary<string, string> GetStats()
+    {
+        var stats = base.GetStats();
+
+        var cooldown = Cooldown * GlobalCooldownMultiplier;
+        stats.Add("Cooldown", cooldown.ToString("0.00"));
+        stats.Add("Size", SizeProjectile.ToString("0.00"));
+        stats.Add("Lifetime", Lifetime.ToString("0.00"));
+        stats.Add("Linger time", LingerTime.ToString("0.00"));
+
+        return stats;
+    }
 
     public override void Trigger()
     {

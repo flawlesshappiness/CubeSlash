@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public abstract class Ability : MonoBehaviourExtended
@@ -23,6 +24,7 @@ public abstract class Ability : MonoBehaviourExtended
     private Coroutine cr_release;
 
     protected GameAttribute att_cooldown_multiplier;
+    protected float GlobalCooldownMultiplier => att_cooldown_multiplier.ModifiedValue.float_value;
 
     private void OnEnable()
     {
@@ -55,6 +57,13 @@ public abstract class Ability : MonoBehaviourExtended
     public void SetBodypart(BodypartAbility bdp)
     {
         Bodypart = bdp;
+    }
+
+    public virtual Dictionary<string, string> GetStats()
+    {
+        var texts = new Dictionary<string, string>();
+
+        return texts;
     }
 
     #region INPUT
@@ -110,10 +119,8 @@ public abstract class Ability : MonoBehaviourExtended
     {
         InUse = false || CanPressWhileOnCooldown();
 
-        var mul_global = att_cooldown_multiplier.ModifiedValue.float_value;
-
         TimeCooldownStart = Time.time;
-        TimeCooldownEnd = TimeCooldownStart + duration * mul_global;
+        TimeCooldownEnd = TimeCooldownStart + duration * GlobalCooldownMultiplier;
         StartCoroutine(WaitForCooldownCr());
 
         IEnumerator WaitForCooldownCr()

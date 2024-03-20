@@ -29,6 +29,19 @@ public class AbilitySplit : Ability
 
     public override float GetBaseCooldown() => Cooldown;
 
+    public override Dictionary<string, string> GetStats()
+    {
+        var stats = base.GetStats();
+
+        var cooldown = Cooldown * GlobalCooldownMultiplier;
+        stats.Add("Cooldown", cooldown.ToString("0.00"));
+        stats.Add("Projectiles", CountProjectiles.ToString());
+        stats.Add("Arc", CountProjectiles.ToString("0.00"));
+        stats.Add("Piercing", Piercing.ToString());
+
+        return stats;
+    }
+
     public override void Trigger()
     {
         base.Trigger();

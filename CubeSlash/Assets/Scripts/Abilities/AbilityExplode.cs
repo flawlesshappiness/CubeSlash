@@ -39,6 +39,16 @@ public class AbilityExplode : Ability
 
     public override float GetBaseCooldown() => Cooldown;
 
+    public override Dictionary<string, string> GetStats()
+    {
+        var stats = base.GetStats();
+
+        stats.Add("Charge time", CalculateChargeTime().ToString("0.00"));
+        stats.Add("Radius", Radius.ToString("0.00"));
+
+        return stats;
+    }
+
     private float CalculateChargeTime()
     {
         return Radius * CHARGE_TIME_PER_SIZE * ChargeTimePerc * att_cooldown_multiplier.ModifiedValue.float_value;

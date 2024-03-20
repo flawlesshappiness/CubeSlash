@@ -39,6 +39,8 @@ public class Player : Character
     private GameAttribute att_chance_avoid_damage;
     private GameAttribute att_experience_multiplier;
 
+    private float GlobalCooldownMultiplier => GameAttributeController.Instance.GetAttribute(GameAttributeType.player_global_cooldown_multiplier).ModifiedValue.float_value;
+
     public void Initialize()
     {
         GameController.Instance.onMainMenu += OnMainMenu;
@@ -67,6 +69,21 @@ public class Player : Character
     private void OnGameStart()
     {
         SetRigidbodyEnabled(true);
+    }
+
+    public Dictionary<string, string> GetStats()
+    {
+        var stats = new Dictionary<string, string>();
+
+        stats.Add("Max speed", att_velocity.ModifiedValue.float_value.ToString("0.00"));
+        stats.Add("Acceleration", att_acceleration.ModifiedValue.float_value.ToString("0.00"));
+        stats.Add("Avoid damage chance", $"{(att_chance_avoid_damage.ModifiedValue.float_value * 100).ToString("0.00")}%");
+        stats.Add("Experience multiplier", att_experience_multiplier.ModifiedValue.float_value.ToString("0.00"));
+        stats.Add("Dodge distance", dodge.Distance.ToString("0.00"));
+        stats.Add("Dodge cooldown", (dodge.Cooldown * GlobalCooldownMultiplier).ToString("0.00"));
+        stats.Add("Energy gain", (heal.KillValue).ToString("0.00"));
+
+        return stats;
     }
 
     public void Clear()

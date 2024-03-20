@@ -5,7 +5,7 @@ public class PlayerDodge : MonoBehaviour
 {
     public bool Dashing { get; private set; }
     public float Distance { get { return GameAttributeController.Instance.GetAttribute(GameAttributeType.dodge_distance).ModifiedValue.float_value; } }
-    private float Cooldown { get { return GameAttributeController.Instance.GetAttribute(GameAttributeType.dodge_cooldown).ModifiedValue.float_value; } }
+    public float Cooldown { get { return GameAttributeController.Instance.GetAttribute(GameAttributeType.dodge_cooldown).ModifiedValue.float_value; } }
     public Player Player { get { return Player.Instance; } }
 
     private float time_cooldown_start;

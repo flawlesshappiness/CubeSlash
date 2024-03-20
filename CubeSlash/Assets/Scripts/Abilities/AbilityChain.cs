@@ -46,6 +46,18 @@ public class AbilityChain : Ability
 
     public override float GetBaseCooldown() => Cooldown.ModifiedValue.float_value;
 
+    public override Dictionary<string, string> GetStats()
+    {
+        var stats = base.GetStats();
+
+        var cooldown = Cooldown.ModifiedValue.float_value * GlobalCooldownMultiplier;
+        stats.Add("Cooldown", cooldown.ToString("0.00"));
+        stats.Add("Radius", Radius.ModifiedValue.float_value.ToString("0.00"));
+        stats.Add("Chains", Chains.ToString());
+
+        return stats;
+    }
+
     private void UpdatePreviewRadius() => pivot_preview.localScale = Vector3.one * Radius.ModifiedValue.float_value * 2;
 
     protected override void Update()
