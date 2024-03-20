@@ -64,6 +64,7 @@ public class AI_EnemyShield : EnemyAI
             StartCoroutine(PhaseOutCr(duration));
 
             ps_shield.Play();
+            SoundController.Instance.SetGroupVolumeByPosition(SoundEffectType.sfx_enemy_crystal_shield, Position);
             SoundController.Instance.PlayGroup(SoundEffectType.sfx_enemy_crystal_shield);
         }
         else if (state == 2)
@@ -75,6 +76,7 @@ public class AI_EnemyShield : EnemyAI
             StartCoroutine(PhaseOutCr(duration));
 
             ps_break.Play();
+            SoundController.Instance.SetGroupVolumeByPosition(SoundEffectType.sfx_enemy_crystal_break, Position);
             SoundController.Instance.PlayGroup(SoundEffectType.sfx_enemy_crystal_break);
         }
         else if (state > 2)
@@ -95,6 +97,7 @@ public class AI_EnemyShield : EnemyAI
 
         if (state == 1)
         {
+            SoundController.Instance.SetGroupVolumeByPosition(SoundEffectType.sfx_enemy_crystal_unshield, Position);
             SoundController.Instance.PlayGroup(SoundEffectType.sfx_enemy_crystal_unshield);
         }
 

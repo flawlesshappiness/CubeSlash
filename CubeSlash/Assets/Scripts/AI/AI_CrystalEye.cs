@@ -33,7 +33,7 @@ public class AI_CrystalEye : AI_EnemyShield
             yield return new WaitForSeconds(Random.Range(2f, 4f));
             yield return ShootProjectileCr();
 
-            if(Random.Range(0f, 1f) < 0.25f)
+            if (Random.Range(0f, 1f) < 0.25f)
             {
                 yield return ShootProjectileCr();
             }
@@ -86,7 +86,7 @@ public class AI_CrystalEye : AI_EnemyShield
 
         eye.ShowPupil = state != 1;
 
-        if(state == 2)
+        if (state == 2)
         {
             Self.Kill();
         }
