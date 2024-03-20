@@ -77,7 +77,7 @@ public class Player : Character
 
         stats.Add("Max speed", att_velocity.ModifiedValue.float_value.ToString("0.00"));
         stats.Add("Acceleration", att_acceleration.ModifiedValue.float_value.ToString("0.00"));
-        stats.Add("Avoid damage chance", $"{(att_chance_avoid_damage.ModifiedValue.float_value * 100).ToString("0.00")}%");
+        stats.Add("Avoid damage chance", $"{(att_chance_avoid_damage.ModifiedValue.float_value * 100).ToString("0")}%");
         stats.Add("Experience multiplier", att_experience_multiplier.ModifiedValue.float_value.ToString("0.00"));
         stats.Add("Dodge distance", dodge.Distance.ToString("0.00"));
         stats.Add("Dodge cooldown", (dodge.Cooldown * GlobalCooldownMultiplier).ToString("0.00"));
