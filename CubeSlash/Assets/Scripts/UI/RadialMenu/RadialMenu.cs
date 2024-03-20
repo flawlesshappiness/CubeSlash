@@ -11,6 +11,7 @@ public class RadialMenu : MonoBehaviour
     public bool SubmitAnimationEnabled { get; set; } = true;
     public RadialMenuElement CurrentElement { get; private set; }
     public RadialMenuElement CancelElement { get; private set; }
+    public int ElementCount => selector.Elements.Count;
 
     public event System.Action<RadialMenuElement> OnSelect;
     public event System.Action<RadialMenuElement> OnSubmitBegin;

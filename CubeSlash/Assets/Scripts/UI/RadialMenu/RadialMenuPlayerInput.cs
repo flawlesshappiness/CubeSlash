@@ -32,7 +32,7 @@ public class RadialMenuPlayerInput : MonoBehaviour
         }
         else
         {
-            if (PlayerInput.CurrentDevice == PlayerInput.DeviceType.KEYBOARD)
+            if (PlayerInput.CurrentDevice == PlayerInput.DeviceType.KEYBOARD && menu.ElementCount > 8)
             {
                 input = in_deadzone ? input : Vector2.Lerp(prev_input, input, Time.deltaTime);
                 prev_input = input;
