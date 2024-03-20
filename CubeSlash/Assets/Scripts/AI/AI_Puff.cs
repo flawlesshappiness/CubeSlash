@@ -20,14 +20,6 @@ public class AI_Puff : EnemyAI
         TurnTowards(pos_player_prev);
     }
 
-    private void Update()
-    {
-        var dist_max = 15f;
-        var t = 1f - Mathf.Clamp01(DistanceToPlayer() / dist_max);
-        var mul = Mathf.Lerp(0f, 0.15f, t);
-        Self.Body.pivot_sprite.localPosition = Random.insideUnitCircle.ToVector3() * mul;
-    }
-
     private void OnDeath()
     {
         trail.CreateTrail(transform.position);
