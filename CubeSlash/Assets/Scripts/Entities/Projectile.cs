@@ -10,6 +10,8 @@ public class Projectile : MonoBehaviourExtended
     public float Lifetime { get; set; } = 1f;
     public int Piercing { get; set; }
     public Rigidbody2D Rigidbody { get { return GetComponentOnce<Rigidbody2D>(ComponentSearchType.THIS); } }
+    public CircleCollider2D Collider { get { return GetComponentOnce<CircleCollider2D>(ComponentSearchType.CHILDREN); } }
+
     public System.Action<Player> onHitPlayer;
     public System.Action<IKillable> onHitEnemy;
     public System.Action onDeath;

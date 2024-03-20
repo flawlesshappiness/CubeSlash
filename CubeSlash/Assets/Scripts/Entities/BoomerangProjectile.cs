@@ -49,6 +49,27 @@ public class BoomerangProjectile : Projectile
             while (true)
             {
                 yield return LerpEnumerator.LocalEuler(pivot_animation, 0.5f, start, end);
+
+                HitOverlappingEnemies();
+            }
+        }
+    }
+
+    private void HitOverlappingEnemies()
+    {
+        var results = new Collider2D[10];
+        var filter = new ContactFilter2D().NoFilter();
+        if (Collider.OverlapCollider(filter, results) > 0)
+        {
+            foreach (var result in results)
+            {
+                if (result == null) continue;
+
+                var k = result.GetComponentInParent<IKillable>();
+                if (k == null) continue;
+
+                onHitEnemy?.Invoke(k);
+                k.TryKill();
             }
         }
     }
