@@ -15,7 +15,7 @@ MonoBehaviour:
   index_level_min: 1
   boss: {fileID: 11400000, guid: 80b4b4d92a4b01045a5ad67d39e979f7, type: 2}
   normal_enemies: 06000000
-  special_enemies: 
+  special_enemies: 17000000
   color_fog: {r: 0.21176471, g: 0.043137256, b: 0.20839988, a: 1}
   color_bg: {r: 0.101960786, g: 0.02352941, b: 0.02352941, a: 1}
   ac_alpha_fog:

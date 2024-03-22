@@ -151,7 +151,7 @@ MonoBehaviour:
   Path: Assets/FMOD/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 638446723705416081
+  lastModified: 638467464925350449
   FileSizes: []
   Exists: 1
 --- !u!114 &-7872426760261806101
@@ -1528,12 +1528,13 @@ MonoBehaviour:
   - {fileID: -8182980310798793663}
   - {fileID: 5761857092000438841}
   - {fileID: -4358442914159365508}
+  - {fileID: 6711892272813003153}
   EditorParameters: []
   MasterBanks:
   - {fileID: -8060980804293988741}
   StringsBanks:
   - {fileID: 5917708036578608240}
-  cacheTime: 638446723705466101
+  cacheTime: 638467464925430463
   cacheVersion: 131593
 --- !u!114 &1453305857757199432
 MonoBehaviour:
@@ -2168,10 +2169,10 @@ MonoBehaviour:
   Path: Assets/FMOD/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 638446723705466101
+  lastModified: 638467464925430463
   FileSizes:
   - Name: 
-    Value: 5080
+    Value: 5126
   Exists: 1
 --- !u!114 &5992827859230917708
 MonoBehaviour:
@@ -2299,6 +2300,33 @@ MonoBehaviour:
     Data2: 1203043853
     Data3: -1995059786
     Data4: -2040260450
+  Banks:
+  - {fileID: -8060980804293988741}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
+--- !u!114 &6711892272813003153
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Game/Enemy/jelly_burst_001
+  m_EditorClassIdentifier: 
+  Path: event:/Game/Enemy/jelly_burst_001
+  Guid:
+    Data1: 1867897417
+    Data2: 1082752944
+    Data3: -934478447
+    Data4: 658875079
   Banks:
   - {fileID: -8060980804293988741}
   IsStream: 0

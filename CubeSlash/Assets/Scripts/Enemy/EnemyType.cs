@@ -11,6 +11,12 @@ public enum EnemyType
     Jelly = 14,
     Eye_Crystal = 17,
     JellyShield = 18,
+    JellyBulb = 19,
+    PlantFlower = 20,
+    RootTeleport = 21,
+    Tripleye = 22,
+    CrystalBall = 23,
+    Camo = 24,
 
     BossInfection = 8,
     BossShooter = 9,

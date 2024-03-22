@@ -717,3 +717,14 @@ MonoBehaviour:
           Data3: 858834102
           Data4: 2088260866
         Path: event:/Game/Health/health_mana_full_001
+  - name: sfx_enemy_jelly_burst
+    type:
+      id: sfx_enemy_jelly_burst
+    sfx:
+      reference:
+        Guid:
+          Data1: 1867897417
+          Data2: 1082752944
+          Data3: -934478447
+          Data4: 658875079
+        Path: event:/Game/Enemy/jelly_burst_001

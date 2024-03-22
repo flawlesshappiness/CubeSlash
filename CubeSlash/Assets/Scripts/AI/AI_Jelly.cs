@@ -1,10 +1,14 @@
 using Flawliz.Lerp;
 using System.Collections;
+using System.Linq;
 using UnityEngine;
 
 public class AI_Jelly : EnemyAI
 {
     public float max_distance_to_player;
+    public bool pushes_enemies_on_death;
+    public SoundEffectType sfx_push;
+    public ParticleSystem ps_death;
 
     private bool moving;
 
@@ -14,6 +18,8 @@ public class AI_Jelly : EnemyAI
     {
         base.Initialize(enemy);
         StartCoroutine(MoveCr());
+
+        enemy.OnDeath += OnDeath;
     }
 
     private void FixedUpdate()
@@ -56,6 +62,52 @@ public class AI_Jelly : EnemyAI
                 TurnTowards(PlayerPosition);
                 yield return new WaitForFixedUpdate();
             }
+        }
+    }
+
+    private void OnDeath()
+    {
+        if (pushes_enemies_on_death)
+        {
+            PushAwayEnemies();
+            SoundController.Instance.SetGroupVolumeByPosition(SoundEffectType.sfx_enemy_jelly_burst, Position);
+            SoundController.Instance.PlayGroup(SoundEffectType.sfx_enemy_jelly_burst);
+        }
+
+        if (ps_death != null)
+        {
+            var ps = ps_death.Duplicate()
+                .Parent(GameController.Instance.world)
+                .Position(transform.position)
+                .Play()
+                .Destroy(3);
+        }
+    }
+
+    private void PushAwayEnemies()
+    {
+        var enemies = EnemyController.Instance.ActiveEnemies
+            .Where(e => e != Self && Vector3.Distance(e.transform.position, transform.position) < 20)
+            .ToList();
+
+        var forward = Self.transform.up;
+        var right = Self.transform.right;
+
+        var force_base = 500f;
+        var force_dot = 250f;
+        var max_dist = 8f;
+        var dir_player = DirectionToPlayer();
+
+        foreach (var e in enemies)
+        {
+            var dir = e.transform.position - transform.position;
+            var dist = dir.magnitude;
+            var dot_player = Vector3.Dot(dir_player.normalized, dir.normalized);
+            var mul_dot = 1f - Mathf.Abs(dot_player);
+            var mul_base = 1f - Mathf.Min(dist / max_dist, 0.5f);
+            var force = force_base * mul_base + force_dot * mul_dot;
+            var velocity = dir.normalized * force;
+            e.Knockback(velocity, true, false);
         }
     }
 }

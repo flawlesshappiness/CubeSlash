@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9c301fa7d26535e4cb7056a730ebca5e, type: 3}
+  m_Name: Enemy_Tripleye
+  m_EditorClassIdentifier: 
+  type: 22
+  body: {fileID: 4513536307685574258, guid: 3a379a2cf8e43d34882ca78ebf974291, type: 3}
+  linear_acceleration: 6
+  linear_velocity: 5
+  linear_drag: 20
+  angular_acceleration: 5
+  angular_velocity: 200
+  size: 1.5
+  mass: 2
+  ai: {fileID: 8767035241809482896, guid: f11e61c706cb5664cb504211139ae209, type: 3}

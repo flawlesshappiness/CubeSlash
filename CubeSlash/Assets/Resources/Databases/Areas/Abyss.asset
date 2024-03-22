@@ -14,11 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   index_level_min: 4
   boss: {fileID: 11400000, guid: 30e30135ff2e10940af19a852a8f0577, type: 2}
-  enemies:
-  - enemy: {fileID: 11400000, guid: 446594942849cc545a50a1af0a528adc, type: 2}
-    chance: 0.1
-    max: 5
-  normal_enemies: 
+  normal_enemies: 18000000
   special_enemies: 07000000
   color_fog: {r: 0, g: 0, b: 0, a: 1}
   color_bg: {r: 0.023529412, g: 0.02745098, b: 0.101960786, a: 1}
