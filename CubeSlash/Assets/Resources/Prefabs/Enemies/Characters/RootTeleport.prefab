@@ -11,6 +11,10 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 509724303943375344, guid: 45499daff63c9d64b8e9f610d9bfd8a4, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2973982606120359821, guid: 45499daff63c9d64b8e9f610d9bfd8a4, type: 3}
       propertyPath: m_Name
       value: RootTeleport
