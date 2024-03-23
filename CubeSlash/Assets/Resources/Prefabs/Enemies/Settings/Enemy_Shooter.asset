@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Enemy_Shooter
   m_EditorClassIdentifier: 
   type: 3
-  body: {fileID: 4160787836209392310, guid: aad9ea359b71a5f4f9f5a2812589ec69, type: 3}
+  body: {fileID: 3026890242561620057, guid: aad9ea359b71a5f4f9f5a2812589ec69, type: 3}
   linear_acceleration: 9
   linear_velocity: 3
   linear_drag: 20

@@ -30,6 +30,26 @@ Transform:
   m_Father: {fileID: 1362514934858604862}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3026890242561620057
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1945788655767330077}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2d5c56067725dbd49a25e885cd1c8539, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pivot_sprite: {fileID: 1362514934858604862}
+  animator_main: {fileID: 3715030648768294680}
+  Collider: {fileID: 2448956681260757774}
+  Trigger: {fileID: 6930517596927986064}
+  ps_death: {fileID: 1272193720796475515, guid: 56a4aa63eefd7704981ffb7c14788af0, type: 3}
+  scale_by_velocity: 0
+  EyeTransforms:
+  - {fileID: 8573271001162443597}
 --- !u!1001 &3622408219302922896
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -47,7 +67,7 @@ PrefabInstance:
       objectReference: {fileID: 9100000, guid: 4a57e16633cc5ec458ca6ee71cfd4c1a, type: 2}
     - target: {fileID: 2973982606120359821, guid: 45499daff63c9d64b8e9f610d9bfd8a4, type: 3}
       propertyPath: m_Name
-      value: Shooter
+      value: Eye_Shooter
       objectReference: {fileID: 0}
     - target: {fileID: 7115478356348238807, guid: 45499daff63c9d64b8e9f610d9bfd8a4, type: 3}
       propertyPath: m_LocalPosition.y
@@ -101,10 +121,31 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 863415056158122022, guid: 45499daff63c9d64b8e9f610d9bfd8a4, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 45499daff63c9d64b8e9f610d9bfd8a4, type: 3}
+--- !u!1 &1945788655767330077 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2973982606120359821, guid: 45499daff63c9d64b8e9f610d9bfd8a4, type: 3}
+  m_PrefabInstance: {fileID: 3622408219302922896}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1362514934858604862 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2354750420328967086, guid: 45499daff63c9d64b8e9f610d9bfd8a4, type: 3}
+  m_PrefabInstance: {fileID: 3622408219302922896}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &3715030648768294680 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 129216412035343752, guid: 45499daff63c9d64b8e9f610d9bfd8a4, type: 3}
+  m_PrefabInstance: {fileID: 3622408219302922896}
+  m_PrefabAsset: {fileID: 0}
+--- !u!58 &6930517596927986064 stripped
+CircleCollider2D:
+  m_CorrespondingSourceObject: {fileID: 5938915428007740160, guid: 45499daff63c9d64b8e9f610d9bfd8a4, type: 3}
+  m_PrefabInstance: {fileID: 3622408219302922896}
+  m_PrefabAsset: {fileID: 0}
+--- !u!58 &2448956681260757774 stripped
+CircleCollider2D:
+  m_CorrespondingSourceObject: {fileID: 1421184977900173726, guid: 45499daff63c9d64b8e9f610d9bfd8a4, type: 3}
   m_PrefabInstance: {fileID: 3622408219302922896}
   m_PrefabAsset: {fileID: 0}
