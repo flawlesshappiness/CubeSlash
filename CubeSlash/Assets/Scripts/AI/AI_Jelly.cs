@@ -70,6 +70,7 @@ public class AI_Jelly : EnemyAI
         if (pushes_enemies_on_death)
         {
             PushAwayEnemies();
+            PushAwayPlayer();
             SoundController.Instance.SetGroupVolumeByPosition(SoundEffectType.sfx_enemy_jelly_burst, Position);
             SoundController.Instance.PlayGroup(SoundEffectType.sfx_enemy_jelly_burst);
         }
@@ -108,6 +109,21 @@ public class AI_Jelly : EnemyAI
             var force = force_base * mul_base + force_dot * mul_dot;
             var velocity = dir.normalized * force;
             e.Knockback(velocity, true, false);
+        }
+    }
+
+    private void PushAwayPlayer()
+    {
+        var dir = DirectionToPlayer();
+        var dist = dir.magnitude;
+        var max_dist = 8f;
+        var mul_base = 1f - Mathf.Min(dist / max_dist, 0.5f);
+        var force = 500f;
+        var velocity = dir.normalized * force * mul_base;
+
+        if (mul_base > 0)
+        {
+            Player.Instance.Knockback(velocity, true, false);
         }
     }
 }

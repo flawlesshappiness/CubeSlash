@@ -21,4 +21,4 @@ MonoBehaviour:
   angular_velocity: 200
   size: 1.5
   mass: 2
-  ai: {fileID: 8767035241809482896, guid: f11e61c706cb5664cb504211139ae209, type: 3}
+  ai: {fileID: 7725353172817150930, guid: bc2d9649f410a374ea8011e5160230d4, type: 3}

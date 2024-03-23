@@ -19,13 +19,14 @@ MonoBehaviour:
   ps_death: {fileID: 1272193720796475515, guid: 56a4aa63eefd7704981ffb7c14788af0, type: 3}
   scale_by_velocity: 0
   sprite_states:
-  - {fileID: 21300000, guid: bd46130d2ae4944449a23a49222b380c, type: 3}
-  - {fileID: 21300000, guid: 5ed62eb1fe756c74d8ca1b952057b027, type: 3}
-  - {fileID: 21300000, guid: 6869ef4ead56a1449a869e7dd4dc31ff, type: 3}
-  - {fileID: 21300000, guid: d2d44d8d61973264ea4119c6c0fef252, type: 3}
-  - {fileID: 21300000, guid: 578676ec2c3902f408a4e818f028b478, type: 3}
-  - {fileID: 21300000, guid: 335a5338a066a2b4d9ca35b19f0e3d23, type: 3}
   - {fileID: 21300000, guid: 0bdd46300ac6a2a4fa086dbf6475fab7, type: 3}
+  - {fileID: 21300000, guid: 335a5338a066a2b4d9ca35b19f0e3d23, type: 3}
+  - {fileID: 21300000, guid: 578676ec2c3902f408a4e818f028b478, type: 3}
+  - {fileID: 21300000, guid: d2d44d8d61973264ea4119c6c0fef252, type: 3}
+  - {fileID: 21300000, guid: 6869ef4ead56a1449a869e7dd4dc31ff, type: 3}
+  - {fileID: 21300000, guid: 5ed62eb1fe756c74d8ca1b952057b027, type: 3}
+  - {fileID: 21300000, guid: bd46130d2ae4944449a23a49222b380c, type: 3}
+  spr: {fileID: 2247687211785407751}
 --- !u!1001 &9047206367721797343
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -120,6 +121,11 @@ GameObject:
 --- !u!4 &6711457776140115313 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2354750420328967086, guid: 45499daff63c9d64b8e9f610d9bfd8a4, type: 3}
+  m_PrefabInstance: {fileID: 9047206367721797343}
+  m_PrefabAsset: {fileID: 0}
+--- !u!212 &2247687211785407751 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 7115478356348238808, guid: 45499daff63c9d64b8e9f610d9bfd8a4, type: 3}
   m_PrefabInstance: {fileID: 9047206367721797343}
   m_PrefabAsset: {fileID: 0}
 --- !u!95 &8954620495944340311 stripped
