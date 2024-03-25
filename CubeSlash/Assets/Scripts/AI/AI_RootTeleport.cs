@@ -127,6 +127,7 @@ public class AI_RootTeleport : EnemyAI
         var inst = Instantiate(temp_roots);
         inst.gameObject.SetActive(true);
         active_roots.Add(inst);
+        ObjectController.Instance.Add(inst.gameObject);
         return inst;
     }
 }

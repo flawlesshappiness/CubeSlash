@@ -8,6 +8,9 @@ public class PlantPillar : Obstacle
     [SerializeField] private Collider2D collider, trigger;
     [SerializeField] private ParticleSystem ps_warn, ps_appear, ps_death;
 
+    public SoundEffectType sfx_telegraph;
+    public SoundEffectType sfx_spawn;
+
     private bool is_hidden;
 
     public void SetHidden()
@@ -18,18 +21,20 @@ public class PlantPillar : Obstacle
         pivot_animation.localScale = Vector3.zero;
     }
 
-    public void AnimateAppear(float delay_appear, float delay_disappear)
+    public CustomCoroutine AnimateAppear(float delay_appear, float delay_disappear)
     {
-        this.StartCoroutineWithID(Cr(), "appear_" + GetInstanceID());
+        return this.StartCoroutineWithID(Cr(), "appear_" + GetInstanceID());
 
         IEnumerator Cr()
         {
-            SoundController.Instance.Play(SoundEffectType.sfx_enemy_plant_warn);
+            SoundController.Instance.SetGroupVolumeByPosition(sfx_telegraph, transform.position);
+            SoundController.Instance.PlayGroup(sfx_telegraph);
             ps_warn.SetEmissionEnabled(true);
             yield return new WaitForSeconds(delay_appear);
             ps_warn.SetEmissionEnabled(false);
             ps_appear.Play();
-            SoundController.Instance.Play(SoundEffectType.sfx_enemy_plant_spawn);
+            SoundController.Instance.SetGroupVolumeByPosition(sfx_spawn, transform.position);
+            SoundController.Instance.PlayGroup(sfx_spawn);
 
             is_hidden = false;
 

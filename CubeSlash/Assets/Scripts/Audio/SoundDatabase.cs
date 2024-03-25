@@ -70,6 +70,7 @@ public class SoundEffectType : FakeEnum
     public static readonly SoundEffectType sfx_dud_death = new SoundEffectType(nameof(sfx_dud_death));
     public static readonly SoundEffectType sfx_avoid_damage = new SoundEffectType(nameof(sfx_avoid_damage));
     public static readonly SoundEffectType sfx_ability_off_cooldown = new SoundEffectType(nameof(sfx_ability_off_cooldown));
+    public static readonly SoundEffectType sfx_silence = new SoundEffectType(nameof(sfx_silence));
 
     // Charge
     public static readonly SoundEffectType sfx_charge_start = new SoundEffectType(nameof(sfx_charge_start));
@@ -113,6 +114,7 @@ public class SoundEffectType : FakeEnum
     public static readonly SoundEffectType sfx_enemy_root = new SoundEffectType(nameof(sfx_enemy_root));
     public static readonly SoundEffectType sfx_enemy_maw_attack = new SoundEffectType(nameof(sfx_enemy_maw_attack));
     public static readonly SoundEffectType sfx_enemy_jelly_burst = new SoundEffectType(nameof(sfx_enemy_jelly_burst));
+    public static readonly SoundEffectType sfx_enemy_plant_pillar_attack = new SoundEffectType(nameof(sfx_enemy_plant_pillar_attack));
 
     // UI
     public static readonly SoundEffectType sfx_ui_level_up = new SoundEffectType(nameof(sfx_ui_level_up));

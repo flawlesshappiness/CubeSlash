@@ -728,3 +728,25 @@ MonoBehaviour:
           Data3: -934478447
           Data4: 658875079
         Path: event:/Game/Enemy/jelly_burst_001
+  - name: sfx_enemy_plant_pillar_attack
+    type:
+      id: sfx_enemy_plant_pillar_attack
+    sfx:
+      reference:
+        Guid:
+          Data1: -982566698
+          Data2: 1262781182
+          Data3: 824420536
+          Data4: 1080473526
+        Path: event:/Game/Enemy/plant_pillar_spawn_002
+  - name: sfx_silence
+    type:
+      id: sfx_silence
+    sfx:
+      reference:
+        Guid:
+          Data1: 3027159
+          Data2: 1105756111
+          Data3: 865057722
+          Data4: -1103705416
+        Path: event:/Game/Misc/Silence
