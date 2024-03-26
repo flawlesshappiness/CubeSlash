@@ -21,7 +21,7 @@ public abstract class BackgroundObject : MonoBehaviour
 
         var w = CameraController.Instance.Width;
         var h = CameraController.Instance.Height;
-        World = new Vector2(w,h);
+        World = new Vector2(w, h);
 
         var parallax_min = area.parallax_min;
         var parallax_max = area.parallax_max;
@@ -39,5 +39,5 @@ public abstract class BackgroundObject : MonoBehaviour
         transform.localPosition = camera_position + new Vector3(pp.x, pp.y, StartPosition.z) + Offset;
     }
 
-    private int GetLayerCount() => area.background_layers.Count;
+    private int GetLayerCount() => area.background_layers?.Count ?? 0;
 }
