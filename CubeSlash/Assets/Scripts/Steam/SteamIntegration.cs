@@ -28,8 +28,12 @@ public class SteamIntegration : MonoBehaviour
     {
         try
         {
+#if UNITY_EDITOR
+            LogController.LogMessage($"STEAM: SteamClient not initialized in UNITY_EDITOR");
+#else
             LogController.LogMessage($"STEAM: Initializing SteamClient");
             SteamClient.Init(STEAM_ID);
+#endif
         }
         catch (Exception e)
         {
