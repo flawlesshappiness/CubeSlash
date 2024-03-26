@@ -30,6 +30,38 @@ Transform:
   m_Father: {fileID: 873286001113897763}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -45}
+--- !u!114 &8000614519184504168
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1945788655767330077}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb4f61cc6b4901045ad7df41d45806b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pivot_sprite: {fileID: 1362514934858604862}
+  animator_main: {fileID: 0}
+  Collider: {fileID: 2448956681260757774}
+  Trigger: {fileID: 6930517596927986064}
+  ps_death: {fileID: 1272193720796475515, guid: 9d70ac3a94366b14cb402524b2942eb6, type: 3}
+  scale_by_velocity: 0
+  template_dud: {fileID: 3405480637174817150, guid: 23ec884aeae69e74c9efdd36a40fc296, type: 3}
+  duds_map:
+  - duds:
+    - {fileID: 2336136779392584403}
+    - {fileID: 4692904412823652900}
+  - duds:
+    - {fileID: 7448214212737662071}
+    - {fileID: 825294944949621889}
+  ps_teleport: {fileID: 7818718246467865662}
+  pivots_wall:
+  - {fileID: 2193095557117512151}
+  - {fileID: 7504315356201625452}
+  - {fileID: 5608042713456924851}
+  - {fileID: 7361698685960902981}
 --- !u!1 &2874642011049375908
 GameObject:
   m_ObjectHideFlags: 0
@@ -124,38 +156,6 @@ Transform:
   m_Father: {fileID: 8318282147740001868}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8000614519184504168
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1945788655767330077}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bb4f61cc6b4901045ad7df41d45806b7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  pivot_main: {fileID: 8318282147740001868}
-  pivot_sprite: {fileID: 1362514934858604862}
-  Collider: {fileID: 2448956681260757774}
-  Trigger: {fileID: 6930517596927986064}
-  ps_death: {fileID: 1272193720796475515, guid: 9d70ac3a94366b14cb402524b2942eb6, type: 3}
-  scale_by_velocity: 0
-  template_dud: {fileID: 3405480637174817150, guid: 39a9d67b895ab3f49ade5a710765fefe, type: 3}
-  duds_map:
-  - duds:
-    - {fileID: 2336136779392584403}
-    - {fileID: 4692904412823652900}
-  - duds:
-    - {fileID: 7448214212737662071}
-    - {fileID: 825294944949621889}
-  ps_teleport: {fileID: 7818718246467865662}
-  pivots_wall:
-  - {fileID: 2193095557117512151}
-  - {fileID: 7504315356201625452}
-  - {fileID: 5608042713456924851}
-  - {fileID: 7361698685960902981}
 --- !u!1 &3729049574313801618
 GameObject:
   m_ObjectHideFlags: 0

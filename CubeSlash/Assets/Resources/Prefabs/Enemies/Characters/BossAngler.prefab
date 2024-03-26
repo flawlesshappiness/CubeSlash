@@ -90,6 +90,36 @@ Transform:
   m_Father: {fileID: 873286001113897763}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -90}
+--- !u!114 &5658857249211950320
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1945788655767330077}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6541c5231df13e44085b803d5737de17, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pivot_sprite: {fileID: 1362514934858604862}
+  animator_main: {fileID: 0}
+  Collider: {fileID: 2448956681260757774}
+  Trigger: {fileID: 6930517596927986064}
+  ps_death: {fileID: 1272193720796475515, guid: fd5afc43bece25445bb6d64a73e7328b, type: 3}
+  scale_by_velocity: 0
+  template_dud: {fileID: 3405480637174817150, guid: 23ec884aeae69e74c9efdd36a40fc296, type: 3}
+  duds_map:
+  - duds:
+    - {fileID: 25652714431467049}
+    - {fileID: 7018957449795081630}
+  - duds:
+    - {fileID: 3259776995590922036}
+    - {fileID: 6117312795693333572}
+  - duds:
+    - {fileID: 2336136779392584403}
+    - {fileID: 7448214212737662071}
+  lamp_target: {fileID: 2488998126500720867}
 --- !u!1 &2852103458703677466
 GameObject:
   m_ObjectHideFlags: 0
@@ -120,36 +150,6 @@ Transform:
   m_Father: {fileID: 873286001113897763}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 120}
---- !u!114 &5658857249211950320
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1945788655767330077}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6541c5231df13e44085b803d5737de17, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  pivot_main: {fileID: 8318282147740001868}
-  pivot_sprite: {fileID: 1362514934858604862}
-  Collider: {fileID: 2448956681260757774}
-  Trigger: {fileID: 6930517596927986064}
-  ps_death: {fileID: 1272193720796475515, guid: fd5afc43bece25445bb6d64a73e7328b, type: 3}
-  scale_by_velocity: 0
-  template_dud: {fileID: 3405480637174817150, guid: d9db459bb2823f84e9f39f091c9ddaf6, type: 3}
-  duds_map:
-  - duds:
-    - {fileID: 25652714431467049}
-    - {fileID: 7018957449795081630}
-  - duds:
-    - {fileID: 3259776995590922036}
-    - {fileID: 6117312795693333572}
-  - duds:
-    - {fileID: 2336136779392584403}
-    - {fileID: 7448214212737662071}
-  lamp_target: {fileID: 2488998126500720867}
 --- !u!1 &3729049574313801618
 GameObject:
   m_ObjectHideFlags: 0

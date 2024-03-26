@@ -33,17 +33,6 @@ public class BossAI : EnemyAI
         }
     }
 
-    protected void ShieldDuds(float duration)
-    {
-        StartCoroutine(Cr());
-        IEnumerator Cr()
-        {
-            Body.Duds.Where(d => d.IsAlive()).ToList().ForEach(d => d.SetArmorActive(true));
-            yield return new WaitForSeconds(duration);
-            Body.Duds.Where(d => d.IsAlive()).ToList().ForEach(d => d.SetArmorActive(false));
-        }
-    }
-
     protected void HideAndShowDuds(float duration)
     {
         StartCoroutine(Cr());
