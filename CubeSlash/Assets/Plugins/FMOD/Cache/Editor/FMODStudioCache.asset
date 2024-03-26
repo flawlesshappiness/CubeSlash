@@ -151,7 +151,7 @@ MonoBehaviour:
   Path: Assets/FMOD/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 638469902068149621
+  lastModified: 638470809283515565
   FileSizes: []
   Exists: 1
 --- !u!114 &-7872426760261806101
@@ -1531,12 +1531,13 @@ MonoBehaviour:
   - {fileID: 6711892272813003153}
   - {fileID: 5784083811613490289}
   - {fileID: 2630433499567744415}
+  - {fileID: 8101458364319998797}
   EditorParameters: []
   MasterBanks:
   - {fileID: -8060980804293988741}
   StringsBanks:
   - {fileID: 5917708036578608240}
-  cacheTime: 638469902068199638
+  cacheTime: 638470809283570794
   cacheVersion: 131593
 --- !u!114 &1453305857757199432
 MonoBehaviour:
@@ -2225,10 +2226,10 @@ MonoBehaviour:
   Path: Assets/FMOD/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 638469902068199638
+  lastModified: 638470809283570794
   FileSizes:
   - Name: 
-    Value: 5220
+    Value: 5278
   Exists: 1
 --- !u!114 &5992827859230917708
 MonoBehaviour:
@@ -2464,6 +2465,33 @@ MonoBehaviour:
     Data2: 1189913678
     Data3: 386416055
     Data4: -1201064192
+  Banks:
+  - {fileID: -8060980804293988741}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
+--- !u!114 &8101458364319998797
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Game/Enemy/camo_appear_001
+  m_EditorClassIdentifier: 
+  Path: event:/Game/Enemy/camo_appear_001
+  Guid:
+    Data1: -761377399
+    Data2: 1093009268
+    Data3: 912464560
+    Data4: 657387759
   Banks:
   - {fileID: -8060980804293988741}
   IsStream: 0

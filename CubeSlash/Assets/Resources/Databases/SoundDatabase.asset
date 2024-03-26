@@ -750,3 +750,14 @@ MonoBehaviour:
           Data3: 865057722
           Data4: -1103705416
         Path: event:/Game/Misc/Silence
+  - name: sfx_enemy_camo_appear
+    type:
+      id: sfx_enemy_camo_appear
+    sfx:
+      reference:
+        Guid:
+          Data1: -761377399
+          Data2: 1093009268
+          Data3: 912464560
+          Data4: 657387759
+        Path: event:/Game/Enemy/camo_appear_001

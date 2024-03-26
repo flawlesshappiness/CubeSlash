@@ -115,6 +115,7 @@ public class SoundEffectType : FakeEnum
     public static readonly SoundEffectType sfx_enemy_maw_attack = new SoundEffectType(nameof(sfx_enemy_maw_attack));
     public static readonly SoundEffectType sfx_enemy_jelly_burst = new SoundEffectType(nameof(sfx_enemy_jelly_burst));
     public static readonly SoundEffectType sfx_enemy_plant_pillar_attack = new SoundEffectType(nameof(sfx_enemy_plant_pillar_attack));
+    public static readonly SoundEffectType sfx_enemy_camo_appear = new SoundEffectType(nameof(sfx_enemy_camo_appear));
 
     // UI
     public static readonly SoundEffectType sfx_ui_level_up = new SoundEffectType(nameof(sfx_ui_level_up));
