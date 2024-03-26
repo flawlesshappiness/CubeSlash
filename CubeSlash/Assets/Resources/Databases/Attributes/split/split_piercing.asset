@@ -17,8 +17,10 @@ MonoBehaviour:
       id: split_piercing_count
     base_value:
       value_type: 0
-      int_value: 0
+      int_value: 1
       float_value: 0
       bool_value: 0
+      display_as_percentage: 0
     text: Piercing
     high_is_negative: 0
+    display_as_percentage: 0
