@@ -4,6 +4,10 @@ using UnityEngine;
 
 public abstract class EnemyAI : MonoBehaviour
 {
+    [Header(nameof(EnemyAI))]
+    public bool move_ignore_enemies;
+    public bool move_ignore_obstacles;
+
     protected Enemy Self { get; private set; }
     protected Vector3 Position { get { return Self.transform.position; } }
     protected Vector3 PlayerPosition { get { return Player.Instance.transform.position; } }
@@ -122,10 +126,10 @@ public abstract class EnemyAI : MonoBehaviour
             foreach (var hit in hits)
             {
                 var enemy = hit.collider.GetComponentInParent<Enemy>();
-                if (enemy != null && enemy != Self) return true;
+                if (!move_ignore_enemies && enemy != null && enemy != Self) return true;
 
                 var obstacle = hit.collider.GetComponentInParent<Obstacle>();
-                if (obstacle != null && !obstacle.enemy_ai_ignore) return true;
+                if (!move_ignore_obstacles && obstacle != null && !obstacle.enemy_ai_ignore) return true;
             }
 
             return false;

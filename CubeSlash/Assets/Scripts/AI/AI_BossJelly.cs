@@ -69,8 +69,7 @@ public class AI_BossJelly : BossAI
             var time_move = Time.time + 0.5f;
             while (Time.time < time_move)
             {
-                var move_dir = Self.MoveDirection;
-                Self.Move(move_dir);
+                MoveTowards(PlayerPosition);
                 yield return new WaitForFixedUpdate();
             }
             moving = false;

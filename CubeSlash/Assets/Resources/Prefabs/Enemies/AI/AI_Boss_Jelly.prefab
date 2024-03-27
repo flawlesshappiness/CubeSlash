@@ -44,6 +44,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e7b2cb85f02ca6d4da42501e25760ec4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  move_ignore_enemies: 1
+  move_ignore_obstacles: 0
   ps_tether: {fileID: 7503386832245874166}
   prefab_dud: {fileID: 3405480637174817150, guid: 1595ab7dc5c50984cb776dd6422f7b55, type: 3}
 --- !u!1 &3876632364915221631
