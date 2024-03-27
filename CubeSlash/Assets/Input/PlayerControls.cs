@@ -73,6 +73,14 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""MouseDelta"",
+                    ""type"": ""Value"",
+                    ""id"": ""ca9b2e97-0276-4180-a882-5f8fbf0b1c01"",
+                    ""expectedControlType"": ""Axis"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -337,6 +345,28 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Home"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""7ff182b5-a200-4656-80e0-828a1cfd1f2a"",
+                    ""path"": ""<Mouse>/delta/x"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MouseDelta"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""daa77803-e3d9-495d-bf5c-e3c16cffe4ab"",
+                    ""path"": ""<Mouse>/delta/y"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MouseDelta"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -912,6 +942,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         m_Player_West = m_Player.FindAction("West", throwIfNotFound: true);
         m_Player_Menu = m_Player.FindAction("Menu", throwIfNotFound: true);
         m_Player_Home = m_Player.FindAction("Home", throwIfNotFound: true);
+        m_Player_MouseDelta = m_Player.FindAction("MouseDelta", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -981,6 +1012,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
     private readonly InputAction m_Player_West;
     private readonly InputAction m_Player_Menu;
     private readonly InputAction m_Player_Home;
+    private readonly InputAction m_Player_MouseDelta;
     public struct PlayerActions
     {
         private @PlayerControls m_Wrapper;
@@ -992,6 +1024,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         public InputAction @West => m_Wrapper.m_Player_West;
         public InputAction @Menu => m_Wrapper.m_Player_Menu;
         public InputAction @Home => m_Wrapper.m_Player_Home;
+        public InputAction @MouseDelta => m_Wrapper.m_Player_MouseDelta;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1022,6 +1055,9 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 @Home.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnHome;
                 @Home.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnHome;
                 @Home.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnHome;
+                @MouseDelta.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMouseDelta;
+                @MouseDelta.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMouseDelta;
+                @MouseDelta.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMouseDelta;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -1047,6 +1083,9 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 @Home.started += instance.OnHome;
                 @Home.performed += instance.OnHome;
                 @Home.canceled += instance.OnHome;
+                @MouseDelta.started += instance.OnMouseDelta;
+                @MouseDelta.performed += instance.OnMouseDelta;
+                @MouseDelta.canceled += instance.OnMouseDelta;
             }
         }
     }
@@ -1173,6 +1212,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         void OnWest(InputAction.CallbackContext context);
         void OnMenu(InputAction.CallbackContext context);
         void OnHome(InputAction.CallbackContext context);
+        void OnMouseDelta(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {

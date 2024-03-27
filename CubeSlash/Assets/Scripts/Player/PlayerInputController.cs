@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerInputController : Singleton
@@ -9,6 +8,32 @@ public class PlayerInputController : Singleton
     protected override void Initialize()
     {
         base.Initialize();
-        var controls = PlayerInput.Controls;
+        MouseVibilityUpdate();
+    }
+
+    private Coroutine MouseVibilityUpdate()
+    {
+        return StartCoroutine(Cr());
+        IEnumerator Cr()
+        {
+            var mouse_time = Time.time;
+            while (true)
+            {
+                if (PlayerInput.Controls.Player.MouseDelta.ReadValue<float>() > 0)
+                {
+                    Cursor.visible = true;
+                    mouse_time = Time.time + 3;
+                }
+
+                if (Time.time < mouse_time)
+                {
+                    yield return null;
+                    continue;
+                }
+
+                Cursor.visible = false;
+                yield return null;
+            }
+        }
     }
 }
