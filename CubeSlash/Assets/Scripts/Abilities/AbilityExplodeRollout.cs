@@ -20,8 +20,12 @@ public class AbilityExplodeRollout : Ability
 
     public override Dictionary<string, string> GetStats()
     {
-        // TODO
-        return base.GetStats();
+        var stats = base.GetStats();
+        stats.Add("Cooldown", Cooldown.ToString("0.00"));
+        stats.Add("Explosions", ExplosionCount.ToString("0.00"));
+        stats.Add("Next radius", ExplosionRadiusDelta.ToString("0.00"));
+        stats.Add("Next offset", ExplosionOffset.ToString("0.00"));
+        return stats;
     }
 
     public override void Trigger()
