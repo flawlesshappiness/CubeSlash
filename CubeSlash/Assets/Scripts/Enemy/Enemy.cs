@@ -41,7 +41,7 @@ public class Enemy : Character, IKillable, IHurt
         SetBody(settings.body);
         SetAI(settings.ai);
 
-        time_spawn = Time.time + 0.2f;
+        time_spawn = Time.time + 0.1f;
     }
 
     protected override void OnUpdate()
@@ -61,7 +61,7 @@ public class Enemy : Character, IKillable, IHurt
         var sh = size * 0.5f;
         var center = Player.Instance.transform.position;
         var pos = transform.position;
-        
+
         if (pos.x < center.x - sh) transform.position += new Vector3(size, 0);
         if (pos.x > center.x + sh) transform.position -= new Vector3(size, 0);
         if (pos.y < center.y - sh) transform.position += new Vector3(0, size);
