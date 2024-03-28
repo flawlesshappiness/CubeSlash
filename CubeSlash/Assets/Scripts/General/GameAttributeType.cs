@@ -24,6 +24,18 @@ public partial class GameAttributeType : FakeEnum
     public static readonly GameAttributeType explode_split = new GameAttributeType(nameof(explode_split));
     public static readonly GameAttributeType explode_delayed = new GameAttributeType(nameof(explode_delayed));
 
+    // EXPLODE (ROLLOUT)
+    public static readonly GameAttributeType rollout_cooldown = new GameAttributeType(nameof(rollout_cooldown));
+    public static readonly GameAttributeType rollout_count = new GameAttributeType(nameof(rollout_count));
+    public static readonly GameAttributeType rollout_radius = new GameAttributeType(nameof(rollout_radius));
+    public static readonly GameAttributeType rollout_radius_delta = new GameAttributeType(nameof(rollout_radius_delta));
+    public static readonly GameAttributeType rollout_offset = new GameAttributeType(nameof(rollout_offset));
+    public static readonly GameAttributeType rollout_delay = new GameAttributeType(nameof(rollout_delay));
+    public static readonly GameAttributeType rollout_line_count = new GameAttributeType(nameof(rollout_line_count)); // SPLIT
+    public static readonly GameAttributeType rollout_behind = new GameAttributeType(nameof(rollout_behind)); // BOOMERANG
+    public static readonly GameAttributeType rollout_minis = new GameAttributeType(nameof(rollout_minis)); // MINES
+    public static readonly GameAttributeType rollout_zap = new GameAttributeType(nameof(rollout_zap)); // CHAIN
+
     // MINES
     public static readonly GameAttributeType mines_cooldown = new GameAttributeType(nameof(mines_cooldown));
     public static readonly GameAttributeType mines_double_shell = new GameAttributeType(nameof(mines_double_shell));

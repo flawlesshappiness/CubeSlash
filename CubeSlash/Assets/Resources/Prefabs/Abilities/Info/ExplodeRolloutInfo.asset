@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9c6785d8516eeff458ef9261144a9b67, type: 3}
+  m_Name: ExplodeRolloutInfo
+  m_EditorClassIdentifier: 
+  type: 2
+  name_ability: Explode
+  desc_ability: Create explosion that hits everything in front of you
+  sprite_icon: {fileID: 21300000, guid: 9fcc1744a317b8e4ab0aa3072a0a3ed5, type: 3}
+  modifiers: {fileID: 11400000, guid: 161417befd49f914f8a016a009f566af, type: 2}
+  type_bodypart:
+    id: ability_explode_A

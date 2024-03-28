@@ -127,6 +127,28 @@ public class UpgradeID : FakeEnum
     public static readonly UpgradeID explode_mod_split = new UpgradeID(nameof(explode_mod_split));
     public static readonly UpgradeID explode_mod_boomerang = new UpgradeID(nameof(explode_mod_boomerang));
 
+    // Explode (rollout)
+    public static readonly UpgradeID rollout_radius_delta_1 = new UpgradeID(nameof(rollout_radius_delta_1));
+    public static readonly UpgradeID rollout_radius_delta_2 = new UpgradeID(nameof(rollout_radius_delta_2));
+    public static readonly UpgradeID rollout_radius_delta_3 = new UpgradeID(nameof(rollout_radius_delta_3));
+    public static readonly UpgradeID rollout_radius_delta_4 = new UpgradeID(nameof(rollout_radius_delta_4));
+    public static readonly UpgradeID rollout_radius_delta_5 = new UpgradeID(nameof(rollout_radius_delta_5));
+    public static readonly UpgradeID rollout_offset_1 = new UpgradeID(nameof(rollout_offset_1));
+    public static readonly UpgradeID rollout_offset_2 = new UpgradeID(nameof(rollout_offset_2));
+    public static readonly UpgradeID rollout_offset_3 = new UpgradeID(nameof(rollout_offset_3));
+    public static readonly UpgradeID rollout_offset_4 = new UpgradeID(nameof(rollout_offset_4));
+    public static readonly UpgradeID rollout_offset_5 = new UpgradeID(nameof(rollout_offset_5));
+    public static readonly UpgradeID rollout_count_1 = new UpgradeID(nameof(rollout_count_1));
+    public static readonly UpgradeID rollout_count_2 = new UpgradeID(nameof(rollout_count_2));
+    public static readonly UpgradeID rollout_count_3 = new UpgradeID(nameof(rollout_count_3));
+    public static readonly UpgradeID rollout_count_4 = new UpgradeID(nameof(rollout_count_4));
+    public static readonly UpgradeID rollout_count_5 = new UpgradeID(nameof(rollout_count_5));
+
+    public static readonly UpgradeID rollout_mod_chain = new UpgradeID(nameof(rollout_mod_chain));
+    public static readonly UpgradeID rollout_mod_mines = new UpgradeID(nameof(rollout_mod_mines));
+    public static readonly UpgradeID rollout_mod_split = new UpgradeID(nameof(rollout_mod_split));
+    public static readonly UpgradeID rollout_mod_boomerang = new UpgradeID(nameof(rollout_mod_boomerang));
+
     // Mines
     public static readonly UpgradeID mines_count_1 = new UpgradeID(nameof(mines_count_1));
     public static readonly UpgradeID mines_count_2 = new UpgradeID(nameof(mines_count_2));

@@ -198,30 +198,38 @@ public class AbilityExplode : Ability
     private void OnExplode(Vector3 position, float t = 1)
     {
         // Mini explosions
-        var mini_max_radius = Radius * 2f;
+        if (MiniExplosions > 0)
+        {
+            var count = (int)(MiniExplosions * t);
+            var radius = Radius * 0.4f;
+            var range = Radius * 2;
+            ExplodeMinis(this, position, count, radius, range);
+        }
+    }
+
+    public static void ExplodeMinis(Ability ability, Vector3 position, int count, float radius, float range)
+    {
         var mini_targets = EnemyController.Instance.ActiveEnemies
-            .Where(e => Vector3.Distance(e.transform.position, Player.transform.position) < mini_max_radius)
-            .OrderBy(e => Vector3.Distance(e.transform.position, Player.transform.position))
+            .Where(e => Vector3.Distance(e.transform.position, position) < range)
+            .OrderBy(e => Vector3.Distance(e.transform.position, position))
             .ToList();
 
-        for (int i = 0; i < (int)(MiniExplosions * t); i++)
+        for (int i = 0; i < count; i++)
         {
             var target = i < mini_targets.Count ? mini_targets[i] : null;
 
-            var radius = Radius * Random.Range(0.3f, 0.5f);
             var dir = Random.insideUnitCircle.ToVector3().normalized;
-            var rnd_pos = position + dir * (Radius + radius);
+            var rnd_pos = position + dir * range;
             var pos = target == null ? rnd_pos : target.transform.position;
             var delay = Random.Range(0.2f, 1.0f);
 
-            StartCoroutine(ExplodeCr(new ChargeInfo
+            ability.StartCoroutine(ExplodeCr(new ChargeInfo
             {
                 parent = GameController.Instance.world,
                 radius = radius,
                 delay = delay,
                 getPosition = () => pos,
                 play_charge_sfx = false,
-                onHit = OnHit,
             }));
         }
     }
