@@ -15,7 +15,7 @@ MonoBehaviour:
   id:
     id: rollout_count_5
   name: 
-  icon: {fileID: 21300000, guid: c1733e23bcb536040b0a26f76617331f, type: 3}
+  icon: {fileID: 21300000, guid: 8659299d6f4b57b488d8ea30515fa1cf, type: 3}
   hidden: 0
   require_ability: 1
   ability_required: 2

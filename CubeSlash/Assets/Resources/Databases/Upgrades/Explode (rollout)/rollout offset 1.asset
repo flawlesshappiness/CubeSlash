@@ -15,7 +15,7 @@ MonoBehaviour:
   id:
     id: rollout_offset_1
   name: 
-  icon: {fileID: 21300000, guid: 9467dad3b15e5224f823a9d9c13fb383, type: 3}
+  icon: {fileID: 21300000, guid: b375ef07e3b5ef04f8dab8f87d9433b7, type: 3}
   hidden: 0
   require_ability: 1
   ability_required: 2
