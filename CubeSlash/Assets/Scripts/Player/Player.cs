@@ -538,11 +538,11 @@ public class Player : Character
         MovementLock.AddLock("Damage");
         DragLock.AddLock("Damage");
 
-        Rigidbody.velocity = dir.normalized * 50f;
         var time_end = Time.time + time;
         while (Time.time < time_end)
         {
-            Rigidbody.velocity = Rigidbody.velocity * 0.99f;
+            ResetStun();
+            Rigidbody.velocity = dir.normalized * 50f;
             yield return null;
         }
 
