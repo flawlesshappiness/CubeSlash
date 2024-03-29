@@ -6,7 +6,7 @@ public class CameraController : Singleton
 {
     public static CameraController Instance { get { return Instance<CameraController>(); } }
     private Camera _cam;
-    public Camera Camera { get { return _cam ?? FindCamera(); } }
+    public Camera Camera => _cam ??= Camera.main;
     public Transform Target { get; set; }
     public float Height { get { return Camera.orthographicSize * 2f; } }
     public float Width { get { return Height * Camera.aspect; } }
@@ -17,7 +17,6 @@ public class CameraController : Singleton
     {
         base.Initialize();
         AreaController.Instance.onNextArea += OnNextArea;
-        GameController.Instance.onMainMenu += OnMainMenu;
 
         Camera.orthographicSize = 15;
         TargetSize = Camera.orthographicSize;
@@ -25,10 +24,9 @@ public class CameraController : Singleton
 
     private void LateUpdate()
     {
-        if (Target == null) return;
-
         var z = -10;
-        Camera.transform.position = Vector3.Lerp(Camera.transform.position, Target.position.SetZ(z), 5f * Time.unscaledDeltaTime);
+        var position = GetTargetPosition().SetZ(z);
+        Camera.transform.position = Vector3.Lerp(Camera.transform.position, position.SetZ(z), 3f * Time.unscaledDeltaTime);
     }
 
     public Vector3 GetPositionOutsideCamera()
@@ -37,12 +35,6 @@ public class CameraController : Singleton
         var dir = Random.insideUnitCircle.normalized.ToVector3();
         var dist = w * 0.5f * Random.Range(1.3f, 2.0f);
         return Camera.transform.position.SetZ(0) + dir * dist;
-    }
-
-    private Camera FindCamera()
-    {
-        _cam = Camera.main;
-        return _cam;
     }
 
     public void SetSize(float size)
@@ -77,8 +69,13 @@ public class CameraController : Singleton
         AnimateSize(15f, size, EasingCurves.EaseInOutQuad);
     }
 
-    private void OnMainMenu()
+    private Vector3 GetTargetPosition()
     {
-        //AnimateSize(5f, 15f, EasingCurves.EaseInOutQuad);
+        if (Player.Instance == null) return Camera.transform.position;
+
+        var player = Player.Instance;
+        var p_player = player.transform.position;
+        var p_velocity = Vector3.ClampMagnitude(player.Rigidbody.velocity, 4f);
+        return p_player + p_velocity;
     }
 }

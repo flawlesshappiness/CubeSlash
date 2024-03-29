@@ -6,7 +6,6 @@ using UnityEngine;
 public class Player : Character
 {
     public static Player Instance;
-    [SerializeField] private Transform camera_target;
     [SerializeField] private PlayerDodge dodge;
     [SerializeField] public PlayerHeal heal;
     [SerializeField] private PlayerSettings settings;
@@ -55,7 +54,6 @@ public class Player : Character
         // Setup
         MoveDirection = transform.up;
         g_invincible.SetActive(false);
-        CameraController.Instance.Target = camera_target;
 
         Clear();
     }
@@ -158,7 +156,6 @@ public class Player : Character
     {
         base.OnUpdate();
         QueuedAbilityUpdate();
-        UpdateCameraTarget();
         UpdateDodgeCooldown();
     }
 
@@ -624,13 +621,6 @@ public class Player : Character
     {
         ps_avoid_damage.Play();
         SoundController.Instance.Play(SoundEffectType.sfx_avoid_damage);
-    }
-    #endregion
-    #region CAMERA
-    private void UpdateCameraTarget()
-    {
-        var distance = Rigidbody.velocity.magnitude * 0.3f;
-        camera_target.localPosition = Rigidbody.velocity.normalized * distance;
     }
     #endregion
 }
