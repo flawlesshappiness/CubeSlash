@@ -10,8 +10,8 @@ public class AI_Volatile : EnemyAI
     private EnemyVolatileBody volatile_body;
     private bool exploding;
 
-    private const float RADIUS_NEAR = 6f;
-    private const float RADIUS_EXPLODE = 8f;
+    private const float RADIUS_NEAR = 7f;
+    private const float RADIUS_EXPLODE = 9f;
 
     public override void Initialize(Enemy enemy)
     {
@@ -36,7 +36,7 @@ public class AI_Volatile : EnemyAI
 
         if (IsPlayerAlive())
         {
-            if(!exploding && DistanceToPlayer() < RADIUS_NEAR)
+            if (!exploding && DistanceToPlayer() < RADIUS_NEAR)
             {
                 StartExploding();
                 exploding = true;
@@ -65,7 +65,7 @@ public class AI_Volatile : EnemyAI
     private void Explode()
     {
         AbilityExplode.CreateExplodeEffect(transform.position, RADIUS_EXPLODE, color_explosion);
-        if(DistanceToPlayer() <= RADIUS_EXPLODE)
+        if (DistanceToPlayer() <= RADIUS_EXPLODE)
         {
             Player.Instance.Damage(transform.position);
         }
@@ -73,6 +73,6 @@ public class AI_Volatile : EnemyAI
 
     private void OnDeath()
     {
-        
+
     }
 }
