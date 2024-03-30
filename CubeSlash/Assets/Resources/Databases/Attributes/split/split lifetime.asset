@@ -22,5 +22,5 @@ MonoBehaviour:
       bool_value: 0
       display_as_percentage: 0
     text: Bullet lifetime
-    high_is_negative: 1
+    high_is_negative: 0
     display_as_percentage: 0
