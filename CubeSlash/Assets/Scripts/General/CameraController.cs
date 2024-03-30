@@ -75,7 +75,8 @@ public class CameraController : Singleton
 
         var player = Player.Instance;
         var p_player = player.transform.position;
-        var p_velocity = Vector3.ClampMagnitude(player.Rigidbody.velocity, 4f);
-        return p_player + p_velocity;
+        var d_velocity = Vector3.ClampMagnitude(player.Rigidbody.velocity, 4f);
+        var m_levelup = GameController.Instance.IsLevellingUp ? 0 : 1;
+        return p_player + d_velocity * m_levelup;
     }
 }

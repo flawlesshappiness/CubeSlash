@@ -16,6 +16,7 @@ public class GameController : MonoBehaviour
     public bool IsGameStarted { get; private set; }
     public bool IsGameEnded { get; private set; }
     public bool IsPaused { get { return PauseLock.IsLocked; } }
+    public bool IsLevellingUp { get; private set; }
     public MultiLock PauseLock { get; private set; } = new MultiLock();
     public int LevelIndex { get; set; }
 
@@ -28,8 +29,6 @@ public class GameController : MonoBehaviour
     public System.Action onWin { get; set; }
 
     public const string TAG_ABILITY_VIEW = "Ability";
-
-    private bool _levelling_up;
 
     private GameStateType GameState { get { return GameStateController.Instance.GameState; } }
 
@@ -119,7 +118,7 @@ public class GameController : MonoBehaviour
         if (PauseView.Exists) return;
         if (GameState != GameStateType.PLAYING) return;
         if (PauseLock.IsLocked) return;
-        if (_levelling_up) return;
+        if (IsLevellingUp) return;
         GameStateController.Instance.SetGameState(GameStateType.MENU);
         ViewController.Instance.ShowView<PauseView>(0, nameof(PauseView));
     }
@@ -204,6 +203,7 @@ public class GameController : MonoBehaviour
 
     public void ResumeLevel()
     {
+        IsLevellingUp = false;
         GameStateController.Instance.SetGameState(GameStateType.PLAYING);
         PauseLock.RemoveLock(nameof(GameController));
         onResume?.Invoke();
@@ -213,7 +213,7 @@ public class GameController : MonoBehaviour
     {
         LogController.LogMethod();
 
-        _levelling_up = true;
+        IsLevellingUp = true;
 
         Player.Instance.ResetExperience();
         onPlayerLevelUp?.Invoke();
@@ -245,13 +245,8 @@ public class GameController : MonoBehaviour
             else if (unlock_upgrade)
             {
                 var view = ViewController.Instance.ShowView<UnlockUpgradeView>(0, TAG_ABILITY_VIEW);
-                view.OnUpgradeSelected += u =>
-                {
-                    ResumeLevel();
-                };
+                view.OnUpgradeSelected += u => ResumeLevel();
             }
-
-            _levelling_up = false;
         }
     }
 
