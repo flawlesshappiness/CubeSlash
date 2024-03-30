@@ -36,8 +36,8 @@ public class AbilitySplit : Ability
         var cooldown = Cooldown * GlobalCooldownMultiplier;
         stats.Add("Cooldown", cooldown.ToString("0.00"));
         stats.Add("Projectiles", CountProjectiles.ToString());
-        stats.Add("Arc", CountProjectiles.ToString("0.00"));
         stats.Add("Piercing", Piercing.ToString());
+        stats.Add("Lifetime", ProjectileLifetime.ToString("0.00"));
 
         return stats;
     }
