@@ -170,12 +170,21 @@ public class UpgradeID : FakeEnum
     public static readonly UpgradeID split_count_1 = new UpgradeID(nameof(split_count_1));
     public static readonly UpgradeID split_count_2 = new UpgradeID(nameof(split_count_2));
     public static readonly UpgradeID split_count_3 = new UpgradeID(nameof(split_count_3));
+    public static readonly UpgradeID split_count_4 = new UpgradeID(nameof(split_count_4));
+    public static readonly UpgradeID split_count_5 = new UpgradeID(nameof(split_count_5));
     public static readonly UpgradeID split_size_1 = new UpgradeID(nameof(split_size_1));
     public static readonly UpgradeID split_size_2 = new UpgradeID(nameof(split_size_2));
     public static readonly UpgradeID split_size_3 = new UpgradeID(nameof(split_size_3));
     public static readonly UpgradeID split_pierce_1 = new UpgradeID(nameof(split_pierce_1));
     public static readonly UpgradeID split_pierce_2 = new UpgradeID(nameof(split_pierce_2));
     public static readonly UpgradeID split_pierce_3 = new UpgradeID(nameof(split_pierce_3));
+    public static readonly UpgradeID split_pierce_4 = new UpgradeID(nameof(split_pierce_4));
+    public static readonly UpgradeID split_pierce_5 = new UpgradeID(nameof(split_pierce_5));
+    public static readonly UpgradeID split_lifetime_1 = new UpgradeID(nameof(split_lifetime_1));
+    public static readonly UpgradeID split_lifetime_2 = new UpgradeID(nameof(split_lifetime_2));
+    public static readonly UpgradeID split_lifetime_3 = new UpgradeID(nameof(split_lifetime_3));
+    public static readonly UpgradeID split_lifetime_4 = new UpgradeID(nameof(split_lifetime_4));
+    public static readonly UpgradeID split_lifetime_5 = new UpgradeID(nameof(split_lifetime_5));
 
     public static readonly UpgradeID split_mod_chain = new UpgradeID(nameof(split_mod_chain));
     public static readonly UpgradeID split_mod_dash = new UpgradeID(nameof(split_mod_dash));

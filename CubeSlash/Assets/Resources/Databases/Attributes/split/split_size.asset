@@ -18,7 +18,9 @@ MonoBehaviour:
     base_value:
       value_type: 1
       int_value: 3
-      float_value: 0.5
+      float_value: 0.75
       bool_value: 0
+      display_as_percentage: 0
     text: Bullet size
     high_is_negative: 0
+    display_as_percentage: 0
