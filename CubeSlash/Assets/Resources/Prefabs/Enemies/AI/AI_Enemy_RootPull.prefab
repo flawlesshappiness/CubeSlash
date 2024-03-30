@@ -44,6 +44,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 266b2937ce36348408ddafac24e11525, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  move_ignore_enemies: 0
+  move_ignore_obstacles: 0
   _vine: {fileID: 4327244987187040586}
   max_dist_to_player: 0.35
 --- !u!1001 &4226003169196797399

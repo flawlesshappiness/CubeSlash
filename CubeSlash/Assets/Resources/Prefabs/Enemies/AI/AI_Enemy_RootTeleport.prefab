@@ -4918,6 +4918,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 888a220ed09a1554c9ae25beac73191f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  move_ignore_enemies: 0
+  move_ignore_obstacles: 0
+  move_dist_max: 6
   temp_roots: {fileID: 5164809194922519052}
   ps_dissolve: {fileID: 3004659842910548014}
 --- !u!1 &4187299422850510427

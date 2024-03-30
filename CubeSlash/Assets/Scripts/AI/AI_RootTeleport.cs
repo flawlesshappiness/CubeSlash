@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class AI_RootTeleport : EnemyAI
 {
+    public float move_dist_max;
+
     public Transform temp_roots;
     public ParticleSystem ps_dissolve;
 
@@ -39,13 +41,12 @@ public class AI_RootTeleport : EnemyAI
         return StartCoroutine(Cr());
         IEnumerator Cr()
         {
-            var max_dist = 3f;
             Transform prev_root = null;
             while (true)
             {
                 // Create next root
                 var dir = GetOpenDirectionTowards(PlayerPosition);
-                var next_position = transform.position + dir.normalized * max_dist;
+                var next_position = transform.position + dir.normalized * move_dist_max;
                 var next_root = CreateRoot();
                 next_root.position = next_position;
                 next_root.localScale = Vector3.zero;
