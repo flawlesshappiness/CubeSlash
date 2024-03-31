@@ -88,7 +88,7 @@ public class PlayerBody : Body
         return bdp;
     }
 
-    public void SetCooldown(float t)
+    public void SetDodgeCooldown(float t)
     {
         dodge_cooldown.SetCooldown(t);
     }

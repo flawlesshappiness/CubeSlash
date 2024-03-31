@@ -218,7 +218,8 @@ public class Player : Character
 
     private void UpdateDodgeCooldown()
     {
-        PlayerBody.SetCooldown(dodge.GetCooldownPercentage());
+        var t = dodge.IsReady ? 0 : (1f - dodge.Percentage);
+        PlayerBody.SetDodgeCooldown(t);
     }
 
     #region ABILITIES

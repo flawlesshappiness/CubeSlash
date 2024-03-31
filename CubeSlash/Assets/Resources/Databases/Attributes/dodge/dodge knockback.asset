@@ -10,17 +10,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 74fb1711040718646b14b53cd6510bf4, type: 3}
-  m_Name: dodge distance
+  m_Name: dodge knockback
   m_EditorClassIdentifier: 
   attribute:
     type:
-      id: dodge_distance
+      id: dodge_knockback
     base_value:
       value_type: 1
       int_value: 0
-      float_value: 3
+      float_value: 0
       bool_value: 0
       display_as_percentage: 0
-    text: Dodge distance
+    text: Dodge knockback
     high_is_negative: 0
     display_as_percentage: 0

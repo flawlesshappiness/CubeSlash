@@ -1,24 +1,39 @@
 using System.Collections;
+using System.Linq;
 using UnityEngine;
 
 public class PlayerDodge : MonoBehaviour
 {
+    [SerializeField] private ParticleSystem ps_dodge, ps_knockback;
+
     public bool Dashing { get; private set; }
     public float Distance { get { return GameAttributeController.Instance.GetAttribute(GameAttributeType.dodge_distance).ModifiedValue.float_value; } }
     public float Cooldown { get { return GameAttributeController.Instance.GetAttribute(GameAttributeType.dodge_cooldown).ModifiedValue.float_value; } }
+    public float Knockback { get { return GameAttributeController.Instance.GetAttribute(GameAttributeType.dodge_knockback).ModifiedValue.float_value; } }
     public Player Player { get { return Player.Instance; } }
 
+    public float Percentage { get { return (Time.time - time_cooldown_start) / (Cooldown * Player.GlobalCooldownMultiplier); } }
+    public bool IsReady => is_ready;
+
+    private bool is_ready;
     private float time_cooldown_start;
-    private float time_cooldown_end;
     private float distance_dashed;
     private Vector3 dir_dash;
     private Coroutine cr_dash;
 
     private const float TIME = 0.2f;
+    private const float KNOCKBACK_RADIUS = 10f;
 
     private void Start()
     {
         Player.onHurt += OnHurt;
+    }
+
+    private void Update()
+    {
+        if (IsReady) return;
+        if (Percentage < 1) return;
+        is_ready = true;
     }
 
     private void OnHurt()
@@ -36,7 +51,7 @@ public class PlayerDodge : MonoBehaviour
 
     private void StartDashing()
     {
-        if (IsOnCooldown()) return;
+        if (!IsReady) return;
         if (Dashing) return;
         Dashing = true;
 
@@ -46,6 +61,14 @@ public class PlayerDodge : MonoBehaviour
 
         SoundController.Instance.Play(SoundEffectType.sfx_dash_start);
 
+        if (Knockback > 0)
+        {
+            ps_knockback?.Play();
+            PushAwayEnemies();
+        }
+
+        ps_dodge.transform.rotation = Player.Body.transform.rotation;
+        ps_dodge?.Play();
         cr_dash = StartCoroutine(DashCr(Player.MoveDirection));
     }
 
@@ -58,6 +81,8 @@ public class PlayerDodge : MonoBehaviour
         dir_dash = direction;
         while (distance_dashed < Distance)
         {
+            Player.ResetStun();
+
             // Update distance
             var pos_cur = Player.transform.position;
             distance_dashed += Vector3.Distance(pos_prev, pos_cur);
@@ -99,11 +124,25 @@ public class PlayerDodge : MonoBehaviour
 
     private void StartCooldown()
     {
+        is_ready = false;
         time_cooldown_start = Time.time;
-        time_cooldown_end = time_cooldown_start + Cooldown;
     }
 
-    private bool IsOnCooldown() => Time.time < time_cooldown_end;
+    private void PushAwayEnemies()
+    {
+        var force_base = Knockback;
+        var enemies = EnemyController.Instance.ActiveEnemies
+            .Where(e => Vector3.Distance(e.transform.position, transform.position) < KNOCKBACK_RADIUS)
+            .ToList();
 
-    public float GetCooldownPercentage() => time_cooldown_end == 0 ? 0 : 1f - Mathf.Clamp01((Time.time - time_cooldown_start) / (time_cooldown_end - time_cooldown_start));
+        foreach (var e in enemies)
+        {
+            var dir = e.transform.position - transform.position;
+            var dist = dir.magnitude;
+            var mul_dist = 1f - Mathf.Min(dist / KNOCKBACK_RADIUS, 0.5f);
+            var force = force_base * mul_dist;
+            var velocity = dir.normalized * force;
+            e.Knockback(velocity, true, false);
+        }
+    }
 }
