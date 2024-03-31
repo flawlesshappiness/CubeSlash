@@ -305,7 +305,7 @@ public class DebugConsoleHandler : Singleton
 
     private void ClickFillMana()
     {
-        Player.Instance.heal.SetMax();
+        Player.Instance.heal.SetFull();
     }
 
     private void ClickGameValues()

@@ -55,6 +55,6 @@ public class UIInputLayout : MonoBehaviour
         AddInput(PlayerInput.UIButtonType.NAV_ALL, "Move");
         AddInput(PlayerInput.UIButtonType.WEST, "Use ability");
         AddInput(PlayerInput.UIButtonType.EAST, "Dash");
-        AddInput(PlayerInput.UIButtonType.NORTH, "Heal using energy");
+        AddInput(PlayerInput.UIButtonType.NORTH, "Heal");
     }
 }

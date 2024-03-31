@@ -10,22 +10,21 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 616189df85cb92d40806459b9c9111b7, type: 3}
-  m_Name: heal kill value 2
+  m_Name: heal cd 1
   m_EditorClassIdentifier: 
   id:
-    id: heal_kill_value_2
+    id: heal_cooldown_1
   name: 
-  icon: {fileID: 21300000, guid: 522c5b855af2bda4aa01ffdb889faa32, type: 3}
+  icon: {fileID: 21300000, guid: 1c643ddfdc5a70448bcf8f1dba1af098, type: 3}
   hidden: 0
   require_ability: 0
   ability_required: 0
-  upgrades_required:
-  - id: heal_kill_value_1
+  upgrades_required: []
   modifiers:
   - attribute_type:
-      id: heal_kill_value
+      id: heal_cooldown
     value_type: 1
     int_value: 0
-    float_value: -0.2
+    float_value: -10
     percent_value: 0
     bool_value: 0

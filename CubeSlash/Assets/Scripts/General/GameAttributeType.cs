@@ -87,4 +87,5 @@ public partial class GameAttributeType : FakeEnum
     // HEAL
     public static readonly GameAttributeType heal_kill_value = new GameAttributeType(nameof(heal_kill_value));
     public static readonly GameAttributeType heal_max_value = new GameAttributeType(nameof(heal_max_value));
+    public static readonly GameAttributeType heal_cooldown = new GameAttributeType(nameof(heal_cooldown));
 }

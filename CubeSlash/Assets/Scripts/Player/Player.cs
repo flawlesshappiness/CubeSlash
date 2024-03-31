@@ -38,7 +38,7 @@ public class Player : Character
     private GameAttribute att_chance_avoid_damage;
     private GameAttribute att_experience_multiplier;
 
-    private float GlobalCooldownMultiplier => GameAttributeController.Instance.GetAttribute(GameAttributeType.player_global_cooldown_multiplier).ModifiedValue.float_value;
+    public float GlobalCooldownMultiplier => GameAttributeController.Instance.GetAttribute(GameAttributeType.player_global_cooldown_multiplier).ModifiedValue.float_value;
 
     public void Initialize()
     {
@@ -79,7 +79,8 @@ public class Player : Character
         stats.Add("Experience modifier", $"{(att_experience_multiplier.ModifiedValue.float_value * 100).ToString("0")}%");
         stats.Add("Dodge distance", dodge.Distance.ToString("0.00"));
         stats.Add("Dodge cooldown", (dodge.Cooldown * GlobalCooldownMultiplier).ToString("0.00"));
-        stats.Add("Energy gain", $"{(heal.KillValue).ToString("0.00")}");
+        stats.Add("Heal cooldown", $"{(heal.Cooldown * GlobalCooldownMultiplier).ToString("0")}");
+        stats.Add("Heal cd per kill", $"{(heal.KillValue).ToString("0.00")}");
 
         return stats;
     }

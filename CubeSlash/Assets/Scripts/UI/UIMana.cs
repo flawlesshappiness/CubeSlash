@@ -16,20 +16,31 @@ public class UIMana : MonoBehaviourExtended
 
     private void OnEnable()
     {
-        Player.Instance.heal.OnPercentChanged += OnPercentChanged;
         Player.Instance.heal.OnHeal += OnHeal;
         Player.Instance.heal.OnHealFailed += OnHealFailed;
         Player.Instance.heal.OnFull += OnFull;
-        SetFill(Player.Instance.heal.ValuePercent);
+        SetFill(Player.Instance.heal.Percentage);
         SetColor(color_normal.GetColor());
+
+        if (Player.Instance.heal.IsFull)
+        {
+            OnFull();
+        }
     }
 
     private void OnDisable()
     {
-        Player.Instance.heal.OnPercentChanged -= OnPercentChanged;
         Player.Instance.heal.OnHeal -= OnHeal;
         Player.Instance.heal.OnHealFailed -= OnHealFailed;
         Player.Instance.heal.OnFull -= OnFull;
+    }
+
+    private void Update()
+    {
+        var full = Player.Instance.heal.IsFull;
+        var p = Player.Instance.heal.Percentage;
+        var t = full ? 1 : Mathf.Lerp(img_fill.fillAmount, p, Time.deltaTime * 20);
+        SetFill(t);
     }
 
     public void AnimateValue(float value)
@@ -70,11 +81,6 @@ public class UIMana : MonoBehaviourExtended
         img_fill.fillAmount = Mathf.Clamp01(fill);
     }
 
-    private void OnPercentChanged(float percent)
-    {
-        AnimateValue(percent);
-    }
-
     private void OnHeal()
     {
         if (_lerp_fill != null) _lerp_fill.Kill();
@@ -84,7 +90,7 @@ public class UIMana : MonoBehaviourExtended
 
     private void OnHealFailed()
     {
-        if (!Player.Instance.heal.IsManaFull())
+        if (!Player.Instance.heal.IsFull)
         {
             AnimateWrong();
         }

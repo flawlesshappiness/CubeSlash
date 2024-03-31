@@ -4,16 +4,17 @@ public class PlayerHeal : MonoBehaviour
 {
     public float KillValue { get { return GameAttributeController.Instance.GetAttribute(GameAttributeType.heal_kill_value).ModifiedValue.float_value; } }
     public float MaxValue { get { return GameAttributeController.Instance.GetAttribute(GameAttributeType.heal_max_value).ModifiedValue.float_value; } }
+    public float Cooldown { get { return GameAttributeController.Instance.GetAttribute(GameAttributeType.heal_cooldown).ModifiedValue.float_value; } }
 
     public Player Player { get { return Player.Instance; } }
 
-    public float ValuePercent { get { return _value / MaxValue; } }
+    public float Percentage { get { return ((Time.time + _kill_reduc) - _start_time) / (Cooldown * Player.GlobalCooldownMultiplier); } }
+    public bool IsFull => _is_full;
 
-    private float _value;
+    private float _start_time;
     private bool _is_full;
+    private float _kill_reduc;
 
-    public System.Action<float> OnValueChanged;
-    public System.Action<float> OnPercentChanged;
     public System.Action OnHeal;
     public System.Action OnHealFailed;
     public System.Action OnFull;
@@ -23,9 +24,22 @@ public class PlayerHeal : MonoBehaviour
         Player.onEnemyKilled += OnEnemyKilled;
     }
 
+    private void Update()
+    {
+        if (_is_full) return;
+        if (Percentage < 1) return;
+
+        SetFull();
+
+        if (GameController.Instance.IsGameStarted)
+        {
+            SoundController.Instance.Play(SoundEffectType.sfx_ui_energy_full);
+        }
+    }
+
     public void Clear()
     {
-        SetValue(0);
+        SetFull();
     }
 
     public void Press()
@@ -33,16 +47,13 @@ public class PlayerHeal : MonoBehaviour
         TryHeal();
     }
 
-    public bool IsManaFull() => _value >= MaxValue;
-
     public bool CanHeal() => Player.Health.HasHealth(HealthPoint.Type.EMPTY);
 
     public void TryHeal()
     {
-        var has_mana = IsManaFull();
         var can_heal = CanHeal();
 
-        if (!has_mana || !can_heal)
+        if (!IsFull || !can_heal)
         {
             SoundController.Instance.Play(SoundEffectType.sfx_ability_cooldown);
             OnHealFailed?.Invoke();
@@ -56,36 +67,26 @@ public class PlayerHeal : MonoBehaviour
     public void Heal()
     {
         Player.AddHealth(HealthPoint.Type.FULL);
-        SetValue(0);
-
         SoundController.Instance.Play(SoundEffectType.sfx_gain_health);
+        StartCooldown();
     }
 
-    public void SetValue(float value)
+    public void SetFull()
     {
-        _value = Mathf.Clamp(value, 0, MaxValue);
-
-        if (!_is_full && _value == MaxValue)
-        {
-            _is_full = true;
-            SoundController.Instance.Play(SoundEffectType.sfx_ui_energy_full);
-            OnFull?.Invoke();
-        }
-        else if (_value < MaxValue)
-        {
-            _is_full = false;
-        }
-
-        OnValueChanged?.Invoke(_value);
-        OnPercentChanged?.Invoke(ValuePercent);
+        _is_full = true;
+        OnFull?.Invoke();
     }
 
-    public void SetMax() => SetValue(MaxValue);
+    public void StartCooldown()
+    {
+        _is_full = false;
+        _kill_reduc = 0;
+        _start_time = Time.time;
+    }
 
     private void OnEnemyKilled()
     {
-        if (_value >= MaxValue) return;
-
-        SetValue(_value + KillValue);
+        if (IsFull) return;
+        _kill_reduc += Mathf.Abs(KillValue);
     }
 }

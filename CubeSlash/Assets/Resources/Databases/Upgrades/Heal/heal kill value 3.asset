@@ -15,7 +15,7 @@ MonoBehaviour:
   id:
     id: heal_kill_value_3
   name: 
-  icon: {fileID: 21300000, guid: 70c010824f284334fb7d809c1b677071, type: 3}
+  icon: {fileID: 21300000, guid: 472082aa636429842b18b5c419ca8347, type: 3}
   hidden: 0
   require_ability: 0
   ability_required: 0
@@ -26,6 +26,6 @@ MonoBehaviour:
       id: heal_kill_value
     value_type: 1
     int_value: 0
-    float_value: 0.4
+    float_value: -0.3
     percent_value: 0
     bool_value: 0
