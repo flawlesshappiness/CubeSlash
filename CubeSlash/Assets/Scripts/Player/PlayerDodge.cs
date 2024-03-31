@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Linq;
 using UnityEngine;
@@ -46,7 +47,15 @@ public class PlayerDodge : MonoBehaviour
 
     public void Press()
     {
-        StartDashing();
+        try
+        {
+            StartDashing();
+        }
+        catch (Exception e)
+        {
+            EndDash();
+            LogController.LogException(e);
+        }
     }
 
     private void StartDashing()
@@ -111,7 +120,7 @@ public class PlayerDodge : MonoBehaviour
 
     private void EndDash()
     {
-        StopCoroutine(cr_dash);
+        if (cr_dash != null) StopCoroutine(cr_dash);
         cr_dash = null;
 
         Dashing = false;
