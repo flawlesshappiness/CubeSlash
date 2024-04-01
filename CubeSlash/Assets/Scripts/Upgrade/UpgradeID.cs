@@ -231,4 +231,32 @@ public class UpgradeID : FakeEnum
     public static readonly UpgradeID boomerang_mod_mines = new UpgradeID(nameof(boomerang_mod_mines));
     public static readonly UpgradeID boomerang_mod_chain = new UpgradeID(nameof(boomerang_mod_chain));
     public static readonly UpgradeID boomerang_mod_explode = new UpgradeID(nameof(boomerang_mod_explode));
+
+    // Orbit
+    public static readonly UpgradeID orbit_projectile_count_1 = new UpgradeID(nameof(orbit_projectile_count_1));
+    public static readonly UpgradeID orbit_projectile_count_2 = new UpgradeID(nameof(orbit_projectile_count_2));
+    public static readonly UpgradeID orbit_projectile_count_3 = new UpgradeID(nameof(orbit_projectile_count_3));
+    public static readonly UpgradeID orbit_projectile_count_4 = new UpgradeID(nameof(orbit_projectile_count_4));
+    public static readonly UpgradeID orbit_projectile_count_5 = new UpgradeID(nameof(orbit_projectile_count_5));
+    public static readonly UpgradeID orbit_projectile_size_1 = new UpgradeID(nameof(orbit_projectile_size_1));
+    public static readonly UpgradeID orbit_projectile_size_2 = new UpgradeID(nameof(orbit_projectile_size_2));
+    public static readonly UpgradeID orbit_projectile_size_3 = new UpgradeID(nameof(orbit_projectile_size_3));
+    public static readonly UpgradeID orbit_projectile_size_4 = new UpgradeID(nameof(orbit_projectile_size_4));
+    public static readonly UpgradeID orbit_projectile_size_5 = new UpgradeID(nameof(orbit_projectile_size_5));
+    public static readonly UpgradeID orbit_projectile_time_1 = new UpgradeID(nameof(orbit_projectile_time_1));
+    public static readonly UpgradeID orbit_projectile_time_2 = new UpgradeID(nameof(orbit_projectile_time_2));
+    public static readonly UpgradeID orbit_projectile_time_3 = new UpgradeID(nameof(orbit_projectile_time_3));
+    public static readonly UpgradeID orbit_projectile_time_4 = new UpgradeID(nameof(orbit_projectile_time_4));
+    public static readonly UpgradeID orbit_projectile_time_5 = new UpgradeID(nameof(orbit_projectile_time_5));
+    public static readonly UpgradeID orbit_ring_count_1 = new UpgradeID(nameof(orbit_ring_count_1));
+    public static readonly UpgradeID orbit_ring_count_2 = new UpgradeID(nameof(orbit_ring_count_2));
+    public static readonly UpgradeID orbit_ring_count_3 = new UpgradeID(nameof(orbit_ring_count_3));
+    public static readonly UpgradeID orbit_ring_count_4 = new UpgradeID(nameof(orbit_ring_count_4));
+    public static readonly UpgradeID orbit_ring_count_5 = new UpgradeID(nameof(orbit_ring_count_5));
+
+    public static readonly UpgradeID orbit_mod_split = new UpgradeID(nameof(orbit_mod_split));
+    public static readonly UpgradeID orbit_mod_explode = new UpgradeID(nameof(orbit_mod_explode));
+    public static readonly UpgradeID orbit_mod_chain = new UpgradeID(nameof(orbit_mod_chain));
+    public static readonly UpgradeID orbit_mod_mines = new UpgradeID(nameof(orbit_mod_mines));
+    public static readonly UpgradeID orbit_mod_boomerang = new UpgradeID(nameof(orbit_mod_boomerang));
 }

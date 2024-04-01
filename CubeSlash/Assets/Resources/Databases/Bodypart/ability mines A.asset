@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ac4cd3749a175684eb481bc5c8746bea, type: 3}
-  m_Name: boomerang A
+  m_Name: ability mines A
   m_EditorClassIdentifier: 
   type:
-    id: ability_boomerang_A
-  preview: {fileID: 21300000, guid: c46fa3a629f85d741b0c8730fbf78e74, type: 3}
-  prefab: {fileID: 3976195390652213528, guid: 7e6b0dacb27cfc9498560abe8438ef98, type: 3}
+    id: ability_mines_A
+  preview: {fileID: 0}
+  prefab: {fileID: 3976195390652213528, guid: 5850c2d5348447047a65d79e537ec510, type: 3}
   is_ability_part: 1

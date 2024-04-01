@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ac4cd3749a175684eb481bc5c8746bea, type: 3}
-  m_Name: chain A
+  m_Name: ability chain A
   m_EditorClassIdentifier: 
   type:
     id: ability_chain_A

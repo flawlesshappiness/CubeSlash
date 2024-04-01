@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 616189df85cb92d40806459b9c9111b7, type: 3}
+  m_Name: orbit ring count 5
+  m_EditorClassIdentifier: 
+  id:
+    id: orbit_ring_count_5
+  name: 
+  icon: {fileID: 21300000, guid: 1affca9244d732441ad3006fbf23f863, type: 3}
+  hidden: 0
+  require_ability: 1
+  ability_required: 6
+  upgrades_required:
+  - id: orbit_ring_count_4
+  modifiers:
+  - attribute_type:
+      id: orbit_ring_count
+    value_type: 0
+    int_value: 1
+    float_value: -0.1
+    percent_value: -0.05
+    bool_value: 0

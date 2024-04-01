@@ -23,7 +23,6 @@ public class Projectile : MonoBehaviourExtended
     protected virtual void Start()
     {
         BirthTime = Time.time;
-        DeathTime = BirthTime + Lifetime;
     }
 
     public virtual void Update()
@@ -39,7 +38,8 @@ public class Projectile : MonoBehaviourExtended
 
     private void LifetimeUpdate()
     {
-        var t = (Time.time - BirthTime) / (DeathTime - BirthTime);
+        if (Lifetime < 0) return;
+        var t = (Time.time - BirthTime) / Lifetime;
         if (t >= 1)
         {
             onDeath?.Invoke();
@@ -88,7 +88,7 @@ public class Projectile : MonoBehaviourExtended
 
         onDestroy?.Invoke();
 
-        gameObject.SetActive(false);
+        gameObject?.SetActive(false);
         Destroy(gameObject);
     }
 

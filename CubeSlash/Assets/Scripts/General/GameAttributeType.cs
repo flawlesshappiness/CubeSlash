@@ -71,6 +71,19 @@ public partial class GameAttributeType : FakeEnum
     public static readonly GameAttributeType boomerang_chain = new GameAttributeType(nameof(boomerang_chain));
     public static readonly GameAttributeType boomerang_linger_time = new GameAttributeType(nameof(boomerang_linger_time));
 
+    // ORBIT
+    public static readonly GameAttributeType orbit_projectile_time = new GameAttributeType(nameof(orbit_projectile_time));
+    public static readonly GameAttributeType orbit_projectile_size = new GameAttributeType(nameof(orbit_projectile_size));
+    public static readonly GameAttributeType orbit_projectile_count = new GameAttributeType(nameof(orbit_projectile_count));
+    public static readonly GameAttributeType orbit_ring_count = new GameAttributeType(nameof(orbit_ring_count));
+    public static readonly GameAttributeType orbit_ring_radius = new GameAttributeType(nameof(orbit_ring_radius));
+
+    public static readonly GameAttributeType orbit_explode = new GameAttributeType(nameof(orbit_explode));
+    public static readonly GameAttributeType orbit_chain = new GameAttributeType(nameof(orbit_chain));
+    public static readonly GameAttributeType orbit_boomerang = new GameAttributeType(nameof(orbit_boomerang));
+    public static readonly GameAttributeType orbit_split = new GameAttributeType(nameof(orbit_split));
+    public static readonly GameAttributeType orbit_mines = new GameAttributeType(nameof(orbit_mines));
+
     // PLAYER
     public static readonly GameAttributeType player_armor = new GameAttributeType(nameof(player_armor));
     public static readonly GameAttributeType player_health = new GameAttributeType(nameof(player_health));

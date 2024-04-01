@@ -9,6 +9,7 @@ public class BodypartType : FakeEnum
     public static readonly BodypartType ability_mines_A = new BodypartType(nameof(ability_mines_A));
     public static readonly BodypartType ability_chain_A = new BodypartType(nameof(ability_chain_A));
     public static readonly BodypartType ability_boomerang_A = new BodypartType(nameof(ability_boomerang_A));
+    public static readonly BodypartType ability_orbit_A = new BodypartType(nameof(ability_orbit_A));
     public static readonly BodypartType bone_A = new BodypartType(nameof(bone_A));
     public static readonly BodypartType bone_B = new BodypartType(nameof(bone_B));
     public static readonly BodypartType crystal_A = new BodypartType(nameof(crystal_A));

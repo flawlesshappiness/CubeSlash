@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ac4cd3749a175684eb481bc5c8746bea, type: 3}
-  m_Name: dash A
+  m_Name: ability split A
   m_EditorClassIdentifier: 
   type:
-    id: ability_dash_A
+    id: ability_split_A
   preview: {fileID: 0}
-  prefab: {fileID: 3976195390652213528, guid: 2d29a87939504ed41bf28f0cc489c196, type: 3}
+  prefab: {fileID: 3976195390652213528, guid: 4a7059456cde39b43b7197a19d12fb13, type: 3}
   is_ability_part: 1
