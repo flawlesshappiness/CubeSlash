@@ -17,6 +17,7 @@ public class AbilitySplit : Ability
     private bool ChainLightning { get { return GameAttributeController.Instance.GetAttribute(GameAttributeType.split_chain).ModifiedValue.bool_value; } }
     private bool ProjectileExplode { get { return GameAttributeController.Instance.GetAttribute(GameAttributeType.split_explode).ModifiedValue.bool_value; } }
     private bool ProjectileBoomerang { get { return GameAttributeController.Instance.GetAttribute(GameAttributeType.split_boomerang).ModifiedValue.bool_value; } }
+    private bool Orbit { get { return GameAttributeController.Instance.GetAttribute(GameAttributeType.split_orbit).ModifiedValue.bool_value; } }
     private float ProjectileLifetime { get { return GameAttributeController.Instance.GetAttribute(GameAttributeType.split_lifetime).ModifiedValue.float_value; } }
 
     private const float PROJECTILE_SPEED = 15f;
@@ -79,6 +80,8 @@ public class AbilitySplit : Ability
             p.StartPosition = start_position;
             p.Velocity = velocity.magnitude;
             p.BoomerangDistance = 7f;
+
+            p.SetMiniOrbitEnabled(Orbit);
 
             var force = FORCE_SELF;
 

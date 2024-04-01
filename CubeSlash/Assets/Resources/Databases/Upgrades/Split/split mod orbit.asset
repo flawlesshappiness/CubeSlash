@@ -1,0 +1,37 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 616189df85cb92d40806459b9c9111b7, type: 3}
+  m_Name: split mod orbit
+  m_EditorClassIdentifier: 
+  id:
+    id: split_mod_orbit
+  name: 
+  icon: {fileID: 21300000, guid: 665d236bf40dab74b8856500b22623e3, type: 3}
+  hidden: 1
+  require_ability: 1
+  ability_required: 1
+  upgrades_required: []
+  modifiers:
+  - attribute_type:
+      id: split_orbit
+    value_type: 2
+    int_value: 3
+    float_value: 0
+    percent_value: 0
+    bool_value: 1
+  - attribute_type:
+      id: split_cooldown
+    value_type: 3
+    int_value: 3
+    float_value: 0
+    percent_value: 0.2
+    bool_value: 0

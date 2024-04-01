@@ -14,8 +14,12 @@ public class SplitProjectile : Projectile
     [Header(nameof(SplitProjectile))]
     [SerializeField] private ParticleSystem ps_chain;
     [SerializeField] private SpriteRenderer spr;
+    [SerializeField] private OrbitProjectile orbit_projectile;
 
     private bool _returning;
+
+    public bool mini_orbit_enabled;
+    public AbilityOrbit.OrbitRing mini_orbit;
 
     protected override void Start()
     {
@@ -27,6 +31,8 @@ public class SplitProjectile : Projectile
             onHitEnemy += OnHitEnemyChain;
         }
 
+        onDestroy += OnDestroyed;
+
         base.Start();
     }
 
@@ -35,11 +41,18 @@ public class SplitProjectile : Projectile
         base.Update();
         UpdateDistance();
         UpdateCatch();
+        UpdateMiniOrbit();
     }
 
     private void FixedUpdate()
     {
         UpdateReturn();
+    }
+
+    private void OnDestroyed()
+    {
+        mini_orbit?.Clear();
+        mini_orbit = null;
     }
 
     private void UpdateDistance()
@@ -89,6 +102,34 @@ public class SplitProjectile : Projectile
             yield return new WaitForSeconds(0.2f);
 
             var success = AbilityChain.TryChainToTarget(info);
+        }
+    }
+
+    public void SetMiniOrbitEnabled(bool enabled)
+    {
+        if (enabled)
+        {
+            if (mini_orbit != null) return;
+            mini_orbit = new AbilityOrbit.OrbitRing(orbit_projectile, transform)
+            {
+                OrbitTime = 1f,
+                ProjectileCount = 2,
+            };
+        }
+        else
+        {
+            mini_orbit?.Clear();
+            mini_orbit = null;
+        }
+    }
+
+    private void UpdateMiniOrbit()
+    {
+        if (mini_orbit != null)
+        {
+            mini_orbit.ProjectileSize = transform.localScale.x * 0.5f;
+            mini_orbit.Radius = transform.localScale.x * 2.0f;
+            mini_orbit.Update();
         }
     }
 }

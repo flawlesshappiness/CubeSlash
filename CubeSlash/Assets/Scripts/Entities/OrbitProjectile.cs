@@ -10,7 +10,6 @@ public class OrbitProjectile : Projectile
     private bool chain_enabled;
     private float cd_chain;
 
-    public bool mini_orbit_enabled;
     public AbilityOrbit.OrbitRing mini_orbit;
     public int mini_orbit_direction_override = 1;
 
