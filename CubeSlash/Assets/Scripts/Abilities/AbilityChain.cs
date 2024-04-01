@@ -11,6 +11,7 @@ public class AbilityChain : Ability
     [SerializeField] private SpriteRenderer spr_preview;
     [SerializeField] private DamageTrail trail;
     [SerializeField] private Projectile projectile_fragment;
+    [SerializeField] private OrbitProjectile projectile_orbit;
 
     public GameAttribute Cooldown { get { return GameAttributeController.Instance.GetAttribute(GameAttributeType.chain_cooldown); } }
     public GameAttribute Radius { get { return GameAttributeController.Instance.GetAttribute(GameAttributeType.chain_radius); } }
@@ -21,6 +22,7 @@ public class AbilityChain : Ability
     public float ZapDelay { get { return GameAttributeController.Instance.GetAttribute(GameAttributeType.chain_zap_delay).ModifiedValue.float_value; } }
     public float ZapMultiplier { get { return GameAttributeController.Instance.GetAttribute(GameAttributeType.chain_zap_multiplier).ModifiedValue.float_value; } }
     public bool ChainBoomerang { get { return GameAttributeController.Instance.GetAttribute(GameAttributeType.chain_boomerang).ModifiedValue.bool_value; } }
+    public bool Orbit { get { return GameAttributeController.Instance.GetAttribute(GameAttributeType.chain_orbit).ModifiedValue.bool_value; } }
 
     private float time_attack;
 
@@ -82,7 +84,6 @@ public class AbilityChain : Ability
             zap_delay = ZapDelay,
             chain_strikes = 1,
             onHit = OnHit,
-            onFinalHit = OnFinalHit
         });
 
         var time_success = Time.time + Cooldown.ModifiedValue.float_value * att_cooldown_multiplier.ModifiedValue.float_value;
@@ -117,39 +118,36 @@ public class AbilityChain : Ability
             trail.CreateTrailsFromPreviousPosition();
         }
 
+        if (Orbit)
+        {
+            StartCoroutine(OrbitCr(k.GetPosition()));
+        }
+
         IEnumerator ExplodeCr(Vector3 position)
         {
             yield return new WaitForSeconds(0.25f);
             AbilityExplode.Explode(position, ExplosionRadius.ModifiedValue.float_value, 0);
         }
-    }
 
-    private void OnFinalHit(ChainInfo info, IKillable k)
-    {
-        if (ChainBoomerang)
+        IEnumerator OrbitCr(Vector3 position)
         {
-            StartCoroutine(ChainBoomerangCr());
-        }
-
-        IEnumerator ChainBoomerangCr()
-        {
-            CreateImpactPS(info.center);
-            yield return new WaitForSeconds(ZapDelay);
-            CreateImpactPS(info.center);
-            yield return new WaitForSeconds(ZapDelay);
-
-            CreateImpactPS(Player.transform.position);
-            CreateZapPS(info.center, Player.transform.position);
-            SoundController.Instance.PlayGroup(SoundEffectType.sfx_chain_zap);
-
-            var dir = Player.transform.position - info.center;
-            var hits = Physics2D.CircleCastAll(info.center, 2f, dir, dir.magnitude);
-            foreach (var hit in hits)
+            var orbit = new AbilityOrbit.OrbitRing(projectile_orbit, position)
             {
-                var k = hit.collider.GetComponentInParent<IKillable>();
-                if (k == null) continue;
-                k.TryKill();
+                OrbitTime = 1f,
+                Radius = 3f,
+                ProjectileSize = 0.75f,
+                ProjectileCount = 1,
+                AngleOffset = Random.Range(0f, 360f)
+            };
+
+            var time_end = Time.time + orbit.OrbitTime;
+            while (Time.time < time_end)
+            {
+                orbit.Update();
+                yield return null;
             }
+
+            orbit.Clear();
         }
     }
 

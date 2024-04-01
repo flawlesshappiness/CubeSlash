@@ -27,5 +27,8 @@ public class GameAttributeController : Singleton
         AddAttributesFromDB();
     }
 
-    public GameAttribute GetAttribute(GameAttributeType type) => attributes[type];
+    public GameAttribute GetAttribute(GameAttributeType type)
+    {
+        return attributes[type];
+    }
 }

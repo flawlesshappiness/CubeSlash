@@ -28,3 +28,6 @@ MonoBehaviour:
   - type: 5
     id:
       id: chain_mod_boomerang
+  - type: 6
+    id:
+      id: chain_mod_orbit

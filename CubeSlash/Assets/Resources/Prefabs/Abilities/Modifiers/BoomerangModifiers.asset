@@ -25,3 +25,6 @@ MonoBehaviour:
   - type: 1
     id:
       id: boomerang_mod_split
+  - type: 6
+    id:
+      id: boomerang_mod_orbit

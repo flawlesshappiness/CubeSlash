@@ -28,3 +28,6 @@ MonoBehaviour:
   - type: 5
     id:
       id: mines_mod_boomerang
+  - type: 6
+    id:
+      id: mines_mod_orbit

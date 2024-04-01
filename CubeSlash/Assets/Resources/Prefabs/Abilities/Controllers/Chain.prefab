@@ -50,6 +50,7 @@ MonoBehaviour:
   spr_preview: {fileID: 6578456927988129669}
   trail: {fileID: 69435302220143581}
   projectile_fragment: {fileID: 2903384162585443173, guid: 35cef0c126fc33849af54dc196d327f6, type: 3}
+  projectile_orbit: {fileID: 1405624117880857705, guid: 4b9f6af1e7208d346baf731fbb4515b8, type: 3}
 --- !u!1 &4582913704674675125
 GameObject:
   m_ObjectHideFlags: 0

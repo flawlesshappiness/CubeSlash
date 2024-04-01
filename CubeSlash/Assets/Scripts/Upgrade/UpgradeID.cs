@@ -92,6 +92,7 @@ public class UpgradeID : FakeEnum
     public static readonly UpgradeID chain_mod_mines = new UpgradeID(nameof(chain_mod_mines));
     public static readonly UpgradeID chain_mod_split = new UpgradeID(nameof(chain_mod_split));
     public static readonly UpgradeID chain_mod_boomerang = new UpgradeID(nameof(chain_mod_boomerang));
+    public static readonly UpgradeID chain_mod_orbit = new UpgradeID(nameof(chain_mod_orbit));
 
     // Dash
     public static readonly UpgradeID dash_distance_1 = new UpgradeID(nameof(dash_distance_1));
@@ -134,6 +135,7 @@ public class UpgradeID : FakeEnum
     public static readonly UpgradeID explode_mod_mines = new UpgradeID(nameof(explode_mod_mines));
     public static readonly UpgradeID explode_mod_split = new UpgradeID(nameof(explode_mod_split));
     public static readonly UpgradeID explode_mod_boomerang = new UpgradeID(nameof(explode_mod_boomerang));
+    public static readonly UpgradeID explode_mod_orbit = new UpgradeID(nameof(explode_mod_orbit));
 
     // Explode (rollout)
     public static readonly UpgradeID rollout_radius_delta_1 = new UpgradeID(nameof(rollout_radius_delta_1));
@@ -156,6 +158,7 @@ public class UpgradeID : FakeEnum
     public static readonly UpgradeID rollout_mod_mines = new UpgradeID(nameof(rollout_mod_mines));
     public static readonly UpgradeID rollout_mod_split = new UpgradeID(nameof(rollout_mod_split));
     public static readonly UpgradeID rollout_mod_boomerang = new UpgradeID(nameof(rollout_mod_boomerang));
+    public static readonly UpgradeID rollout_mod_orbit = new UpgradeID(nameof(rollout_mod_orbit));
 
     // Mines
     public static readonly UpgradeID mines_count_1 = new UpgradeID(nameof(mines_count_1));
@@ -173,6 +176,7 @@ public class UpgradeID : FakeEnum
     public static readonly UpgradeID mines_mod_explode = new UpgradeID(nameof(mines_mod_explode));
     public static readonly UpgradeID mines_mod_split = new UpgradeID(nameof(mines_mod_split));
     public static readonly UpgradeID mines_mod_boomerang = new UpgradeID(nameof(mines_mod_boomerang));
+    public static readonly UpgradeID mines_mod_orbit = new UpgradeID(nameof(mines_mod_orbit));
 
     // Split
     public static readonly UpgradeID split_count_1 = new UpgradeID(nameof(split_count_1));
@@ -199,6 +203,7 @@ public class UpgradeID : FakeEnum
     public static readonly UpgradeID split_mod_explode = new UpgradeID(nameof(split_mod_explode));
     public static readonly UpgradeID split_mod_mines = new UpgradeID(nameof(split_mod_mines));
     public static readonly UpgradeID split_mod_boomerang = new UpgradeID(nameof(split_mod_boomerang));
+    public static readonly UpgradeID split_mod_orbit = new UpgradeID(nameof(split_mod_orbit));
 
     // Boomerang
     public static readonly UpgradeID boomerang_distance_1 = new UpgradeID(nameof(boomerang_distance_1));
@@ -231,6 +236,7 @@ public class UpgradeID : FakeEnum
     public static readonly UpgradeID boomerang_mod_mines = new UpgradeID(nameof(boomerang_mod_mines));
     public static readonly UpgradeID boomerang_mod_chain = new UpgradeID(nameof(boomerang_mod_chain));
     public static readonly UpgradeID boomerang_mod_explode = new UpgradeID(nameof(boomerang_mod_explode));
+    public static readonly UpgradeID boomerang_mod_orbit = new UpgradeID(nameof(boomerang_mod_orbit));
 
     // Orbit
     public static readonly UpgradeID orbit_projectile_count_1 = new UpgradeID(nameof(orbit_projectile_count_1));

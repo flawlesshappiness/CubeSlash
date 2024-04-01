@@ -10,24 +10,21 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e72ec920637b88348b294d24f48bf858, type: 3}
-  m_Name: SplitModifiers
+  m_Name: ExplodeRolloutModifiers
   m_EditorClassIdentifier: 
   modifiers:
-  - type: 0
+  - type: 1
     id:
-      id: split_mod_dash
-  - type: 2
-    id:
-      id: split_mod_explode
+      id: rollout_mod_split
   - type: 3
     id:
-      id: split_mod_chain
+      id: rollout_mod_chain
   - type: 4
     id:
-      id: split_mod_mines
+      id: rollout_mod_mines
   - type: 5
     id:
-      id: split_mod_boomerang
+      id: rollout_mod_boomerang
   - type: 6
     id:
-      id: split_mod_orbit
+      id: rollout_mod_orbit

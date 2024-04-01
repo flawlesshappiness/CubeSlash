@@ -28,6 +28,7 @@ public class AbilityOrbit : Ability
         public float ProjectileSize { get; set; }
         public float OrbitTime { get; set; }
         public float Radius { get; set; }
+        public float AngleOffset { get; set; }
         public bool HasChain { get; set; }
         public bool HasMiniOrbit { get; set; }
         public int? OverrideDirectionMul { get; set; }
@@ -35,12 +36,19 @@ public class AbilityOrbit : Ability
         private List<OrbitProjectile> projectiles = new List<OrbitProjectile>();
         private OrbitProjectile prefab_projectile;
         private Transform _target;
+        private Vector3 _target_position;
         private float _time;
 
         public OrbitRing(OrbitProjectile prefab_projectile, Transform target)
         {
             this.prefab_projectile = prefab_projectile;
             _target = target;
+        }
+
+        public OrbitRing(OrbitProjectile prefab_projectile, Vector3 position)
+        {
+            this.prefab_projectile = prefab_projectile;
+            _target_position = position;
         }
 
         public void Clear()
@@ -101,11 +109,11 @@ public class AbilityOrbit : Ability
 
                 var angle_start = angle_delta * i_proj;
                 var angle_time = Mathf.Lerp(0f, 360f, _time / OrbitTime);
-                var angle = angle_start + angle_time * dir_mul;
+                var angle = AngleOffset + angle_start + angle_time * dir_mul;
                 var q_angle = Quaternion.AngleAxis(angle, Vector3.forward);
 
                 var position_angle = q_angle * Vector3.up * radius;
-                var position_player = _target.position;
+                var position_player = _target?.position ?? _target_position;
                 var position = position_angle + position_player;
                 proj.transform.position = position;
 
@@ -134,6 +142,8 @@ public class AbilityOrbit : Ability
     protected override void Update()
     {
         base.Update();
+
+        if (AbilityController.Instance.GetPrimaryAbility() != this) return;
 
         UpdateRings();
     }

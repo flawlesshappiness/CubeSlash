@@ -10,6 +10,7 @@ public partial class GameAttributeType : FakeEnum
     public static readonly GameAttributeType chain_boomerang = new GameAttributeType(nameof(chain_boomerang));
     public static readonly GameAttributeType chain_zap_delay = new GameAttributeType(nameof(chain_zap_delay));
     public static readonly GameAttributeType chain_zap_multiplier = new GameAttributeType(nameof(chain_zap_multiplier));
+    public static readonly GameAttributeType chain_orbit = new GameAttributeType(nameof(chain_orbit));
 
     // EXPLODE
     public static readonly GameAttributeType explode_chain = new GameAttributeType(nameof(explode_chain));
@@ -23,6 +24,7 @@ public partial class GameAttributeType : FakeEnum
     public static readonly GameAttributeType explode_slow = new GameAttributeType(nameof(explode_slow));
     public static readonly GameAttributeType explode_split = new GameAttributeType(nameof(explode_split));
     public static readonly GameAttributeType explode_delayed = new GameAttributeType(nameof(explode_delayed));
+    public static readonly GameAttributeType explode_orbit = new GameAttributeType(nameof(explode_orbit));
 
     // EXPLODE (ROLLOUT)
     public static readonly GameAttributeType rollout_cooldown = new GameAttributeType(nameof(rollout_cooldown));
@@ -35,6 +37,7 @@ public partial class GameAttributeType : FakeEnum
     public static readonly GameAttributeType rollout_behind = new GameAttributeType(nameof(rollout_behind)); // BOOMERANG
     public static readonly GameAttributeType rollout_minis = new GameAttributeType(nameof(rollout_minis)); // MINES
     public static readonly GameAttributeType rollout_zap = new GameAttributeType(nameof(rollout_zap)); // CHAIN
+    public static readonly GameAttributeType rollout_orbit = new GameAttributeType(nameof(rollout_orbit)); // CHAIN
 
     // MINES
     public static readonly GameAttributeType mines_cooldown = new GameAttributeType(nameof(mines_cooldown));
@@ -46,6 +49,7 @@ public partial class GameAttributeType : FakeEnum
     public static readonly GameAttributeType mines_fragment_lifetime = new GameAttributeType(nameof(mines_fragment_lifetime));
     public static readonly GameAttributeType mines_fragment_pierce = new GameAttributeType(nameof(mines_fragment_pierce));
     public static readonly GameAttributeType mines_fragment_curve = new GameAttributeType(nameof(mines_fragment_curve));
+    public static readonly GameAttributeType mines_orbit = new GameAttributeType(nameof(mines_orbit));
 
     // SPLIT
     public static readonly GameAttributeType split_piercing_count = new GameAttributeType(nameof(split_piercing_count));
@@ -58,6 +62,7 @@ public partial class GameAttributeType : FakeEnum
     public static readonly GameAttributeType split_size = new GameAttributeType(nameof(split_size));
     public static readonly GameAttributeType split_boomerang = new GameAttributeType(nameof(split_boomerang));
     public static readonly GameAttributeType split_lifetime = new GameAttributeType(nameof(split_lifetime));
+    public static readonly GameAttributeType split_orbit = new GameAttributeType(nameof(split_orbit));
 
     // BOOMERANG
     public static readonly GameAttributeType boomerang_cooldown = new GameAttributeType(nameof(boomerang_cooldown));
@@ -70,6 +75,7 @@ public partial class GameAttributeType : FakeEnum
     public static readonly GameAttributeType boomerang_fragment = new GameAttributeType(nameof(boomerang_fragment));
     public static readonly GameAttributeType boomerang_chain = new GameAttributeType(nameof(boomerang_chain));
     public static readonly GameAttributeType boomerang_linger_time = new GameAttributeType(nameof(boomerang_linger_time));
+    public static readonly GameAttributeType boomerang_orbit = new GameAttributeType(nameof(boomerang_orbit));
 
     // ORBIT
     public static readonly GameAttributeType orbit_projectile_time = new GameAttributeType(nameof(orbit_projectile_time));
