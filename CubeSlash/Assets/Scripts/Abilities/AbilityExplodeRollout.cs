@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class AbilityExplodeRollout : Ability
 {
+    [SerializeField] private OrbitProjectile projectile_orbit;
+
     public float Cooldown { get { return GameAttributeController.Instance.GetAttribute(GameAttributeType.rollout_cooldown).ModifiedValue.float_value; } }
     public float ExplosionRadius { get { return GameAttributeController.Instance.GetAttribute(GameAttributeType.rollout_radius).ModifiedValue.float_value; } }
     public float ExplosionRadiusDelta { get { return GameAttributeController.Instance.GetAttribute(GameAttributeType.rollout_radius_delta).ModifiedValue.float_value; } }
@@ -15,6 +17,7 @@ public class AbilityExplodeRollout : Ability
     public bool BehindEnabled { get { return GameAttributeController.Instance.GetAttribute(GameAttributeType.rollout_behind).ModifiedValue.bool_value; } }
     public bool ZapEnabled { get { return GameAttributeController.Instance.GetAttribute(GameAttributeType.rollout_zap).ModifiedValue.bool_value; } }
     public bool MinisEnabled { get { return GameAttributeController.Instance.GetAttribute(GameAttributeType.rollout_minis).ModifiedValue.bool_value; } }
+    public bool OrbitEnabled { get { return GameAttributeController.Instance.GetAttribute(GameAttributeType.rollout_orbit).ModifiedValue.bool_value; } }
 
     public override float GetBaseCooldown() => Cooldown;
 
@@ -91,6 +94,40 @@ public class AbilityExplodeRollout : Ability
             var mini_radius = radius * 0.4f;
             var mini_range = radius * 2;
             AbilityExplode.ExplodeMinis(this, position, 3, mini_radius, mini_range);
+        }
+
+        if (OrbitEnabled)
+        {
+            var dir = position - Player.transform.position;
+            var angle = Vector3.SignedAngle(Vector3.up, dir, Vector3.forward);
+            var duration = dir.magnitude * 0.15f;
+            var size = radius * 0.35f;
+            CreateOrbit(dir.magnitude, angle, duration, size);
+        }
+    }
+
+    private void CreateOrbit(float radius, float angle, float duration, float size)
+    {
+        StartCoroutine(Cr());
+        IEnumerator Cr()
+        {
+            var orbit = new AbilityOrbit.OrbitRing(projectile_orbit, Player.transform)
+            {
+                OrbitTime = duration,
+                Radius = radius,
+                ProjectileSize = size,
+                ProjectileCount = 1,
+                AngleOffset = angle
+            };
+
+            var time_end = Time.time + orbit.OrbitTime;
+            while (Time.time < time_end)
+            {
+                orbit.Update();
+                yield return null;
+            }
+
+            orbit.Clear();
         }
     }
 

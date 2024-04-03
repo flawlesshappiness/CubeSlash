@@ -46,6 +46,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Info: {fileID: 11400000, guid: 6f36dbe756688ae44ad828962723ac8e, type: 2}
+  projectile_orbit: {fileID: 1405624117880857705, guid: 4b9f6af1e7208d346baf731fbb4515b8, type: 3}
 --- !u!114 &4660649604227888230
 MonoBehaviour:
   m_ObjectHideFlags: 0

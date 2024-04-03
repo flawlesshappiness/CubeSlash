@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 616189df85cb92d40806459b9c9111b7, type: 3}
-  m_Name: rollout mod mines
+  m_Name: rollout mod orbit
   m_EditorClassIdentifier: 
   id:
-    id: rollout_mod_mines
+    id: rollout_mod_orbit
   name: 
   icon: {fileID: 21300000, guid: 9fcc1744a317b8e4ab0aa3072a0a3ed5, type: 3}
   hidden: 1
@@ -22,16 +22,16 @@ MonoBehaviour:
   upgrades_required: []
   modifiers:
   - attribute_type:
-      id: rollout_minis
+      id: rollout_orbit
     value_type: 2
-    int_value: 0
+    int_value: 2
     float_value: 0.1
     percent_value: 0
     bool_value: 1
   - attribute_type:
       id: rollout_cooldown
     value_type: 3
-    int_value: 0
+    int_value: 2
     float_value: 0.1
     percent_value: 0.2
     bool_value: 1

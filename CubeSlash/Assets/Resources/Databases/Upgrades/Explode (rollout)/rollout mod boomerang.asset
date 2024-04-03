@@ -22,16 +22,16 @@ MonoBehaviour:
   upgrades_required: []
   modifiers:
   - attribute_type:
-      id: rollout_cooldown
-    value_type: 3
-    int_value: 2
-    float_value: 0.1
-    percent_value: 0.2
-    bool_value: 1
-  - attribute_type:
       id: rollout_behind
     value_type: 2
     int_value: 2
     float_value: 0.1
     percent_value: 0
+    bool_value: 1
+  - attribute_type:
+      id: rollout_cooldown
+    value_type: 3
+    int_value: 2
+    float_value: 0.1
+    percent_value: 0.2
     bool_value: 1
