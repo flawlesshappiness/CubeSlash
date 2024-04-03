@@ -5,6 +5,7 @@ using UnityEngine;
 public class BoomerangProjectile : Projectile
 {
     [SerializeField] private ParticleSystem ps_chain;
+    [SerializeField] private OrbitProjectile orbit_projectile;
 
     public Vector3 StartPosition { get; set; }
     public Vector3 Velocity { get; set; }
@@ -17,6 +18,9 @@ public class BoomerangProjectile : Projectile
     private bool _stopping;
     private bool _returning;
     private float _time_chain_hit;
+
+    private bool mini_orbit_enabled;
+    private AbilityOrbit.OrbitRing mini_orbit;
 
     private const float RETURN_ACCELERATION = 20f;
     private const float DISTANCE_CATCH = 1.5f;
@@ -37,6 +41,14 @@ public class BoomerangProjectile : Projectile
         }
 
         StartCoroutine(StateCr());
+
+        onDestroy += OnDestroyed;
+    }
+
+    private void OnDestroyed()
+    {
+        mini_orbit?.Clear();
+        mini_orbit = null;
     }
 
     private Coroutine AnimateRotation()
@@ -81,6 +93,7 @@ public class BoomerangProjectile : Projectile
         UpdateCatch();
         UpdateSize();
         UpdateChain();
+        UpdateMiniOrbit();
     }
 
     public void FixedUpdate()
@@ -203,5 +216,33 @@ public class BoomerangProjectile : Projectile
 
         var time_add = success ? TIME_CHAIN_HIT : 0.1f;
         _time_chain_hit = Time.time + time_add;
+    }
+
+    public void SetMiniOrbitEnabled(bool enabled)
+    {
+        if (enabled)
+        {
+            if (mini_orbit != null) return;
+            mini_orbit = new AbilityOrbit.OrbitRing(orbit_projectile, transform)
+            {
+                OrbitTime = 1f,
+                ProjectileCount = 2,
+            };
+        }
+        else
+        {
+            mini_orbit?.Clear();
+            mini_orbit = null;
+        }
+    }
+
+    private void UpdateMiniOrbit()
+    {
+        if (mini_orbit != null)
+        {
+            mini_orbit.ProjectileSize = transform.localScale.x * 0.75f;
+            mini_orbit.Radius = transform.localScale.x * 2.5f;
+            mini_orbit.Update();
+        }
     }
 }

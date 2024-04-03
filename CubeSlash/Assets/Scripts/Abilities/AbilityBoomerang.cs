@@ -17,6 +17,7 @@ public class AbilityBoomerang : Ability
     private bool ChainLightning { get { return GameAttributeController.Instance.GetAttribute(GameAttributeType.boomerang_chain).ModifiedValue.bool_value; } } // CHAIN
     private bool ProjectileExplode { get { return GameAttributeController.Instance.GetAttribute(GameAttributeType.boomerang_explode).ModifiedValue.bool_value; } } // EXPLODE
     private int FragmentProjectile { get { return GameAttributeController.Instance.GetAttribute(GameAttributeType.boomerang_fragment).ModifiedValue.int_value; } } // MINES
+    private bool Orbit { get { return GameAttributeController.Instance.GetAttribute(GameAttributeType.boomerang_orbit).ModifiedValue.bool_value; } } // ORBIT
 
     private const float PROJECTILE_SPEED = 15f;
     private const float FORCE_SELF = 300f;
@@ -109,6 +110,7 @@ public class AbilityBoomerang : Ability
         p.onDestroy += () => OnDestroy(p);
 
         p.HasChain = ChainLightning;
+        p.SetMiniOrbitEnabled(Orbit);
 
         var force_mul = FragmentProjectile > 0 ? 1f / FragmentProjectile : 1f;
         var force = (FORCE_SELF + FORCE_SELF_SIZE * SizeProjectile) * force_mul / CountProjectile;

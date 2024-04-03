@@ -19327,6 +19327,7 @@ MonoBehaviour:
   ps_death: {fileID: 7757127490551086021}
   ps_trail: {fileID: 4236737699428214933}
   ps_chain: {fileID: 7743325656753023215}
+  orbit_projectile: {fileID: 1405624117880857705, guid: 4b9f6af1e7208d346baf731fbb4515b8, type: 3}
 --- !u!50 &2903384162585443172
 Rigidbody2D:
   serializedVersion: 4

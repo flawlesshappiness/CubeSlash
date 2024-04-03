@@ -6,6 +6,7 @@ public class AbilityMines : Ability
 {
     [Header("MINES")]
     [SerializeField] private MinesProjectile prefab_mine;
+    [SerializeField] private OrbitProjectile projectile_orbit;
     [SerializeField] private MinesFragmentProjectile prefab_fragment;
     [SerializeField] private DamageTrail trail;
 
@@ -18,6 +19,7 @@ public class AbilityMines : Ability
     private bool FragmentsPierce { get { return GameAttributeController.Instance.GetAttribute(GameAttributeType.mines_fragment_pierce).ModifiedValue.bool_value; } }
     private bool FragmentsCurve { get { return GameAttributeController.Instance.GetAttribute(GameAttributeType.mines_fragment_curve).ModifiedValue.bool_value; } }
     private float FragmentLifetime { get { return GameAttributeController.Instance.GetAttribute(GameAttributeType.mines_fragment_lifetime).ModifiedValue.float_value; } }
+    private bool Orbit { get { return GameAttributeController.Instance.GetAttribute(GameAttributeType.mines_orbit).ModifiedValue.bool_value; } }
 
     private const float SHELL_SPEED = 10f;
     private const float SHELL_DRAG = 0.95f;
@@ -190,6 +192,37 @@ public class AbilityMines : Ability
                 var radius = 4f * FRAGMENT_SIZE;
                 AbilityExplode.Explode(p.transform.position, radius, 0);
             }
+
+            if (Orbit)
+            {
+                CreateOrbit(p.transform.position);
+            }
+        }
+    }
+
+    private void CreateOrbit(Vector3 position)
+    {
+        StartCoroutine(Cr());
+        IEnumerator Cr()
+        {
+            var orbit = new AbilityOrbit.OrbitRing(projectile_orbit, position)
+            {
+                OrbitTime = Random.Range(0.75f, 1.25f),
+                Radius = Random.Range(1.5f, 2.0f),
+                ProjectileSize = FRAGMENT_SIZE,
+                ProjectileCount = 1,
+                AngleOffset = Random.Range(0f, 360f),
+                OverrideDirectionMul = Random.Range(0, 2) == 0 ? -1 : 1
+            };
+
+            var time_end = Time.time + orbit.OrbitTime;
+            while (Time.time < time_end)
+            {
+                orbit.Update();
+                yield return null;
+            }
+
+            orbit.Clear();
         }
     }
 
