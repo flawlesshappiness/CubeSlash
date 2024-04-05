@@ -19,7 +19,7 @@ public class PlayerInputDatabase : ScriptableObject
     public class UIInputMap
     {
         [HideInInspector] public string name;
-        public PlayerInput.DeviceType device;
+        public DeviceType device;
         public Sprite sprite;
         public Color color = Color.white;
         public string text = "";
@@ -27,10 +27,10 @@ public class PlayerInputDatabase : ScriptableObject
 
     private void OnValidate()
     {
-        foreach(var c in input_collections)
+        foreach (var c in input_collections)
         {
             c.name = c.type.ToString();
-            foreach(var m in c.maps)
+            foreach (var m in c.maps)
             {
                 m.name = m.device.ToString();
             }
@@ -39,10 +39,10 @@ public class PlayerInputDatabase : ScriptableObject
 
     public UIInputMap GetCurrentInputMap(PlayerInput.UIButtonType type)
     {
-        return GetInputMap(PlayerInput.CurrentDevice, type);
+        return GetInputMap(DeviceController.CurrentDevice, type);
     }
 
-    public UIInputMap GetInputMap(PlayerInput.DeviceType device, PlayerInput.UIButtonType type)
+    public UIInputMap GetInputMap(DeviceType device, PlayerInput.UIButtonType type)
     {
         var collection = input_collections.FirstOrDefault(c => c.type == type);
         if (collection == null) return null;

@@ -17,15 +17,15 @@ public class UIInputLayout : MonoBehaviour
 
     private void OnEnable()
     {
-        PlayerInput.OnDeviceChanged += OnDeviceChanged;
+        DeviceController.OnDeviceChanged += OnDeviceChanged;
     }
 
     private void OnDisable()
     {
-        PlayerInput.OnDeviceChanged -= OnDeviceChanged;
+        DeviceController.OnDeviceChanged -= OnDeviceChanged;
     }
 
-    private void OnDeviceChanged(PlayerInput.DeviceType type)
+    private void OnDeviceChanged(DeviceType type)
     {
         rows.ForEach(row => row.Image.SetInputType(row.Image.type_button));
     }

@@ -37,11 +37,10 @@ public class GameController : MonoBehaviour
         LogController.LogMethod();
 
         Instance = this;
-        PlayerInput.Initialize();
         SteamIntegration.Create();
         Singleton.CreateAllSingletons();
         PauseLock.OnLockChanged += OnPauseChanged;
-        PlayerInput.OnCurrentDeviceLost += OnDeviceLost;
+        DeviceController.OnCurrentDeviceLost += OnDeviceLost;
     }
 
     private void Start()
@@ -92,7 +91,7 @@ public class GameController : MonoBehaviour
         }
     }
 
-    private void OnDeviceLost(PlayerInput.DeviceType type)
+    private void OnDeviceLost(DeviceType type)
     {
         if (IsGameStarted)
         {

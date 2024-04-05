@@ -43,7 +43,7 @@ public class AbilityView : View
         var input = PlayerInput.Controls.Player;
         input.Menu.performed += PressStart;
 
-        PlayerInput.OnDeviceChanged += UpdateEquipmentOrder;
+        DeviceController.OnDeviceChanged += UpdateEquipmentOrder;
     }
 
     private void OnDisable()
@@ -53,7 +53,7 @@ public class AbilityView : View
         var input = PlayerInput.Controls.Player;
         input.Menu.performed -= PressStart;
 
-        PlayerInput.OnDeviceChanged -= UpdateEquipmentOrder;
+        DeviceController.OnDeviceChanged -= UpdateEquipmentOrder;
     }
 
     #region SLOTS
@@ -75,7 +75,7 @@ public class AbilityView : View
             InitializeEquipmentSlot(equipment);
         }
         UpdateEquipment();
-        UpdateEquipmentOrder(PlayerInput.CurrentDevice);
+        UpdateEquipmentOrder(DeviceController.CurrentDevice);
     }
 
     private void InitializeAbilitySlot(Ability ability)
@@ -136,9 +136,9 @@ public class AbilityView : View
         btn_continue.interactable = !any_wrong && any_filled && !IsMovingAbility();
     }
 
-    private void UpdateEquipmentOrder(PlayerInput.DeviceType type)
+    private void UpdateEquipmentOrder(DeviceType type)
     {
-        if (type == PlayerInput.DeviceType.KEYBOARD)
+        if (type == DeviceType.KEYBOARD)
         {
             // WASD
             SetEquipmentOrder(PlayerInput.ButtonType.NORTH, 0);

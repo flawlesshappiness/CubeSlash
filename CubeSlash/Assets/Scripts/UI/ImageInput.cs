@@ -11,15 +11,15 @@ public class ImageInput : MonoBehaviourExtended
 
     private void OnEnable()
     {
-        PlayerInput.OnDeviceChanged += OnDeviceChanged;
+        DeviceController.OnDeviceChanged += OnDeviceChanged;
     }
 
     private void OnDisable()
     {
-        PlayerInput.OnDeviceChanged -= OnDeviceChanged;
+        DeviceController.OnDeviceChanged -= OnDeviceChanged;
     }
 
-    private void OnDeviceChanged(PlayerInput.DeviceType device)
+    private void OnDeviceChanged(DeviceType device)
     {
         UpdateSprite();
     }
