@@ -139,6 +139,18 @@ public class AbilityOrbit : Ability
         Player.onDeath += Clear;
     }
 
+    public override Dictionary<string, string> GetStats()
+    {
+        var stats = base.GetStats();
+
+        stats.Add("Orbits", $"{CalculatedRingCount}");
+        stats.Add("Projectiles", $"{CalculatedProjectileCount}");
+        stats.Add("Projectile size", $"{ProjectileSize}");
+        stats.Add("Orbit time", $"{ProjectileOrbitTime}");
+
+        return stats;
+    }
+
     protected override void Update()
     {
         base.Update();

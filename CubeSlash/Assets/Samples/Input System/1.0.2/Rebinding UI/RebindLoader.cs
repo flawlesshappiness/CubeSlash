@@ -16,7 +16,7 @@ public class RebindLoader : MonoBehaviour
             var action = asset.FindAction(id);
             if (action == null) continue;
 
-            action.ApplyBindingOverride(path);
+            action.ApplyBindingOverride(path, "Keyboard");
         }
     }
 }
