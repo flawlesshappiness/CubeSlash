@@ -10,12 +10,13 @@ public class PauseView : View
     [SerializeField] private SelectableMenuItem btnOptions;
     [SerializeField] private SelectableMenuItem btnMainMenu;
     [SerializeField] private SelectableMenuItem btnEndRun;
-    [SerializeField] private UIInputLayout input;
 
     private void OnEnable()
     {
         Exists = true;
         GameController.Instance.PauseLock.AddLock(nameof(PauseView));
+
+        PlayerInputController.Instance.Pause.Pressed += Menu_started;
     }
 
     private void OnDisable()
@@ -23,19 +24,15 @@ public class PauseView : View
         Exists = false;
         GameController.Instance.PauseLock.RemoveLock(nameof(PauseView));
 
-        PlayerInput.Controls.Player.Menu.started -= Menu_started;
+        PlayerInputController.Instance.Pause.Pressed -= Menu_started;
     }
 
     private void Start()
     {
-        PlayerInput.Controls.Player.Menu.started += Menu_started;
-
         btnContinue.onSubmit += ClickContinue;
         btnOptions.onSubmit += ClickOptions;
         btnMainMenu.onSubmit += ClickMainMenu;
         btnEndRun.onSubmit += ClickEndRun;
-
-        input.SetupTutorial();
     }
 
     IEnumerator TransitionToOptionsCr()
@@ -56,7 +53,7 @@ public class PauseView : View
         Close(0);
     }
 
-    private void Menu_started(UnityEngine.InputSystem.InputAction.CallbackContext obj)
+    private void Menu_started()
     {
         ClickContinue();
     }

@@ -13,15 +13,15 @@ public class SplashView : View
 
     private void OnEnable()
     {
-        PlayerInput.Controls.Player.South.started += SouthPressed;
+        PlayerInputController.Instance.Submit.Pressed += SkipPressed;
     }
 
     private void OnDisable()
     {
-        PlayerInput.Controls.Player.South.started -= SouthPressed;
+        PlayerInputController.Instance.Submit.Pressed -= SkipPressed;
     }
 
-    private void SouthPressed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
+    private void SkipPressed()
     {
         skip_pressed = true;
     }

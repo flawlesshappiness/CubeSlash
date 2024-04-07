@@ -3,13 +3,11 @@ using Flawliz.Lerp;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.InputSystem;
 
 public class OptionsView : View
 {
     [SerializeField] private UISlider slider_master, slider_music, slider_sfx;
     [SerializeField] private SelectableMenuItem btn_delete_save;
-    [SerializeField] private UIInputLayout input;
     [SerializeField] private GenericOptions options;
     [SerializeField] private CategoryControl category_game;
 
@@ -34,8 +32,6 @@ public class OptionsView : View
         options.OnBack += Back;
 
         StartCoroutine(TransitionShowCr(true));
-
-        input.AddInput(PlayerInput.UIButtonType.EAST, "Back");
     }
 
     private IEnumerator TransitionShowCr(bool show)
@@ -59,17 +55,17 @@ public class OptionsView : View
     {
         GameController.Instance.PauseLock.AddLock(nameof(OptionsView));
 
-        PlayerInput.Controls.Player.East.started += PressBack;
+        PlayerInputController.Instance.Cancel.Pressed += PressBack;
     }
 
     private void OnDisable()
     {
         GameController.Instance.PauseLock.RemoveLock(nameof(OptionsView));
 
-        PlayerInput.Controls.Player.East.started -= PressBack;
+        PlayerInputController.Instance.Cancel.Pressed -= PressBack;
     }
 
-    private void PressBack(InputAction.CallbackContext context)
+    private void PressBack()
     {
         if (!Interactable) return;
         options.ClickBack();
@@ -117,7 +113,7 @@ public class OptionsView : View
             SaveDataController.Instance.ClearSaveData();
             Player.Instance.Clear();
             Back();
-            PressBack(new InputAction.CallbackContext());
+            PressBack();
         }
 
         void Back()

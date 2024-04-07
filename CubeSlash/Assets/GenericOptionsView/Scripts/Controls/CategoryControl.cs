@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace Flawliz.GenericOptions
@@ -5,8 +6,12 @@ namespace Flawliz.GenericOptions
     public class CategoryControl : ButtonControl
     {
         [SerializeField] private GameObject _content;
+        [SerializeField] private bool _disableRestoreDefaultsButton;
+
+        public Action OnSubmit;
 
         public GameObject Content => _content;
+        public bool DisableRestoreDefaultsButton => _disableRestoreDefaultsButton;
 
         public static CategoryControl ActiveCategory { get; private set; }
 
@@ -38,6 +43,7 @@ namespace Flawliz.GenericOptions
             if (ActiveCategory != null)
             {
                 ActiveCategory.SetContentActive(true);
+                OnSubmit?.Invoke();
             }
 
             Select();

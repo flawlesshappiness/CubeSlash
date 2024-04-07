@@ -5,9 +5,9 @@ using UnityEngine.InputSystem;
 public class DeviceController : Singleton
 {
     public static DeviceController Instance => Instance<DeviceController>();
-    public static DeviceType CurrentDevice { get; private set; } = DeviceType.KEYBOARD;
-    public static System.Action<DeviceType> OnDeviceChanged { get; set; }
-    public static System.Action<DeviceType> OnCurrentDeviceLost { get; set; }
+    public DeviceType CurrentDevice { get; private set; } = DeviceType.KEYBOARD;
+    public System.Action<DeviceType> OnDeviceChanged { get; set; }
+    public System.Action<DeviceType> OnCurrentDeviceLost { get; set; }
 
     protected override void Initialize()
     {
@@ -38,33 +38,33 @@ public class DeviceController : Singleton
         };
     }
 
-    private static void OnDeviceAdded(InputDevice device)
+    private void OnDeviceAdded(InputDevice device)
     {
         DeviceConnected(device);
     }
 
-    private static void OnDeviceReconnected(InputDevice device)
+    private void OnDeviceReconnected(InputDevice device)
     {
         DeviceConnected(device);
     }
 
-    private static void DeviceConnected(InputDevice device)
+    private void DeviceConnected(InputDevice device)
     {
         LogController.LogMethod(device.name);
         SetDevice(device);
     }
 
-    private static void OnDeviceDisconnected(InputDevice device)
+    private void OnDeviceDisconnected(InputDevice device)
     {
         DeviceLost(device);
     }
 
-    private static void OnDeviceRemoved(InputDevice device)
+    private void OnDeviceRemoved(InputDevice device)
     {
         DeviceLost(device);
     }
 
-    private static void DeviceLost(InputDevice device)
+    private void DeviceLost(InputDevice device)
     {
         LogController.LogMethod(device.name);
         var type = GetDeviceType(device.name);
@@ -82,15 +82,17 @@ public class DeviceController : Singleton
         }
     }
 
-    private static void SetDevice(InputDevice device)
+    public void SetDevice(InputDevice device)
     {
         var type = GetDeviceType(device.name);
+        if (CurrentDevice == type) return;
+
         CurrentDevice = type;
         OnDeviceChanged?.Invoke(type);
         Debug.Log($"Current device changed to {CurrentDevice}");
     }
 
-    private static DeviceType GetDeviceType(string name)
+    private DeviceType GetDeviceType(string name)
     {
         name = name.ToLower();
         if (name.Contains("xinput"))

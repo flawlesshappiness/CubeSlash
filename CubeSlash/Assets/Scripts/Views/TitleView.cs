@@ -1,28 +1,29 @@
 using Flawliz.Lerp;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class TitleView : View
 {
-    [SerializeField] private UIInputLayout input;
-
     private bool transitioning = true;
 
     private void Start()
     {
-        input.Clear();
-        input.AddInput(PlayerInput.UIButtonType.SOUTH, "Start");
-
-        PlayerInput.Controls.UI.Submit.started += c => ClickStart();
-
         StartCoroutine(Cr());
         IEnumerator Cr()
         {
             yield return new WaitForSecondsRealtime(2f);
             transitioning = false;
         }
+    }
+
+    private void OnEnable()
+    {
+        PlayerInputController.Instance.Submit.Pressed += ClickStart;
+    }
+
+    private void OnDisable()
+    {
+        PlayerInputController.Instance.Submit.Pressed -= ClickStart;
     }
 
     private void ClickStart()

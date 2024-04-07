@@ -4,13 +4,11 @@ using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class GameEndView : View
 {
     [SerializeField] private TMP_Text tmp_title_win, tmp_title_lose;
-    [SerializeField] private CanvasGroup cvg_title;
-    [SerializeField] private UIInputLayout input;
+    [SerializeField] private CanvasGroup cvg_title, cvg_input;
 
     private bool animating = true;
     private List<UnlockItem> unlocked_items = new List<UnlockItem>();
@@ -23,10 +21,7 @@ public class GameEndView : View
 
     private void Start()
     {
-        input.Clear();
-        input.AddInput(PlayerInput.UIButtonType.SOUTH, "Continue");
-        input.CanvasGroup.alpha = 0;
-
+        cvg_input.alpha = 0;
         cvg_title.alpha = 0;
 
         var data = SessionController.Instance.CurrentData;
@@ -39,7 +34,7 @@ public class GameEndView : View
         IEnumerator Cr()
         {
             yield return LerpEnumerator.Alpha(cvg_title, 1f, 1f).UnscaledTime();
-            Lerp.Alpha(input.CanvasGroup, 0.25f, 1f).UnscaledTime();
+            Lerp.Alpha(cvg_input, 0.25f, 1f).UnscaledTime();
             animating = false;
         }
     }
@@ -48,17 +43,17 @@ public class GameEndView : View
     {
         GameController.Instance.PauseLock.AddLock(nameof(GameEndView));
 
-        PlayerInput.Controls.UI.Submit.started += ClickContinue;
+        PlayerInputController.Instance.Submit.Pressed += ClickContinue;
     }
 
     private void OnDisable()
     {
         GameController.Instance.PauseLock.RemoveLock(nameof(GameEndView));
 
-        PlayerInput.Controls.UI.Submit.started -= ClickContinue;
+        PlayerInputController.Instance.Submit.Pressed -= ClickContinue;
     }
 
-    private void ClickContinue(InputAction.CallbackContext ctx)
+    private void ClickContinue()
     {
         if (animating) return;
         animating = true;
@@ -69,7 +64,7 @@ public class GameEndView : View
             SoundController.Instance.Play(SoundEffectType.sfx_ui_marima_001);
 
             Lerp.Alpha(cvg_title, 0.5f, 0).UnscaledTime();
-            Lerp.Alpha(input.CanvasGroup, 0.5f, 0).UnscaledTime();
+            Lerp.Alpha(cvg_input, 0.5f, 0).UnscaledTime();
             yield return new WaitForSecondsRealtime(0.5f);
 
             foreach (var item in unlocked_items)

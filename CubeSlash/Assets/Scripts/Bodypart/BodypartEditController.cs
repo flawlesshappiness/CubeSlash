@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class BodypartEditController : Singleton
 {
@@ -49,15 +48,15 @@ public class BodypartEditController : Singleton
         var start_mirrored = _selected_part.Mirrored;
         var cr = StartCoroutine(UpdateCr());
 
-        PlayerInput.Controls.UI.Submit.started += Submit;
-        PlayerInput.Controls.UI.Cancel.started += Cancel;
-        PlayerInput.Controls.Player.West.started += Mirror;
+        PlayerInputController.Instance.Submit.Pressed += Submit;
+        PlayerInputController.Instance.Cancel.Pressed += Cancel;
+        PlayerInputController.Instance.Ability.Pressed += Mirror;
 
         IEnumerator UpdateCr()
         {
             while (true)
             {
-                var dir = PlayerInput.Controls.UI.Navigate.ReadValue<Vector2>();
+                var dir = PlayerInputController.Instance.Move.Value;
                 if (dir.y.Abs() > DEAD_ZONE)
                 {
                     var sign = Mathf.Sign(dir.y);
@@ -88,13 +87,13 @@ public class BodypartEditController : Singleton
             }
         }
 
-        void Submit(InputAction.CallbackContext context)
+        void Submit()
         {
             End();
             OnSubmit?.Invoke();
         }
 
-        void Cancel(InputAction.CallbackContext context)
+        void Cancel()
         {
             End();
             _selected_part.SetPosition(start_position);
@@ -103,7 +102,7 @@ public class BodypartEditController : Singleton
             OnCancel?.Invoke();
         }
 
-        void Mirror(InputAction.CallbackContext context)
+        void Mirror()
         {
             _selected_part.ToggleMirror();
         }
@@ -113,9 +112,9 @@ public class BodypartEditController : Singleton
             _selected_part.SetSelected(false);
             _selected_part.CounterPart.SetSelected(false);
 
-            PlayerInput.Controls.UI.Submit.started -= Submit;
-            PlayerInput.Controls.UI.Cancel.started -= Cancel;
-            PlayerInput.Controls.Player.West.started -= Mirror;
+            PlayerInputController.Instance.Submit.Pressed -= Submit;
+            PlayerInputController.Instance.Cancel.Pressed -= Cancel;
+            PlayerInputController.Instance.Ability.Pressed -= Mirror;
             StopCoroutine(cr);
 
             var part = _selected_part;
@@ -142,14 +141,14 @@ public class BodypartEditController : Singleton
         SelectPart(selected);
         var cr = StartCoroutine(UpdateCr());
 
-        PlayerInput.Controls.UI.Submit.started += Submit;
-        PlayerInput.Controls.UI.Cancel.started += Cancel;
+        PlayerInputController.Instance.Submit.Pressed += Submit;
+        PlayerInputController.Instance.Cancel.Pressed += Cancel;
 
         IEnumerator UpdateCr()
         {
             while (true)
             {
-                var dir = PlayerInput.Controls.UI.Navigate.ReadValue<Vector2>();
+                var dir = PlayerInputController.Instance.Move.Value;
                 if (dir.y.Abs() > DEAD_ZONE)
                 {
                     var i = (int)Mathf.Sign(dir.y);
@@ -181,13 +180,13 @@ public class BodypartEditController : Singleton
             }
         }
 
-        void Submit(InputAction.CallbackContext context)
+        void Submit()
         {
             End();
             OnSelect?.Invoke(selected);
         }
 
-        void Cancel(InputAction.CallbackContext context)
+        void Cancel()
         {
             End();
             OnCancel?.Invoke();
@@ -198,8 +197,8 @@ public class BodypartEditController : Singleton
             selected.SetHover(false);
             selected.CounterPart.SetHover(false);
 
-            PlayerInput.Controls.UI.Submit.started -= Submit;
-            PlayerInput.Controls.UI.Cancel.started -= Cancel;
+            PlayerInputController.Instance.Submit.Pressed -= Submit;
+            PlayerInputController.Instance.Cancel.Pressed -= Cancel;
             StopCoroutine(cr);
         }
     }

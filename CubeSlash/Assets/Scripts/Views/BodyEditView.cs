@@ -5,7 +5,7 @@ using UnityEngine;
 public class BodyEditView : View
 {
     [SerializeField] private RadialMenu radial;
-    [SerializeField] private UIInputLayout inputs;
+    [SerializeField] private GameObject input_select, input_move, input_remove;
 
     private Player Player { get { return Player.Instance; } }
     private PlayerBody Body { get { return Player.PlayerBody; } }
@@ -31,7 +31,7 @@ public class BodyEditView : View
 
     private void ShowMainOptions()
     {
-        inputs.Clear();
+        ClearInputs();
         radial.Clear();
 
         var options = new List<RadialMenuOption>
@@ -133,7 +133,6 @@ public class BodyEditView : View
     {
         var db = Database.Load<BodypartDatabase>();
         radial.Clear();
-        inputs.Clear();
 
         var options = db.collection
             .Where(info => !info.is_ability_part)
@@ -231,29 +230,28 @@ public class BodyEditView : View
         }
     }
 
+    private void ClearInputs()
+    {
+        input_move?.SetActive(false);
+        input_select?.SetActive(false);
+        input_remove?.SetActive(false);
+    }
+
     private void ShowMoveBodypartInput()
     {
-        inputs.Clear();
-        inputs.AddInput(PlayerInput.UIButtonType.NAV_UP_DOWN, "Move");
-        inputs.AddInput(PlayerInput.UIButtonType.NAV_LEFT_RIGHT, "Size");
-        inputs.AddInput(PlayerInput.UIButtonType.SOUTH, "Set");
-        inputs.AddInput(PlayerInput.UIButtonType.WEST, "Mirror");
-        inputs.AddInput(PlayerInput.UIButtonType.EAST, "Cancel");
+        ClearInputs();
+        input_move?.SetActive(true);
     }
 
     private void ShowSelectBodypartInput()
     {
-        inputs.Clear();
-        inputs.AddInput(PlayerInput.UIButtonType.NAV_UP_DOWN, "Move");
-        inputs.AddInput(PlayerInput.UIButtonType.SOUTH, "Select");
-        inputs.AddInput(PlayerInput.UIButtonType.EAST, "Cancel");
+        ClearInputs();
+        input_select?.SetActive(true);
     }
 
     private void ShowRemoveBodypartInput()
     {
-        inputs.Clear();
-        inputs.AddInput(PlayerInput.UIButtonType.NAV_UP_DOWN, "Move");
-        inputs.AddInput(PlayerInput.UIButtonType.SOUTH, "Remove");
-        inputs.AddInput(PlayerInput.UIButtonType.EAST, "Cancel");
+        ClearInputs();
+        input_remove?.SetActive(true);
     }
 }

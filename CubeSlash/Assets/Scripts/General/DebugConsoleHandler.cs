@@ -16,9 +16,7 @@ public class DebugConsoleHandler : Singleton
     {
         base.Initialize();
 
-        // Input
-        var ui = PlayerInput.Controls.UI;
-        ui.DebugConsole.started += c => ToggleView();
+        PlayerInputController.Instance.Debug.Pressed += ToggleView;
     }
 
     private void ToggleView()
@@ -53,7 +51,6 @@ public class DebugConsoleHandler : Singleton
             window.CreateButton("Gain Ability", ClickGainAbility);
             window.CreateButton("Level up", ClickLevelUp);
             window.CreateButton("Level up (Ability)", ClickLevelUpAbility);
-            //window.CreateButton("Equipment", ClickEquipment);
             window.CreateButton(GameController.DAMAGE_DISABLED ? "Enable damage" : "Disable damage", ClickToggleDamage);
             window.CreateButton("Set Area", ClickSetArea);
             window.CreateButton("Next Area", ClickNextArea);
@@ -205,17 +202,6 @@ public class DebugConsoleHandler : Singleton
     {
         Player.Instance.CheatLevelsUntilNextAbility(1);
         ClickLevelUp();
-    }
-
-    private void ClickEquipment()
-    {
-        CloseView();
-
-        var view = ViewController.Instance.ShowView<AbilityView>(0, GameController.TAG_ABILITY_VIEW);
-        view.OnContinue += () =>
-        {
-            GameController.Instance.ResumeLevel();
-        };
     }
 
     private void ClickToggleDamage()

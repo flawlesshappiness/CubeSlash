@@ -1,22 +1,28 @@
 using TMPro;
-using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
-[RequireComponent(typeof(Image))]
 public class ImageInput : MonoBehaviourExtended
 {
-    public PlayerInput.UIButtonType type_button;
-    private Image Image { get { return GetComponentOnce<Image>(ComponentSearchType.THIS); } }
-    private TMP_Text Text { get { return GetComponentOnce<TMP_Text>(ComponentSearchType.CHILDREN); } }
+    public InputActionReference input_action_reference;
+    private Image Image => GetComponentOnce<Image>(ComponentSearchType.CHILDREN);
+    private TMP_Text Text => GetComponentOnce<TMP_Text>(ComponentSearchType.CHILDREN);
+
+    private GamepadIconDatabase DB => Database.Load<GamepadIconDatabase>();
 
     private void OnEnable()
     {
-        DeviceController.OnDeviceChanged += OnDeviceChanged;
+        DeviceController.Instance.OnDeviceChanged += OnDeviceChanged;
     }
 
     private void OnDisable()
     {
-        DeviceController.OnDeviceChanged -= OnDeviceChanged;
+        DeviceController.Instance.OnDeviceChanged -= OnDeviceChanged;
+    }
+
+    private void Start()
+    {
+        UpdateSprite();
     }
 
     private void OnDeviceChanged(DeviceType device)
@@ -26,15 +32,37 @@ public class ImageInput : MonoBehaviourExtended
 
     private void UpdateSprite()
     {
-        var map = PlayerInput.Database.GetCurrentInputMap(type_button);
-        Image.sprite = map.sprite;
-        Image.color = map.color;
-        Text.text = map.text;
+        Text.text = GetBindingDisplayString(out var path);
+        Image.sprite = DB.GetSprite(path);
+
+        Image.enabled = Image.sprite != null && DeviceController.Instance.CurrentDevice != DeviceType.KEYBOARD;
+        Text.enabled = !string.IsNullOrEmpty(Text.text) && DeviceController.Instance.CurrentDevice == DeviceType.KEYBOARD;
     }
 
-    public void SetInputType(PlayerInput.UIButtonType type)
+    private string GetBindingDisplayString(out string path)
     {
-        this.type_button = type;
-        UpdateSprite();
+        try
+        {
+            var action = input_action_reference.action;
+            var bindings = action.bindings.ToArray();
+            var binding_index = action.GetBindingIndex(PlayerInputController.Instance.CurrentControlScheme);
+            var display_string = string.Empty;
+            action.GetBindingDisplayString(binding_index, out var device, out path);
+
+            // Composite display string
+            for (int i = binding_index; i < bindings.Length; i++)
+            {
+                var binding = bindings[i];
+                if (i > binding_index && !binding.isPartOfComposite) break;
+                display_string += action.GetBindingDisplayString(i);
+            }
+
+            return display_string;
+        }
+        catch
+        {
+            path = string.Empty;
+            return string.Empty;
+        }
     }
 }

@@ -30,6 +30,16 @@ namespace Flawliz.GenericOptions
         private void Awake()
         {
             LoadDataFromPlayerPrefs();
+
+            foreach (var category in GetComponentsInChildren<CategoryControl>())
+            {
+                category.OnSubmit += () => CategorySubmit(category);
+            }
+        }
+
+        private void CategorySubmit(CategoryControl category)
+        {
+            _btn_restore_defaults.gameObject.SetActive(!category.DisableRestoreDefaultsButton);
         }
 
         private void Start()

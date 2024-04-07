@@ -1,16 +1,13 @@
 using Flawliz.Lerp;
 using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 public class UnlockItemView : View
 {
-    [SerializeField] private UIInputLayout input;
     [SerializeField] private Image img_item;
-    [SerializeField] private CanvasGroup cvg_fx, cvg_title;
+    [SerializeField] private CanvasGroup cvg_fx, cvg_title, cvg_input;
     [SerializeField] private RectTransform rt_rays, rt_glow, rt_item;
     [SerializeField] private TMP_Text tmp_title;
 
@@ -20,10 +17,7 @@ public class UnlockItemView : View
 
     private void Awake()
     {
-        input.Clear();
-        input.AddInput(PlayerInput.UIButtonType.SOUTH, "Claim");
-
-        input.CanvasGroup.alpha = 0;
+        cvg_input.alpha = 0;
         cvg_title.alpha = 0;
         cvg_fx.alpha = 0;
 
@@ -36,15 +30,15 @@ public class UnlockItemView : View
 
     private void OnEnable()
     {
-        PlayerInput.Controls.UI.Submit.started += ClickClaim;
+        PlayerInputController.Instance.Submit.Pressed += ClickClaim;
     }
 
     private void OnDisable()
     {
-        PlayerInput.Controls.UI.Submit.started -= ClickClaim;
+        PlayerInputController.Instance.Submit.Pressed -= ClickClaim;
     }
 
-    private void ClickClaim(InputAction.CallbackContext ctx)
+    private void ClickClaim()
     {
         if (animating) return;
         animating = true;
@@ -87,7 +81,7 @@ public class UnlockItemView : View
             Lerp.Alpha(cvg_title, 0.5f, 1f).UnscaledTime();
             Lerp.LocalScale(rt_rays, 0.75f, Vector3.one).UnscaledTime();
             yield return LerpEnumerator.LocalScale(rt_item, 0.5f, Vector3.one).Curve(EasingCurves.EaseOutBack).UnscaledTime();
-            Lerp.Alpha(input.CanvasGroup, 0.5f, 1f).UnscaledTime();
+            Lerp.Alpha(cvg_input, 0.5f, 1f).UnscaledTime();
             animating = false;
         }
     }

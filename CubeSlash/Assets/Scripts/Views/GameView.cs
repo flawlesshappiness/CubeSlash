@@ -7,7 +7,6 @@ public class GameView : View
 {
     [SerializeField] private Image img_experience;
     [SerializeField] private CanvasGroup cvg_tutorial;
-    [SerializeField] private UIInputLayout input_tutorial;
 
     private void Start()
     {
@@ -55,8 +54,6 @@ public class GameView : View
 
     public void ShowIntroTutorial()
     {
-        input_tutorial.SetupTutorial();
-
         StartCoroutine(Cr());
         IEnumerator Cr()
         {

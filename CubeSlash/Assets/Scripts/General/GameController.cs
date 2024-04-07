@@ -39,8 +39,7 @@ public class GameController : MonoBehaviour
         Instance = this;
         SteamIntegration.Create();
         Singleton.CreateAllSingletons();
-        PauseLock.OnLockChanged += OnPauseChanged;
-        DeviceController.OnCurrentDeviceLost += OnDeviceLost;
+        InitializePause();
     }
 
     private void Start()
@@ -59,6 +58,13 @@ public class GameController : MonoBehaviour
         yield return view.ShowSplashes();
         view.Close(2f);
         MainMenu();
+    }
+
+    private void InitializePause()
+    {
+        PlayerInputController.Instance.Pause.Pressed += OpenPauseView;
+        PauseLock.OnLockChanged += OnPauseChanged;
+        DeviceController.Instance.OnCurrentDeviceLost += OnDeviceLost;
     }
 
     public void InitializePlayer()
@@ -97,10 +103,6 @@ public class GameController : MonoBehaviour
         {
             OpenPauseView();
         }
-    }
-
-    public void HomeButtonPressed()
-    {
     }
 
     private void OnSteamOverlayEnabled()

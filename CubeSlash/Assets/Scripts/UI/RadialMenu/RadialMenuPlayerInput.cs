@@ -12,16 +12,25 @@ public class RadialMenuPlayerInput : MonoBehaviour
     private void Start()
     {
         menu = GetComponent<RadialMenu>();
+    }
 
-        PlayerInput.Controls.UI.Submit.started += _ => Submit();
-        PlayerInput.Controls.UI.Cancel.started += _ => Cancel();
+    private void OnEnable()
+    {
+        PlayerInputController.Instance.Submit.Pressed += Submit;
+        PlayerInputController.Instance.Cancel.Pressed += Cancel;
+    }
+
+    private void OnDisable()
+    {
+        PlayerInputController.Instance.Submit.Pressed -= Submit;
+        PlayerInputController.Instance.Cancel.Pressed -= Cancel;
     }
 
     private void Update()
     {
         if (menu == null) return;
 
-        var input = PlayerInput.MoveDirection.normalized;
+        var input = PlayerInputController.Instance.Move.Value;
         if (input.magnitude < deadzone)
         {
             if (!in_deadzone)
@@ -32,7 +41,7 @@ public class RadialMenuPlayerInput : MonoBehaviour
         }
         else
         {
-            if (DeviceController.CurrentDevice == DeviceType.KEYBOARD && menu.ElementCount > 8)
+            if (DeviceController.Instance.CurrentDevice == DeviceType.KEYBOARD && menu.ElementCount > 8)
             {
                 input = in_deadzone ? input : Vector2.Lerp(prev_input, input, Time.deltaTime);
                 prev_input = input;

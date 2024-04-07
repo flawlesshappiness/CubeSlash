@@ -143,14 +143,18 @@ public class Player : Character
 
     private void OnEnable()
     {
-        PlayerInput.OnAbilityButtonDown += PressAbility;
-        PlayerInput.OnAbilityButtonUp += ReleaseAbility;
+        PlayerInputController.Instance.Ability.Pressed += PressEquippedAbility;
+        PlayerInputController.Instance.Ability.Released += ReleaseEquippedAbility;
+        PlayerInputController.Instance.Dash.Pressed += PressDodge;
+        PlayerInputController.Instance.Heal.Pressed += PressHeal;
     }
 
     private void OnDisable()
     {
-        PlayerInput.OnAbilityButtonDown -= PressAbility;
-        PlayerInput.OnAbilityButtonUp -= ReleaseAbility;
+        PlayerInputController.Instance.Ability.Pressed -= PressEquippedAbility;
+        PlayerInputController.Instance.Ability.Released -= ReleaseEquippedAbility;
+        PlayerInputController.Instance.Dash.Pressed -= PressDodge;
+        PlayerInputController.Instance.Heal.Pressed -= PressHeal;
     }
 
     protected override void OnUpdate()
@@ -182,7 +186,7 @@ public class Player : Character
         LinearDrag = Info.linear_drag;
 
         // Move
-        var dir = PlayerInput.MoveDirection;
+        var dir = PlayerInputController.Instance.Move.Value;
         if (InputLock.IsFree)
         {
             if (dir.magnitude > 0.5f)
@@ -230,29 +234,11 @@ public class Player : Character
         return not_blocking && not_cooldown;
     }
 
-    private void PressAbility(PlayerInput.ButtonType button)
+    private void PressEquippedAbility()
     {
         if (!GameController.Instance.IsGameStarted) return;
         if (GameController.Instance.IsPaused) return;
         if (InputLock.IsLocked) return;
-        switch (button)
-        {
-            case PlayerInput.ButtonType.WEST:
-                PressEquippedAbility();
-                break;
-
-            case PlayerInput.ButtonType.EAST:
-                dodge.Press();
-                break;
-
-            case PlayerInput.ButtonType.NORTH:
-                heal.Press();
-                break;
-        }
-    }
-
-    private void PressEquippedAbility()
-    {
         if (GameStateController.Instance.GameState != GameStateType.PLAYING) return;
 
         var ability = AbilityController.Instance.GetEquippedAbility();
@@ -268,22 +254,11 @@ public class Player : Character
         }
     }
 
-    private void ReleaseAbility(PlayerInput.ButtonType button)
-    {
-        if (!GameController.Instance.IsGameStarted) return;
-        //if (GameController.Instance.IsPaused) return;
-        if (InputLock.IsLocked) return;
-
-        switch (button)
-        {
-            case PlayerInput.ButtonType.WEST:
-                ReleaseEquippedAbility();
-                break;
-        }
-    }
-
     private void ReleaseEquippedAbility()
     {
+        if (!GameController.Instance.IsGameStarted) return;
+        if (InputLock.IsLocked) return;
+
         var ability = AbilityController.Instance.GetEquippedAbility();
 
         if (ability.IsPressed)
@@ -295,6 +270,26 @@ public class Player : Character
         {
             AbilityQueued = null;
         }
+    }
+
+    private void PressDodge()
+    {
+        if (!GameController.Instance.IsGameStarted) return;
+        if (GameController.Instance.IsPaused) return;
+        if (InputLock.IsLocked) return;
+        if (GameStateController.Instance.GameState != GameStateType.PLAYING) return;
+
+        dodge.Press();
+    }
+
+    private void PressHeal()
+    {
+        if (!GameController.Instance.IsGameStarted) return;
+        if (GameController.Instance.IsPaused) return;
+        if (InputLock.IsLocked) return;
+        if (GameStateController.Instance.GameState != GameStateType.PLAYING) return;
+
+        heal.Press();
     }
 
     private void QueuedAbilityUpdate()

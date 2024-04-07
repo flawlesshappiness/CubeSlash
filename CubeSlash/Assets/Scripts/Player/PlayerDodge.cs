@@ -98,7 +98,7 @@ public class PlayerDodge : MonoBehaviour
             pos_prev = pos_cur;
 
             // Update direction
-            var input = PlayerInput.MoveDirection;
+            var input = Player.MoveDirection;
             if (input.magnitude > 0.5f)
             {
                 var right = Vector3.Cross(direction, Vector3.forward);
