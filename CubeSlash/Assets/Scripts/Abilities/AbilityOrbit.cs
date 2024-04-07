@@ -53,7 +53,10 @@ public class AbilityOrbit : Ability
 
         public void Clear()
         {
-            projectiles.ToList().ForEach(x => x.Kill());
+            projectiles
+                .Where(x => x != null)
+                .ToList()
+                .ForEach(x => x.Kill());
             projectiles.Clear();
         }
 
@@ -80,6 +83,7 @@ public class AbilityOrbit : Ability
                     for (int i = 0; i < Mathf.Abs(diff); i++)
                     {
                         var p = projectiles[projectiles.Count - 1];
+                        if (p == null) continue;
                         p.Kill();
                         projectiles.Remove(p);
                     }
@@ -88,6 +92,7 @@ public class AbilityOrbit : Ability
 
             foreach (var p in projectiles)
             {
+                if (p == null) continue;
                 p.transform.localScale = Vector3.one * ProjectileSize;
                 p.SetChainEnabled(HasChain);
                 p.SetMiniOrbitEnabled(HasMiniOrbit);
@@ -105,7 +110,8 @@ public class AbilityOrbit : Ability
 
             for (int i_proj = 0; i_proj < projectiles.Count; i_proj++)
             {
-                var proj = projectiles[i_proj];
+                var p = projectiles[i_proj];
+                if (p == null) continue;
 
                 var angle_start = angle_delta * i_proj;
                 var angle_time = Mathf.Lerp(0f, 360f, _time / OrbitTime);
@@ -115,9 +121,9 @@ public class AbilityOrbit : Ability
                 var position_angle = q_angle * Vector3.up * radius;
                 var position_player = _target?.position ?? _target_position;
                 var position = position_angle + position_player;
-                proj.transform.position = position;
+                p.transform.position = position;
 
-                proj.mini_orbit_direction_override = dir_mul * -1;
+                p.mini_orbit_direction_override = dir_mul * -1;
             }
         }
 

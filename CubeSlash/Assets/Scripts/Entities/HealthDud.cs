@@ -71,7 +71,7 @@ public class HealthDud : MonoBehaviour, IKillable
     public bool CanKill() => CanHit();
     public Vector3 GetPosition() => transform.position;
 
-    private Coroutine AnimateIdle()
+    public Coroutine AnimateIdle()
     {
         var start = Vector3.one * 0.9f;
         var end = Vector3.one * 1.1f;

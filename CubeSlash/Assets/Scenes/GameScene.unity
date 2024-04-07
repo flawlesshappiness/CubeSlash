@@ -419,7 +419,7 @@ MonoBehaviour:
   m_LeftClickAction: {fileID: 8148825614708344254, guid: 226efad10bdefbc47829d93163f58210, type: 3}
   m_MiddleClickAction: {fileID: 0}
   m_RightClickAction: {fileID: 0}
-  m_ScrollWheelAction: {fileID: 0}
+  m_ScrollWheelAction: {fileID: 2904986990529443159, guid: 226efad10bdefbc47829d93163f58210, type: 3}
   m_TrackedDevicePositionAction: {fileID: 0}
   m_TrackedDeviceOrientationAction: {fileID: 0}
   m_DeselectOnBackgroundClick: 1
@@ -518,6 +518,14 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: 78137bca-0d1d-453f-95f5-0398f57a9687
     m_ActionName: UI/Submit[/Keyboard/k]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: f19aae54-bcea-41d0-b8da-542ea2ffafb5
+    m_ActionName: UI/Debug[/Keyboard/backquote]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: b55b0758-183d-4173-9451-bd02bf8eb2d6
+    m_ActionName: UI/Scroll[/Mouse/scroll/y]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Main

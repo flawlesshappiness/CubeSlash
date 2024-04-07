@@ -112,6 +112,7 @@ public class AI_BossPlant : BossAI
         dud.SetDudActive(false, false);
         dud.SetDudActive(true, true);
         dud.SetGlowEnabled(true);
+        dud.AnimateIdle();
     }
 
     private void CreatePillar()

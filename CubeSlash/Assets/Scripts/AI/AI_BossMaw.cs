@@ -317,6 +317,7 @@ public class AI_BossMaw : BossAI
         dud.SetDudActive(false, false);
         dud.SetDudActive(true, true);
         dud.SetGlowEnabled(true);
+        dud.AnimateIdle();
     }
 
     private void OnDudKilled()

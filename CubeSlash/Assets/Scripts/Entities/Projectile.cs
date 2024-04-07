@@ -88,8 +88,11 @@ public class Projectile : MonoBehaviourExtended
 
         onDestroy?.Invoke();
 
-        gameObject?.SetActive(false);
-        Destroy(gameObject);
+        if (gameObject != null)
+        {
+            gameObject.SetActive(false);
+            Destroy(gameObject);
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
