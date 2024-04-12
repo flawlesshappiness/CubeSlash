@@ -20,10 +20,11 @@ public class GamemodeController : Singleton
         SaveDataController.Instance.Save<GameSaveData>();
     }
 
-    public void UnlockGamemode(GamemodeType type)
+    public bool TryUnlockGamemode(GamemodeType type)
     {
-        if (Save.Game.unlocked_gamemodes.Contains(type)) return;
+        if (Save.Game.unlocked_gamemodes.Contains(type)) return false;
         Save.Game.unlocked_gamemodes.Add(type);
+        return true;
     }
 
     public bool IsGamemodeUnlocked(GamemodeType type)
@@ -36,15 +37,20 @@ public class GamemodeController : Singleton
         // Won on easy
         if (Save.Game.idx_difficulty_completed > -1)
         {
-            UnlockGamemode(GamemodeType.Medium);
-            UnlockGamemode(GamemodeType.DoubleBoss);
+            TryUnlockGamemode(GamemodeType.Medium);
+            TryUnlockGamemode(GamemodeType.DoubleBoss);
         }
 
         // Won on medium
         if (Save.Game.idx_difficulty_completed > 0)
         {
-            UnlockGamemode(GamemodeType.Hard);
+            TryUnlockGamemode(GamemodeType.Hard);
         }
+
+        // Distinct
+        Save.Game.unlocked_gamemodes = Save.Game.unlocked_gamemodes
+            .Distinct()
+            .ToList();
 
         SaveDataController.Instance.Save<GameSaveData>();
     }

@@ -1,6 +1,5 @@
 using Flawliz.VisualConsole;
 using System.Linq;
-using TMPro;
 using UnityEngine;
 
 public class DebugConsoleHandler : Singleton
@@ -8,6 +7,7 @@ public class DebugConsoleHandler : Singleton
     public static DebugConsoleHandler Instance { get { return Instance<DebugConsoleHandler>(); } }
 
     private VisualConsoleView view;
+    private DebugInfoView info_view;
 
     protected override void Initialize()
     {
@@ -56,6 +56,7 @@ public class DebugConsoleHandler : Singleton
             window.CreateButton(EnemyController.Instance.EnemySpawnEnabled ? "Disable enemy spawn" : "Enable enemy spawn", ClickToggleEnemySpawn);
             window.CreateButton("Kill Enemies", ClickKillEnemies);
             window.CreateButton("Fill mana", ClickFillMana);
+            window.CreateButton("Toggle DebugInfoView", ClickToggleDebugInfoView);
         }
         else
         {
@@ -276,10 +277,15 @@ public class DebugConsoleHandler : Singleton
         Player.Instance.heal.SetFull();
     }
 
-    private class GameValueText
+    private void ClickToggleDebugInfoView()
     {
-        public TMP_Text tmp;
-        public System.Func<string> getString;
-        public void UpdateText() => tmp.text = getString();
+        if (info_view == null)
+        {
+            info_view = ViewController.Instance.ShowView<DebugInfoView>(0, nameof(DebugInfoView));
+        }
+        else
+        {
+            info_view.gameObject.SetActive(!info_view.gameObject.activeInHierarchy);
+        }
     }
 }

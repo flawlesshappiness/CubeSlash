@@ -13,10 +13,15 @@ MonoBehaviour:
   m_Name: Endless
   m_EditorClassIdentifier: 
   type: 4
+  gamemode_name: 
+  gamemode_desc: 
+  icon: {fileID: 0}
   area_count: 4
   area_duration: 180
+  area_size: 0
   enemy_spawn_frequency_start: 1.3
   enemy_spawn_frequency_end: 0.7
+  enemy_spawn_frequency_final: 1.2
   enemy_spawn_count_start: 2
   enemy_spawn_count_end: 5
   enemy_count_max_start: 75

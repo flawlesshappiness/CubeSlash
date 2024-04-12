@@ -18,6 +18,7 @@ public class GamemodeSettings : ScriptableObject
     [Header("ENEMY")]
     public float enemy_spawn_frequency_start;
     public float enemy_spawn_frequency_end;
+    public float enemy_spawn_frequency_final;
     public int enemy_spawn_count_start;
     public int enemy_spawn_count_end;
     public int enemy_count_max_start;
@@ -41,7 +42,7 @@ public class GamemodeSettings : ScriptableObject
     public float T_GameDuration => CurrentGameDuration / MaxGameDuration;
     public float BossSpawnTime => area_duration * boss_time_spawn;
     public int EnemyCountMax => (int)Mathf.Lerp(enemy_count_max_start, enemy_count_max_end, T_GameDuration);
-    public int EnemySpawnFrequency => (int)Mathf.Lerp(enemy_spawn_frequency_start, enemy_spawn_frequency_end, T_GameDuration);
     public int EnemySpawnCount => (int)Mathf.Lerp(enemy_spawn_count_start, enemy_spawn_count_end, T_GameDuration);
-    public int CameraSize => (int)Mathf.Lerp(camera_size_start, camera_size_end, T_GameDuration);
+    public float EnemySpawnFrequency => EnemyController.Instance.IsFinalBossActive ? enemy_spawn_frequency_final : Mathf.Lerp(enemy_spawn_frequency_start, enemy_spawn_frequency_end, T_GameDuration);
+    public float CameraSize => Mathf.Lerp(camera_size_start, camera_size_end, T_GameDuration);
 }

@@ -186,10 +186,8 @@ public class GameEndView : View
 
     private void TryUnlockGamemode(GamemodeType type)
     {
-        if (!Save.Game.unlocked_gamemodes.Contains(type))
+        if (GamemodeController.Instance.TryUnlockGamemode(type))
         {
-            Save.Game.unlocked_gamemodes.Add(type);
-
             var gamemode = GamemodeController.Instance.GetGamemode(type);
             unlocked_items.Add(new UnlockItem
             {
