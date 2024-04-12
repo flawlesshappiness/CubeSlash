@@ -90,7 +90,7 @@ public class AI_BossJelly : BossAI
     {
         var diff = DifficultyController.Instance.DifficultyValue;
         var count_tether_diff = (int)Mathf.Lerp(COUNT_TETHER_MIN_DIFF, COUNT_TETHER_MAX_DIFF, diff);
-        var count_tether_area = AreaController.Instance.AreaIndex;
+        var count_tether_area = AreaController.Instance.CurrentAreaIndex;
         max_tethers = count_tether_diff + count_tether_area;
         remaining_tethers = max_tethers;
 

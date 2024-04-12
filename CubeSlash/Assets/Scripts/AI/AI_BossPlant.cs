@@ -52,7 +52,7 @@ public class AI_BossPlant : BossAI
 
     private void CreateArena()
     {
-        var area_number = AreaController.Instance.AreaIndex + 1;
+        var area_number = AreaController.Instance.CurrentAreaIndex + 1;
         var radius = Mathf.Clamp(RADIUS + RADIUS_PER_INDEX * area_number, 0, RADIUS_MAX);
         var points = CircleHelper.Points(radius, 10);
         var bezier = new BezierPath(points, true, PathSpace.xy);

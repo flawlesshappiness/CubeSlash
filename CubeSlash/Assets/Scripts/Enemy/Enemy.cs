@@ -57,7 +57,7 @@ public class Enemy : Character, IKillable, IHurt
         if (Player.Instance == null) return;
         if (!CanReposition) return;
 
-        var size = GameSettings.Instance.area_size;
+        var size = GamemodeController.Instance.SelectedGameMode.area_size;
         var sh = size * 0.5f;
         var center = Player.Instance.transform.position;
         var pos = transform.position;

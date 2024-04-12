@@ -58,7 +58,7 @@ public class PlayRadialView : View
         radial.Clear();
 
         var ability_icon = AbilityController.Instance.GetAbilityPrefab(Save.PlayerBody.primary_ability).Info.sprite_icon;
-        var difficulty_icon = DifficultyController.Instance.Difficulty.difficulty_sprite;
+        var gamemode_icon = GamemodeController.Instance.SelectedGameMode.icon;
 
         var options = new List<RadialMenuOption>
         {
@@ -86,9 +86,9 @@ public class PlayRadialView : View
 
             new RadialMenuOption
             {
-                Title = "Difficulty",
-                Sprite = difficulty_icon,
-                OnSubmitComplete = ShowDifficultyOptions
+                Title = "Gamemode",
+                Sprite = gamemode_icon,
+                OnSubmitComplete = ShowGamemodeOptions
             },
 
              new RadialMenuOption
@@ -162,19 +162,20 @@ public class PlayRadialView : View
         }
     }
 
-    private void ShowDifficultyOptions()
+    private void ShowGamemodeOptions()
     {
         radial.Clear();
 
-        var infos = DifficultyController.Instance.DifficultyInfos;
+        var infos = GamemodeController.Instance.DB.collection;
 
         var options = infos
             .Select(info => new RadialMenuOption
             {
-                Title = info.difficulty_name,
-                Sprite = info.difficulty_sprite,
-                IsLocked = infos.IndexOf(info) > (Save.Game.idx_difficulty_completed + 1),
-                OnSubmitComplete = () => SelectDifficulty(info)
+                Title = info.gamemode_name,
+                Description = info.gamemode_desc,
+                Sprite = info.icon,
+                IsLocked = !GamemodeController.Instance.IsGamemodeUnlocked(info.type),
+                OnSubmitComplete = () => Select(info)
             }).ToList();
 
         InsertBackOption(options, ShowMainOptions);
@@ -183,10 +184,9 @@ public class PlayRadialView : View
         radial.AnimateShowElements(true, 0.05f);
         radial.SetCancelElement(radial.GetElement(0));
 
-        void SelectDifficulty(DifficultyInfo info)
+        void Select(GamemodeSettings info)
         {
-            DifficultyController.Instance.SetDifficulty(info);
-            SaveDataController.Instance.Save<GameSaveData>();
+            GamemodeController.Instance.SetGamemode(info);
             ShowMainOptions();
         }
     }

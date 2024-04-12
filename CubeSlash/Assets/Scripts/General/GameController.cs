@@ -165,20 +165,11 @@ public class GameController : MonoBehaviour
 
         IEnumerator Cr()
         {
-            /*
-            var view = ViewController.Instance.ShowView<GameIntroView>(1);
-            yield return new WaitForSecondsRealtime(1);
-            yield return view.AnimateIntro();
-            view.Close(1);
-            yield return new WaitForSecondsRealtime(1);
-            */
-
             IsGameStarted = true;
 
             onGameStart?.Invoke();
 
             GameStateController.Instance.SetGameState(GameStateType.MENU);
-            AreaController.Instance.StartAreaCoroutine();
             ViewController.Instance.ShowView<GameView>(0);
 
             Player.Instance.ResetValues();
@@ -305,7 +296,7 @@ public class GameController : MonoBehaviour
 
         // End
         EndGame();
-        SessionController.Instance.CurrentData.won = false;
+        RunController.Instance.CurrentRun.Won = false;
         StartCoroutine(EndGameCr());
         onPlayerDeath?.Invoke();
     }
@@ -324,7 +315,7 @@ public class GameController : MonoBehaviour
 
         // End
         IsGameEnded = true;
-        SessionController.Instance.CurrentData.won = true;
+        RunController.Instance.CurrentRun.Won = true;
         MusicController.Instance.StopBGM();
         EnemyController.Instance.KillActiveEnemies();
         onWin?.Invoke();

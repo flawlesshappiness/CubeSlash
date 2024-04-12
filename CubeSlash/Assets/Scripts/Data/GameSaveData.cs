@@ -10,6 +10,9 @@ public class GameSaveData : SaveDataObject
     public int idx_gamesetup_charm = -1;
     public int idx_gamesetup_difficulty = 0;
 
+    public GamemodeType gamemode_selected = GamemodeType.Normal;
+    public List<GamemodeType> unlocked_gamemodes = new List<GamemodeType> { GamemodeType.Normal };
+
     public int count_wins = 0;
     public int count_losses = 0;
 
@@ -49,5 +52,9 @@ public class GameSaveData : SaveDataObject
         unlocked_abilities.Add(Ability.Type.SPLIT);
         unlocked_bodyparts.Add(BodypartType.eye_A);
         unlocked_player_bodies.Add(PlayerBodyType.Cell);
+
+        gamemode_selected = GamemodeType.Normal;
+        unlocked_gamemodes.Clear();
+        unlocked_gamemodes.Add(GamemodeType.Normal);
     }
 }

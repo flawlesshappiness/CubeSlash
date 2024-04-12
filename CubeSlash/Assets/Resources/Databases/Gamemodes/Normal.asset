@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00f6d988a5c9030499a153e06417c174, type: 3}
+  m_Name: Normal
+  m_EditorClassIdentifier: 
+  type: 0
+  gamemode_name: Easy
+  icon: {fileID: 21300000, guid: 02402735c7d1de649ac0d839106fcca0, type: 3}
+  area_count: 4
+  area_duration: 180
+  enemy_spawn_frequency_start: 1.4
+  enemy_spawn_frequency_end: 0.8
+  enemy_spawn_count_start: 2
+  enemy_spawn_count_end: 5
+  enemy_count_max_start: 50
+  enemy_count_max_end: 200
+  boss_time_spawn: 0.6
+  boss_size: 1
+  experience_spawn_frequency: 0.5
+  experience_count_max: 60
+  experience_gain_multiplier: 1
+  camera_size_start: 12
+  camera_size_end: 17

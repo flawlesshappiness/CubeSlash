@@ -24,9 +24,9 @@ public class GameEndView : View
         cvg_input.alpha = 0;
         cvg_title.alpha = 0;
 
-        var data = SessionController.Instance.CurrentData;
-        tmp_title_win.enabled = data.won;
-        tmp_title_lose.enabled = !data.won;
+        var run = RunController.Instance.CurrentRun;
+        tmp_title_win.enabled = run.Won;
+        tmp_title_lose.enabled = !run.Won;
 
         UnlockItems();
 
@@ -99,38 +99,45 @@ public class GameEndView : View
 
     private void UnlockItems()
     {
-        var data = SessionController.Instance.CurrentData;
-        if (data.areas_completed >= 2 || data.levels_gained > 8)
+        var run = RunController.Instance.CurrentRun;
+        if (run.CurrentAreaIndex > 0)
         {
-            UnlockRandomAbility();
+            TryUnlockRandomAbility();
         }
 
-        if (data.areas_completed >= 2 || data.levels_gained > 4)
+        if (run.CurrentAreaIndex > 0)
         {
-            UnlockRandomBodypart();
+            TryUnlockRandomBodypart();
         }
 
-        if (data.bosses_killed.Contains(EnemyType.BossPlant))
+        if (run.EnemiesKilled.ContainsKey(EnemyType.BossPlant))
         {
-            UnlockBody(PlayerBodyType.Plant);
+            TryUnlockBody(PlayerBodyType.Plant);
             SteamIntegration.Instance.UnlockAchievement(AchievementType.ACH_BODY_PLANT);
         }
 
-        if (data.bosses_killed.Contains(EnemyType.BossCrystalEyes))
+        if (run.EnemiesKilled.ContainsKey(EnemyType.BossCrystalEyes))
         {
-            UnlockBody(PlayerBodyType.Meat);
+            TryUnlockBody(PlayerBodyType.Meat);
             SteamIntegration.Instance.UnlockAchievement(AchievementType.ACH_BODY_MEAT);
         }
 
-        if (data.won && Save.Game.idx_difficulty_completed < DifficultyController.Instance.DifficultyIndex)
+        if (run.Won && run.Gamemode.type == GamemodeType.Normal)
         {
-            UnlockDifficulty();
+            TryUnlockGamemode(GamemodeType.Medium);
+            TryUnlockGamemode(GamemodeType.DoubleBoss);
+        }
+
+        if (run.Won && run.Gamemode.type == GamemodeType.Medium)
+        {
+            TryUnlockGamemode(GamemodeType.Hard);
+            TryUnlockGamemode(GamemodeType.DoubleBoss);
         }
 
         SaveDataController.Instance.Save<GameSaveData>();
     }
 
-    private void UnlockRandomAbility()
+    private void TryUnlockRandomAbility()
     {
         var info = AbilityController.Instance.UnlockRandomAbility();
 
@@ -144,7 +151,7 @@ public class GameEndView : View
         }
     }
 
-    private void UnlockRandomBodypart()
+    private void TryUnlockRandomBodypart()
     {
         var info = BodypartController.Instance.UnlockRandomPart();
 
@@ -158,7 +165,7 @@ public class GameEndView : View
         }
     }
 
-    private void UnlockBody(PlayerBodyType type)
+    private void TryUnlockBody(PlayerBodyType type)
     {
         if (Save.Game.unlocked_player_bodies.Contains(type)) return;
         Save.Game.unlocked_player_bodies.Add(type);
@@ -177,17 +184,17 @@ public class GameEndView : View
         }
     }
 
-    private void UnlockDifficulty()
+    private void TryUnlockGamemode(GamemodeType type)
     {
-        Save.Game.idx_difficulty_completed++;
-        var info = DifficultyController.Instance.GetInfo(Save.Game.idx_difficulty_completed + 1);
-
-        if (info != null)
+        if (!Save.Game.unlocked_gamemodes.Contains(type))
         {
+            Save.Game.unlocked_gamemodes.Add(type);
+
+            var gamemode = GamemodeController.Instance.GetGamemode(type);
             unlocked_items.Add(new UnlockItem
             {
-                sprite = info.difficulty_sprite,
-                title = "Difficulty unlocked"
+                sprite = gamemode.icon,
+                title = "Gamemode unlocked"
             });
         }
     }

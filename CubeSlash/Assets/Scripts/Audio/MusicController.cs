@@ -27,7 +27,7 @@ public class MusicController : Singleton
 
     private void OnMainMenu()
     {
-        if(cr_bgm_delay != null)
+        if (cr_bgm_delay != null)
         {
             StopCoroutine(cr_bgm_delay);
             cr_bgm_delay = null;
@@ -48,7 +48,7 @@ public class MusicController : Singleton
 
     private void OnNextArea(Area area)
     {
-        var delay = GameSettings.Instance.area_duration * GameSettings.Instance.time_bgm_play;
+        var delay = GamemodeController.Instance.SelectedGameMode.area_duration * GameSettings.Instance.time_bgm_play;
         PlayBGM(area.bgm_type, delay);
     }
 
@@ -70,7 +70,7 @@ public class MusicController : Singleton
 
     public void StopBGM(FMOD.Studio.STOP_MODE stop_mode = FMOD.Studio.STOP_MODE.IMMEDIATE)
     {
-        if(current_bgm != null)
+        if (current_bgm != null)
         {
             current_bgm.Stop(stop_mode);
         }

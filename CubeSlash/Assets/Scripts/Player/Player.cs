@@ -563,7 +563,7 @@ public class Player : Character
 
     public void CollectExperience(ExperienceType type)
     {
-        var mul_difficulty = GameSettings.Instance.experience_mul_difficulty.Evaluate(DifficultyController.Instance.DifficultyValue);
+        var mul_difficulty = GamemodeController.Instance.SelectedGameMode.experience_gain_multiplier;
         Experience.Value += 1f * att_experience_multiplier.ModifiedValue.float_value * mul_difficulty;
 
         if (type == ExperienceType.PLANT)

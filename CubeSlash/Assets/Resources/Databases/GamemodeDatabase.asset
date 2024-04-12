@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 508565759d7f8ce4db18a9c6b18bbea0, type: 3}
+  m_Name: GamemodeDatabase
+  m_EditorClassIdentifier: 
+  collection:
+  - {fileID: 11400000, guid: ce144bc637cd2634883b8d062966a2fb, type: 2}
+  - {fileID: 11400000, guid: 47e3f545a44a443458ad0dcfce8ab171, type: 2}
+  - {fileID: 11400000, guid: 075daabe7e2f65048ab03bd7f4e04bfd, type: 2}
+  - {fileID: 11400000, guid: 2d1fea2fba1165942a3bf8f291facee3, type: 2}
+  Endless: {fileID: 11400000, guid: 5dea9b68885ef714bac17f2e1379a988, type: 2}

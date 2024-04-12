@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -46,8 +45,11 @@ public class ItemController : Singleton
     private void SpawnExperienceUpdate()
     {
         if (Time.time < time_spawn) return;
-        if (experience_active.Count >= GameSettings.Instance.count_experience_active) return;
-        time_spawn = Time.time + GameSettings.Instance.frequency_spawn_experience;
+
+        var gamemode = GamemodeController.Instance.SelectedGameMode;
+        if (experience_active.Count >= gamemode.experience_count_max) return;
+
+        time_spawn = Time.time + gamemode.experience_spawn_frequency;
         var e = SpawnExperience(CameraController.Instance.GetPositionOutsideCamera());
         e.Initialize();
         e.SetPlant();
@@ -55,7 +57,7 @@ public class ItemController : Singleton
 
     public ExperienceItem SpawnExperience(Vector3 position)
     {
-        if(experience_inactive.Count == 0)
+        if (experience_inactive.Count == 0)
         {
             ExtendPool(COUNT_POOL_EXTEND);
         }
@@ -104,7 +106,7 @@ public class ItemController : Singleton
 
     public void ClearAllExperience()
     {
-        foreach(var e in experience_active)
+        foreach (var e in experience_active)
         {
             e.Despawn();
         }
@@ -137,12 +139,12 @@ public class ItemController : Singleton
 
     public void DespawnAllActiveItems()
     {
-        foreach(var item in experience_active.ToList())
+        foreach (var item in experience_active.ToList())
         {
             item.Despawn();
         }
 
-        foreach(var item in other_items.ToList())
+        foreach (var item in other_items.ToList())
         {
             if (item == null) continue;
             item.Despawn();

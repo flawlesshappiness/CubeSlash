@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00f6d988a5c9030499a153e06417c174, type: 3}
+  m_Name: Medium
+  m_EditorClassIdentifier: 
+  type: 1
+  gamemode_name: Medium
+  icon: {fileID: 21300000, guid: 7a6f0462fd6d05b4ca1183709383f152, type: 3}
+  area_count: 5
+  area_duration: 180
+  enemy_spawn_frequency_start: 1.3
+  enemy_spawn_frequency_end: 0.7
+  enemy_spawn_count_start: 2
+  enemy_spawn_count_end: 5
+  enemy_count_max_start: 75
+  enemy_count_max_end: 225
+  boss_time_spawn: 0.6
+  boss_size: 1.1
+  experience_spawn_frequency: 0.5
+  experience_count_max: 60
+  experience_gain_multiplier: 0.85
+  camera_size_start: 12
+  camera_size_end: 17

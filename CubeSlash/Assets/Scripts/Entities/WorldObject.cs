@@ -23,7 +23,7 @@ public class WorldObject : MonoBehaviour
     {
         if (Player.Instance == null) return;
 
-        var size = GameSettings.Instance.area_size;
+        var size = GamemodeController.Instance.SelectedGameMode.area_size;
         var sh = size * 0.5f;
         var center = Player.Instance.transform.position;
         var pos = transform.position;
@@ -46,9 +46,9 @@ public class WorldObject : MonoBehaviour
         }
     }
 
-    protected virtual void OnReposition() 
-    { 
-        if(Area != null && AreaController.Instance.CurrentArea != Area)
+    protected virtual void OnReposition()
+    {
+        if (Area != null && AreaController.Instance.CurrentArea != Area)
         {
             Destroy(gameObject);
         }

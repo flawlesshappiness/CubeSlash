@@ -12,32 +12,26 @@ public class AreaController : Singleton
     private AreaDatabase db;
     private Coroutine cr_next_area;
     private Area current_area;
-    private int index_area;
-    private int max_area_index;
 
     private List<Area> visited_areas = new List<Area>();
     private List<Area> available_areas = new List<Area>();
 
-    public bool IsFinalArea { get; set; }
-    public int AreaIndex { get { return index_area; } }
-    public float TimeAreaStart { get; private set; }
-    public Area CurrentArea { get { return current_area; } }
-
-    private float time_next_area;
+    public Area CurrentArea => current_area;
+    public int CurrentAreaIndex => RunController.Instance.CurrentRun?.CurrentAreaIndex ?? 0;
+    public bool IsFinalArea => CurrentAreaIndex == (RunController.Instance.CurrentRun?.Areas?.Count ?? 1);
 
     protected override void Initialize()
     {
         base.Initialize();
         db = Database.Load<AreaDatabase>();
-        GameController.Instance.onGameStart += OnGameStart;
+        RunController.Instance.onRunStarted += RunStarted;
         GameController.Instance.onGameEnd += OnGameEnd;
         GameController.Instance.onMainMenu += OnMainMenu;
     }
 
-    private void OnGameStart()
+    private void RunStarted()
     {
-        var diff = DifficultyController.Instance.DifficultyValue;
-        max_area_index = (int)GameSettings.Instance.area_count_difficulty.Evaluate(diff);
+        StartAreaCoroutine();
     }
 
     private void OnGameEnd()
@@ -47,7 +41,6 @@ public class AreaController : Singleton
 
     private void OnMainMenu()
     {
-        IsFinalArea = false;
         visited_areas.Clear();
         available_areas = db.collection.ToList();
     }
@@ -69,58 +62,63 @@ public class AreaController : Singleton
 
     private IEnumerator NextAreaCr()
     {
-        index_area = -1;
-        while (!IsFinalArea)
+        var gamemode = GamemodeController.Instance.SelectedGameMode;
+        var run = RunController.Instance.CurrentRun;
+        while (CurrentAreaIndex < run.Areas.Count)
         {
-            index_area++;
-
-            var next_area = GetNextArea();
+            var next_area = run.Areas[CurrentAreaIndex];
             SetArea(next_area);
 
-            visited_areas.Add(current_area);
-            available_areas.Remove(current_area);
-
+            var time_next_area = run.StartTime + (run.CurrentAreaIndex + 1) * gamemode.area_duration;
             while (Time.time < time_next_area)
             {
                 yield return null;
             }
+
+            run.CurrentAreaIndex++;
         }
     }
 
     public void SetArea(Area area)
     {
         current_area = area;
-        TimeAreaStart = Time.time;
-        time_next_area = Time.time + GameSettings.Instance.area_duration;
         onNextArea?.Invoke(current_area);
     }
 
-    public void ForceNextArea()
+    public void DebugSetArea(Area area)
     {
-        time_next_area = Time.time;
+        StopAreaCoroutine();
+        SetArea(area);
     }
 
-    public void ForceFinalArea()
+    public List<Area> GetRandomAreas(int count)
     {
-        available_areas.Clear();
-        ForceNextArea();
-    }
+        var areas = new List<Area>();
+        var available = db.collection.ToList();
 
-    private Area GetNextArea()
-    {
-        if (available_areas.Count == 0 || index_area >= max_area_index)
+        for (int i = 0; i < count; i++)
         {
-            IsFinalArea = true;
-            return db.final_area;
+            if (i == count - 1)
+            {
+                areas.Add(db.final_area);
+            }
+            else
+            {
+                var area = available_areas
+                    .Where(a => IsValid(i, a))
+                    .ToList().Random();
+
+                available.Remove(area);
+
+                areas.Add(area);
+            }
         }
 
-        return available_areas
-            .Where(a => IsValid(a))
-            .ToList().Random();
+        return areas;
 
-        bool IsValid(Area area)
+        bool IsValid(int i, Area area)
         {
-            var valid_index = index_area >= area.index_level_min;
+            var valid_index = i >= area.index_level_min;
             var unvisited = !visited_areas.Contains(area);
             return valid_index && unvisited;
         }

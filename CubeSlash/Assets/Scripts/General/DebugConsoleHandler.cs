@@ -1,7 +1,4 @@
 using Flawliz.VisualConsole;
-using Steamworks;
-using System.Collections;
-using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using UnityEngine;
@@ -53,8 +50,6 @@ public class DebugConsoleHandler : Singleton
             window.CreateButton("Level up (Ability)", ClickLevelUpAbility);
             window.CreateButton(GameController.DAMAGE_DISABLED ? "Enable damage" : "Disable damage", ClickToggleDamage);
             window.CreateButton("Set Area", ClickSetArea);
-            window.CreateButton("Next Area", ClickNextArea);
-            window.CreateButton("Final Area", ClickFinalArea);
             window.CreateButton("Suicide", ClickSuicide);
             window.CreateButton("Win", ClickWin);
             window.CreateButton("Spawn Boss", ClickSpawnBoss);
@@ -71,7 +66,6 @@ public class DebugConsoleHandler : Singleton
 
         window.CreateButton("Give money", ClickGiveCurrency);
         window.CreateButton("Log", ClickLog);
-        window.CreateButton("Game Values", ClickGameValues);
     }
 
     private void ClickUnlockUpgrade()
@@ -230,21 +224,9 @@ public class DebugConsoleHandler : Singleton
 
         void SetArea(Area area)
         {
-            AreaController.Instance.SetArea(area);
+            AreaController.Instance.DebugSetArea(area);
             CloseView();
         }
-    }
-
-    private void ClickNextArea()
-    {
-        AreaController.Instance.ForceNextArea();
-        CloseView();
-    }
-
-    private void ClickFinalArea()
-    {
-        AreaController.Instance.ForceFinalArea();
-        CloseView();
     }
 
     private void ClickWin()
@@ -292,71 +274,6 @@ public class DebugConsoleHandler : Singleton
     private void ClickFillMana()
     {
         Player.Instance.heal.SetFull();
-    }
-
-    private void ClickGameValues()
-    {
-        var window = view.ShowList();
-        window.Clear();
-
-        // Create texts
-        var texts = new List<GameValueText>();
-
-        if (GameController.Instance.IsGameStarted)
-        {
-            CreateText(() => $"Spawn frequency: {GameSettings.Instance.EnemySpawnFrequency}");
-            CreateText(() => $"Spawn frequency (Difficulty): {GameSettings.Instance.EnemySpawnFrequencyDifficulty}");
-            CreateText(() => $"Spawn frequency (Game): {GameSettings.Instance.EnemySpawnFrequencyGame}");
-            CreateText(() => $"Spawn count: {GameSettings.Instance.EnemySpawnCount}");
-            CreateText(() => $"Max count: {GameSettings.Instance.EnemyMaxCount}");
-            CreateText(() => $"Max count (Difficulty): {GameSettings.Instance.EnemyMaxCountDifficulty}");
-            CreateText(() => $"Max count (Game): {GameSettings.Instance.EnemyMaxCountGame}");
-        }
-
-        CreateText(() => $"GameSaveData from cloud: {SaveDataController.Instance.Get<GameSaveData>().from_cloud}");
-        CreateText(() => $"PlayerBodySaveData from cloud: {SaveDataController.Instance.Get<PlayerBodySaveData>().from_cloud}");
-
-        CreateText(() => "");
-        CreateText(() => $"Steam IsValid: {SteamClient.IsValid}");
-        CreateText(() => $"Steam Username: {SteamClient.Name}");
-        CreateText(() => $"Steam Achievements: {SteamUserStats.Achievements.Count()}");
-        CreateText(() => $"Steam Overlay Enabled: {SteamUtils.IsOverlayEnabled}");
-
-        CreateText(() => $"Steam Cloud Files: {SteamRemoteStorage.FileCount}");
-        var files = SteamRemoteStorage.Files;
-        foreach (var file in files)
-        {
-            CreateText(() => $"Steam Cloud File: {file}");
-        }
-
-        // Start
-        var cr = StartCoroutine(Cr());
-        view.ShowBackButton(Back);
-
-        void Back()
-        {
-            StopCoroutine(cr);
-            ShowFunctionsWindow();
-        }
-
-        void CreateText(System.Func<string> getString)
-        {
-            var text = new GameValueText
-            {
-                tmp = window.CreateText(""),
-                getString = getString,
-            };
-            texts.Add(text);
-        }
-
-        IEnumerator Cr()
-        {
-            while (true)
-            {
-                texts.ForEach(t => t.UpdateText());
-                yield return null;
-            }
-        }
     }
 
     private class GameValueText

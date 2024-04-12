@@ -31,7 +31,7 @@ public class AI_BossAngler : BossAI
 
     private void OnDisable()
     {
-        if(lamp != null)
+        if (lamp != null)
         {
             lamp.gameObject.SetActive(false);
         }
@@ -48,7 +48,7 @@ public class AI_BossAngler : BossAI
     protected override void OnDeath()
     {
         base.OnDeath();
-        if(lamp != null)
+        if (lamp != null)
         {
             Destroy(lamp.gameObject);
         }
@@ -66,7 +66,7 @@ public class AI_BossAngler : BossAI
             angler_body.gameObject.SetActive(false);
             yield return SmallBiteAttackCr();
             yield return BigBiteAttackCr();
-            if(hits_taken > 3) yield return BigBiteAttackCr();
+            if (hits_taken > 3) yield return BigBiteAttackCr();
         }
     }
 
@@ -74,7 +74,7 @@ public class AI_BossAngler : BossAI
     {
         var start_dir = Random.insideUnitCircle.normalized.ToVector3();
         var player_position = Player.Instance.transform.position;
-        var level_size = (GameSettings.Instance.area_size * 0.5f) - Self.Settings.size;
+        var level_size = (GamemodeController.Instance.SelectedGameMode.area_size * 0.5f) - Self.Settings.size;
         var start_position = player_position - start_dir * level_size;
 
         var angle = Vector3.SignedAngle(Vector3.up, start_dir, Vector3.forward);
@@ -98,13 +98,13 @@ public class AI_BossAngler : BossAI
             var dist = DistanceToPlayer();
             if (moving_to_player)
             {
-                if(dist_to_player < start_dist_to_player * 0.75f && dist > dist_to_player)
+                if (dist_to_player < start_dist_to_player * 0.75f && dist > dist_to_player)
                 {
                     moving_to_player = false;
                 }
                 dist_to_player = dist;
             }
-            else if(dist >= level_size)
+            else if (dist >= level_size)
             {
                 break;
             }
@@ -162,7 +162,7 @@ public class AI_BossAngler : BossAI
         teeth.transform.position = Player.Instance.transform.position;
 
         var time_end = Time.time + 2.5f;
-        while(Time.time < time_end)
+        while (Time.time < time_end)
         {
             teeth.transform.position = Player.Instance.transform.position;
             yield return null;
@@ -177,11 +177,11 @@ public class AI_BossAngler : BossAI
         teeth.AnimateHide(0.25f);
         Destroy(teeth.gameObject, 0.25f);
     }
-    
+
     private void Bite(Vector3 position, float radius)
     {
         var hits = Physics2D.OverlapCircleAll(position, radius);
-        foreach(var hit in hits)
+        foreach (var hit in hits)
         {
             var player = hit.GetComponentInParent<Player>();
             if (player == null) continue;

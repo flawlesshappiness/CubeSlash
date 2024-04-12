@@ -16,9 +16,10 @@ public class EnemyController : Singleton
     private List<EnemySettings> normal_enemies_unlocked = new List<EnemySettings>();
     private List<EnemySettings> special_enemies_unlocked = new List<EnemySettings>();
 
+    private GamemodeSettings Gamemode => GamemodeController.Instance.SelectedGameMode;
     public bool EnemySpawnEnabled { get; set; } = true;
     public bool IsFinalBossActive { get; set; }
-    public System.Action OnEnemyKilled { get; set; }
+    public System.Action<EnemySettings> OnEnemyKilled { get; set; }
     public System.Action<Enemy> OnEnemySpawned { get; set; }
     public System.Action<EnemyType> OnBossKilled { get; set; }
     public List<Enemy> ActiveEnemies { get { return enemies_active.ToList(); } }
@@ -98,12 +99,12 @@ public class EnemyController : Singleton
         if (special_enemies_unlocked.Count == 0) return;
         if (Time.time < time_next_spawn_enemy) return;
 
-        time_next_spawn_enemy += GameSettings.Instance.EnemySpawnFrequency;
+        time_next_spawn_enemy += Gamemode.EnemySpawnFrequency;
 
-        var count = GameSettings.Instance.EnemySpawnCount;
+        var count = Gamemode.EnemySpawnCount;
         for (int i = 0; i < count; i++)
         {
-            if (ActiveEnemies.Count >= GameSettings.Instance.EnemyMaxCount) return;
+            if (ActiveEnemies.Count >= Gamemode.EnemyCountMax) return;
 
             SpawnRandomEnemy(CameraController.Instance.GetPositionOutsideCamera());
         }
@@ -113,7 +114,7 @@ public class EnemyController : Singleton
     {
         var area = AreaController.Instance.CurrentArea;
         if (cr_spawn_boss != null) StopCoroutine(cr_spawn_boss);
-        var boss_spawn_delay = GameSettings.Instance.area_duration * GameSettings.Instance.time_boss_spawn;
+        var boss_spawn_delay = Gamemode.BossSpawnTime;
         cr_spawn_boss = StartCoroutine(SpawnBossCr(area.boss, boss_spawn_delay));
     }
 
@@ -137,31 +138,26 @@ public class EnemyController : Singleton
     private Enemy SpawnBoss(EnemySettings boss)
     {
         var enemy = SpawnEnemy(boss, CameraController.Instance.GetPositionOutsideCamera());
-        var size_mul = GameSettings.Instance.boss_size_difficulty.Evaluate(DifficultyController.Instance.DifficultyValue);
-        enemy.transform.localScale *= size_mul;
+        enemy.transform.localScale *= Gamemode.boss_size;
         return enemy;
     }
 
     private Enemy SpawnAreaBoss(EnemySettings boss)
     {
-        if (AreaController.Instance.IsFinalArea)
-        {
-            IsFinalBossActive = true;
-        }
-
         var area = AreaController.Instance.CurrentArea;
         var enemy = SpawnBoss(boss);
         enemy.OnDeath += () =>
         {
             // Win
-            if (boss.type == EnemyType.BossMaw)
+            if (AreaController.Instance.IsFinalArea)
             {
                 GameController.Instance.Win();
             }
 
             // Exp
-            if (!AreaController.Instance.IsFinalArea && boss.type != EnemyType.BossPlant)
+            if (boss.type != EnemyType.BossPlant)
             {
+                var exp_count = 25 + 15 * AreaController.Instance.CurrentAreaIndex;
                 for (int i = 0; i < 25; i++)
                 {
                     var experience = ItemController.Instance.SpawnExperience(enemy.transform.position);
@@ -252,7 +248,7 @@ public class EnemyController : Singleton
     {
         enemies_active.Remove(enemy);
         enemies_inactive.Add(enemy);
-        OnEnemyKilled?.Invoke();
+        OnEnemyKilled?.Invoke(enemy.Settings);
     }
 
     public void KillActiveEnemies(List<Enemy> enemies_except = null)
