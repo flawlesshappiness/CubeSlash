@@ -15,7 +15,7 @@ public class PlayerInputController : Singleton
     public static PlayerInputController Instance => Instance<PlayerInputController>();
 
     public PlayerInput PlayerInput { get; private set; }
-    public string CurrentControlScheme => DeviceController.Instance.CurrentDevice == DeviceType.KEYBOARD ? "Keyboard" : "Gamepad";
+    public string CurrentControlScheme => DeviceController.Instance.CurrentDevice == DeviceType.KEYBOARD ? "KeyboardMouse" : "Gamepad";
     public PlayerInputAction Submit { get; private set; } = new PlayerInputAction(nameof(Submit));
     public PlayerInputAction Cancel { get; private set; } = new PlayerInputAction(nameof(Cancel));
     public PlayerInputAction Dash { get; private set; } = new PlayerInputAction(nameof(Dash));
@@ -34,6 +34,10 @@ public class PlayerInputController : Singleton
 
         InitializeInputActions();
         MouseVibilityUpdate();
+    }
+
+    private void Update()
+    {
     }
 
     private void InitializeInputActions()
