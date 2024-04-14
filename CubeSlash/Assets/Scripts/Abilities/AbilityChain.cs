@@ -60,7 +60,19 @@ public class AbilityChain : Ability
         return stats;
     }
 
-    private void UpdatePreviewRadius() => pivot_preview.localScale = Vector3.one * Radius.ModifiedValue.float_value * 2;
+    private void UpdatePreviewRadius()
+    {
+        try
+        {
+            if (pivot_preview == null) return;
+            pivot_preview.localScale = Vector3.one * Radius.ModifiedValue.float_value * 2;
+        }
+        catch (System.Exception e)
+        {
+            LogController.LogMethod("ERROR");
+            LogController.LogException(e);
+        }
+    }
 
     protected override void Update()
     {
