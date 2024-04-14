@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class AI_Shooter : EnemyAI
 {
-    [SerializeField] private float dist_max_mul_shoot;
+    [SerializeField] private float dist_min_shoot;
     [SerializeField] private float cooldown_shoot_min;
     [SerializeField] private float cooldown_shoot_max;
 
@@ -12,22 +12,28 @@ public class AI_Shooter : EnemyAI
     [SerializeField] private float velocity_projectile;
 
     private Vector3 pos_player_prev;
-    private float cd_shoot;
+    private bool shooting;
 
     private TripleyeBody EyeBody => Body as TripleyeBody;
+    private bool IsInRange => DistanceToPlayer() < dist_min_shoot;
+
+    public override void Initialize(Enemy enemy)
+    {
+        base.Initialize(enemy);
+        StartShootCoroutine();
+    }
 
     private void FixedUpdate()
     {
         pos_player_prev = IsPlayerAlive() ? Player.Instance.transform.position : pos_player_prev;
         MoveUpdate();
-        ShootUpdate();
     }
 
     private void MoveUpdate()
     {
         var dist = DistanceToPlayer();
-        var dist_max_shoot = CameraController.Instance.Width * dist_max_mul_shoot;
-        if (dist < dist_max_shoot)
+        var dist_max_shoot = CameraController.Instance.Width * dist_min_shoot;
+        if (IsInRange || shooting)
         {
             MoveToStop(0.5f);
             TurnTowards(pos_player_prev);
@@ -39,24 +45,26 @@ public class AI_Shooter : EnemyAI
         }
     }
 
-    private void ShootUpdate()
+    private void StartShootCoroutine()
     {
-        var dist = DistanceToPlayer();
-        var dist_max = CameraController.Instance.Width * dist_max_mul_shoot;
-        if (Time.time < cd_shoot) return;
-        if (dist < dist_max)
-        {
-            StartCoroutine(Cr());
-        }
-
+        StartCoroutine(Cr());
         IEnumerator Cr()
         {
-            cd_shoot = Time.time + 999;
-            yield return new WaitForSeconds(Random.Range(0f, 1f)); // Wait for a brief random amount of time
-            TelegraphAll();
-            yield return new WaitForSeconds(0.5f);
-            ShootAll();
-            cd_shoot = Time.time + Random.Range(cooldown_shoot_min, cooldown_shoot_max);
+            while (true)
+            {
+                while (!IsInRange)
+                {
+                    yield return null;
+                }
+
+                shooting = true;
+                yield return new WaitForSeconds(Random.Range(0f, 8f)); // Wait for a brief random amount of time
+                TelegraphAll();
+                yield return new WaitForSeconds(0.5f);
+                ShootAll();
+                shooting = false;
+                yield return new WaitForSeconds(Random.Range(cooldown_shoot_min, cooldown_shoot_max)); // Cooldown
+            }
         }
     }
 

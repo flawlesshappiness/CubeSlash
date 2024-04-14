@@ -63,7 +63,7 @@ public class BossBody : EnemyBody
             {
                 var t = map.duds[i_t];
                 var dud = Instantiate(template_dud, t);
-                dud.transform.SetGlobalScale(t.localScale);
+                dud.transform.SetGlobalScale(t.localScale * 1.25f);
                 dud.transform.localPosition = Vector3.zero;
                 dud.transform.localRotation = Quaternion.identity;
                 dud.Initialize();

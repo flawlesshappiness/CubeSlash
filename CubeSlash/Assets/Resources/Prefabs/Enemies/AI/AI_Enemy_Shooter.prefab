@@ -43,7 +43,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 53de92fa2c3f5eb409601a39bae9eb01, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dist_max_mul_shoot: 0.35
+  move_ignore_enemies: 0
+  move_ignore_obstacles: 0
+  dist_min_shoot: 15
   cooldown_shoot_min: 5
   cooldown_shoot_max: 8
   prefab_projectile: {fileID: 7462172402094969671, guid: 71203e8c07f4e5e45872096491b16f9a, type: 3}
