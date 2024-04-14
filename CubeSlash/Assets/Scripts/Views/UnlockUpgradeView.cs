@@ -58,7 +58,6 @@ public class UnlockUpgradeView : View
         radial.Clear();
 
         var ability_icon = AbilityController.Instance.GetAbilityPrefab(Save.PlayerBody.primary_ability).Info.sprite_icon;
-        var difficulty_icon = DifficultyController.Instance.Difficulty.difficulty_sprite;
 
         var options = new List<RadialMenuOption>();
 

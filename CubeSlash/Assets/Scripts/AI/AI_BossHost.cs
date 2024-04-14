@@ -19,7 +19,7 @@ public class AI_BossHost : BossAI
 
     private void OnDudKilled(HealthDud dud)
     {
-        if(DifficultyController.Instance.DifficultyIndex > 0 && Body.HasLivingDuds())
+        if (GamemodeController.Instance.SelectedGameMode.type != GamemodeType.Normal && Body.HasLivingDuds())
         {
             HideAndShowDuds(3);
         }
@@ -74,7 +74,7 @@ public class AI_BossHost : BossAI
 
     private void ShootBeams()
     {
-        foreach(var dud in Body.Duds)
+        foreach (var dud in Body.Duds)
         {
             if (!dud.Dead) continue;
             dud.StartCoroutineWithID(ShootBeam(dud), "ShootBeam_" + dud.GetInstanceID());

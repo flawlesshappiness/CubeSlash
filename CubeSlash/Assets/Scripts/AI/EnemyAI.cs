@@ -13,6 +13,7 @@ public abstract class EnemyAI : MonoBehaviour
     protected Vector3 PlayerPosition { get { return Player.Instance.transform.position; } }
     protected EnemyBody Body { get { return Self.Body as EnemyBody; } }
     protected Vector3 LastOpenDirection { get; set; }
+    protected GamemodeType Gamemode => GamemodeController.Instance.SelectedGameMode.type;
 
     private float _time_open_direction;
 

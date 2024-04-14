@@ -311,7 +311,7 @@ public class GameController : MonoBehaviour
         Save.Game.count_wins++;
 
         UnlockWinAchievement();
-        UnlockWinAbilityAchievement();
+        TryUnlockWinAbilityAchievement(GamemodeController.Instance.SelectedGameMode.type);
 
         // End
         IsGameEnded = true;
@@ -378,24 +378,46 @@ public class GameController : MonoBehaviour
         }
     }
 
-    private void UnlockWinAbilityAchievement()
+    private void TryUnlockWinAbilityAchievement(GamemodeType type)
+    {
+        LogController.LogMethod(type.ToString());
+
+        UnlockWinAbilityAchievement(type);
+
+        switch (type)
+        {
+            case GamemodeType.Medium:
+                TryUnlockWinAbilityAchievement(GamemodeType.Normal);
+                break;
+
+            case GamemodeType.Hard:
+                TryUnlockWinAbilityAchievement(GamemodeType.Medium);
+                break;
+        }
+    }
+
+    private void UnlockWinAbilityAchievement(GamemodeType type)
     {
         LogController.LogMethod();
 
-        var diff = DifficultyController.Instance.DifficultyIndex + 1;
-        for (int i = 0; i < diff; i++)
+        var s_mode = type switch
         {
-            var s_diff = i + 1;
-            var ability = Save.PlayerBody.primary_ability;
-            var ach_name = $"ACH_{ability.ToString().ToUpper()}_{s_diff}";
-            var enums = System.Enum.GetValues(typeof(AchievementType)).Cast<AchievementType>().ToList();
-            var valid_enum = enums.Any(e => e.ToString() == ach_name);
+            GamemodeType.Normal => "1",
+            GamemodeType.Medium => "2",
+            GamemodeType.Hard => "3",
+            GamemodeType.DoubleBoss => "Double",
+            _ => "unknown"
+        };
 
-            if (valid_enum)
-            {
-                var value = enums.FirstOrDefault(e => e.ToString() == ach_name);
-                SteamIntegration.Instance.UnlockAchievement(value);
-            }
+        var ability = Save.PlayerBody.primary_ability;
+        var ach_name = $"ACH_{ability.ToString().ToUpper()}_{s_mode}";
+        var enums = System.Enum.GetValues(typeof(AchievementType)).Cast<AchievementType>().ToList();
+        var valid_enum = enums.Any(e => e.ToString() == ach_name);
+
+        if (valid_enum)
+        {
+            var value = enums.FirstOrDefault(e => e.ToString() == ach_name);
+            SteamIntegration.Instance.UnlockAchievement(value);
         }
     }
 }

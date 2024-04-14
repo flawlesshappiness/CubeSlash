@@ -88,13 +88,20 @@ public class AI_BossJelly : BossAI
 
     private void CreateTethers()
     {
-        var diff = DifficultyController.Instance.DifficultyValue;
-        var count_tether_diff = (int)Mathf.Lerp(COUNT_TETHER_MIN_DIFF, COUNT_TETHER_MAX_DIFF, diff);
+        var count_tether_mode = Gamemode switch
+        {
+            GamemodeType.Normal => 5,
+            GamemodeType.Medium => 8,
+            GamemodeType.Hard => 12,
+            _ => 8,
+        };
+
         var count_tether_area = AreaController.Instance.CurrentAreaIndex;
-        max_tethers = count_tether_diff + count_tether_area;
+
+        max_tethers = count_tether_mode + count_tether_area;
         remaining_tethers = max_tethers;
 
-        if (DifficultyController.Instance.DifficultyIndex == 0)
+        if (Gamemode == GamemodeType.Normal)
         {
             for (int i = 0; i < max_tethers; i++)
             {
@@ -164,7 +171,7 @@ public class AI_BossJelly : BossAI
         Destroy(tether.ps.gameObject, 5);
         tethers.Remove(tether);
 
-        if (remaining_tethers > 0 && DifficultyController.Instance.DifficultyIndex > 0)
+        if (remaining_tethers > 0 && Gamemode != GamemodeType.Normal)
         {
             CreateTether();
         }

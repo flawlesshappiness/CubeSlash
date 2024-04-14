@@ -13,7 +13,6 @@ public class AI_BossPlant : BossAI
     private List<PlantPillar> pillars = new List<PlantPillar>();
 
     private const int EXP_PER_WALL = 2;
-    private static readonly int[] HITPOINTS = new int[] { 4, 5, 6 };
     private const float SIZE_WALL = 5;
     private const float RADIUS = 20;
     private const float RADIUS_PER_INDEX = 3;
@@ -32,21 +31,28 @@ public class AI_BossPlant : BossAI
     public override void Initialize(Enemy enemy)
     {
         base.Initialize(enemy);
-        var i_diff = DifficultyController.Instance.DifficultyIndex;
-        duds_max = HITPOINTS[Mathf.Clamp(i_diff, 0, HITPOINTS.Length - 1)];
+
+        duds_max = Gamemode switch
+        {
+            GamemodeType.Normal => 4,
+            GamemodeType.Medium => 5,
+            GamemodeType.Hard => 6,
+            _ => 5
+        };
+
         duds_to_kill = duds_max;
         Self.Body.gameObject.SetActive(false);
         Self.transform.position = Player.Instance.transform.position;
 
         CreateArena();
 
-        if (DifficultyController.Instance.DifficultyValue > 0.1f)
+        if (Gamemode == GamemodeType.Normal)
         {
-            CreateDud();
+            CreateDuds();
         }
         else
         {
-            CreateDuds();
+            CreateDud();
         }
     }
 
@@ -141,7 +147,7 @@ public class AI_BossPlant : BossAI
             return;
         }
 
-        if (DifficultyController.Instance.DifficultyValue > 0.1f)
+        if (Gamemode != GamemodeType.Normal)
         {
             CreateDud();
         }

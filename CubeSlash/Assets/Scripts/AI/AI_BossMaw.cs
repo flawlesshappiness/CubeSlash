@@ -12,7 +12,6 @@ public class AI_BossMaw : BossAI
     [SerializeField] private Projectile template_projectile;
     [SerializeField] private ColorPaletteValue color_beam;
 
-    private static readonly int[] HITPOINTS = new int[] { 6, 8, 10 };
     private const float RADIUS = 20;
     private const float RADIUS_PER_INDEX = 3;
     private const float RADIUS_MAX = 35;
@@ -39,8 +38,14 @@ public class AI_BossMaw : BossAI
     {
         base.Initialize(enemy);
 
-        var i_diff = DifficultyController.Instance.DifficultyIndex;
-        duds_max = HITPOINTS[Mathf.Clamp(i_diff, 0, HITPOINTS.Length - 1)];
+        duds_max = Gamemode switch
+        {
+            GamemodeType.Normal => 6,
+            GamemodeType.Medium => 8,
+            GamemodeType.Hard => 10,
+            _ => 8
+        };
+
         duds_to_kill = duds_max;
 
         cr_main = StartCoroutine(MainCr());

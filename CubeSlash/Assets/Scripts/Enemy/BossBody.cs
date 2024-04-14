@@ -47,17 +47,23 @@ public class BossBody : EnemyBody
 
     private void InitializeHealthDuds()
     {
-        var difficulty = DifficultyController.Instance.DifficultyValue;
+        var i_diff = GamemodeController.Instance.SelectedGameMode.type switch
+        {
+            GamemodeType.Normal => 0,
+            GamemodeType.Medium => 1,
+            GamemodeType.Hard => 2,
+            _ => 1,
+        };
+
         for (int i_map = 0; i_map < duds_map.Count; i_map++)
         {
-            if (i_map > DifficultyController.Instance.DifficultyIndex) continue;
+            if (i_map > i_diff) continue;
             var map = duds_map[i_map];
             for (int i_t = 0; i_t < map.duds.Count; i_t++)
             {
                 var t = map.duds[i_t];
                 var dud = Instantiate(template_dud, t);
-                var size_mul = Mathf.Lerp(1.5f, 1f, difficulty);
-                dud.transform.SetGlobalScale(t.localScale * size_mul);
+                dud.transform.SetGlobalScale(t.localScale);
                 dud.transform.localPosition = Vector3.zero;
                 dud.transform.localRotation = Quaternion.identity;
                 dud.Initialize();

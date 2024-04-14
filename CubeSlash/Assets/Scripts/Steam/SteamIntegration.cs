@@ -116,6 +116,7 @@ public class SteamIntegration : MonoBehaviour
         try
         {
             LogController.LogMessage($"STEAM: Unlock achievement: {id}");
+            Debug.Log($"STEAM: Unlock achievement: {id}");
 
             if (!SteamClient.IsValid) return;
 

@@ -6,10 +6,6 @@ public class GameSaveData : SaveDataObject
     public int runs_completed = 0;
     public int idx_difficulty_completed = -1;
 
-    public int idx_gamesetup_ability = -1;
-    public int idx_gamesetup_charm = -1;
-    public int idx_gamesetup_difficulty = 0;
-
     public GamemodeType gamemode_selected = GamemodeType.Normal;
     public List<GamemodeType> unlocked_gamemodes = new List<GamemodeType> { GamemodeType.Normal };
 
@@ -37,10 +33,6 @@ public class GameSaveData : SaveDataObject
 
     public override void Clear()
     {
-        idx_gamesetup_ability = -1;
-        idx_gamesetup_charm = -1;
-        idx_gamesetup_difficulty = 0;
-
         new_abilities.Clear();
         unlocked_abilities.Clear();
         new_bodyparts.Clear();

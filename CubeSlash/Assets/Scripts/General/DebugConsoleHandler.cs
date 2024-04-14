@@ -65,8 +65,8 @@ public class DebugConsoleHandler : Singleton
             window.CreateButton("Test unlock item", ClickTestUnlockItem);
         }
 
-        window.CreateButton("Give money", ClickGiveCurrency);
         window.CreateButton("Log", ClickLog);
+        window.CreateButton("Test SaveData", ClickTestSaveData);
     }
 
     private void ClickUnlockUpgrade()
@@ -236,12 +236,6 @@ public class DebugConsoleHandler : Singleton
         CloseView();
     }
 
-    private void ClickGiveCurrency()
-    {
-        CurrencyController.Instance.Gain(CurrencyType.DNA, 100000);
-        CloseView();
-    }
-
     private void ClickSpawnBoss()
     {
         EnemyController.Instance.DebugSpawnBoss();
@@ -287,5 +281,20 @@ public class DebugConsoleHandler : Singleton
         {
             info_view.gameObject.SetActive(!info_view.gameObject.activeInHierarchy);
         }
+    }
+
+    private void ClickTestSaveData()
+    {
+        Save.PlayerBody.Clear();
+        Player.Instance.Clear();
+
+        var save = Save.Game;
+        save.Clear();
+
+        save.idx_difficulty_completed = 1;
+
+        SaveDataController.Instance.SaveAll();
+
+        CloseView();
     }
 }
