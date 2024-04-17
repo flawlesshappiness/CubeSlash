@@ -62,7 +62,7 @@ public class EnemyController : Singleton
             special_enemies_unlocked.Add(settings);
         }
 
-        StartSpawnBossTimer();
+        StartSpawnBossCoroutine();
     }
 
     private void OnGameStart()
@@ -110,11 +110,18 @@ public class EnemyController : Singleton
         }
     }
 
-    private void StartSpawnBossTimer()
+    private void StopSpawnBossCoroutine()
+    {
+        if (cr_spawn_boss != null) StopCoroutine(cr_spawn_boss);
+        cr_spawn_boss = null;
+    }
+
+    private void StartSpawnBossCoroutine()
     {
         var area = AreaController.Instance.CurrentArea;
-        if (cr_spawn_boss != null) StopCoroutine(cr_spawn_boss);
         var boss_spawn_delay = Gamemode.BossSpawnTime;
+
+        StopSpawnBossCoroutine();
         cr_spawn_boss = StartCoroutine(SpawnBossCr(area.boss, boss_spawn_delay));
     }
 
@@ -126,12 +133,12 @@ public class EnemyController : Singleton
             yield return null;
         }
 
-        SpawnAreaBoss(boss);
+        SpawnAreaBosses(boss);
     }
 
     public void DebugSpawnBoss()
     {
-        StartSpawnBossTimer();
+        StartSpawnBossCoroutine();
         time_spawn_boss = Time.time;
     }
 
@@ -142,37 +149,39 @@ public class EnemyController : Singleton
         return enemy;
     }
 
-    private Enemy SpawnAreaBoss(EnemySettings boss)
+    private void SpawnAreaBosses(EnemySettings boss)
     {
-        var area = AreaController.Instance.CurrentArea;
-        var enemy = SpawnBoss(boss);
-        enemy.OnDeath += () =>
+        var count = boss.can_multi_boss ? GamemodeController.Instance.SelectedGameMode.boss_spawn_count : 1;
+
+        for (int i = 0; i < count; i++)
         {
-            // Win
-            if (AreaController.Instance.IsFinalArea)
+            var enemy = SpawnBoss(boss);
+            enemy.OnDeath += () =>
             {
-                GameController.Instance.Win();
-            }
-
-            // Exp
-            if (boss.type != EnemyType.BossPlant)
-            {
-                var exp_count = 25 + 15 * AreaController.Instance.CurrentAreaIndex;
-                for (int i = 0; i < 25; i++)
+                // Win
+                if (AreaController.Instance.IsFinalArea)
                 {
-                    var experience = ItemController.Instance.SpawnExperience(enemy.transform.position);
-                    experience.Initialize();
-                    experience.SetMeat();
-                    experience.transform.position = enemy.transform.position + Random.insideUnitCircle.ToVector3() * enemy.Settings.size * 0.5f;
-                    experience.AnimateCollect();
+                    GameController.Instance.Win();
                 }
-            }
 
-            // Log
-            OnBossKilled?.Invoke(enemy.Settings.type);
-        };
+                // Exp
+                if (boss.type != EnemyType.BossPlant)
+                {
+                    var exp_count = 25 + 15 * AreaController.Instance.CurrentAreaIndex;
+                    for (int i = 0; i < 25; i++)
+                    {
+                        var experience = ItemController.Instance.SpawnExperience(enemy.transform.position);
+                        experience.Initialize();
+                        experience.SetMeat();
+                        experience.transform.position = enemy.transform.position + Random.insideUnitCircle.ToVector3() * enemy.Settings.size * 0.5f;
+                        experience.AnimateCollect();
+                    }
+                }
 
-        return enemy;
+                // Log
+                OnBossKilled?.Invoke(enemy.Settings.type);
+            };
+        }
     }
 
     private Enemy SpawnRandomEnemy(Vector3 position)

@@ -27,6 +27,7 @@ public class AI_BossPlant : BossAI
     private int duds_max;
     private int duds_to_kill;
     private float time_until_pillar;
+    private float radius_arena;
 
     public override void Initialize(Enemy enemy)
     {
@@ -59,8 +60,9 @@ public class AI_BossPlant : BossAI
     private void CreateArena()
     {
         var area_number = AreaController.Instance.CurrentAreaIndex + 1;
-        var radius = Mathf.Clamp(RADIUS + RADIUS_PER_INDEX * area_number, 0, RADIUS_MAX);
-        var points = CircleHelper.Points(radius, 10);
+        radius_arena = Mathf.Clamp(RADIUS + RADIUS_PER_INDEX * area_number, 0, RADIUS_MAX);
+        radius_arena *= Gamemode == GamemodeType.DoubleBoss ? 1.25f : 1f;
+        var points = CircleHelper.Points(radius_arena, 10);
         var bezier = new BezierPath(points, true, PathSpace.xy);
         var path = new VertexPath(bezier, GameController.Instance.world);
         var offset = Player.Instance.transform.position;
@@ -121,10 +123,29 @@ public class AI_BossPlant : BossAI
         dud.AnimateIdle();
     }
 
-    private void CreatePillar()
+    private void CreatePillars()
+    {
+        // Player pillar
+        {
+            var dir = Player.Instance.MoveDirection * Random.Range(8f, 12);
+            var position = PlayerPosition + dir;
+            CreatePillar(position);
+        }
+
+        // Other pillars
+        var count = Gamemode == GamemodeType.DoubleBoss ? 5 : 1;
+        for (int i = 0; i < count; i++)
+        {
+            var offset = Random.insideUnitCircle.ToVector3() * Random.Range(radius_arena * 0.1f, radius_arena);
+            var position = transform.position + offset;
+            CreatePillar(position);
+        }
+    }
+
+    private void CreatePillar(Vector3 position)
     {
         var pillar = Instantiate(template_pillar, GameController.Instance.world);
-        pillar.transform.position = Player.Instance.transform.position;
+        pillar.transform.position = position;
         pillar.SetHidden();
         pillars.Add(pillar);
         ObjectController.Instance.Add(pillar.gameObject);
@@ -198,7 +219,7 @@ public class AI_BossPlant : BossAI
         var t = GetHealthPercentage();
         if (Time.time > time_until_pillar)
         {
-            CreatePillar();
+            CreatePillars();
             var cooldown = Mathf.Lerp(COOLDOWN_PILLAR_MAX, COOLDOWN_PILLAR_MIN, t);
             time_until_pillar = Time.time + cooldown;
         }

@@ -405,7 +405,7 @@ public class GameController : MonoBehaviour
             GamemodeType.Normal => "1",
             GamemodeType.Medium => "2",
             GamemodeType.Hard => "3",
-            GamemodeType.DoubleBoss => "Double",
+            GamemodeType.DoubleBoss => "DOUBLE",
             _ => "unknown"
         };
 

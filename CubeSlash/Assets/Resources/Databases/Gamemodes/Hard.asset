@@ -18,7 +18,7 @@ MonoBehaviour:
   icon: {fileID: 21300000, guid: a682950efae51d0428de1c9d662981f4, type: 3}
   area_count: 7
   area_duration: 180
-  area_size: 0
+  area_size: 100
   enemy_spawn_frequency_start: 1.2
   enemy_spawn_frequency_end: 0.6
   enemy_spawn_frequency_final: 1.2
@@ -28,6 +28,7 @@ MonoBehaviour:
   enemy_count_max_end: 250
   boss_time_spawn: 0.6
   boss_size: 1.2
+  boss_spawn_count: 1
   experience_spawn_frequency: 0.5
   experience_count_max: 60
   experience_gain_multiplier: 0.7

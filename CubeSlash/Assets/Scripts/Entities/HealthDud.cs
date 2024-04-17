@@ -19,6 +19,10 @@ public class HealthDud : MonoBehaviour, IKillable
     {
         SetDudActive(true, false);
         Dead = false;
+    }
+
+    private void OnEnable()
+    {
         AnimateIdle();
     }
 

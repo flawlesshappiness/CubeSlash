@@ -27,6 +27,7 @@ public class GamemodeSettings : ScriptableObject
     [Header("BOSS")]
     [Range(0f, 1f)] public float boss_time_spawn;
     public float boss_size;
+    public int boss_spawn_count;
 
     [Header("EXPERIENCE")]
     public float experience_spawn_frequency;

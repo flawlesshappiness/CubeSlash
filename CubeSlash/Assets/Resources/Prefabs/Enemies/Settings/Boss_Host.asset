@@ -22,3 +22,4 @@ MonoBehaviour:
   size: 5
   mass: 100
   ai: {fileID: 8224403435722928764, guid: d67f2202b22b9404f9fb5df7901db12c, type: 3}
+  can_multi_boss: 1
