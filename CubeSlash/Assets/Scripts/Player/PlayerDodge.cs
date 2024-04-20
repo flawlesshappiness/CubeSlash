@@ -90,6 +90,8 @@ public class PlayerDodge : MonoBehaviour
         dir_dash = direction;
         while (distance_dashed < Distance)
         {
+            if (RaycastObstacle()) break;
+
             Player.ResetStun();
 
             // Update distance
@@ -153,5 +155,12 @@ public class PlayerDodge : MonoBehaviour
             var velocity = dir.normalized * force;
             e.Knockback(velocity, true, false);
         }
+    }
+
+    private bool RaycastObstacle()
+    {
+        var hits = Physics2D.RaycastAll(Player.Instance.transform.position, Player.MoveDirection.normalized, 1f);
+        var any_obstacle = hits.Any(hit => hit.collider.GetComponentInParent<Obstacle>() != null);
+        return any_obstacle;
     }
 }
