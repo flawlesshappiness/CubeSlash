@@ -219,6 +219,12 @@ public class DebugConsoleHandler : Singleton
         var db = Database.Load<AreaDatabase>();
         foreach (var area in db.collection)
         {
+            CreateButton(area);
+        }
+        CreateButton(db.final_area);
+
+        void CreateButton(Area area)
+        {
             var btn = window.CreateButton(area.name);
             btn.onClick.AddListener(() => SetArea(area));
         }

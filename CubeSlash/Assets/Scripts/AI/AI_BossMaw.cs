@@ -9,6 +9,7 @@ public class AI_BossMaw : BossAI
 {
     [SerializeField] private HealthDud template_dud;
     [SerializeField] private MawWall template_wall;
+    [SerializeField] private PlantPillar template_pillar;
     [SerializeField] private Projectile template_projectile;
     [SerializeField] private ColorPaletteValue color_beam;
 
@@ -17,21 +18,38 @@ public class AI_BossMaw : BossAI
     private const float RADIUS_MAX = 35;
     private const float SIZE_WALL = 5;
 
+    private const float PILLAR_SIZE_MIN = 5;
+    private const float PILLAR_SIZE_MAX = 6;
+    private const float PILLAR_LIFETIME_MIN = 4f;
+    private const float PILLAR_LIFETIME_MAX = 6f;
+
     private int duds_to_kill, duds_max;
     private int hits_taken;
     private string prev_attack;
 
     private List<Arena> arenas = new List<Arena>();
+    private List<PlantPillar> pillars = new List<PlantPillar>();
+    private List<Beam> beams = new List<Beam>();
 
     private Coroutine cr_attack;
     private Coroutine cr_main;
 
     private float T_HitsTaken { get { return Mathf.Clamp01((float)hits_taken / (duds_max - 1)); } }
 
+    private float AreaMultiplier => Gamemode == GamemodeType.DoubleBoss ? 1.25f : 1f;
+    private float AreaRadius => (RADIUS + RADIUS_PER_INDEX * (AreaController.Instance.CurrentAreaIndex + 1)) * AreaMultiplier;
+
     private class Arena
     {
         public List<MawWall> walls = new List<MawWall>();
         public Transform pivot;
+        public float radius;
+    }
+
+    private class Beam
+    {
+        public ChargeBeam Object { get; set; }
+        public Coroutine Coroutine { get; set; }
     }
 
     public override void Initialize(Enemy enemy)
@@ -47,8 +65,15 @@ public class AI_BossMaw : BossAI
         };
 
         duds_to_kill = duds_max;
+        duds_to_kill = 1;
 
         cr_main = StartCoroutine(MainCr());
+    }
+
+    protected override void OnDeath()
+    {
+        base.OnDeath();
+        Self.Rigidbody.isKinematic = false;
     }
 
     IEnumerator MainCr()
@@ -58,6 +83,8 @@ public class AI_BossMaw : BossAI
         yield return new WaitForSeconds(BackgroundController.OBJECT_FADE_TIME);
 
         // arena
+        Self.Rigidbody.isKinematic = true;
+        Self.transform.position = Player.Instance.transform.position;
         CreateArenas();
 
         // init
@@ -87,8 +114,9 @@ public class AI_BossMaw : BossAI
     {
         var r = new WeightedRandom<(string, System.Action)>();
         AddElement(nameof(Attack_Projectiles), 1, () => Attack_Projectiles());
-        AddElement(nameof(Attack_Beam), 1, () => Attack_Beam());
+        AddElement(nameof(Attack_Beam_Large), 1, () => Attack_Beam_Large());
         AddElement(nameof(Attack_Beams), 0.5f, () => Attack_Beams());
+        AddElement(nameof(Attack_Pillars), 1f, () => Attack_Pillars());
         var tuple = r.Random();
         tuple.Item2?.Invoke();
         prev_attack = tuple.Item1;
@@ -107,7 +135,10 @@ public class AI_BossMaw : BossAI
         cr_attack = StartCoroutine(Cr());
         IEnumerator Cr()
         {
-            var count = Random.Range(5, 10);
+            var count_min = 3;
+            var count_max = 8;
+            var count_double = Gamemode == GamemodeType.DoubleBoss ? 4 : 0;
+            var count = (int)(Mathf.Lerp(count_min, count_max, T_HitsTaken) + count_double);
             var has_delay = Random.Range(0, 2) == 0;
             var delay = 0.2f;
             for (int i = 0; i < count; i++)
@@ -129,21 +160,34 @@ public class AI_BossMaw : BossAI
         }
     }
 
-    private void Attack_FollowingProjectile()
-    {
-        // Spawn a projectile that follows the player around for a while
-    }
-
-    private void Attack_Beam()
+    private void Attack_Beam_Large()
     {
         // Beam attack
-        var t = T_HitsTaken;
-        var center = arenas[0].pivot.position;
-        var dir_to_player = Player.Instance.transform.position - center;
-        var origin = center + dir_to_player.normalized * CameraController.Instance.Width * 2;
-        var direction = -dir_to_player.normalized;
-        var width = Mathf.Lerp(25f, 35f, t);
-        cr_attack = StartCoroutine(ShootBeamCr(origin, direction, width, 4f));
+        var dir = DirectionToPlayer().normalized;
+        CreateBeam(dir);
+
+        if (Gamemode == GamemodeType.DoubleBoss)
+        {
+            var cross = Vector3.Cross(Vector3.forward, dir);
+            CreateBeam(cross);
+        }
+
+        void CreateBeam(Vector3 direction)
+        {
+            var center = arenas[0].pivot.position;
+            var origin = center - direction.normalized * CameraController.Instance.Width * 2;
+            var width_min = 25f;
+            var width_max = 35f;
+            var width = Mathf.Lerp(width_min, width_max, T_HitsTaken);
+            var delay = 4f;
+            ShootBeam(origin, direction.normalized, width, delay);
+            cr_attack = StartCoroutine(Cr(delay));
+        }
+
+        IEnumerator Cr(float duration)
+        {
+            yield return new WaitForSeconds(duration);
+        }
     }
 
     private void Attack_Beams()
@@ -154,8 +198,11 @@ public class AI_BossMaw : BossAI
         {
             var t = T_HitsTaken;
             var width = 5f;
-            var beam_delay_max = Mathf.Lerp(2.2f, 1.8f, t);
-            var beam_delay_min = Mathf.Lerp(1.4f, 1f, t);
+            var angle = Random.Range(0f, 360f);
+            var angle_delta = 20;
+            var beam_delay_mul = Gamemode == GamemodeType.DoubleBoss ? 0.5f : 1f;
+            var beam_delay_max = Mathf.Lerp(2.2f, 1.8f, t) * beam_delay_mul;
+            var beam_delay_min = Mathf.Lerp(1.4f, 1f, t) * beam_delay_mul;
             var count_min = (int)Mathf.Lerp(4, 8, t);
             var count_max = (int)Mathf.Lerp(8, 12, t);
             var count = Random.Range(count_min, count_max);
@@ -164,54 +211,90 @@ public class AI_BossMaw : BossAI
                 var t_count = Mathf.Clamp01((float)i / (count - 1));
                 var delay = Mathf.Lerp(beam_delay_max, beam_delay_min, t_count);
                 var delay_next = delay * 0.5f;
-                var angle = Random.Range(0f, 360f);
+                angle = (angle + angle_delta) % 360f;
                 var direction = Quaternion.AngleAxis(angle, Vector3.forward) * Vector3.up;
                 var origin = Player.Instance.transform.position + direction * CameraController.Instance.Width * 2;
-                StartCoroutine(ShootBeamCr(origin, -direction, width, delay));
+                var beam = ShootBeam(origin, -direction, width, delay);
                 yield return new WaitForSeconds(delay_next);
             }
         }
     }
 
-    private IEnumerator ShootBeamCr(Vector3 origin, Vector3 direction, float width, float delay)
+    private Beam ShootBeam(Vector3 origin, Vector3 direction, float width, float delay)
     {
-        var angle = Vector3.SignedAngle(Vector3.up, direction, Vector3.forward);
-        var rotation = Quaternion.AngleAxis(angle, Vector3.forward);
-        var beam = ChargeBeam.Create();
-        var length = CameraController.Instance.Width * 8;
+        var b = ChargeBeam.Create();
+        var beam = new Beam
+        {
+            Object = b
+        };
 
-        beam.transform.parent = GameController.Instance.world;
-        beam.transform.position = origin;
-        beam.transform.rotation = rotation;
-        beam.SetColor(color_beam.GetColor());
-        beam.SetWidth(width);
-        beam.SetLength(length);
-        beam.UpdateVisual();
-        beam.AnimateShowPreview(true);
+        beam.Coroutine = b.StartCoroutine(ShootBeamCr(beam));
 
-        var sfx_charge_start = SoundController.Instance.Play(SoundEffectType.sfx_charge_start)
-            .SetPitch(-1)
-            .StopWith(gameObject);
+        beams.Add(beam);
 
-        yield return new WaitForSeconds(delay);
+        return beam;
 
-        sfx_charge_start.Stop();
-        SoundController.Instance.Play(SoundEffectType.sfx_charge_shoot);
+        IEnumerator ShootBeamCr(Beam beam)
+        {
+            var angle = Vector3.SignedAngle(Vector3.up, direction, Vector3.forward);
+            var rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+            var length = CameraController.Instance.Width * 8;
 
-        Physics2D.CircleCastAll(origin, width * 0.25f, direction, length)
-                .Select(hit => hit.collider.GetComponentInParent<Player>())
-                .Distinct()
-                .Where(p => p != null && !p.IsDead)
-                .ToList().ForEach(p =>
-                {
-                    p.Damage(origin);
-                });
+            b.transform.parent = GameController.Instance.world;
+            b.transform.position = origin;
+            b.transform.rotation = rotation;
+            b.SetColor(color_beam.GetColor());
+            b.SetWidth(width);
+            b.SetLength(length);
+            b.UpdateVisual();
+            b.AnimateShowPreview(true);
 
-        Self.Knockback(-direction * 200f, true, false);
+            var sfx_charge_start = SoundController.Instance.Play(SoundEffectType.sfx_charge_start)
+                .SetPitch(-1)
+                .StopWith(gameObject);
 
-        yield return beam.AnimateFire();
+            yield return new WaitForSeconds(delay);
 
-        Destroy(beam.gameObject);
+            sfx_charge_start.Stop();
+            SoundController.Instance.Play(SoundEffectType.sfx_charge_shoot);
+
+            Physics2D.CircleCastAll(origin, width * 0.25f, direction, length)
+                    .Select(hit => hit.collider.GetComponentInParent<Player>())
+                    .Distinct()
+                    .Where(p => p != null && !p.IsDead)
+                    .ToList().ForEach(p =>
+                    {
+                        p.Damage(origin);
+                    });
+
+            yield return b.AnimateFire();
+
+            beams.Remove(beam);
+            Destroy(b.gameObject);
+        }
+    }
+
+    private void Attack_Pillars()
+    {
+        // Player pillar
+        {
+            var dir = Player.Instance.MoveDirection * Random.Range(8f, 12);
+            var position = PlayerPosition + dir;
+            CreatePillar(position);
+        }
+
+        // Other pillars
+        var count_min = 1;
+        var count_max = 3;
+        var count_double = Gamemode == GamemodeType.DoubleBoss ? 3 : 0;
+        var count = (int)(Mathf.Lerp(count_min, count_max, T_HitsTaken) + count_double);
+        var radius = AreaRadius * 0.8f;
+        for (int i = 0; i < count; i++)
+        {
+            var offset = Random.insideUnitCircle.ToVector3() * Random.Range(radius * 0.1f, radius);
+            var position = Self.transform.position + offset;
+            CreatePillar(position);
+        }
     }
 
     private Coroutine AnimateAppear()
@@ -263,8 +346,7 @@ public class AI_BossMaw : BossAI
     {
         var walls = new List<MawWall>();
 
-        var area_number = AreaController.Instance.CurrentAreaIndex + 1;
-        var radius = Mathf.Clamp(RADIUS + RADIUS_PER_INDEX * area_number, 0, RADIUS_MAX) * size_mul;
+        var radius = Mathf.Clamp(AreaRadius, 0, RADIUS_MAX) * size_mul;
         var points = CircleHelper.Points(radius, 10);
         var bezier = new BezierPath(points, true, PathSpace.xy);
         var path = new VertexPath(bezier, GameController.Instance.world);
@@ -344,8 +426,36 @@ public class AI_BossMaw : BossAI
         }
     }
 
+    private void CreatePillar(Vector3 position)
+    {
+        var pillar = Instantiate(template_pillar, GameController.Instance.world);
+        pillar.transform.position = position;
+        pillar.SetHidden();
+        pillars.Add(pillar);
+        ObjectController.Instance.Add(pillar.gameObject);
+
+        var t = T_HitsTaken;
+        var scale = Vector3.one * Mathf.Lerp(PILLAR_SIZE_MIN, PILLAR_SIZE_MAX, t);
+        pillar.transform.localScale = scale;
+
+        var lifetime = Mathf.Lerp(PILLAR_LIFETIME_MIN, PILLAR_LIFETIME_MAX, t);
+        pillar.AnimateAppear(3f, lifetime);
+    }
+
+    private void Clear()
+    {
+        foreach (var beam in beams)
+        {
+            if (beam == null) continue;
+            if (beam.Coroutine != null) StopCoroutine(beam.Coroutine);
+            if (beam.Object != null) Destroy(beam.Object.gameObject);
+        }
+        beams.Clear();
+    }
+
     private void End()
     {
+        Clear();
         StartCoroutine(Cr());
         IEnumerator Cr()
         {

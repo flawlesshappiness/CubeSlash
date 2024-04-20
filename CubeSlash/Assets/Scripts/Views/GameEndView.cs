@@ -179,7 +179,7 @@ public class GameEndView : View
             unlocked_items.Add(new UnlockItem
             {
                 sprite = info.skins[0],
-                title = "Body unlocked"
+                title = "Body unlocked!"
             });
         }
     }
@@ -192,7 +192,7 @@ public class GameEndView : View
             unlocked_items.Add(new UnlockItem
             {
                 sprite = gamemode.icon,
-                title = "Gamemode unlocked"
+                title = "Gamemode unlocked!"
             });
         }
     }
