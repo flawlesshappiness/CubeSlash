@@ -1,4 +1,4 @@
 public enum PlayerBodyType
 {
-    Cell, Plant, Meat
+    Cell, Plant, Meat, Jelly, Root
 }

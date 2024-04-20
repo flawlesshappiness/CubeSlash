@@ -100,34 +100,55 @@ public class GameEndView : View
     private void UnlockItems()
     {
         var run = RunController.Instance.CurrentRun;
+
+        // Ability
         if (run.CurrentAreaIndex > 0)
         {
             TryUnlockRandomAbility();
         }
 
+        // Bodypart
         if (run.CurrentAreaIndex > 0)
         {
             TryUnlockRandomBodypart();
         }
 
+        // Plant body
         if (run.EnemiesKilled.ContainsKey(EnemyType.BossPlant))
         {
             TryUnlockBody(PlayerBodyType.Plant);
             SteamIntegration.Instance.UnlockAchievement(AchievementType.ACH_BODY_PLANT);
         }
 
+        // Meat body
         if (run.EnemiesKilled.ContainsKey(EnemyType.BossCrystalEyes))
         {
             TryUnlockBody(PlayerBodyType.Meat);
             SteamIntegration.Instance.UnlockAchievement(AchievementType.ACH_BODY_MEAT);
         }
 
+        // Jelly body
+        if (run.EnemiesKilled.ContainsKey(EnemyType.BossJelly))
+        {
+            TryUnlockBody(PlayerBodyType.Jelly);
+            SteamIntegration.Instance.UnlockAchievement(AchievementType.ACH_BODY_JELLY);
+        }
+
+        // Root body
+        if (run.EnemiesKilled.ContainsKey(EnemyType.BossRoot))
+        {
+            TryUnlockBody(PlayerBodyType.Root);
+            SteamIntegration.Instance.UnlockAchievement(AchievementType.ACH_BODY_ROOT);
+        }
+
+        // Medium & Double gamemode
         if (run.Won && run.Gamemode.type == GamemodeType.Normal)
         {
             TryUnlockGamemode(GamemodeType.Medium);
             TryUnlockGamemode(GamemodeType.DoubleBoss);
         }
 
+        // Hard & Double gamemode
         if (run.Won && run.Gamemode.type == GamemodeType.Medium)
         {
             TryUnlockGamemode(GamemodeType.Hard);

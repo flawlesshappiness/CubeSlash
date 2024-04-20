@@ -62,6 +62,7 @@ public class DebugConsoleHandler : Singleton
         {
             window.CreateButton("Unlock Ability", ClickUnlockAbility);
             window.CreateButton("Unlock Bodypart", ClickUnlockBodypart);
+            window.CreateButton("Unlock Body", ClickUnlockBody);
             window.CreateButton("Test unlock item", ClickTestUnlockItem);
         }
 
@@ -163,12 +164,37 @@ public class DebugConsoleHandler : Singleton
             var btn = window.CreateButton(info.name);
             btn.onClick.AddListener(() => Click(btn, info));
             var is_unlocked = Save.Game.unlocked_bodyparts.Contains(info.type);
-            btn.TextRight = is_unlocked ? "Gained" : "";
+            btn.TextRight = is_unlocked ? "Unlocked" : "";
         }
 
         void Click(ListButton btn, BodypartInfo info)
         {
             BodypartController.Instance.UnlockPart(info);
+            btn.TextRight = "Unlocked";
+        }
+    }
+
+    private void ClickUnlockBody()
+    {
+        var window = view.ShowList();
+        view.ShowBackButton(ShowFunctionsWindow);
+        window.Clear();
+
+        var db = Database.Load<PlayerBodyDatabase>();
+        foreach (var info in db.collection)
+        {
+            var btn = window.CreateButton(info.name);
+            btn.onClick.AddListener(() => Click(btn, info));
+            var is_unlocked = Save.Game.unlocked_player_bodies.Contains(info.type);
+            btn.TextRight = is_unlocked ? "Unlocked" : "";
+        }
+
+        void Click(ListButton btn, PlayerBodyInfo info)
+        {
+            if (Save.Game.unlocked_player_bodies.Contains(info.type)) return;
+
+            Save.Game.unlocked_player_bodies.Add(info.type);
+            Save.Game.new_player_bodies.Add(info.type);
             btn.TextRight = "Unlocked";
         }
     }

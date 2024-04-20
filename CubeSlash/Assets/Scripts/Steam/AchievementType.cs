@@ -8,6 +8,8 @@ public enum AchievementType
     ACH_LOSE_10,
     ACH_BODY_MEAT,
     ACH_BODY_PLANT,
+    ACH_BODY_JELLY,
+    ACH_BODY_ROOT,
     ACH_SPLIT_1,
     ACH_SPLIT_2,
     ACH_SPLIT_3,
