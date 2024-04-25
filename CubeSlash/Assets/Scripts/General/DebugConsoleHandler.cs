@@ -44,14 +44,17 @@ public class DebugConsoleHandler : Singleton
 
         if (GameController.Instance.IsGameStarted)
         {
-            window.CreateButton("Unlock Upgrade", ClickUnlockUpgrade);
+            window.CreateButton("Unlock upgrade", ClickUnlockUpgrade);
+            window.CreateButton("Unlock all upgrades", ClickUnlockAllUpgrades);
             window.CreateButton("Gain Ability", ClickGainAbility);
             window.CreateButton("Level up", ClickLevelUp);
             window.CreateButton("Level up (Ability)", ClickLevelUpAbility);
             window.CreateButton(GameController.DAMAGE_DISABLED ? "Enable damage" : "Disable damage", ClickToggleDamage);
             window.CreateButton("Set Area", ClickSetArea);
+            window.CreateButton("Skip Area", ClickSkipArea);
             window.CreateButton("Suicide", ClickSuicide);
             window.CreateButton("Win", ClickWin);
+            window.CreateButton("Endless", ClickEndless);
             window.CreateButton("Spawn Boss", ClickSpawnBoss);
             window.CreateButton(EnemyController.Instance.EnemySpawnEnabled ? "Disable enemy spawn" : "Enable enemy spawn", ClickToggleEnemySpawn);
             window.CreateButton("Kill Enemies", ClickKillEnemies);
@@ -98,6 +101,16 @@ public class DebugConsoleHandler : Singleton
                 btn.TextRight = "Unlocked";
                 UpgradeController.Instance.CheatUnlockUpgrade(info);
             }
+        }
+    }
+
+    private void ClickUnlockAllUpgrades()
+    {
+        foreach (var info in UpgradeController.Instance.GetUpgradeInfos())
+        {
+            var id = info.upgrade.id;
+            if (UpgradeController.Instance.IsUpgradeUnlocked(id)) continue;
+            UpgradeController.Instance.UnlockUpgrade(id);
         }
     }
 
@@ -262,9 +275,21 @@ public class DebugConsoleHandler : Singleton
         }
     }
 
+    private void ClickSkipArea()
+    {
+        AreaController.Instance.DebugSkipArea();
+        CloseView();
+    }
+
     private void ClickWin()
     {
         GameController.Instance.Win();
+        CloseView();
+    }
+
+    private void ClickEndless()
+    {
+        GameController.Instance.StartEndless();
         CloseView();
     }
 

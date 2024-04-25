@@ -22,6 +22,7 @@ public class GameController : MonoBehaviour
 
     public System.Action onResume { get; set; }
     public System.Action onGameStart { get; set; }
+    public System.Action onEndlessStart { get; set; }
     public System.Action onGameEnd { get; set; }
     public System.Action onMainMenu { get; set; }
     public System.Action onPlayerLevelUp { get; set; }
@@ -161,23 +162,37 @@ public class GameController : MonoBehaviour
     {
         LogController.LogMethod();
 
-        StartCoroutine(Cr());
+        IsGameStarted = true;
+        onGameStart?.Invoke();
 
-        IEnumerator Cr()
-        {
-            IsGameStarted = true;
+        ViewController.Instance.ShowView<GameView>(0);
 
-            onGameStart?.Invoke();
+        Player.Instance.ResetValues();
 
-            GameStateController.Instance.SetGameState(GameStateType.MENU);
-            ViewController.Instance.ShowView<GameView>(0);
+        ResumeLevel();
+    }
 
-            Player.Instance.ResetValues();
+    public void StartEndless()
+    {
+        LogController.LogMethod();
 
-            ResumeLevel();
+        // Setup run
+        var run = RunInfo.Current;
+        run.Endless = true;
+        run.EndlessStartTime = Time.time;
 
-            yield return null;
-        }
+        // Areas
+        run.Areas = AreaController.Instance.GetEndlessAreas();
+        run.Areas.Shuffle();
+        run.CurrentAreaIndex = 0;
+
+        // Restart
+        IsGameStarted = true;
+        IsGameEnded = false;
+
+        ViewController.Instance.ShowView<GameView>(0);
+        onEndlessStart?.Invoke();
+        ResumeLevel();
     }
 
     public void EndGame()
@@ -288,6 +303,19 @@ public class GameController : MonoBehaviour
     private void OnPlayerDeath()
     {
         LogController.LogMethod();
+        var run = RunInfo.Current;
+
+        // Endless
+        if (run.Endless)
+        {
+            run.EndlessEndTime = Time.time;
+            var endless_duration = run.EndlessEndTime - run.EndlessStartTime;
+
+            if (endless_duration > Save.Game.endless_highscore)
+            {
+                Save.Game.endless_highscore = endless_duration;
+            }
+        }
 
         // Lose
         Save.Game.count_losses++;
@@ -318,6 +346,7 @@ public class GameController : MonoBehaviour
         RunController.Instance.CurrentRun.Won = true;
         MusicController.Instance.StopBGM();
         EnemyController.Instance.KillActiveEnemies();
+        ProjectileController.Instance.ClearProjectiles();
         onWin?.Invoke();
         StartCoroutine(EndGameCr());
     }
@@ -330,12 +359,6 @@ public class GameController : MonoBehaviour
         GameStateController.Instance.SetGameState(GameStateType.MENU);
         ViewController.Instance.CloseView(0.5f);
         var end_view = ViewController.Instance.ShowView<GameEndView>(0, nameof(GameEndView));
-    }
-
-    public void ResumeEndless()
-    {
-        IsGameEnded = false;
-        GameStateController.Instance.SetGameState(GameStateType.PLAYING);
     }
 
     private void UnlockWinAchievement()

@@ -8,8 +8,6 @@ public class PlayRadialView : View
     [SerializeField] private UIFloatingPanel floating_panel;
     [SerializeField] private UIFloatingPanelText floating_text;
 
-    private Player Player { get { return Player.Instance; } }
-
     private void Start()
     {
         HideFloatingPanel();

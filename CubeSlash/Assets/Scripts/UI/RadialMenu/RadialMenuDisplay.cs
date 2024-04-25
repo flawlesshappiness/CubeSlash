@@ -26,15 +26,15 @@ public class RadialMenuDisplay : MonoBehaviour
     {
         var show = element != null && (!string.IsNullOrEmpty(element.Option.Title) || !string.IsNullOrEmpty(element.Option.Description));
 
-        if(!show)
+        if (!show)
         {
             ClearSelection();
             return;
         }
 
         var option = element.Option;
-        
-        if(tmp_title != null)
+
+        if (tmp_title != null)
         {
             tmp_title.text = option.Title;
             tmp_title.gameObject.SetActive(!string.IsNullOrEmpty(option.Title));
@@ -46,12 +46,16 @@ public class RadialMenuDisplay : MonoBehaviour
             tmp_desc.gameObject.SetActive(!string.IsNullOrEmpty(option.Description));
         }
 
-        Lerp.LocalScale(pivot, 0.25f, Vector3.one).Curve(EasingCurves.EaseOutQuad);
+        Lerp.LocalScale(pivot, 0.25f, Vector3.one)
+            .UnscaledTime()
+            .Curve(EasingCurves.EaseOutQuad);
     }
 
     private void ClearSelection()
     {
-        Lerp.LocalScale(pivot, 0.25f, Vector3.zero).Curve(EasingCurves.EaseInQuad);
+        Lerp.LocalScale(pivot, 0.25f, Vector3.zero)
+            .UnscaledTime()
+            .Curve(EasingCurves.EaseInQuad);
     }
 
     private void OnSubmit(RadialMenuElement element)

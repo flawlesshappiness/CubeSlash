@@ -65,7 +65,6 @@ public class AI_BossMaw : BossAI
         };
 
         duds_to_kill = duds_max;
-        duds_to_kill = 1;
 
         cr_main = StartCoroutine(MainCr());
     }
@@ -455,6 +454,8 @@ public class AI_BossMaw : BossAI
 
     private void End()
     {
+        if (Player.Instance.IsDead) return;
+
         Clear();
         StartCoroutine(Cr());
         IEnumerator Cr()

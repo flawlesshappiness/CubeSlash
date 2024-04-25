@@ -9,12 +9,11 @@ public class AreaController : Singleton
 
     public event System.Action<Area> onNextArea;
 
+    private bool skip_area;
+
     private AreaDatabase db;
     private Coroutine cr_next_area;
     private Area current_area;
-
-    private List<Area> visited_areas = new List<Area>();
-    private List<Area> available_areas = new List<Area>();
 
     public Area CurrentArea => current_area;
     public int CurrentAreaIndex => RunController.Instance.CurrentRun?.CurrentAreaIndex ?? 0;
@@ -26,7 +25,6 @@ public class AreaController : Singleton
         db = Database.Load<AreaDatabase>();
         RunController.Instance.onRunStarted += RunStarted;
         GameController.Instance.onGameEnd += OnGameEnd;
-        GameController.Instance.onMainMenu += OnMainMenu;
     }
 
     private void RunStarted()
@@ -37,12 +35,6 @@ public class AreaController : Singleton
     private void OnGameEnd()
     {
         StopAreaCoroutine();
-    }
-
-    private void OnMainMenu()
-    {
-        visited_areas.Clear();
-        available_areas = db.collection.ToList();
     }
 
     public void StartAreaCoroutine()
@@ -69,13 +61,25 @@ public class AreaController : Singleton
             var next_area = run.Areas[CurrentAreaIndex];
             SetArea(next_area);
 
-            var time_next_area = run.StartTime + (run.CurrentAreaIndex + 1) * gamemode.area_duration;
-            while (Time.time < time_next_area)
+            var start_time = run.Endless ? run.EndlessStartTime : run.StartTime;
+            var time_next_area = start_time + (run.CurrentAreaIndex + 1) * gamemode.area_duration;
+            while (Time.time < time_next_area && !skip_area)
             {
                 yield return null;
             }
 
+            skip_area = false;
             run.CurrentAreaIndex++;
+
+            // Endless refill
+            if (run.CurrentAreaIndex >= run.Areas.Count && run.Endless)
+            {
+                run.Areas = GetEndlessAreas();
+                run.Areas.Shuffle();
+                run.CurrentAreaIndex = 0;
+            }
+
+            yield return null;
         }
     }
 
@@ -91,6 +95,11 @@ public class AreaController : Singleton
         SetArea(area);
     }
 
+    public void DebugSkipArea()
+    {
+        skip_area = true;
+    }
+
     public List<Area> GetRandomAreas(int count)
     {
         var areas = new List<Area>();
@@ -104,7 +113,7 @@ public class AreaController : Singleton
             }
             else
             {
-                var area = available_areas
+                var area = available
                     .Where(a => IsValid(i, a))
                     .ToList().Random();
 
@@ -119,8 +128,13 @@ public class AreaController : Singleton
         bool IsValid(int i, Area area)
         {
             var valid_index = i >= area.index_level_min;
-            var unvisited = !visited_areas.Contains(area);
-            return valid_index && unvisited;
+            return valid_index;
         }
+    }
+
+    public List<Area> GetEndlessAreas()
+    {
+        var areas = db.collection.ToList();
+        return areas;
     }
 }

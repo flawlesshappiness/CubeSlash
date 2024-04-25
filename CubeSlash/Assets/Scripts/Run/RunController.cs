@@ -13,6 +13,8 @@ public class RunController : Singleton
     {
         base.Initialize();
         GameController.Instance.onGameStart += GameStart;
+        GameController.Instance.onEndlessStart += EndlessStart;
+        GameController.Instance.onMainMenu += MainMenu;
         EnemyController.Instance.OnEnemyKilled += EnemyKilled;
     }
 
@@ -20,6 +22,18 @@ public class RunController : Singleton
     {
         CurrentRun = GenerateRun();
         onRunStarted?.Invoke();
+    }
+
+    private void EndlessStart()
+    {
+        onRunStarted?.Invoke();
+    }
+
+    private void MainMenu()
+    {
+        if (CurrentRun == null) return;
+
+        CurrentRun.Endless = false;
     }
 
     public RunInfo GenerateRun()

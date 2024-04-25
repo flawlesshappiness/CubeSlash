@@ -19,6 +19,11 @@ public class AI_Camo : EnemyAI
         MoveSequence();
     }
 
+    private void OnDisable()
+    {
+        AreaController.Instance.onNextArea -= OnNextArea;
+    }
+
     private Color GetCamoColor()
     {
         var area = AreaController.Instance.CurrentArea;

@@ -34,7 +34,7 @@ public class EnemyController : Singleton
     {
         prefab_enemy = Resources.Load<Enemy>("Prefabs/Entities/Enemy");
         AreaController.Instance.onNextArea += OnNextArea;
-        GameController.Instance.onGameStart += OnGameStart;
+        RunController.Instance.onRunStarted += OnRunStarted;
         GameController.Instance.onGameEnd += OnGameEnd;
         GameController.Instance.onMainMenu += OnMainMenu;
     }
@@ -65,7 +65,7 @@ public class EnemyController : Singleton
         StartSpawnBossCoroutine();
     }
 
-    private void OnGameStart()
+    private void OnRunStarted()
     {
         IsFinalBossActive = false;
         EnemySpawnEnabled = true;
@@ -165,7 +165,7 @@ public class EnemyController : Singleton
                 }
 
                 // Exp
-                if (boss.type != EnemyType.BossPlant)
+                if (boss.type != EnemyType.BossPlant && boss.type != EnemyType.BossMaw)
                 {
                     var exp_count = 25 + 15 * AreaController.Instance.CurrentAreaIndex;
                     for (int i = 0; i < 25; i++)
@@ -262,6 +262,7 @@ public class EnemyController : Singleton
 
     public void KillActiveEnemies(List<Enemy> enemies_except = null)
     {
+        LogController.LogMethod();
         foreach (var enemy in enemies_active.ToList())
         {
             if (enemies_except != null && enemies_except.Contains(enemy)) continue;

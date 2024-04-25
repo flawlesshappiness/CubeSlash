@@ -4,9 +4,16 @@ using UnityEngine;
 
 public class RadialMenuElementSelector : MonoBehaviour
 {
+    private RadialMenuLayout layout;
+
     private List<RadialMenuElement> elements = new List<RadialMenuElement>();
 
     public List<RadialMenuElement> Elements { get { return elements.ToList(); } }
+
+    private void Awake()
+    {
+        layout = GetComponentInChildren<RadialMenuLayout>();
+    }
 
     private void Start()
     {
@@ -38,7 +45,7 @@ public class RadialMenuElementSelector : MonoBehaviour
 
     public RadialMenuElement GetElement(float angle)
     {
-        angle += 180;
+        angle += 180 - layout.AngleOffset;
         var arc = 360f;
         angle = angle < 0 ? angle + arc : angle;
         var count = elements.Count;

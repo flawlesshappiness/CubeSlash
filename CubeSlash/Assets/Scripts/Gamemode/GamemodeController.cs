@@ -4,7 +4,7 @@ public class GamemodeController : Singleton
 {
     public static GamemodeController Instance => Instance<GamemodeController>();
     public GamemodeDatabase DB => Database.Load<GamemodeDatabase>();
-    public GamemodeSettings SelectedGameMode => GetGamemode(Save.Game.gamemode_selected);
+    public GamemodeSettings SelectedGameMode => RunInfo.Current?.Endless ?? false ? DB.Endless : GetGamemode(Save.Game.gamemode_selected);
     public GamemodeSettings GetGamemode(GamemodeType type) => DB.collection.FirstOrDefault(x => x.type == type);
 
     protected override void Initialize()

@@ -145,6 +145,16 @@ public class AbilityOrbit : Ability
         Player.onDeath += Clear;
     }
 
+    private void OnEnable()
+    {
+        ProjectileController.Instance.OnClear += Clear;
+    }
+
+    private void OnDisable()
+    {
+        ProjectileController.Instance.OnClear -= Clear;
+    }
+
     public override Dictionary<string, string> GetStats()
     {
         var stats = base.GetStats();

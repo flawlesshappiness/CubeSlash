@@ -8,7 +8,10 @@ using UnityEngine;
 public class GameEndView : View
 {
     [SerializeField] private TMP_Text tmp_title_win, tmp_title_lose;
-    [SerializeField] private CanvasGroup cvg_title, cvg_input;
+    [SerializeField] private TMP_Text tmp_endless_current, tmp_endless_highscore;
+    [SerializeField] private RadialMenu radial;
+    [SerializeField] private CanvasGroup cvg_title, cvg_input, cvg_endless;
+    [SerializeField] private Sprite sp_endless, sp_exit;
 
     private bool animating = true;
     private List<UnlockItem> unlocked_items = new List<UnlockItem>();
@@ -23,18 +26,32 @@ public class GameEndView : View
     {
         cvg_input.alpha = 0;
         cvg_title.alpha = 0;
+        cvg_endless.alpha = 0;
+
+        tmp_endless_current.text = RunInfo.Current.EndlessDuration.ToString("0.0");
+        tmp_endless_highscore.text = Save.Game.endless_highscore.ToString("0.0");
 
         var run = RunController.Instance.CurrentRun;
         tmp_title_win.enabled = run.Won;
         tmp_title_lose.enabled = !run.Won;
+
+        radial.Clear();
+        radial.gameObject.SetActive(false);
 
         UnlockItems();
 
         StartCoroutine(Cr());
         IEnumerator Cr()
         {
+            animating = true;
             yield return LerpEnumerator.Alpha(cvg_title, 1f, 1f).UnscaledTime();
             Lerp.Alpha(cvg_input, 0.25f, 1f).UnscaledTime();
+
+            if (RunInfo.Current.Endless)
+            {
+                Lerp.Alpha(cvg_endless, 0.25f, 1f).UnscaledTime();
+            }
+
             animating = false;
         }
     }
@@ -65,6 +82,7 @@ public class GameEndView : View
 
             Lerp.Alpha(cvg_title, 0.5f, 0).UnscaledTime();
             Lerp.Alpha(cvg_input, 0.5f, 0).UnscaledTime();
+            Lerp.Alpha(cvg_endless, 0.5f, 0).UnscaledTime();
             yield return new WaitForSecondsRealtime(0.5f);
 
             foreach (var item in unlocked_items)
@@ -82,18 +100,37 @@ public class GameEndView : View
                 }
             }
 
-            yield return ReturnToMainMenuCr();
+            var run = RunController.Instance.CurrentRun;
+            if (run.Won)
+            {
+                ShowWinRadial();
+            }
+            else
+            {
+                yield return ReturnToMainMenuCr();
+            }
         }
+    }
+
+    private Coroutine ReturnToMainMenu()
+    {
+        return StartCoroutine(ReturnToMainMenuCr());
     }
 
     private IEnumerator ReturnToMainMenuCr()
     {
-        GameController.Instance.EndGame();
+        animating = true;
         var fg_view = ViewController.Instance.ShowView<ForegroundView>(1, "Foreground");
         yield return new WaitForSecondsRealtime(1);
         GameController.Instance.MainMenu();
         yield return new WaitForSecondsRealtime(0.5f);
         fg_view.Close(1f);
+        Close(0);
+    }
+
+    private void StartEndless()
+    {
+        GameController.Instance.StartEndless();
         Close(0);
     }
 
@@ -216,5 +253,32 @@ public class GameEndView : View
                 title = "Gamemode unlocked!"
             });
         }
+    }
+
+    private void ShowWinRadial()
+    {
+        var options = new List<RadialMenuOption>
+        {
+            new RadialMenuOption
+            {
+                Title = "Endless",
+                Description = "Mode",
+                Sprite = sp_endless,
+                OnSubmitComplete = () => StartEndless()
+            },
+
+            new RadialMenuOption
+            {
+                Title = "Main",
+                Description = "Menu",
+                Sprite = sp_exit,
+                OnSubmitComplete = () => ReturnToMainMenu()
+            }
+        };
+
+        radial.gameObject.SetActive(true);
+        radial.Clear();
+        radial.AddOptions(options);
+        radial.AnimateShowElements(true, 0.05f);
     }
 }

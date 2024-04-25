@@ -162,8 +162,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3e42868605e9f24280fa52485d3b45f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pivot_main: {fileID: 8318282147740001868}
   pivot_sprite: {fileID: 1362514934858604862}
+  animator_main: {fileID: 0}
   Collider: {fileID: 2448956681260757774}
   Trigger: {fileID: 6930517596927986064}
   ps_death: {fileID: 1272193720796475515, guid: fd5afc43bece25445bb6d64a73e7328b, type: 3}
@@ -175,6 +175,7 @@ MonoBehaviour:
     - {fileID: 7018957449795081630}
     - {fileID: 3259776995590922036}
     - {fileID: 6117312795693333572}
+  - duds:
     - {fileID: 2336136779392584403}
     - {fileID: 4692904412823652900}
   - duds:

@@ -11,6 +11,7 @@ public class GameSaveData : SaveDataObject
 
     public int count_wins = 0;
     public int count_losses = 0;
+    public float endless_highscore = 0;
 
     public List<Ability.Type> new_abilities = new List<Ability.Type>();
     public List<Ability.Type> unlocked_abilities = new List<Ability.Type>()
@@ -48,5 +49,7 @@ public class GameSaveData : SaveDataObject
         gamemode_selected = GamemodeType.Normal;
         unlocked_gamemodes.Clear();
         unlocked_gamemodes.Add(GamemodeType.Normal);
+
+        endless_highscore = 0;
     }
 }

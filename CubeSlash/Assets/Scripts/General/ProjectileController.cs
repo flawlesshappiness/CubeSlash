@@ -1,5 +1,5 @@
+using System;
 using System.Collections.Generic;
-using System.Drawing;
 using UnityEngine;
 
 public class ProjectileController : Singleton
@@ -7,6 +7,8 @@ public class ProjectileController : Singleton
     public static ProjectileController Instance { get { return Instance<ProjectileController>(); } }
 
     private List<Projectile> active_projectiles = new List<Projectile>();
+
+    public Action OnClear;
 
     protected override void Initialize()
     {
@@ -34,12 +36,14 @@ public class ProjectileController : Singleton
 
     public void ClearProjectiles()
     {
-        foreach(var p in active_projectiles)
+        foreach (var p in active_projectiles)
         {
             if (p == null) continue;
             Destroy(p.gameObject);
         }
         active_projectiles.Clear();
+
+        OnClear?.Invoke();
     }
 
     public class PlayerShootInfo

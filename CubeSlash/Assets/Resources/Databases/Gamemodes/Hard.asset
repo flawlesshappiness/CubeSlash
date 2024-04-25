@@ -21,7 +21,7 @@ MonoBehaviour:
   area_size: 100
   enemy_spawn_frequency_start: 1.2
   enemy_spawn_frequency_end: 0.6
-  enemy_spawn_frequency_final: 1.2
+  enemy_spawn_frequency_final: 1.4
   enemy_spawn_count_start: 2
   enemy_spawn_count_end: 5
   enemy_count_max_start: 100
@@ -31,6 +31,6 @@ MonoBehaviour:
   boss_spawn_count: 1
   experience_spawn_frequency: 0.5
   experience_count_max: 60
-  experience_gain_multiplier: 0.7
+  experience_gain_multiplier: 0.8
   camera_size_start: 12
   camera_size_end: 17

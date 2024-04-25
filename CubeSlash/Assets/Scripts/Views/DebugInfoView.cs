@@ -20,12 +20,15 @@ public class DebugInfoView : View
     private void Start()
     {
         temp_text.gameObject.SetActive(false);
+
+        GameController.Instance.onGameStart += ResetTexts;
+        GameController.Instance.onGameEnd += ResetTexts;
+        GameController.Instance.onEndlessStart += ResetTexts;
     }
 
     private void OnEnable()
     {
-        ClearTexts();
-        InitializeTexts();
+        ResetTexts();
     }
 
     private void Update()
@@ -34,6 +37,12 @@ public class DebugInfoView : View
         {
             text.UpdateText();
         }
+    }
+
+    private void ResetTexts()
+    {
+        ClearTexts();
+        InitializeTexts();
     }
 
     private void ClearTexts()
@@ -54,10 +63,11 @@ public class DebugInfoView : View
         {
             var run = RunController.Instance.CurrentRun;
             CreateText(() => $"Run.Won: {run.Won}");
+            CreateText(() => $"Run.Endless: {run.Endless}");
             CreateText(() => $"Run.Gamemode.type: {run.Gamemode.type}");
             CreateText(() => $"Run.CurrentAreaIndex: {run.CurrentAreaIndex}");
-            CreateText(() => $"Run.TimeStart: {Time.time - run.StartTime}");
-            CreateText(() => $"Run.TimeNextArea: {run.Gamemode.area_duration * (run.CurrentAreaIndex + 1)}");
+            CreateText(() => $"Run.Time: {Time.time - run.StartTime}");
+            CreateText(() => $"Run.EndlessTime: {(run.Endless ? (Time.time - run.EndlessStartTime) : 0)}");
 
             foreach (var area in run.Areas)
             {

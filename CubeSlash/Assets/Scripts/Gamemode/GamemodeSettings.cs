@@ -38,8 +38,10 @@ public class GamemodeSettings : ScriptableObject
     public float camera_size_start;
     public float camera_size_end;
 
+    private RunInfo Run => RunInfo.Current;
     public float MaxGameDuration => (area_count + 1) * area_duration;
-    public float CurrentGameDuration => Time.time - RunController.Instance.CurrentRun.StartTime;
+    public float StartTime => Run.Endless ? Run.EndlessStartTime : Run.StartTime;
+    public float CurrentGameDuration => Time.time - StartTime;
     public float T_GameDuration => CurrentGameDuration / MaxGameDuration;
     public float BossSpawnTime => area_duration * boss_time_spawn;
     public int EnemyCountMax => (int)Mathf.Lerp(enemy_count_max_start, enemy_count_max_end, T_GameDuration);
