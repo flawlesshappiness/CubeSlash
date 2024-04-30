@@ -54,6 +54,8 @@ public class MusicController : Singleton
 
     public void PlayBGM(SoundEffectType type, float delay)
     {
+
+        if (cr_bgm_delay != null) StopCoroutine(cr_bgm_delay);
         cr_bgm_delay = StartCoroutine(Cr());
         IEnumerator Cr()
         {
@@ -64,6 +66,8 @@ public class MusicController : Singleton
 
     public void PlayBGM(SoundEffectType type)
     {
+        if (RunInfo.Current.Endless) return;
+
         StopBGM();
         current_bgm = SoundController.Instance.Play(type);
     }

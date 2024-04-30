@@ -13,6 +13,8 @@ public class Enemy : Character, IKillable, IHurt
     public MultiLock InvincibleLock { get; private set; } = new MultiLock();
     public MultiLock HitLock { get; private set; } = new MultiLock();
 
+    public float SpeedMultiplier => RunInfo.Current.Endless ? Mathf.Lerp(1f, 2f, GamemodeController.Instance.SelectedGameMode.T_GameDuration) : 1f;
+
     public event System.Action OnHit;
     public event System.Action OnDeath;
 
@@ -30,8 +32,8 @@ public class Enemy : Character, IKillable, IHurt
         HitLock.ClearLock();
 
         this.Settings = settings;
-        LinearAcceleration = settings.linear_acceleration;
-        LinearVelocity = settings.linear_velocity;
+        LinearAcceleration = settings.linear_acceleration * SpeedMultiplier;
+        LinearVelocity = settings.linear_velocity * SpeedMultiplier;
         LinearDrag = settings.linear_drag;
         AngularAcceleration = settings.angular_acceleration;
         AngularVelocity = settings.angular_velocity;
