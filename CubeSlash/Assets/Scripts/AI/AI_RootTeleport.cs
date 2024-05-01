@@ -46,7 +46,7 @@ public class AI_RootTeleport : EnemyAI
             {
                 // Create next root
                 var dir = GetOpenDirectionTowards(PlayerPosition);
-                var next_position = transform.position + dir.normalized * move_dist_max;
+                var next_position = transform.position + dir.normalized * move_dist_max * Self.SpeedMultiplier;
                 var next_root = CreateRoot();
                 next_root.position = next_position;
                 next_root.localScale = Vector3.zero;

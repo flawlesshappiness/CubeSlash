@@ -31,8 +31,6 @@ public class AI_Shooter : EnemyAI
 
     private void MoveUpdate()
     {
-        var dist = DistanceToPlayer();
-        var dist_max_shoot = CameraController.Instance.Width * dist_min_shoot;
         if (IsInRange || shooting)
         {
             MoveToStop(0.5f);

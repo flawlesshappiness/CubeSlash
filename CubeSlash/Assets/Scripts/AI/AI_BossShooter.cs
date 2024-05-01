@@ -127,57 +127,6 @@ public class AI_BossShooter : BossAI
         ignore_state = false;
     }
 
-    private IEnumerator AttackSpinShoot()
-    {
-        attacking = true;
-        ignore_state = true;
-        var angle_player = AngleTowards(PlayerPosition);
-        var sign = Mathf.Sign(angle_player);
-        var dir = -DirectionToPlayer();
-
-        var linearMax = 6;
-        var angular_max = 200;
-        var count_shots = 8;
-        var arc = 60;
-        var radius = 5f;
-
-        body_shooter.SetEyesArc();
-
-        yield return new WaitForSeconds(1f);
-
-        TelegraphShortMany(count_shots, arc);
-
-        while (AngleTowards(PlayerPosition).Abs() < 175f)
-        {
-            Self.LinearVelocity = linearMax;
-            Self.AngularVelocity = angular_max;
-            Self.Turn(sign < 0);
-            Self.Move(dir);
-            yield return null;
-        }
-
-        TelegraphShortMany(count_shots, arc);
-
-        while (AngleTowards(PlayerPosition).Abs() > 5)
-        {
-            var angle = AngleTowards(PlayerPosition);
-            var t_angle = angle.Abs() / 30;
-            Self.LinearVelocity = Mathf.Lerp(0, linearMax, t_angle);
-            Self.AngularVelocity = Mathf.Lerp(25, angular_max, t_angle);
-            Self.Turn(sign < 0);
-            Self.Move(dir);
-            yield return null;
-        }
-
-        ShootMany(count_shots, arc, radius);
-        body_shooter.SetEyesSingle();
-        Self.Knockback(-transform.up * 300, true, true);
-
-        ResetSpeed();
-        time_attack = Time.time + Random.Range(5f, 7f);
-        attacking = false;
-    }
-
     IEnumerator AttackShootCircle()
     {
         attacking = true;

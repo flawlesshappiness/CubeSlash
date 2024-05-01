@@ -66,7 +66,7 @@ public class MusicController : Singleton
 
     public void PlayBGM(SoundEffectType type)
     {
-        if (RunInfo.Current.Endless) return;
+        if (RunInfo.Current?.Endless ?? false) return;
 
         StopBGM();
         current_bgm = SoundController.Instance.Play(type);

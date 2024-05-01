@@ -82,8 +82,8 @@ public class AI_Camo : EnemyAI
                 while (Time.time < time_charge_end)
                 {
                     Self.AngularVelocity = 1;
-                    Self.LinearAcceleration = 15;
-                    Self.LinearVelocity = 50;
+                    Self.LinearAcceleration = 15 * Self.SpeedMultiplier;
+                    Self.LinearVelocity = 50 * Self.SpeedMultiplier;
                     Self.Move(DirectionToPlayer());
                     TurnTowards(Position + Self.Rigidbody.velocity.normalized.ToVector3() * 1000);
                     yield return new WaitForFixedUpdate();
@@ -99,8 +99,8 @@ public class AI_Camo : EnemyAI
                 }
 
                 Self.AngularVelocity = Self.Settings.angular_velocity;
-                Self.LinearAcceleration = Self.Settings.linear_acceleration;
-                Self.LinearVelocity = Self.Settings.linear_velocity;
+                Self.LinearAcceleration = Self.Settings.linear_acceleration * Self.SpeedMultiplier;
+                Self.LinearVelocity = Self.Settings.linear_velocity * Self.SpeedMultiplier;
             }
         }
     }
