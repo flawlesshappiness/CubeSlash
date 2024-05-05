@@ -12,7 +12,7 @@ public class SteamIntegration : MonoBehaviour
 
     private const uint STEAM_ID = 2814280;
 
-    private const bool DISABLED = true;
+    private const bool DISABLED = false;
 
     public static void Create()
     {
