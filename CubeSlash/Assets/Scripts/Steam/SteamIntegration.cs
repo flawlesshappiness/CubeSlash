@@ -12,6 +12,8 @@ public class SteamIntegration : MonoBehaviour
 
     private const uint STEAM_ID = 2814280;
 
+    private const bool DISABLED = true;
+
     public static void Create()
     {
         if (Instance != null) return;
@@ -28,12 +30,15 @@ public class SteamIntegration : MonoBehaviour
     {
         try
         {
-#if UNITY_EDITOR
-            LogController.LogMessage($"STEAM: SteamClient not initialized in UNITY_EDITOR");
-#else
-            LogController.LogMessage($"STEAM: Initializing SteamClient");
-            SteamClient.Init(STEAM_ID);
-#endif
+            if (DISABLED)
+            {
+                LogController.LogMessage($"STEAM: SteamClient not initialized in UNITY_EDITOR");
+            }
+            else
+            {
+                LogController.LogMessage($"STEAM: Initializing SteamClient");
+                SteamClient.Init(STEAM_ID);
+            }
         }
         catch (Exception e)
         {
