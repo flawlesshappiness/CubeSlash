@@ -527,7 +527,7 @@ MonoBehaviour:
     m_ActionId: 9d0a78ba-5117-4ad5-90be-27ff03f6c12a
     m_ActionName: Main/MouseDelta[/Mouse/delta/x,/Mouse/delta/y]
   m_NeverAutoSwitchControlSchemes: 0
-  m_DefaultControlScheme: Gamepad
+  m_DefaultControlScheme: KeyboardMouse
   m_DefaultActionMap: Main
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
