@@ -40,6 +40,8 @@ public class Enemy : Character, IKillable, IHurt
 
         transform.localScale = Vector3.one * settings.size;
         Rigidbody.mass = settings.mass;
+        Rigidbody.isKinematic = false;
+
         SetBody(settings.body);
         SetAI(settings.ai);
 

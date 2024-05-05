@@ -107,24 +107,15 @@ public class GameEndView : View
             }
             else
             {
-                yield return ReturnToMainMenuCr();
+                ReturnToMainMenu();
             }
         }
     }
 
-    private Coroutine ReturnToMainMenu()
-    {
-        return StartCoroutine(ReturnToMainMenuCr());
-    }
-
-    private IEnumerator ReturnToMainMenuCr()
+    private void ReturnToMainMenu()
     {
         animating = true;
-        var fg_view = ViewController.Instance.ShowView<ForegroundView>(1, "Foreground");
-        yield return new WaitForSecondsRealtime(1);
-        GameController.Instance.MainMenu();
-        yield return new WaitForSecondsRealtime(0.5f);
-        fg_view.Close(1f);
+        GameController.Instance.ReturnToMainMenu();
         Close(0);
     }
 
