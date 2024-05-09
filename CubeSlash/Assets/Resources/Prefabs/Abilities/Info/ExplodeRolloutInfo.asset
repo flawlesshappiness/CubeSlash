@@ -19,3 +19,4 @@ MonoBehaviour:
   modifiers: {fileID: 11400000, guid: 08e78c57ef54dcf4ab5a50d91be4883c, type: 2}
   type_bodypart:
     id: ability_explode_A
+  hasAbilityInput: 1

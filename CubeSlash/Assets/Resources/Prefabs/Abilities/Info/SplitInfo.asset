@@ -19,3 +19,4 @@ MonoBehaviour:
   modifiers: {fileID: 11400000, guid: 057deef5701e54e4fa96b588847eeb3f, type: 2}
   type_bodypart:
     id: ability_split_A
+  hasAbilityInput: 1

@@ -9,4 +9,5 @@ public class AbilityInfo : ScriptableObject
     public Sprite sprite_icon;
     public AbilityModifierCollection modifiers;
     public BodypartType type_bodypart;
+    public bool hasAbilityInput;
 }
