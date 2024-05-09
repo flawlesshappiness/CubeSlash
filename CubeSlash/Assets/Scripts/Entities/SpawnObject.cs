@@ -1,5 +1,3 @@
-using UnityEngine;
-
 public class SpawnObject : WorldObject
 {
     public SpawnObjectInfo Info { get; set; }
@@ -9,7 +7,7 @@ public class SpawnObject : WorldObject
 
     }
 
-    protected void Destroy()
+    public void Destroy()
     {
         ObjectSpawnController.Instance.OnObjectDestroyed(this);
         Destroy(gameObject);

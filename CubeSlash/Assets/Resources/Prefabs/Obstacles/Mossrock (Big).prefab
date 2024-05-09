@@ -5,6 +5,7 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
+    serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 3683016353169286616, guid: 734e940a4366b6346898f7ba7269c336, type: 3}
@@ -83,5 +84,72 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: 9f85ccf496c68ea499a435e20d416897, type: 3}
+    - target: {fileID: 5932899764352805102, guid: 734e940a4366b6346898f7ba7269c336, type: 3}
+      propertyPath: InitialModule.startColor.maxGradient.ctime0
+      value: 12336
+      objectReference: {fileID: 0}
+    - target: {fileID: 5932899764352805102, guid: 734e940a4366b6346898f7ba7269c336, type: 3}
+      propertyPath: InitialModule.startColor.maxGradient.ctime1
+      value: 29876
+      objectReference: {fileID: 0}
+    - target: {fileID: 5932899764352805102, guid: 734e940a4366b6346898f7ba7269c336, type: 3}
+      propertyPath: InitialModule.startColor.maxGradient.ctime2
+      value: 44718
+      objectReference: {fileID: 0}
+    - target: {fileID: 5932899764352805102, guid: 734e940a4366b6346898f7ba7269c336, type: 3}
+      propertyPath: InitialModule.startColor.maxGradient.ctime3
+      value: 52043
+      objectReference: {fileID: 0}
+    - target: {fileID: 5932899764352805102, guid: 734e940a4366b6346898f7ba7269c336, type: 3}
+      propertyPath: InitialModule.startColor.maxGradient.ctime4
+      value: 58018
+      objectReference: {fileID: 0}
+    - target: {fileID: 5932899764352805102, guid: 734e940a4366b6346898f7ba7269c336, type: 3}
+      propertyPath: InitialModule.startColor.maxGradient.ctime5
+      value: 65535
+      objectReference: {fileID: 0}
+    - target: {fileID: 5932899764352805102, guid: 734e940a4366b6346898f7ba7269c336, type: 3}
+      propertyPath: InitialModule.startColor.maxGradient.key3.b
+      value: 0.37254903
+      objectReference: {fileID: 0}
+    - target: {fileID: 5932899764352805102, guid: 734e940a4366b6346898f7ba7269c336, type: 3}
+      propertyPath: InitialModule.startColor.maxGradient.key3.g
+      value: 0.61960787
+      objectReference: {fileID: 0}
+    - target: {fileID: 5932899764352805102, guid: 734e940a4366b6346898f7ba7269c336, type: 3}
+      propertyPath: InitialModule.startColor.maxGradient.key3.r
+      value: 0.19607845
+      objectReference: {fileID: 0}
+    - target: {fileID: 5932899764352805102, guid: 734e940a4366b6346898f7ba7269c336, type: 3}
+      propertyPath: InitialModule.startColor.maxGradient.key4.b
+      value: 0.3137255
+      objectReference: {fileID: 0}
+    - target: {fileID: 5932899764352805102, guid: 734e940a4366b6346898f7ba7269c336, type: 3}
+      propertyPath: InitialModule.startColor.maxGradient.key4.g
+      value: 0.5176471
+      objectReference: {fileID: 0}
+    - target: {fileID: 5932899764352805102, guid: 734e940a4366b6346898f7ba7269c336, type: 3}
+      propertyPath: InitialModule.startColor.maxGradient.key4.r
+      value: 0.16470589
+      objectReference: {fileID: 0}
+    - target: {fileID: 5932899764352805102, guid: 734e940a4366b6346898f7ba7269c336, type: 3}
+      propertyPath: InitialModule.startColor.maxGradient.key5.b
+      value: 0.20784315
+      objectReference: {fileID: 0}
+    - target: {fileID: 5932899764352805102, guid: 734e940a4366b6346898f7ba7269c336, type: 3}
+      propertyPath: InitialModule.startColor.maxGradient.key5.g
+      value: 0.34901962
+      objectReference: {fileID: 0}
+    - target: {fileID: 5932899764352805102, guid: 734e940a4366b6346898f7ba7269c336, type: 3}
+      propertyPath: InitialModule.startColor.maxGradient.key5.r
+      value: 0.10980393
+      objectReference: {fileID: 0}
+    - target: {fileID: 5932899764352805102, guid: 734e940a4366b6346898f7ba7269c336, type: 3}
+      propertyPath: InitialModule.startColor.maxGradient.m_NumColorKeys
+      value: 6
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 734e940a4366b6346898f7ba7269c336, type: 3}

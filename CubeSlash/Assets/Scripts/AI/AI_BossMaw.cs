@@ -322,6 +322,8 @@ public class AI_BossMaw : BossAI
 
     private void CreateArenas()
     {
+        DestroyObstaclesInArena();
+
         var size_muls = new float[4] { 1f, 0.75f, 0.5f, 0.25f };
         for (int i = 0; i < size_muls.Length; i++)
         {
@@ -381,6 +383,19 @@ public class AI_BossMaw : BossAI
         }
 
         return walls;
+    }
+
+    private void DestroyObstaclesInArena()
+    {
+        var radius = Mathf.Clamp(AreaRadius, 0, RADIUS_MAX);
+        var hits = Physics2D.OverlapCircleAll(Self.transform.position, radius);
+        foreach (var hit in hits)
+        {
+            var obstacle = hit.GetComponentInParent<Obstacle>();
+            if (obstacle == null) continue;
+
+            obstacle.DestroyObstacle();
+        }
     }
 
     private void CreateDud()
