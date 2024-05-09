@@ -217,18 +217,17 @@ namespace UnityEngine.InputSystem.Samples.RebindUI
             if (!ResolveActionAndBinding(out var action, out var bindingIndex))
                 return;
 
-            ResetBinding(action, bindingIndex);
+            if (action.bindings[bindingIndex].isComposite)
+            {
+                // It's a composite. Remove overrides from part bindings.
+                for (var i = bindingIndex + 1; i < action.bindings.Count && action.bindings[i].isPartOfComposite; ++i)
+                    ResetBinding(action, i);
+            }
+            else
+            {
+                ResetBinding(action, bindingIndex);
+            }
 
-            //if (action.bindings[bindingIndex].isComposite)
-            //{
-            //    // It's a composite. Remove overrides from part bindings.
-            //    for (var i = bindingIndex + 1; i < action.bindings.Count && action.bindings[i].isPartOfComposite; ++i)
-            //        action.RemoveBindingOverride(i);
-            //}
-            //else
-            //{
-            //    action.RemoveBindingOverride(bindingIndex);
-            //}
             UpdateBindingDisplay();
         }
 
@@ -237,8 +236,10 @@ namespace UnityEngine.InputSystem.Samples.RebindUI
             var newBinding = action.bindings[bindingIndex];
             var oldOverridePath = newBinding.overridePath;
 
+            // Remove override
             action.RemoveBindingOverride(bindingIndex);
 
+            // Check for duplicates
             foreach (var otherAction in action.actionMap.actions)
             {
                 if (otherAction == action) continue;
@@ -313,6 +314,7 @@ namespace UnityEngine.InputSystem.Samples.RebindUI
                             action.RemoveBindingOverride(bindingIndex);
                             CleanUp();
                             PerformInteractiveRebind(action, bindingIndex, allCompositeParts);
+                            m_RebindDuplicateText.gameObject.SetActive(true);
                             return;
                         }
 
@@ -342,6 +344,7 @@ namespace UnityEngine.InputSystem.Samples.RebindUI
                     ? $"{partName}Waiting for {m_RebindOperation.expectedControlType} input..."
                     : $"{partName}Waiting for input...";
                 m_RebindText.text = text;
+                m_RebindDuplicateText.gameObject.SetActive(false);
             }
 
             // If we have no rebind overlay and no callback but we have a binding text label,
@@ -460,6 +463,18 @@ namespace UnityEngine.InputSystem.Samples.RebindUI
         [SerializeField]
         private Text m_RebindText;
 
+        [Tooltip("Optional text label that will be updated if user inputs a duplicate input.")]
+        [SerializeField]
+        private Text m_RebindDuplicateText;
+
+        [Tooltip("Allows you to override the action label with your own text.")]
+        [SerializeField]
+        public bool m_OverrideActionLabel;
+
+        [Tooltip("Text to display instead of the default action name.")]
+        [SerializeField]
+        private string m_ActionLabelString;
+
         [Tooltip("Event that is triggered when the way the binding is display should be updated. This allows displaying "
             + "bindings in custom ways, e.g. using images instead of text.")]
         [SerializeField]
@@ -495,7 +510,15 @@ namespace UnityEngine.InputSystem.Samples.RebindUI
             if (m_ActionLabel != null)
             {
                 var action = m_Action?.action;
-                m_ActionLabel.text = action != null ? action.name : string.Empty;
+                if (m_OverrideActionLabel)
+                {
+                    m_ActionLabel.text = m_ActionLabelString;
+                }
+                else
+                {
+                    m_ActionLabel.text = action != null ? action.name : string.Empty;
+                    m_ActionLabelString = string.Empty;
+                }
             }
         }
 

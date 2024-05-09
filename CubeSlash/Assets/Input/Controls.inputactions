@@ -11,7 +11,8 @@
                     "id": "3f73eca1-e971-42a8-8155-2dbc3d18986f",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "",
+                    "initialStateCheck": false
                 },
                 {
                     "name": "Dash",
@@ -19,7 +20,8 @@
                     "id": "baddef45-d8c7-4847-9693-02a7e660beb1",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "",
+                    "initialStateCheck": false
                 },
                 {
                     "name": "Ability",
@@ -27,7 +29,8 @@
                     "id": "cdd99e2b-544d-414f-8664-7c015d186c6f",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "",
+                    "initialStateCheck": false
                 },
                 {
                     "name": "Heal",
@@ -35,7 +38,8 @@
                     "id": "ea69442c-285b-4ef1-b515-04f067760b05",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "",
+                    "initialStateCheck": false
                 },
                 {
                     "name": "Move",
@@ -43,7 +47,8 @@
                     "id": "f55ec690-6a6d-4d0d-b0db-2952a2f4f2e4",
                     "expectedControlType": "Vector2",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "",
+                    "initialStateCheck": false
                 },
                 {
                     "name": "MouseDelta",
@@ -51,7 +56,8 @@
                     "id": "9d0a78ba-5117-4ad5-90be-27ff03f6c12a",
                     "expectedControlType": "Axis",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -144,20 +150,20 @@
                     "isPartOfComposite": true
                 },
                 {
-                    "name": "down",
-                    "id": "b0d848c5-a001-46ba-a16b-3e67593800b7",
-                    "path": "<Keyboard>/s",
+                    "name": "left",
+                    "id": "3fcdbc43-d6cf-4c19-a15d-681e43d180a4",
+                    "path": "<Keyboard>/a",
                     "interactions": "",
                     "processors": "",
-                    "groups": "Keyboard&Mouse;KeyboardMouse",
+                    "groups": "KeyboardMouse",
                     "action": "Move",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
                 {
-                    "name": "left",
-                    "id": "3fcdbc43-d6cf-4c19-a15d-681e43d180a4",
-                    "path": "<Keyboard>/a",
+                    "name": "down",
+                    "id": "b0d848c5-a001-46ba-a16b-3e67593800b7",
+                    "path": "<Keyboard>/s",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard&Mouse;KeyboardMouse",
@@ -243,7 +249,8 @@
                     "id": "14e0d02e-7464-4654-917e-b843f67c5d5f",
                     "expectedControlType": "Vector2",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "",
+                    "initialStateCheck": false
                 },
                 {
                     "name": "Click",
@@ -251,7 +258,8 @@
                     "id": "e71f717d-b412-4989-928a-e8067b593f21",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "",
+                    "initialStateCheck": false
                 },
                 {
                     "name": "Cancel",
@@ -259,7 +267,8 @@
                     "id": "f87e837c-cf66-406d-ab48-c6bce0f04872",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "",
+                    "initialStateCheck": false
                 },
                 {
                     "name": "Submit",
@@ -267,7 +276,8 @@
                     "id": "78137bca-0d1d-453f-95f5-0398f57a9687",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "",
+                    "initialStateCheck": false
                 },
                 {
                     "name": "Debug",
@@ -275,7 +285,8 @@
                     "id": "f19aae54-bcea-41d0-b8da-542ea2ffafb5",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "",
+                    "initialStateCheck": false
                 },
                 {
                     "name": "Scroll",
@@ -283,7 +294,8 @@
                     "id": "b55b0758-183d-4173-9451-bd02bf8eb2d6",
                     "expectedControlType": "Vector2",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "",
+                    "initialStateCheck": true
                 }
             ],
             "bindings": [
