@@ -1,4 +1,3 @@
-using Newtonsoft.Json;
 using Steamworks;
 using Steamworks.Data;
 using System;
@@ -81,7 +80,7 @@ public class SteamIntegration : MonoBehaviour
             LogController.LogMessage($"STEAM: Loading cloud data {filename}");
 
             var json = LoadCloudData(filename);
-            T data = JsonConvert.DeserializeObject<T>(json);
+            T data = JsonUtility.FromJson<T>(json);
             return data;
         }
         catch (Exception e)

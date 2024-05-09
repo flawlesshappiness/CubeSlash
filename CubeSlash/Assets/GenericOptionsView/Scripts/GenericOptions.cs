@@ -1,4 +1,3 @@
-using Newtonsoft.Json;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -154,7 +153,7 @@ namespace Flawliz.GenericOptions
 
         public void SaveDataToPlayerPrefs()
         {
-            var json = JsonConvert.SerializeObject(Data);
+            var json = JsonUtility.ToJson(Data);
             PlayerPrefs.SetString(typeof(OptionsData).AssemblyQualifiedName, json);
         }
 
@@ -167,7 +166,7 @@ namespace Flawliz.GenericOptions
         public static OptionsData GetDataFromPlayerPrefs()
         {
             var json = PlayerPrefs.GetString(typeof(OptionsData).AssemblyQualifiedName);
-            var data = JsonConvert.DeserializeObject<OptionsData>(json);
+            var data = JsonUtility.FromJson<OptionsData>(json);
             return data ?? new OptionsData();
         }
     }
