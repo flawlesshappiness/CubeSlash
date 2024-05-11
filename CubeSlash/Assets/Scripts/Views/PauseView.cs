@@ -61,9 +61,11 @@ public class PauseView : View
 
     private void PressPause()
     {
+        /*
         return;
         if (!initiated) return;
         if (Time.unscaledTime < time_started + 0.2f) return;
+        */
 
         ClickContinue();
     }
