@@ -11,6 +11,7 @@ public class PauseView : View
     [SerializeField] private SelectableMenuItem btnMainMenu;
     [SerializeField] private SelectableMenuItem btnEndRun;
 
+    private bool initiated;
     private float time_started;
 
     private void OnEnable()
@@ -37,6 +38,7 @@ public class PauseView : View
         btnEndRun.onSubmit += ClickEndRun;
 
         time_started = Time.unscaledTime;
+        initiated = true;
     }
 
     IEnumerator TransitionToOptionsCr()
@@ -59,6 +61,8 @@ public class PauseView : View
 
     private void PressPause()
     {
+        return;
+        if (!initiated) return;
         if (Time.unscaledTime < time_started + 0.2f) return;
 
         ClickContinue();
