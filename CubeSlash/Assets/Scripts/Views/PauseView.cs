@@ -11,12 +11,14 @@ public class PauseView : View
     [SerializeField] private SelectableMenuItem btnMainMenu;
     [SerializeField] private SelectableMenuItem btnEndRun;
 
+    private float time_started;
+
     private void OnEnable()
     {
         Exists = true;
         GameController.Instance.PauseLock.AddLock(nameof(PauseView));
 
-        PlayerInputController.Instance.Pause.Pressed += Menu_started;
+        PlayerInputController.Instance.Pause.Pressed += PressPause;
     }
 
     private void OnDisable()
@@ -24,7 +26,7 @@ public class PauseView : View
         Exists = false;
         GameController.Instance.PauseLock.RemoveLock(nameof(PauseView));
 
-        PlayerInputController.Instance.Pause.Pressed -= Menu_started;
+        PlayerInputController.Instance.Pause.Pressed -= PressPause;
     }
 
     private void Start()
@@ -33,6 +35,8 @@ public class PauseView : View
         btnOptions.onSubmit += ClickOptions;
         btnMainMenu.onSubmit += ClickMainMenu;
         btnEndRun.onSubmit += ClickEndRun;
+
+        time_started = Time.unscaledTime;
     }
 
     IEnumerator TransitionToOptionsCr()
@@ -53,8 +57,10 @@ public class PauseView : View
         Close(0);
     }
 
-    private void Menu_started()
+    private void PressPause()
     {
+        if (Time.unscaledTime < time_started + 0.2f) return;
+
         ClickContinue();
     }
 
