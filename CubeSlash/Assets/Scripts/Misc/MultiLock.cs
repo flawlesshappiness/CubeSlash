@@ -1,20 +1,23 @@
-using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 
 public class MultiLock
 {
-    public bool IsLocked { get { return locks.Count > 0; } }
-    public bool IsFree { get { return locks.Count == 0; } }
+    public bool IsLocked { get; private set; }
+    public bool IsFree { get; private set; }
 
     public System.Action<bool> OnLockChanged { get; set; }
 
     private List<string> locks = new List<string>();
 
+    public MultiLock()
+    {
+        LockUpdated();
+    }
+
     public void ClearLock()
     {
         locks.Clear();
-        OnLockChanged?.Invoke(IsLocked);
+        LockUpdated();
     }
 
     public void AddLock(string id)
@@ -22,7 +25,7 @@ public class MultiLock
         if (!locks.Contains(id))
         {
             locks.Add(id);
-            OnLockChanged?.Invoke(IsLocked);
+            LockUpdated();
         }
     }
 
@@ -31,7 +34,7 @@ public class MultiLock
         if (locks.Contains(id))
         {
             locks.Remove(id);
-            OnLockChanged?.Invoke(IsLocked);
+            LockUpdated();
         }
     }
 
@@ -45,5 +48,12 @@ public class MultiLock
         {
             AddLock(id);
         }
+    }
+
+    private void LockUpdated()
+    {
+        IsLocked = locks.Count > 0;
+        IsFree = locks.Count == 0;
+        OnLockChanged?.Invoke(IsLocked);
     }
 }

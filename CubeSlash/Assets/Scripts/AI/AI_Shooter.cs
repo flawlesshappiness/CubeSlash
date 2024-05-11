@@ -11,7 +11,6 @@ public class AI_Shooter : EnemyAI
     [SerializeField] private Projectile prefab_projectile;
     [SerializeField] private float velocity_projectile;
 
-    private Vector3 pos_player_prev;
     private bool shooting;
 
     private TripleyeBody EyeBody => Body as TripleyeBody;
@@ -25,7 +24,6 @@ public class AI_Shooter : EnemyAI
 
     private void FixedUpdate()
     {
-        pos_player_prev = IsPlayerAlive() ? Player.Instance.transform.position : pos_player_prev;
         MoveUpdate();
     }
 
@@ -34,12 +32,12 @@ public class AI_Shooter : EnemyAI
         if (IsInRange || shooting)
         {
             MoveToStop(0.5f);
-            TurnTowards(pos_player_prev);
+            TurnTowards(PlayerPosition);
         }
         else
         {
-            MoveTowards(pos_player_prev);
-            TurnTowards(pos_player_prev);
+            MoveTowards(PlayerPosition);
+            TurnTowards(PlayerPosition);
         }
     }
 

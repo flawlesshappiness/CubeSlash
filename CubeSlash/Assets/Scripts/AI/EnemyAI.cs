@@ -55,13 +55,22 @@ public abstract class EnemyAI : MonoBehaviour
 
     protected void MoveTowards(Vector3 destination)
     {
-        if (Time.time > _time_open_direction)
+        if (RunInfo.Current.Endless)
         {
-            _time_open_direction = Time.time + 0.5f;
-            LastOpenDirection = GetOpenDirectionTowards(destination);
+            // Less expensive
+            Self.Move(destination - Position);
         }
+        else
+        {
+            // Expensive
+            if (Time.time > _time_open_direction)
+            {
+                _time_open_direction = Time.time + 0.5f;
+                LastOpenDirection = GetOpenDirectionTowards(destination);
+            }
 
-        Self.Move(LastOpenDirection);
+            Self.Move(LastOpenDirection);
+        }
     }
 
     protected void MoveToStop(float mul = 1f)
@@ -90,7 +99,7 @@ public abstract class EnemyAI : MonoBehaviour
         var raycast_distance = 5f;
         var forward = (destination - Self.transform.position).normalized;
         var angle = 0;
-        var angle_delta = 30;
+        var angle_delta = 60;
         var radius = Self.Settings.size * 0.5f;
         while (angle < 180)
         {

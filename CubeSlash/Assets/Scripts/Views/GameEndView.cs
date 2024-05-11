@@ -100,8 +100,9 @@ public class GameEndView : View
                 }
             }
 
+            var endless_enabled = false;
             var run = RunController.Instance.CurrentRun;
-            if (run.Won)
+            if (run.Won && endless_enabled)
             {
                 ShowWinRadial();
             }

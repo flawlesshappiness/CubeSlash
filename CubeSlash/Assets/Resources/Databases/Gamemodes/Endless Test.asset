@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00f6d988a5c9030499a153e06417c174, type: 3}
+  m_Name: Endless Test
+  m_EditorClassIdentifier: 
+  type: 4
+  gamemode_name: 
+  gamemode_desc: 
+  icon: {fileID: 0}
+  area_count: 5
+  area_duration: 90
+  area_size: 100
+  enemy_spawn_frequency_start: 0.3
+  enemy_spawn_frequency_end: 0.3
+  enemy_spawn_frequency_final: 0.3
+  enemy_spawn_count_start: 20
+  enemy_spawn_count_end: 20
+  enemy_count_max_start: 400
+  enemy_count_max_end: 400
+  boss_time_spawn: 0.6
+  boss_size: 1.2
+  boss_spawn_count: 2
+  experience_spawn_frequency: 0.5
+  experience_count_max: 60
+  experience_gain_multiplier: 0
+  camera_size_start: 17
+  camera_size_end: 17
