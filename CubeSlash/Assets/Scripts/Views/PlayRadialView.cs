@@ -138,6 +138,7 @@ public class PlayRadialView : View
             Player.Instance.SetPrimaryAbility(info.type);
             Player.Instance.UpdateBodyparts();
             SaveDataController.Instance.Save<GameSaveData>();
+            SaveDataController.Instance.Save<PlayerBodySaveData>();
             ShowMainOptions();
         }
 
