@@ -19,6 +19,11 @@ public class CrystalEye : MonoBehaviour
 
     private void Start()
     {
+        ResetPupilSprite();
+    }
+
+    public void ResetPupilSprite()
+    {
         spr_pupil_charged.SetAlpha(0);
     }
 
@@ -53,6 +58,7 @@ public class CrystalEye : MonoBehaviour
         return StartCoroutine(Cr());
         IEnumerator Cr()
         {
+            ResetPupilSprite();
             LookingAtPlayer = false;
             Open = true;
             yield return LerpEnumerator.Value(0.4f, f =>
