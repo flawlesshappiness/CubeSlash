@@ -16,7 +16,7 @@ public class OptionsController : Singleton
             resolution = Screen.currentResolution;
         }
 
-        Screen.SetResolution(resolution.width, resolution.height, data.FullScreenMode, data.Resolution.refreshRate);
+        Screen.SetResolution(resolution.width, resolution.height, data.FullScreenMode, resolution.refreshRateRatio);
         QualitySettings.vSyncCount = data.Vsync ? 1 : 0;
         Application.targetFrameRate = data.FrameRateCap;
     }

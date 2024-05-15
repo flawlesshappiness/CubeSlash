@@ -17,7 +17,7 @@ namespace Flawliz.GenericOptions
         private void UpdateText()
         {
             var resolution = GetSelectedValue();
-            Control.SetText($"{resolution.width} x {resolution.height} @ {resolution.refreshRate}Hz");
+            Control.SetText($"{resolution.width} x {resolution.height} @ {resolution.refreshRateRatio.value}Hz");
         }
     }
 }

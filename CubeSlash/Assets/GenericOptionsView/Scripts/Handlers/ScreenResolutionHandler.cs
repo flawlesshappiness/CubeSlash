@@ -19,7 +19,7 @@ namespace Flawliz.GenericOptions
             SetResolution(Root.Data.Resolution);
             SetFullScreenMode(Root.Data.FullScreenMode);
 
-            _resolution_control.OnIndexChanged += i => Root.Data.Resolution = _resolution_control.GetSelectedValue();
+            _resolution_control.OnIndexChanged += i => Root.Data.SetResolution(_resolution_control.GetSelectedValue());
             _resolution_control.OnIndexChanged += i => Root.SetHasChanges();
 
             _full_screen_mode_control.OnIndexChanged += i => Root.Data.FullScreenMode = _full_screen_mode_control.GetSelectedValue();
@@ -45,7 +45,7 @@ namespace Flawliz.GenericOptions
             base.Apply();
             var resolution = _resolution_control.GetSelectedValue();
             var mode = _full_screen_mode_control.GetSelectedValue();
-            Screen.SetResolution(resolution.width, resolution.height, mode, resolution.refreshRate);
+            Screen.SetResolution(resolution.width, resolution.height, mode, resolution.refreshRateRatio);
         }
 
         private void SetResolution(Resolution resolution)
@@ -55,7 +55,7 @@ namespace Flawliz.GenericOptions
             var matching_res = resolutions.FirstOrDefault(res =>
                     res.width == resolution.width &&
                     res.height == resolution.height &&
-                    res.refreshRate == resolution.refreshRate);
+                    res.refreshRateRatio.value == resolution.refreshRateRatio.value);
 
             resolution = matching_res;
 
