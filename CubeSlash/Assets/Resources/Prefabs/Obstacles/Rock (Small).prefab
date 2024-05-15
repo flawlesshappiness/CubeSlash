@@ -10400,6 +10400,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hurts: 0
   enemy_ai_ignore: 0
+  is_area_obstacle: 1
   ps_destroy: {fileID: 5932899764352805102}
 --- !u!114 &-8144886329794796608
 MonoBehaviour:

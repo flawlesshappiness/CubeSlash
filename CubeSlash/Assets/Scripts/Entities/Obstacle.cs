@@ -6,6 +6,7 @@ public class Obstacle : MonoBehaviour, IKillable, IHurt
 
     public bool hurts;
     public bool enemy_ai_ignore;
+    public bool is_area_obstacle;
 
     public ParticleSystem ps_destroy;
 

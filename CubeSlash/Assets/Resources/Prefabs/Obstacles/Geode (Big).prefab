@@ -20,6 +20,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Geode (Big)
       objectReference: {fileID: 0}
+    - target: {fileID: 3683016353986101016, guid: 734e940a4366b6346898f7ba7269c336, type: 3}
+      propertyPath: is_area_obstacle
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3683016353986101017, guid: 734e940a4366b6346898f7ba7269c336, type: 3}
       propertyPath: size_max
       value: 5

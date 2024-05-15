@@ -29,6 +29,8 @@ public class AI_BossPlant : BossAI
     private float time_until_pillar;
     private float radius_arena;
 
+    private float cd_destroy_obstacles;
+
     public override void Initialize(Enemy enemy)
     {
         base.Initialize(enemy);
@@ -46,7 +48,6 @@ public class AI_BossPlant : BossAI
         Self.transform.position = Player.Instance.transform.position;
 
         CalculateArenaRadius();
-        DestroyObstaclesInArena();
         CreateArena();
 
         if (Gamemode == GamemodeType.Normal)
@@ -59,23 +60,33 @@ public class AI_BossPlant : BossAI
         }
     }
 
+    private void Update()
+    {
+        if (Player.Instance.IsDead) return;
+
+        UpdateDestroyObstacles();
+
+        var t = GetHealthPercentage();
+        if (Time.time > time_until_pillar)
+        {
+            CreatePillars();
+            var cooldown = Mathf.Lerp(COOLDOWN_PILLAR_MAX, COOLDOWN_PILLAR_MIN, t);
+            time_until_pillar = Time.time + cooldown;
+        }
+    }
+
+    private void UpdateDestroyObstacles()
+    {
+        if (Time.time < cd_destroy_obstacles) return;
+        cd_destroy_obstacles = Time.time + 2f;
+        DestroyObstaclesInArena(radius_arena);
+    }
+
     private void CalculateArenaRadius()
     {
         var area_number = AreaController.Instance.CurrentAreaIndex + 1;
         radius_arena = Mathf.Clamp(RADIUS + RADIUS_PER_INDEX * area_number, 0, RADIUS_MAX);
         radius_arena *= Gamemode == GamemodeType.DoubleBoss ? 1.25f : 1f;
-    }
-
-    private void DestroyObstaclesInArena()
-    {
-        var hits = Physics2D.OverlapCircleAll(Self.transform.position, radius_arena);
-        foreach (var hit in hits)
-        {
-            var obstacle = hit.GetComponentInParent<Obstacle>();
-            if (obstacle == null) continue;
-
-            obstacle.DestroyObstacle();
-        }
     }
 
     private void CreateArena()
@@ -228,18 +239,5 @@ public class AI_BossPlant : BossAI
     private float GetHealthPercentage()
     {
         return 1f - ((float)duds_to_kill / duds_max);
-    }
-
-    private void Update()
-    {
-        if (Player.Instance.IsDead) return;
-
-        var t = GetHealthPercentage();
-        if (Time.time > time_until_pillar)
-        {
-            CreatePillars();
-            var cooldown = Mathf.Lerp(COOLDOWN_PILLAR_MAX, COOLDOWN_PILLAR_MIN, t);
-            time_until_pillar = Time.time + cooldown;
-        }
     }
 }

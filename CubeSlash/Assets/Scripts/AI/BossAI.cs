@@ -53,4 +53,18 @@ public class BossAI : EnemyAI
     {
         Body.Duds.Where(d => d.IsAlive()).ToList().ForEach(d => d.SetDudActive(true));
     }
+
+    protected void DestroyObstaclesInArena(float radius)
+    {
+        var hits = Physics2D.OverlapCircleAll(Self.transform.position, radius);
+        foreach (var hit in hits)
+        {
+            var obstacle = hit.GetComponentInParent<Obstacle>();
+            if (obstacle == null) continue;
+
+            if (!obstacle.is_area_obstacle) continue;
+
+            obstacle.DestroyObstacle();
+        }
+    }
 }
