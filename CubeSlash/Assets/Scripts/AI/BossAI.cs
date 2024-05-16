@@ -54,7 +54,15 @@ public class BossAI : EnemyAI
         Body.Duds.Where(d => d.IsAlive()).ToList().ForEach(d => d.SetDudActive(true));
     }
 
-    protected void DestroyObstaclesInArena(float radius)
+    protected void DistableObstaclesInArena(float radius)
+    {
+        ForeachObstacleInArena(radius, o =>
+        {
+            o.DisableDestroy();
+        });
+    }
+
+    protected void ForeachObstacleInArena(float radius, System.Action<Obstacle> action)
     {
         var hits = Physics2D.OverlapCircleAll(Self.transform.position, radius);
         foreach (var hit in hits)
@@ -64,7 +72,7 @@ public class BossAI : EnemyAI
 
             if (!obstacle.is_area_obstacle) continue;
 
-            obstacle.DestroyObstacle();
+            action?.Invoke(obstacle);
         }
     }
 }

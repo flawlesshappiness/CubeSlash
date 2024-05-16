@@ -2,8 +2,6 @@ using UnityEngine;
 
 public class Obstacle : MonoBehaviour, IKillable, IHurt
 {
-    private SpawnObject spawn_object;
-
     public bool hurts;
     public bool enemy_ai_ignore;
     public bool is_area_obstacle;
@@ -18,12 +16,7 @@ public class Obstacle : MonoBehaviour, IKillable, IHurt
     public virtual bool TryKill() => false;
     public bool CanHurt() => hurts;
 
-    private void Awake()
-    {
-        spawn_object = GetComponent<SpawnObject>();
-    }
-
-    public void DestroyObstacle()
+    public void DisableDestroy()
     {
         if (ps_destroy != null)
         {
@@ -36,13 +29,6 @@ public class Obstacle : MonoBehaviour, IKillable, IHurt
                 .Destroy(4f);
         }
 
-        if (spawn_object != null)
-        {
-            spawn_object.Destroy();
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
+        gameObject.SetActive(false);
     }
 }

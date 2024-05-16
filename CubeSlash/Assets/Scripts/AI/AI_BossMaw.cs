@@ -81,7 +81,7 @@ public class AI_BossMaw : BossAI
         if (Time.time < cd_destroy_obstacles) return;
         cd_destroy_obstacles = Time.time + 2f;
         var radius = Mathf.Clamp(AreaRadius, 0, RADIUS_MAX);
-        DestroyObstaclesInArena(radius);
+        DistableObstaclesInArena(radius);
     }
 
     protected override void OnDeath()

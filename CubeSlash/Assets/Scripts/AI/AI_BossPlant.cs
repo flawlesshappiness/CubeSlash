@@ -79,7 +79,7 @@ public class AI_BossPlant : BossAI
     {
         if (Time.time < cd_destroy_obstacles) return;
         cd_destroy_obstacles = Time.time + 2f;
-        DestroyObstaclesInArena(radius_arena);
+        DistableObstaclesInArena(radius_arena);
     }
 
     private void CalculateArenaRadius()
